@@ -2,13 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 import React from "react";
-import { SafeAreaView, TextInput, Button, Dropdown} from "react-native";
+import { SafeAreaView, TextInput, Button} from "react-native";
 
-const countryInput = () => {
-  <Text>Filler</Text>
-}
 
-const emailInput = () => {
+const emailImput = () => {
   const [text, onChangeText] = React.useState("Enter your email address");
   const [number, onChangeNumber] = React.useState(null);
 
@@ -52,32 +49,3 @@ const enterButton = () => {
     />
   );
 }
-
-export default function App() {
-  console.log("App executed")
-
-  let x =1;
-
-  
-  return (
-    <View style={styles.container}>
-
-      {countryInput()}
-      <Text>Enter your email address</Text>
-      {emailInput()}
-      <Text>Enter your mobile number</Text>
-      {mobileInput()}
-      {enterButton()}
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
