@@ -1,79 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useCallback} from "react";
+import { View,Text, Image, SafeAreaView, Pressable, StyleSheet, ScrollView } from "react-native";
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import 'expo-dev-menu';
 
-import React from "react";
-import { SafeAreaView, TextInput, Button, Dropdown} from "react-native";
 
-const countryInput = () => {
-  <Text>Filler</Text>
-}
+import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
+import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
+import Account from "./app/screens/Account"
+import GlobalStyles from "./GlobalStyles";
 
-const emailInput = () => {
-  const [text, onChangeText] = React.useState("Enter your email address");
-  const [number, onChangeNumber] = React.useState(null);
 
-  return (
-    <SafeAreaView>
-    <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="email"
-        keyboardType="text"
-    />
-    </SafeAreaView>
-  );
-};
-
-const mobileInput = () => {
-  const [text, onChangeText] = React.useState("Enter your mobile number");
-  const [number, onChangeNumber] = React.useState(null);
-
-  return (
-    <SafeAreaView>
-    <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="mobile number"
-        keyboardType="numeric"
-    />
-    </SafeAreaView>
-  );
-};
-
-const enterButton = () => {
-  return (
-    <Button
-      onPress={console.log("!")}
-      title="Continue"
-      color="#2E38F6"
-      accessibilityLabel="Learn more about this purple button"
-    />
-  );
-}
+// SplashScreen.preventAutoHideAsync(); 
 
 export default function App() {
 
-  return (
-    <View style={styles.container}>
+  
+  // const [fontsLoaded] = useFonts({
 
-      {countryInput()}
-      <Text>Enter your email address</Text>
-      {emailInput()}
-      <Text>Enter your mobile number</Text>
-      {mobileInput()}
-      {enterButton()}
-      <StatusBar style="auto" />
-    </View>
-  );
+  //   Roboto: require("./app/assets/fonts/Roboto.ttf")
+  // });
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   console.log(fontsLoaded)
+  //   if (fontsLoaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
+
+  // if (!fontsLoaded) {
+    
+  //   return null;
+  // }
+
+  return (
+    <Account />
+    
+  )
+
+ 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+

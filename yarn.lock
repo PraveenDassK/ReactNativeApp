@@ -786,7 +786,7 @@
     "pirates" "^4.0.5"
     "source-map-support" "^0.5.16"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.14.0", "@babel/runtime@^7.18.6", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.14.0", "@babel/runtime@^7.15.4", "@babel/runtime@^7.18.6", "@babel/runtime@^7.8.4":
   "version" "7.20.7"
   dependencies:
     "regenerator-runtime" "^0.13.11"
@@ -934,6 +934,18 @@
     "semver" "7.3.2"
     "slugify" "^1.3.4"
     "sucrase" "^3.20.0"
+
+"@expo/configure-splash-screen@^0.6.0":
+  "version" "0.6.0"
+  dependencies:
+    "color-string" "^1.5.3"
+    "commander" "^5.1.0"
+    "fs-extra" "^9.0.0"
+    "glob" "^7.1.6"
+    "lodash" "^4.17.15"
+    "pngjs" "^5.0.0"
+    "xcode" "^3.0.0"
+    "xml-js" "^1.6.11"
 
 "@expo/dev-server@0.1.123":
   "version" "0.1.123"
@@ -1390,6 +1402,11 @@
   "version" "3.0.1"
   dependencies:
     "@types/istanbul-lib-report" "*"
+
+"@types/lodash@^4.14.175":
+  "integrity" "sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ=="
+  "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.191.tgz"
+  "version" "4.14.191"
 
 "@types/node@*":
   "version" "18.11.17"
@@ -1927,11 +1944,17 @@
   dependencies:
     "color-name" "~1.1.4"
 
-"color-name@~1.1.4":
+"color-name@^1.0.0", "color-name@~1.1.4":
   "version" "1.1.4"
 
 "color-name@1.1.3":
   "version" "1.1.3"
+
+"color-string@^1.5.3":
+  "version" "1.9.1"
+  dependencies:
+    "color-name" "^1.0.0"
+    "simple-swizzle" "^0.2.2"
 
 "colorette@^1.0.7":
   "version" "1.4.0"
@@ -1946,6 +1969,9 @@
 
 "commander@^4.0.0":
   "version" "4.1.1"
+
+"commander@^5.1.0":
+  "version" "5.1.0"
 
 "commander@^7.2.0":
   "version" "7.2.0"
@@ -2100,6 +2126,11 @@
 
 "deep-extend@^0.6.0":
   "version" "0.6.0"
+
+"deepmerge@^2.1.1":
+  "integrity" "sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA=="
+  "resolved" "https://registry.npmjs.org/deepmerge/-/deepmerge-2.2.1.tgz"
+  "version" "2.2.1"
 
 "deepmerge@^3.2.0":
   "version" "3.3.0"
@@ -2279,6 +2310,22 @@
     "@expo/config" "~7.0.2"
     "uuid" "^3.3.2"
 
+"expo-dev-menu-interface@1.0.0":
+  "integrity" "sha512-4lsVofTwV9oBM+zo7XhtmvbfiXD4I7I3Rqns6U0i6IOnH7OGBDpKvGZ5YikWPFGn6NOu8loqqd8S7inFIaxC0A=="
+  "resolved" "https://registry.npmjs.org/expo-dev-menu-interface/-/expo-dev-menu-interface-1.0.0.tgz"
+  "version" "1.0.0"
+
+"expo-dev-menu@^2.0.2":
+  "integrity" "sha512-SxR5riXgm+VVKsDKC/bOLuOJ0CKutW07G+OqJ9eYfxwGfxa8omLJHwagbCsd8FwUPGkzvzgfRJRGLo5J6REMow=="
+  "resolved" "https://registry.npmjs.org/expo-dev-menu/-/expo-dev-menu-2.0.2.tgz"
+  "version" "2.0.2"
+  dependencies:
+    "expo-dev-menu-interface" "1.0.0"
+    "semver" "^7.3.5"
+
+"expo-eas-client@~0.4.0":
+  "version" "0.4.1"
+
 "expo-error-recovery@~4.0.1":
   "version" "4.0.1"
 
@@ -2292,8 +2339,16 @@
   dependencies:
     "fontfaceobserver" "^2.1.0"
 
+"expo-json-utils@~0.4.0":
+  "version" "0.4.0"
+
 "expo-keep-awake@~11.0.1":
   "version" "11.0.1"
+
+"expo-manifests@~0.4.0":
+  "version" "0.4.0"
+  dependencies:
+    "expo-json-utils" "~0.4.0"
 
 "expo-modules-autolinking@>=0.8.1", "expo-modules-autolinking@1.0.0":
   "version" "1.0.0"
@@ -2310,10 +2365,38 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
+"expo-splash-screen@~0.17.5":
+  "version" "0.17.5"
+  dependencies:
+    "@expo/configure-splash-screen" "^0.6.0"
+    "@expo/prebuild-config" "5.0.7"
+
 "expo-status-bar@~1.4.2":
   "version" "1.4.2"
 
-"expo@*", "expo@~47.0.9":
+"expo-structured-headers@~3.0.0":
+  "version" "3.0.1"
+
+"expo-updates-interface@~0.8.0":
+  "version" "0.8.1"
+
+"expo-updates@~0.15.6":
+  "version" "0.15.6"
+  dependencies:
+    "@expo/code-signing-certificates" "0.0.5"
+    "@expo/config" "~7.0.2"
+    "@expo/config-plugins" "~5.0.3"
+    "@expo/metro-config" "~0.5.0"
+    "arg" "4.1.0"
+    "expo-eas-client" "~0.4.0"
+    "expo-manifests" "~0.4.0"
+    "expo-structured-headers" "~3.0.0"
+    "expo-updates-interface" "~0.8.0"
+    "fbemitter" "^3.0.0"
+    "resolve-from" "^5.0.0"
+    "uuid" "^3.4.0"
+
+"expo@*", "expo@^47.0.9":
   "version" "47.0.9"
   dependencies:
     "@babel/runtime" "^7.14.0"
@@ -2492,6 +2575,19 @@
     "combined-stream" "^1.0.8"
     "mime-types" "^2.1.12"
 
+"formik@^2.2.9":
+  "integrity" "sha512-LQLcISMmf1r5at4/gyJigGn0gOwFbeEAlji+N9InZF6LIMXnFNkO42sCI8Jt84YZggpD4cPWObAZaxpEFtSzNA=="
+  "resolved" "https://registry.npmjs.org/formik/-/formik-2.2.9.tgz"
+  "version" "2.2.9"
+  dependencies:
+    "deepmerge" "^2.1.1"
+    "hoist-non-react-statics" "^3.3.0"
+    "lodash" "^4.17.21"
+    "lodash-es" "^4.17.21"
+    "react-fast-compare" "^2.0.1"
+    "tiny-warning" "^1.0.2"
+    "tslib" "^1.10.0"
+
 "fragment-cache@^0.2.1":
   "version" "0.2.1"
   dependencies:
@@ -2548,6 +2644,9 @@
 
 "fs.realpath@^1.0.0":
   "version" "1.0.0"
+
+"fsevents@^2.1.2":
+  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "version" "1.1.1"
@@ -2677,6 +2776,13 @@
   dependencies:
     "source-map" "^0.7.3"
 
+"hoist-non-react-statics@^3.3.0":
+  "integrity" "sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw=="
+  "resolved" "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz"
+  "version" "3.3.2"
+  dependencies:
+    "react-is" "^16.7.0"
+
 "hosted-git-info@^3.0.2":
   "version" "3.0.8"
   dependencies:
@@ -2796,6 +2902,9 @@
 
 "is-arrayish@^0.2.1":
   "version" "0.2.1"
+
+"is-arrayish@^0.3.1":
+  "version" "0.3.2"
 
 "is-buffer@^1.1.5", "is-buffer@~1.1.1", "is-buffer@~1.1.6":
   "version" "1.1.6"
@@ -3133,13 +3242,18 @@
   dependencies:
     "p-locate" "^5.0.0"
 
+"lodash-es@^4.17.21":
+  "integrity" "sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw=="
+  "resolved" "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
+  "version" "4.17.21"
+
 "lodash.debounce@^4.0.8":
   "version" "4.0.8"
 
 "lodash.throttle@^4.1.1":
   "version" "4.1.1"
 
-"lodash@^4.17.13", "lodash@^4.17.4":
+"lodash@^4.17.13", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.17.4":
   "version" "4.17.21"
 
 "log-symbols@^2.2.0":
@@ -3594,6 +3708,11 @@
     "object-assign" "^4.0.1"
     "thenify-all" "^1.0.0"
 
+"nanoclone@^0.2.1":
+  "integrity" "sha512-wynEP02LmIbLpcYw8uBKpcfF6dmg2vcpKqxeH5UcoKEYdExslsdUA4ugFauuaeYdTB76ez6gJW8XAZ6CgkXYxA=="
+  "resolved" "https://registry.npmjs.org/nanoclone/-/nanoclone-0.2.1.tgz"
+  "version" "0.2.1"
+
 "nanomatch@^1.2.9":
   "version" "1.2.13"
   dependencies:
@@ -3883,6 +4002,9 @@
 "pngjs@^3.3.0":
   "version" "3.4.0"
 
+"pngjs@^5.0.0":
+  "version" "5.0.0"
+
 "posix-character-classes@^0.1.0":
   "version" "0.1.1"
 
@@ -3924,6 +4046,11 @@
   dependencies:
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
+
+"property-expr@^2.0.4":
+  "integrity" "sha512-IJUkICM5dP5znhCckHSv30Q4b5/JA5enCtkRHYaOVOAocnH/1BQEYTC5NMfT3AVl/iXKdr3aqQbQn9DxyWknwA=="
+  "resolved" "https://registry.npmjs.org/property-expr/-/property-expr-2.0.5.tgz"
+  "version" "2.0.5"
 
 "pump@^3.0.0":
   "version" "3.0.0"
@@ -3974,8 +4101,18 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.22.0"
 
+"react-fast-compare@^2.0.1":
+  "integrity" "sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw=="
+  "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-2.0.4.tgz"
+  "version" "2.0.4"
+
 "react-is@^16.12.0 || ^17.0.0 || ^18.0.0":
   "version" "18.2.0"
+
+"react-is@^16.7.0":
+  "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+  "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
+  "version" "16.13.1"
 
 "react-is@^17.0.1":
   "version" "17.0.2"
@@ -4047,7 +4184,7 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0 || ^18.0.0"
 
-"react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0", "react@^18.1.0", "react@18.1.0":
+"react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0", "react@^18.1.0", "react@>=16.8.0", "react@18.1.0":
   "version" "18.1.0"
   dependencies:
     "loose-envify" "^1.1.0"
@@ -4241,7 +4378,7 @@
 "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0":
   "version" "2.1.2"
 
-"sax@>=0.6.0":
+"sax@^1.2.4", "sax@>=0.6.0":
   "version" "1.2.4"
 
 "scheduler@^0.22.0":
@@ -4259,6 +4396,8 @@
   "version" "6.3.0"
 
 "semver@^7.3.5":
+  "integrity" "sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A=="
+  "resolved" "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz"
   "version" "7.3.8"
   dependencies:
     "lru-cache" "^6.0.0"
@@ -4352,6 +4491,11 @@
     "bplist-creator" "0.1.1"
     "bplist-parser" "0.3.2"
     "plist" "^3.0.5"
+
+"simple-swizzle@^0.2.2":
+  "version" "0.2.2"
+  dependencies:
+    "is-arrayish" "^0.3.1"
 
 "sisteransi@^1.0.5":
   "version" "1.0.5"
@@ -4625,6 +4769,11 @@
     "readable-stream" "~2.3.6"
     "xtend" "~4.0.1"
 
+"tiny-warning@^1.0.2":
+  "integrity" "sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA=="
+  "resolved" "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
+  "version" "1.0.3"
+
 "tmp@^0.0.33":
   "version" "0.0.33"
   dependencies:
@@ -4666,6 +4815,11 @@
 "toidentifier@1.0.1":
   "version" "1.0.1"
 
+"toposort@^2.0.2":
+  "integrity" "sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg=="
+  "resolved" "https://registry.npmjs.org/toposort/-/toposort-2.0.2.tgz"
+  "version" "2.0.2"
+
 "tr46@~0.0.3":
   "version" "0.0.3"
 
@@ -4674,6 +4828,11 @@
 
 "ts-interface-checker@^0.1.9":
   "version" "0.1.13"
+
+"tslib@^1.10.0":
+  "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
+  "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
+  "version" "1.14.1"
 
 "tslib@^2.0.1", "tslib@^2.1.0", "tslib@^2.4.0":
   "version" "2.4.1"
@@ -4898,11 +5057,16 @@
 "ws@^7", "ws@^7.5.1":
   "version" "7.5.9"
 
-"xcode@^3.0.1":
+"xcode@^3.0.0", "xcode@^3.0.1":
   "version" "3.0.1"
   dependencies:
     "simple-plist" "^1.1.0"
     "uuid" "^7.0.3"
+
+"xml-js@^1.6.11":
+  "version" "1.6.11"
+  dependencies:
+    "sax" "^1.2.4"
 
 "xml2js@0.4.23":
   "version" "0.4.23"
@@ -4954,3 +5118,16 @@
 
 "yocto-queue@^0.1.0":
   "version" "0.1.0"
+
+"yup@^0.32.11":
+  "integrity" "sha512-Z2Fe1bn+eLstG8DRR6FTavGD+MeAwyfmouhHsIUgaADz8jvFKbO/fXc2trJKZg+5EBjh4gGm3iU/t3onKlXHIg=="
+  "resolved" "https://registry.npmjs.org/yup/-/yup-0.32.11.tgz"
+  "version" "0.32.11"
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    "@types/lodash" "^4.14.175"
+    "lodash" "^4.17.21"
+    "lodash-es" "^4.17.21"
+    "nanoclone" "^0.2.1"
+    "property-expr" "^2.0.4"
+    "toposort" "^2.0.2"
