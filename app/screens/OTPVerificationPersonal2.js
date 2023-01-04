@@ -53,7 +53,7 @@ const validationSchema = Yup.object().shape({
         <Image
           style={styles.iconIonicIosArrowDown}
           resizeMode="cover"
-          source={require("../assets/icon-ioniciosarrowdown14.png")}
+          source={require("../assets/icon-carbonytedownarrow.png")}
         />
         <Text
           style={[styles.hello1, styles.helloFlexBox, styles.hello1Position]}

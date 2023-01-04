@@ -66,12 +66,12 @@ function Onboarding2Screen() {
                   <Image
                     style={[styles.groupItem, styles.groupChildLayout3]}
                     resizeMode="cover"
-                    source={require("../assets/group-3175916.png")}
+                    source={require("../assets/logo-carbonytetext16.png")}
                   />
                   <Image
                     style={[styles.groupInner, styles.groupLayout]}
                     resizeMode="cover"
-                    source={require("../assets/group-3176016.png")}
+                    source={require("../assets/logo-carbonytetextlarge16.png")}
                   />
                   <View style={[styles.groupChild1, styles.groupChildLayout2]} />
                   <Image
@@ -90,17 +90,17 @@ function Onboarding2Screen() {
               <Image
                 style={styles.groupIcon}
                 resizeMode="cover"
-                source={require("../assets/group-3176416.png")}
+                source={require("../assets/image-chip16.png")}
               />
               <Image
                 style={styles.groupChild2}
                 resizeMode="cover"
-                source={require("../assets/group-3176616.png")}
+                source={require("../assets/logo-visa16.png")}
               />
               <Image
                 style={[styles.groupChild3, styles.groupChildPosition]}
                 resizeMode="cover"
-                source={require("../assets/group-3176716.png")}
+                source={require("../assets/icon-contactless16.png")}
               />
             </View>
           </View>
@@ -116,12 +116,12 @@ function Onboarding2Screen() {
                   <Image
                     style={[styles.groupChild4, styles.groupChildLayout3]}
                     resizeMode="cover"
-                    source={require("../assets/group-3175917.png")}
+                    source={require("../assets/logo-carbonytetext17.png")}
                   />
                   <Image
                     style={[styles.groupChild5, styles.groupLayout]}
                     resizeMode="cover"
-                    source={require("../assets/group-3176017.png")}
+                    source={require("../assets/logo-carbonytetextlarge17.png")}
                   />
                   <View style={[styles.groupChild6, styles.groupChildLayout2]} />
                   <Image
@@ -140,17 +140,17 @@ function Onboarding2Screen() {
               <Image
                 style={[styles.groupChild8, styles.groupChildLayout1]}
                 resizeMode="cover"
-                source={require("../assets/group-3176417.png")}
+                source={require("../assets/image-chip17.png")}
               />
               <Image
                 style={[styles.groupChild9, styles.groupChildLayout]}
                 resizeMode="cover"
-                source={require("../assets/group-3176617.png")}
+                source={require("../assets/logo-visa17.png")}
               />
               <Image
                 style={[styles.groupChild10, styles.groupChildPosition]}
                 resizeMode="cover"
-                source={require("../assets/group-3176717.png")}
+                source={require("../assets/icon-contactless17.png")}
               />
             </View>
           </View>
@@ -169,12 +169,12 @@ function Onboarding2Screen() {
                   <Image
                     style={[styles.groupChild11, styles.groupChildLayout3]}
                     resizeMode="cover"
-                    source={require("../assets/group-3175918.png")}
+                    source={require("../assets/logo-carbonytetext18.png")}
                   />
                   <Image
                     style={[styles.groupChild12, styles.groupChildLayout3]}
                     resizeMode="cover"
-                    source={require("../assets/group-3176018.png")}
+                    source={require("../assets/logo-carbonytetextlarge18.png")}
                   />
                   <View style={[styles.groupChild13, styles.groupChildLayout2]} />
                   <Image
@@ -193,17 +193,17 @@ function Onboarding2Screen() {
               <Image
                 style={[styles.groupChild15, styles.groupChildLayout1]}
                 resizeMode="cover"
-                source={require("../assets/group-3176418.png")}
+                source={require("../assets/image-chip18.png")}
               />
               <Image
                 style={[styles.groupChild16, styles.groupChildLayout]}
                 resizeMode="cover"
-                source={require("../assets/group-3176618.png")}
+                source={require("../assets/logo-visa18.png")}
               />
               <Image
                 style={[styles.groupChild17, styles.groupChildPosition]}
                 resizeMode="cover"
-                source={require("../assets/group-3176718.png")}
+                source={require("../assets/icon-contactless18.png")}
               />
             </View>
           </Pressable>

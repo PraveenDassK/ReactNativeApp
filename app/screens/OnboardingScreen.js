@@ -27,14 +27,14 @@ function OnboardingScreen() {
                 styles.groupPosition,
               ]}
              
-              source={require("../assets/path-331182.png")}
+              source={require("../assets/image-orange.png")}
             />
             <View style={[styles.groupParent, styles.groupPosition]}>
              
               <Image
                 style={[styles.groupInner, styles.groupIconLayout]}
                 resizeMode="cover"
-                source={require("../assets/group-3176020.png")}
+                source={require("../assets/logo-carbonytetextlarge20.png")}
               />
               <View style={styles.groupChild1} />
              
@@ -44,17 +44,17 @@ function OnboardingScreen() {
           <Image
             style={styles.groupIcon}
             resizeMode="cover"
-            source={require("../assets/group-3176420.png")}
+            source={require("../assets/image-chip20.png")}
           />
           <Image
             style={[styles.groupChild2, styles.statusBarPosition]}
             resizeMode="cover"
-            source={require("../assets/group-3176618.png")}
+            source={require("../assets/logo-visa18.png")}
           />
           <Image
             style={[styles.groupChild3, styles.networkPosition]}
             resizeMode="cover"
-            source={require("../assets/group-3176719.png")}
+            source={require("../assets/icon-contactless19.png")}
           />
           <Text style={[styles.xxxx, styles.xxxxPosition]}>
             4234 1234 1424 XXXX
@@ -144,16 +144,14 @@ const styles = StyleSheet.create({
       position: "absolute",
     },
     bTypo: {
-      fontFamily: GlobalStyles.FontFamily.helvetica,
-      fontWeight: "700",
+        fontWeight: "700",
       textAlign: "left",
       position: "absolute",
     },
     xxxxPosition: {
       color: GlobalStyles.Color.gray_1600,
       left: 18,
-      fontFamily: GlobalStyles.FontFamily.helvetica,
-      textAlign: "left",
+        textAlign: "left",
       top: "50%",
       position: "absolute",
     },
