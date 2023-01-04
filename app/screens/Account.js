@@ -33,7 +33,7 @@ const Account = () => {
             <Image
               style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/icon-ioniciosarrowforward.png")}
+              source={("../assets/icon-ioniciosarrowforward.png")}
             />
           </Pressable>
           <View style={[styles.limitsParent, styles.parentPosition]}>
@@ -52,7 +52,7 @@ const Account = () => {
               <Image
                 style={styles.icon}
                 resizeMode="cover"
-                source={require("../assets/icon-ioniciosarrowforward.png")}
+                source={("../assets/icon-ioniciosarrowforward.png")}
               />
             </Pressable>
           </View>
@@ -79,7 +79,7 @@ const Account = () => {
         <Image
           style={[styles.groupIcon, styles.iconPosition]}
           resizeMode="cover"
-          source={require("../assets/group-31123.png")}
+          source={("../assets/group-31123.png")}
         />
       </View>
     </View>

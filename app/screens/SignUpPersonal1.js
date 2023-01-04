@@ -7,10 +7,12 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
-
 import GlobalStyles from "../../GlobalStyles";
 
 const SignUpPersonal1 = () => {
+  const [number, onChangeNumber] = React.useState(null);
+  const [code, onChangeCode] = React.useState(null);
+
   return (
     <View style={styles.signUpPersonal1}>
       <View style={styles.helloParent}>
@@ -20,7 +22,7 @@ const SignUpPersonal1 = () => {
         <Image
           style={styles.iconIonicIosArrowDown}
           resizeMode="cover"
-          source={require("../assets/icon-ioniciosarrowdown14.png")}
+          source={require("../assets/icon-carbonytedownarrow.png")}
         />
         <View style={styles.helloGroup}>
           <Text
@@ -47,10 +49,18 @@ const SignUpPersonal1 = () => {
           </View>
           <Text style={[styles.hello3, styles.helloFlexBox]}>Continue</Text>
         </Pressable>
-        <View style={[styles.groupItem, styles.groupBorder]} />
+
+        <TextInput 
+          style={[styles.groupItem, styles.groupBorder]} 
+          keyboardType="numerical"
+          onChangeText = {onChangeNumber}
+        />
+
         <TextInput
           style={[styles.groupInner, styles.groupBorder]}
-          keyboardType="default"
+          keyboardType="numerical"
+          placeholder = "+44"
+          onChangeText = {onChangeCode}
         />
       </View>
     </View>
@@ -60,7 +70,6 @@ const SignUpPersonal1 = () => {
 const styles = StyleSheet.create({
   helloTypo: {
     color: GlobalStyles.Color.gray_700,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
   },
@@ -110,13 +119,10 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: 30,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     top: 0,
   },
   selectYourMobileNumber: {
     bottom: 0,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_base,
     color: GlobalStyles.Color.indigo_100,
     left: 0,
   },
@@ -156,7 +162,6 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   groupParent: {
     bottom: 88,
