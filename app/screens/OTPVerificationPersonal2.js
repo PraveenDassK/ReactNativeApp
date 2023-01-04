@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -7,9 +7,43 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+import * as Yup from 'yup';
+
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
+import Form from "../components/forms/Form"
 
 const OTPVerificationPersonal2 = () => {
+
+  const initialValues= {'pVer1': '', 'pVer2':'', 'pVer3':''}
+
+  const [count, setCount] = useState(45)
+
+  const { user } = useContext(AuthContext)
+
+  const countdown = () => {
+    setCount(prev => prev - 1)
+
+  }
+
+
+const validationSchema = Yup.object().shape({
+  pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
+  pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
+  pVer3: Yup.number().required().min(0).max(9).label("P Ver3")
+})
+
+  useEffect(()=> {
+    if (count === 0) {
+      setCount(45)
+      console.log("send api request")
+    } 
+  },[count])
+
+  useEffect(() => {
+    setInterval(countdown, 1000)
+  
+  },[])
   return (
     <View style={styles.otpVerificationPersonal2}>
       <View style={styles.helloParent}>
@@ -26,6 +60,8 @@ const OTPVerificationPersonal2 = () => {
         >
           OTP Verfication
         </Text>
+
+        <Form initialValues={initialValues} onSubmit={values => console.log(values)} validationSchema={validationSchema}/>
         <View style={[styles.groupChild, styles.groupLayout]} />
         <TextInput
           style={[styles.groupChildPosition, styles.groupLayout]}
@@ -58,19 +94,19 @@ const OTPVerificationPersonal2 = () => {
           <Text
             style={styles.pleaseEnterThe}
           >{`Please enter the code sent to `}</Text>
-          <Text style={styles.text}>+44 1234567890</Text>
+          <Text style={styles.text}>+44{ user.phoneNumber }</Text>
         </Text>
         <Text style={[styles.pleaseEnterTheCodeSentTo1, styles.resendPosition]}>
           <Text
             style={styles.pleaseEnterThe}
           >{`Please enter the code sent to `}</Text>
-          <Text style={styles.text}>XYZ@gmail.com</Text>
+          <Text style={styles.text}>{ user.email }</Text>
         </Text>
         <Text style={[styles.resendCodeIn0010, styles.resendPosition]}>
-          Resend Code in 00:10
+          Resend Code in 00:{count < 10 ? `0${count}` : count}
         </Text>
         <Text style={[styles.resendCodeIn00101, styles.resendPosition]}>
-          Resend Code in 00:10
+          Resend Code in 00:{count < 10 ? `0${count}` : count}
         </Text>
         <Pressable style={styles.rectanglePressable} />
         <Text style={[styles.hello2, styles.helloFlexBox]}>Verify</Text>

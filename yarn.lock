@@ -1522,6 +1522,13 @@
     "normalize-path" "^3.0.0"
     "picomatch" "^2.0.4"
 
+"apisauce@^2.1.6":
+  "integrity" "sha512-MdxR391op/FucS2YQRfB/NMRyCnHEPDd4h17LRIuVYi0BpGmMhpxc0shbOpfs5ahABuBEffNCGal5EcsydbBWg=="
+  "resolved" "https://registry.npmjs.org/apisauce/-/apisauce-2.1.6.tgz"
+  "version" "2.1.6"
+  dependencies:
+    "axios" "^0.21.4"
+
 "appdirsjs@^1.2.4":
   "version" "1.2.7"
 
@@ -1582,6 +1589,13 @@
 
 "atob@^2.1.2":
   "version" "2.1.2"
+
+"axios@^0.21.4":
+  "integrity" "sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz"
+  "version" "0.21.4"
+  dependencies:
+    "follow-redirects" "^1.14.0"
 
 "babel-core@^7.0.0-bridge.0":
   "version" "7.0.0-bridge.0"
@@ -2561,6 +2575,11 @@
 
 "flow-parser@0.*":
   "version" "0.196.3"
+
+"follow-redirects@^1.14.0":
+  "integrity" "sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
+  "version" "1.15.2"
 
 "fontfaceobserver@^2.1.0":
   "version" "2.3.0"

@@ -2,13 +2,13 @@ import Constants from "expo-constants";
 
 const settings = {
   dev: {
-    apiUrl: "http://192.168.0.14:9000/api",
+    apiUrl: "https://api.carbonyte.io/regmodule",
   },
   staging: {
-    apiUrl: "http://192.168.0.14:9000/api",
+    apiUrl: "https://api.carbonyte.io/regmodule",
   },
   prod: {
-    apiUrl: "http://192.168.0.14:9000/api",
+    apiUrl: "https://api.carbonyte.io/regmodule",
   },
 };
 

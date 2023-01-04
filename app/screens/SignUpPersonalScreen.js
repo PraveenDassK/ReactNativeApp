@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, SafeAreaView, Text, TextInput, Image } from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 
+import otpApi from "../api/otp";
 import Button from "../components/Button"
+import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
+
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  phoneNumber: Yup.string().required().min(10).max(12).label("Phone number")
+  phoneNumber: Yup.string().required().min(10).max(14).label("Phone number")
 })
 
 const SignUpPersonalScreen = (props) => {
+
+  const authContext = useContext(AuthContext)
+
+  const handleSubmit = async (credentials) => {
+    const result = await otpApi.otp(credentials)
+    authContext.setUser(credentials)
+    console.log( result.data)
+    if (!result.ok) return  alert('Could not send otp')
+    alert('Sucess')
+    
+  }
+
 
 
   
@@ -35,7 +51,7 @@ const SignUpPersonalScreen = (props) => {
 
       <Formik
           initialValues={{email:'', phoneNumber: ''}}
-          onSubmit={values => console.log(values)}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
@@ -73,7 +89,7 @@ const SignUpPersonalScreen = (props) => {
         source={require("../assets/mask-group-288.png")}
       />
     </View>
-    {touched.phoneNumber && <Text style={{ color: 'red' }}>{errors.phoneNumber}</Text>}
+<ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
     <Text
       style={[
         styles.enterYourEmailId,
@@ -98,7 +114,7 @@ const SignUpPersonalScreen = (props) => {
         styles.childBorder,
       ]}
     />
-     {touched.email && <Text style={{ color: 'red' }}>{errors.email}</Text>}
+     <ErrorMessage error={errors.email} visible={touched.email}/>
    <Button title="Continue" color="blue" onPress={handleSubmit} style={styles.button}/>
             
             </>
