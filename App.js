@@ -27,7 +27,7 @@ const StackNavigator = () => (
 
 export default function App() {
 
-  const [user, setUser] = useState({email:'chisambwe', phoneNumber: '0775646446'})
+  const [user, setUser] = useState()
 
   
   // const [fontsLoaded] = useFonts({
