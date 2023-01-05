@@ -13,15 +13,18 @@ import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
 import Account from "./app/screens/Account"
 import GlobalStyles from "./GlobalStyles";
 import AuthContext from "./app/auth/context";
+import Carbon from "./app/screens/Carbon"
 
 
 // SplashScreen.preventAutoHideAsync(); 
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
-  <Stack.Navigator initialRouteName="SignUp">
+  <Stack.Navigator initialRouteName="Carbon">
+    
     <Stack.Screen  name="SignUp" component={SignUpPersonalScreen} />
     <Stack.Screen  name="OTPVerification" component={OTPVerificationPersonal2} />
+    <Stack.Screen  name="Carbon" component={Carbon} />
   </Stack.Navigator>
 )
 

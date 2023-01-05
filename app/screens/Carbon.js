@@ -1,13 +1,31 @@
-import * as React from "react";
+import React,{ useEffect, useState } from "react";
 import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
+import carbonApi from "../api/carbon"
+
 const Carbon = () => {
+
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await carbonApi.getListings();
+    setData(response.data)
+    
+   
+    
+  }
   return (
+
+  
     <View style={styles.carbon}>
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloColor, styles.helloTypo6]}>
-          <Text style={styles.removeCarbon}>Remove Carbon,</Text>
+          <Text style={styles.removeCarbon}>gjhgjg</Text>
           <Text style={styles.removeCarbon}>Restore Nature</Text>
         </Text>
         <Image
