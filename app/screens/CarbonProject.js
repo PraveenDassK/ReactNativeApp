@@ -19,8 +19,6 @@ const CarbonProject = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    console.log(user.ID)
-
     const response = await carbonApi.getListingsSingle(user.ID);
     setData(response.data.details)
   }

@@ -21,7 +21,7 @@ const Carbon = ({navigation}) => {
   }
 
   const switchProject = (_ID) => {
-    console.log(_ID)
+    console.log("Navigate to:"+_ID)
     authContext.setUser({ID : _ID})    
     navigation.navigate("CarbonProject")
   }
@@ -32,7 +32,7 @@ const Carbon = ({navigation}) => {
     if(data != null){
       data.map(element => {
         projects.push(
-          <View key = {element.id} style={styles.rectanglePressable}>
+          <View key = {element.id} style={styles.projectBox}>
             <Text> 
               {element.displayName} 
             </Text>
@@ -48,7 +48,7 @@ const Carbon = ({navigation}) => {
               {element.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}... 
             </Text>
 
-            <Pressable onPress = {() => switchProject(element.id)} style = {styles.button}>
+            <Pressable onPress = {() => switchProject(element.id)} style={[styles.mainFont, styles.button]}>
               <Text style = {styles.mainFont}>
                 More details
               </Text>
@@ -72,26 +72,28 @@ const Carbon = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/image-tree.png")}
         />
+
+        <Pressable
+          style={[styles.groupParent, styles.groupPosition]}
+          onPress={() => navigation.navigate("ChooseCardsStandard5")}
+        >
+          <Text style={[styles.mainFont, styles.button]}>
+            Calculate Carbon Footprint
+          </Text>
+        </Pressable>
+
         <View style={[styles.groupChild, styles.iconLayout]} />
         <View style={styles.helloWrapper}>
-          <Text style={[styles.hello1, styles.helloTypo5, styles.helloColor]}>
-            <Text style={styles.removeCarbon}>
+          <Text >
+            <Text >
               <Text style={styles.mainFont}>
                 At Carbonyte we help you to track, reduce and calculate your CO2 emission from your daily transcation
-
               </Text>
             </Text>
           </Text>
         </View>
 
-        <Pressable
-          style={[styles.groupParent, styles.groupPosition]}
-          onPress={() => navigation.navigate("CarbonSpending")}
-        >
-          <Text style={styles.mainFont}>
-            Calculate Carbon Footprint
-          </Text>
-        </Pressable>
+
 
         <Text style={styles.mainFont}>
           Remove your carbon footprint and restore nature in seconds with our
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.gray_500,
   },
+
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -133,6 +136,14 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: 'blue',
   },
+
+  projectBox: {
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    width: "95%",
+    backgroundColor: "light-grey"
+  }
 
 
 });
