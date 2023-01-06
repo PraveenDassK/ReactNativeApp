@@ -1,130 +1,130 @@
-const SendRegistrationOTP = (email, phoneNumber) => client.post('/SendRegistrationOTP', { email, phoneNumber });
+const registrationmodule_sendregistrationotp = (email, phoneNumber) => client.post('/registrationmodule/sendregistrationotp', { email, phoneNumber });
 
-const VerifyRegistrationOTP = (email, emailOTP, phoneNumber, phoneOTP) => client.post('/VerifyRegistrationOTP', { email, emailOTP, phoneNumber, phoneOTP });
+const registrationmodule_verifyregistrationotp = (email, emailOTP, phoneNumber, phoneOTP) => client.post('/registrationmodule/verifyregistrationotp', { email, emailOTP, phoneNumber, phoneOTP });
 
-const GetCustomerDetais_endpoint = '/GetCustomerDetais';
-const GetCustomerDetais = () => client.get(GetCustomerDetais_endpoint);
+const registrationmodule_getcustomerdetais_endpoint = '/registrationmodule/getcustomerdetais';
+const registrationmodule_getcustomerdetais = () => client.get(registrationmodule_getcustomerdetais_endpoint);
 
-const SaveCustomerAccountDetails = () => client.post('/SaveCustomerAccountDetails', {  });
+const registrationmodule_savecustomeraccountdetails = () => client.post('/registrationmodule/savecustomeraccountdetails', {  });
 
-const SaveCompanyDetails = () => client.post('/SaveCompanyDetails', {  });
+const registrationmodule_savecompanydetails = () => client.post('/registrationmodule/savecompanydetails', {  });
 
-const GetCompanySearch_endpoint = '/GetCompanySearch/{RegNo}';
-const GetCompanySearch = () => client.get(GetCompanySearch_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getcompanysearch/{regno}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetOfficerList_endpoint = '/GetOfficerList/{companyNumber}';
-const GetOfficerList = () => client.get(GetOfficerList_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getofficerlist/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const AdvanceCompanySearch_endpoint = '/AdvanceCompanySearch';
-const AdvanceCompanySearch = () => client.get(AdvanceCompanySearch_endpoint);
+const authverifymodule_advancecompanysearch_endpoint = '/authverifymodule/advancecompanysearch';
+const authverifymodule_advancecompanysearch = () => client.get(authverifymodule_advancecompanysearch_endpoint);
 
-const ListStatement_endpoint = '/ListStatement/{company_number}';
-const ListStatement = () => client.get(ListStatement_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/liststatement/{company_number}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetBeneficialOwner_endpoint = '/GetBeneficialOwner/{companyNumber},{psc_id}';
-const GetBeneficialOwner = () => client.get(GetBeneficialOwner_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getbeneficialowner/{companynumber},{psc_id}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetStatement_endpoint = '/GetStatement/{company_number},{statement_id}';
-const GetStatement = () => client.get(GetStatement_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getstatement/{company_number},{statement_id}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetSuperSecurePerson_endpoint = '/GetSuperSecurePerson/{company_number},{super_secure_id}';
-const GetSuperSecurePerson = () => client.get(GetSuperSecurePerson_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getsupersecureperson/{company_number},{super_secure_id}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetSuperSecureBeneficialOwner_endpoint = '/GetSuperSecureBeneficialOwner/{company_number},{super_secure_id}';
-const GetSuperSecureBeneficialOwner = () => client.get(GetSuperSecureBeneficialOwner_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getsupersecurebeneficialowner/{company_number},{super_secure_id}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetLegalPersonBeneficialOwner_endpoint = '/GetLegalPersonBeneficialOwner/{company_number},{psc_id}';
-const GetLegalPersonBeneficialOwner = () => client.get(GetLegalPersonBeneficialOwner_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getlegalpersonbeneficialowner/{company_number},{psc_id}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetLegalPerson_endpoint = '/GetLegalPerson/{company_number},{psc_id}';
-const GetLegalPerson = () => client.get(GetLegalPerson_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getlegalperson/{company_number},{psc_id}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetCooperateEntities_endpoint = '/GetCooperateEntities/{company_number},{psc_id}';
-const GetCooperateEntities = () => client.get(GetCooperateEntities_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getcooperateentities/{company_number},{psc_id}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetPSC_endpoint = '/GetPSC/{companyNumber}';
-const GetPSC = () => client.get(GetPSC_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getpsc/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetPSCIndividual_endpoint = '/GetPSCIndividual/{companyNumber}/{PSCId}';
-const GetPSCIndividual = () => client.get(GetPSCIndividual_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getpscindividual/{companynumber}/{pscid}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetOfficerAppointmentList_endpoint = '/GetOfficerAppointmentList/{officerId}';
-const GetOfficerAppointmentList = () => client.get(GetOfficerAppointmentList_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getofficerappointmentlist/{officerid}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetCODisqualification_endpoint = '/GetCODisqualification/{officerId}';
-const GetCODisqualification = () => client.get(GetCODisqualification_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getcodisqualification/{officerid}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetNaturalOfficerDisqualification_endpoint = '/GetNaturalOfficerDisqualification/{officerId}';
-const GetNaturalOfficerDisqualification = () => client.get(GetNaturalOfficerDisqualification_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getnaturalofficerdisqualification/{officerid}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetCompanyRegisters_endpoint = '/GetCompanyRegisters/{companyNumber}';
-const GetCompanyRegisters = () => client.get(GetCompanyRegisters_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getcompanyregisters/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetChargesList_endpoint = '/GetChargesList/{companyNumber}';
-const GetChargesList = () => client.get(GetChargesList_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getchargeslist/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetDissolvedCompany_endpoint = '/GetDissolvedCompany/{companyName}/{searchType}';
-const GetDissolvedCompany = () => client.get(GetDissolvedCompany_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getdissolvedcompany/{companyname}/{searchtype}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetDisqualifiedOfficers_endpoint = '/GetDisqualifiedOfficers/{Officer}';
-const GetDisqualifiedOfficers = () => client.get(GetDisqualifiedOfficers_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getdisqualifiedofficers/{officer}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetChargers_endpoint = '/GetChargers/{companyNumber}/{chargeId}';
-const GetChargers = () => client.get(GetChargers_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getchargers/{companynumber}/{chargeid}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetFilingHistoryList_endpoint = '/GetFilingHistoryList/{companyNumber}';
-const GetFilingHistoryList = () => client.get(GetFilingHistoryList_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getfilinghistorylist/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetFilingHistory_endpoint = '/GetFilingHistory/{companyNumber}/{transactionId}';
-const GetFilingHistory = () => client.get(GetFilingHistory_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getfilinghistory/{companynumber}/{transactionid}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetInsolvency_endpoint = '/GetInsolvency/{companyNumber}';
-const GetInsolvency = () => client.get(GetInsolvency_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getinsolvency/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetExemptions_endpoint = '/GetExemptions/{companyNumber}';
-const GetExemptions = () => client.get(GetExemptions_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getexemptions/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetRegisteredOfficeAddress_endpoint = '/GetRegisteredOfficeAddress/{companyNumber}';
-const GetRegisteredOfficeAddress = () => client.get(GetRegisteredOfficeAddress_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getregisteredofficeaddress/{companynumber}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetCompaniesAlphabetically_endpoint = '/GetCompaniesAlphabetically/{companyName}';
-const GetCompaniesAlphabetically = () => client.get(GetCompaniesAlphabetically_endpoint);
+const authverifymodule_endpoint = '/authverifymodule/getcompaniesalphabetically/{companyname}';
+const authverifymodule = () => client.get(authverifymodule_endpoint);
 
-const GetAddressesByPostcode_endpoint = '/GetAddressesByPostcode';
-const GetAddressesByPostcode = () => client.get(GetAddressesByPostcode_endpoint);
+const authverifymodule_getaddressesbypostcode_endpoint = '/authverifymodule/getaddressesbypostcode';
+const authverifymodule_getaddressesbypostcode = () => client.get(authverifymodule_getaddressesbypostcode_endpoint);
 
-const CropDocument = (Page, DocumentType, ClientReference) => client.post('/CropDocument', { Page, DocumentType, ClientReference });
+const authverifymodule_cropdocument = (Page, DocumentType, ClientReference) => client.post('/authverifymodule/cropdocument', { Page, DocumentType, ClientReference });
 
-const ClassifyAndVerify = (DocumentType, ClientReference, AutoVerify) => client.post('/ClassifyAndVerify', { DocumentType, ClientReference, AutoVerify });
+const authverifymodule_classifyandverify = (DocumentType, ClientReference, AutoVerify) => client.post('/authverifymodule/classifyandverify', { DocumentType, ClientReference, AutoVerify });
 
-const VerifyDocument = () => client.post('/VerifyDocument', {  });
+const authverifymodule_verifydocument = () => client.post('/authverifymodule/verifydocument', {  });
 
-const SendLoginOTP = (email, phoneNumber) => client.post('/SendLoginOTP', { email, phoneNumber });
+const authverifymodule_sendloginotp = (email, phoneNumber) => client.post('/authverifymodule/sendloginotp', { email, phoneNumber });
 
-const VerifyLoginOTP = (email, emailOTP, phoneNumber, phoneOTP) => client.post('/VerifyLoginOTP', { email, emailOTP, phoneNumber, phoneOTP });
+const authverifymodule_verifyloginotp = (email, emailOTP, phoneNumber, phoneOTP) => client.post('/authverifymodule/verifyloginotp', { email, emailOTP, phoneNumber, phoneOTP });
 
-const SaveTokenDetails = (customerID, tokenId, DeviceId) => client.post('/SaveTokenDetails', { customerID, tokenId, DeviceId });
+const authverifymodule_savetokendetails = (customerID, tokenId, DeviceId) => client.post('/authverifymodule/savetokendetails', { customerID, tokenId, DeviceId });
 
-const SendNotification = () => client.post('/SendNotification', {  });
+const authverifymodule_sendnotification = () => client.post('/authverifymodule/sendnotification', {  });
 
-const KYCCheck = () => client.post('/KYCCheck', {  });
+const authverifymodule_kyccheck = () => client.post('/authverifymodule/kyccheck', {  });
 
-const KYBCheck = (CompanyName, CompanyID) => client.post('/KYBCheck', { CompanyName, CompanyID });
+const authverifymodule_kybcheck = (CompanyName, CompanyID) => client.post('/authverifymodule/kybcheck', { CompanyName, CompanyID });
 
-const EcoModule_Earthly_GetProjectById_endpoint = '/EcoModule/Earthly/GetProjectById';
-const EcoModule_Earthly_GetProjectById = () => client.get(EcoModule_Earthly_GetProjectById_endpoint);
+const ecomodule_earthly_getprojectbyid_endpoint = '/ecomodule/earthly/getprojectbyid';
+const ecomodule_earthly_getprojectbyid = () => client.get(ecomodule_earthly_getprojectbyid_endpoint);
 
-const EcoModule_Earthly_GetProjectList_endpoint = '/EcoModule/Earthly/GetProjectList';
-const EcoModule_Earthly_GetProjectList = () => client.get(EcoModule_Earthly_GetProjectList_endpoint);
+const ecomodule_earthly_getprojectlist_endpoint = '/ecomodule/earthly/getprojectlist';
+const ecomodule_earthly_getprojectlist = () => client.get(ecomodule_earthly_getprojectlist_endpoint);
 
-const EcoModule_Earthly_CreateTokenizedUser = () => client.post('/EcoModule/Earthly/CreateTokenizedUser', {  });
+const ecomodule_earthly_createtokenizeduser = () => client.post('/ecomodule/earthly/createtokenizeduser', {  });
 
-const EcoModule_Earthly_GetCompanyImpacts_endpoint = '/EcoModule/Earthly/GetCompanyImpacts';
-const EcoModule_Earthly_GetCompanyImpacts = () => client.get(EcoModule_Earthly_GetCompanyImpacts_endpoint);
+const ecomodule_earthly_getcompanyimpacts_endpoint = '/ecomodule/earthly/getcompanyimpacts';
+const ecomodule_earthly_getcompanyimpacts = () => client.get(ecomodule_earthly_getcompanyimpacts_endpoint);
 
-const EcoModule_endpoint = '/EcoModule/Earthly/GetUserImpacts/{userId}';
-const EcoModule = () => client.get(EcoModule_endpoint);
+const ecomodule_endpoint = '/ecomodule/earthly/getuserimpacts/{userid}';
+const ecomodule = () => client.get(ecomodule_endpoint);
 
-const EcoModule_Earthly_RewardUser_{userId}_{projectId} = (userId, projectId, amount) => client.post('/EcoModule/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId, amount });
+const ecomodule_earthly_rewarduser_{userid}_{projectid} = (userId, projectId, amount) => client.post('/ecomodule/earthly/rewarduser/{userid}/{projectid}', { userId, projectId, amount });
 
-const EcoModule_Earthly_Checkout = () => client.post('/EcoModule/Earthly/Checkout', {  });
+const ecomodule_earthly_checkout = () => client.post('/ecomodule/earthly/checkout', {  });
