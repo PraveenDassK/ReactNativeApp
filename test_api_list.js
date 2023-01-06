@@ -111,20 +111,20 @@ const KYCCheck = () => client.post('/KYCCheck', {  });
 
 const KYBCheck = (CompanyName, CompanyID) => client.post('/KYBCheck', { CompanyName, CompanyID });
 
-const Earthly_GetProjectById_endpoint = '/Earthly/GetProjectById';
-const Earthly_GetProjectById = () => client.get(Earthly_GetProjectById_endpoint);
+const EcoModule_Earthly_GetProjectById_endpoint = '/EcoModule/Earthly/GetProjectById';
+const EcoModule_Earthly_GetProjectById = () => client.get(EcoModule_Earthly_GetProjectById_endpoint);
 
-const Earthly_GetProjectList_endpoint = '/Earthly/GetProjectList';
-const Earthly_GetProjectList = () => client.get(Earthly_GetProjectList_endpoint);
+const EcoModule_Earthly_GetProjectList_endpoint = '/EcoModule/Earthly/GetProjectList';
+const EcoModule_Earthly_GetProjectList = () => client.get(EcoModule_Earthly_GetProjectList_endpoint);
 
-const Earthly_CreateTokenizedUser = () => client.post('/Earthly/CreateTokenizedUser', {  });
+const EcoModule_Earthly_CreateTokenizedUser = () => client.post('/EcoModule/Earthly/CreateTokenizedUser', {  });
 
-const Earthly_GetCompanyImpacts_endpoint = '/Earthly/GetCompanyImpacts';
-const Earthly_GetCompanyImpacts = () => client.get(Earthly_GetCompanyImpacts_endpoint);
+const EcoModule_Earthly_GetCompanyImpacts_endpoint = '/EcoModule/Earthly/GetCompanyImpacts';
+const EcoModule_Earthly_GetCompanyImpacts = () => client.get(EcoModule_Earthly_GetCompanyImpacts_endpoint);
 
-const Earthly_endpoint = '/Earthly/GetUserImpacts/{userId}';
-const Earthly = () => client.get(Earthly_endpoint);
+const EcoModule_endpoint = '/EcoModule/Earthly/GetUserImpacts/{userId}';
+const EcoModule = () => client.get(EcoModule_endpoint);
 
-const Earthly_RewardUser_{userId}_{projectId} = (userId, projectId, amount) => client.post('/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId, amount });
+const EcoModule_Earthly_RewardUser_{userId}_{projectId} = (userId, projectId, amount) => client.post('/EcoModule/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId, amount });
 
-const Earthly_Checkout = () => client.post('/Earthly/Checkout', {  });
+const EcoModule_Earthly_Checkout = () => client.post('/EcoModule/Earthly/Checkout', {  });
