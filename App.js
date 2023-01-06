@@ -14,24 +14,26 @@ import Account from "./app/screens/Account"
 import GlobalStyles from "./GlobalStyles";
 import AuthContext from "./app/auth/context";
 import Carbon from "./app/screens/Carbon"
+import CarbonStyle from "./app/screens/CarbonStyle"
+import CarbonProject from "./app/screens/CarbonProject"
+import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
 
 
 // SplashScreen.preventAutoHideAsync(); 
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
-  <Stack.Navigator initialRouteName="Carbon">
-    
-    <Stack.Screen  name="SignUp" component={SignUpPersonalScreen} />
-    <Stack.Screen  name="OTPVerification" component={OTPVerificationPersonal2} />
-    <Stack.Screen  name="Carbon" component={Carbon} />
+  
+  <Stack.Navigator initialRouteName="ChooseCardsStandard5">
+    <Stack.Screen  name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
+    <Stack.Screen  name="Carbon" component={Carbon}/>
+    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
   </Stack.Navigator>
 )
 
 export default function App() {
 
   const [user, setUser] = useState()
-
   
   // const [fontsLoaded] = useFonts({
 
