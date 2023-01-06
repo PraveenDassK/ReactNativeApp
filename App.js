@@ -24,7 +24,7 @@ import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="ChooseCardsStandard5">
+  <Stack.Navigator initialRouteName="Carbon">
     <Stack.Screen  name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
     <Stack.Screen  name="Carbon" component={Carbon}/>
     <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
