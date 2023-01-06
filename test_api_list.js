@@ -1,3 +1,4 @@
+import client from "./client";
 const SendRegistrationOTP = (email, phoneNumber) => client.post('/SendRegistrationOTP', { email, phoneNumber });
 
 const VerifyRegistrationOTP = (email, emailOTP, phoneNumber, phoneOTP) => client.post('/VerifyRegistrationOTP', { email, emailOTP, phoneNumber, phoneOTP });
@@ -125,6 +126,12 @@ const EcoModule_Earthly_GetCompanyImpacts = () => client.get(EcoModule_Earthly_G
 const EcoModule_endpoint = '/EcoModule/Earthly/GetUserImpacts/{userId}';
 const EcoModule = () => client.get(EcoModule_endpoint);
 
-const EcoModule_Earthly_RewardUser_{userId}_{projectId} = (userId, projectId, amount) => client.post('/EcoModule/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId, amount });
+/**
+ * @todo add earthly reward user
+ */
 
-const EcoModule_Earthly_Checkout = () => client.post('/EcoModule/Earthly/Checkout', {  });
+const Earthly_Checkout = () => client.post('/Earthly/Checkout', {  });
+
+export default {
+    Earthly_GetProjectList
+  };
