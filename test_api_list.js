@@ -1,13 +1,13 @@
-const SendRegistrationOTP = (email, phoneNumber) = > client.post('/SendRegistrationOTP', { email, phoneNumber });
+const SendRegistrationOTP = (email, phoneNumber) => client.post('/SendRegistrationOTP', { email, phoneNumber });
 
-const VerifyRegistrationOTP = (email, emailOTP, phoneNumber, phoneOTP) = > client.post('/VerifyRegistrationOTP', { email, emailOTP, phoneNumber, phoneOTP });
+const VerifyRegistrationOTP = (email, emailOTP, phoneNumber, phoneOTP) => client.post('/VerifyRegistrationOTP', { email, emailOTP, phoneNumber, phoneOTP });
 
 const GetCustomerDetais_endpoint = '/GetCustomerDetais';
 const GetCustomerDetais = () => client.get(GetCustomerDetais_endpoint);
 
-const SaveCustomerAccountDetails = () = > client.post('/SaveCustomerAccountDetails', {  });
+const SaveCustomerAccountDetails = () => client.post('/SaveCustomerAccountDetails', {  });
 
-const SaveCompanyDetails = () = > client.post('/SaveCompanyDetails', {  });
+const SaveCompanyDetails = () => client.post('/SaveCompanyDetails', {  });
 
 const GetCompanySearch_endpoint = '/GetCompanySearch/{RegNo}';
 const GetCompanySearch = () => client.get(GetCompanySearch_endpoint);
@@ -93,23 +93,23 @@ const GetCompaniesAlphabetically = () => client.get(GetCompaniesAlphabetically_e
 const GetAddressesByPostcode_endpoint = '/GetAddressesByPostcode';
 const GetAddressesByPostcode = () => client.get(GetAddressesByPostcode_endpoint);
 
-const CropDocument = (Page, DocumentType, ClientReference) = > client.post('/CropDocument', { Page, DocumentType, ClientReference });
+const CropDocument = (Page, DocumentType, ClientReference) => client.post('/CropDocument', { Page, DocumentType, ClientReference });
 
-const ClassifyAndVerify = (DocumentType, ClientReference, AutoVerify) = > client.post('/ClassifyAndVerify', { DocumentType, ClientReference, AutoVerify });
+const ClassifyAndVerify = (DocumentType, ClientReference, AutoVerify) => client.post('/ClassifyAndVerify', { DocumentType, ClientReference, AutoVerify });
 
-const VerifyDocument = () = > client.post('/VerifyDocument', {  });
+const VerifyDocument = () => client.post('/VerifyDocument', {  });
 
-const SendLoginOTP = (email, phoneNumber) = > client.post('/SendLoginOTP', { email, phoneNumber });
+const SendLoginOTP = (email, phoneNumber) => client.post('/SendLoginOTP', { email, phoneNumber });
 
-const VerifyLoginOTP = (email, emailOTP, phoneNumber, phoneOTP) = > client.post('/VerifyLoginOTP', { email, emailOTP, phoneNumber, phoneOTP });
+const VerifyLoginOTP = (email, emailOTP, phoneNumber, phoneOTP) => client.post('/VerifyLoginOTP', { email, emailOTP, phoneNumber, phoneOTP });
 
-const SaveTokenDetails = (customerID, tokenId, DeviceId) = > client.post('/SaveTokenDetails', { customerID, tokenId, DeviceId });
+const SaveTokenDetails = (customerID, tokenId, DeviceId) => client.post('/SaveTokenDetails', { customerID, tokenId, DeviceId });
 
-const SendNotification = () = > client.post('/SendNotification', {  });
+const SendNotification = () => client.post('/SendNotification', {  });
 
-const KYCCheck = () = > client.post('/KYCCheck', {  });
+const KYCCheck = () => client.post('/KYCCheck', {  });
 
-const KYBCheck = (CompanyName, CompanyID) = > client.post('/KYBCheck', { CompanyName, CompanyID });
+const KYBCheck = (CompanyName, CompanyID) => client.post('/KYBCheck', { CompanyName, CompanyID });
 
 const Earthly_GetProjectById_endpoint = '/Earthly/GetProjectById';
 const Earthly_GetProjectById = () => client.get(Earthly_GetProjectById_endpoint);
@@ -117,7 +117,7 @@ const Earthly_GetProjectById = () => client.get(Earthly_GetProjectById_endpoint)
 const Earthly_GetProjectList_endpoint = '/Earthly/GetProjectList';
 const Earthly_GetProjectList = () => client.get(Earthly_GetProjectList_endpoint);
 
-const Earthly_CreateTokenizedUser = () = > client.post('/Earthly/CreateTokenizedUser', {  });
+const Earthly_CreateTokenizedUser = () => client.post('/Earthly/CreateTokenizedUser', {  });
 
 const Earthly_GetCompanyImpacts_endpoint = '/Earthly/GetCompanyImpacts';
 const Earthly_GetCompanyImpacts = () => client.get(Earthly_GetCompanyImpacts_endpoint);
@@ -125,6 +125,6 @@ const Earthly_GetCompanyImpacts = () => client.get(Earthly_GetCompanyImpacts_end
 const Earthly_endpoint = '/Earthly/GetUserImpacts/{userId}';
 const Earthly = () => client.get(Earthly_endpoint);
 
-const Earthly_RewardUser_{userId}_{projectId} = (userId, projectId, amount) = > client.post('/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId, amount });
+const Earthly_RewardUser_{userId}_{projectId} = (userId, projectId, amount) => client.post('/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId, amount });
 
-const Earthly_Checkout = () = > client.post('/Earthly/Checkout', {  });
+const Earthly_Checkout = () => client.post('/Earthly/Checkout', {  });
