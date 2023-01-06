@@ -33,7 +33,7 @@ const Account = () => {
             <Image
               style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
               resizeMode="cover"
-              source={("../assets/icon-ioniciosarrowforward.png")}
+              source={("../assets/icon-carbonyteuparrow.png")}
             />
           </Pressable>
           <View style={[styles.limitsParent, styles.parentPosition]}>
@@ -52,7 +52,7 @@ const Account = () => {
               <Image
                 style={styles.icon}
                 resizeMode="cover"
-                source={("../assets/icon-ioniciosarrowforward.png")}
+                source={("../assets/icon-carbonyteuparrow.png")}
               />
             </Pressable>
           </View>
@@ -72,7 +72,7 @@ const Account = () => {
             <Image
               style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/icon-ioniciosarrowforward.png")}
+              source={require("../assets/icon-carbonyteuparrow.png")}
             />
           </Pressable>
         </View>

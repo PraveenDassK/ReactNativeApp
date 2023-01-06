@@ -90,7 +90,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
       <Image
         style={[styles.maskGroup288, styles.keysPosition]}
         resizeMode="cover"
-        source={require("../assets/mask-group-288.png")}
+        source={require("../assets/image-ukflag.png")}
       />
     </View>
 <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
