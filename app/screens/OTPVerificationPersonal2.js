@@ -63,6 +63,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
     const result = await otpVerificationAPI.otpVerification({email, phoneNumber, emailOTP, phoneOTP})
 
     console.log('what is this', result.ok, result.data)
+    console.log({email, phoneNumber, emailOTP, phoneOTP})
 
     if (!result.ok) return alert('Could not verify otp') 
 

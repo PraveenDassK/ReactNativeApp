@@ -27,7 +27,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="OTPVerification" component={OTPVerificationPersonal2} />
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness} />
     <Stack.Screen  name="Name" component={Name} />
-    <Stack.Screen  name="ProofOfResisendcyList" component={ProofOfResidencyListA1} />
+    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyListA1} />
   </Stack.Navigator>
 )
 
