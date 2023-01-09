@@ -9,7 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import SplashAnimation from "./app/screens/SplashAnimation";
 
 import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
-import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
+import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal";
 import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
 import Account from "./app/screens/Account"
 import GlobalStyles from "./GlobalStyles";
@@ -21,6 +21,11 @@ import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
 import Onboarding1 from "./app/screens/Onboarding1"
 import Onboarding2 from "./app/screens/Onboarding2"
 import Onboarding3 from "./app/screens/Onboarding3"
+import LoginPersonal from "./app/screens/SignUpPersonal"
+import CountryOfResidence from "./app/screens/CountryOfResidence"
+import SignUpPersonal from "./app/screens/SignUpPersonal"
+import FaceScan from "./app/screens/FaceScan"
+import BiometrixComplete from "./app/screens/BiometrixComplete"
 
 // SplashScreen.preventAutoHideAsync(); 
 
@@ -28,6 +33,16 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
   <Stack.Navigator initialRouteName="carbon">
+    <Stack.Screen  name="BiometrixComplete" component={BiometrixComplete}/>
+    <Stack.Screen  name="FaceScan" component={FaceScan}/>
+    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
+
+    <Stack.Screen  name="SignUpPersonal" component={SignUpPersonal}/>
+    <Stack.Screen  name="CountryOfResidence" component={CountryOfResidence}/>
+    <Stack.Screen  name="Account" component={Account}/>
+
+    <Stack.Screen  name="LoginPersonal" component={LoginPersonal}/>
+
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
@@ -39,7 +54,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
     <Stack.Screen  name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
     <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
-    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
   </Stack.Navigator>
 )
 
