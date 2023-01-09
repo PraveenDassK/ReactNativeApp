@@ -2,7 +2,7 @@ import React,{ useEffect, useState,useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-import carbonApi from "../api/carbon"
+import carbonApi from "../api/test_api_list"
 import AuthContext from "../auth/context";
 import Button from "../components/Button"
 
@@ -16,7 +16,7 @@ const Carbon = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await carbonApi.getListings();
+    const response = await carbonApi.EcoModule_Earthly_GetProjectList();
     setData(response.data.details.data)
   }
 
@@ -32,27 +32,30 @@ const Carbon = ({navigation}) => {
     if(data != null){
       data.map(element => {
         projects.push(
-          <View key = {element.id} style={styles.projectBox}>
-            <Text> 
-              {element.displayName} 
-            </Text>
-            
-            <Image 
-              style={{height: 100, width:200}}
-              source={
-                element.image != "" ? {uri:element.image} : require("../assets/icon-bluecheck.png")
-              }
-            />
+          <View style={styles.projectBoxPadding}>
+            <View key = {element.id} style={styles.projectBox}>
 
-            <Text>
-              {element.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}... 
-            </Text>
+              <Image 
+                style={{height: 150, width:230}}
+                source={
+                  element.image != "" ? {uri:element.image} : require("../assets/icon-bluecheck.png")
+                }
+              />
 
-            <Pressable onPress = {() => switchProject(element.id)} style={[styles.mainFont, styles.button]}>
-              <Text style = {styles.mainFont}>
-                More details
+              <Text style = {styles.projectBoxTitleFont}>
+                {element.displayName} 
               </Text>
-            </Pressable>
+
+              <Text style = {styles.projectBoxFont}>
+                {element.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}... 
+              </Text>
+
+              <Pressable onPress = {() => switchProject(element.id)} style={[styles.mainFont, styles.button]}>
+                <Text style = {styles.mainFont}>
+                  More details
+                </Text>
+              </Pressable>
+            </View>
           </View>
         )
       });
@@ -68,7 +71,7 @@ const Carbon = ({navigation}) => {
           <Text style={styles.titleFont}>Remove Carbon,Restore Nature</Text>
         </Text>
         <Image
-          style={[styles.image88Icon, styles.image88IconLayout]}
+          style={[styles.treeImage]}
           resizeMode="cover"
           source={require("../assets/image-tree.png")}
         />
@@ -120,6 +123,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",
     margin: GlobalStyles.Margin.margin_8xs,
+    width: "80%"
   },
 
   rectanglePressable: {
@@ -137,12 +141,43 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
 
+  treeImage: {
+    width:"100%",
+    height:"10%",
+  },
+
   projectBox: {
     flex: 1,
     alignContent: "center",
     justifyContent: "center",
-    width: "95%",
-    backgroundColor: "light-grey"
+    backgroundColor: "#DEDEDE",
+    width:"80%",
+    left: "10%",
+    borderRadius: 20,
+    padding:20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 10.32,
+    elevation: 16,
+  },
+
+  projectBoxPadding:{
+    padding:20
+  },
+
+  projectBoxTitleFont: {
+    fontSize: GlobalStyles.FontSize.size_xl,
+    textAlign: "left",
+    width:100,
+    fontWeight: "bold"
+  },
+
+  projectBoxFont: {
+    color: 'dark-grey'
   }
 
 

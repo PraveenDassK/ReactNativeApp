@@ -31,9 +31,6 @@ const SignUpPersonalScreen = ({ navigation }) => {
     
   }
 
-
-
-  
   return (
     <Screen>
     <View style={styles.signUpPersonal}>
@@ -65,19 +62,10 @@ const SignUpPersonalScreen = ({ navigation }) => {
       <TextInput 
       
         keyboardType="numeric" 
-        autoCorrect="none" 
         onBlur={() => setFieldTouched("phoneNumber")}
         onChangeText={handleChange("phoneNumber")}
         style={[styles.component1981Child, styles.childBorder]} 
       />
-       
-     
-        {/* <View style={styles.component2083}>
-          <View style={styles.rectangleParent}>
-            <View style={styles.groupChild} />
-            <View style={styles.maskGroup236} />
-          </View>
-        </View> */}
    
       
     </View>
@@ -105,7 +93,6 @@ const SignUpPersonalScreen = ({ navigation }) => {
       Enter your Email ID
     </Text>
     <TextInput
-    autoCorrect={false}
     autoCapitalize="none"
     textContentType="emailAdress"
     keyboardType="email-address"
@@ -119,12 +106,16 @@ const SignUpPersonalScreen = ({ navigation }) => {
       ]}
     />
      <ErrorMessage error={errors.email} visible={touched.email}/>
-   <Button title="Continue" color="blue" onPress={handleSubmit} style={styles.button}/>
-            
+      <Button title="Continue" onPress={handleSubmit} style={styles.button}/>
             </>
           )}
         </Formik>
       
+      <Text
+       style={styles.swipe}
+      >
+        Swipe Up to login
+      </Text>
 
 
     </View>
@@ -133,8 +124,12 @@ const SignUpPersonalScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  swipe:{
+    
+  },
   button:{
-    marginTop:50
+    marginTop:50,
+    color:"#841584",
   },
   mt2: {
     marginTop: GlobalStyles.Margin.margin_31xs,
@@ -581,7 +576,6 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.black,
     textAlign: "left",
     position: "absolute",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   component2083Parent: {
     top: 382,
@@ -612,6 +606,7 @@ const styles = StyleSheet.create({
     top: 19,
     bottom: 19,
     maxHeight: "100%",
+    height:20,
     width: 22,
   },
   component1971: {
@@ -624,16 +619,12 @@ const styles = StyleSheet.create({
   },
   enterYourEmailId: {
     textAlign: "left",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
   },
   signUpPersonal: {
-   
-    paddingTop: 80,
     paddingHorizontal:35,
     flex: 1,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.gray_400,
   },
 });
 

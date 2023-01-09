@@ -1,8 +1,32 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { Picker } from "react-native-web";
 import GlobalStyles from "../../GlobalStyles";
+import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { SelectCountry } from 'react-native-element-dropdown';
+import {useState} from "react";
+
+const data = [
+  { label: 'United Kingdom', value: '44' },
+  { label: 'United States of America', value: '1' },
+  { label: 'India', value: '91' },
+];
 
 const CountryOfResidence = () => {
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+          Dropdown label
+        </Text>
+      );
+    }
+    return null;
+  };
   return (
     <View style={styles.countryOfResidence}>
       <View style={styles.groupParent}>
@@ -18,7 +42,7 @@ const CountryOfResidence = () => {
           </Text>
           <Text style={[styles.hello2, styles.helloTypo, styles.helloTypo1]}>
             <Text style={styles.theTermsAnd}>
-              The terms and services which apply to you, will
+              The terms and services which apply to you, will{"\n"}
             </Text>
             <Text style={styles.theTermsAnd}>
               depend on your country of residence.
@@ -56,7 +80,7 @@ const CountryOfResidence = () => {
             Accept and Continue
           </Text>
         </View>
-        <View
+        {/* <View
           style={[
             styles.iconIonicIosArrowDownParent,
             styles.groupItemLayout,
@@ -71,7 +95,33 @@ const CountryOfResidence = () => {
           <Text style={[styles.unitedKingdom, styles.unitedKingdomTypo]}>
             United Kingdom
           </Text>
-        </View>
+        </View> */}
+        
+        <Dropdown
+          style={[styles.iconIonicIosArrowDownDropdown,
+            styles.groupItemLayout,
+            styles.groupContainerPosition,
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'United Kingdom' : 'Country'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+
       </View>
     </View>
   );
@@ -174,7 +224,7 @@ const styles = StyleSheet.create({
     marginTop: -204,
   },
   groupItem: {
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
   },
   maskGroup236: {
     bottom: 13,
@@ -189,7 +239,7 @@ const styles = StyleSheet.create({
     left: "22.7%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
   },
   iconIonicIosArrowDown: {
@@ -225,6 +275,64 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
+  text: {
+    fontSize: 30,
+    alignSelf: 'center',
+    color: 'red'
+ },
+ /////////////////////////
+ iconIonicIosArrowDownDropdown: {
+  marginTop: -170,
+  borderStyle: "solid",
+  borderColor: "#e8e8e8",
+  borderWidth: 1,
+  top: "50%",
+  backgroundColor: GlobalStyles.Color.white,
+},
+ container: {
+  backgroundColor: 'white',
+  padding: 16,
+},
+dropdown: {
+  height: 50,
+  borderColor: 'gray',
+  borderWidth: 0.5,
+  borderRadius: 8,
+  paddingHorizontal: 8,
+},
+icon: {
+  marginRight: 5,
+},
+label: {
+  position: 'absolute',
+  backgroundColor: 'white',
+  left: 22,
+  top: 2,
+  zIndex: 999,
+  paddingHorizontal: 8,
+  fontSize: 14,
+},
+placeholderStyle: {
+  fontSize: 16,
+  color:  GlobalStyles.Color.blue_100,
+  left: 10.
+},
+selectedTextStyle: {
+  fontSize: 16,
+  color:  GlobalStyles.Color.blue_100,
+  left: 10.
+},
+iconStyle: {
+  width: 20,
+  height: 20,
+  right: 10,
+},
+inputSearchStyle: {
+  height: 40,
+  fontSize: 16,
+},
 });
+
+
 
 export default CountryOfResidence;

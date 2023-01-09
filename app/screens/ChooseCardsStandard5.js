@@ -3,15 +3,10 @@ import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const ChooseCardsStandard5 = () => {
+const ChooseCardsStandard5 = ({navigation}) => {
   return (
     <Screen>
     <View style={styles.chooseCardsStandard5}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-whitearrow.png")}
-          />
       <View style={styles.groupParent}>
         <Pressable
           style={[styles.groupContainer, styles.groupContainerPosition]}
