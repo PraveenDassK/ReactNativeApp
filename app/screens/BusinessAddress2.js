@@ -1,11 +1,9 @@
 import * as React from "react";
-import { Text, StyleSheet, Pressable, View, TextInput } from "react-native";
+import { Text, StyleSheet, Pressable, View } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
 const BusinessAddress2 = () => {
-    const [postcode, onChangePostcode] = React.useState(null);
-
   return (
     <View style={styles.businessAddress2}>
       
@@ -26,17 +24,17 @@ const BusinessAddress2 = () => {
             Don't know postcode?
           </Text>
         </Pressable>
-
-        <TextInput
+        <View
           style={[
             styles.helloWrapper,
             styles.groupChildLayout,
             styles.helloWrapperPosition,
           ]}
-          placeholder = "Postcode"
-          onChangeText = {onChangePostcode}
-        />
-
+        >
+          <Text style={[styles.hello, styles.helloTypo]}>
+            Enter your postcode
+          </Text>
+        </View>
         <View style={styles.helloParent}>
           <Text style={[styles.hello1, styles.hello1Position]}>
             Your Address
@@ -77,15 +75,14 @@ const styles = StyleSheet.create({
   groupChildLayout: {
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
-    
   },
   helloWrapperPosition: {
     right: 0,
     left: 0,
-    color: GlobalStyles.Color.gray_1000
-
   },
   helloTypo: {
+    color: GlobalStyles.Color.gray_700,
+    textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
