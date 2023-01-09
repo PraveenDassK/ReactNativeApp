@@ -6,6 +6,7 @@ import 'expo-dev-menu';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 
+import SplashAnimation from "./app/screens/SplashAnimation";
 
 import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
 import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
@@ -17,17 +18,28 @@ import Carbon from "./app/screens/Carbon"
 import CarbonStyle from "./app/screens/CarbonStyle"
 import CarbonProject from "./app/screens/CarbonProject"
 import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
-
+import Onboarding1 from "./app/screens/Onboarding1"
+import Onboarding2 from "./app/screens/Onboarding2"
+import Onboarding3 from "./app/screens/Onboarding3"
 
 // SplashScreen.preventAutoHideAsync(); 
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="Carbon">
-    <Stack.Screen  name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
+  <Stack.Navigator initialRouteName="carbon">
+    <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
+
+    <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
+    <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
+    <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
+    
     <Stack.Screen  name="Carbon" component={Carbon}/>
+    
+    <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
+    <Stack.Screen  name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
     <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
+    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
   </Stack.Navigator>
 )
 
