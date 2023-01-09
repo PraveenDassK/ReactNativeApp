@@ -41,7 +41,7 @@ const CountryOfResidence = () => {
               styles.groupPosition,
               styles.groupPosition1,
             ]}
-            onPress={() => navigation.navigate("Address1")}
+           
           >
             <View
               style={[

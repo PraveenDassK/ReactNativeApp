@@ -3,6 +3,7 @@ import { useFormikContext } from "formik";
 
 import TextInput from "../TextInput";
 import ErrorMessage from "./ErrorMessage";
+import GlobalStyles from "../../../GlobalStyles";
 
 function AppFormField({ name, width, ...otherProps }) {
   const {

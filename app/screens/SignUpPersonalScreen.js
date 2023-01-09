@@ -9,31 +9,31 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
 import otpApi from "../api/otp";
 import Screen from "../components/Screen";
+import FormField from "../components/forms/FormField"
 
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  phoneNumber: Yup.string().required().min(10).max(14).label("Phone number")
+  phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
 const SignUpPersonalScreen = ({ navigation }) => {
+  const prefix = "44"
 
   const authContext = useContext(AuthContext)
 
-  const handleSubmit = async (credentials) => {
-   
-    const result = await otpApi.otp(credentials)
-    authContext.setUser(credentials)
-    console.log( result.data)
+  const handleSubmit = async ({ email, phoneNumber }) => {
+    phoneNumber = prefix + phoneNumber
+    const result = await otpApi.otp({ email, phoneNumber })
+    authContext.setUser({ email, phoneNumber })
+
+    console.log(result.data)
     if (!result.ok) return  alert('Could not send otp')
-    alert('Success')
-    navigation.navigate("OTPVerification")
+    // alert('Success')
     
+    navigation.navigate("OTPVerification")
   }
 
-
-
-  
   return (
     <Screen>
     <View style={styles.signUpPersonal}>
@@ -46,9 +46,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
           Enter your mobile number
         </Text>
         <Text styrle={[styles.hello2, styles.text1Typo]}>
-          <Text
-           
-          >{`We will send an OTP to verify `}</Text>
+          <Text>{`We will send an OTP to verify `}</Text>
           <Text >your number and email ID.</Text>
         </Text>
       </View>
@@ -60,29 +58,19 @@ const SignUpPersonalScreen = ({ navigation }) => {
         >
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
-                  <View style={[styles.component1981, styles.mt14]}>
+            <View style={[styles.component1981, styles.mt14]}>
       
-      <TextInput 
-      
-        keyboardType="numeric" 
-        autoCorrect="none" 
-        onBlur={() => setFieldTouched("phoneNumber")}
-        onChangeText={handleChange("phoneNumber")}
-        style={[styles.component1981Child, styles.childBorder]} 
-      />
-       
+              <TextInput 
+              
+                keyboardType="numeric" 
+                autoCorrect="none" 
+                onBlur={() => setFieldTouched("phoneNumber")}
+                onChangeText={handleChange("phoneNumber")}
+                style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+              />
      
-        {/* <View style={styles.component2083}>
-          <View style={styles.rectangleParent}>
-            <View style={styles.groupChild} />
-            <View style={styles.maskGroup236} />
           </View>
-        </View> */}
-   
-      
-    </View>
-   
-    <View style={[styles.component1971, styles.mt_850, styles.ml24]}>
+      <View style={[styles.component1971, styles.mt_850, styles.ml24]}>
       <View style={[styles.component1971Child, styles.childBorder]} />
       <Text style={[styles.text1, styles.networkPosition, styles.text1Typo]}>
         +44
@@ -93,7 +81,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
         source={require("../assets/mask-group-288.png")}
       />
     </View>
-<ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
+    <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
     <Text
       style={[
         styles.enterYourEmailId,
@@ -116,10 +104,14 @@ const SignUpPersonalScreen = ({ navigation }) => {
         styles.mt9,
         styles.ml24,
         styles.childBorder,
+        {padding:10}
       ]}
     />
      <ErrorMessage error={errors.email} visible={touched.email}/>
-   <Button title="Continue" color="blue" onPress={handleSubmit} style={styles.button}/>
+    <View style={styles.button}>
+
+      <Button title="Continue" color="blue" onPress={handleSubmit} />
+    </View>
             
             </>
           )}
@@ -427,6 +419,7 @@ const styles = StyleSheet.create({
     left: 111,
     top: 0,
     position: "absolute",
+    width: '57%'
   },
   backgroundBackground: {
     top: 0,

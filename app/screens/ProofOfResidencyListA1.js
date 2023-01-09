@@ -20,11 +20,11 @@ const ProofOfResidencyListA1 = () => {
         <Text style={styles.yourCountry}>Your Country</Text>
         <View style={styles.unitedKingdomParent}>
           <Text style={styles.unitedKingdom}>United Kingdom</Text>
-          <Image
+          {/* <Image
             style={[styles.maskGroup288, styles.maskGroup288Position]}
             resizeMode="cover"
             source={require("../assets/mask-group-288@3x.png")}
-          />
+          /> */}
         </View>
         <Text style={[styles.hello2, styles.helloTypo]}>
           Select one document from below categories
@@ -47,11 +47,11 @@ const ProofOfResidencyListA1 = () => {
             <Text style={styles.bankBuilding}>HMRC tax{'\n'}</Text>
             <Text style={styles.bankBuilding}>statement</Text>
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
             resizeMode="cover"
             source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
-          />
+          /> */}
         </View>
         <View
           style={[
@@ -70,11 +70,11 @@ const ProofOfResidencyListA1 = () => {
             <Text style={styles.bankBuilding}>insurance{'\n'}</Text>
             <Text style={styles.bankBuilding}>certificate</Text>
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconIonicIosArrowForward1, styles.iconPosition]}
             resizeMode="cover"
             source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
-          />
+          /> */}
         </View>
         <View
           style={[styles.councilTaxOrUtilityBillParent, styles.parentShadowBox]}
@@ -89,11 +89,11 @@ const ProofOfResidencyListA1 = () => {
             <Text style={styles.bankBuilding}>or {'\n'}</Text>
             <Text style={styles.bankBuilding}>utility bill</Text>
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconIonicIosArrowForward1, styles.iconPosition]}
             resizeMode="cover"
             source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
-          />
+          /> */}
         </View>
         <Text style={[styles.hello3, styles.helloTypo, styles.helloPosition]}>
           Select one document from below categories
@@ -107,11 +107,11 @@ const ProofOfResidencyListA1 = () => {
           <Text style={[styles.underReview, styles.underReviewPosition]}>
             Under Review
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconAwesomeCheckCircle, styles.maskGroup288Position]}
             resizeMode="cover"
             source={require("../assets/icon-bluecheck166@3x.png")}
-          />
+          /> */}
         </View>
       </View>
     </View>

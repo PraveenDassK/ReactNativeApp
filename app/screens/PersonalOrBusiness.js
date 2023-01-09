@@ -4,7 +4,9 @@ import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 import Screen from "../components/Screen"
 import GlobalStyles from "../../GlobalStyles";
 
-const PersonalOrBusiness = () => {
+const PersonalOrBusiness = ({ navigation }) => {
+
+
 
   return (
     <Screen>
@@ -30,7 +32,7 @@ const PersonalOrBusiness = () => {
             <View style={styles.groupItem} />
             <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
           </Pressable>
-          <Text style={[styles.hello2, styles.helloTypo]}>Personal</Text>
+          <Text style={[styles.hello2, styles.helloTypo]} onPress={() => navigation.navigate('Name')}>Personal</Text>
         </View>
       </View>
     </Screen>

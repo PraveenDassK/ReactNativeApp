@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback} from "react";
 import {
   Text,
   StyleSheet,
@@ -7,43 +7,100 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+import { Formik } from "formik";
 import * as Yup from 'yup';
+import { useFocusEffect } from "@react-navigation/native";
 
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
+import Button from "../components/Button";
+import ErrorMessage from "../components/forms/ErrorMessage";
 import Form from "../components/forms/Form"
-
-const OTPVerificationPersonal2 = () => {
-
-  const initialValues= {'pVer1': '', 'pVer2':'', 'pVer3':''}
-
-  const [count, setCount] = useState(45)
-
-  const { user } = useContext(AuthContext)
-
-  const countdown = () => {
-    setCount(prev => prev - 1)
-
-  }
-
+import otpVerificationAPI from '../api/otpVerification'
+import otpAPI from '../api/otp'
 
 const validationSchema = Yup.object().shape({
   pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
   pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
-  pVer3: Yup.number().required().min(0).max(9).label("P Ver3")
+  pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
+  pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
+  eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
+  eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
+  eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
+  eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
+
 })
+
+const OTPVerificationPersonal2 = ({ navigation }) => {
+
+  const initialValues= {
+    pVer1:'', 
+    pVer2:'', 
+    pVer3:'', 
+    pVer4:'', 
+    eVer1:'', 
+    eVer2:'',
+    eVer3:'',
+    eVer4:''}
+
+  const [count, setCount] = useState(45)
+  // const [resendOTP, setResendOTP] = useState(null)
+  const { user } = useContext(AuthContext)
+
+  const countdown = () => {
+    setCount(prev => prev - 1)
+  }
+
+  const handleSubmit = async({pVer1, pVer2, pVer3, pVer4, eVer1, eVer2, eVer3, eVer4, })=> {
+
+    const email = user.email
+    const phoneNumber = user.phoneNumber
+    const emailOTP = pVer1  + pVer2 + pVer3 + pVer4 
+    const phoneOTP =  eVer1 + eVer2 + eVer3 + eVer4 
+    
+    // setResendOTP({email, phoneNumber, emailOTP, phoneOTP})
+   
+    const result = await otpVerificationAPI.otpVerification({email, phoneNumber, emailOTP, phoneOTP})
+
+    console.log('what is this', result.ok, result.data)
+
+    if (!result.ok) return alert('Could not verify otp') 
+
+    if (!result.data.result) return alert('Could not verify otp') 
+
+  
+    console.log(result.ok)
+
+   
+    navigation.navigate("PersonalOrBusiness")
+
+   
+  }
+
+  const resendCred = async () => {
+    const email = user.email
+    const phoneNumber = user.phoneNumber
+
+    const result = await otpAPI.otp({ email, phoneNumber})
+    console.log(result.data)
+  }
 
   useEffect(()=> {
     if (count === 0) {
       setCount(45)
-      console.log("send api request")
+      resendCred()
     } 
   },[count])
 
-  useEffect(() => {
-    setInterval(countdown, 1000)
+  useFocusEffect(
+    useCallback(() => {
+    const countdownId = setInterval(countdown, 1000)
+
+    return () => {
+      clearInterval(countdownId);
+    };
   
-  },[])
+  },[]))
   return (
     <View style={styles.otpVerificationPersonal2}>
       <View style={styles.helloParent}>
@@ -61,28 +118,152 @@ const validationSchema = Yup.object().shape({
           OTP Verfication
         </Text>
 
-        <Form initialValues={initialValues} onSubmit={values => console.log(values)} validationSchema={validationSchema}/>
-        <View style={[styles.groupChild, styles.groupLayout]} />
-        <TextInput
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+            <>
+               <TextInput 
+                maxLength={1}
+                placeholder="1"
+                keyboardType="numeric" 
+                autoCorrect="none" 
+                onBlur={() => setFieldTouched("eVer1")}
+                onChangeText={handleChange("eVer1")}
+                style={[styles.groupChild, styles.groupLayout, styles.inputText]}
+              />
+              <ErrorMessage error={errors.eVer1} visible={touched.eVer1}/>
+
+              {/* <View style={[styles.groupChild, styles.groupLayout]} /> */}
+              <TextInput 
+                maxLength={1}
+                placeholder="1"
+                keyboardType="numeric" 
+                autoCorrect="none" 
+                onBlur={() => setFieldTouched("pVer1")}
+                onChangeText={handleChange("pVer1")}
+                style={[styles.groupChildPosition, styles.groupLayout, styles.inputText]} 
+              />
+              <ErrorMessage error={errors.pVer1} visible={touched.pVer1}/>
+        {/* <TextInput
           style={[styles.groupChildPosition, styles.groupLayout]}
           keyboardType="default"
-        />
-        <TextInput
+        /> */}
+
+        {/* <TextInput
           style={[styles.groupInner, styles.groupInnerBorder]}
           keyboardType="default"
-        />
-        <View style={[styles.groupInnerBorder, styles.groupChildPosition]} />
-        <TextInput
-          style={[styles.rectangleTextinput, styles.groupChild1Border]}
-          keyboardType="default"
-        />
-        <View style={[styles.groupChild1Border, styles.groupChildPosition]} />
-        <View style={[styles.groupChild2, styles.groupChildBorder2]} />
-        <View style={[styles.groupChildBorder2, styles.groupChildPosition]} />
-        <View style={[styles.groupChild4, styles.groupChildBorder1]} />
-        <View style={[styles.groupChildBorder1, styles.groupChildPosition]} />
-        <View style={[styles.groupChild6, styles.groupChildBorder]} />
-        <View style={[styles.groupChildBorder, styles.groupChildPosition]} />
+        /> */}
+            <TextInput 
+              maxLength={1}
+              placeholder="2"
+              keyboardType="numeric" 
+              autoCorrect="none" 
+              onBlur={() => setFieldTouched("eVer2")}
+              onChangeText={handleChange("eVer2")}
+              style={[styles.groupInner, styles.groupInnerBorder, styles.inputText]} 
+            />
+            <ErrorMessage error={errors.eVer2} visible={touched.eVer2}/>
+            <TextInput 
+              maxLength={1}
+              placeholder="2"
+              keyboardType="numeric" 
+              autoCorrect="none" 
+              onBlur={() => setFieldTouched("pVer2")}
+              onChangeText={handleChange("pVer2")}
+              style={[styles.groupInnerBorder, styles.groupChildPosition, styles.inputText]} 
+            />
+            <ErrorMessage error={errors.pVer2} visible={touched.pVer2}/>
+              {/* <View style={[styles.groupInnerBorder, styles.groupChildPosition]} /> */}
+            <TextInput 
+                  maxLength={1}
+                  placeholder="3"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("eVer3")}
+                  onChangeText={handleChange("eVer3")}
+                style={[styles.rectangleTextinput, styles.groupChild1Border, styles.inputText]} 
+                />
+                <ErrorMessage error={errors.eVer3} visible={touched.eVer3}/>
+            {/* <TextInput
+              style={[styles.rectangleTextinput, styles.groupChild1Border]}
+              keyboardType="default"
+            /> */}
+            <TextInput 
+                  maxLength={1}
+                  placeholder="3"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("pVer3")}
+                  onChangeText={handleChange("pVer3")}
+                  style={[styles.groupChild1Border, styles.groupChildPosition, styles.inputText]} 
+                />
+            <ErrorMessage error={errors.pVer3} visible={touched.pVer3}/>
+            {/* <View style={[styles.groupChild1Border, styles.groupChildPosition]} /> */}
+            {/* <TextInput 
+                  placeholder="5"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("eVer5")}
+                  onChangeText={handleChange("eVer5")}
+                  style={[styles.groupChild2, styles.groupChildBorder2]}
+                />
+            <ErrorMessage error={errors.eVer5} visible={touched.eVer5}/> */}
+            {/* <View style={[styles.groupChild2, styles.groupChildBorder2]} /> */}
+            {/* <TextInput 
+                  placeholder="5"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("pVer5")}
+                  onChangeText={handleChange("pVer5")}
+                  style={[styles.groupChildBorder2, styles.groupChildPosition]}
+                />
+            <ErrorMessage error={errors.pVer5} visible={touched.pVer5}/> */}
+            {/* <View style={[styles.groupChildBorder2, styles.groupChildPosition]} /> */}
+            <TextInput 
+                  maxLength={1}
+                  placeholder="4"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("eVer4")}
+                  onChangeText={handleChange("eVer4")}
+                  style={[styles.groupChild4, styles.groupChildBorder1, styles.inputText]} 
+                />
+            <ErrorMessage error={errors.eVer4} visible={touched.eVer4}/>
+            {/* <View style={[styles.groupChild4, styles.groupChildBorder1]} /> */}
+            <TextInput 
+                  maxLength={1}
+                  placeholder="4"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("pVer4")}
+                  onChangeText={handleChange("pVer4")}
+                  style={[styles.groupChildBorder1, styles.groupChildPosition, styles.inputText]}
+                />
+            <ErrorMessage error={errors.pVer4} visible={touched.pVer4}/>
+            {/* <View style={[styles.groupChildBorder1, styles.groupChildPosition]} /> */}
+            {/* <TextInput 
+                  placeholder="6"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("pVer6")}
+                  onChangeText={handleChange("pVer6")}
+                  style={[styles.groupChild6, styles.groupChildBorder]} 
+                />
+            <ErrorMessage error={errors.pVer6} visible={touched.pVer6}/> */}
+            {/* <View style={[styles.groupChild6, styles.groupChildBorder]} /> */}
+            {/* <TextInput 
+                  placeholder="6"
+                  keyboardType="numeric" 
+                  autoCorrect="none" 
+                  onBlur={() => setFieldTouched("eVer6")}
+                  onChangeText={handleChange("eVer6")}
+                  style={[styles.groupChildBorder, styles.groupChildPosition]} 
+                />
+            <ErrorMessage error={errors.pVer6} visible={touched.pVer6}/> */}
+            {/* <View style={[styles.groupChildBorder, styles.groupChildPosition]} /> */}
         <Text
           style={[
             styles.pleaseEnterTheCodeSentTo,
@@ -94,7 +275,7 @@ const validationSchema = Yup.object().shape({
           <Text
             style={styles.pleaseEnterThe}
           >{`Please enter the code sent to `}</Text>
-          <Text style={styles.text}>+44{ user.phoneNumber }</Text>
+          <Text style={styles.text}>+{ user.phoneNumber }</Text>
         </Text>
         <Text style={[styles.pleaseEnterTheCodeSentTo1, styles.resendPosition]}>
           <Text
@@ -108,14 +289,22 @@ const validationSchema = Yup.object().shape({
         <Text style={[styles.resendCodeIn00101, styles.resendPosition]}>
           Resend Code in 00:{count < 10 ? `0${count}` : count}
         </Text>
-        <Pressable style={styles.rectanglePressable} />
-        <Text style={[styles.hello2, styles.helloFlexBox]}>Verify</Text>
+        {/* <Pressable style={styles.rectanglePressable} /> */}
+        <View style={styles.button}>
+          <Button title="Verify" color="blue" onPress={handleSubmit} />
+       </View>
+        </>
+          )}
+        </Formik>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  button: {
+    top: 350
+  },
   helloTypo: {
     fontSize: GlobalStyles.FontSize.size_base,
     // // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -127,6 +316,9 @@ const styles = StyleSheet.create({
   hello1Position: {
     left: 2,
     textAlign: "left",
+  },
+  inputText:{
+    padding: 10
   },
   groupLayout: {
     height: 42,
