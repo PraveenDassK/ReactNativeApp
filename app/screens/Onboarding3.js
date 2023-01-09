@@ -3,24 +3,24 @@ import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Onboarding1 = ({navigation}) => {
+const Onboarding3 = ({navigation}) => {
   return (
     <Pressable
       style={styles.onboarding1}
-      onPress={() => navigation.navigate("Onboarding2")}
+      onPress={() => navigation.navigate("SignUpPersonalScreen")}
     >
       <Text
         style={styles.titleText}
       >
-        Manage your Finances with your pocket
+        The Next Gen of your Future Investments
       </Text>
       <Image
           style={styles.cardImage}
-          source={require("../assets/image-cardyellow.png")}
+          source={require("../assets/image-cardblue.png")}
         />
       <Image
           style={styles.progressbar}
-          source={require("../assets/image-progress13.png")}
+          source={require("../assets/image-progress33.png")}
         />
     </Pressable>
   );
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Onboarding1;
+export default Onboarding3;
