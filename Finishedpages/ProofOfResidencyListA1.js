@@ -8,7 +8,7 @@ const ProofOfResidencyListA1 = () => {
       <Image
             style={[styles.arrowCircle, styles.arrowPosition]}
             resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
+            source={require("../assets/icon-whitearrow@3x.png")}
           />
       <View style={styles.groupParent}>
         <View style={styles.helloParent}>
@@ -110,7 +110,7 @@ const ProofOfResidencyListA1 = () => {
           <Image
             style={[styles.iconAwesomeCheckCircle, styles.maskGroup288Position]}
             resizeMode="cover"
-            source={require("../assets/icon-awesomecheckcircle166@3x.png")}
+            source={require("../assets/icon-bluecheck166@3x.png")}
           />
         </View>
       </View>

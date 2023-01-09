@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
-import GlobalStyles from "../../GlobalStyles";
+import GlobalStyles from "../GlobalStyles";
 
 const LogoAnimation3 = () => {
-  
+  //const navigation = useNavigation();
 
   return (
     <Pressable
@@ -20,7 +20,7 @@ const LogoAnimation3 = () => {
         <Image
           style={styles.layer12Icon}
           resizeMode="cover"
-          source={require("../assets/layer-129@3x.png")}
+          source={require("../assets/layer-12@3x.png")}
         />
         <Text style={[styles.hello, styles.helloFlexBox]}>Welcome to</Text>
         <Text
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     height: 132,
   },
   layer12Icon: {
-    marginTop: -165.5,
+    marginTop: -155.5,
     marginLeft: -63.5,
     left: "50%",
     width: 128,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 100,
     fontSize: GlobalStyles.FontSize.size_10xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
+    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
   },
   quickSecuredBanking: {
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     left: 25,
     fontSize: GlobalStyles.FontSize.size_2xl,
     lineHeight: 16,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    fontFamily: GlobalStyles.FontFamily.helvetica,
     color: GlobalStyles.Color.blue_100,
     width: 326,
     top: "50%",
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.gray_300,
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_9xl,
   },
 });
 
