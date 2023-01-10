@@ -216,7 +216,6 @@ const styles = StyleSheet.create({
     left: 2,
     fontSize: GlobalStyles.FontSize.size_7xl,
     lineHeight: 30,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     fontWeight: "700",

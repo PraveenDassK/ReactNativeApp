@@ -234,7 +234,6 @@ const styles = StyleSheet.create({
   hello3: {
     left: 2,
     fontSize: GlobalStyles.FontSize.size_8xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",
     textAlign: "left",

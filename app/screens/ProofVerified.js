@@ -60,7 +60,7 @@ const ProofVerified = () => {
           <Image
             style={[styles.iconAwesomeCheckCircle, styles.maskGroup288Position]}
             resizeMode="cover"
-            source={require("../assets/icon-bluecheck.png")}
+            source={require("../assets/icon-awesomecheckcircle3.png")}
           />
         </View>
         <View
@@ -87,7 +87,7 @@ const ProofVerified = () => {
           <Image
             style={[styles.iconAwesomeCheckCircle, styles.maskGroup288Position]}
             resizeMode="cover"
-            source={require("../assets/icon-bluecheck.png")}
+            source={require("../assets/icon-awesomecheckcircle3.png")}
           />
         </View>
         <View style={styles.unitedKingdomParent}>
@@ -97,7 +97,7 @@ const ProofVerified = () => {
           <Image
             style={[styles.maskGroup288, styles.maskGroup288Position]}
             resizeMode="cover"
-            source={require("../assets/image-ukflag.png")}
+            source={require("../assets/mask-group-288.png")}
           />
         </View>
       </View>
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   helloTypo: {
     textAlign: "left",
     color: GlobalStyles.Color.gray_700,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     left: 1,
     top: "50%",
@@ -140,7 +139,6 @@ const styles = StyleSheet.create({
   underReviewTypo: {
     color: GlobalStyles.Color.blue_100,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     top: "50%",
     position: "absolute",
   },
@@ -162,7 +160,6 @@ const styles = StyleSheet.create({
     left: 3,
     textAlign: "left",
     color: GlobalStyles.Color.gray_700,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
     position: "absolute",
@@ -170,7 +167,6 @@ const styles = StyleSheet.create({
   hello2: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     left: 0,
     color: GlobalStyles.Color.indigo_100,
     top: 0,
@@ -217,7 +213,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   groupParent: {
@@ -229,7 +224,6 @@ const styles = StyleSheet.create({
   },
   yourCountry: {
     top: 97,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     color: GlobalStyles.Color.indigo_100,
     fontSize: GlobalStyles.FontSize.size_base,
     left: 1,

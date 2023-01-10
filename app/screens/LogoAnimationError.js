@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     left: 0,
     fontSize: GlobalStyles.FontSize.size_11xl,
     fontWeight: "700",
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.blue_100,
     textAlign: "center",
     position: "absolute",

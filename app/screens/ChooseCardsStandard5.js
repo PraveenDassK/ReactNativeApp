@@ -286,7 +286,6 @@ const styles = StyleSheet.create({
     left: 5,
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: 28,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     fontWeight: "700",
     top: 0,
   },

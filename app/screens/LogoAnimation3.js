@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 100,
     fontSize: GlobalStyles.FontSize.size_10xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
   },
   quickSecuredBanking: {

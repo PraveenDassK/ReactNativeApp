@@ -467,7 +467,6 @@ const Account3 = () => {
 
 const styles = StyleSheet.create({
   historyTypo1: {
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     fontWeight: "700",
   },
