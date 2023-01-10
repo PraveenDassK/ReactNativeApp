@@ -233,7 +233,6 @@ const styles = StyleSheet.create({
     top: 0,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
   },
   groupChild: {

@@ -74,13 +74,11 @@ const styles = StyleSheet.create({
   },
   helloTypo: {
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   helloTypo1: {
     color: GlobalStyles.Color.gray_700,
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   containerPosition: {
     position: "absolute",
@@ -124,7 +122,6 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   iconAwesomeCheckCircle: {
     marginTop: -218.62,

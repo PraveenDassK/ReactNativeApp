@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 6,
     fontSize: GlobalStyles.FontSize.size_4xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     fontWeight: "700",
     position: "absolute",

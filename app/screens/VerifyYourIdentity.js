@@ -4,7 +4,6 @@ import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const VerifyYourIdentity = () => {
-  
 
   return (
     <Screen>
@@ -157,7 +156,6 @@ const styles = StyleSheet.create({
     left: 2,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     top: 0,

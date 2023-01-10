@@ -228,7 +228,6 @@ const styles = StyleSheet.create({
   historyTypo: {
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     fontWeight: "700",
     position: "absolute",
   },

@@ -184,7 +184,6 @@ const styles = StyleSheet.create({
     marginRight: GlobalStyles.Margin.margin_sm,
   },
   helloTypo1: {
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
   },
   maskGroup2361Position: {
@@ -195,7 +194,6 @@ const styles = StyleSheet.create({
   },
   helloTypo: {
     fontSize: GlobalStyles.FontSize.size_xs,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
   },
   bankTransfer1: {
@@ -203,7 +201,6 @@ const styles = StyleSheet.create({
     top: 40,
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",

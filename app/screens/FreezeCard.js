@@ -239,7 +239,6 @@ const styles = StyleSheet.create({
   myCardsTypo: {
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     fontWeight: "700",
     position: "absolute",
   },

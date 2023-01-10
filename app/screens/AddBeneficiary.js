@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { Text, StyleSheet, View, Pressable,TextInput } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
-import { TextInput } from "react-native-web";
 
 const AddBeneficiary = () => {
   
@@ -125,7 +124,6 @@ const styles = StyleSheet.create({
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",

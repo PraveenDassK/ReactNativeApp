@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
   },
   hello: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "center",
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",

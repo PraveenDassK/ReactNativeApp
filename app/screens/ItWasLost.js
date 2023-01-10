@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
   yourCardTypo: {
     color: GlobalStyles.Color.gray_1400,
     fontSize: GlobalStyles.FontSize.size_xs,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   wrapperLayout: {
     height: 12,
@@ -214,7 +213,6 @@ const styles = StyleSheet.create({
   hello: {
     left: 2,
     fontSize: GlobalStyles.FontSize.size_7xl,
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     fontWeight: "700",
@@ -235,7 +233,6 @@ const styles = StyleSheet.create({
   toKeepYour: {
     fontSize: GlobalStyles.FontSize.size_3xs,
     color: GlobalStyles.Color.gray_800,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   yourCurrentCardWillBeTerm: {
     marginTop: -12.5,
@@ -307,7 +304,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   groupParent: {

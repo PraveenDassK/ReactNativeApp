@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
   },
   theColor: {
     color: GlobalStyles.Color.gray_800,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   groupLayout: {
     overflow: "hidden",
@@ -126,14 +125,12 @@ const styles = StyleSheet.create({
   helloPosition: {
     color: GlobalStyles.Color.gray_700,
     left: "50%",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
   },
   hello: {
     left: 2,
     fontSize: GlobalStyles.FontSize.size_8xl,
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",
     top: 0,
@@ -148,7 +145,6 @@ const styles = StyleSheet.create({
   },
   cardSpendingLimit1: {
     color: GlobalStyles.Color.gray_1400,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     fontWeight: "700",
   },

@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   hello1Typo: {
     color: GlobalStyles.Color.gray_700,
     fontSize: GlobalStyles.FontSize.size_base,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     top: "50%",
     textAlign: "left",
     position: "absolute",
@@ -69,7 +68,6 @@ const styles = StyleSheet.create({
     right: 0,
   },
   textTypo: {
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
   },
@@ -100,7 +98,6 @@ const styles = StyleSheet.create({
     left: 2,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     top: 0,
@@ -171,7 +168,6 @@ const styles = StyleSheet.create({
     fontSize: 27,
     color: GlobalStyles.Color.blue_100,
     top: "50%",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   resendCodeIn0010: {
     marginTop: 14.5,

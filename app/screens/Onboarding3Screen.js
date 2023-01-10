@@ -410,15 +410,13 @@ const styles = StyleSheet.create({
       width: 375,
     },
     theNextGen: {
-      // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
-    },
+      },
     theNextGenOfYour: {
       margin: GlobalStyles.Margin.margin_33xs,
     },
     futureInvestments1: {
       fontWeight: "700",
-      // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
-    },
+      },
     hello: {
       fontSize: GlobalStyles.FontSize.size_8xl,
       lineHeight: 35,
