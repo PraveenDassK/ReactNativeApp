@@ -95,7 +95,7 @@ const StackNavigator = () => (
   
   <Stack.Navigator initialRouteName="SplashAnimation">
 
-    <Stack.Screen name="DOB" component={DOB}/>
+    <Stack.Screen name="DOB" component={Pin}/>
     <Stack.Screen name="PushNotification" component={PushNotification}/>
 
 
