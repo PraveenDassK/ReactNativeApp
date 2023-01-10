@@ -1,8 +1,41 @@
-import * as React from "react";
+import React,{ useEffect, useState} from "react";
+import * as ImagePicker from "expo-image-picker"
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const ProofOfResidencyListA1 = () => {
+  const [imageUri, setImageUri] = useState();
+  const [base64, setBase64] = useState()
+
+  const requestPermission = async () => {
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync()
+    if (!granted) alert('You need to enable permission to access the library')
+  }
+
+  const selectImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        base64: true
+      })
+
+      console.log(result)
+     
+      if (!result.canceled) {
+        setImageUri(result.assets[0].uri)
+        setBase64(result.assets[0].base64)
+      }
+
+    } catch (error) {
+      console.log("Error reading an image", error)
+    }
+  }
+
+  useEffect(() => {
+    requestPermission();
+  }, [])
+
+
   return (
     <View style={styles.proofOfResidencyListA1}>
       <Image
@@ -78,6 +111,7 @@ const ProofOfResidencyListA1 = () => {
         </View>
         <View
           style={[styles.councilTaxOrUtilityBillParent, styles.parentShadowBox]}
+          onPress={selectImage}
         >
           <Text
             style={[
@@ -85,7 +119,7 @@ const ProofOfResidencyListA1 = () => {
               styles.councilTaxOrUtilityBillTypo,
             ]}
           >
-            <Text style={styles.bankBuilding}>Council tax {'\n'}</Text>
+            <Text onPress={selectImage}style={styles.bankBuilding}>Council tax {'\n'}</Text>
             <Text style={styles.bankBuilding}>or {'\n'}</Text>
             <Text style={styles.bankBuilding}>utility bill</Text>
           </Text>
@@ -114,6 +148,11 @@ const ProofOfResidencyListA1 = () => {
           /> */}
         </View>
       </View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      
+      {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200, zIndex: 7 }} />}
+      {base64 && <Text>{base64}</Text>}
+    </View>
     </View>
   );
 };

@@ -116,8 +116,6 @@ const SignUpPersonalScreen = ({ navigation }) => {
             </>
           )}
         </Formik>
-      
-
 
     </View>
     </Screen>
