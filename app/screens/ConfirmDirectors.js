@@ -218,7 +218,7 @@ const ConfirmDirectors = () => {
           <Image
             style={styles.iconIonicIosAdd}
             resizeMode="cover"
-            source={require("../assets/icon-ioniciosadd.png")}
+            source={require("../assets/add.png")}
           />
         </Pressable>
       </View>

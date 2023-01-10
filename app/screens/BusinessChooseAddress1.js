@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 import { TextInput } from "react-native-web";
-
 import GlobalStyles from "../../GlobalStyles";
 
 const BusinessChooseAddress1 = () => {
@@ -61,7 +60,7 @@ const BusinessChooseAddress1 = () => {
             <Image
               style={styles.iconIonicIosArrowDown}
               resizeMode="cover"
-              source={require("../assets/icon-ioniciosarrowdown12@3x.png")}
+              source={require("../assets/icon-ioniciosarrowdown12.png")}
             />
             <Text style={[styles.hello2, styles.helloTypo]}>
               <Text style={styles.lowlandsRoadHarrow}>

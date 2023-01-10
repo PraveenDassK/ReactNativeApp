@@ -34,7 +34,7 @@ const SentMoney = () => {
         <Image
           style={[styles.iconAwesomeCheckCircle, styles.containerPosition]}
           resizeMode="cover"
-          source={require("../assets/icon-awesomecheckcircle3@3x.png")}
+          source={require("../assets/icon-awesomecheckcircle3.png")}
         />
         <View style={[styles.groupContainer, styles.containerPosition]}>
           <View style={[styles.groupChild, styles.groupPosition]} />

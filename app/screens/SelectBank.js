@@ -15,12 +15,12 @@ const SelectBank = () => {
           <Image
             style={[styles.iconAwesomeSearch, styles.iconPosition]}
             resizeMode="cover"
-            source={require("../assets/icon-awesomesearch@3x.png")}
+            source={require("../assets/icon-awesomesearch.png")}
           />
           <Image
             style={[styles.iconMaterialKeyboardVoice, styles.iconPosition]}
             resizeMode="cover"
-            source={require("../assets/icon-materialkeyboardvoice@3x.png")}
+            source={require("../assets/icon-materialkeyboardvoice.png")}
           />
           <TextInput style={styles.hello1} placeholder={"Search"}/>
         </View>
@@ -132,42 +132,42 @@ const SelectBank = () => {
         <Image
           style={styles.hsbcSymbolIcon}
           resizeMode="cover"
-          source={require("../assets/hsbcsymbol@3x.png")}
+          source={require("../assets/hsbcsymbol.png")}
         />
         <Image
           style={[styles.image145Icon, styles.image145IconPosition]}
           resizeMode="cover"
-          source={require("../assets/image-145@3x.png")}
+          source={require("../assets/image-145.png")}
         />
         <Image
           style={[styles.image146Icon, styles.iconLayout1]}
           resizeMode="cover"
-          source={require("../assets/image-146@3x.png")}
+          source={require("../assets/image-146.png")}
         />
         <Image
           style={styles.image148Icon}
           resizeMode="cover"
-          source={require("../assets/image-148@3x.png")}
+          source={require("../assets/image-148.png")}
         />
         <Image
           style={[styles.downloadIcon, styles.iconLayout2]}
           resizeMode="cover"
-          source={require("../assets/download@3x.png")}
+          source={require("../assets/download.png")}
         />
         <Image
           style={styles.nationwideLogo20012011Icon}
           resizeMode="cover"
-          source={require("../assets/nationwidelogo20012011@3x.png")}
+          source={require("../assets/nationwidelogo20012011.png")}
         />
         <Image
           style={[styles.nationwideLogo20012011Icon1, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/nationwidelogo200120111@3x.png")}
+          source={require("../assets/nationwidelogo200120111.png")}
         />
         <Image
           style={[styles.image149Icon, styles.iconLayout1]}
           resizeMode="cover"
-          source={require("../assets/image-149@3x.png")}
+          source={require("../assets/image-149.png")}
         />
         <Image
           style={[
@@ -175,17 +175,17 @@ const SelectBank = () => {
             styles.rectangleParentPosition1,
           ]}
           resizeMode="cover"
-          source={require("../assets/schroderslogopngtransparent@3x.png")}
+          source={require("../assets/schroderslogopngtransparent.png")}
         />
         <Image
           style={[styles.image150Icon, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/image-150@3x.png")}
+          source={require("../assets/image-150.png")}
         />
         <Image
           style={styles.image151Icon}
           resizeMode="cover"
-          source={require("../assets/image-151@3x.png")}
+          source={require("../assets/image-151.png")}
         />
       </View>
     </View>

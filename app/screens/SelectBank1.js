@@ -9,11 +9,6 @@ const SelectBank1 = () => {
   return (
     <Screen>
     <View style={styles.selectBank1}>
-    <Image
-        style={[styles.arrowCircle, styles.arrowPosition]}
-        resizeMode="cover"
-        source={require("../assets/icon-featherarrowleft@3x.png")}
-        />
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Enter your detail</Text>
         <Text style={[styles.hello1, styles.helloTypo]}>
@@ -24,8 +19,8 @@ const SelectBank1 = () => {
             enabling Carbonyte to retrieve your personal data.
           </Text>
         </Text>
-        <Text style={[styles.username, styles.usernameTypo]}>Username</Text>
-        <Text style={[styles.password, styles.usernameTypo]}>Password</Text>
+        <TextInput style={[styles.username, styles.usernameTypo]} placeholder={"Username"}/>
+        <TextInput style={[styles.password, styles.usernameTypo]} placeholder={"Password"}/>
         <TextInput style={[styles.groupChild, styles.groupBorder]} placeholder={""} />
         <TextInput style={[styles.groupItem, styles.groupBorder]} />
         <Pressable
