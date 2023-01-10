@@ -27,7 +27,7 @@ const BankTransferAmount = () => {
             <Image
               style={[styles.groupItem, styles.groupPosition]}
               resizeMode="cover"
-              source={require("../assets/group-30409@3x.png")}
+              source={require("../assets/group-30409.png")}
             />
           </View>
           <View style={[styles.helloContainer, styles.helloPosition]}>
@@ -35,7 +35,7 @@ const BankTransferAmount = () => {
             <Image
               style={[styles.groupInner, styles.groupPosition]}
               resizeMode="cover"
-              source={require("../assets/group-30410@3x.png")}
+              source={require("../assets/group-30410.png")}
             />
           </View>
           <View style={[styles.groupView, styles.groupPosition1]}>
@@ -43,7 +43,7 @@ const BankTransferAmount = () => {
             <Image
               style={[styles.groupIcon, styles.groupPosition]}
               resizeMode="cover"
-              source={require("../assets/group-30408@3x.png")}
+              source={require("../assets/group-30408.png")}
             />
           </View>
         </View>
@@ -61,7 +61,7 @@ const BankTransferAmount = () => {
           <Image
             style={styles.iconMaterialKeyboardVoice}
             resizeMode="cover"
-            source={require("../assets/icon-materialkeyboardvoice@3x.png")}
+            source={require("../assets/icon-materialkeyboardvoice.png")}
           />
         </View>
         <View style={[styles.maskGroup236, styles.helloParent1Position]} />

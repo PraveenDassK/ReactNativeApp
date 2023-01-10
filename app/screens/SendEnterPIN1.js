@@ -1,13 +1,13 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
-import Screen from "../components/Screen";
+
 import GlobalStyles from "../../GlobalStyles";
 
 const SendEnterPIN1 = () => {
   
 
   return (
-    <Screen>
+    
     <Pressable
       style={styles.sendEnterPin1}
       onPress={() => navigation.navigate("FreezeCard")}
@@ -29,16 +29,16 @@ const SendEnterPIN1 = () => {
         <Image
           style={styles.iconIonicIosBackspace}
           resizeMode="cover"
-          source={require("../assets/icon-ioniciosbackspace@3x.png")}
+          source={require("../assets/icon-caebonyteiosbackspace.png")}
         />
       </View>
       <Image
         style={[styles.sendEnterPin1Item, styles.mt28, styles.ml1]}
         resizeMode="cover"
-        source={require("../assets/group-30317@3x.png")}
+        source={require("../assets/group-fullpin.png")}
       />
     </Pressable>
-    </Screen>
+   
   );
 };
 

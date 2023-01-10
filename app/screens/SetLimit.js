@@ -11,11 +11,7 @@ const SetLimit = () => {
   return (
     <Screen>
     <View style={styles.setLimit}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
+       
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloColor1]}>
           Set a monthly limit

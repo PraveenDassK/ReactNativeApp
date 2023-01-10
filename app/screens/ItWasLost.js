@@ -7,11 +7,6 @@ const ItWasLost = () => {
   return (
     <Screen>
     <View style={styles.itWasLost}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
       <View style={styles.helloParent}>
         <Text style={styles.hello}>It was lost</Text>
         <View
@@ -53,7 +48,7 @@ const ItWasLost = () => {
           <Image
             style={styles.groupItem}
             resizeMode="cover"
-            source={require("../assets/ellipse-3260@3x.png")}
+            source={require("../assets/ellipse-3260.png")}
           />
           <View style={[styles.wrapper, styles.wrapperLayout]}>
             <Text
@@ -104,7 +99,7 @@ const ItWasLost = () => {
           <Image
             style={styles.groupItem}
             resizeMode="cover"
-            source={require("../assets/ellipse-3260@3x.png")}
+            source={require("../assets/ellipse-3260.png")}
           />
           <View style={[styles.container, styles.wrapperLayout]}>
             <Text
@@ -147,7 +142,7 @@ const ItWasLost = () => {
           <Image
             style={styles.groupItem}
             resizeMode="cover"
-            source={require("../assets/ellipse-3260@3x.png")}
+            source={require("../assets/ellipse-3260.png")}
           />
           <View style={[styles.container, styles.wrapperLayout]}>
             <Text

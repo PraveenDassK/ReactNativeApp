@@ -9,11 +9,6 @@ const Terminate = () => {
   return (
     <Screen>
     <View style={styles.terminate}>
-    <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
       <View style={styles.terminateInner}>
         <View
           style={[

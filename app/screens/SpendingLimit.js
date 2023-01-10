@@ -1,27 +1,40 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
-import GlobalStyles from "../../GlobalStyles";
+import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import Screen from "../components/Screen";
+import GlobalStyles from "../../GlobalStyles";
 
-const SpendingLimit2 = () => {
+const SpendingLimit = () => {
+ 
+
   return (
     <Screen>
-    <View style={styles.spendingLimit2}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
+    <View style={styles.spendingLimit}>
+     
+      <View style={styles.helloParent}>
+        <Text style={[styles.hello, styles.limitFlexBox]}>Spending limit</Text>
+        <View
+          style={[
+            styles.rectangleParent,
+            styles.groupChildPosition,
+            styles.groupChildPosition1,
+          ]}
+        >
+          <View
+            style={[
+              styles.groupChild,
+              styles.groupChildPosition,
+              styles.groupChildPosition1,
+            ]}
           />
-      <View style={styles.groupParent}>
-        <View style={[styles.rectangleParent, styles.groupChildPosition]}>
-          <View style={[styles.groupChild, styles.groupChildPosition]} />
           <View
             style={[
               styles.cardSpendingLimitTheSpendParent,
               styles.rectangleGroupPosition,
             ]}
           >
-            <Text style={styles.cardSpendingLimitTheSpend}>
+            <Text
+              style={[styles.cardSpendingLimitTheSpend, styles.limitFlexBox]}
+            >
               <Text style={styles.cardSpendingLimit}>
                 <Text style={styles.cardSpendingLimit1}>
                   Card spending limit
@@ -30,47 +43,54 @@ const SpendingLimit2 = () => {
               <Text style={styles.cardSpendingLimit}>
                 <Text
                   style={[styles.theSpend, styles.theColor]}
-                >{"\n"}The spend & withdrawal cap</Text>
+                >{`\n The spend & withdrawal cap`}</Text>
               </Text>
             </Text>
             <Image
-              style={[styles.meter1Icon, styles.hello3Position]}
+              style={[styles.meter1Icon, styles.groupChildPosition]}
               resizeMode="cover"
-              source={require("../assets/meter-1@3x.png")}
+              source={require("../assets/meter-1.png")}
             />
           </View>
-          <View style={[styles.rectangleGroup, styles.rectangleGroupPosition]}>
+          <Pressable
+            style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
+            onPress={() => navigation.navigate("SetLimit")}
+          >
             <View style={styles.groupItem} />
             <Image
               style={[styles.groupInner, styles.groupLayout]}
               resizeMode="cover"
-              source={require("../assets/ellipse-350@3x.png")}
+              source={require("../assets/ellipse-350.png")}
             />
-          </View>
+          </Pressable>
           <Image
             style={[styles.groupIcon, styles.groupLayout]}
             resizeMode="cover"
-            source={require("../assets/group-27579@3x.png")}
+            source={require("../assets/group-275793.png")}
           />
         </View>
-        <Text style={styles.hello}>£22.33</Text>
-        <Text style={styles.hello1}>Spent this month</Text>
-        <Text style={styles.hello2}>
-          <Text style={styles.limitIs100}>{`Limit is £100. `}</Text>
-          <Text style={styles.changeLimit}>Change limit</Text>
+        <Text style={[styles.hello1, styles.helloPosition]}>£22.33</Text>
+        <Text style={[styles.hello2, styles.helloPosition]}>
+          Spent this month
+        </Text>
+        <Text style={[styles.hello3, styles.helloPosition]}>
+          Limit is toggled off
+        </Text>
+        <Text
+          style={[
+            styles.theLimitDeterminesTheAmoun,
+            styles.theColor,
+            styles.limitFlexBox,
+          ]}
+        >
+          The limit determines the amount that can be spent or withdrawn using
+          this card per month
         </Text>
         <Image
           style={styles.cardIcon}
           resizeMode="cover"
-          source={require("../assets/card@3x.png")}
+          source={require("../assets/card.png")}
         />
-        <Text style={[styles.hello3, styles.hello3Position]}>
-          Spending limit
-        </Text>
-        <Text style={[styles.theLimitDeterminesTheAmoun, styles.theColor]}>
-          The limit determines the amount that can be spent or withdrawn using
-          this card per month
-        </Text>
       </View>
     </View>
     </Screen>
@@ -78,10 +98,17 @@ const SpendingLimit2 = () => {
 };
 
 const styles = StyleSheet.create({
+  limitFlexBox: {
+    textAlign: "left",
+    position: "absolute",
+  },
   groupChildPosition: {
-    right: 0,
     left: 0,
     position: "absolute",
+  },
+  groupChildPosition1: {
+    right: 0,
+    left: 0,
   },
   rectangleGroupPosition: {
     right: 22,
@@ -91,28 +118,38 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_800,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
-  hello3Position: {
-    top: 0,
-    position: "absolute",
-  },
   groupLayout: {
     overflow: "hidden",
     maxWidth: "100%",
     position: "absolute",
   },
+  helloPosition: {
+    color: GlobalStyles.Color.gray_700,
+    left: "50%",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    textAlign: "left",
+    position: "absolute",
+  },
+  hello: {
+    left: 2,
+    fontSize: GlobalStyles.FontSize.size_8xl,
+    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
+    color: GlobalStyles.Color.indigo_100,
+    fontWeight: "700",
+    top: 0,
+  },
   groupChild: {
     marginTop: -181,
     borderRadius: GlobalStyles.Border.br_5xl,
+    backgroundColor: GlobalStyles.Color.white,
     height: 362,
     top: "50%",
-    left: 0,
-    backgroundColor: GlobalStyles.Color.white,
   },
   cardSpendingLimit1: {
     color: GlobalStyles.Color.gray_1400,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontWeight: "700",
     fontSize: GlobalStyles.FontSize.size_base,
+    fontWeight: "700",
   },
   cardSpendingLimit: {
     margin: GlobalStyles.Margin.margin_8xs,
@@ -125,14 +162,12 @@ const styles = StyleSheet.create({
     left: 27,
     lineHeight: 18,
     width: 257,
-    textAlign: "left",
     top: "50%",
-    position: "absolute",
   },
   meter1Icon: {
     width: 17,
     height: 17,
-    left: 0,
+    top: 0,
   },
   cardSpendingLimitTheSpendParent: {
     top: 20,
@@ -146,7 +181,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_sm,
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: GlobalStyles.Color.gray_600,
     position: "absolute",
     width: "100%",
   },
@@ -154,10 +189,10 @@ const styles = StyleSheet.create({
     height: "76.92%",
     width: "43.48%",
     top: "11.54%",
-    right: "6.52%",
+    right: "50%",
     bottom: "11.54%",
+    left: "6.52%",
     maxHeight: "100%",
-    left: "50%",
   },
   rectangleGroup: {
     top: 23,
@@ -172,64 +207,27 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   rectangleParent: {
-    top: 135,
+    top: 138,
     bottom: 0,
-    left: 0,
-  },
-  hello: {
-    marginTop: 93.5,
-    marginLeft: -38,
-    fontSize: GlobalStyles.FontSize.size_7xl,
-    color: GlobalStyles.Color.gray_700,
-    left: "50%",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontWeight: "700",
-    textAlign: "left",
-    top: "50%",
-    position: "absolute",
   },
   hello1: {
-    marginTop: 126.5,
-    marginLeft: -57,
-    color: GlobalStyles.Color.gray_700,
-    left: "50%",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontWeight: "700",
-    fontSize: GlobalStyles.FontSize.size_base,
-    textAlign: "left",
+    marginTop: 76,
+    marginLeft: -38,
+    fontSize: GlobalStyles.FontSize.size_7xl,
     top: "50%",
-    position: "absolute",
-  },
-  limitIs100: {
-    color: GlobalStyles.Color.gray_700,
-  },
-  changeLimit: {
-    color: GlobalStyles.Color.blue_100,
+    fontWeight: "700",
   },
   hello2: {
-    marginLeft: -58,
-    bottom: 16,
-    left: "50%",
-    fontSize: GlobalStyles.FontSize.size_3xs,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    position: "absolute",
-  },
-  cardIcon: {
-    marginLeft: -6,
-    bottom: 37,
-    width: 12,
-    height: 9,
-    left: "50%",
-    position: "absolute",
+    marginTop: 109,
+    marginLeft: -57,
+    fontSize: GlobalStyles.FontSize.size_base,
+    top: "50%",
+    fontWeight: "700",
   },
   hello3: {
-    left: 2,
-    fontSize: GlobalStyles.FontSize.size_8xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    textAlign: "left",
+    marginLeft: -40,
+    bottom: 16,
+    fontSize: GlobalStyles.FontSize.size_3xs,
   },
   theLimitDeterminesTheAmoun: {
     top: 40,
@@ -237,12 +235,18 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     width: 316,
     fontSize: GlobalStyles.FontSize.size_base,
-    textAlign: "left",
+  },
+  cardIcon: {
+    marginLeft: -6,
+    bottom: 38,
+    width: 12,
+    height: 9,
+    left: "50%",
     position: "absolute",
   },
-  groupParent: {
+  helloParent: {
     width: 326,
-    height: 497,
+    height: 500,
   },
   arrowPosition: {
     top: "6%",
@@ -254,14 +258,14 @@ const styles = StyleSheet.create({
     width: 15,
     height: 15,
   },
-  spendingLimit2: {
+  spendingLimit: {
+    backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
+    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 
-export default SpendingLimit2;
+export default SpendingLimit;

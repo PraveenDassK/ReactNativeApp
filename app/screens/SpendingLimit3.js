@@ -3,17 +3,13 @@ import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const SpendingLimit = () => {
- 
+const SpendingLimit3 = () => {
+  
 
   return (
     <Screen>
-    <View style={styles.spendingLimit}>
-    <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
+    <View style={styles.spendingLimit3}>
+       
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.limitFlexBox]}>Spending limit</Text>
         <View
@@ -47,30 +43,30 @@ const SpendingLimit = () => {
               <Text style={styles.cardSpendingLimit}>
                 <Text
                   style={[styles.theSpend, styles.theColor]}
-                >{`\n The spend & withdrawal cap`}</Text>
+                >{`\n`}The spend & withdrawal cap</Text>
               </Text>
             </Text>
             <Image
               style={[styles.meter1Icon, styles.groupChildPosition]}
               resizeMode="cover"
-              source={require("../assets/meter-1@3x.png")}
+              source={require("../assets/meter-1.png")}
             />
           </View>
           <Pressable
             style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
-            onPress={() => navigation.navigate("SetLimit")}
+            onPress={() => navigation.navigate("SetLimit1")}
           >
             <View style={styles.groupItem} />
             <Image
               style={[styles.groupInner, styles.groupLayout]}
               resizeMode="cover"
-              source={require("../assets/ellipse-350@3x.png")}
+              source={require("../assets/ellipse-350.png")}
             />
           </Pressable>
           <Image
             style={[styles.groupIcon, styles.groupLayout]}
             resizeMode="cover"
-            source={require("../assets/group-275793@3x.png")}
+            source={require("../assets/group-275793.png")}
           />
         </View>
         <Text style={[styles.hello1, styles.helloPosition]}>£22.33</Text>
@@ -93,7 +89,7 @@ const SpendingLimit = () => {
         <Image
           style={styles.cardIcon}
           resizeMode="cover"
-          source={require("../assets/card@3x.png")}
+          source={require("../assets/card.png")}
         />
       </View>
     </View>
@@ -120,7 +116,7 @@ const styles = StyleSheet.create({
   },
   theColor: {
     color: GlobalStyles.Color.gray_800,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   groupLayout: {
     overflow: "hidden",
@@ -130,14 +126,14 @@ const styles = StyleSheet.create({
   helloPosition: {
     color: GlobalStyles.Color.gray_700,
     left: "50%",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
   },
   hello: {
     left: 2,
     fontSize: GlobalStyles.FontSize.size_8xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
+    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",
     top: 0,
@@ -145,13 +141,14 @@ const styles = StyleSheet.create({
   groupChild: {
     marginTop: -181,
     borderRadius: GlobalStyles.Border.br_5xl,
-    backgroundColor: GlobalStyles.Color.white,
     height: 362,
     top: "50%",
+    backgroundColor: GlobalStyles.Color.white,
+    right: 0,
   },
   cardSpendingLimit1: {
     color: GlobalStyles.Color.gray_1400,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     fontWeight: "700",
   },
@@ -262,14 +259,14 @@ const styles = StyleSheet.create({
     width: 15,
     height: 15,
   },
-  spendingLimit: {
-    backgroundColor: GlobalStyles.Color.gray_100,
+  spendingLimit3: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 
-export default SpendingLimit;
+export default SpendingLimit3;

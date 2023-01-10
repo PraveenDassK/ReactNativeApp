@@ -9,11 +9,6 @@ const ReplaceCard = () => {
   return (
     <Screen>
     <View style={styles.replaceCard}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>Replace card</Text>
         <Pressable
@@ -73,17 +68,17 @@ const ReplaceCard = () => {
         <Image
           style={[styles.iconFeatherChevronRight, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/icon-featherchevronright@3x.png")}
+          source={require("../assets/icon-featherchevronright.png")}
         />
         <Image
           style={[styles.iconFeatherChevronRight1, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/icon-featherchevronright@3x.png")}
+          source={require("../assets/icon-featherchevronright.png")}
         />
         <Image
           style={[styles.iconFeatherChevronRight2, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/icon-featherchevronright@3x.png")}
+          source={require("../assets/icon-featherchevronright.png")}
         />
         <View style={[styles.groupView, styles.viewPosition]}>
           <View style={[styles.rectangleView, styles.viewPosition]} />
@@ -106,7 +101,7 @@ const ReplaceCard = () => {
             <Image
               style={styles.iconFeatherCreditCard}
               resizeMode="cover"
-              source={require("../assets/icon-feathercreditcard@3x.png")}
+              source={require("../assets/icon-feathercreditcard.png")}
             />
           </View>
         </View>

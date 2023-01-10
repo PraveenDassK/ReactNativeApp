@@ -8,11 +8,6 @@ const VerifyCode = () => {
   return (
     <Screen>
     <View style={styles.verifyCode}>
-    <Image
-        style={[styles.arrowCircle, styles.arrowPosition]}
-        resizeMode="cover"
-        source={require("../assets/icon-featherarrowleft@3x.png")}
-        />
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Verify your identity</Text>
         <Text style={[styles.hello1, styles.hello1Typo]}>

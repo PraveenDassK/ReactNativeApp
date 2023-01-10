@@ -7,11 +7,6 @@ const IWasAVictimOfFraudOrThe = () => {
   return (
     <Screen>
     <View style={styles.iWasAVictimOfFraudOrThe}>
-    <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
       <View style={styles.helloParent}>
         <Text style={styles.hello}>
           <Text style={styles.iWasA}>I was a victim of fraud or</Text>
@@ -71,7 +66,7 @@ const IWasAVictimOfFraudOrThe = () => {
           <Image
             style={styles.groupInner}
             resizeMode="cover"
-            source={require("../assets/ellipse-3260@3x.png")}
+            source={require("../assets/ellipse-3260.png")}
           />
           <View style={[styles.wrapper, styles.wrapperLayout]}>
             <Text
@@ -118,7 +113,7 @@ const IWasAVictimOfFraudOrThe = () => {
           <Image
             style={styles.groupInner}
             resizeMode="cover"
-            source={require("../assets/ellipse-3260@3x.png")}
+            source={require("../assets/ellipse-3260.png")}
           />
           <View style={[styles.container, styles.wrapperLayout]}>
             <Text
@@ -153,7 +148,7 @@ const IWasAVictimOfFraudOrThe = () => {
           <Image
             style={styles.groupInner}
             resizeMode="cover"
-            source={require("../assets/ellipse-3260@3x.png")}
+            source={require("../assets/ellipse-3260.png")}
           />
           <View style={[styles.container, styles.wrapperLayout]}>
             <Text

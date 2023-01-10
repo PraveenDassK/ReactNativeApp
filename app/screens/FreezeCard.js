@@ -19,7 +19,7 @@ const FreezeCard = () => {
             <Image
               style={styles.iconIonicIosArrowForward}
               resizeMode="cover"
-              source={require("../assets/icon-ioniciosarrowforward10@3x.png")}
+              source={require("../assets/downarrow.png")}
             />
           </View>
           <Text style={[styles.myCards, styles.myCardsTypo]}>My Cards</Text>
@@ -30,7 +30,7 @@ const FreezeCard = () => {
             <Image
               style={[styles.path23663Icon, styles.iconLayout]}
               resizeMode="cover"
-              source={require("../assets/path-23663@3x.png")}
+              source={require("../assets/cashwithdraw.png")}
             />
             <View style={[styles.groupView, styles.groupPosition2]}>
               <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
@@ -49,7 +49,7 @@ const FreezeCard = () => {
                 <Image
                   style={styles.maskGroup14}
                   resizeMode="cover"
-                  source={require("../assets/mask-group-144@3x.png")}
+                  source={require("../assets/freshsupermarket.png")}
                 />
               </View>
               <View style={[styles.groupParent2, styles.groupParentShadowBox]}>
@@ -68,7 +68,7 @@ const FreezeCard = () => {
                 <Image
                   style={styles.maskGroup14}
                   resizeMode="cover"
-                  source={require("../assets/mask-group-144@3x.png")}
+                  source={require("../assets/freshsupermarket.png")}
                 />
               </View>
               <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
@@ -89,7 +89,7 @@ const FreezeCard = () => {
                 <Image
                   style={styles.maskGroup14}
                   resizeMode="cover"
-                  source={require("../assets/mask-group-144@3x.png")}
+                  source={require("../assets/freshsupermarket.png")}
                 />
               </View>
               <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
@@ -108,7 +108,7 @@ const FreezeCard = () => {
                 <Image
                   style={[styles.maskGroup16, styles.groupPosition1]}
                   resizeMode="cover"
-                  source={require("../assets/mask-group-16@3x.png")}
+                  source={require("../assets/spotify-16.png")}
                 />
               </View>
               <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
@@ -127,7 +127,7 @@ const FreezeCard = () => {
                 <Image
                   style={[styles.groupItem, styles.groupPosition1]}
                   resizeMode="cover"
-                  source={require("../assets/rectangle-502@3x.png")}
+                  source={require("../assets/image-person.png")}
                 />
               </View>
             </View>
@@ -140,7 +140,7 @@ const FreezeCard = () => {
           <Image
             style={styles.groupInner}
             resizeMode="cover"
-            source={require("../assets/component-222--4@3x.png")}
+            source={require("../assets/icon-unfreeze.png")}
           />
           <Text style={[styles.hello, styles.helloTypo]}>FREEZE</Text>
         </Pressable>
@@ -152,7 +152,7 @@ const FreezeCard = () => {
           <Image
             style={[styles.settingsIcon, styles.iconLayout]}
             resizeMode="cover"
-            source={require("../assets/settings@3x.png")}
+            source={require("../assets/settings.png")}
           />
         </Pressable>
         <Text style={[styles.hello1, styles.helloTypo]}>SETTINGS</Text>
@@ -162,24 +162,24 @@ const FreezeCard = () => {
               <Image
                 style={[styles.path33118Icon, styles.groupIconLayout]}
                 resizeMode="cover"
-                source={require("../assets/path-3311819@3x.png")}
+                source={require("../assets/path-3311819.png")}
               />
               <View style={[styles.groupParent6, styles.groupPosition2]}>
                 <Image
                   style={[styles.groupIcon, styles.groupIconLayout]}
                   resizeMode="cover"
-                  source={require("../assets/group-3175918@3x.png")}
+                  source={require("../assets/logo-carbonytetext.png")}
                 />
                 <Image
                   style={[styles.groupChild1, styles.groupIconLayout]}
                   resizeMode="cover"
-                  source={require("../assets/group-3176020@3x.png")}
+                  source={require("../assets/logo-carbonytetextlarge.png")}
                 />
                 <View style={styles.groupChild2} />
                 <Image
                   style={[styles.rectangleIcon, styles.groupIconLayout]}
                   resizeMode="cover"
-                  source={require("../assets/rectangle-2620417@3x.png")}
+                  source={require("../assets/rectangle-2620417.png")}
                 />
                 <View style={styles.bWrapper}>
                   <Text style={[styles.b, styles.bTypo, styles.bTypo1]}>B</Text>
@@ -192,24 +192,24 @@ const FreezeCard = () => {
             <Image
               style={styles.groupChild3}
               resizeMode="cover"
-              source={require("../assets/group-3176420@3x.png")}
+              source={require("../assets/image-chip.png")}
             />
             <Image
               style={styles.groupChild4}
               resizeMode="cover"
-              source={require("../assets/group-3176618@3x.png")}
+              source={require("../assets/logo-visa.png")}
             />
             <Image
               style={styles.groupChild5}
               resizeMode="cover"
-              source={require("../assets/group-3176719@3x.png")}
+              source={require("../assets/icon-contactless.png")}
             />
           </View>
         </View>
         <Image
           style={[styles.maskGroup25046, styles.card1Position]}
           resizeMode="cover"
-          source={require("../assets/mask-group-25046@3x.png")}
+          source={require("../assets/image-freezecard.png")}
         />
       </View>
     </View>

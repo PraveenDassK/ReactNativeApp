@@ -14,7 +14,7 @@ const VerifyCode1 = () => {
         <Image
           style={[styles.iconAwesomeCheckCircle, styles.hello1Position]}
           resizeMode="cover"
-          source={require("../assets/icon-awesomecheckcircle@3x.png")}
+          source={require("../assets/icon-awesomecheckcircle.png")}
         />
         <Text style={[styles.hello1, styles.hello1Position, styles.helloTypo]}>
           Tap anywhere to continue

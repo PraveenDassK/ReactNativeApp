@@ -9,11 +9,7 @@ const CardSettings = () => {
   return (
     <Screen>
     <View style={styles.cardSettings}>
-    <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
+     
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Settings</Text>
         <Text style={styles.hello1}>Security</Text>
@@ -56,7 +52,7 @@ const CardSettings = () => {
             <Image
               style={[styles.meter1Icon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/meter-1@3x.png")}
+              source={require("../assets/meter-1.png")}
             />
           </View>
         </Pressable>
@@ -103,7 +99,7 @@ const CardSettings = () => {
             <Image
               style={[styles.meter1Icon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/meter-1@3x.png")}
+              source={require("../assets/meter-1.png")}
             />
           </View>
         </View>
@@ -156,7 +152,7 @@ const CardSettings = () => {
             <Image
               style={[styles.resetIcon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/reset@3x.png")}
+              source={require("../assets/reset.png")}
             />
           </Pressable>
           <Pressable
@@ -194,7 +190,7 @@ const CardSettings = () => {
             <Image
               style={[styles.meter1Icon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/delete-6@3x.png")}
+              source={require("../assets/delete-redbin.png")}
             />
           </Pressable>
         </View>
@@ -240,7 +236,7 @@ const CardSettings = () => {
             <Image
               style={[styles.globeIcon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/globe@3x.png")}
+              source={require("../assets/globe.png")}
             />
           </View>
           <View
@@ -277,7 +273,7 @@ const CardSettings = () => {
             <Image
               style={[styles.swipeCardIcon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/swipecard@3x.png")}
+              source={require("../assets/swipecard.png")}
             />
           </View>
           <View
@@ -315,7 +311,7 @@ const CardSettings = () => {
             <Image
               style={[styles.atmIcon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/atm@3x.png")}
+              source={require("../assets/atm.png")}
             />
           </View>
           <View
@@ -360,7 +356,7 @@ const CardSettings = () => {
             <Image
               style={[styles.swipeCardIcon, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/contactlesspayment-1@3x.png")}
+              source={require("../assets/contactlesspayment-1.png")}
             />
           </View>
           <View style={[styles.rectangleParent1, styles.rectangleParentLayout]}>
@@ -368,7 +364,7 @@ const CardSettings = () => {
             <Image
               style={styles.ellipseIcon}
               resizeMode="cover"
-              source={require("../assets/ellipse-350@3x.png")}
+              source={require("../assets/ellipse-350.png")}
             />
           </View>
           <View style={[styles.rectangleParent2, styles.rectangleParentLayout]}>
@@ -376,7 +372,7 @@ const CardSettings = () => {
             <Image
               style={styles.ellipseIcon}
               resizeMode="cover"
-              source={require("../assets/ellipse-350@3x.png")}
+              source={require("../assets/ellipse-350.png")}
             />
           </View>
           <View style={[styles.rectangleParent3, styles.rectangleParentLayout]}>
@@ -384,7 +380,7 @@ const CardSettings = () => {
             <Image
               style={styles.ellipseIcon}
               resizeMode="cover"
-              source={require("../assets/ellipse-350@3x.png")}
+              source={require("../assets/ellipse-350.png")}
             />
           </View>
           <View style={[styles.rectangleParent4, styles.rectangleParentLayout]}>
@@ -392,7 +388,7 @@ const CardSettings = () => {
             <Image
               style={styles.ellipseIcon}
               resizeMode="cover"
-              source={require("../assets/ellipse-350@3x.png")}
+              source={require("../assets/ellipse-350.png")}
             />
           </View>
         </View>

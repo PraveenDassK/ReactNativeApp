@@ -23,12 +23,12 @@ const Account3 = () => {
           <Image
             style={styles.component3731Inner}
             resizeMode="cover"
-            source={require("../assets/group-30387@3x.png")}
+            source={require("../assets/group-30387.png")}
           />
           <Image
             style={[styles.rectangleIcon, styles.rectangleIconPosition]}
             resizeMode="cover"
-            source={require("../assets/rectangle-6035@3x.png")}
+            source={require("../assets/rectangle-6035.png")}
           />
           <Text style={[styles.hello, styles.helloTypo4]}>2400</Text>
           <Text style={[styles.hello1, styles.helloTypo3]}>Kg of CO2</Text>
@@ -36,7 +36,7 @@ const Account3 = () => {
           <Image
             style={[styles.component3731Child1, styles.rectangleIconPosition]}
             resizeMode="cover"
-            source={require("../assets/rectangle-6033@3x.png")}
+            source={require("../assets/rectangle-6033.png")}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
           <View style={[styles.component3731Child2, styles.lineViewPosition]} />
@@ -50,7 +50,7 @@ const Account3 = () => {
               <Image
                 style={[styles.iconFeatherHeart, styles.iconPosition2]}
                 resizeMode="cover"
-                source={require("../assets/icon-featherheart@3x.png")}
+                source={require("../assets/icon-featherheart.png")}
               />
               <Text style={styles.hello4}>254</Text>
             </View>
@@ -64,7 +64,7 @@ const Account3 = () => {
               <Image
                 style={[styles.layer2Icon, styles.iconPosition2]}
                 resizeMode="cover"
-                source={require("../assets/layer-21@3x.png")}
+                source={require("../assets/layer-2.png")}
               />
             </View>
             <View style={[styles.helloContainer, styles.groupParentPosition]}>
@@ -79,7 +79,7 @@ const Account3 = () => {
               <Image
                 style={[styles.house1Icon, styles.iconPosition1]}
                 resizeMode="cover"
-                source={require("../assets/house-12@3x.png")}
+                source={require("../assets/house-12.png")}
               />
             </View>
             <View style={[styles.groupView, styles.groupParentPosition]}>
@@ -94,7 +94,7 @@ const Account3 = () => {
               <Image
                 style={[styles.shoppingIcon, styles.iconPosition1]}
                 resizeMode="cover"
-                source={require("../assets/shopping1@3x.png")}
+                source={require("../assets/shopping1.png")}
               />
             </View>
             <View style={[styles.helloParent1, styles.groupParentPosition]}>
@@ -109,7 +109,7 @@ const Account3 = () => {
               <Image
                 style={styles.transportationIcon}
                 resizeMode="cover"
-                source={require("../assets/transportation@3x.png")}
+                source={require("../assets/transportation.png")}
               />
             </View>
           </View>
@@ -181,7 +181,7 @@ const Account3 = () => {
         <Image
           style={[styles.groupIcon, styles.groupLayout]}
           resizeMode="cover"
-          source={require("../assets/group-30403@3x.png")}
+          source={require("../assets/group-30403.png")}
         />
         <Pressable
           style={[styles.sendMoneyParent, styles.parentShadowBox]}
@@ -193,7 +193,7 @@ const Account3 = () => {
           <Image
             style={styles.send1Icon}
             resizeMode="cover"
-            source={require("../assets/send-1@3x.png")}
+            source={require("../assets/send-1.png")}
           />
         </Pressable>
         <View style={[styles.bankTransferParent, styles.parentShadowBox]}>
@@ -207,7 +207,7 @@ const Account3 = () => {
               styles.iconPosition,
             ]}
             resizeMode="cover"
-            source={require("../assets/transfer-1@3x.png")}
+            source={require("../assets/transfer-1.png")}
           />
         </View>
         <Pressable
@@ -226,7 +226,7 @@ const Account3 = () => {
           <Image
             style={[styles.addIcon, styles.addIconLayout, styles.iconPosition]}
             resizeMode="cover"
-            source={require("../assets/add@3x.png")}
+            source={require("../assets/add.png")}
           />
         </Pressable>
         <View style={[styles.historyGroup, styles.groupPosition1]}>
@@ -242,7 +242,7 @@ const Account3 = () => {
           <Image
             style={styles.path23663Icon}
             resizeMode="cover"
-            source={require("../assets/path-23663@3x.png")}
+            source={require("../assets/cashwithdraw.png")}
           />
           <View style={styles.groupContainer}>
             <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
@@ -257,7 +257,7 @@ const Account3 = () => {
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
-                source={require("../assets/mask-group-144@3x.png")}
+                source={require("../assets/freshsupermarket.png")}
               />
             </View>
             <View style={[styles.groupParent2, styles.groupParentShadowBox]}>
@@ -272,7 +272,7 @@ const Account3 = () => {
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
-                source={require("../assets/mask-group-1412@3x.png")}
+                source={require("../assets/freshsupermarket.png")}
               />
             </View>
             <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
@@ -287,7 +287,7 @@ const Account3 = () => {
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
-                source={require("../assets/mask-group-1412@3x.png")}
+                source={require("../assets/freshsupermarket.png")}
               />
             </View>
             <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
@@ -302,7 +302,7 @@ const Account3 = () => {
               <Image
                 style={[styles.maskGroup16, styles.groupPosition]}
                 resizeMode="cover"
-                source={require("../assets/mask-group-16@3x.png")}
+                source={require("../assets/spotify-16.png")}
               />
             </View>
             <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
@@ -317,7 +317,7 @@ const Account3 = () => {
               <Image
                 style={[styles.groupChild7, styles.groupPosition]}
                 resizeMode="cover"
-                source={require("../assets/rectangle-502@3x.png")}
+                source={require("../assets/image-person.png")}
               />
             </View>
           </View>
@@ -325,12 +325,12 @@ const Account3 = () => {
         <Image
           style={[styles.cardIcon, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/card@3x.png")}
+          source={require("../assets/card.png")}
         />
         <Image
           style={[styles.groupChild8, styles.groupLayout]}
           resizeMode="cover"
-          source={require("../assets/group-31984@3x.png")}
+          source={require("../assets/group-31984.png")}
         />
         <View
           style={[
@@ -376,7 +376,7 @@ const Account3 = () => {
           <Image
             style={[styles.path33217Icon, styles.iconGroupLayout]}
             resizeMode="cover"
-            source={require("../assets/path-33217@3x.png")}
+            source={require("../assets/path-33217.png")}
           />
           <Text
             style={[styles.text9, styles.historyTypo1, styles.historyPosition]}
@@ -401,14 +401,14 @@ const Account3 = () => {
             <Image
               style={styles.polygonIcon}
               resizeMode="cover"
-              source={require("../assets/polygon-5@3x.png")}
+              source={require("../assets/polygon-5.png")}
             />
           </View>
           <View style={[styles.vectorContainer, styles.vectorPosition]}>
             <Image
               style={styles.polygonIcon}
               resizeMode="cover"
-              source={require("../assets/polygon-5@3x.png")}
+              source={require("../assets/polygon-5.png")}
             />
           </View>
           <Text style={[styles.referAndEarnCarbonTokens, styles.helloTypo]}>
@@ -427,7 +427,7 @@ const Account3 = () => {
           <Image
             style={[styles.groupChild13, styles.iconGroupLayout]}
             resizeMode="cover"
-            source={require("../assets/group-32017@3x.png")}
+            source={require("../assets/group-32017.png")}
           />
         </View>
         <Pressable
@@ -451,12 +451,12 @@ const Account3 = () => {
           <Image
             style={[styles.groupChild14, styles.iconGroupLayout]}
             resizeMode="cover"
-            source={require("../assets/group-32066@3x.png")}
+            source={require("../assets/group-32066.png")}
           />
           <Image
             style={[styles.image88Icon, styles.iconGroupLayout]}
             resizeMode="cover"
-            source={require("../assets/image-881@3x.png")}
+            source={require("../assets/image-881.png")}
           />
         </Pressable>
       </View>

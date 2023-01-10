@@ -7,11 +7,7 @@ const CarbonSpending = () => {
   return (
     <Screen>
     <View style={styles.carbonSpending}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
+       
       <View style={styles.groupParent}>
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo5, styles.helloLayout]}>
@@ -48,12 +44,12 @@ const CarbonSpending = () => {
           <Image
             style={styles.groupInner}
             resizeMode="cover"
-            source={require("../assets/ellipse-3211@3x.png")}
+            source={require("../assets/ellipse-3211.png")}
           />
           <Image
             style={[styles.groupIcon, styles.groupIconPosition]}
             resizeMode="cover"
-            source={require("../assets/group-30652@3x.png")}
+            source={require("../assets/group-30652.png")}
           />
           <Text style={[styles.hello10, styles.helloTypo]}>2436</Text>
           <Text style={[styles.hello11, styles.helloTypo]}>
@@ -63,7 +59,7 @@ const CarbonSpending = () => {
           <Image
             style={[styles.iconFeatherHeart, styles.iconLayout]}
             resizeMode="cover"
-            source={require("../assets/icon-featherheart@3x.png")}
+            source={require("../assets/icon-featherheart.png")}
           />
           <Image
             style={[
@@ -72,12 +68,12 @@ const CarbonSpending = () => {
               styles.house1IconLayout,
             ]}
             resizeMode="cover"
-            source={require("../assets/house-1@3x.png")}
+            source={require("../assets/house-1.png")}
           />
           <Image
             style={[styles.transportationIcon, styles.transportationIconLayout]}
             resizeMode="cover"
-            source={require("../assets/transportation@3x.png")}
+            source={require("../assets/transportation.png")}
           />
         </View>
         <View style={[styles.lanceBogrolParent, styles.parentPosition]}>
@@ -99,7 +95,7 @@ const CarbonSpending = () => {
               <Image
                 style={[styles.iconFeatherHeart1, styles.iconLayout]}
                 resizeMode="cover"
-                source={require("../assets/icon-featherheart@3x.png")}
+                source={require("../assets/icon-featherheart.png")}
               />
               <Text style={[styles.hello13, styles.helloTypo]}>254</Text>
             </View>
@@ -112,7 +108,7 @@ const CarbonSpending = () => {
               <Image
                 style={[styles.layer2Icon, styles.iconPosition1]}
                 resizeMode="cover"
-                source={require("../assets/layer-2@3x.png")}
+                source={require("../assets/layer-2.png")}
               />
             </View>
             <View style={[styles.helloParent2, styles.helloParentPosition]}>
@@ -126,7 +122,7 @@ const CarbonSpending = () => {
                   styles.house1IconLayout,
                 ]}
                 resizeMode="cover"
-                source={require("../assets/house-11@3x.png")}
+                source={require("../assets/house-1.png")}
               />
             </View>
             <View style={[styles.helloParent3, styles.helloParentPosition]}>
@@ -136,7 +132,7 @@ const CarbonSpending = () => {
               <Image
                 style={[styles.shoppingIcon, styles.house1IconPosition]}
                 resizeMode="cover"
-                source={require("../assets/shopping@3x.png")}
+                source={require("../assets/shopping.png")}
               />
             </View>
             <View style={[styles.helloParent4, styles.helloParentPosition]}>
@@ -149,7 +145,7 @@ const CarbonSpending = () => {
                   styles.transportationIconLayout,
                 ]}
                 resizeMode="cover"
-                source={require("../assets/transportation@3x.png")}
+                source={require("../assets/transportation.png")}
               />
             </View>
           </View>
@@ -163,7 +159,7 @@ const CarbonSpending = () => {
           <Image
             style={[styles.path23339Icon, styles.groupChild9Layout]}
             resizeMode="cover"
-            source={require("../assets/path-23663@3x.png")}
+            source={require("../assets/cashwithdraw.png")}
           />
           <View style={[styles.groupParent1, styles.groupParentShadowBox]}>
             <View style={[styles.lanceBogrolGroup, styles.groupPosition]}>
@@ -185,7 +181,7 @@ const CarbonSpending = () => {
             <Image
               style={[styles.iconAwesomePlaneDeparture, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/icon-awesomeplanedeparture@3x.png")}
+              source={require("../assets/icon-awesomeplanedeparture.png")}
             />
           </View>
           <View style={[styles.groupParent2, styles.groupParentShadowBox]}>
@@ -206,7 +202,7 @@ const CarbonSpending = () => {
             <Image
               style={[styles.iconMapFood, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/icon-mapfood@3x.png")}
+              source={require("../assets/icon-mapfood.png")}
             />
           </View>
           <View style={[styles.groupParent3, styles.groupParentShadowBox]}>
@@ -227,7 +223,7 @@ const CarbonSpending = () => {
             <Image
               style={[styles.iconAwesomeCar, styles.iconPosition1]}
               resizeMode="cover"
-              source={require("../assets/icon-awesomecar@3x.png")}
+              source={require("../assets/icon-awesomecar.png")}
             />
           </View>
           <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
@@ -248,14 +244,14 @@ const CarbonSpending = () => {
             <Image
               style={[styles.iconAwesomeShoppingCart, styles.iconLayout]}
               resizeMode="cover"
-              source={require("../assets/icon-awesomeshoppingcart@3x.png")}
+              source={require("../assets/icon-awesomeshoppingcart.png")}
             />
           </View>
         </View>
         <Image
           style={[styles.groupChild9, styles.groupChild9Layout]}
           resizeMode="cover"
-          source={require("../assets/group-31146@3x.png")}
+          source={require("../assets/group-31146.png")}
         />
       </View>
     </View>

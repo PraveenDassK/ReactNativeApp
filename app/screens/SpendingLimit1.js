@@ -33,7 +33,7 @@ const SpendingLimit1 = () => {
             <Image
               style={[styles.meter1Icon, styles.hello3Position]}
               resizeMode="cover"
-              source={require("../assets/meter-1@3x.png")}
+              source={require("../assets/meter-1.png")}
             />
           </View>
           <View style={[styles.rectangleGroup, styles.rectangleGroupPosition]}>
@@ -41,13 +41,13 @@ const SpendingLimit1 = () => {
             <Image
               style={[styles.groupInner, styles.groupLayout]}
               resizeMode="cover"
-              source={require("../assets/ellipse-350@3x.png")}
+              source={require("../assets/ellipse-350.png")}
             />
           </View>
           <Image
             style={[styles.groupIcon, styles.groupLayout]}
             resizeMode="cover"
-            source={require("../assets/group-275792@3x.png")}
+            source={require("../assets/group-275792.png")}
           />
         </View>
         <Text style={styles.hello}>£22.33</Text>
@@ -59,7 +59,7 @@ const SpendingLimit1 = () => {
         <Image
           style={styles.cardIcon}
           resizeMode="cover"
-          source={require("../assets/card@3x.png")}
+          source={require("../assets/card.png")}
         />
         <Text style={[styles.hello3, styles.hello3Position]}>
           Spending limit

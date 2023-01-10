@@ -9,11 +9,6 @@ const VerifyYourIdentity = () => {
   return (
     <Screen>
     <View style={styles.verifyYourIdentity}>
-    <Image
-        style={[styles.arrowCircle, styles.arrowPosition]}
-        resizeMode="cover"
-        source={require("../assets/icon-featherarrowleft@3x.png")}
-        />
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Verify your identity</Text>
         <Text style={[styles.hello1, styles.helloTypo, styles.helloTypo1]}>
@@ -50,13 +45,13 @@ const VerifyYourIdentity = () => {
                 styles.iconPosition1,
               ]}
               resizeMode="cover"
-              source={require("../assets/icon-materialtextsms@3x.png")}
+              source={require("../assets/icon-materialtextsms.png")}
             />
           </View>
           <Image
             style={[styles.groupItem, styles.iconPosition]}
             resizeMode="cover"
-            source={require("../assets/component-226--1@3x.png")}
+            source={require("../assets/component-226--1.png")}
           />
         </View>
         <View style={[styles.helloContainer, styles.groupPosition]}>
@@ -73,13 +68,13 @@ const VerifyYourIdentity = () => {
             <Image
               style={[styles.iconAwesomePhoneVolume, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/icon-awesomephonevolume@3x.png")}
+              source={require("../assets/icon-awesomephonevolume.png")}
             />
           </View>
           <Image
             style={[styles.groupItem, styles.iconPosition]}
             resizeMode="cover"
-            source={require("../assets/component-226--1@3x.png")}
+            source={require("../assets/component-226--1.png")}
           />
         </View>
         <View style={[styles.groupView, styles.groupPosition]}>
@@ -96,13 +91,13 @@ const VerifyYourIdentity = () => {
             <Image
               style={[styles.iconMaterialEmail, styles.iconPosition1]}
               resizeMode="cover"
-              source={require("../assets/icon-materialemail@3x.png")}
+              source={require("../assets/icon-materialemail.png")}
             />
           </View>
           <Image
             style={[styles.groupItem, styles.iconPosition]}
             resizeMode="cover"
-            source={require("../assets/component-226--1@3x.png")}
+            source={require("../assets/component-226--1.png")}
           />
         </View>
         <View style={[styles.lineView, styles.lineViewPosition]} />

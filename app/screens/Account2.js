@@ -7,11 +7,7 @@ const Account2 = () => {
   return (
     <Screen>
     <View style={styles.account2}>
-    <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-featherarrowleft@3x.png")}
-          />
+     
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Account verification letter</Text>
         <View style={[styles.groupChild, styles.groupChildPosition]} />
@@ -49,7 +45,7 @@ const Account2 = () => {
         <Image
           style={[styles.iconZocialEmail, styles.groupChildPosition]}
           resizeMode="cover"
-          source={require("../assets/icon-zocialemail@3x.png")}
+          source={require("../assets/icon-zocialemail.png")}
         />
       </View>
     </View>

@@ -19,7 +19,7 @@ const SignUpPersonal3 = () => {
         <Image
           style={styles.iconIonicIosArrowDown}
           resizeMode="cover"
-          source={require("../assets/icon-ioniciosarrowdown14.png")}
+          source={require("../assets/icon-ioniciosarrowdown.png")}
         />
         <Text style={[styles.hello1, styles.helloFlexBox]}>
           Sign In to your account
