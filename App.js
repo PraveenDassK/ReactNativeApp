@@ -84,12 +84,21 @@ import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
 
+import PushNotification from "./app/screens/PushNotifications";
+import DOB from "./app/screens/DOB"
+
+
 //import verifyCode from "./app/screens/VerifyCode"
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
   <Stack.Navigator initialRouteName="SplashAnimation">
+
+    <Stack.Screen name="DOB" component={DOB}/>
+    <Stack.Screen name="PushNotification" component={PushNotification}/>
+
+
     <Stack.Screen name="FreezeCard" component={FreezeCard}/>
     <Stack.Screen name="DirectorsOrPartners" component={DirectorsOrPartners}/>
     <Stack.Screen name="ConfirmDirectors" component={ConfirmDirectors}/>
