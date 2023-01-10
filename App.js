@@ -27,15 +27,28 @@ import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
 import LoginPersonal from "./app/screens/SignUpPersonal"
 import CountryOfResidence from "./app/screens/CountryOfResidence"
 import SignUpPersonal from "./app/screens/SignUpPersonal"
-import SignUpPersonal3 from "./app/screens/SignUpPersonal3";
 import FaceScan from "./app/screens/FaceScan"
 import BiometrixComplete from "./app/screens/BiometrixComplete"
 import Pin from "./app/screens/Pin"
 import Success from "./app/screens/Success"
 import Name from "./app/screens/Name"
-import MyCards from "./app/screens/MyCards"
+
+import SignUpPersonal3 from "./app/screens/SignUpPersonal3";
+
 import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
 import ProofVerified from "./app/screens/ProofVerified"
+import BusinessAddress2 from "./app/screens/ProofVerified"
+import AddFunds from "./app/screens/AddFunds"
+import SendMoney from "./app/screens/SendMoney"
+import BankTransfer from "./app/screens/BankTransfer"
+import Analytics from "./app/screens/Analytics"
+import SecurityAndPrivacy from "./app/screens/SecurityAndPrivacy"
+import FindFriends from "./app/screens/FindFriends"
+import PersonalAddress from "./app/screens/PersonalAddress"
+import ReviewAndConfirm from "./app/screens/ReviewAndConfirm"
+import SendAccountSelection from "./app/screens/SendAccountSelection"
+
+import MyCards from "./app/screens/MyCards"
 import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
 import SendEnterPIN from "./app/screens/SendEnterPIN";
 import FreezeCard from "./app/screens/FreezeCard";
@@ -71,6 +84,8 @@ import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
 // SplashScreen.preventAutoHideAsync(); 
 
+//import verifyCode from "./app/screens/VerifyCode"
+
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
@@ -86,23 +101,34 @@ const StackNavigator = () => (
     <Stack.Screen name="ChooseCardsElite" component={ChooseCardsElite}/>
     <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>
     <Stack.Screen name="SendEnterPIN" component={SendEnterPIN}/>
+  <Stack.Navigator initialRouteName="SplashAnimation">
+
+    <Stack.Screen  name="SendAccountSelection" component={SendAccountSelection}/>
+    <Stack.Screen  name="ReviewAndConfirm" component={ReviewAndConfirm}/>
+    <Stack.Screen  name="PersonalAddress" component={PersonalAddress}/>
+    <Stack.Screen  name="FindFriends" component={FindFriends}/>
+    <Stack.Screen  name="SecurityAndPrivacy" component={SecurityAndPrivacy}/>
+
+    <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
+
+    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyList}/>
+
+    <Stack.Screen  name="Analytics" component={Analytics}/>
+    <Stack.Screen  name="SendMoney" component={SendMoney}/>
+    <Stack.Screen  name="AddFunds" component={AddFunds}/>
+    <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
+    <Stack.Screen  name="CountryOfResidence" component={CountryOfResidence}/>
+
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
     <Stack.Screen  name="OTPVerificationPersonal" component={OTPVerificationPersonal}/>
-    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
-    <Stack.Screen  name="Account3" component={Account3}/>
-    <Stack.Screen  name="Account2" component={Account2}/>
-    <Stack.Screen  name="SpendingLimit3" component={SpendingLimit3}/>
-    <Stack.Screen  name="ItsDamagedOrDoesntWork" component={ItsDamagedOrDoesntWork}/>
-    <Stack.Screen  name="IWasAVictimOfFraudOrThe" component={IWasAVictimOfFraudOrThe}/>
+
     <Stack.Screen  name="ProofVerified" component={ProofVerified}/>
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyList}/>
     <Stack.Screen  name="Name" component={Name}/>
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Account" component={Account}/>
-    <Stack.Screen  name="Terminate" component={Terminate}/>
-    <Stack.Screen  name="TerminatedCard" component={TerminatedCard}/>
+
     <Stack.Screen  name="Success" component={Success}/>
     <Stack.Screen  name="Pin" component={Pin}/>
     <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
@@ -123,8 +149,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
 
     <Stack.Screen  name="SignUpPersonal" component={SignUpPersonal}/>
-    <Stack.Screen  name="SignUpPersonal3" component={SignUpPersonal3}/>
-    <Stack.Screen  name="CountryOfResidence" component={CountryOfResidence}/>
 
     <Stack.Screen  name="LoginPersonal" component={LoginPersonal}/>
 
@@ -133,6 +157,25 @@ const StackNavigator = () => (
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
     <Stack.Screen  name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
     <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
+
+    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
+    <Stack.Screen  name="Account3" component={Account3}/>
+    <Stack.Screen  name="Account2" component={Account2}/>
+    <Stack.Screen  name="SpendingLimit3" component={SpendingLimit3}/>
+    <Stack.Screen  name="ItsDamagedOrDoesntWork" component={ItsDamagedOrDoesntWork}/>
+    <Stack.Screen  name="IWasAVictimOfFraudOrThe" component={IWasAVictimOfFraudOrThe}/>
+    <Stack.Screen  name="SendEnterPIN1" component={SendEnterPIN1}/>
+    <Stack.Screen  name="FreezeCard" component={FreezeCard}/>
+    <Stack.Screen  name="Terminate" component={Terminate}/>
+    <Stack.Screen  name="TerminatedCard" component={TerminatedCard}/>
+    <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
+    <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
+    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/>
+    <Stack.Screen  name="BankTransferAmount" component={BankTransferAmount}/>
+    <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
+    <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
+    <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
+    <Stack.Screen  name="SignUpPersonal3" component={SignUpPersonal3}/>
 
     <Stack.Screen name="MyCars" component={MyCards}/>
     <Stack.Screen name="CardSettings" component={CardSettings}/>
