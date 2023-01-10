@@ -14,8 +14,6 @@ import Onboarding3 from "./app/screens/Onboarding3"
 
 import GlobalStyles from "./GlobalStyles";
 
-import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
-import ChooseCardsElite from "./app/screens/ChooseCardsElite";
 import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
 import OTPVerificationPersonal from "./app/screens/OTPVerificationPersonal";
 import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
@@ -35,10 +33,15 @@ import Name from "./app/screens/Name"
 
 import SignUpPersonal3 from "./app/screens/SignUpPersonal3";
 
+
+import SendEnterPIN from "./app/screens/SendEnterPIN";
+
+import BusinessChooseAddress1 from "./app/screens/BusinessChooseAddress1";
+
+import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
+import ChooseCardsElite from "./app/screens/ChooseCardsElite";
+
 import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
-import ProofVerified from "./app/screens/ProofVerified"
-import BusinessAddress2 from "./app/screens/ProofVerified"
-import AddFunds from "./app/screens/AddFunds"
 import SendMoney from "./app/screens/SendMoney"
 import BankTransfer from "./app/screens/BankTransfer"
 import Analytics from "./app/screens/Analytics"
@@ -49,8 +52,12 @@ import ReviewAndConfirm from "./app/screens/ReviewAndConfirm"
 import SendAccountSelection from "./app/screens/SendAccountSelection"
 
 import MyCards from "./app/screens/MyCards"
+
+import ProofVerified from "./app/screens/ProofVerified"
+import BusinessAddress2 from "./app/screens/BusinessAddress2"
+import AddFunds from "./app/screens/AddFunds"
+
 import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
-import SendEnterPIN from "./app/screens/SendEnterPIN";
 import FreezeCard from "./app/screens/FreezeCard";
 import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
@@ -73,26 +80,16 @@ import BankTransferAmount from "./app/screens/BankTransferAmount";
 import VerifyCode1 from "./app/screens/VerifyCode1";
 import VerifyCode from "./app/screens/VerifyCode";
 import AddBeneficiary from "./app/screens/AddBeneficiary";
-import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
-import SelectBank1 from "./app/screens/SelectBank1";
-import SelectBank from "./app/screens/SelectBank";
-import SentMoney from "./app/screens/SentMoney";
-import CarbonCart1 from "./app/screens/CarbonCart1";
-import AddFundsSuccess from "./app/screens/AddFundsSuccess";
-import BusinessChooseAddress1 from "./app/screens/BusinessChooseAddress1";
+import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
-// SplashScreen.preventAutoHideAsync(); 
 
 //import verifyCode from "./app/screens/VerifyCode"
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="carbon">
-    <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
-
-
+  <Stack.Navigator initialRouteName="SplashAnimation">
     <Stack.Screen name="FreezeCard" component={FreezeCard}/>
     <Stack.Screen name="DirectorsOrPartners" component={DirectorsOrPartners}/>
     <Stack.Screen name="ConfirmDirectors" component={ConfirmDirectors}/>
@@ -101,8 +98,8 @@ const StackNavigator = () => (
     <Stack.Screen name="ChooseCardsElite" component={ChooseCardsElite}/>
     <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>
     <Stack.Screen name="SendEnterPIN" component={SendEnterPIN}/>
-  <Stack.Navigator initialRouteName="SplashAnimation">
 
+    <Stack.Screen  name="Address1" component={Address1}/>
     <Stack.Screen  name="SendAccountSelection" component={SendAccountSelection}/>
     <Stack.Screen  name="ReviewAndConfirm" component={ReviewAndConfirm}/>
     <Stack.Screen  name="PersonalAddress" component={PersonalAddress}/>
@@ -124,26 +121,12 @@ const StackNavigator = () => (
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
     <Stack.Screen  name="OTPVerificationPersonal" component={OTPVerificationPersonal}/>
 
-    <Stack.Screen  name="ProofVerified" component={ProofVerified}/>
     <Stack.Screen  name="Name" component={Name}/>
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Account" component={Account}/>
 
     <Stack.Screen  name="Success" component={Success}/>
     <Stack.Screen  name="Pin" component={Pin}/>
-    <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
-    <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
-    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/>
-    <Stack.Screen  name="BankTransferAmount" component={BankTransferAmount}/>
-    <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
-    <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
-    <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
-    <Stack.Screen  name="VerifyYourIdentity" component={VerifyYourIdentity}/>
-    <Stack.Screen  name="SelectBank1" component={SelectBank1}/>
-    <Stack.Screen  name="SelectBank" component={SelectBank}/>
-    <Stack.Screen  name="SentMoney" component={SentMoney}/>
-    <Stack.Screen  name="CarbonCart1" component={CarbonCart1}/>
-    <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
 
     <Stack.Screen  name="BiometrixComplete" component={BiometrixComplete}/>
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
@@ -164,8 +147,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="SpendingLimit3" component={SpendingLimit3}/>
     <Stack.Screen  name="ItsDamagedOrDoesntWork" component={ItsDamagedOrDoesntWork}/>
     <Stack.Screen  name="IWasAVictimOfFraudOrThe" component={IWasAVictimOfFraudOrThe}/>
-    <Stack.Screen  name="SendEnterPIN1" component={SendEnterPIN1}/>
-    <Stack.Screen  name="FreezeCard" component={FreezeCard}/>
     <Stack.Screen  name="Terminate" component={Terminate}/>
     <Stack.Screen  name="TerminatedCard" component={TerminatedCard}/>
     <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
