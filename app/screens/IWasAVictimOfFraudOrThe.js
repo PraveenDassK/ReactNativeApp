@@ -273,8 +273,8 @@ const styles = StyleSheet.create({
   },
   groupInner: {
     left: 16,
-    width: 22,
-    height: 22,
+    width: "7.5%",
+    height: "40%",
     marginTop: -11.5,
     top: "50%",
     position: "absolute",
@@ -285,28 +285,28 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   wrapper: {
-    marginTop: -6.5,
+    marginTop: "-2%",
     left: 23,
   },
   rectangleGroup: {
     top: 69,
   },
   container: {
-    marginTop: -7.5,
+    marginTop: "-2%",
     left: 24,
   },
   rectangleContainer: {
-    marginTop: -192.5,
+    marginTop: "-60%",
   },
   startUsingYourNewCardRigh: {
-    marginTop: -13,
+    marginTop: "-5%",
     fontWeight: "700",
   },
   startUsingYourNewCardRighWrapper: {
-    height: 26,
+    height: "30%",
   },
   groupView: {
-    marginTop: -119.5,
+    marginTop: "-38%",
   },
   helloParent: {
     width: 326,
@@ -317,10 +317,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   arrowCircle: {
-    marginTop: -10.11,
-    marginRight: 303.54,
-    width: 15,
-    height: 15,
+    marginTop: "-2%",
+    marginRight: "20%",
+    width: "2%",
+    height: "3%",
   },
   iWasAVictimOfFraudOrThe: {
     flex: 1,

@@ -106,7 +106,7 @@ import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="FreezeCard">
+  <Stack.Navigator initialRouteName="IWasAVictimOfFraudOrThe">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>

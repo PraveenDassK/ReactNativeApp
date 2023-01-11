@@ -273,8 +273,8 @@ const styles = StyleSheet.create({
   },
   groupInner: {
     left: 16,
-    width: 22,
-    height: 22,
+    width: "7.5%",
+    height: "40%",
     marginTop: -11.5,
     top: "50%",
     position: "absolute",
@@ -292,8 +292,8 @@ const styles = StyleSheet.create({
     top: 69,
   },
   container: {
-    marginTop: -7.5,
-    left: 24,
+    marginTop: "-2%",
+    left: "8%",
   },
   rectangleContainer: {
     marginTop: -192.5,
@@ -317,10 +317,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   arrowCircle: {
-    marginTop: -10.11,
-    marginRight: 303.54,
-    width: 15,
-    height: 15,
+    marginTop: "-2%",
+    marginRight: "20%",
+    width: "2%",
+    height: "3%",
   },
   itsDamagedOrDoesntWork: {
     flex: 1,
