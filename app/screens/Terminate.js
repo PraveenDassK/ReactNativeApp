@@ -66,7 +66,7 @@ const Terminate = () => {
 
 const styles = StyleSheet.create({
   helloPosition: {
-    left: 30,
+    left: "10%",
     top: 0,
     position: "absolute",
   },
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupPosition1: {
-    height: 60,
-    width: 146,
+    height: "25%",
+    width: "50%",
     left: "50%",
     marginLeft: -72.5,
     position: "absolute",
