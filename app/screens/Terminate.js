@@ -1,13 +1,11 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable,Image } from "react-native";
-import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const Terminate = () => {
   
 
   return (
-    <Screen>
     <View style={styles.terminate}>
       <View style={styles.terminateInner}>
         <View
@@ -18,7 +16,7 @@ const Terminate = () => {
           ]}
         >
           <Text style={[styles.hello, styles.helloPosition]}>
-            <Text style={styles.areYouSure}>Are you sure you want to</Text>
+            <Text style={styles.areYouSure}>Are you sure you want to{"\n"}</Text>
             <Text style={styles.areYouSure}>terminate your card?</Text>
           </Text>
           <View style={[styles.groupParent, styles.groupPosition1]}>
@@ -63,7 +61,6 @@ const Terminate = () => {
         </View>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -166,7 +163,7 @@ const styles = StyleSheet.create({
   terminate: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_6xs,
-    paddingTop: 290,
+    paddingTop: 220,
     paddingRight: GlobalStyles.Padding.padding_4xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

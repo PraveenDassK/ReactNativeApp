@@ -1,11 +1,9 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
-import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const ItsDamagedOrDoesntWork = () => {
   return (
-    <Screen>
     <View style={styles.itsDamagedOrDoesntWork}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>
@@ -160,7 +158,6 @@ const ItsDamagedOrDoesntWork = () => {
         </View>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -328,7 +325,7 @@ const styles = StyleSheet.create({
   itsDamagedOrDoesntWork: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

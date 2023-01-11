@@ -1,13 +1,12 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
-import Screen from "../components/Screen";
+
 import GlobalStyles from "../../GlobalStyles";
 
-const ReplaceCard = () => {
+const ReplaceCard = ({navigation}) => {
   
 
   return (
-    <Screen>
     <View style={styles.replaceCard}>
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>Replace card</Text>
@@ -30,7 +29,7 @@ const ReplaceCard = () => {
         </Pressable>
         <Pressable
           style={[styles.rectangleGroup, styles.groupPosition]}
-          onPress={() => navigation.navigate("IWasAVictimOfFraudOrTheft")}
+          onPress={() => navigation.navigate("IWasAVictimOfFraudOrThe")}
         >
           <View style={[styles.groupChild, styles.groupPosition]} />
           <View style={styles.itWasLostWrapper}>
@@ -107,7 +106,6 @@ const ReplaceCard = () => {
         </View>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -254,7 +252,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },

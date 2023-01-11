@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Screen from "../components/Screen";
-const TerminatedCard = () => {
+const TerminatedCard = ({navigation}) => {
 
 
   return (
@@ -104,10 +103,10 @@ const styles = StyleSheet.create({
     height: 328,
   },
   terminatedCard: {
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
-    paddingLeft: 73,
-    paddingTop: 222,
+    paddingLeft: 93,
+    paddingTop: 162,
     paddingRight: 72,
     width: "100%",
   },

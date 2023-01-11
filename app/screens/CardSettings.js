@@ -1,13 +1,11 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
-import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const CardSettings = () => {
+const CardSettings = ({navigation}) => {
   
 
   return (
-    <Screen>
     <View style={styles.cardSettings}>
      
       <View style={styles.helloParent}>
@@ -59,8 +57,8 @@ const CardSettings = () => {
         <View style={styles.rectangleGroup}>
           <Pressable
             style={styles.groupChild}
-            onPress={() => navigation.navigate("Plan")}
-          />
+            onPress={() => navigation.navigate("ChooseCardsElite")}
+          >
           <View
             style={[
               styles.spendingLimitSetMonthlySpeParent,
@@ -102,6 +100,7 @@ const CardSettings = () => {
               source={require("../assets/meter-1.png")}
             />
           </View>
+          </Pressable>
         </View>
         <View style={[styles.rectangleContainer, styles.groupInnerPosition]}>
           <View
@@ -394,7 +393,6 @@ const CardSettings = () => {
         </View>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -689,7 +687,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: 21,
     width: "100%",
   },

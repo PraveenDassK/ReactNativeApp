@@ -1,11 +1,9 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Screen from "../components/Screen";
 
 const IWasAVictimOfFraudOrThe = () => {
   return (
-    <Screen>
     <View style={styles.iWasAVictimOfFraudOrThe}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>
@@ -160,7 +158,6 @@ const IWasAVictimOfFraudOrThe = () => {
         </View>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -328,7 +325,7 @@ const styles = StyleSheet.create({
   iWasAVictimOfFraudOrThe: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

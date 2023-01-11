@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 6,
     shadowOpacity: 1,
-    backgroundColor: GlobalStyles.Color.gray_100,
+    backgroundColor: GlobalStyles.Color.white,
   },
   yourTransferTo: {
     margin: GlobalStyles.Margin.margin_8xs,
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingTop: GlobalStyles.Padding.padding_12xs,
-    backgroundColor: GlobalStyles.Color.white,
+    paddingLeft: GlobalStyles.Padding.padding_9xs,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

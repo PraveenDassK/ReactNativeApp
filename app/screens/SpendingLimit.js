@@ -1,13 +1,11 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
-import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const SpendingLimit = () => {
+const SpendingLimit = ({navigation}) => {
  
 
   return (
-    <Screen>
     <View style={styles.spendingLimit}>
      
       <View style={styles.helloParent}>
@@ -93,7 +91,6 @@ const SpendingLimit = () => {
         />
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -199,10 +196,10 @@ const styles = StyleSheet.create({
     height: 26,
   },
   groupIcon: {
-    marginTop: -80.03,
+    marginTop: -40.03,
     right: 49,
     left: 48,
-    height: 180,
+    height: 100,
     top: "50%",
   },
   rectangleParent: {
