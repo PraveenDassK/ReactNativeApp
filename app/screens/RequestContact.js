@@ -1,10 +1,8 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View, Pressable } from "react-native";
-import { TextInput } from "react-native-web";
-
+import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const RequestContact = () => {
+const RequestContact = ({navigation}) => {
  
   return (
     <View style={styles.requestContact}>
@@ -36,16 +34,15 @@ const RequestContact = () => {
           ]}
         />
         <View style={[styles.helloGroup, styles.groupPosition1]}>
-          <Text
+          <TextInput
             style={[
               styles.hello3,
               styles.helloTypo1,
               styles.helloColor,
               styles.helloTypo2,
             ]}
-          >
-            Add a note
-          </Text>
+           placeholder= {"Add a note"}
+          />
           <Image
             style={styles.iconMaterialKeyboardVoice}
             resizeMode="cover"
@@ -152,17 +149,18 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
   },
   groupPosition1: {
-    left: 32,
+    left: 42,
+    right:0,
     top: "50%",
     position: "absolute",
   },
   helloParent2Position: {
-    left: 33,
+    left: 53,
     top: "50%",
     position: "absolute",
   },
   groupViewPosition: {
-    width: 42,
+    width: 62,
     bottom: 0,
     top: 0,
     position: "absolute",
@@ -184,13 +182,13 @@ const styles = StyleSheet.create({
     top: 0,
   },
   hello: {
-    top: 158,
-    left: 0,
+    top: 148,
+    left: 20,
   },
   groupChild: {
     right: 44,
     bottom: 106,
-    left: 43,
+    left: 63,
     maxWidth: "100%",
     overflow: "hidden",
     maxHeight: "100%",
@@ -198,13 +196,13 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello1: {
-    top: 100,
-    left: 21,
+    top: 90,
+    left: 31,
     fontWeight: "700",
   },
   hello2: {
-    top: 130,
-    left: 9,
+    top: 120,
+    left: 19,
   },
   helloParent: {
     marginLeft: -83.5,
@@ -219,8 +217,8 @@ const styles = StyleSheet.create({
     right: 32,
   },
   hello3: {
-    top: 15,
-    left: 13,
+    top: 5,
+    left: 23,
   },
   iconMaterialKeyboardVoice: {
     marginTop: -9.35,
@@ -239,7 +237,7 @@ const styles = StyleSheet.create({
   },
   hello4: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 22,
+    lineHeight: 32,
     top: 0,
     left: 0,
   },
@@ -260,7 +258,7 @@ const styles = StyleSheet.create({
     marginLeft: -7.22,
   },
   helloParent1: {
-    width: 56,
+    width: 76,
   },
   groupContainer: {
     marginTop: 149,
@@ -273,10 +271,10 @@ const styles = StyleSheet.create({
     top: 0,
   },
   hello8: {
-    top: 38,
+    top: 28,
     left: 75,
     fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 37,
+    lineHeight: 27,
     color: GlobalStyles.Color.blue_100,
   },
   lineView: {
@@ -290,10 +288,10 @@ const styles = StyleSheet.create({
   },
   rectangleView: {
     height: "100%",
-    top: "0%",
+    top: "-20%",
     right: "0%",
     bottom: "0%",
-    left: "0%",
+    left: "5%",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
@@ -308,8 +306,8 @@ const styles = StyleSheet.create({
     left: 0,
   },
   hello9: {
-    top: "38.33%",
-    left: "38.96%",
+    top: "18.33%",
+    left: "43.96%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,

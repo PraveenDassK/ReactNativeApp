@@ -60,7 +60,7 @@ const AddBeneficiarySchedulePay1 = ({navigation}) => {
           </View>
           <Pressable
             style={[styles.groupContainer, styles.groupContainerPosition]}
-            onPress={() => navigation.navigate("PaymentOnMonthOrWeek")}
+            onPress={() => navigation.navigate("SendAccountSelection")}
           >
             <View style={[styles.groupParent, styles.groupParentPosition]}>
               <View style={[styles.groupParent, styles.groupParentPosition]}>
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
   addBeneficiarySchedulePay: {
     flex: 1,
     paddingTop: GlobalStyles.Padding.padding_12xs,
+    paddingLeft: GlobalStyles.Padding.padding_10xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },

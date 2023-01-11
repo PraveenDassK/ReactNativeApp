@@ -2,7 +2,7 @@
 import { StyleSheet, View, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const CarbonCart1 = () => {
+const CarbonCart1 = ({navigation}) => {
   return (
     <View style={styles.carbonCart1}>
       <View style={styles.rectangleParent}>

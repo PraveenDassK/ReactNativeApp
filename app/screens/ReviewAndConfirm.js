@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     width: 375,
     height: 749,
+    left:15,
     backgroundColor: GlobalStyles.Color.white,
   },
   reviewAndConfirm: {

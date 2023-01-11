@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Requested = () => {
+const Requested = ({navigation}) => {
   
   return (
     <Pressable
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   requested: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_xs,
+    paddingTop: GlobalStyles.Padding.padding_12xs,
     backgroundColor: GlobalStyles.Color.white,
   },
 });

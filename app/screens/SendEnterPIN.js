@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SendEnterPIN = () => {
+const SendEnterPIN = ({navigation}) => {
   return (
     <Pressable
       style={styles.sendEnterPin1}
@@ -46,14 +46,14 @@ const styles = StyleSheet.create({
     marginTop: 82,
   },
   mt28: {
-    marginTop: 28,
+    marginTop: -328,
   },
   ml1: {
     marginLeft: GlobalStyles.Margin.margin_7xs,
   },
   helloTypo2: {
     textAlign: "center",
-    lineHeight: 25,
+    lineHeight: 35,
     fontSize: GlobalStyles.FontSize.size_9xl,
     left: 114,
     position: "absolute",
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   helloTypo1: {
     left: 228,
     textAlign: "center",
-    lineHeight: 25,
+    lineHeight: 35,
     fontSize: GlobalStyles.FontSize.size_9xl,
     position: "absolute",
     color: GlobalStyles.Color.indigo_100,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   helloTypo: {
     left: 0,
     textAlign: "center",
-    lineHeight: 25,
+    lineHeight: 35,
     fontSize: GlobalStyles.FontSize.size_9xl,
     position: "absolute",
     color: GlobalStyles.Color.indigo_100,
@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
   },
   iconIonicIosBackspace: {
     right: 0,
-    bottom: 10,
-    width: 29,
+    bottom: 0,
+    width: 32,
     height: 23,
     position: "absolute",
   },
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     height: 14,
   },
   sendEnterPin1: {
-    backgroundColor: GlobalStyles.Color.gray_1100,
+    backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     width: "100%",
     alignItems: "center",

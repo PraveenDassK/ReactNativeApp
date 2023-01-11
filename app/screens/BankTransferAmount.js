@@ -1,8 +1,8 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, TextInput, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const BankTransferAmount = () => {
+const BankTransferAmount = ({navigation}) => {
   return (
     <View style={styles.bankTransferAmount}>
       <View style={styles.groupParent}>
@@ -49,15 +49,15 @@ const BankTransferAmount = () => {
         </View>
         <View style={[styles.helloParent1, styles.helloParent1Position]}>
           <Text style={[styles.hello7, styles.helloTypo]}>Pay</Text>
-          <Text style={[styles.hello8, styles.helloTypo2, styles.helloTypo4]}>
-            £500
-          </Text>
+          <TextInput style={[styles.hello8, styles.helloTypo2, styles.helloTypo4]}
+           placeholder= {"£500"}
+          />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
         <View style={styles.helloParent2}>
-          <Text style={[styles.hello9, styles.helloTypo, styles.helloTypo1]}>
-            Add a note
-          </Text>
+          <TextInput style={[styles.hello9, styles.helloTypo, styles.helloTypo1]}
+            placeholder={"Add a note"}
+          />
           <Image
             style={styles.iconMaterialKeyboardVoice}
             resizeMode="cover"
@@ -65,7 +65,12 @@ const BankTransferAmount = () => {
           />
         </View>
         <View style={[styles.maskGroup236, styles.helloParent1Position]} />
+        
         <View style={styles.groupParent1}>
+        <Pressable
+          style={styles.groupParent1}
+          onPress={() => navigation.navigate("Pin")}
+        >
           <View style={[styles.rectangleParent, styles.groupPosition1]}>
             <View style={styles.rectangleView} />
             <View style={[styles.maskGroup2361, styles.lineViewPosition]} />
@@ -73,7 +78,9 @@ const BankTransferAmount = () => {
           <Text style={[styles.hello10, styles.helloTypo2, styles.helloTypo4]}>
             Send
           </Text>
+          </Pressable>
         </View>
+        
       </View>
     </View>
   );
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
   },
   helloPosition: {
-    width: 42,
+    width: 82,
     bottom: 0,
     top: 0,
     position: "absolute",
@@ -149,33 +156,33 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   hello: {
-    top: 45,
+    top: 34,
     left: 2,
   },
   hello1: {
     left: 9,
-    top: 0,
+    top: -10,
   },
   hello2: {
-    top: 64,
+    top: 44,
     left: 0,
   },
   hello3: {
-    top: 94,
+    top: 80,
     left: 25,
   },
   helloParent: {
     marginLeft: -67.5,
     top: 101,
-    width: 122,
+    width: 152,
     height: 108,
     left: "50%",
     position: "absolute",
   },
   hello4: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 22,
-    left: 0,
+    lineHeight: 42,
+    left: 20,
     top: 0,
   },
   groupItem: {
@@ -195,7 +202,7 @@ const styles = StyleSheet.create({
     marginLeft: -7.22,
   },
   groupView: {
-    width: 56,
+    width: 76,
   },
   groupContainer: {
     marginTop: 149,
@@ -211,7 +218,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   hello8: {
-    top: 38,
+    top: 28,
     left: 75,
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 37,
@@ -230,7 +237,7 @@ const styles = StyleSheet.create({
     height: 98,
   },
   hello9: {
-    top: 15,
+    top: 5,
     left: 13,
   },
   iconMaterialKeyboardVoice: {
@@ -294,9 +301,10 @@ const styles = StyleSheet.create({
   },
   bankTransferAmount: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_2xs,
+    paddingTop: GlobalStyles.Padding.padding_10xs,
+    paddingLeft: GlobalStyles.Padding.padding_10xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

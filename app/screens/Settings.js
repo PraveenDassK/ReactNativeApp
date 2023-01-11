@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Settings = () => {
+const Settings = ({navigation}) => {
   
 
   return (
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
   settings: {
     flex: 1,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

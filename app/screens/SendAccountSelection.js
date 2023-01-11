@@ -148,7 +148,11 @@ const SendAccountSelection = ({navigation}) => {
             </Text>
             <View style={styles.groupChild2} />
           </View>
-          <View style={[styles.groupParent1, styles.groupParent1Position]}>
+          <Pressable
+            style={styles.groupWrapper1}
+            onPress={() => navigation.navigate("SendEnterPIN")}
+          >
+          <View style={[styles.groupParent1, styles.groupParent1Position1]}>
             <View style={styles.rectangleParent}>
               <View style={[styles.groupChild6, styles.bank2IconPosition]} />
               <View style={styles.maskGroup2361} />
@@ -159,6 +163,7 @@ const SendAccountSelection = ({navigation}) => {
               Send
             </Text>
           </View>
+          </Pressable>
         </View>
       </View>
     </View>
@@ -225,6 +230,11 @@ const styles = StyleSheet.create({
     right: 24,
     position: "absolute",
   },
+  groupParent1Position1: {
+    left: 0,
+    right: 0,
+    position: "absolute",
+  },
   helloParentPosition: {
     height: 32,
     width: 181,
@@ -288,9 +298,9 @@ const styles = StyleSheet.create({
     left: 0,
   },
   groupItem: {
-    right: 39,
+    right: 49,
     bottom: 156,
-    left: 10,
+    left: 0,
     top: -30,
     position: "absolute",
   },
@@ -445,6 +455,14 @@ const styles = StyleSheet.create({
     height: 53,
     left: 36,
     borderStyle: "solid",
+    top: "50%",
+    position: "absolute",
+  },
+  groupWrapper1: {
+    marginTop: 156,
+    right: 38,
+    height: 53,
+    left: 36,
     top: "50%",
     position: "absolute",
   },

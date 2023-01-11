@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, Image, View } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const VerifyCode1 = () => {
+const VerifyCode1 = ({navigation}) => {
   return (
     <View style={styles.verifyCode1}>
       <View style={styles.helloParent}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_xl,
-    paddingTop: 249,
+    paddingTop: 189,
     paddingRight: GlobalStyles.Padding.padding_xl,
   },
 });

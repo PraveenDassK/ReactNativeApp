@@ -3,7 +3,7 @@ import { Text, StyleSheet, Image, Pressable, View } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
-const Pin = () => {
+const Pin = ({navigation}) => {
   //const navigation = useNavigation();
 
   return (
@@ -36,7 +36,7 @@ const Pin = () => {
             styles.groupParentPosition,
             styles.parentPosition,
           ]}
-          onPress={() => navigation.navigate("Success")}
+          onPress={() => navigation.navigate("AddBeneficiarySuccess")}
         >
           <View
             style={[
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f3f0f4",
     flex: 3,
     paddingLeft: GlobalStyles.Padding.padding_5xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingBottom: GlobalStyles.Padding.padding_12xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
