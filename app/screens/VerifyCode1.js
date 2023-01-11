@@ -27,7 +27,6 @@ const VerifyCode1 = () => {
 const styles = StyleSheet.create({
   helloTypo: {
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   hello1Position: {
     top: "50%",
@@ -45,7 +44,6 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   iconAwesomeCheckCircle: {
     marginTop: -241.28,

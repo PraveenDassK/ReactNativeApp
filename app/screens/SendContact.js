@@ -1,10 +1,9 @@
 import * as React from "react";
-import { StyleSheet, View, Pressable, Text, Image } from "react-native";
-import { TextInput } from "react-native-web";
+import { StyleSheet, View, Pressable, Text, Image, TextInput } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const SendContact = () => {
+const SendContact = ({navigation}) => {
   
   return (
     <View style={styles.sendContact}>
@@ -26,7 +25,7 @@ const SendContact = () => {
           <Image
             style={styles.groupItem}
             resizeMode="cover"
-            source={require("../assets/group-303373@3x.png")}
+            source={require("../assets/group-303373.png")}
           />
         </View>
         <View style={styles.groupContainer}>
@@ -35,7 +34,7 @@ const SendContact = () => {
             <Image
               style={[styles.groupInner, styles.groupPosition]}
               resizeMode="cover"
-              source={require("../assets/group-30410@3x.png")}
+              source={require("../assets/group-30410.png")}
             />
           </View>
           <View style={[styles.helloContainer, styles.helloPosition]}>
@@ -43,7 +42,7 @@ const SendContact = () => {
             <Image
               style={[styles.groupIcon, styles.groupPosition]}
               resizeMode="cover"
-              source={require("../assets/group-304101@3x.png")}
+              source={require("../assets/group-304101.png")}
             />
           </View>
           <View style={[styles.groupView, styles.groupPosition1]}>
@@ -51,7 +50,7 @@ const SendContact = () => {
             <Image
               style={[styles.groupChild1, styles.groupPosition]}
               resizeMode="cover"
-              source={require("../assets/group-30410@3x.png")}
+              source={require("../assets/group-30410.png")}
             />
           </View>
         </View>
@@ -63,19 +62,19 @@ const SendContact = () => {
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
         <View style={styles.helloParent2}>
-          <Text style={[styles.hello8, styles.helloTypo, styles.helloTypo1]}>
-            Add a note
-          </Text>
+          <TextInput style={[styles.hello8, styles.helloTypo, styles.helloTypo1]}
+            placeholder={"Add a note"}/>
+          
           <Image
             style={styles.iconMaterialKeyboardVoice}
             resizeMode="cover"
-            source={require("../assets/icon-materialkeyboardvoice@3x.png")}
+            source={require("../assets/icon-materialkeyboardvoice.png")}
           />
         </View>
         <View style={[styles.maskGroup236, styles.helloParent1Position]} />
         <Pressable
           style={styles.groupPressable}
-          onPress={() => navigation.navigate("AddBeneficiarySchedulePayment1")}
+          onPress={() => navigation.navigate("AddBeneficiarySchedulePay1")}
         >
           <View style={[styles.rectangleParent, styles.groupPosition1]}>
             <View style={styles.rectangleView} />
@@ -93,7 +92,7 @@ const SendContact = () => {
 const styles = StyleSheet.create({
   groupPosition1: {
     bottom: 0,
-    right: 0,
+    right: -10,
     top: 0,
     position: "absolute",
   },
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
   },
   helloPosition: {
-    width: 42,
+    width: 80,
     bottom: 0,
     top: 0,
     position: "absolute",
@@ -132,8 +131,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloParent1Position: {
-    right: 32,
-    left: 33,
+    right: 22,
+    left: 53,
     top: "50%",
     position: "absolute",
   },
@@ -160,16 +159,16 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   hello: {
-    top: 100,
+    top: 80,
     left: 12,
     fontWeight: "700",
   },
   hello1: {
-    top: 130,
+    top: 110,
     left: 0,
   },
   hello2: {
-    top: 158,
+    top: 138,
     left: 0,
   },
   groupItem: {
@@ -183,17 +182,17 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloParent: {
-    marginLeft: -74.5,
+    marginLeft: -64.5,
     top: 44,
-    width: 149,
+    width: 189,
     height: 172,
     left: "50%",
     position: "absolute",
   },
   hello3: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 22,
-    left: 0,
+    lineHeight: 35,
+    left: 15,
     top: 0,
   },
   groupInner: {
@@ -213,13 +212,13 @@ const styles = StyleSheet.create({
     marginLeft: -7.22,
   },
   groupView: {
-    width: 56,
+    width: 80,
   },
   groupContainer: {
-    marginTop: 149,
+    marginTop: 119,
     height: 50,
-    left: 33,
-    right: 31,
+    left: 53,
+    right: 21,
     top: "50%",
     position: "absolute",
   },
@@ -229,7 +228,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   hello7: {
-    top: 38,
+    top: 28,
     left: 75,
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 37,
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
     height: 98,
   },
   hello8: {
-    top: 15,
+    top: 5,
     left: 13,
   },
   iconMaterialKeyboardVoice: {
@@ -261,11 +260,11 @@ const styles = StyleSheet.create({
   },
   helloParent2: {
     marginTop: 44.5,
-    left: 32,
+    left: 52,
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.gray_200,
     height: 42,
-    right: 31,
+    right: 11,
     top: "50%",
     position: "absolute",
   },
@@ -275,10 +274,10 @@ const styles = StyleSheet.create({
   },
   rectangleView: {
     height: "100%",
-    top: "0%",
+    top: "-30%",
     right: "0%",
     bottom: "0%",
-    left: "0%",
+    left: "2%",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
@@ -290,11 +289,11 @@ const styles = StyleSheet.create({
     top: 0,
   },
   rectangleParent: {
-    left: 0,
+    left: 10,
   },
   hello9: {
-    top: "40%",
-    left: "43.56%",
+    top: "10%",
+    left: "48.56%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,

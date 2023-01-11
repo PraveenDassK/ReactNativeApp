@@ -1,10 +1,9 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View, Pressable } from "react-native";
-import { TextInput } from "react-native-web";
+import { Text, StyleSheet, Image, View, Pressable,TextInput } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const AddFunds = () => {
+const AddFunds = ({navigation}) =>{
   return (
     <Pressable
       style={styles.addFunds}
@@ -48,11 +47,16 @@ const AddFunds = () => {
           <Text style={[styles.hello4, styles.helloColor, styles.helloTypo1]}>
             Pay
           </Text>
-
+        
           <View style={styles.lineView} />
         </View>
+        <View style={[styles.helloParent11, styles.parentPosition]}>
+          <TextInput style={[styles.hello5, styles.helloTypo1]} placeholder={"£100"}>
+            
+          </TextInput>
+        </View>
         <View style={[styles.helloParent2, styles.iconPosition]}>
-          <Text style={[styles.hello6, styles.helloTypo]}>Add a note</Text>
+          <TextInput style={[styles.hello6, styles.helloTypo]} placeholder={"Add a note"}/>
           <Image
             style={[styles.iconMaterialKeyboardVoice, styles.iconPosition]}
             resizeMode="cover"
@@ -110,6 +114,7 @@ const styles = StyleSheet.create({
     left: 33,
     top: "50%",
     position: "absolute",
+    paddingRight: 120,
   },
   helloColor: {
     color: GlobalStyles.Color.gray_700,
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
   groupPosition1: {
     height: 17,
     width: 18,
-    left: "50%",
+    left: "40%",
     bottom: 0,
     position: "absolute",
   },
@@ -142,7 +147,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupPosition: {
-    left: 25,
+    left: 45,
     position: "absolute",
   },
   rectangleViewLayout: {
@@ -160,23 +165,22 @@ const styles = StyleSheet.create({
     left: 138,
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 22,
-    left: 0,
+    lineHeight: 32,
+    left: 10,
     textAlign: "left",
   },
   groupChild: {
     marginLeft: -7.94,
   },
   helloGroup: {
-    width: 42,
-    left: 0,
+    width: 80,
+    left: 40,
     bottom: 0,
     top: 0,
     position: "absolute",
@@ -185,9 +189,9 @@ const styles = StyleSheet.create({
     marginLeft: -7.71,
   },
   helloContainer: {
-    marginLeft: -27.5,
+    marginLeft: 37.5,
     left: "50%",
-    width: 42,
+    width: 80,
     bottom: 0,
     top: 0,
     position: "absolute",
@@ -196,7 +200,7 @@ const styles = StyleSheet.create({
     marginLeft: -7.22,
   },
   groupView: {
-    width: 56,
+    width: 80,
     right: 0,
     top: 0,
     position: "absolute",
@@ -212,10 +216,10 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   hello5: {
-    top: 38,
-    left: 88,
-    fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 37,
+    top: 18,
+    left: 108,
+    fontSize: GlobalStyles.FontSize.size_12xl,
+    lineHeight: 57,
     color: GlobalStyles.Color.blue_100,
     textAlign: "left",
   },
@@ -234,9 +238,15 @@ const styles = StyleSheet.create({
     right: 32,
     height: 98,
   },
+  helloParent11: {
+    marginTop: -75.5,
+    right: 32,
+    height: 178,
+    width: 300,
+  },
   hello6: {
     left: 13,
-    top: 15,
+    top: 10,
   },
   iconMaterialKeyboardVoice: {
     marginTop: -9.35,
@@ -317,7 +327,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello10: {
-    top: "40%",
+    top: "30%",
     left: "36.5%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
@@ -326,7 +336,7 @@ const styles = StyleSheet.create({
   },
   groupPressable: {
     right: 24,
-    bottom: 49,
+    bottom: 59,
     height: 60,
   },
   helloParent: {
@@ -346,7 +356,7 @@ const styles = StyleSheet.create({
   },
   addFunds: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_9xs,
+    paddingTop: GlobalStyles.Padding.padding_19xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },

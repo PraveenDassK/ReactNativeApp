@@ -1,14 +1,11 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
-import Screen from "../components/Screen";
+import { Text, StyleSheet, View, Pressable,TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { TextInput } from "react-native-web";
 
-const AddBeneficiary = () => {
+const AddBeneficiary = ({navigation}) => {
   
 
   return (
-    <Screen>
     <View style={styles.addBeneficiary}>
       <View style={styles.groupParent}>
         <View style={[styles.groupWrapper, styles.wrapperPosition]}>
@@ -76,7 +73,6 @@ const AddBeneficiary = () => {
         </View>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -125,7 +121,6 @@ const styles = StyleSheet.create({
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
@@ -191,7 +186,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello8: {
-    top: "43.33%",
+    top: "33.33%",
     left: "39.26%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
@@ -229,8 +224,9 @@ const styles = StyleSheet.create({
   },
   addBeneficiary: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_3xs,
     width: "100%",
+    paddingTop: GlobalStyles.Padding.padding_13xs,
+    paddingLeft: GlobalStyles.Padding.padding_10xs,
     backgroundColor: GlobalStyles.Color.white,
   },
 });

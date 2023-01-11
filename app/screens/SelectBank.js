@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View, Pressable } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable ,TextInput} from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
-import { TextInput } from "react-native-web";
 
 const SelectBank = () => {
 
@@ -305,7 +304,6 @@ const styles = StyleSheet.create({
   },
   hello: {
     fontSize: GlobalStyles.FontSize.size_8xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",

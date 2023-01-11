@@ -1,10 +1,9 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
-import { TextInput } from "react-native-web";
+import { Text, StyleSheet, View, Pressable,TextInput } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const AddBeneficiarySchedulePay1 = () => {
+const AddBeneficiarySchedulePay1 = ({navigation}) => {
  
 
   return (
@@ -212,7 +211,7 @@ const styles = StyleSheet.create({
   },
   addBeneficiarySchedulePay: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_6xs,
+    paddingTop: GlobalStyles.Padding.padding_12xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },

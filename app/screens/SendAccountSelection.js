@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SendAccountSelection = () => {
+const SendAccountSelection = ({navigation}) => {
 
   return (
     <View style={styles.sendAccountSelection}>
@@ -289,17 +289,17 @@ const styles = StyleSheet.create({
   },
   groupItem: {
     right: 39,
-    bottom: 106,
-    left: 43,
-    top: 0,
+    bottom: 156,
+    left: 10,
+    top: -30,
     position: "absolute",
   },
   helloParent: {
     marginLeft: -74.5,
     top: 44,
-    width: 149,
+    width: 189,
     height: 172,
-    left: "50%",
+    left: "55%",
     position: "absolute",
   },
   hello3: {
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
   groupChild6: {
     right: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     width: "100%",
   },
   maskGroup2361: {
@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
     left: "43.56%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   groupParent1: {
     bottom: 49,
@@ -492,6 +492,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: GlobalStyles.Border.br_7xl,
     borderTopRightRadius: GlobalStyles.Border.br_7xl,
     height: 456,
+    width:420,
     left: 0,
     bottom: 0,
     right: 0,
@@ -502,7 +503,7 @@ const styles = StyleSheet.create({
   },
   sendAccountSelection: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_md,
+    paddingTop: GlobalStyles.Padding.padding_12xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },

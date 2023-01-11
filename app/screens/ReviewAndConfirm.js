@@ -2,9 +2,13 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const ReviewAndConfirm = () => {
+const ReviewAndConfirm = ({navigation}) => {
 
   return (
+    <Pressable
+      style={styles.reviewAndConfirm}
+      onPress={() => navigation.navigate("Account")}
+    >
     <View style={styles.reviewAndConfirm}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Review and Confirm</Text>
@@ -38,7 +42,7 @@ const ReviewAndConfirm = () => {
             styles.helloContainerPosition,
           ]}
           resizeMode="cover"
-          source={require("../assets/icon-carbonyteuparrow.png")}
+          source={require("../assets/icon-ioniciosarrowforward13.png")}
         />
         <Pressable
           style={styles.groupParent}
@@ -52,13 +56,14 @@ const ReviewAndConfirm = () => {
         </Pressable>
       </View>
     </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   helloLayout: {
     height: 45,
-    right: 40,
+    right: 20,
   },
   helloTypo: {
     color: GlobalStyles.Color.blue_100,
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
   },
   helloGroup: {
     top: 108,
-    left: 26,
+    left: 46,
     position: "absolute",
   },
   hello6: {
@@ -138,14 +143,14 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   helloContainer: {
-    marginTop: -18.5,
-    left: 25,
+    marginTop: -188.5,
+    left: 45,
   },
   groupChild: {
-    left: 25,
+    left: 45,
   },
   groupItem: {
-    right: 40,
+    right: 20,
     width: 139,
     borderTopWidth: 1,
     borderColor: "#707070",
@@ -153,24 +158,24 @@ const styles = StyleSheet.create({
     marginTop: -204.27,
   },
   hello7: {
-    left: 25,
+    left: 45,
     textAlign: "left",
   },
   hello8: {
-    left: 25,
+    left: 45,
     textAlign: "left",
   },
   hello9: {
-    left: 302,
+    left: 322,
     textAlign: "right",
   },
   hello10: {
-    left: 303,
+    left: 323,
     textAlign: "right",
   },
   iconIonicIosArrowForward: {
     marginTop: -207.29,
-    marginLeft: -13.5,
+    marginLeft: 3.5,
     left: "50%",
     width: 12,
     height: 7,
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
     width: "100%",
   },
@@ -193,19 +198,19 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello11: {
-    top: "40%",
+    top: "30%",
     left: "39.26%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
     position: "absolute",
   },
   groupParent: {
-    right: 24,
-    bottom: 48,
+    right: 14,
+    bottom: 88,
     height: 60,
-    left: 25,
+    left: 55,
     position: "absolute",
   },
   helloParent: {
@@ -225,9 +230,9 @@ const styles = StyleSheet.create({
   },
   reviewAndConfirm: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_sm,
+    paddingTop: GlobalStyles.Padding.padding_11xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

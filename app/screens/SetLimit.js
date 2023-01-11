@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
-import { TextInput } from "react-native-web";
+import { Text, StyleSheet, View, Pressable,TextInput } from "react-native";
 import { Image } from "react-native-web";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
   hello: {
     left: 2,
     fontSize: GlobalStyles.FontSize.size_7xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     top: 0,
     position: "absolute",

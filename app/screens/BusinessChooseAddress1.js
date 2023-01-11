@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable, Image } from "react-native";
-import { TextInput } from "react-native-web";
+import { Text, StyleSheet, View, Pressable, Image,TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const BusinessChooseAddress1 = () => {
@@ -105,7 +104,6 @@ const styles = StyleSheet.create({
   postcodeTypo: {
     fontSize: GlobalStyles.FontSize.size_xl,
     color: GlobalStyles.Color.indigo_100,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloWrapperPosition: {
     height: 60,
@@ -129,17 +127,14 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   postcode: {
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     top: 0,
   },
   chooseAddress: {
     marginTop: -37,
     top: "50%",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   hello: {
     marginTop: -6,
@@ -148,7 +143,6 @@ const styles = StyleSheet.create({
     left: 14,
     top: "50%",
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   helloWrapper: {
@@ -181,7 +175,6 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   groupContainer: {
     bottom: 0,
@@ -215,7 +208,6 @@ const styles = StyleSheet.create({
   hello3: {
     fontSize: GlobalStyles.FontSize.size_7xl,
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     top: 0,
   },
   hello4: {

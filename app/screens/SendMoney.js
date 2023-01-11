@@ -339,7 +339,6 @@ const styles = StyleSheet.create({
   hello8: {
     marginTop: -4,
     marginLeft: 18.5,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,

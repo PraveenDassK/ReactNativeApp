@@ -131,12 +131,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   itWasLostTypo: {
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     fontWeight: "700",
   },
   hello1Color: {
     color: GlobalStyles.Color.gray_800,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   iconLayout: {
     height: 14,
@@ -154,7 +152,6 @@ const styles = StyleSheet.create({
   hello: {
     top: 0,
     fontSize: GlobalStyles.FontSize.size_7xl,
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
   },
   groupChild: {

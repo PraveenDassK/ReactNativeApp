@@ -2,7 +2,7 @@ import * as React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const AddFundsSuccess = () => {
+const AddFundsSuccess = ({navigation}) => {
   return (
     <View style={styles.addFundsSuccess}>
       <View style={styles.iconAwesomeCheckCircleParent}>
@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
   iconAwesomeCheckCircle: {
     top: 0,
     right: 0,
-    left: 0,
-    maxWidth: "100%",
+    left: -10,
     overflow: "hidden",
-    height: 180,
+    height: 200,
+    width:200,
     position: "absolute",
   },
   congratulations1: {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: 98,
-    paddingTop: GlobalStyles.Padding.padding_11xl,
+    paddingTop: GlobalStyles.Padding.padding_8xl,
     paddingRight: 97,
   },
 });

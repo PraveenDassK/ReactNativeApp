@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
   hello: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.white,
     textAlign: "left",
     left: 0,

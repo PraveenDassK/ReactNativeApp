@@ -625,7 +625,6 @@ const styles = StyleSheet.create({
   helloTypo2: {
     lineHeight: 14,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   iconLayout: {
@@ -646,7 +645,6 @@ const styles = StyleSheet.create({
   helloTypo1: {
     lineHeight: 16,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   groupParentPosition1: {
@@ -654,7 +652,6 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello8Typo: {
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
   },
@@ -705,14 +702,12 @@ const styles = StyleSheet.create({
     top: "50%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.indigo_100,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   textTypo3: {
     textAlign: "right",
     letterSpacing: 1,
     top: "50%",
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     position: "absolute",
   },
@@ -727,7 +722,6 @@ const styles = StyleSheet.create({
     textAlign: "right",
     color: GlobalStyles.Color.gray_700,
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   lanceParentLayout: {
@@ -737,7 +731,6 @@ const styles = StyleSheet.create({
   lanceTypo: {
     marginTop: -8.5,
     letterSpacing: 1,
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     top: "50%",
     fontWeight: "700",
     fontSize: GlobalStyles.FontSize.size_2xl,
@@ -800,7 +793,6 @@ const styles = StyleSheet.create({
     left: "0%",
     top: "50%",
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   textTypo1: {
@@ -811,7 +803,6 @@ const styles = StyleSheet.create({
     top: "50%",
     color: GlobalStyles.Color.blue_100,
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   textTypo: {
@@ -820,7 +811,6 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     color: GlobalStyles.Color.gray_700,
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   parentLayout: {
@@ -864,7 +854,6 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_xl,
     color: GlobalStyles.Color.gray_700,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     top: 0,
     position: "absolute",
   },
@@ -873,13 +862,11 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     fontSize: GlobalStyles.FontSize.size_xl,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   hello: {
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     top: 0,
     position: "absolute",
   },
@@ -902,7 +889,6 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
     fontSize: GlobalStyles.FontSize.size_xs,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   hello3: {
     right: 14,
@@ -949,7 +935,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   hello7: {
@@ -957,7 +942,6 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     right: -1,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     top: 0,
     position: "absolute",
   },
@@ -1165,12 +1149,10 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
     fontSize: GlobalStyles.FontSize.size_xs,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   hello12: {
     fontSize: GlobalStyles.FontSize.size_xs,
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   scrollGroup16: {
     right: 21,
@@ -1220,7 +1202,6 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.blue_100,
     fontWeight: "700",
     textAlign: "left",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   union23Parent: {
@@ -1401,7 +1382,6 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_xl,
     color: GlobalStyles.Color.gray_700,
     fontWeight: "700",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     top: 0,
   },
   history3: {
