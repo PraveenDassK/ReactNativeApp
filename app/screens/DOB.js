@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 273,
   },
   arrowPosition: {

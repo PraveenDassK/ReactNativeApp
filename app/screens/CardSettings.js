@@ -398,14 +398,14 @@ const CardSettings = ({navigation}) => {
 
 const styles = StyleSheet.create({
   parentPosition: {
-    height: 27,
-    right: 22,
+    height: "12%",
+    right: "12%",
     top: "50%",
     position: "absolute",
   },
   cardLayout: {
     lineHeight: 14,
-    width: 257,
+    width: "43%",
   },
   replaceCardLostStolenNotPosition: {
     marginTop: -13.5,
@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
     left: 3,
   },
   helloParent: {
-    width: 329,
+    width: "100%",
     height: 689,
   },
   arrowPosition: {
@@ -678,17 +678,17 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   arrowCircle: {
-    marginTop: -10.11,
+    marginTop: "100%",
     marginRight: 303.54,
-    width: 15,
+    width: "100%",
     height: 15,
-  },
+  },                                
   cardSettings: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingTop: GlobalStyles.Padding.padding_8xs,
-    paddingRight: 21,
+    paddingRight: "6%",
     width: "100%",
   },
 });

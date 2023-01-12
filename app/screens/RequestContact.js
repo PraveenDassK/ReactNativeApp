@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
   },
   groupPosition1: {
-    left: 42,
+    left: "22%",
     right:0,
     top: "50%",
     position: "absolute",
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupPosition: {
-    height: 17,
+    height: "17%",
     width: 18,
     bottom: 0,
     left: "50%",
@@ -333,8 +333,8 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
   requestContact: {
