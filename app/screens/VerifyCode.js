@@ -1,12 +1,10 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable,Image } from "react-native";
-import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const VerifyCode = () => {
 
   return (
-    <Screen>
     <View style={styles.verifyCode}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Verify your identity</Text>
@@ -45,7 +43,6 @@ const VerifyCode = () => {
         </Text>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -92,6 +89,7 @@ const styles = StyleSheet.create({
     marginTop: -43.5,
     top: "50%",
     position: "absolute",
+    justifyContent: "space-evenly", 
     backgroundColor: GlobalStyles.Color.white,
   },
   hello: {
@@ -163,7 +161,7 @@ const styles = StyleSheet.create({
     right: 6,
   },
   text: {
-    marginTop: -33.5,
+    marginTop: -38.5,
     left: 19,
     fontSize: 27,
     color: GlobalStyles.Color.blue_100,
@@ -174,7 +172,7 @@ const styles = StyleSheet.create({
     left: 6,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 351,
   },
   arrowPosition: {

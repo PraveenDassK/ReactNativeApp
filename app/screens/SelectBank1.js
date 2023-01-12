@@ -1,21 +1,19 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image,TextInput } from "react-native";
-import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const SelectBank1 = () => {
+const SelectBank1 = ({navigation}) => {
 
   return (
-    <Screen>
     <View style={styles.selectBank1}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Enter your detail</Text>
         <Text style={[styles.hello1, styles.helloTypo]}>
           <Text style={styles.byProvidingYour}>
-            By providing your information to Carbonyte, you are{"\n"}
+            By providing your information to Carbonyte, you are{" "}
           </Text>
           <Text style={styles.byProvidingYour}>
-            enabling Carbonyte to retrieve your personal data.
+              enabling Carbonyte to retrieve your personal data.
           </Text>
         </Text>
         <TextInput style={[styles.username, styles.usernameTypo]} placeholder={"Username"}/>
@@ -34,7 +32,6 @@ const SelectBank1 = () => {
         </Pressable>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -139,7 +136,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 417,
   },
   arrowPosition: {
@@ -155,7 +152,7 @@ const styles = StyleSheet.create({
   selectBank1: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

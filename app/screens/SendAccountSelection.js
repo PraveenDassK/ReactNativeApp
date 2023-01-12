@@ -307,9 +307,9 @@ const styles = StyleSheet.create({
   helloParent: {
     marginLeft: -74.5,
     top: 44,
-    width: 189,
+    width: "100%",
     height: 172,
-    left: "55%",
+    left: "50%",
     position: "absolute",
   },
   hello3: {
@@ -401,8 +401,8 @@ const styles = StyleSheet.create({
     height: 47,
   },
   hello10: {
-    top: 36,
-    left: 99,
+    top: "3%",
+    left: "25%",
     color: GlobalStyles.Color.gray_700,
   },
   rectangleView: {
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   hello11: {
-    top: 2,
+    top: "2%",
     color: GlobalStyles.Color.gray_700,
   },
   hello12: {
@@ -509,21 +509,21 @@ const styles = StyleSheet.create({
   helloParent4: {
     borderTopLeftRadius: GlobalStyles.Border.br_7xl,
     borderTopRightRadius: GlobalStyles.Border.br_7xl,
-    height: 456,
-    width:420,
+    height: "60%",
+    width:"100%",
     left: 0,
     bottom: 0,
     right: 0,
   },
   groupParent: {
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
   },
   sendAccountSelection: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_12xs,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 
