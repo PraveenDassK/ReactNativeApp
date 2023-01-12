@@ -198,9 +198,10 @@ const styles = StyleSheet.create({
   groupIcon: {
     marginTop: -40.03,
     right: 49,
-    left: 48,
-    height: 100,
-    top: "50%",
+    left: 30,
+    height: 205,
+    width:260,
+    top: "30%",
   },
   rectangleParent: {
     top: 138,
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },
