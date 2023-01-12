@@ -1,42 +1,124 @@
-import * as React from "react";
-import { Text, StyleSheet, Image, Pressable, View } from "react-native";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
+import { Text, StyleSheet, Image, Pressable, View} from "react-native";
 //import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
-const Pin = ({navigation}) => {
-  //const navigation = useNavigation();
+const Pin = () => {
+  const title = "Setup Your Pin";
+
+  const [count, setCount] = useState("")
+
+  const enterNumber = (_num) => {
+    count.length > 3 ? null : setCount(count + _num);
+
+  }
+  const removeNumber = () => {
+    setCount(count.slice(0, -1))
+  }
+
+  const submit = () => {
+    console.log(count) 
+  }
+  console.log(count)
 
   return (
     <View style={styles.pin}>
       <View style={styles.helloParent}>
-        <Text style={styles.hello}>Setup Your Pin</Text>
+        <Text style={styles.hello}>{title}</Text>
         <Image
           style={styles.groupChild}
           resizeMode="cover"
           source={require("../assets/icon-progress14.png")}
         />
-        <Text style={[styles.hello1, styles.helloTypo2]}>1</Text>
-        <Text style={[styles.hello2, styles.helloTypo2]}>4</Text>
+        <Pressable
+          onPress={() => {
+            enterNumber(1)
+          }}
+          style={[styles.button]}
+        >
+          <Text style={[styles.hello1, styles.helloTypo2]}>1</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            enterNumber(4)
+          }}
+        >
+          <View style={[styles.button]}>
+            <Text style={[styles.hello2, styles.helloTypo2]}>4</Text>
+          </View>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            enterNumber(7)
+          }}
+        >
         <Text style={[styles.hello3, styles.helloTypo2]}>7</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            enterNumber(2)
+          }}
+        >
         <Text style={[styles.hello4, styles.helloTypo1]}>2</Text>
-        <Text style={[styles.hello5, styles.helloTypo1]}>5</Text>
-        <Text style={[styles.hello6, styles.helloTypo1]}>8</Text>
-        <Text style={[styles.hello7, styles.helloTypo1]}>0</Text>
-        <Text style={[styles.hello8, styles.helloTypo]}>3</Text>
-        <Text style={[styles.hello9, styles.helloTypo]}>6</Text>
-        <Text style={[styles.hello10, styles.helloTypo]}>9</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            enterNumber(5)
+          }}
+        >
+          <Text style={[styles.hello5, styles.helloTypo1]}>5</Text>
+          </Pressable>
+          <Pressable
+          onPress={() => {
+            enterNumber(8)
+          }}
+        >
+          <Text style={[styles.hello6, styles.helloTypo1]}>8</Text>
+          </Pressable>
+          <Pressable
+          onPress={() => {
+            enterNumber(0)
+          }}
+        >
+          <Text style={[styles.hello7, styles.helloTypo1]}>0</Text>
+          </Pressable>
+          <Pressable
+          onPress={() => {
+            enterNumber(3)
+          }}
+        >
+          <Text style={[styles.hello8, styles.helloTypo]}>3</Text>
+          </Pressable>
+          <Pressable
+          onPress={() => {
+            enterNumber(6)
+          }}
+        >
+          <Text style={[styles.hello9, styles.helloTypo]}>6</Text>
+          </Pressable>
+          <Pressable
+          onPress={() => {
+            enterNumber(9)
+          }}
+        >
+          <Text style={[styles.hello10, styles.helloTypo]}>9</Text>
+          </Pressable>
+        <Pressable
+          onPress={() => removeNumber()}
+        >
         <Image
           style={styles.iconIonicMdBackspace}
-          resizeMode="cover"
           source={require("../assets/icon-backspace.png")}
         />
+        </Pressable>
+
         <Pressable
           style={[
             styles.groupParent,
             styles.groupParentPosition,
             styles.parentPosition,
           ]}
-          onPress={() => navigation.navigate("AddBeneficiarySuccess")}
+          onPress={() => submit()}
         >
           <View
             style={[
@@ -48,6 +130,7 @@ const Pin = ({navigation}) => {
             <View style={styles.rectangleView} />
             <View style={[styles.maskGroup236, styles.groupParentPosition]} />
           </View>
+          
           <Text style={styles.hello11}>Continue</Text>
         </Pressable>
       </View>
@@ -56,6 +139,9 @@ const Pin = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  button:{
+    width:100,
+  },
   groupPosition: {
     height: 65,
     width: 66,
@@ -69,7 +155,7 @@ const styles = StyleSheet.create({
     height: 65,
     top: "50%",
     left: "50%",
-    position: "centre",
+    position: "absolute",
   },
   groupChildPosition: {
     right: 22,
@@ -79,41 +165,21 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloTypo2: {
-    borderRadius: 40,
-    width: 70,
-    height: 70,
-    borderWidth: 5,
-    borderColor: 'white',
-    backgroundColor: 'white',
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_9xl,
-    left: 25,
+    left: 45,
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
   },
   helloTypo1: {
-    
-    borderRadius: 40,
-    width: 70,
-    height: 70,
-    borderWidth: 5,
-    borderColor: 'white',
-    backgroundColor: 'white',
-
-    left: 133,
+    left: 153,
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_9xl,
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
   },
   helloTypo: {
-    borderRadius: 40,
-    width: 70,
-    height: 70,
-    borderWidth: 5,
-    borderColor: 'white',
-    backgroundColor: 'white',
-    left: 242,
+    left: 262,
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_9xl,
     color: GlobalStyles.Color.indigo_100,
@@ -130,16 +196,16 @@ const styles = StyleSheet.create({
     right: 0,
   },
   hello: {
-    left: 10,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
-    top: 0,
-    position: "absolute",
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
   },
   groupChild: {
-    marginLeft: -67,
+    marginLeft: -77,
     top: 105,
     width: 142,
     height: 13,
@@ -207,11 +273,8 @@ const styles = StyleSheet.create({
     top: 377,
   },
   iconIonicMdBackspace: {
-    right: 41,
-    bottom: 153,
-    width: 28,
-    height: 21,
-    position: "absolute",
+    left: 230,
+    top: 450,
   },
   rectangleView: {
     height: "100%",
@@ -220,7 +283,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: GlobalStyles.Color.gray_500,
     position: "absolute",
     width: "100%",
   },
@@ -235,11 +298,11 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello11: {
-    top: "30%",
+    top: "40%",
     left: "40.8%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "left",
     position: "absolute",
   },
@@ -247,16 +310,14 @@ const styles = StyleSheet.create({
     height: 60,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 654,
   },
   pin: {
-
     backgroundColor: "#f3f0f4",
-    flex: 3,
-    paddingLeft: GlobalStyles.Padding.padding_5xs,
-    paddingTop: GlobalStyles.Padding.padding_8xs,
-    paddingBottom: GlobalStyles.Padding.padding_12xl,
+    flex: 1,
+    paddingLeft: GlobalStyles.Padding.padding_8xs,
+    paddingTop: "10%",
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },
