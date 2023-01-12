@@ -187,13 +187,13 @@ const styles = StyleSheet.create({
   },
   hello8: {
     top: "20.33%",
-    left: "45.26%",
+    left: "38.26%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
   },
   groupFrame: {
-    marginTop: 264.5,
+    marginTop: 234.5,
     right: 24,
   },
   helloFrame: {
@@ -220,12 +220,12 @@ const styles = StyleSheet.create({
   },
   groupParent: {
     width: "100%",
-    height: "100%",
+    height: "110%",
   },
   addBeneficiary: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },
 });

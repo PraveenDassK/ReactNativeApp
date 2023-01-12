@@ -50,6 +50,7 @@ const BankTransferAmount = ({navigation}) => {
         <View style={[styles.helloParent1, styles.helloParent1Position]}>
           <Text style={[styles.hello7, styles.helloTypo]}>Pay</Text>
           <TextInput style={[styles.hello8, styles.helloTypo2, styles.helloTypo4]}
+           keyboardType="numeric"
            placeholder= {"£500"}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
@@ -172,10 +173,9 @@ const styles = StyleSheet.create({
     left: 25,
   },
   helloParent: {
-    marginLeft: -67.5,
-    top: 101,
-    width: 152,
-    height: 108,
+    marginLeft: -63.56,
+    top: "10%",
+    width: "50%",
     left: "50%",
     position: "absolute",
   },
@@ -213,13 +213,13 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello7: {
-    left: 142,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_xl,
     top: 0,
   },
   hello8: {
     top: 28,
-    left: 75,
+    left: "35%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 37,
     color: GlobalStyles.Color.blue_100,
@@ -233,8 +233,8 @@ const styles = StyleSheet.create({
     height: 2,
   },
   helloParent1: {
-    marginTop: -64.5,
-    height: 98,
+    marginTop: "-20%",
+    height: 125,
   },
   hello9: {
     top: 5,
@@ -290,19 +290,18 @@ const styles = StyleSheet.create({
   },
   groupParent1: {
     right: 24,
-    bottom: 49,
+    bottom: "5%",
     height: 60,
     left: 25,
     position: "absolute",
   },
   groupParent: {
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
   },
   bankTransferAmount: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_10xs,
-    paddingLeft: GlobalStyles.Padding.padding_10xs,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

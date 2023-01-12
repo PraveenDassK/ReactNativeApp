@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 221,
-    left: 0,
+    marginLeft: -93.56,
+    left: "35%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     fontWeight: "700",
@@ -48,18 +49,19 @@ const styles = StyleSheet.create({
   iconAwesomeCheckCircle: {
     marginTop: -241.28,
     marginLeft: -93.56,
-    left: "50%",
+    left: "35%",
     width: 187,
     height: 187,
   },
   hello1: {
     marginTop: 229.28,
-    left: 37,
+    marginLeft: -93.56,
+    left: "45%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
   },
   helloParent: {
-    width: 208,
+    width: "100%",
     height: 483,
   },
   verifyCode1: {
@@ -68,7 +70,6 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_xl,
     paddingTop: 189,
-    paddingRight: GlobalStyles.Padding.padding_xl,
   },
 });
 
