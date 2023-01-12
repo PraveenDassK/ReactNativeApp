@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image, TextInput } from "react-native";
-
 import GlobalStyles from "../../GlobalStyles";
 
 const DOB = () => {
@@ -8,11 +7,6 @@ const DOB = () => {
 
   return (
     <View style={styles.dob}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-whitearrow.png")}
-          />
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Verify Date of Birth</Text>
         <Text style={[styles.requiresToMakeSureYouAre, styles.hello2Typo]}>
@@ -35,7 +29,7 @@ const DOB = () => {
           style={[styles.helloGroup, styles.groupLayout, styles.groupPosition]}
         >
             
-        <TextInput style={[styles.hello2, styles.hello2Typo]}
+        <TextInput style={[styles.hello2, styles.hello2Typo1]}
           onChangeText={onChangeNumber}
           value={number}
           placeholder="dd-mm-yyyy"
@@ -64,8 +58,16 @@ const styles = StyleSheet.create({
   hello2Typo: {
     color: GlobalStyles.Color.gray_700,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_base,
+    fontSize: GlobalStyles.FontSize.size_xl,
     top: "50%",
+    textAlign: "left",
+    position: "absolute",
+  },
+  hello2Typo1: {
+    color: GlobalStyles.Color.gray_700,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    fontSize: GlobalStyles.FontSize.size_xl,
+    top: "40%",
     textAlign: "left",
     position: "absolute",
   },
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   hello2: {
     marginTop: -6,
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 273,
   },
   arrowPosition: {
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
   dob: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
