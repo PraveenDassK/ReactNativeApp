@@ -1,12 +1,14 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
-
+import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const ReplaceCard = ({navigation}) => {
+  //Comment
+  const cardName = "Carbonyte Standard - 7761"
   
-
   return (
+    <Screen>
     <View style={styles.replaceCard}>
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>Replace card</Text>
@@ -90,7 +92,7 @@ const ReplaceCard = ({navigation}) => {
             >
               <Text style={styles.carbonyteStandard7761}>
                 <Text style={[styles.carbonyteStandard, styles.itWasLostTypo]}>
-                  Carbonyte Standard - 7761
+                  {cardName}
                 </Text>
               </Text>
               <Text style={styles.carbonyteStandard7761}>
@@ -106,6 +108,7 @@ const ReplaceCard = ({navigation}) => {
         </View>
       </View>
     </View>
+    </Screen>
   );
 };
 
@@ -235,7 +238,7 @@ const styles = StyleSheet.create({
     marginTop: -102,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 296,
   },
   arrowPosition: {
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_8xs,
+    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },

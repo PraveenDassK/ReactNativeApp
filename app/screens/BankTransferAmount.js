@@ -1,35 +1,62 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { StyleSheet, View, Text, Image, TextInput, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const BankTransferAmount = ({navigation}) => {
+  const [amount, setAmount] = useState("")
+  const [note, setNote] = useState("")
+  const [userData, setCode] = useState("")
+  const reciver = "Me";
+  const sortCode = "00-00-00"
+  const accountCode = "01234567890"  
+  let payment = (amount ? amount : 1).toString()
+
+  console.log(payment)
+
+  const send = (amount) => {
+    console.log(amount)
+    navigation.navigate("Pin")
+  }
+
   return (
     <View style={styles.bankTransferAmount}>
       <View style={styles.groupParent}>
         <View style={[styles.groupChild, styles.groupPosition1]} />
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
-            Hudson Maia
+            {reciver}
           </Text>
           <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
-            {"\n"}Bank Name
+            {"\n"}Receiver
           </Text>
           <Text style={[styles.hello2, styles.helloTypo2, styles.helloTypo3]}>
-          {"\n"}01234567890
+          {"\n" + accountCode}
           </Text>
           <Text style={[styles.hello3, styles.helloTypo, styles.helloTypo1]}>
-          {"\n"}00 - 00 - 00
+          {"\n" + sortCode}
           </Text>
         </View>
         <View style={styles.groupContainer}>
           <View style={[styles.helloGroup, styles.helloPosition]}>
+            <Pressable
+              onPress={() => {
+                setAmount(20)
+              }}
+            >
             <Text style={[styles.hello4, styles.helloTypo]}>£20</Text>
             <Image
               style={[styles.groupItem, styles.groupPosition]}
               resizeMode="cover"
               source={require("../assets/group-30409.png")}
             />
+            </Pressable>
           </View>
+
+          <Pressable
+              onPress={() => {
+                setAmount(50)
+              }}
+            >
           <View style={[styles.helloContainer, styles.helloPosition]}>
             <Text style={[styles.hello4, styles.helloTypo]}>£50</Text>
             <Image
@@ -38,19 +65,29 @@ const BankTransferAmount = ({navigation}) => {
               source={require("../assets/group-30410.png")}
             />
           </View>
-          <View style={[styles.groupView, styles.groupPosition1]}>
-            <Text style={[styles.hello4, styles.helloTypo]}>£100</Text>
-            <Image
-              style={[styles.groupIcon, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-30408.png")}
-            />
-          </View>
+          </Pressable>
+
+          <Pressable
+              onPress={() => {
+                setAmount(100)
+              }}
+            >
+            <View style={[styles.groupView, styles.groupPosition1]}>
+              <Text style={[styles.hello4, styles.helloTypo]}>£100</Text>
+              <Image
+                style={[styles.groupIcon, styles.groupPosition]}
+                resizeMode="cover"
+                source={require("../assets/group-30408.png")}
+              />
+            </View>
+          </Pressable>
+
         </View>
         <View style={[styles.helloParent1, styles.helloParent1Position]}>
           <Text style={[styles.hello7, styles.helloTypo]}>Pay</Text>
           <TextInput style={[styles.hello8, styles.helloTypo2, styles.helloTypo4]}
-           placeholder= {"£500"}
+           keyboardType="numeric"
+           placeholder= {"£" + payment}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
@@ -58,18 +95,13 @@ const BankTransferAmount = ({navigation}) => {
           <TextInput style={[styles.hello9, styles.helloTypo, styles.helloTypo1]}
             placeholder={"Add a note"}
           />
-          <Image
-            style={styles.iconMaterialKeyboardVoice}
-            resizeMode="cover"
-            source={require("../assets/icon-materialkeyboardvoice.png")}
-          />
         </View>
         <View style={[styles.maskGroup236, styles.helloParent1Position]} />
         
         <View style={styles.groupParent1}>
         <Pressable
           style={styles.groupParent1}
-          onPress={() => navigation.navigate("Pin")}
+          onPress={() => send(amount)}
         >
           <View style={[styles.rectangleParent, styles.groupPosition1]}>
             <View style={styles.rectangleView} />
@@ -94,19 +126,19 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloTypo2: {
-    textAlign: "left",
+    textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   helloTypo3: {
     color: GlobalStyles.Color.indigo_100,
     fontSize: GlobalStyles.FontSize.size_4xl,
-    textAlign: "left",
+    textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloTypo: {
     color: GlobalStyles.Color.gray_700,
-    textAlign: "left",
+    textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
@@ -172,10 +204,9 @@ const styles = StyleSheet.create({
     left: 25,
   },
   helloParent: {
-    marginLeft: -67.5,
-    top: 101,
-    width: 152,
-    height: 108,
+    marginLeft: -180,
+    top: "10%",
+    width: "50%",
     left: "50%",
     position: "absolute",
   },
@@ -213,13 +244,13 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello7: {
-    left: 142,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_xl,
     top: 0,
   },
   hello8: {
     top: 28,
-    left: 75,
+    left: "35%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 37,
     color: GlobalStyles.Color.blue_100,
@@ -233,8 +264,8 @@ const styles = StyleSheet.create({
     height: 2,
   },
   helloParent1: {
-    marginTop: -64.5,
-    height: 98,
+    marginTop: "-20%",
+    height: 125,
   },
   hello9: {
     top: 5,
@@ -290,19 +321,18 @@ const styles = StyleSheet.create({
   },
   groupParent1: {
     right: 24,
-    bottom: 49,
+    bottom: "5%",
     height: 60,
     left: 25,
     position: "absolute",
   },
   groupParent: {
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
   },
   bankTransferAmount: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_10xs,
-    paddingLeft: GlobalStyles.Padding.padding_10xs,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

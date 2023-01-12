@@ -3,13 +3,12 @@ import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
-const Success = () => {
-  //const navigation = useNavigation();
+const Success = ({navigation}) => {
 
   return (
     <Pressable
       style={styles.success}
-      onPress={() => navigation.navigate("PersonalOrBusiness")}
+      onPress={() => navigation.navigate("AccountMain")}
     >
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>All set</Text>
@@ -51,16 +50,12 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.indigo_100,
   },
   groupChild: {
-    top: 0,
-    right: 19,
-    left: 19,
-    maxWidth: "100%",
-    overflow: "hidden",
-    height: 188,
-    position: "absolute",
+    width:"60%",
+    height:"43%",
+    left: 50,
   },
   helloParent: {
-    width: 226,
+    width: "100%",
     height: 344,
   },
   success: {
@@ -68,8 +63,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: 75,
-    paddingTop: 252,
-    paddingRight: 74,
+    paddingTop: 200,
+    paddingRight: 75,
   },
 });
 

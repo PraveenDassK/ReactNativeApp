@@ -1,12 +1,10 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
-import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const VerifyYourIdentity = () => {
+const VerifyYourIdentity = ({navigation}) => {
 
   return (
-    <Screen>
     <View style={styles.verifyYourIdentity}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Verify your identity</Text>
@@ -103,7 +101,6 @@ const VerifyYourIdentity = () => {
         <View style={[styles.groupChild1, styles.lineViewPosition]} />
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -260,7 +257,7 @@ const styles = StyleSheet.create({
     marginTop: 47.52,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 462,
   },
   arrowPosition: {
@@ -276,7 +273,7 @@ const styles = StyleSheet.create({
   verifyYourIdentity: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

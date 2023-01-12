@@ -78,10 +78,10 @@ const AddBeneficiary = ({navigation}) => {
 
 const styles = StyleSheet.create({
   wrapperPosition: {
-    bottom: 0,
+    bottom: 10,
     left: 0,
     right: 0,
-    top: 0,
+    top: -10,
     position: "absolute",
   },
   groupPosition: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     height: "100%",
     top: "0%",
     right: "0%",
-    bottom: "0%",
+    bottom: "10%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.blue_100,
@@ -186,14 +186,14 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello8: {
-    top: "33.33%",
-    left: "39.26%",
+    top: "20.33%",
+    left: "38.26%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
   },
   groupFrame: {
-    marginTop: 264.5,
+    marginTop: 234.5,
     right: 24,
   },
   helloFrame: {
@@ -219,15 +219,14 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupParent: {
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "110%",
   },
   addBeneficiary: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_13xs,
-    paddingLeft: GlobalStyles.Padding.padding_10xs,
-    backgroundColor: GlobalStyles.Color.white,
+    paddingTop: GlobalStyles.Padding.padding_xs,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

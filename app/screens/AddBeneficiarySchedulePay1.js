@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   hello9: {
-    top: "40%",
+    top: "30%",
     left: "39.26%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     right: 24,
   },
   addBeneficiarySchedulePayInner: {
-    width: 375,
+    width: "100%",
     height: 749,
   },
   addBeneficiarySchedulePay: {

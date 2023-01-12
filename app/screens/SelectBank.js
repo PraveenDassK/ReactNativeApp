@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View, Pressable ,TextInput} from "react-native";
-import Screen from "../components/Screen";
+import { Text, StyleSheet, Image, View, Pressable ,TextInput, ScrollView} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SelectBank = () => {
+const SelectBank = ({navigation}) => {
 
   return (
-    <Screen>
+    <ScrollView>
     <View style={styles.selectBank}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Select Bank</Text>
@@ -188,7 +187,7 @@ const SelectBank = () => {
         />
       </View>
     </View>
-    </Screen>
+    </ScrollView>
   );
 };
 
@@ -320,7 +319,7 @@ const styles = StyleSheet.create({
     right: 16,
   },
   hello1: {
-    marginTop: -5,
+    marginTop: "-2%",
     left: 50,
     color: GlobalStyles.Color.gray_700,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -405,6 +404,7 @@ const styles = StyleSheet.create({
   },
   hello7: {
     top: "58.42%",
+    width: "110%",
   },
   rectangleContainer: {
     marginLeft: -37.5,
@@ -568,14 +568,14 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloParent: {
-    width: 327,
+    width: "100%",
     height: 720,
   },
   selectBank: {
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_8xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },

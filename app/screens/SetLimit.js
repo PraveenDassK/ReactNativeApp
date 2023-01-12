@@ -1,14 +1,11 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable,TextInput } from "react-native";
-import { Image } from "react-native-web";
+import { Text, StyleSheet, View, Pressable,TextInput,Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Screen from "../components/Screen";
 
 const SetLimit = () => {
   
 
   return (
-    <Screen>
     <View style={styles.setLimit}>
        
       <View style={styles.helloParent}>
@@ -41,7 +38,6 @@ const SetLimit = () => {
         </Pressable>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -170,7 +166,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },

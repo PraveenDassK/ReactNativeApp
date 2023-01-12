@@ -57,6 +57,7 @@ const SendContact = ({navigation}) => {
         <View style={[styles.helloParent1, styles.helloParent1Position]}>
           <Text style={[styles.hello6, styles.helloTypo]}>Pay</Text>
           <TextInput style={[styles.hello7, styles.helloTypo2, styles.helloTypo4]}
+          keyboardType="numeric"
            placeholder="£500" 
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   lineViewPosition: {
-    right: 0,
+    right: "5%",
     position: "absolute",
   },
   groupChild: {
@@ -182,10 +183,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloParent: {
-    marginLeft: -64.5,
-    top: 44,
-    width: 189,
+    width: "80%",
     height: 172,
+    top:"5%",
+    marginLeft: "-15%",
     left: "50%",
     position: "absolute",
   },
@@ -217,26 +218,26 @@ const styles = StyleSheet.create({
   groupContainer: {
     marginTop: 119,
     height: 50,
-    left: 53,
-    right: 21,
+    left: "5%",
+    right: "5%",
     top: "50%",
     position: "absolute",
   },
   hello6: {
-    left: 142,
+    left: "40%",
     fontSize: GlobalStyles.FontSize.size_xl,
     top: 0,
   },
   hello7: {
     top: 28,
-    left: 75,
+    left: "25%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 37,
     color: GlobalStyles.Color.blue_100,
   },
   lineView: {
-    bottom: -1,
-    left: -1,
+    bottom: "-1%",
+    left: "-6%",
     borderStyle: "solid",
     borderColor: "#707070",
     borderTopWidth: 1,
@@ -260,11 +261,11 @@ const styles = StyleSheet.create({
   },
   helloParent2: {
     marginTop: 44.5,
-    left: 52,
+    left: "10%",
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.gray_200,
     height: 42,
-    right: 11,
+    right: "8%",
     top: "50%",
     position: "absolute",
   },
@@ -299,21 +300,22 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.white,
   },
   groupPressable: {
-    right: 24,
-    bottom: 49,
-    left: 25,
+    right: "10%",
+    bottom: "5%",
+    left: "5%",
     height: 60,
     position: "absolute",
   },
   groupParent: {
-    width: 375,
-    height: 749,
+    width: "99%",
+    height: "100%",
+    alignItems: "center",
   },
   sendContact: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_9xs,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 
