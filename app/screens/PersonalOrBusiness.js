@@ -7,15 +7,15 @@ import GlobalStyles from "../../GlobalStyles";
 
 const PersonalOrBusiness = ({ navigation }) => {
 
-  const authContext = useContext(AuthContext)
+  const { setUser }= useContext(AuthContext)
 
   const handlePersonal = () => {
-    authContext.setUser(prev => ({...prev, accountType: 'personal'}))
+    setUser(prev => ({...prev, accountType: 'personal'}))
     navigation.navigate('Name')
   }
 
   const handleBusiness = () => {
-    authContext.setUser(prev => ({...prev, accountType: 'business'}))
+    setUser(prev => ({...prev, accountType: 'business'}))
     console.log("navigate to business page g")
   }
 

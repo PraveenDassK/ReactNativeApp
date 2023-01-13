@@ -1,14 +1,35 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Pressable, TextInput } from "react-native";
-import GlobalStyles from "../../GlobalStyles";
+import React, { useContext } from "react";
+import { Text, StyleSheet, View,  TextInput} from "react-native";
+import { Formik } from "formik"
+import * as Yup from 'yup'
 
-const PersonalAddress = () => {
-  const [line1, onChangeline1] = React.useState(null);
-  const [line2, onChangeline2] = React.useState(null);
-  const [city, onChangecity] = React.useState(null);
-  const [name, onChangeName] = React.useState(null);
+import AuthContext from "../auth/context";
+import Button from "../components/Button";
+import ErrorMessage from "../components/forms/ErrorMessage";
+import GlobalStyles from "../../GlobalStyles";
+import Screen from "../components/Screen";
+
+const validationSchema = Yup.object().shape({
+  buildOrHouseNo: Yup.string().required().label("Building name or house number"),
+  addressLine1: Yup.string().required().label("Address line 1"),
+  addressLine2: Yup.string().label("Address line 2"),
+  townOrCity: Yup.string().required().label("Town or city"),
+})
+
+const PersonalAddress = ({navigation}) => {
+
+  const authContext = useContext(AuthContext)
+
+  const handleSubmit = ({buildOrHouseNo, addressLine1, addressLine2, townOrCity}) => {
+
+    const address = `${buildOrHouseNo},${addressLine1},${addressLine2},${townOrCity}`
+    authContext.setUser(prev => ({...prev, address}))
+    console.log(authContext.user)
+    navigation.navigate("DOB")
+  }
 
   return (
+    <Screen>
     <View style={styles.personalAddress}>
       <View style={styles.buildingNameOrNumberParent}>
         <Text
@@ -31,50 +52,85 @@ const PersonalAddress = () => {
         <Text style={[styles.townOrCity, styles.addressTypo]}>
           Town or city
         </Text>
-        
+
+         <Formik
+          initialValues={{buildOrHouseNo:"", addressLine1:"", addressLine2:"",townOrCity:""}}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          >
+              {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+            <>
         <TextInput
+        keyboardType="default" 
+        onBlur={() => setFieldTouched("buildOrHouseNo")}
+        onChangeText={handleChange("buildOrHouseNo")}
           style={[
             styles.groupChild,
             styles.groupChildLayout,
             styles.groupChildBorder,
           ]}
-          onChangeText = {onChangeline1}
+          placeholder="1"
         />
-        <Pressable
+          <View style={{ position: "absolute", top:190}}>
+                <ErrorMessage error={errors.buildOrHouseNo} visible={touched.buildOrHouseNo}/>
+          </View>
+
+        <View
           style={[styles.parentPosition, styles.groupChildLayout]}
-          onPress={() => navigation.navigate("DOB")}
+          
         >
+          
           <View style={[styles.helloParentPosition, styles.parentPosition]}>
             <View style={styles.groupItem} />
             <View style={[styles.maskGroup236, styles.helloParentPosition]} />
           </View>
-          <Text style={[styles.hello, styles.helloTypo]}>Continue</Text>
-        </Pressable>
+          
+          <Text style={[styles.hello, styles.helloTypo]} onPress={handleSubmit}>Continue</Text>
+        </View>
         <TextInput
+          keyboardType="default" 
+          onBlur={() => setFieldTouched("addressLine1")}
+          onChangeText={handleChange("addressLine1")}
           style={[
             styles.groupInner,
             styles.groupChildLayout,
             styles.groupChildBorder,
           ]}
-          onChangeText = {onChangeline2}
+         placeholder="2"
         />
+         <View style={{ position: "absolute", top:313}}>
+                <ErrorMessage error={errors.addressLine1} visible={touched.addressLine1}/>
+            </View>
         <TextInput
+           keyboardType="default" 
+           onBlur={() => setFieldTouched("addressLine2")}
+           onChangeText={handleChange("addressLine2")}
           style={[
             styles.groupView,
             styles.groupChildLayout,
             styles.groupChildBorder,
           ]}
-          onChangeText = {onChangecity}
+          placeholder="3"
         />
+        <View style={{ position: "absolute", top:403}}>
+          <ErrorMessage error={errors.addressLine2} visible={touched.addressLine2}/>
+        </View>
         <TextInput
+          keyboardType="default" 
+          onBlur={() => setFieldTouched("townOrCity")}
+          onChangeText={handleChange("townOrCity")}
           style={[
             styles.groupChild1,
             styles.groupChildLayout,
             styles.groupChildBorder,
           ]}
-          onChangeText = {onChangeName}
+          placeholder="4"
         />
-        <Pressable
+         <View style={{ position: "absolute", top:554}}>
+            <ErrorMessage error={errors.townOrCity} visible={touched.townOrCity}/>
+        </View>
+
+        <View
           style={styles.enterPostcode}
           onPress={() => navigation.navigate("BusinessAddress2")}
         >
@@ -87,7 +143,7 @@ const PersonalAddress = () => {
           >
             Enter postcode?
           </Text>
-        </Pressable>
+        </View>
         <View style={[styles.helloParent, styles.helloParentPosition]}>
           <Text style={[styles.hello1, styles.helloParentPosition]}>
             Your Address
@@ -99,8 +155,12 @@ const PersonalAddress = () => {
             <Text style={styles.byLawWe}> account</Text>
           </Text>
         </View>
+        </>
+          )}
+          </Formik>
       </View>
     </View>
+    </Screen>
   );
 };
 

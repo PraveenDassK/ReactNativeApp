@@ -19,12 +19,12 @@ const validationSchema = Yup.object().shape({
 
 const Name = ({navigation}) => {
   //const navigation = useNavigation();
-  const authContext = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext)
 
   const handleSubmit = ({firstName, lastName}) => {
-    authContext.setUser(prev => ({...prev, firstName, lastName}))
-    console.log(authContext.user)
-    navigation.navigate("ProofOfResidencyList")
+    setUser(prev => ({...prev, firstName, lastName}))
+    console.log(user)
+    navigation.navigate("Proof")
   }
 
   return (

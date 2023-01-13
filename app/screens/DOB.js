@@ -1,19 +1,120 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Pressable, Image } from "react-native";
-import { TextInput } from "react-native-web";
+import React, { useState, useContext} from "react";
+import { TextInput, Text, StyleSheet, View } from "react-native";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
+
+import Button from "../components/Button";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
+import registrstion2API from "../api/registrstion2";
 
-const DOB = () => {
-  const [number, onChangeNumber] = React.useState(null);
+const DOB = ({ navigation }) => {
+  const { user, setUser } = useContext(AuthContext);
+
+  const [dob, setDOB] = useState(new Date(1598051730000));
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+  
+    setDOB(currentDate);
+  };
+
+  // const customerDetails = ({accountType, documentType, phoneNumber, email, address, firstName, lastName, dob, postCode}) => {
+    
+  //   const dateOfCreation = Date.now().toLocaleString()
+  //   const customer = {
+  //     "id": 0,
+  //     "customerId": phoneNumber,
+  //     "accountDetails": [
+  //       {
+  //         "status": null,
+  //         "accountType": accountType,
+  //         "accountNo": null,
+  //         "dateOfCreation": dateOfCreation
+  //       }
+  //     ],
+  //     "emails": [
+  //       {
+  //         "emailId": email
+  //       }
+  //     ],
+  //     "phoneNumbers": [
+  //       {
+  //         "phoneNo": phoneNumber
+  //       }
+  //     ],
+  //     "customerDetails": [
+  //       {
+  //         "documentNo": null,
+  //         "documentType": documentType,
+  //         "address": address,
+  //         "firstName": firstName,
+  //         "dob": dob,
+  //         "nationalId": null,
+  //         "lastName": lastName,
+  //         "postCode": postCode
+  //       }
+  //     ],
+  //     "key": phoneNumber
+  //   }
+
+  //   return customer
+  // }
+
+  const handleSubmit = async ({accountType, documentType, phoneNumber, email, address, firstName, lastName, postCode}) =>  {
+    
+    const dateOfBirth = dob.toLocaleString()?.split(",")[0]
+    const dateOfCreation = new Date()?.toLocaleString()
+
+    console.log("before", accountType, documentType, phoneNumber, email, address, firstName, lastName, postCode, dateOfBirth, dateOfCreation,)
+    
+    const result = await registrstion2API.saveCustomerAccountDetails({
+      "id": 0,
+      "customerId":"",
+      "accountDetails": [
+        {
+          "status": "",
+           accountType,
+          "accountNo": "",
+          dateOfCreation,
+        }
+      ],
+      "emails": [
+        {
+          "emailId": email
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "phoneNo": phoneNumber
+        }
+      ],
+      "customerDetails": [
+        {
+          "documentNo": "",
+          documentType,
+          address,
+          firstName,
+          "dob": dateOfBirth,
+          "nationalId": "",
+          lastName,
+          postCode
+        }
+      ],
+      "key": phoneNumber
+    })
+
+  
+    if (!result.ok || !result.data.result) return alert('Could not complete setup') 
+   
+    setUser(prev => ({...prev, dob: dateOfBirth}))
+    navigation.navigate("SignUp")
+  }
+
 
   return (
     <View style={styles.dob}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-whitearrow.png")}
-          />
+     
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Verify Date of Birth</Text>
         <Text style={[styles.requiresToMakeSureYouAre, styles.hello2Typo]}>
@@ -22,46 +123,32 @@ const DOB = () => {
         <Text style={[styles.dateOfBirth, styles.hello1Typo]}>
           Date of Birth
         </Text>
-        <Pressable
-          style={[styles.groupPosition, styles.parentPosition]}
-          onPress={() => navigation.navigate("LogoAnimation1")}
-        >
-          <View style={[styles.parentPosition, styles.maskGroup236Position]}>
-            <View style={[styles.groupChild, styles.groupLayout]} />
-            <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
-          </View>
-          <Text style={[styles.hello1, styles.hello1Typo]}>Continue</Text>
-        </Pressable>
-        <View
-          style={[styles.helloGroup, styles.groupLayout, styles.groupPosition]}
-        >
-            
-        <TextInput style={[styles.hello2, styles.hello2Typo]}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="dd-mm-yyyy"
-          keyboardType="numeric"
+      
+        <View style={styles.viewDate}>
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={dob}
+          mode="date"
+          display="spinner"
+          onChange={onChange}
         />
-
-          <View style={styles.groupItem} />
-          <View style={styles.layer}>
-            <View style={styles.vrstva98}>
-              <Image
-                style={styles.vrstva98}
-                resizeMode="cover"
-                source={require("../assets/icon-calender.png")}
-              />
-              <View style={[styles.vrstva98Child, styles.vrstva98Layout]} />
-              <View style={[styles.vrstva98Item, styles.vrstva98Layout]} />
-            </View>
-          </View>
+        </View >
+        <View style={styles.viewDate1}>
+          <Button title="Continue" color="blue" onPress={() => handleSubmit(user)}/>
         </View>
+    
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  viewDate: {
+   top: 150
+  },
+  viewDate1: {
+    top:300
+  },
   hello2Typo: {
     color: GlobalStyles.Color.gray_700,
     // fontFamily: GlobalStyles.FontFamily.helvetica,

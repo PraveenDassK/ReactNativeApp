@@ -19,21 +19,23 @@ import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
 import ProofOfResidencyListA1 from "./app/screens/ProofOfResidencyListA1";
 import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
 import ProofOfResidency from "./app/screens/ProofOfResidency";
+import PersonalAddress from "./app/screens/PersonalAddress";
+import DOB from "./app/screens/DOB"
 
 
 // SplashScreen.preventAutoHideAsync(); 
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
-  <Stack.Navigator initialRouteName="Proof">
+  <Stack.Navigator initialRouteName="">
     <Stack.Screen  name="SignUp" component={SignUpPersonalScreen} />
     <Stack.Screen  name="OTPVerification" component={OTPVerificationPersonal2} />
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness} />
     <Stack.Screen  name="Name" component={Name} />
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyListA1} />
-    <Stack.Screen  name="Business" component={BusinessAddress2} />
-    <Stack.Screen  name="Country" component={CountryOfResidence} />
     <Stack.Screen  name="Proof" component={ProofOfResidency} />
+    <Stack.Screen  name="PostCodeSignUp" component={BusinessAddress2} />
+    <Stack.Screen  name="PersonalAddress" component={PersonalAddress} />
+    <Stack.Screen  name="DOB" component={DOB} />
   </Stack.Navigator>
 )
 
