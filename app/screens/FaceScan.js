@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
 
     marginTop: 80.11,
 
-    marginRight: 303.54,
+    marginRight: 403.54,
 
-    width: 300,
+    width: "100%",
 
     height: 350,
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   faceScanInner: {
-    width: 326,
+    width: "100%",
     height: 177,
   },
   faceScan: {

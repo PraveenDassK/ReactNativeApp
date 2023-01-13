@@ -357,13 +357,13 @@ const styles = StyleSheet.create({
     width: 127,
   },
   hello9: {
-    marginTop: -5,
+    marginTop: "-5%",
   },
   helloFrame: {
-    bottom: 2,
-    left: 10,
-    borderRadius: 22,
-    width: 107,
+    bottom: "5%",
+    left: "7%",
+    borderRadius: "5%",
+    width: "23%",
     backgroundColor: GlobalStyles.Color.gray_200,
   },
   sendMoney: {

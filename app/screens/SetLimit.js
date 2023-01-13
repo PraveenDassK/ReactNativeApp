@@ -19,7 +19,6 @@ const SetLimit = () => {
         <TextInput style={[styles.hello1, styles.helloColor, styles.helloTypo]}
           placeholder = "£0"
         />
-        <Text style={[styles.hello2, styles.helloTypo]}>|</Text>
         <Text style={[styles.hello3, styles.helloPosition, styles.helloColor1]}>
           GBP
         </Text>
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
     fontWeight: "700",
     color: GlobalStyles.Color.gray_700,
-    width: 100,
+    width: "50%",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   hello2: {
@@ -149,7 +148,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 399,
   },
   arrowPosition: {

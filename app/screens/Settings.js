@@ -60,11 +60,11 @@ const Settings = ({navigation}) => {
             12345678
           </Text>
         </View>
-        <Image
+        {/* <Image
           style={[styles.maskGroup241, styles.groupLayout]}
           resizeMode="cover"
           source={require("../assets/mask-group-241.png")}
-        />
+        /> */}
         <Image
           style={[
             styles.iconMaterialContentCopy,
@@ -92,7 +92,7 @@ const Settings = ({navigation}) => {
         </View>
         <Pressable
           style={[styles.groupParent, styles.groupParentPosition]}
-          onPress={() => navigation.navigate("Plan")}
+          onPress={() => navigation.navigate("ChooseCardsElite")}
         >
           <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
             <View style={styles.groupInner} />
@@ -130,10 +130,10 @@ const Settings = ({navigation}) => {
           style={[styles.groupParent1, styles.groupParentPosition]}
           onPress={() => navigation.navigate("SecurityAndPrivacy1")}
         >
-          <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
+          {/* <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
             <View style={styles.groupInner} />
             <View style={styles.maskGroup236} />
-          </View>
+          </View> */}
           <Text style={[styles.hello11, styles.helloTypo]}>About us</Text>
         </Pressable>
       </View>
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "94.09%",
-    left: "40.84%",
+    left: "44%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.blue_100,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     marginTop: -93,
   },
   britishPounds: {
-    marginLeft: -38.5,
+    marginLeft: "2%",
   },
   britishPoundsWrapper: {
     marginTop: -153,
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     marginTop: -123,
   },
   maskGroup241: {
-    top: 250,
+    top: "0%",
     bottom: 546,
     left: 239,
     width: 17,
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
     marginTop: 27,
   },
   hello10: {
-    left: "31.29%",
+    left: "36%",
   },
   groupPressable: {
     marginTop: 100,
@@ -424,8 +424,8 @@ const styles = StyleSheet.create({
     marginTop: 173,
   },
   path33370Parent: {
-    width: 404,
-    height: 812,
+    width: "90%",
+    height: "100%",
   },
   settings: {
     flex: 1,

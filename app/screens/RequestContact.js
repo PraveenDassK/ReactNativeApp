@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
   },
   groupPosition1: {
-    left: 42,
-    right:"10%",
+    left: "22%",
+    right:0,
     top: "50%",
     position: "absolute",
   },
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupPosition: {
-    height: 17,
+    height: "17%",
     width: 18,
     bottom: 0,
     left: "50%",

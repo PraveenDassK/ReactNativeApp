@@ -19,10 +19,10 @@ const AddFundsSuccess = ({navigation}) => {
             <Text style={styles.congratulations1}> </Text>
           </Text>
           <Text style={styles.congratulations}>
-            <Text style={styles.added1}>{`£500.00 added `}</Text>
+            <Text style={styles.added1}>{`\n£500.00 added `}</Text>
           </Text>
           <Text style={styles.congratulations}>
-            <Text style={styles.added1}>successfully</Text>
+            <Text style={styles.added1}>{"\nsuccessfully"}</Text>
           </Text>
         </Text>
         <Text style={[styles.hello1, styles.helloFlexBox]}>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   iconAwesomeCheckCircle: {
     top: 0,
     right: 0,
-    left: -10,
+    left: "25%",
     overflow: "hidden",
     height: 200,
     width:200,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 219,
-    left: 10,
+    left: "30%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     color: GlobalStyles.Color.indigo_100,
@@ -65,21 +65,19 @@ const styles = StyleSheet.create({
   hello1: {
     marginTop: 241.5,
     top: "50%",
-    left: 22,
+    left: "32%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
   },
   iconAwesomeCheckCircleParent: {
-    width: 180,
-    height: 507,
+    width: "100%",
+    height: "100%",
   },
   addFundsSuccess: {
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     width: "100%",
-    paddingLeft: 98,
     paddingTop: GlobalStyles.Padding.padding_8xl,
-    paddingRight: 97,
   },
 });
 

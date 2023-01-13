@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   groupPosition1: {
     height: 17,
     width: 18,
-    left: "40%",
+    left: "-2%",
     bottom: 0,
     position: "absolute",
   },
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupPosition: {
-    left: 45,
+    left: "5%",
     position: "absolute",
   },
   rectangleViewLayout: {
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 39,
-    left: 138,
+    left: "38%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
     textAlign: "left",
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   hello1: {
     fontSize: GlobalStyles.FontSize.size_7xl,
     lineHeight: 32,
-    left: 10,
+    left: "-25%",
     textAlign: "left",
   },
   groupChild: {
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupInner: {
-    marginLeft: -7.22,
+    marginLeft: 1.22,
   },
   groupView: {
     width: 80,
@@ -211,13 +211,13 @@ const styles = StyleSheet.create({
     right: 31,
   },
   hello4: {
-    left: 142,
+    left: "65%",
     fontSize: GlobalStyles.FontSize.size_xl,
     textAlign: "left",
   },
   hello5: {
     top: 18,
-    left: 108,
+    left: "65%",
     fontSize: GlobalStyles.FontSize.size_12xl,
     lineHeight: 57,
     color: GlobalStyles.Color.blue_100,
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
   },
   groupContainer: {
     top: 93,
-    right: 25,
+    right: "5%",
     height: 69,
   },
   rectangleView: {
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   },
   hello10: {
     top: "30%",
-    left: "36.5%",
+    left: "40.5%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   groupPressable: {
     right: 24,
-    bottom: 59,
+    bottom: "5%",
     height: 60,
   },
   helloParent: {
@@ -350,15 +350,15 @@ const styles = StyleSheet.create({
     shadowRadius: 50,
     elevation: 50,
     shadowOpacity: 1,
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
   addFunds: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_19xs,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 
