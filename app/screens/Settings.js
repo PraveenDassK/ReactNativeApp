@@ -126,16 +126,16 @@ const Settings = ({navigation}) => {
             style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
           >{`Security & Privacy`}</Text>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           style={[styles.groupParent1, styles.groupParentPosition]}
           onPress={() => navigation.navigate("SecurityAndPrivacy1")}
         >
-          {/* <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
+          <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
             <View style={styles.groupInner} />
             <View style={styles.maskGroup236} />
-          </View> */}
+          </View>
           <Text style={[styles.hello11, styles.helloTypo]}>About us</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
     </View>
   );
@@ -157,9 +157,8 @@ const styles = StyleSheet.create({
     top: 0,
   },
   helloPosition1: {
-    marginLeft: -127,
     top: "50%",
-    left: "50%",
+    left: "10%",
     fontSize: GlobalStyles.FontSize.size_base,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
   },
   wrapperPosition: {
     height: 12,
-    right: 60,
+    right: "15%",
     top: "50%",
     position: "absolute",
   },
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   iconContentPosition: {
-    marginLeft: 68.35,
+    marginLeft: 98.35,
     height: 16,
     top: "50%",
     width: 14,
@@ -207,8 +206,8 @@ const styles = StyleSheet.create({
   },
   groupParentPosition: {
     height: 60,
-    left: 54,
-    right: 24,
+    left: "5%",
+    right: "5%",
     top: "50%",
     position: "absolute",
   },
@@ -228,29 +227,29 @@ const styles = StyleSheet.create({
     left: 29,
   },
   hello: {
-    top: 108,
+    top: 78,
     fontSize: GlobalStyles.FontSize.size_8xl,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",
-    left: 59,
+    left: "5%",
     position: "absolute",
   },
   hello1: {
-    top: 140,
+    top: 110,
     color: GlobalStyles.Color.gray_700,
     fontSize: GlobalStyles.FontSize.size_base,
     textAlign: "left",
-    left: 59,
+    left: "5%",
     position: "absolute",
   },
   groupChild: {
-    height: "7.76%",
-    width: "15.59%",
-    top: "12.07%",
-    right: "5.94%",
+    height:80,
+    width: 80,
+    top: "10.07%",
+    right: "10%",
     bottom: "80.17%",
-    left: "78.47%",
+    left: "74.47%",
   },
   hello2: {
     left: "33.76%",
@@ -270,7 +269,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloParent: {
-    marginLeft: -21,
+    marginLeft: -31,
     bottom: 99,
     width: 71,
     height: 14,
@@ -279,7 +278,8 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "94.09%",
-    left: "44%",
+    marginLeft: -40.56,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.blue_100,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_base,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
-    left: 59,
+    left: "5%",
     position: "absolute",
   },
   groupItem: {
@@ -307,8 +307,8 @@ const styles = StyleSheet.create({
     elevation: 20,
     shadowOpacity: 1,
     height: 111,
-    left: 54,
-    right: 24,
+    left: "5%",
+    right: "5%",
     top: "50%",
     position: "absolute",
     backgroundColor: GlobalStyles.Color.white,
@@ -323,14 +323,14 @@ const styles = StyleSheet.create({
     marginTop: -93,
   },
   britishPounds: {
-    marginLeft: "2%",
+    marginLeft: "-1%",
   },
   britishPoundsWrapper: {
     marginTop: -153,
     width: 88,
   },
   text: {
-    marginLeft: -26.5,
+    marginLeft: "-10%",
   },
   wrapper: {
     width: 53,
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     marginTop: -92,
-    marginLeft: 94,
+    marginLeft: "17%",
   },
   history: {
     left: 0,
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   historyParent: {
-    top: 58,
+    top: 10,
     width: 300,
     left: 0,
   },
@@ -402,7 +402,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello8: {
-    left: "41.72%",
+    marginLeft: -23.56,
+    left: "50%",
   },
   groupParent: {
     marginTop: -46,
@@ -411,7 +412,8 @@ const styles = StyleSheet.create({
     marginTop: 27,
   },
   hello10: {
-    left: "36%",
+    marginLeft: -53.56,
+    left: "50%",
   },
   groupPressable: {
     marginTop: 100,
@@ -424,7 +426,7 @@ const styles = StyleSheet.create({
     marginTop: 173,
   },
   path33370Parent: {
-    width: "90%",
+    width: "100%",
     height: "100%",
   },
   settings: {
