@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   maskGroupLayout: {
     overflow: "hidden",
     maxWidth: "100%",
+    width:"100%",
     alignItems: 'center',
   },
   helloFlexBox: {
@@ -71,13 +72,12 @@ const styles = StyleSheet.create({
   },
   maskGroup259: {
     marginTop: -140.5,
-    right: 17,
-    left: 21,
     height: 337,
     top: "50%",
+    width:"100%"
   },
   maskGroup261Parent: {
-    width: 375,
+    width: "100%",
     height: 605,
   },
   logoAnimation3: {

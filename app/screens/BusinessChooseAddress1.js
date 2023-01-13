@@ -2,8 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image,TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const BusinessChooseAddress1 = () => {
-
+const BusinessChooseAddress1 = ({navigation}) => {
 
   return (
     <View style={styles.businessChooseAddress1}>
@@ -221,7 +220,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 430,
   },
   businessChooseAddress1: {

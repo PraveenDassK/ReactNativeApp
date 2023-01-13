@@ -1,19 +1,21 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image,TextInput } from "react-native";
+import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const SelectBank1 = ({navigation}) => {
 
   return (
+    <Screen>
     <View style={styles.selectBank1}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Enter your detail</Text>
         <Text style={[styles.hello1, styles.helloTypo]}>
           <Text style={styles.byProvidingYour}>
-            By providing your information to Carbonyte, you are{" "}
+            By providing your information to Carbonyte, you are{"\n"}
           </Text>
           <Text style={styles.byProvidingYour}>
-              enabling Carbonyte to retrieve your personal data.
+            enabling Carbonyte to retrieve your personal data.
           </Text>
         </Text>
         <TextInput style={[styles.username, styles.usernameTypo]} placeholder={"Username"}/>
@@ -32,6 +34,7 @@ const SelectBank1 = ({navigation}) => {
         </Pressable>
       </View>
     </View>
+    </Screen>
   );
 };
 
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
   selectBank1: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
+    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

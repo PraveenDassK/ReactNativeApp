@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     opacity: 0.42,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 611,
   },
   arrowPosition: {

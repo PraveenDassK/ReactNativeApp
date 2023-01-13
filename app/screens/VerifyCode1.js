@@ -1,10 +1,14 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View } from "react-native";
+import { Text, StyleSheet, Image, View,Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const VerifyCode1 = ({navigation}) => {
   return (
     <View style={styles.verifyCode1}>
+          <Pressable
+      style={styles.onboarding1}
+      onPress={() => navigation.navigate("SendAccountSelection")}
+    >
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>
           <Text style={styles.yourBankAccount}>Your bank account is{"\n"}</Text>
@@ -20,6 +24,7 @@ const VerifyCode1 = ({navigation}) => {
           Tap anywhere to continue
         </Text>
       </View>
+      </Pressable>
     </View>
   );
 };

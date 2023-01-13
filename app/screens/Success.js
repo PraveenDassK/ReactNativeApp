@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   groupChild: {
     width:"60%",
     height:"43%",
-    left: 50,
+    left:50,
   },
   helloParent: {
     width: "100%",

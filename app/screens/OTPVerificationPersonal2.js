@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 673,
   },
   otpVerificationPersonal2: {

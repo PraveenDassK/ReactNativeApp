@@ -3,13 +3,13 @@ import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const SentMoney = () => {
+const SentMoney = ({navigation}) => {
   
 
   return (
     <Pressable
       style={styles.sentMoney}
-      onPress={() => navigation.navigate("SendMoney")}
+      onPress={() => navigation.navigate("AccountMain")}
     >
       <View style={styles.groupParent}>
         <View style={[styles.helloWrapperPosition, styles.wrapperPosition]}>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   groupParent: {
-    width: 375,
+    width: "100%",
     height: 749,
   },
   sentMoney: {

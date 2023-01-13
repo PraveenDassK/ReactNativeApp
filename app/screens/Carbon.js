@@ -66,26 +66,72 @@ const Carbon = ({navigation}) => {
   return (
     <View>
       <ScrollView>
+        {
+          //Header View
+        }
+        <View style={[styles.headerContainter]}>
+          <Text style={[styles.header1, styles.headerText]}>
+            <Pressable
+              onPress={() => navigation.navigate("AccountMain")}                      
+            >
+              <Text>
+                Account
+              </Text>
+            </Pressable>
+          </Text>
+          <Text style={[styles.header2, styles.headerText]}>
+          <Pressable
+              onPress={() => navigation.navigate("Analytics")}                      
+            >
+              <Text>
+                Analysis
+              </Text>
+            </Pressable>
+          </Text>
+          <Text style={[styles.header3, styles.headerText]}>          
+            <Pressable
+              onPress={() => navigation.navigate("Carbon")}                      
+            >
+              <Text>
+                Carbon
+              </Text>
+            </Pressable>
+          </Text>
+          <Text style={[styles.header4, styles.headerText]}>
+            <Pressable
+              onPress={() => navigation.navigate("Settings")}                      
+            >
+              <Text>
+                Profile
+              </Text>
+            </Pressable>
+          </Text>
+        </View>
 
-        <Text style={[styles.hello, styles.helloColor, styles.helloTypo6]}>
-          <Text style={styles.titleFont}>Remove Carbon,Restore Nature</Text>
-        </Text>
+        {
+          //Title box
+        }
+        <View style={styles.titleBox}>
+          <Text style={styles.titleFont}>Remove Carbon,</Text>
+          <Text style={styles.titleFont}>Restore Nature</Text>
+
+        </View>
         <Image
           style={[styles.treeImage]}
           resizeMode="cover"
-          source={require("../assets/image-tree.png")}
+          source={require("../assets/image-twotrees.png")}
         />
 
         <Pressable
           style={[styles.groupParent, styles.groupPosition]}
           onPress={() => navigation.navigate("ChooseCardsStandard5")}
         >
-          <Text style={[styles.mainFont, styles.button]}>
+          <Text style={[styles.mainFont, styles.footprintButton]}>
             Calculate Carbon Footprint
           </Text>
         </Pressable>
 
-        <View style={[styles.groupChild, styles.iconLayout]} />
+        <View/>
         <View style={styles.helloWrapper}>
           <Text >
             <Text >
@@ -114,10 +160,20 @@ const Carbon = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  titleBox: {
+    borderWidth: 1,
+    borderColor: "red",
+    paddingVertical: 12,
+    paddingHorizontal: 40,  
+  },
   titleFont: {
     color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
+    fontSize: GlobalStyles.FontSize.size_6xl,
+    fontWeight:"bold",
     margin: GlobalStyles.Margin.margin_8xs,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign:'left',
   },
   mainFont: {
     color: GlobalStyles.Color.indigo_100,
@@ -130,6 +186,26 @@ const styles = StyleSheet.create({
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.gray_500,
   },
+  headerContainter:{
+    borderWidth: 1,
+    borderColor: "red",
+    backgroundColor: GlobalStyles.Color.gray_500,
+  },
+  headerText:{
+
+  },
+  header1:{
+
+  },
+  header2:{
+
+  },
+  header3:{
+
+  },
+  header4:{
+
+  },
 
   button: {
     alignItems: 'center',
@@ -141,9 +217,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
 
+  footprintButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 150,
+    backgroundColor: '#7FDEFA',
+  },
+
   treeImage: {
-    width:"100%",
-    height:"10%",
+    width: "100%",
+    height: 400,
+    alignContent: "center",
+    justifyContent: "center",
   },
 
   projectBox: {

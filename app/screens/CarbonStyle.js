@@ -3304,7 +3304,7 @@ const styles = StyleSheet.create({
     width: 13,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 7336,
   },
   carbon: {

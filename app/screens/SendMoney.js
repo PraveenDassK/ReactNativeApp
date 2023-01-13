@@ -3,12 +3,12 @@ import { Image, StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SendMoney = () => {
+const SendMoney = ({navigation}) => {
   return (
     <View style={styles.sendMoney}>
       <Pressable
         style={styles.sendMoneyInner}
-        onPress={() => navigation.navigate("Account3")}
+        onPress={() => navigation.navigate("SendContact")}
       >
         <View
           style={[
@@ -108,11 +108,6 @@ const SendMoney = () => {
         source={require("../assets/group-30456.png")}
       />
       <View style={[styles.rectangle, styles.mt12_5, styles.ml25]}>
-        <Image
-          style={[styles.groupIcon, styles.groupLayout]}
-          resizeMode="cover"
-          source={require("../assets/group-30337.png")}
-        />
         <Pressable
           style={[styles.groupWrapper, styles.helloFramePosition]}
           onPress={() => navigation.navigate("SendContact")}
@@ -282,7 +277,7 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     borderRadius: GlobalStyles.Border.br_4xl,
-    width: 326,
+    width: "100%",
     height: 64,
     backgroundColor: GlobalStyles.Color.gray_200,
   },
@@ -362,7 +357,6 @@ const styles = StyleSheet.create({
   helloFrame: {
     bottom: "5%",
     left: "7%",
-    borderRadius: "5%",
     width: "23%",
     backgroundColor: GlobalStyles.Color.gray_200,
   },

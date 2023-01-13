@@ -10,7 +10,7 @@ const SendContact = ({navigation}) => {
       <View style={styles.groupParent}>
         <Pressable
           style={[styles.groupChild, styles.groupPosition1]}
-          onPress={() => navigation.navigate("SendMoney")}
+          onPress={() => navigation.navigate("SentMoney")}
         />
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
@@ -75,7 +75,7 @@ const SendContact = ({navigation}) => {
         <View style={[styles.maskGroup236, styles.helloParent1Position]} />
         <Pressable
           style={styles.groupPressable}
-          onPress={() => navigation.navigate("AddBeneficiarySchedulePay1")}
+          onPress={() => navigation.navigate("SentMoney")}
         >
           <View style={[styles.rectangleParent, styles.groupPosition1]}>
             <View style={styles.rectangleView} />

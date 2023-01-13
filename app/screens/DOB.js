@@ -1,12 +1,18 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image, TextInput } from "react-native";
+
 import GlobalStyles from "../../GlobalStyles";
 
-const DOB = () => {
+const DOB = ({navigation}) => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
     <View style={styles.dob}>
+      <Image
+            style={[styles.arrowCircle, styles.arrowPosition]}
+            resizeMode="cover"
+            source={require("../assets/icon-whitearrow.png")}
+          />
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Verify Date of Birth</Text>
         <Text style={[styles.requiresToMakeSureYouAre, styles.hello2Typo]}>
@@ -17,7 +23,7 @@ const DOB = () => {
         </Text>
         <Pressable
           style={[styles.groupPosition, styles.parentPosition]}
-          onPress={() => navigation.navigate("LogoAnimation1")}
+          onPress={() => navigation.navigate("AccountMain")}
         >
           <View style={[styles.parentPosition, styles.maskGroup236Position]}>
             <View style={[styles.groupChild, styles.groupLayout]} />
@@ -29,7 +35,7 @@ const DOB = () => {
           style={[styles.helloGroup, styles.groupLayout, styles.groupPosition]}
         >
             
-        <TextInput style={[styles.hello2, styles.hello2Typo1]}
+        <TextInput style={[styles.hello2, styles.hello2Typo]}
           onChangeText={onChangeNumber}
           value={number}
           placeholder="dd-mm-yyyy"
@@ -58,16 +64,8 @@ const styles = StyleSheet.create({
   hello2Typo: {
     color: GlobalStyles.Color.gray_700,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_xl,
+    fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
-    textAlign: "left",
-    position: "absolute",
-  },
-  hello2Typo1: {
-    color: GlobalStyles.Color.gray_700,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    top: "40%",
     textAlign: "left",
     position: "absolute",
   },
@@ -146,7 +144,7 @@ const styles = StyleSheet.create({
     left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
   },
   hello2: {
     marginTop: -6,
@@ -212,7 +210,7 @@ const styles = StyleSheet.create({
   dob: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
+    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

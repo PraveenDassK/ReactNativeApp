@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, TextInput,ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const BusinessType = () => {
+const BusinessType = ({navigation}) => {
   const [name, onChangeName] = React.useState(null);
   const [number, onChangeNumber] = React.useState(null);
   const [type, onChangeType] = React.useState(null);
@@ -12,6 +12,8 @@ const BusinessType = () => {
 
 
   return (
+        <ScrollView>
+
     <View style={styles.businessType}>
       <View style={styles.companyStatusParent}>
         <Text
@@ -217,6 +219,8 @@ const BusinessType = () => {
         </View>
       </View>
     </View>
+    </ScrollView>
+
   );
 };
 
@@ -410,13 +414,12 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   companyStatusParent: {
-    width: 347,
+    width: "100%",
     height: 1010,
   },
   businessType: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: 3,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,

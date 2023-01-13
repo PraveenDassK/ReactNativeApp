@@ -1,11 +1,10 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import carbonApi from "../api/test_api_list"
 
 import GlobalStyles from "../../GlobalStyles";
 
 const Account = () => {
- 
-
   return (
     <View style={styles.account}>
       <View style={styles.helloParent}>

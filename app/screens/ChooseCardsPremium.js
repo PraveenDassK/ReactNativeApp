@@ -1343,7 +1343,7 @@ const styles = StyleSheet.create({
   rectangleLayout: {
     marginTop: -482.93,
     height: 684,
-    width: 326,
+    width: "100%",
   },
   wrapperPosition1: {
     left: 48,
@@ -1679,7 +1679,7 @@ const styles = StyleSheet.create({
     top: 1314,
   },
   rectangleParent: {
-    width: 326,
+    width: "100%",
     left: 0,
   },
   groupItem: {
@@ -2101,7 +2101,7 @@ const styles = StyleSheet.create({
     marginLeft: -162.5,
     height: 60,
     left: "50%",
-    width: 326,
+    width: "100%",
     top: "50%",
     position: "absolute",
   },

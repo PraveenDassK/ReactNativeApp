@@ -1,11 +1,12 @@
 import * as React from "react";
-import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const MyCards = () => {
+const MyCards = ({navigation}) => {
   
   return (
+    <ScrollView>
     <View style={styles.myCards}>
       <View style={styles.groupParent}>
         <Pressable
@@ -130,7 +131,7 @@ const MyCards = () => {
         </View>
         <Pressable
           style={styles.wrapper}
-          onPress={() => navigation.navigate("SendEnterPIN1")}
+          onPress={() => navigation.navigate("CardSettings")}
         >
           <Image
             style={styles.icon}
@@ -203,6 +204,7 @@ const MyCards = () => {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -511,6 +513,8 @@ const styles = StyleSheet.create({
     bottom: -60,
     top: 0,
     left: 0,
+    width:"100%",
+    height:"100%",
   },
   groupIcon: {
     height: "6.35%",

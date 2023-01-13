@@ -1,8 +1,10 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable, TextInput, ScrollView } from "react-native";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
+import { Text, StyleSheet, View, Image, Pressable, TextInput } from "react-native";
 import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 import { useState } from "react";
+
 import GlobalStyles from "../../GlobalStyles";
+
 const roledata = [
   { label: 'United Kingdom', value: '1' },
   { label: 'United States of America', value: '2' },
@@ -23,7 +25,7 @@ const occupationdata = [
   { label: 'United States of America', value: '2' },
   { label: 'India', value: '3' },
 ];
-const DirectorsOrPartners = () => {
+const DirectorsOrPartners = ({navigation}) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const renderLabel = () => {

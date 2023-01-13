@@ -29,17 +29,11 @@ import BiometrixComplete from "./app/screens/BiometrixComplete"
 import Pin from "./app/screens/Pin"
 import Success from "./app/screens/Success"
 import Name from "./app/screens/Name"
-
-import SignUpPersonal3 from "./app/screens/SignUpPersonal3";
-
-
+import Login from "./app/screens/Login";
 import SendEnterPIN from "./app/screens/SendEnterPIN";
-
 import BusinessChooseAddress from "./app/screens/BusinessChooseAddress";
-
 import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
 import ChooseCardsElite from "./app/screens/ChooseCardsElite";
-
 import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
 import SendMoney from "./app/screens/SendMoney"
 import BankTransfer from "./app/screens/BankTransfer"
@@ -49,26 +43,17 @@ import FindFriends from "./app/screens/FindFriends"
 import PersonalAddress from "./app/screens/PersonalAddress"
 import ReviewAndConfirm from "./app/screens/ReviewAndConfirm"
 import SendAccountSelection from "./app/screens/SendAccountSelection"
-
 import MyCards from "./app/screens/MyCards"
-
 import ProofVerified from "./app/screens/ProofVerified"
 import BusinessAddress2 from "./app/screens/BusinessAddress2"
 import AddFunds from "./app/screens/AddFunds"
-import AddFundsSuccess from "./app/screens/AddFundsSuccess";
-
 import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
 import FreezeCard from "./app/screens/FreezeCard";
 import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
 import SpendingLimit from "./app/screens/SpendingLimit";
-import SpendingLimit1 from "./app/screens/SpendingLimit1";
 import CarbonSpending from "./app/screens/CarbonSpending";
 import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
-import Account3 from "./app/screens/Account3";
-import Account2 from "./app/screens/Account2";
-import SpendingLimit3 from "./app/screens/SpendingLimit3";
-import SpendingLimit2 from "./app/screens/SpendingLimit2";
 import ItsDamagedOrDoesntWork from "./app/screens/ItsDamagedOrDoesntWork";
 import IWasAVictimOfFraudOrThe from "./app/screens/IWasAVictimOfFraudOrThe";
 import Terminate from "./app/screens/Terminate";
@@ -80,40 +65,40 @@ import BankTransferAmount from "./app/screens/BankTransferAmount";
 import VerifyCode1 from "./app/screens/VerifyCode1";
 import VerifyCode from "./app/screens/VerifyCode";
 import AddBeneficiary from "./app/screens/AddBeneficiary";
-import AddBeneficiarySchedulePay1 from "./app/screens/AddBeneficiarySchedulePay1";
 import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
-
 import PushNotification from "./app/screens/PushNotifications";
 import DOB from "./app/screens/DOB"
-
-import SendContact from "./app/screens/SendContact";
 import RequestContact from "./app/screens/RequestContact"
 import Requested from "./app/screens/Requested"
 import Settings from "./app/screens/Settings";
 import BusinessType from "./app/screens/BusinessType";
-import CarbonCart1 from "./app/screens/CarbonCart1";
+import CarbonCart1 from "./app/screens/CarbonCart";
 import SentMoney from "./app/screens/SentMoney";
-
 import SelectBank from "./app/screens/SelectBank";
 import SelectBank1 from "./app/screens/SelectBank1";
 import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
+import AddFundsSuccess from "./app/screens/AddFundsSuccess";
 
-
+import AccountMain from "./app/screens/AccountMain";
+import AccountMainBusiness from "./app/screens/AccountMainBusiness";
+import SendContact from "./app/screens/SendContact";
+import CarbonCart from "./app/screens/CarbonCart";
 
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="DirectorsOrPartners">
+  <Stack.Navigator initialRouteName="PersonalAddress">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
 
-    <Stack.Screen  name="SignUpPersonal" component={SignUpPersonal}/>
+    <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
+    <Stack.Screen  name="Login" component={Login}/>
 
     <Stack.Screen  name="OTPVerificationPersonal" component={OTPVerificationPersonal}/>
     <Stack.Screen  name="BiometrixComplete" component={BiometrixComplete}/>
@@ -130,11 +115,12 @@ const StackNavigator = () => (
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
     <Stack.Screen  name="Account" component={Account}/>
+    <Stack.Screen  name="AccountMain" component={AccountMain}/>
+    <Stack.Screen  name="AccountMainBusiness" component={AccountMainBusiness}/>
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
     <Stack.Screen  name="SendMoney" component={SendMoney}/>
     <Stack.Screen  name="RequestContact" component={RequestContact}/>
-    <Stack.Screen  name="SendContact" component={SendContact}/>
 
     <Stack.Screen  name="BankTransfer" component={BankTransfer}/>
     <Stack.Screen  name="BankTransferAmount" component={BankTransferAmount}/>
@@ -168,15 +154,14 @@ const StackNavigator = () => (
 
     <Stack.Screen name="SelectBank" component={SelectBank}/>
     <Stack.Screen name="SelectBank1" component={SelectBank1}/>
+    <Stack.Screen name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
     
     <Stack.Screen name="VerifyYourIdentity" component={VerifyYourIdentity}/>
 
-    
     <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
     <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
 
     <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
-    <Stack.Screen  name="AddBeneficiarySchedulePay1" component={AddBeneficiarySchedulePay1}/>
     <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/>
 
     <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
@@ -185,7 +170,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="Terminate" component={Terminate}/>
     <Stack.Screen  name="IWasAVictimOfFraudOrThe" component={IWasAVictimOfFraudOrThe}/>
     <Stack.Screen  name="ItsDamagedOrDoesntWork" component={ItsDamagedOrDoesntWork}/>
-    <Stack.Screen name="MyCars" component={MyCards}/>
+    <Stack.Screen name="MyCards" component={MyCards}/>
     <Stack.Screen name="FreezeCard" component={FreezeCard}/>
     <Stack.Screen name="CardSettings" component={CardSettings}/>
     <Stack.Screen name="SpendingLimit" component={SpendingLimit}/> 
@@ -193,11 +178,9 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="Carbon" component={Carbon}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
+    <Stack.Screen name="CarbonCart" component={CarbonCart}/>
 
-    <Stack.Screen  name="SignUpPersonal3" component={SignUpPersonal3}/>
     <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
-
-
 
     <Stack.Screen name="ChooseCardsPremium" component={ChooseCardsPremium}/>
     <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>
@@ -205,10 +188,8 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
 
-    
-    <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
-    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
-    
+    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>    
+    <Stack.Screen  name="SendContact" component={SendContact}/>    
   </Stack.Navigator>
 )
 

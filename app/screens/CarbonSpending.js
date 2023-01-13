@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
 
-const CarbonSpending = () => {
+const CarbonSpending = ({ navigation }) => {
   return (
     <Screen>
+      <ScrollView>
     <View style={styles.carbonSpending}>
        
       <View style={styles.groupParent}>
@@ -255,6 +256,7 @@ const CarbonSpending = () => {
         />
       </View>
     </View>
+    </ScrollView>
     </Screen>
   );
 };
@@ -745,7 +747,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   groupParent: {
-    width: 350,
+    width: "100%",
     height: 1253,
   },
   arrowPosition: {
@@ -762,7 +764,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_10xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     paddingRight: GlobalStyles.Padding.padding_10xs,
     alignItems: "center",
     backgroundColor: GlobalStyles.Color.gray_100,

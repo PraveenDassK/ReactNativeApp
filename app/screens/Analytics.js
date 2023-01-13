@@ -538,7 +538,7 @@ const Analytics = ({navigation}) => {
         </View>
         <View style={styles.historyParent}>
         <Pressable
-          onPress={() => navigation.navigate("Account")}
+          onPress={() => navigation.navigate("AccountMain")}
         >
           <Text style={[styles.history1, styles.historyTypo]}>Account</Text>
         </Pressable>
