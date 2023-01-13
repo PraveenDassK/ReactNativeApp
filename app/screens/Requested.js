@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   hello1Position: {
-    top: "50%",
+    top: "40%",
     position: "absolute",
   },
   groupChild: {
@@ -60,11 +60,12 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   youHaveRequested: {
-    margin: GlobalStyles.Margin.margin_8xs,
+    margin: GlobalStyles.Margin.margin_xl,
   },
   hello: {
-    top: 458,
-    left: 69,
+    marginTop: 388.06,
+    marginLeft: -123.56,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     fontWeight: "700",
@@ -80,20 +81,21 @@ const styles = StyleSheet.create({
     height: 187,
   },
   hello1: {
-    marginTop: 332.5,
-    left: 120,
+    marginTop: 338.06,
+    marginLeft: -63.56,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
   },
   groupParent: {
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
   },
   requested: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_12xs,
-    backgroundColor: GlobalStyles.Color.white,
+    paddingTop: GlobalStyles.Padding.padding_xs,
+    backgroundColor: GlobalStyles.Color.green_100,
   },
 });
 
