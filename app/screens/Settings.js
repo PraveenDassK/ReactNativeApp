@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     height: 16,
     position: "absolute",
   },
-  iconContentPosition: {
+   iconContentPosition: {
     marginLeft: 98.35,
     height: 16,
     top: "50%",
