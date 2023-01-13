@@ -1,11 +1,23 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable,TextInput } from "react-native";
+import { View,
+  KeyboardAvoidingView,
+  TextInput,
+  StyleSheet,
+  Text,
+  Platform,
+  TouchableWithoutFeedback,
+  Pressable,
+  Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const AddBeneficiary = ({navigation}) => {
   
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.addBeneficiary}>
       <View style={styles.groupParent}>
         <View style={[styles.groupWrapper, styles.wrapperPosition]}>
@@ -73,10 +85,15 @@ const AddBeneficiary = ({navigation}) => {
         </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   wrapperPosition: {
     bottom: 10,
     left: 0,
@@ -225,7 +242,6 @@ const styles = StyleSheet.create({
   addBeneficiary: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },
 });

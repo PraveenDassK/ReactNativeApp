@@ -106,7 +106,7 @@ import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="SendAccountSelection">
+  <Stack.Navigator initialRouteName="AddBeneficiary">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>

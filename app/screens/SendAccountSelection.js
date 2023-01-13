@@ -305,7 +305,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloParent: {
-    marginLeft: -74.5,
+    marginLeft: -63.56,
+    left: "50%",
     top: 44,
     width: "100%",
     height: 172,
@@ -402,7 +403,8 @@ const styles = StyleSheet.create({
   },
   hello10: {
     top: "3%",
-    left: "25%",
+    marginLeft: -83.56,
+    left: "50%",
     color: GlobalStyles.Color.gray_700,
   },
   rectangleView: {
@@ -497,7 +499,8 @@ const styles = StyleSheet.create({
   },
   hello16: {
     top: "40%",
-    left: "43.56%",
+    marginLeft: -23.56,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -521,7 +524,6 @@ const styles = StyleSheet.create({
   },
   sendAccountSelection: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },
