@@ -4,6 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const Analytics = () => {
   return (
+    <ScrollView>
     <View style={styles.analytics}>
       <View style={styles.groupParent}>
         <View style={[styles.groupContainer, styles.groupShadowBox]}>
@@ -14,7 +15,7 @@ const Analytics = () => {
             </Text>
           </View>
           <Text style={[styles.hello2, styles.helloPosition]}>
-            <Text style={styles.noOf}>No. of</Text>
+            <Text style={styles.noOf}>No. of{" "}</Text>
             <Text style={styles.noOf}>Payments</Text>
           </Text>
           <Text style={[styles.hello3, styles.helloTypo2]}>1000</Text>
@@ -33,7 +34,7 @@ const Analytics = () => {
         >
           <View style={[styles.helloGroup, styles.helloGroupPosition]}>
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloTypo3]}>
-              <Text style={styles.noOf}>Average Monthly</Text>
+              <Text style={styles.noOf}>Average Monthly{" "}</Text>
               <Text style={styles.noOf}>Spendings</Text>
             </Text>
             <Text style={[styles.hello5, styles.helloColor, styles.helloTypo2]}>
@@ -85,7 +86,7 @@ const Analytics = () => {
               £1458
             </Text>
             <Image
-              style={styles.bagShoppingSolidIcon}
+              style={styles.groupIcon}
               resizeMode="cover"
               source={require("../assets/bagshoppingsolid.png")}
             />
@@ -338,7 +339,7 @@ const Analytics = () => {
                 Wallmart
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022</Text>
+                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
                 <Text style={styles.noOf}>12:06 PM</Text>
               </Text>
             </View>
@@ -354,7 +355,7 @@ const Analytics = () => {
             </Text>
           </View>
           <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
-            <View style={styles.groupPosition}>
+            <View style={[styles.lanceLayout, styles.groupPosition]}>
               <Text
                 style={[
                   styles.lanceBogrol5,
@@ -365,12 +366,12 @@ const Analytics = () => {
                 Adidas
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022</Text>
+                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
                 <Text style={styles.noOf}>12:06 PM</Text>
               </Text>
             </View>
             <Image
-              style={styles.groupPosition}
+              style={[styles.walmartIconLayout, styles.groupPosition]}
               resizeMode="cover"
               source={require("../assets/logo-addidas.png")}
             />
@@ -393,7 +394,7 @@ const Analytics = () => {
                 Grocery Market
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022</Text>
+                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
                 <Text style={styles.noOf}>12:06 PM</Text>
               </Text>
             </View>
@@ -453,7 +454,7 @@ const Analytics = () => {
             </View>
             <Text style={[styles.text21, styles.textTypo3]}>£350.00</Text>
             <Image
-              style={styles.groupPosition}
+              style={[styles.walmartIconLayout, styles.groupPosition]}
               resizeMode="cover"
               source={require("../assets/walmarticon1.png")}
             />
@@ -483,7 +484,7 @@ const Analytics = () => {
             </View>
             <Text style={[styles.text22, styles.textTypo3]}>£50.00</Text>
             <Image
-              style={styles.groupPosition}
+              style={[styles.walmartIconLayout, styles.groupPosition]}
               resizeMode="cover"
               source={require("../assets/logo-addidas.png")}
             />
@@ -513,7 +514,7 @@ const Analytics = () => {
             </View>
             <Text style={[styles.text22, styles.textTypo3]}>£70.00</Text>
             <Image
-              style={styles.groupPosition}
+              style={[styles.walmartIconLayout, styles.groupPosition]}
               resizeMode="cover"
               source={require("../assets/logo-addidas.png")}
             />
@@ -550,6 +551,7 @@ const Analytics = () => {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -596,7 +598,7 @@ const styles = StyleSheet.create({
   },
   groupShadowBox: {
     height: 88,
-    width: 142,
+    width: "40%",
     top: 177,
     shadowOpacity: 1,
     elevation: 6,
@@ -623,7 +625,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   helloTypo2: {
-    lineHeight: 14,
+    lineHeight: 24,
     textAlign: "left",
     position: "absolute",
   },
@@ -686,7 +688,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lanceWrapperPosition: {
-    left: 44,
+    left: "10%",
     marginTop: -5.5,
     height: 12,
     top: "50%",
@@ -712,13 +714,13 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   textPosition: {
-    left: "82.26%",
+    right: "4%",
     textAlign: "right",
     color: GlobalStyles.Color.blue_100,
   },
   textTypo2: {
     letterSpacing: 0,
-    right: 11,
+    right: "5%",
     textAlign: "right",
     color: GlobalStyles.Color.gray_700,
     fontWeight: "700",
@@ -797,7 +799,7 @@ const styles = StyleSheet.create({
   },
   textTypo1: {
     fontSize: GlobalStyles.FontSize.size_5xl,
-    left: "70.97%",
+    right: "6%",
     textAlign: "right",
     letterSpacing: 1,
     top: "50%",
@@ -806,7 +808,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   textTypo: {
-    right: 24,
+    right: "6%",
     textAlign: "right",
     letterSpacing: 1,
     color: GlobalStyles.Color.gray_700,
@@ -820,7 +822,7 @@ const styles = StyleSheet.create({
   },
   lanceLayout: {
     height: 36,
-    width: 105,
+    width: "100%",
     marginLeft: -97.08,
     left: "50%",
   },
@@ -833,7 +835,7 @@ const styles = StyleSheet.create({
     height: 17,
     width: 18,
     left: "50%",
-    bottom: 0,
+    bottom: -40,
     position: "absolute",
   },
   groupParentPosition: {
@@ -872,7 +874,8 @@ const styles = StyleSheet.create({
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_2xl,
-    bottom: 0,
+    width:100,
+    bottom: -10,
     left: 0,
   },
   helloParent: {
@@ -892,7 +895,7 @@ const styles = StyleSheet.create({
   },
   hello3: {
     right: 14,
-    bottom: 9,
+    bottom: 5,
     fontSize: GlobalStyles.FontSize.size_xl,
     color: GlobalStyles.Color.gray_700,
   },
@@ -939,7 +942,7 @@ const styles = StyleSheet.create({
   },
   hello7: {
     fontSize: 28,
-    lineHeight: 25,
+    lineHeight: 30,
     right: -1,
     textAlign: "left",
     top: 0,
@@ -988,14 +991,14 @@ const styles = StyleSheet.create({
     marginTop: -6,
   },
   lanceBogrolWrapper: {
-    width: 57,
+    width: "100%",
   },
   text: {
     marginTop: -11.25,
   },
   bagShoppingSolidIcon: {
     marginTop: -8.01,
-    marginLeft: -145.26,
+    marginLeft: -345.26,
     width: 13,
     height: 15,
     left: "50%",
@@ -1022,12 +1025,12 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.orange_100,
   },
   lanceBogrolContainer: {
-    width: 112,
+    width: "100%",
   },
   groupIcon: {
     top: 10,
     left: 13,
-    width: 15,
+    width: 13,
     height: 13,
     position: "absolute",
   },
@@ -1042,7 +1045,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.green_100,
   },
   lanceBogrolFrame: {
-    width: 58,
+    width: "100%",
   },
   iconAwesomeCar: {
     right: 290,
@@ -1064,7 +1067,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.orange_200,
   },
   lanceBogrolWrapper1: {
-    width: 39,
+    width: "100%",
   },
   groupChild1: {
     marginTop: -3.53,
@@ -1156,8 +1159,8 @@ const styles = StyleSheet.create({
   },
   scrollGroup16: {
     right: 21,
-    height: 14,
-    bottom: 0,
+    height: 50,
+    bottom: 10,
   },
   lineView: {
     marginTop: -50,
@@ -1304,10 +1307,10 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   lanceBogrolParent3: {
-    width: 74,
+    width: "100%",
   },
   text21: {
-    left: "74.06%",
+    right: "6%",
     marginTop: -6,
     color: GlobalStyles.Color.indigo_100,
   },
@@ -1316,10 +1319,10 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   groupFrame: {
-    width: 93,
+    width: "100%",
   },
   text22: {
-    left: "76.88%",
+    right: "6%",
     marginTop: -6,
     color: GlobalStyles.Color.indigo_100,
   },
@@ -1346,7 +1349,7 @@ const styles = StyleSheet.create({
   },
   groupParent11: {
     marginLeft: -98,
-    width: 49,
+    width: "100%",
     height: 24,
     marginTop: -10,
   },
@@ -1395,26 +1398,27 @@ const styles = StyleSheet.create({
     right: 47,
     left: 35,
     height: 16,
-    top: 0,
+    top: -30,
     position: "absolute",
+    justifyContent:"space-evenly"
   },
   hello22: {
-    left: 20,
+    left: "10%",
     top: 11,
     fontSize: GlobalStyles.FontSize.size_xl,
     color: GlobalStyles.Color.gray_700,
   },
   hello23: {
-    left: 90,
+    left: "30%",
     top: 11,
   },
   hello24: {
-    left: 174,
+    left: "55%",
     top: 11,
     fontSize: GlobalStyles.FontSize.size_xl,
   },
   hello25: {
-    left: 261,
+    left: "80%",
     top: 12,
   },
   helloParent1: {
@@ -1425,15 +1429,15 @@ const styles = StyleSheet.create({
     height: 35,
   },
   groupParent: {
-    width: 377,
-    height: 1452,
+    width: "100%",
+    height: 1500,
   },
   analytics: {
     flex: 1,
     width: "100%",
     paddingTop: GlobalStyles.Padding.padding_2xs,
     paddingRight: GlobalStyles.Padding.padding_12xs,
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 
