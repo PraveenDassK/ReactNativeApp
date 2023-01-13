@@ -85,9 +85,21 @@ const Settings = ({navigation}) => {
         />
         <Text style={[styles.text1, styles.textTypo]}>12-34-56</Text>
         <View style={[styles.historyParent, styles.iconContentLayout]}>
+        <Pressable
+          onPress={() => navigation.navigate("Account")}
+        >
           <Text style={[styles.history, styles.historyTypo]}>Account</Text>
+          </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate("Analytics")}
+        >
           <Text style={[styles.history1, styles.historyTypo]}>Analysis</Text>
+          </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate("Carbon")}
+        >
           <Text style={[styles.history2, styles.historyTypo]}>Carbon</Text>
+          </Pressable>
           <Text style={styles.history3}>Profile</Text>
         </View>
         <Pressable
