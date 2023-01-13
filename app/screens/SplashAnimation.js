@@ -32,19 +32,13 @@ const LogoAnimation3 = ({navigation}) => {
 
 const styles = StyleSheet.create({
   maskGroupLayout: {
-    overflow: "hidden",
-    maxWidth: "100%",
     width:"100%",
     alignItems: 'center',
   },
   helloFlexBox: {
     textAlign: "center",
-    position: "absolute",
   },
   maskGroup261: {
-    right: 0,
-    bottom: 0,
-    left: 0,
     height: 132,
   },
   layer12Icon: {
@@ -58,8 +52,8 @@ const styles = StyleSheet.create({
     
   },
   hello: {
-    top: 0,
-    left: 100,
+
+    textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_10xl,
     color: GlobalStyles.Color.indigo_100,
   },
@@ -71,10 +65,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   maskGroup259: {
-    marginTop: -140.5,
-    height: 337,
-    top: "50%",
-    width:"100%"
+    top: "30%",
+    height: "30%",
+    width:"80%"
   },
   maskGroup261Parent: {
     width: "100%",
