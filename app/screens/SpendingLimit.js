@@ -68,11 +68,12 @@ const SpendingLimit = ({navigation}) => {
             resizeMode="cover"
             source={require("../assets/group-275793.png")}
           />
-        </View>
-        <Text style={[styles.hello1, styles.helloPosition]}>£22.33</Text>
+          <Text style={[styles.hello1, styles.helloPosition]}>£22.33</Text>
         <Text style={[styles.hello2, styles.helloPosition]}>
-          Spent this month
+          Spent this {"\n"}month
         </Text>
+        </View>
+        
         <Text style={[styles.hello3, styles.helloPosition]}>
           Limit is toggled off
         </Text>
@@ -199,10 +200,12 @@ const styles = StyleSheet.create({
     height: 26,
   },
   groupIcon: {
-    marginTop: -80.03,
-    right: 49,
-    left: 48,
-    height: 180,
+    marginTop: -30.03,
+    right: "40%",
+    left: "50%",
+    marginLeft: -97,
+    height: 150,
+    width: 290,
     top: "50%",
   },
   rectangleParent: {
@@ -210,15 +213,15 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello1: {
-    marginTop: 76,
+    marginTop: 26,
     marginLeft: -38,
     fontSize: GlobalStyles.FontSize.size_7xl,
     top: "50%",
     fontWeight: "700",
   },
   hello2: {
-    marginTop: 109,
-    marginLeft: -57,
+    marginTop: 59,
+    marginLeft: -27,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
     fontWeight: "700",
@@ -261,7 +264,6 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },
