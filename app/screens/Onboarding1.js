@@ -1,61 +1,53 @@
 import * as React from "react";
-import { Image, StyleSheet, Text, View, Pressable } from "react-native";
-
+import { Image, StyleSheet, Text, View, Pressable, SafeAreaView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Onboarding1 = ({navigation}) => {
   return (
-    <Pressable
-      style={styles.onboarding1}
+  <SafeAreaView style={styles.container}>
+    <Pressable style={styles.container}
       onPress={() => navigation.navigate("Onboarding2")}
     >
       <Text
-        style={styles.titleText}
+        style={styles.text}
       >
         Manage your Finances with your pocket
       </Text>
       <Image
-          style={styles.cardImage}
+            style = {styles.image}
           source={require("../assets/image-cardyellow.png")}
         />
       <Image
-          style={styles.progressbar}
+            style = {styles.ProgressBar}
           source={require("../assets/image-progress13.png")}
         />
     </Pressable>
+     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  onboarding1: {
-    backgroundColor: GlobalStyles.Color.gray_300,
+container: {
     flex: 1,
-    width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_8xl,
-  },
-  titleText:{
+}, text: {
+    fontSize: 25,
+    fontWeight: '500',
     textAlign: 'center',
-    alignItems: 'center',
-    top: 0,
-    fontSize: GlobalStyles.FontSize.size_10xl,
-    color: GlobalStyles.Color.indigo_100,
-  },
-  cardImage:{
-    height:"50%",
-    width:"50%",
-    alignItems: 'center',
-    left: "25%",
-    top:"10%",
-  },
-  progressbar:{
-    top:75,
-    left:"25%",
-    alignItems: 'center',
-    justifyContent: 'center',
-    width:"50%",
-    height:20,
-  }
+    top: "10%",
+    padding: "10%"
+}, image: {
+    height: "40%",
+    top: "15%",
+    alignSelf: 'center',
+    aspectRatio: 53.98/85.60,
+    borderRadius: 5,
+}, ProgressBar: {
+top: "32.5%",
+alignSelf: 'center',
+height: "1%",
+resizeMode: 'contain',
+}})
 
-});
+
 
 export default Onboarding1;
