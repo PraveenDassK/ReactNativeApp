@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 60,
   },
   hello2: {

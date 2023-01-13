@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import Screen from "../components/Screen";
 
 const IWasAVictimOfFraudOrThe = () => {
   return (
+    <Screen>
     <View style={styles.iWasAVictimOfFraudOrThe}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>
@@ -113,7 +115,7 @@ const IWasAVictimOfFraudOrThe = () => {
             resizeMode="cover"
             source={require("../assets/ellipse-3260.png")}
           />
-          <View style={[styles.wrapper, styles.wrapperLayout]}>
+          <View style={[styles.container, styles.wrapperLayout]}>
             <Text
               style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
             >
@@ -135,7 +137,7 @@ const IWasAVictimOfFraudOrThe = () => {
           >
             <Text
               style={[
-                styles.startUsingYourNewCardRigh1,
+                styles.startUsingYourNewCardRigh,
                 styles.yourCardTypo,
                 styles.yourCardPosition,
               ]}
@@ -148,7 +150,7 @@ const IWasAVictimOfFraudOrThe = () => {
             resizeMode="cover"
             source={require("../assets/ellipse-3260.png")}
           />
-          <View style={[styles.wrapper, styles.wrapperLayout]}>
+          <View style={[styles.container, styles.wrapperLayout]}>
             <Text
               style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
             >
@@ -158,6 +160,7 @@ const IWasAVictimOfFraudOrThe = () => {
         </View>
       </View>
     </View>
+    </Screen>
   );
 };
 
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   yourCardPosition: {
-    width:"100%",
+    width: 257,
     lineHeight: 14,
     top: "50%",
     left: 0,
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
     top: "50%",
     position: "absolute",
   },
-  itsDamagedOr: {
+  iWasA: {
     margin: GlobalStyles.Margin.margin_8xs,
   },
   hello: {
@@ -218,7 +221,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     top: 0,
     position: "absolute",
-    width: "100%",
   },
   groupChild: {
     height: "100%",
@@ -242,8 +244,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "38.33%",
-    left: "50%",
-    marginLeft: -100,
+    left: "18.71%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -274,16 +275,15 @@ const styles = StyleSheet.create({
     height: 25,
   },
   groupInner: {
-    left: 18,
-    width: 25,
-    height: 25,
-    marginTop: -7,
+    left: 16,
+    width: 22,
+    height: 22,
+    marginTop: -11.5,
     top: "50%",
     position: "absolute",
   },
   text: {
-    marginTop: "-30%",
-    marginLeft: "40%",
+    marginTop: -6,
     width: 8,
     textAlign: "left",
   },
@@ -295,18 +295,14 @@ const styles = StyleSheet.create({
     top: 69,
   },
   container: {
-    marginTop: "-2%",
-    left: "8%",
+    marginTop: -7.5,
+    left: 24,
   },
   rectangleContainer: {
     marginTop: -192.5,
   },
   startUsingYourNewCardRigh: {
     marginTop: -13,
-    fontWeight: "700",
-  },
-  startUsingYourNewCardRigh1: {
-    marginTop: -6,
     fontWeight: "700",
   },
   startUsingYourNewCardRighWrapper: {
@@ -324,16 +320,16 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   arrowCircle: {
-    marginTop: "-2%",
-    marginRight: "20%",
-    width: "2%",
-    height: "3%",
+    marginTop: -10.11,
+    marginRight: 303.54,
+    width: 15,
+    height: 15,
   },
   iWasAVictimOfFraudOrThe: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
+    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
-    paddingTop: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

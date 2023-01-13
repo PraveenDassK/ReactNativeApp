@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
 
     marginTop: 80.11,
 
-    marginRight: 403.54,
+    marginRight: 303.54,
 
-    width: "100%",
+    width: 300,
 
     height: 350,
 

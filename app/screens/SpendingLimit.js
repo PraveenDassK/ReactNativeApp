@@ -1,11 +1,13 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const SpendingLimit = ({navigation}) => {
  
 
   return (
+    <Screen>
     <View style={styles.spendingLimit}>
      
       <View style={styles.helloParent}>
@@ -91,6 +93,7 @@ const SpendingLimit = ({navigation}) => {
         />
       </View>
     </View>
+    </Screen>
   );
 };
 
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   groupChild: {
-    marginTop: "-54%",
+    marginTop: -181,
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.white,
     height: 362,
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
     marginTop: -15.5,
     left: 27,
     lineHeight: 18,
-    width: "-34%",
+    width: 257,
     top: "50%",
   },
   meter1Icon: {
@@ -196,52 +199,52 @@ const styles = StyleSheet.create({
     height: 26,
   },
   groupIcon: {
-    marginTop: -40.03,
+    marginTop: -80.03,
     right: 49,
-    left: 30,
-    height: 205,
-    width:260,
-    top: "30%",
+    left: 48,
+    height: 180,
+    top: "50%",
   },
   rectangleParent: {
     top: 138,
     bottom: 0,
   },
   hello1: {
-    marginTop: "55%",
-    marginLeft: "-23%",
+    marginTop: 76,
+    marginLeft: -38,
     fontSize: GlobalStyles.FontSize.size_7xl,
     top: "50%",
     fontWeight: "700",
   },
   hello2: {
-    marginTop: "40%",
+    marginTop: 109,
     marginLeft: -57,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
     fontWeight: "700",
   },
   hello3: {
-    marginLeft: "-5%",
-    bottom: "10%",
+    marginLeft: -40,
+    bottom: 16,
     fontSize: GlobalStyles.FontSize.size_3xs,
   },
   theLimitDeterminesTheAmoun: {
-    top: "22%",
-    left: "1%",
-    lineHeight: "3%",
-    width: "45%",
+    top: 40,
+    left: 3,
+    lineHeight: 16,
+    width: 316,
     fontSize: GlobalStyles.FontSize.size_base,
   },
   cardIcon: {
-    bottom: "5%",
-    width: "6%",
-    height: "3%",
+    marginLeft: -6,
+    bottom: 38,
+    width: 12,
+    height: 9,
     left: "50%",
     position: "absolute",
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 500,
   },
   arrowPosition: {
@@ -249,16 +252,16 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   arrowCircle: {
-    marginTop: "-12%",
-    marginRight: "40%",
-    width: "4%",
-    height: "5%",
+    marginTop: -10.11,
+    marginRight: 303.54,
+    width: 15,
+    height: 15,
   },
   spendingLimit: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_8xs,
+    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },

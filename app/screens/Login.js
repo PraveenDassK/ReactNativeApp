@@ -8,11 +8,9 @@ import {
   View,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Screen from "../components/Screen";
 
-const SignUpPersonal = () => {
+const Login = ({navigation}) => {
   return (
-    <Screen>
     <View style={styles.signUpPersonal3}>
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>
@@ -21,7 +19,7 @@ const SignUpPersonal = () => {
         <Image
           style={styles.iconIonicIosArrowDown}
           resizeMode="cover"
-          source={require("../assets/icon-carbonytedownarrow.png")}
+          source={require("../assets/icon-ioniciosarrowdown.png")}
         />
         <Text style={[styles.hello1, styles.helloFlexBox]}>
           Sign In to your account
@@ -33,13 +31,16 @@ const SignUpPersonal = () => {
           <Text
             style={styles.weWillSend}
           >{`We will send an OTP to verify `}</Text>
-          <Text style={styles.weWillSend}>{"\n"}your number and email ID.</Text>
+          <Text style={styles.weWillSend}>your number and email ID.</Text>
         </Text>
-        <Pressable style={styles.groupChild} />
+        <Pressable 
+          style={styles.groupChild} 
+          onPress={() => navigation.navigate("AccountMain")}
+        />
         <Text style={[styles.hello3, styles.helloFlexBox]}>Continue</Text>
         <TextInput
           style={[styles.groupItem, styles.groupBorder]}
-          keyboardType="numeric"
+          keyboardType="default"
         />
         <TextInput
           style={[styles.groupInner, styles.groupBorder]}
@@ -50,7 +51,6 @@ const SignUpPersonal = () => {
         </Text>
       </View>
     </View>
-    </Screen>
   );
 };
 
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     right: "0%",
     bottom: "9.1%",
     left: "0.15%",
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: GlobalStyles.Color.gray_500,
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
   },
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     left: "38.13%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
   },
@@ -152,28 +152,18 @@ const styles = StyleSheet.create({
     marginTop: -77.62,
   },
   helloParent: {
-    width: "100%",
+    width: 327,
     height: 673,
-  },
-  arrowPosition: {
-    top: "6%",
-    position: "absolute",
-  },
-  arrowCircle: {
-    marginTop: -10.11,
-    marginRight: 303.54,
-    width: 15,
-    height: 15,
   },
   signUpPersonal3: {
     backgroundColor: GlobalStyles.Color.gray_300,
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_8xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
+    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: GlobalStyles.Padding.padding_7xs,
     alignItems: "flex-end",
   },
 });
 
-export default SignUpPersonal;
+export default Login;

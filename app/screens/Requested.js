@@ -8,7 +8,7 @@ const Requested = ({navigation}) => {
   return (
     <Pressable
       style={styles.requested}
-      onPress={() => navigation.navigate("SendMoney")}
+      onPress={() => navigation.navigate("AccountMain")}
     >
       <View style={styles.groupParent}>
         <View style={styles.groupPosition}>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   hello1Position: {
-    top: "40%",
+    top: "50%",
     position: "absolute",
   },
   groupChild: {
@@ -60,12 +60,11 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   youHaveRequested: {
-    margin: GlobalStyles.Margin.margin_xl,
+    margin: GlobalStyles.Margin.margin_8xs,
   },
   hello: {
-    marginTop: 388.06,
-    marginLeft: -123.56,
-    left: "50%",
+    top: 458,
+    left: 69,
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     fontWeight: "700",
@@ -81,21 +80,19 @@ const styles = StyleSheet.create({
     height: 187,
   },
   hello1: {
-    marginTop: 338.06,
-    marginLeft: -63.56,
-    left: "50%",
+    marginTop: 332.5,
+    left: 120,
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
   },
   groupParent: {
-    width: "100%",
-    height: "100%",
+    width: 375,
+    height: 749,
   },
   requested: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_xs,
-    backgroundColor: GlobalStyles.Color.green_100,
+    backgroundColor: GlobalStyles.Color.white,
   },
 });
 

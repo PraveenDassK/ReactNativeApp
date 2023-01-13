@@ -3,14 +3,14 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const AddBeneficiarySuccess = () => {
+const AddBeneficiarySuccess = ({navigation}) => {
   
 
   return (
     <Screen>
     <Pressable
       style={styles.addBeneficiarySuccess}
-      onPress={() => navigation.navigate("BankTransfer")}
+      onPress={() => navigation.navigate("AccountMain")}
     >
       <View style={styles.groupParent}>
         <View style={styles.groupPosition}>

@@ -6,37 +6,35 @@ import GlobalStyles from "../../GlobalStyles";
 const AddFundsSuccess = ({navigation}) => {
   return (
     <Pressable
-    onPress={() => navigation.navigate("AccountMain")}
+      onPress={() => navigation.navigate("AccountMain")}
     >
-
-    <View style={styles.addFundsSuccess}>
-      <View style={styles.iconAwesomeCheckCircleParent}>
-        <Image
-          style={styles.iconAwesomeCheckCircle}
-          resizeMode="cover"
-          source={require("../assets/icon-bluecheck.png")}
-        />
-        <Text style={[styles.hello, styles.helloFlexBox]}>
-          <Text style={styles.congratulations}>
-            <Text style={styles.congratulations1}>Congratulations!</Text>
+      <View style={styles.addFundsSuccess}>
+        <View style={styles.iconAwesomeCheckCircleParent}>
+          <Image
+            style={styles.iconAwesomeCheckCircle}
+            resizeMode="cover"
+            source={require("../assets/icon-bluecheck.png")}
+          />
+          <Text style={[styles.hello, styles.helloFlexBox]}>
+            <Text style={styles.congratulations}>
+              <Text style={styles.congratulations1}>Congratulations!</Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.congratulations1}> </Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.added1}>{`£500.00 added `}</Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.added1}>successfully</Text>
+            </Text>
           </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.congratulations1}> </Text>
+          <Text style={[styles.hello1, styles.helloFlexBox]}>
+            Tap anywhere to continue
           </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.added1}>{`£500.00 added `}</Text>
-          </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.added1}>successfully</Text>
-          </Text>
-        </Text>
-        <Text style={[styles.hello1, styles.helloFlexBox]}>
-          Tap anywhere to continue
-        </Text>
+        </View>
       </View>
-    </View>
     </Pressable>
-
   );
 };
 

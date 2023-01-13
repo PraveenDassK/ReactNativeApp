@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const ProofOfResidencyList = (DOB) => {
+const ProofOfResidencyList = () => {
   return (
     <View style={styles.proofOfResidencyListA1}>
       <Image

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     color: GlobalStyles.Color.blue_100,
-    width: 326,
+    width: "100%",
     top: "50%",
   },
   maskGroup259: {

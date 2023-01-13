@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     left: 1,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 673,
   },
   signUpPersonal1: {

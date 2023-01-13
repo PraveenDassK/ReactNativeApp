@@ -5,10 +5,6 @@ import GlobalStyles from "../../GlobalStyles";
 const ReviewAndConfirm = ({navigation}) => {
 
   return (
-    <Pressable
-      style={styles.reviewAndConfirm}
-      onPress={() => navigation.navigate("Account")}
-    >
     <View style={styles.reviewAndConfirm}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Review and Confirm</Text>
@@ -56,7 +52,6 @@ const ReviewAndConfirm = ({navigation}) => {
         </Pressable>
       </View>
     </View>
-    </Pressable>
   );
 };
 

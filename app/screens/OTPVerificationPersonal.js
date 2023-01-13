@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
 import {
   Text,
   StyleSheet,
@@ -45,6 +45,7 @@ const validationSchema = Yup.object().shape({
   
   },[])
   return (
+    
     <View style={styles.otpVerificationPersonal2}>
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>
@@ -94,13 +95,13 @@ const validationSchema = Yup.object().shape({
           <Text
             style={styles.pleaseEnterThe}
           >{`Please enter the code sent to `}</Text>
-          <Text style={styles.text}>+44{ user.phoneNumber }</Text>
+          <Text style={styles.text}>+44 </Text>
         </Text>
         <Text style={[styles.pleaseEnterTheCodeSentTo1, styles.resendPosition]}>
           <Text
             style={styles.pleaseEnterThe}
           >{`Please enter the code sent to `}</Text>
-          <Text style={styles.text}>{ user.email }</Text>
+          <Text style={styles.text}>a</Text>
         </Text>
         <Text style={[styles.resendCodeIn0010, styles.resendPosition]}>
           Resend Code in 00:{count < 10 ? `0${count}` : count}
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 673,
   },
   otpVerificationPersonal2: {

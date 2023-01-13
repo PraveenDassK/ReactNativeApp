@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 411,
   },
   name: {

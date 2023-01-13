@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     right: 15,
     width: 92,
     height: 14,
-    top: "50%",
+    top: "48%",
     position: "absolute",
   },
   tons: {
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     top: "78.94%",
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 679,
   },
   arrowPosition: {
@@ -429,7 +429,6 @@ const styles = StyleSheet.create({
   chooseCardsStandard5: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

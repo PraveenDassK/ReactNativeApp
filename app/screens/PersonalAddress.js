@@ -14,7 +14,6 @@ const PersonalAddress = ({navigation}) => {
         <Text
           style={[
             styles.buildingNameOrNumber,
-            styles.addressTypo,
             styles.helloTypo,
             styles.enterPostcode1Typo,
           ]}
@@ -33,7 +32,14 @@ const PersonalAddress = ({navigation}) => {
           Town or city
         </Text>
         
-        
+        <TextInput
+          style={[
+            styles.groupChild,
+            styles.groupChildLayout,
+            styles.groupChildBorder,
+          ]}
+          onChangeText = {onChangeline1}
+        />
         <Pressable
           style={[styles.parentPosition, styles.groupChildLayout]}
           onPress={() => navigation.navigate("DOB")}
@@ -44,14 +50,6 @@ const PersonalAddress = ({navigation}) => {
           </View>
           <Text style={[styles.hello, styles.helloTypo]}>Continue</Text>
         </Pressable>
-        <TextInput
-          style={[
-            styles.groupChild,
-            styles.groupChildLayout,
-            styles.groupChildBorder,
-          ]}
-          onChangeText = {onChangeline1}
-        />
         <TextInput
           style={[
             styles.groupInner,
@@ -90,7 +88,7 @@ const PersonalAddress = ({navigation}) => {
             Enter postcode?
           </Text>
         </Pressable>
-        <View style={[styles.helloParent, styles.helloParentPosition1]}>
+        <View style={[styles.helloParent, styles.helloParentPosition]}>
           <Text style={[styles.hello1, styles.helloParentPosition]}>
             Your Address
           </Text>
@@ -143,14 +141,12 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
-  helloParentPosition1: {
-    top: 20,
-    position: "absolute",
-  },
   buildingNameOrNumber: {
-    marginTop: -204.5,
+    top: 116,
+    textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     left: 0,
+    position: "absolute",
   },
   addressLine1: {
     marginTop: -104.5,
@@ -173,7 +169,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   groupChild: {
-    marginTop: -182.5,
+    marginTop: -202.5,
   },
   groupItem: {
     height: "100%",
@@ -181,7 +177,7 @@ const styles = StyleSheet.create({
     right: "0%",
     bottom: "0%",
     left: "0%",
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: GlobalStyles.Color.gray_500,
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
     width: "100%",
@@ -197,7 +193,7 @@ const styles = StyleSheet.create({
     left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "left",
     position: "absolute",
   },
@@ -242,13 +238,12 @@ const styles = StyleSheet.create({
   },
   buildingNameOrNumberParent: {
     width: "100%",
-    height: "100%",
+    height: 683,
   },
   personalAddress: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
-    paddingBottom: GlobalStyles.Padding.padding_6xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
