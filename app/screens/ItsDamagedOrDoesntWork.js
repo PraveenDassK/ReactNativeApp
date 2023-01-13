@@ -272,10 +272,10 @@ const styles = StyleSheet.create({
     height: 25,
   },
   groupInner: {
-    left: 16,
-    width: "7.5%",
-    height: "40%",
-    marginTop: -11.5,
+    left: 18,
+    width: 25,
+    height: 25,
+    marginTop: -7,
     top: "50%",
     position: "absolute",
   },
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     marginTop: -119.5,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 669,
   },
   arrowPosition: {

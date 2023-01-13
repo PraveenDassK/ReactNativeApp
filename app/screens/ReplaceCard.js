@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     marginTop: -102,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 296,
   },
   arrowPosition: {

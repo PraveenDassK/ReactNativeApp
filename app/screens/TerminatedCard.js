@@ -13,8 +13,9 @@ const TerminatedCard = ({navigation}) => {
           source={require("../assets/brokencreditcard.png")}
         />
         <Text style={[styles.hello, styles.helloTypo]}>
-          <Text style={styles.yourCardHas}>Your card has been{"\n"}</Text>
+          <Text style={styles.yourCardHas}>Your card has been{" "}</Text>
           <Text style={styles.yourCardHas}>terminated.</Text>
+
         </Text>
         <Pressable
           style={[styles.groupParent, styles.groupParentPosition]}
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   brokenCreditCardParent: {
-    width: 230,
+    width: "100%",
     height: 328,
   },
   terminatedCard: {

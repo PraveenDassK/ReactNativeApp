@@ -150,12 +150,12 @@ const styles = StyleSheet.create({
   },
   groupPosition1: {
     left: 42,
-    right:0,
+    right:"10%",
     top: "50%",
     position: "absolute",
   },
   helloParent2Position: {
-    left: 53,
+    left: 50,
     top: "50%",
     position: "absolute",
   },
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   parentPosition: {
-    right: 0,
+    right: "10%",
     position: "absolute",
   },
   parentPosition1: {
@@ -266,13 +266,13 @@ const styles = StyleSheet.create({
     right: 31,
   },
   hello7: {
-    left: 112,
+    left: "35%",
     fontSize: GlobalStyles.FontSize.size_xl,
     top: 0,
   },
   hello8: {
     top: 28,
-    left: 75,
+    left: "30%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 27,
     color: GlobalStyles.Color.blue_100,
@@ -316,9 +316,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupPressable: {
-    right: 24,
+    right: "10%",
     bottom: 49,
-    left: 25,
+    left: "-1%",
     height: 60,
     position: "absolute",
   },
@@ -333,15 +333,15 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
   requestContact: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_9xs,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

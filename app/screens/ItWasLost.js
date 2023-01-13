@@ -238,15 +238,15 @@ const styles = StyleSheet.create({
     height: 25,
   },
   groupItem: {
-    left: 16,
-    width: "7.5%",
-    height: "40%",
-    marginTop: -11.5,
+    left: 18,
+    width: 20,
+    height: 20,
+    marginTop: -7,
     top: "50%",
     position: "absolute",
   },
   text: {
-    marginTop: -6,
+    marginTop: -4,
     width: 8,
     textAlign: "left",
   },
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "38.33%",
-    left: "18.71%",
+    left: "20.71%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   helloParent: {
-    width: 326,
+    width:"100%",
     height: 669,
   },
   arrowPosition: {

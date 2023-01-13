@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Pressable,Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const VerifyCode = () => {
+const VerifyCode = ({navigation}) => {
 
   return (
     <View style={styles.verifyCode}>
