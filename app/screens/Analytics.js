@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
 
-const Analytics = () => {
+const Analytics = ({navigation}) => {
   return (
     <ScrollView>
     <View style={styles.analytics}>
@@ -536,11 +537,23 @@ const Analytics = () => {
           />
         </View>
         <View style={styles.historyParent}>
+        <Pressable
+          onPress={() => navigation.navigate("Account")}
+        >
           <Text style={[styles.history1, styles.historyTypo]}>Account</Text>
+        </Pressable>
           <Text style={[styles.history2, styles.historyFlexBox]}>Analysis</Text>
+        <Pressable
+          onPress={() => navigation.navigate("Carbon")}
+        >
           <Text style={[styles.history3, styles.historyTypo]}>Carbon</Text>
+        </Pressable>
+          <Pressable
+          onPress={() => navigation.navigate("Settings")}
+        >
           <Text style={[styles.history4, styles.historyTypo]}>Profile</Text>
-        </View>
+        </Pressable>
+          </View>
         <View style={[styles.helloParent1, styles.parentLayout]}>
           <Text style={[styles.hello22, styles.helloTypo1]}>Day</Text>
           <Text style={[styles.hello23, styles.helloTypo]}>Week</Text>
@@ -1378,6 +1391,7 @@ const styles = StyleSheet.create({
   },
   history1: {
     left: 0,
+    marginTop: -4,
   },
   history2: {
     marginLeft: -63.5,
@@ -1390,9 +1404,11 @@ const styles = StyleSheet.create({
   history3: {
     marginLeft: 21.5,
     left: "50%",
+    marginTop:-8,
   },
   history4: {
     right: -1,
+    marginTop: -10,
   },
   historyParent: {
     right: 47,
