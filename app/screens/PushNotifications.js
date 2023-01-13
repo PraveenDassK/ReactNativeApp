@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
-
 import GlobalStyles from "../../GlobalStyles";
 
 const PushNotification = () => {
@@ -8,11 +7,6 @@ const PushNotification = () => {
 
   return (
     <View style={styles.pushNotification}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-whitearrow.png")}
-          />
       <View style={styles.groupParent}>
         <View style={[styles.helloParent, styles.parentPosition]}>
           <Text style={styles.hello}>Notify Me</Text>
@@ -32,7 +26,7 @@ const PushNotification = () => {
             style={[styles.hello2, styles.hello2Position, styles.helloTypo]}
           >
             <Text style={styles.getAllNotifications}>
-              Get all notifications of your spending, wealth,
+              Get all notifications of your spending, wealth, {" "}
             </Text>
             <Text style={styles.getAllNotifications}>
               finances, carbon spending and much more...
@@ -116,8 +110,9 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "40%",
-    left: "15.64%",
-    color: GlobalStyles.Color.black,
+    marginLeft: -103.56,
+    left: "50%",
+    color: GlobalStyles.Color.white,
   },
   groupContainer: {
     bottom: 76,
@@ -137,7 +132,8 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "38.33%",
-    left: "38.96%",
+    marginLeft: -33.56,
+    left: "50%",
     color: GlobalStyles.Color.white,
   },
   groupView: {
@@ -149,15 +145,17 @@ const styles = StyleSheet.create({
   },
   groupInner: {
     marginTop: -221.89,
-    left: 28,
+    marginLeft: -120.56,
+    left: "50%",
     maxWidth: "100%",
     overflow: "hidden",
     height: 350,
+    width: 350,
     right: 0,
   },
   groupParent: {
-    width: 345,
-    height: 652,
+    width: "100%",
+    height: "100%",
   },
   arrowPosition: {
     top: "6%",
@@ -172,8 +170,9 @@ const styles = StyleSheet.create({
   pushNotification: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingTop: GlobalStyles.Padding.padding_xs,
+    paddingLeft: GlobalStyles.Padding.padding_8xs,
+    paddingRight: GlobalStyles.Padding.padding_8xs,
     paddingRight: 5,
     width: "100%",
   },
