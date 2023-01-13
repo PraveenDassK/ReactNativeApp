@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello1: {
-    top: "38.33%",
-    left: "26.71%",
+    top: "30%",
+    left: "25%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
