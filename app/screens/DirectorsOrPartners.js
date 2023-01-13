@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState, Keyboard } from "react";
-import { Text, StyleSheet, View, Image, Pressable, TextInput } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, TextInput, ScrollView } from "react-native";
 import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
-import { useState } from "react";
 
 import GlobalStyles from "../../GlobalStyles";
 
@@ -71,8 +70,8 @@ const DirectorsOrPartners = ({navigation}) => {
               styles.currentPosition,
             ]}
           >
-            <Text style={styles.current}>Current</Text>
-            <Text style={styles.current}>signed</Text>
+            <Text style={styles.current}>Current{"\n"}</Text>
+            <Text style={styles.current}>signed{"\n"}</Text>
             <Text style={styles.current}>passport </Text>
           </Text>
           <View style={[styles.groupItem, styles.groupLayout]} />
@@ -97,8 +96,8 @@ const DirectorsOrPartners = ({navigation}) => {
             ]}
           >
             <Text style={styles.current}>Current</Text>
-            <Text style={styles.current}>photo-card</Text>
-            <Text style={styles.current}>driving license </Text>
+            <Text style={styles.current}>{"\n"}photo-card</Text>
+            <Text style={styles.current}>{"\n"}driving license </Text>
           </Text>
           <View style={[styles.helloPosition1, styles.groupLayout]} />
           <Image
@@ -116,7 +115,7 @@ const DirectorsOrPartners = ({navigation}) => {
         >
           <Text style={[styles.birthCertificate, styles.helloTypo]}>
             <Text style={styles.current}>Birth</Text>
-            <Text style={styles.current}>Certificate </Text>
+            <Text style={styles.current}>{"\n"}Certificate </Text>
           </Text>
           <View style={[styles.rectangleView, styles.groupLayout]} />
           <Image
@@ -643,8 +642,8 @@ const styles = StyleSheet.create({
     left: 20,
   },
   currentPhotoCardDrivingLicParent: {
-    marginLeft: -57,
-    left: "50%",
+    //marginLeft: -57,
+    left: "30%",
   },
   birthCertificate: {
     marginTop: 26.89,
@@ -664,6 +663,7 @@ const styles = StyleSheet.create({
   birthCertificateParent: {
     width: 114,
     height: 148,
+    left:"65%",
     shadowOpacity: 1,
     elevation: 20,
     shadowRadius: 20,
@@ -921,7 +921,7 @@ const styles = StyleSheet.create({
     right: "0%",
     bottom: "0%",
     left: "0%",
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
     width: "100%",
@@ -940,9 +940,9 @@ const styles = StyleSheet.create({
     top: "40%",
     left: "34.65%",
     fontSize: GlobalStyles.FontSize.size_lg,
-    lineHeight: 10,
+    lineHeight: 20,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
     position: "absolute",
   },
@@ -971,6 +971,7 @@ const styles = StyleSheet.create({
   directorsOrPartners: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
+    paddingBottom: GlobalStyles.Padding.padding_7xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },
