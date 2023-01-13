@@ -15,7 +15,7 @@ const Terminate = () => {
             styles.helloParentPosition,
           ]}
         >
-          <Text style={[styles.hello, styles.helloPosition]}>
+          <Text style={[styles.hello, styles.helloPosition1]}>
             <Text style={styles.areYouSure}>Are you sure you want to{"\n"}</Text>
             <Text style={styles.areYouSure}>terminate your card?</Text>
           </Text>
@@ -66,7 +66,13 @@ const Terminate = () => {
 
 const styles = StyleSheet.create({
   helloPosition: {
-    left: "10%",
+    left: "50%",
+    top: 0,
+    position: "absolute",
+  },
+  helloPosition1: {
+    left: "50%",
+    marginLeft: -120,
     top: 0,
     position: "absolute",
   },
@@ -78,9 +84,9 @@ const styles = StyleSheet.create({
   },
   groupPosition1: {
     height: "25%",
-    width: "50%",
+    width: 200,
     left: "50%",
-    marginLeft: -72.5,
+    marginLeft: -92.5,
     position: "absolute",
   },
   groupPosition: {
@@ -147,7 +153,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   terminateInner: {
-    width: 299,
+    width: "100%",
     height: 235,
   },
   arrowPosition: {

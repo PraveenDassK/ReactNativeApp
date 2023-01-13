@@ -113,7 +113,7 @@ const ItsDamagedOrDoesntWork = () => {
             resizeMode="cover"
             source={require("../assets/ellipse-3260.png")}
           />
-          <View style={[styles.container, styles.wrapperLayout]}>
+          <View style={[styles.wrapper, styles.wrapperLayout]}>
             <Text
               style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
             >
@@ -135,7 +135,7 @@ const ItsDamagedOrDoesntWork = () => {
           >
             <Text
               style={[
-                styles.startUsingYourNewCardRigh,
+                styles.startUsingYourNewCardRigh1,
                 styles.yourCardTypo,
                 styles.yourCardPosition,
               ]}
@@ -148,7 +148,7 @@ const ItsDamagedOrDoesntWork = () => {
             resizeMode="cover"
             source={require("../assets/ellipse-3260.png")}
           />
-          <View style={[styles.container, styles.wrapperLayout]}>
+          <View style={[styles.wrapper, styles.wrapperLayout]}>
             <Text
               style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
             >
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   yourCardPosition: {
-    width: 257,
+    width:"100%",
     lineHeight: 14,
     top: "50%",
     left: 0,
@@ -241,7 +241,8 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "38.33%",
-    left: "18.71%",
+    left: "50%",
+    marginLeft: -100,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -280,7 +281,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   text: {
-    marginTop: -6,
+    marginTop: "-30%",
+    marginLeft: "40%",
     width: 8,
     textAlign: "left",
   },
@@ -300,6 +302,10 @@ const styles = StyleSheet.create({
   },
   startUsingYourNewCardRigh: {
     marginTop: -13,
+    fontWeight: "700",
+  },
+  startUsingYourNewCardRigh1: {
+    marginTop: -6,
     fontWeight: "700",
   },
   startUsingYourNewCardRighWrapper: {
@@ -325,8 +331,9 @@ const styles = StyleSheet.create({
   itsDamagedOrDoesntWork: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
+    
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

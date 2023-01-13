@@ -113,7 +113,7 @@ const IWasAVictimOfFraudOrThe = () => {
             resizeMode="cover"
             source={require("../assets/ellipse-3260.png")}
           />
-          <View style={[styles.container, styles.wrapperLayout]}>
+          <View style={[styles.wrapper, styles.wrapperLayout]}>
             <Text
               style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
             >
@@ -135,7 +135,7 @@ const IWasAVictimOfFraudOrThe = () => {
           >
             <Text
               style={[
-                styles.startUsingYourNewCardRigh,
+                styles.startUsingYourNewCardRigh1,
                 styles.yourCardTypo,
                 styles.yourCardPosition,
               ]}
@@ -148,7 +148,7 @@ const IWasAVictimOfFraudOrThe = () => {
             resizeMode="cover"
             source={require("../assets/ellipse-3260.png")}
           />
-          <View style={[styles.container, styles.wrapperLayout]}>
+          <View style={[styles.wrapper, styles.wrapperLayout]}>
             <Text
               style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
             >
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   yourCardPosition: {
-    width: 257,
+    width:"100%",
     lineHeight: 14,
     top: "50%",
     left: 0,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     top: "50%",
     position: "absolute",
   },
-  iWasA: {
+  itsDamagedOr: {
     margin: GlobalStyles.Margin.margin_8xs,
   },
   hello: {
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     top: 0,
     position: "absolute",
+    width: "100%",
   },
   groupChild: {
     height: "100%",
@@ -241,7 +242,8 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "38.33%",
-    left: "18.71%",
+    left: "50%",
+    marginLeft: -100,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -272,20 +274,21 @@ const styles = StyleSheet.create({
     height: 25,
   },
   groupInner: {
-    left: 16,
-    width: "7.5%",
-    height: "40%",
-    marginTop: -11.5,
+    left: 18,
+    width: 25,
+    height: 25,
+    marginTop: -7,
     top: "50%",
     position: "absolute",
   },
   text: {
-    marginTop: -6,
+    marginTop: "-30%",
+    marginLeft: "40%",
     width: 8,
     textAlign: "left",
   },
   wrapper: {
-    marginTop: "-2%",
+    marginTop: -6.5,
     left: 23,
   },
   rectangleGroup: {
@@ -293,23 +296,27 @@ const styles = StyleSheet.create({
   },
   container: {
     marginTop: "-2%",
-    left: 24,
+    left: "8%",
   },
   rectangleContainer: {
-    marginTop: "-60%",
+    marginTop: -192.5,
   },
   startUsingYourNewCardRigh: {
-    marginTop: "-5%",
+    marginTop: -13,
+    fontWeight: "700",
+  },
+  startUsingYourNewCardRigh1: {
+    marginTop: -6,
     fontWeight: "700",
   },
   startUsingYourNewCardRighWrapper: {
-    height: "30%",
+    height: 26,
   },
   groupView: {
-    marginTop: "-38%",
+    marginTop: -119.5,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 669,
   },
   arrowPosition: {
@@ -325,8 +332,8 @@ const styles = StyleSheet.create({
   iWasAVictimOfFraudOrThe: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

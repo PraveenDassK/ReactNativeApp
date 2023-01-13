@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Pressable, TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const PersonalAddress = () => {
+const PersonalAddress = ({navigation}) => {
   const [line1, onChangeline1] = React.useState(null);
   const [line2, onChangeline2] = React.useState(null);
   const [city, onChangecity] = React.useState(null);
@@ -14,6 +14,7 @@ const PersonalAddress = () => {
         <Text
           style={[
             styles.buildingNameOrNumber,
+            styles.addressTypo,
             styles.helloTypo,
             styles.enterPostcode1Typo,
           ]}
@@ -32,14 +33,7 @@ const PersonalAddress = () => {
           Town or city
         </Text>
         
-        <TextInput
-          style={[
-            styles.groupChild,
-            styles.groupChildLayout,
-            styles.groupChildBorder,
-          ]}
-          onChangeText = {onChangeline1}
-        />
+        
         <Pressable
           style={[styles.parentPosition, styles.groupChildLayout]}
           onPress={() => navigation.navigate("DOB")}
@@ -50,6 +44,14 @@ const PersonalAddress = () => {
           </View>
           <Text style={[styles.hello, styles.helloTypo]}>Continue</Text>
         </Pressable>
+        <TextInput
+          style={[
+            styles.groupChild,
+            styles.groupChildLayout,
+            styles.groupChildBorder,
+          ]}
+          onChangeText = {onChangeline1}
+        />
         <TextInput
           style={[
             styles.groupInner,
@@ -88,7 +90,7 @@ const PersonalAddress = () => {
             Enter postcode?
           </Text>
         </Pressable>
-        <View style={[styles.helloParent, styles.helloParentPosition]}>
+        <View style={[styles.helloParent, styles.helloParentPosition1]}>
           <Text style={[styles.hello1, styles.helloParentPosition]}>
             Your Address
           </Text>
@@ -141,12 +143,14 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
+  helloParentPosition1: {
+    top: 20,
+    position: "absolute",
+  },
   buildingNameOrNumber: {
-    top: 116,
-    textAlign: "left",
+    marginTop: -204.5,
     color: GlobalStyles.Color.indigo_100,
     left: 0,
-    position: "absolute",
   },
   addressLine1: {
     marginTop: -104.5,
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   groupChild: {
-    marginTop: -202.5,
+    marginTop: -182.5,
   },
   groupItem: {
     height: "100%",
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
     right: "0%",
     bottom: "0%",
     left: "0%",
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
     width: "100%",
@@ -193,7 +197,7 @@ const styles = StyleSheet.create({
     left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
     position: "absolute",
   },
@@ -237,14 +241,14 @@ const styles = StyleSheet.create({
     height: 77,
   },
   buildingNameOrNumberParent: {
-    width: 326,
-    height: 683,
+    width: "100%",
+    height: "100%",
   },
   personalAddress: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
+    paddingBottom: GlobalStyles.Padding.padding_6xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
