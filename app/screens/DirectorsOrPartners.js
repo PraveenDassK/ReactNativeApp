@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
-import { TextInput } from "react-native-web";
+import { Text, StyleSheet, View, Image, Pressable, TextInput, ScrollView } from "react-native";
+import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
+import { useState } from "react";
 import GlobalStyles from "../../GlobalStyles";
 const roledata = [
   { label: 'United Kingdom', value: '1' },
@@ -36,6 +37,7 @@ const DirectorsOrPartners = () => {
     return null;
   };
   return (
+    <ScrollView>
     <View style={styles.directorsOrPartners}>
       <View style={styles.identityProofParent}>
         <Text style={[styles.identityProof, styles.nameTypo, styles.nameTypo1]}>
@@ -121,7 +123,7 @@ const DirectorsOrPartners = () => {
             source={require("../assets/icon-carbonytedownarrow.png")}
           />
         </View>
-        <View
+        {/* <View
           style={[
             styles.iconIonicIosArrowDownParent,
             styles.groupChildLayout,
@@ -137,7 +139,34 @@ const DirectorsOrPartners = () => {
           <Text style={[styles.hello, styles.helloTypo]}>
             Select the occupation
           </Text>
-        </View>
+        </View> */}
+
+<Dropdown
+          style={[ styles.iconIonicIosArrowDownParent,
+            styles.groupChildLayout,
+            styles.groupChildPosition,
+            styles.groupChildBorder,
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={occupationdata}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the occupation' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+        
         <Text style={[styles.firstName, styles.nameTypo, styles.nameTypo1]}>
           First Name
         </Text>
@@ -330,7 +359,7 @@ const DirectorsOrPartners = () => {
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={data}
+          data={nationalitydata}
           search
           maxHeight={300}
           labelField="label"
@@ -359,7 +388,7 @@ const DirectorsOrPartners = () => {
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={data}
+          data={countrydata}
           search
           maxHeight={300}
           labelField="label"
@@ -407,7 +436,7 @@ const DirectorsOrPartners = () => {
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={data}
+          data={roledata}
           search
           maxHeight={300}
           labelField="label"
@@ -449,6 +478,7 @@ const DirectorsOrPartners = () => {
         </Pressable>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -933,15 +963,14 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   identityProofParent: {
-    width: 350,
+    width: "100%",
     height: 2127,
   },
   directorsOrPartners: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

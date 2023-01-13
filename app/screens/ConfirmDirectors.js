@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const ConfirmDirectors = () => {
+const ConfirmDirectors = ({navigation}) => {
 
 
   return (
+    <ScrollView>
     <Pressable
       style={styles.confirmDirectors}
       onPress={() => navigation.navigate("LogoAnimation1")}
@@ -18,7 +19,7 @@ const ConfirmDirectors = () => {
           </Text>
           <Text style={styles.hello1}>
             <Text style={styles.carbonyteWouldLike}>
-              Carbonyte would like to know details of any{"\n"}
+              Carbonyte would like to know details of any{" "}
             </Text>
             <Text style={styles.carbonyteWouldLike}>
               Associates - usually the Directors or Partners
@@ -218,11 +219,12 @@ const ConfirmDirectors = () => {
           <Image
             style={styles.iconIonicIosAdd}
             resizeMode="cover"
-            source={require("../assets/add.png")}
+            source={require("../assets/icon-blackadd.png")}
           />
         </Pressable>
       </View>
     </Pressable>
+    </ScrollView>
   );
 };
 
@@ -283,6 +285,7 @@ const styles = StyleSheet.create({
     top: "50%",
     textAlign: "left",
     position: "absolute",
+    width:"100%"
   },
   helloParent: {
     right: 43,
@@ -424,15 +427,16 @@ const styles = StyleSheet.create({
   },
   hello18: {
     top: "40%",
-    left: "36.22%",
+    left: "50%",
+    marginLeft: -40,
     fontSize: GlobalStyles.FontSize.size_lg,
-    lineHeight: 10,
+    lineHeight: 20,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   groupContainer: {
-    width: 254,
+    width: "70%",
     left: 0,
   },
   iconIonicIosAdd: {
@@ -449,14 +453,14 @@ const styles = StyleSheet.create({
     right: 0,
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 1436,
   },
   confirmDirectors: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
+    paddingBottom: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },
