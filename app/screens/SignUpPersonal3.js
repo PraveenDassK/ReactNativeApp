@@ -19,7 +19,7 @@ const SignUpPersonal3 = () => {
         <Image
           style={styles.iconIonicIosArrowDown}
           resizeMode="cover"
-          source={require("../assets/icon-ioniciosarrowdown14.png")}
+          source={require("../assets/icon-ioniciosarrowdown.png")}
         />
         <Text style={[styles.hello1, styles.helloFlexBox]}>
           Sign In to your account
@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
     left: 3,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
   },

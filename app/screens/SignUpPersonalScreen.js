@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image } from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable } from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 
@@ -11,6 +11,7 @@ import otpApi from "../api/otp";
 import Screen from "../components/Screen";
 import FormField from "../components/forms/FormField"
 
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -78,7 +79,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
       <Image
         style={[styles.maskGroup288, styles.keysPosition]}
         resizeMode="cover"
-        source={require("../assets/mask-group-288.png")}
+        source={require("../assets/image-ukflag.png")}
       />
     </View>
     <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
@@ -93,7 +94,6 @@ const SignUpPersonalScreen = ({ navigation }) => {
       Enter your Email ID
     </Text>
     <TextInput
-    autoCorrect={false}
     autoCapitalize="none"
     textContentType="emailAdress"
     keyboardType="email-address"
@@ -123,8 +123,14 @@ const SignUpPersonalScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  continueButton:{
+    backgroundColor:"#0101FD",
+    color:"#0101FD",
+  },
   button:{
-    marginTop:50
+    marginTop:50,
+    color:"#0101FD",
+    backgroundColor:"#0101FD",
   },
   mt2: {
     marginTop: GlobalStyles.Margin.margin_31xs,
@@ -199,7 +205,7 @@ const styles = StyleSheet.create({
   },
   childBorder: {
     borderWidth: 1,
-    borderColor: "#e8e8e8",
+    borderColor: "#0101FD",
     borderStyle: "solid",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.white,
@@ -226,7 +232,7 @@ const styles = StyleSheet.create({
     width: 117,
     elevation: 0,
     shadowRadius: 0,
-    shadowColor: "#898a8d",
+    shadowColor: "#0101FD",
     backgroundColor: GlobalStyles.Color.gray_100,
     borderRadius: GlobalStyles.Border.br_5xs,
     shadowOpacity: 1,
@@ -304,7 +310,6 @@ const styles = StyleSheet.create({
     
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: 30,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     fontWeight: "700",
    
@@ -327,7 +332,7 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_base,
   },
   helloParent: {
-    width: 208,
+    width: "100%",
     height: 164,
   },
   rectangle: {
@@ -467,7 +472,7 @@ const styles = StyleSheet.create({
   keyBackground: {
     elevation: 0,
     shadowRadius: 0,
-    shadowColor: "#898a8d",
+    shadowColor: "#0101FD",
     backgroundColor: GlobalStyles.Color.gray_100,
     borderRadius: GlobalStyles.Border.br_5xs,
     shadowOpacity: 1,
@@ -572,7 +577,6 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.black,
     textAlign: "left",
     position: "absolute",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   component2083Parent: {
     top: 382,
@@ -603,6 +607,7 @@ const styles = StyleSheet.create({
     top: 19,
     bottom: 19,
     maxHeight: "100%",
+    height:20,
     width: 22,
   },
   component1971: {
@@ -610,21 +615,17 @@ const styles = StyleSheet.create({
     height: 60,
   },
   signUpPersonalItem: {
-    width: 326,
+    width: "100%",
     height: 60,
   },
   enterYourEmailId: {
     textAlign: "left",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
   },
   signUpPersonal: {
-   
-    paddingTop: 80,
     paddingHorizontal:35,
     flex: 1,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.gray_400,
   },
 });
 

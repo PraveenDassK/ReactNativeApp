@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const ReviewAndConfirm = () => {
+const ReviewAndConfirm = ({navigation}) => {
 
   return (
     <View style={styles.reviewAndConfirm}>
@@ -35,10 +35,10 @@ const ReviewAndConfirm = () => {
         <Image
           style={[
             styles.iconIonicIosArrowForward,
-            styles.helloContainerPosition,
+            styles.helloContainerPosition1,
           ]}
           resizeMode="cover"
-          source={require("../assets/icon-carbonyteuparrow.png")}
+          source={require("../assets/icon-ioniciosarrowforward13.png")}
         />
         <Pressable
           style={styles.groupParent}
@@ -58,12 +58,12 @@ const ReviewAndConfirm = () => {
 const styles = StyleSheet.create({
   helloLayout: {
     height: 45,
-    right: 40,
+    right: "5%",
   },
   helloTypo: {
     color: GlobalStyles.Color.blue_100,
     fontSize: GlobalStyles.FontSize.size_2xl,
-    top: 10,
+    top: 25,
     textAlign: "right",
     position: "absolute",
   },
@@ -71,24 +71,27 @@ const styles = StyleSheet.create({
     top: "50%",
     position: "absolute",
   },
+  helloContainerPosition1: {
+    top: 350,
+    position: "absolute",
+  },
   groupPosition: {
     height: 2,
-    width: 139,
+    width: "30%",
     borderTopWidth: 1,
     borderColor: "#707070",
     borderStyle: "solid",
-    marginTop: -204.27,
-    top: "50%",
+    marginTop: 180,
     position: "absolute",
   },
   helloPosition1: {
-    top: 275,
+    top: "45%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
     position: "absolute",
   },
   helloPosition: {
-    top: 303,
+    top: "48%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
     position: "absolute",
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 40,
-    left: 92,
+    marginLeft: "30%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_base,
     color: GlobalStyles.Color.gray_700,
     left: 0,
-    top: 0,
+    top: 10,
     textAlign: "left",
     position: "absolute",
   },
@@ -125,27 +128,27 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello3: {
-    left: 228,
+    left: "70%",
     textAlign: "right",
   },
   helloGroup: {
     top: 108,
-    left: 26,
+    left: "10%",
     position: "absolute",
   },
   hello6: {
-    left: 229,
+    left: "70%",
     textAlign: "right",
   },
   helloContainer: {
-    marginTop: -18.5,
-    left: 25,
+    marginTop: "-30%",
+    left: "10%",
   },
   groupChild: {
-    left: 25,
+    left: "10%",
   },
   groupItem: {
-    right: 40,
+    right: "10%",
     width: 139,
     borderTopWidth: 1,
     borderColor: "#707070",
@@ -153,24 +156,24 @@ const styles = StyleSheet.create({
     marginTop: -204.27,
   },
   hello7: {
-    left: 25,
+    left: "10%",
     textAlign: "left",
   },
   hello8: {
-    left: 25,
+    left:"10%",
     textAlign: "left",
   },
   hello9: {
-    left: 302,
+    right: "10%",
     textAlign: "right",
   },
   hello10: {
-    left: 303,
+    right: "10%",
     textAlign: "right",
   },
   iconIonicIosArrowForward: {
-    marginTop: -207.29,
-    marginLeft: -13.5,
+    marginTop: -170,
+    marginLeft: -4.5,
     left: "50%",
     width: 12,
     height: 7,
@@ -182,7 +185,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
     width: "100%",
   },
@@ -193,19 +196,19 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello11: {
-    top: "40%",
+    top: "30%",
     left: "39.26%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
     position: "absolute",
   },
   groupParent: {
-    right: 24,
-    bottom: 48,
+    right: "10%",
+    bottom: 88,
     height: 60,
-    left: 25,
+    left: "10%",
     position: "absolute",
   },
   helloParent: {
@@ -219,15 +222,15 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
   reviewAndConfirm: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_sm,
+    paddingTop: GlobalStyles.Padding.padding_11xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

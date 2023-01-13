@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image, TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const BusinessChooseAddress = () => {
+const BusinessChooseAddress = ({navigation}) => {
   return (
     <View style={styles.businessChooseAddress}>
       <View style={styles.groupParent}>
@@ -38,7 +38,7 @@ const BusinessChooseAddress = () => {
 
           <Pressable
             style={[styles.groupContainer, styles.helloWrapperPosition]}
-            onPress={() => navigation.navigate("BusinessChooseAddress1")}
+            onPress={() => navigation.navigate("DOB")}
           >
             <View style={[styles.rectangleParent, styles.parentPosition]}>
               <View style={styles.groupChild} />
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 413,
   },
   businessChooseAddress: {

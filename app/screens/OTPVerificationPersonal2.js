@@ -426,7 +426,6 @@ const styles = StyleSheet.create({
     top: 0,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
   },
   groupChild: {
@@ -488,7 +487,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloParent: {
-    width: 326,
+    width: "100%",
     height: 673,
   },
   otpVerificationPersonal2: {

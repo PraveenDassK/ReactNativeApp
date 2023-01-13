@@ -56,6 +56,8 @@ const ProofOfResidencyListA1 = () => {
           {/* <Image
             style={[styles.maskGroup288, styles.maskGroup288Position]}
             resizeMode="cover"
+            source={require("../assets/image-ukflag.png")}
+          />
             source={require("../assets/mask-group-288@3x.png")}
           /> */}
         </View>
@@ -83,6 +85,8 @@ const ProofOfResidencyListA1 = () => {
           {/* <Image
             style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
             resizeMode="cover"
+            source={require("../assets/icon-carbonyteforwardarrow@3x.png")}
+          />
             source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
           /> */}
         </View>
@@ -126,6 +130,8 @@ const ProofOfResidencyListA1 = () => {
           {/* <Image
             style={[styles.iconIonicIosArrowForward1, styles.iconPosition]}
             resizeMode="cover"
+            source={require("../assets/icon-carbonyteforwardarrow.png")}
+          />
             source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
           /> */}
         </View>
@@ -144,7 +150,7 @@ const ProofOfResidencyListA1 = () => {
           {/* <Image
             style={[styles.iconAwesomeCheckCircle, styles.maskGroup288Position]}
             resizeMode="cover"
-            source={require("../assets/icon-bluecheck166@3x.png")}
+            source={require("../assets/icon-bluecheck.png")}
           /> */}
         </View>
       </View>
@@ -228,7 +234,6 @@ const styles = StyleSheet.create({
   hello: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     left: 0,

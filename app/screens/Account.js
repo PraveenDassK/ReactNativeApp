@@ -1,11 +1,10 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import carbonApi from "../api/test_api_list"
 
 import GlobalStyles from "../../GlobalStyles";
 
 const Account = () => {
- 
-
   return (
     <View style={styles.account}>
       <View style={styles.helloParent}>
@@ -33,7 +32,7 @@ const Account = () => {
             <Image
               style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
               resizeMode="cover"
-              source={("../assets/icon-ioniciosarrowforward.png")}
+              source={("../assets/icon-carbonyteuparrow.png")}
             />
           </Pressable>
           <View style={[styles.limitsParent, styles.parentPosition]}>
@@ -52,7 +51,7 @@ const Account = () => {
               <Image
                 style={styles.icon}
                 resizeMode="cover"
-                source={("../assets/icon-ioniciosarrowforward.png")}
+                source={("../assets/icon-carbonyteuparrow.png")}
               />
             </Pressable>
           </View>
@@ -72,7 +71,7 @@ const Account = () => {
             <Image
               style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
               resizeMode="cover"
-              source={require("../assets/icon-ioniciosarrowforward.png")}
+              source={require("../assets/icon-carbonyteuparrow.png")}
             />
           </Pressable>
         </View>
@@ -142,7 +141,6 @@ const styles = StyleSheet.create({
     top: 0,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     fontWeight: "700",
     left: 6,
     fontSize: GlobalStyles.FontSize.size_4xl,
@@ -160,7 +158,6 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
     fontSize: GlobalStyles.FontSize.size_base,
     textAlign: "left",
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     left: 6,
     position: "absolute",
   },

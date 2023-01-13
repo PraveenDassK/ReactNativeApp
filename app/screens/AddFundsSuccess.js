@@ -1,35 +1,40 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
 
-const AddFundsSuccess = () => {
+const AddFundsSuccess = ({navigation}) => {
   return (
-    <View style={styles.addFundsSuccess}>
-      <View style={styles.iconAwesomeCheckCircleParent}>
-        <Image
-          style={styles.iconAwesomeCheckCircle}
-          resizeMode="cover"
-          source={require("../assets/icon-bluecheck.png")}
-        />
-        <Text style={[styles.hello, styles.helloFlexBox]}>
-          <Text style={styles.congratulations}>
-            <Text style={styles.congratulations1}>Congratulations!</Text>
+    <Pressable
+      onPress={() => navigation.navigate("AccountMain")}
+    >
+      <View style={styles.addFundsSuccess}>
+        <View style={styles.iconAwesomeCheckCircleParent}>
+          <Image
+            style={styles.iconAwesomeCheckCircle}
+            resizeMode="cover"
+            source={require("../assets/icon-bluecheck.png")}
+          />
+          <Text style={[styles.hello, styles.helloFlexBox]}>
+            <Text style={styles.congratulations}>
+              <Text style={styles.congratulations1}>Congratulations!</Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.congratulations1}> </Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.added1}>{`£500.00 added `}</Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.added1}>successfully</Text>
+            </Text>
           </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.congratulations1}> </Text>
+          <Text style={[styles.hello1, styles.helloFlexBox]}>
+            Tap anywhere to continue
           </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.added1}>{`£500.00 added `}</Text>
-          </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.added1}>successfully</Text>
-          </Text>
-        </Text>
-        <Text style={[styles.hello1, styles.helloFlexBox]}>
-          Tap anywhere to continue
-        </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -42,7 +47,8 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     left: 0,
-    maxWidth: "100%",
+    height:"50%",
+    width:"100%",
     overflow: "hidden",
     height: 180,
     position: "absolute",
@@ -74,7 +80,6 @@ const styles = StyleSheet.create({
     height: 507,
   },
   addFundsSuccess: {
-    backgroundColor: GlobalStyles.Color.white,
     flex: 1,
     width: "100%",
     paddingLeft: 98,

@@ -3,9 +3,7 @@ import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const PushNotification = () => {
-
-
+const PushNotification = ({navigation}) => {
   return (
     <View style={styles.pushNotification}>
       <Image
@@ -98,7 +96,6 @@ const styles = StyleSheet.create({
     left: 2,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     top: 0,

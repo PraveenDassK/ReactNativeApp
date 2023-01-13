@@ -118,6 +118,8 @@ const styles = StyleSheet.create({
   helloTypo: {
     color: GlobalStyles.Color.gray_700,
     textAlign: "left",
+    color: GlobalStyles.Color.gray_700,
+    textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
@@ -162,7 +164,6 @@ const styles = StyleSheet.create({
   hello1: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     top: 0,
     textAlign: "left",
   },

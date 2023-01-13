@@ -1,8 +1,40 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
+import { Text, StyleSheet, View, Image, Pressable, TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const DirectorsOrPartners = () => {
+const roledata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const countrydata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const nationalitydata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const occupationdata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const DirectorsOrPartners = ({navigation}) => {
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+          Dropdown label
+        </Text>
+      );
+    }
+    return null;
+  };
   return (
     <View style={styles.directorsOrPartners}>
       <View style={styles.identityProofParent}>
@@ -226,7 +258,7 @@ const DirectorsOrPartners = () => {
           <Text style={styles.hello1}>Directors or Partners</Text>
           <Text style={[styles.hello2, styles.helloTypo]}>
             <Text style={styles.current}>
-              Carbonyte would like to know details of any
+              Carbonyte would like to know details of any{"\n"}
             </Text>
             <Text style={styles.current}>
               Associates - usually the Directors or Partners
@@ -234,24 +266,24 @@ const DirectorsOrPartners = () => {
           </Text>
         </View>
 
-        <Text style={[styles.hello3, styles.helloPosition1, styles.helloTypo]}>
-          Enter the first name
-        </Text>
-        <Text style={[styles.hello4, styles.helloPosition1, styles.helloTypo]}>
-          Enter the second name
-        </Text>
-        <Text style={[styles.hello5, styles.helloPosition]}>
-          Enter the address line 1
-        </Text>
-        <Text style={[styles.hello6, styles.helloPosition]}>
-          Enter the address line 2
-        </Text>
-        <Text style={[styles.hello7, styles.helloPosition]}>
-          Enter the Town or city
-        </Text>
-        <Text style={[styles.hello8, styles.helloPosition]}>
-          Enter the postcode
-        </Text>
+        <Text style={[styles.hello3, styles.helloPosition1, styles.helloTypo]}
+          placeholder={"Enter the first name"}
+        />
+        <TextInput style={[styles.hello4, styles.helloPosition1, styles.helloTypo]}
+          placeholder={"Enter the second name"}
+        />
+        <TextInput style={[styles.hello5, styles.helloPosition]}
+          placeholder={"Enter the address line 1"}
+        />
+        <TextInput style={[styles.hello6, styles.helloPosition]}
+          placeholder={"Enter the address line 2"}
+        />
+        <TextInput style={[styles.hello7, styles.helloPosition]}
+          placeholder={"Enter the Town or city"}
+        />
+        <TextInput style={[styles.hello8, styles.helloPosition]}
+          placeholder={"Enter the postcode"}
+        />
         
         <View
           style={[
@@ -261,7 +293,7 @@ const DirectorsOrPartners = () => {
             styles.groupChildBorder,
           ]}
         >
-          <Text style={[styles.hello, styles.helloTypo]}>dd-mm-yyyy</Text>
+          <Text style={[styles.hello, styles.helloTypo]} placeholder={"dd-mm-yyyy"}/>
           <View style={styles.groupChild6} />
           <View style={styles.layer}>
             <View style={styles.vrstva98}>
@@ -275,7 +307,7 @@ const DirectorsOrPartners = () => {
             </View>
           </View>
         </View>
-        <View
+        {/* <View
           style={[
             styles.iconIonicIosArrowDownGroup,
             styles.groupChildLayout,
@@ -287,28 +319,61 @@ const DirectorsOrPartners = () => {
             style={styles.iconIonicIosArrowDown}
             resizeMode="cover"
             source={require("../assets/icon-carbonytedownarrow.png")}
-          />
-          <Text style={[styles.hello, styles.helloTypo]}>
-            Select the nationality
-          </Text>
-        </View>
-        <View
-          style={[
-            styles.iconIonicIosArrowDownContainer,
+          /> */}
+           <Dropdown
+          style={[ styles.iconIonicIosArrowDownGroup,
             styles.groupChildLayout,
             styles.groupChildPosition,
             styles.groupChildBorder,
-          ]}
-        >
-          <Image
-            style={styles.iconIonicIosArrowDown}
-            resizeMode="cover"
-            source={require("../assets/icon-carbonytedownarrow.png")}
-          />
-          <Text style={[styles.hello, styles.helloTypo]}>
-            Select the country of residence
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the nationality' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+          {/* <Text style={[styles.hello, styles.helloTypo]}>
+            Select the nationality
           </Text>
-        </View>
+        </View> */}
+          <Dropdown
+          style={[ styles.iconIonicIosArrowDownContainer,
+            styles.groupChildLayout,
+            styles.groupChildPosition,
+            styles.groupChildBorder,
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the country of residence' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
         <View
           style={[
             styles.helloContainer,
@@ -317,7 +382,7 @@ const DirectorsOrPartners = () => {
             styles.groupChildBorder,
           ]}
         >
-          <Text style={[styles.hello, styles.helloTypo]}>dd-mm-yyyy</Text>
+          <TextInput style={[styles.hello, styles.helloTypo]} placeholder={"dd-mm-yyyy"}/>
           <View style={styles.groupChild6} />
           <View style={styles.layer}>
             <View style={styles.vrstva98}>
@@ -331,21 +396,32 @@ const DirectorsOrPartners = () => {
             </View>
           </View>
         </View>
-        <View
-          style={[
-            styles.iconIonicIosArrowDownParent1,
+        
+          <Dropdown
+          style={[ styles.iconIonicIosArrowDownParent1,
             styles.groupChildLayout,
             styles.groupChildPosition,
             styles.groupChildBorder,
-          ]}
-        >
-          <Image
-            style={styles.iconIonicIosArrowDown}
-            resizeMode="cover"
-            source={require("../assets/icon-carbonytedownarrow.png")}
-          />
-          <Text style={[styles.hello, styles.helloTypo]}>Select the role</Text>
-        </View>
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the role' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
         <Pressable
           style={[styles.groupParent, styles.groupChildLayout]}
           onPress={() => navigation.navigate("ConfirmDirectors")}

@@ -278,7 +278,6 @@ const styles = StyleSheet.create({
   hello1: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     left: 0,
@@ -298,13 +297,12 @@ const styles = StyleSheet.create({
     height: 77,
   },
   buildingNameOrNumberParent: {
-    width: 326,
+    width: "100%",
     height: 683,
   },
   personalAddress: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
