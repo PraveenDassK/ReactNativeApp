@@ -261,7 +261,6 @@ const styles = StyleSheet.create({
     height: 15,
   },
   spendingLimit: {
-    backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,

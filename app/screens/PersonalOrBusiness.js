@@ -10,7 +10,7 @@ const PersonalOrBusiness = ({navigation}) => {
     <Screen>
       <View style={styles.personalOrBusiness}>
         <View style={styles.helloParent}>
-          <Text style={styles.hello}>What account do you want?</Text>
+          <Text style={styles.hello}>Choose an account</Text>
           <Image
             style={styles.groupChild}
             resizeMode="cover"
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     position: "absolute",
+    width:"100%"
   },
   maskGroup236Position: {
     left: 0,
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   },
   helloTypo: {
     textAlign: "center",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textTransform: "uppercase",
     fontSize: GlobalStyles.FontSize.size_lg,
     position: "absolute",
@@ -65,9 +66,10 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
-    textAlign: "left",
+    textAlign: "center",
     top: "50%",
     position: "absolute",
+    width: "100%"
   },
   groupChild: {
     marginLeft: -76.42,
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "40%",
-    left: "38.34%",
+    width:"100%"
   },
   groupParent: {
     bottom: 0,
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "65.72%",
-    left: "37.42%",
+    width:"100%"
   },
   helloParent: {
     width: "100%",
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: 156,
+    paddingTop: 100,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },

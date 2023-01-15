@@ -172,11 +172,7 @@ const MyCards = ({navigation}) => {
                   source={require("../assets/logo-carbonytetextlarge.png")}
                 />
                 <View style={styles.rectangleView} />
-                <Image
-                  style={[styles.rectangleIcon, styles.groupIconLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/image-card.png")}
-                />
+
                 <View style={styles.bWrapper}>
                   <Text style={[styles.b, styles.bTypo, styles.bTypo1]}>B</Text>
                 </View>

@@ -296,13 +296,12 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     width: "100%",
-    height: 673,
+    height: "100%",
   },
   otpVerificationPersonal2: {
     backgroundColor: "#f5f4f7",
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_4xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },

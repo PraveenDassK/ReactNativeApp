@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable, ScrollView } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable,ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
@@ -8,10 +8,6 @@ const ConfirmDirectors = ({navigation}) => {
 
   return (
     <ScrollView>
-    <Pressable
-      style={styles.confirmDirectors}
-      onPress={() => navigation.navigate("LogoAnimation1")}
-    >
       <View style={styles.groupParent}>
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloFlexBox, styles.helloColor]}>
@@ -19,7 +15,7 @@ const ConfirmDirectors = ({navigation}) => {
           </Text>
           <Text style={styles.hello1}>
             <Text style={styles.carbonyteWouldLike}>
-              Carbonyte would like to know details of any{" "}
+              Carbonyte would like to know details of any{"\n"}
             </Text>
             <Text style={styles.carbonyteWouldLike}>
               Associates - usually the Directors or Partners
@@ -209,22 +205,25 @@ const ConfirmDirectors = ({navigation}) => {
             <View style={styles.groupInner} />
             <View style={styles.maskGroup236} />
           </View>
+          <Pressable
+          onPress={() => navigation.navigate("AccountMain")}
+        >
           <Text style={[styles.hello18, styles.helloFlexBox]}>Confirm{"\n"}</Text>
+        </Pressable>
         </View>
         <Pressable
           style={[styles.rectangleGroup, styles.groupPosition]}
-          onPress={() => navigation.navigate("DirectorsOrPartners2")}
+          onPress={() => navigation.navigate("AccountMain")}
         >
           <View style={styles.groupInner} />
           <Image
             style={styles.iconIonicIosAdd}
             resizeMode="cover"
-            source={require("../assets/icon-blackadd.png")}
+            source={require("../assets/add.png")}
           />
         </Pressable>
       </View>
-    </Pressable>
-    </ScrollView>
+      </ScrollView>
   );
 };
 
@@ -285,7 +284,6 @@ const styles = StyleSheet.create({
     top: "50%",
     textAlign: "left",
     position: "absolute",
-    width:"100%"
   },
   helloParent: {
     right: 43,
@@ -427,16 +425,15 @@ const styles = StyleSheet.create({
   },
   hello18: {
     top: "40%",
-    left: "50%",
-    marginLeft: -40,
+    left: "20%",
     fontSize: GlobalStyles.FontSize.size_lg,
-    lineHeight: 20,
+    lineHeight: 10,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   groupContainer: {
-    width: "70%",
+    width: 254,
     left: 0,
   },
   iconIonicIosAdd: {
@@ -460,7 +457,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
-    paddingBottom: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

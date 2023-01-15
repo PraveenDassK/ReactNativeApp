@@ -13,9 +13,7 @@ const Success = ({navigation}) => {
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloTypo]}>All set</Text>
         <Text style={[styles.hello1, styles.helloTypo]}>
-          <Text style={styles.yourFaceId}>Your face ID, pin and</Text>
-          <Text style={styles.yourFaceId}>biometric authentication</Text>
-          <Text style={styles.yourFaceId}>has been setup successfully</Text>
+          <Text style={styles.yourFaceId}>Your face ID, pin and biometric authentication has been setup successfully</Text>
         </Text>
         <Image
           style={styles.groupChild}
@@ -33,38 +31,37 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello: {
-    top: 214,
-    left: 56,
+    top: "50%",
     fontSize: 38,
     fontWeight: "700",
+    width:"100%",
     color: GlobalStyles.Color.gray_1300,
   },
   yourFaceId: {
-    margin: GlobalStyles.Margin.margin_8xs,
   },
   hello1: {
-    top: 276,
+    top: "70%",
     left: 0,
+    textAlign:"center",
     fontSize: GlobalStyles.FontSize.size_2xl,
     lineHeight: 25,
     color: GlobalStyles.Color.indigo_100,
   },
   groupChild: {
-    width:"60%",
-    height:"43%",
-    left:50,
+    width:"50%",
+    height:"50%",
+    top:"0%",
+    left:"25%",
+    resizeMode:"contain"
   },
   helloParent: {
     width: "100%",
-    height: 344,
+    height: "100%",
   },
   success: {
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_400,
     flex: 1,
     width: "100%",
-    paddingLeft: 75,
-    paddingTop: 200,
-    paddingRight: 75,
   },
 });
 

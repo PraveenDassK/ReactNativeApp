@@ -66,11 +66,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
+    width:"100%",
     position: "absolute",
   },
   helloWrapperPosition: {
-    left: 0,
-    top: 0,
+    top:"300%",
+    width:"100%",
+
   },
   helloTypo: {
     textAlign: "center",
@@ -117,11 +119,14 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.blue_100,
   },
   hello1: {
-    top: 379,
-    left: 22,
+    top: "75%",
+    left: "5%",
+    right: "5%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
     textAlign: "center",
+    width:"100%",
+
   },
   iconAwesomeCheckCircle: {
     marginTop: -218.62,
@@ -166,7 +171,7 @@ const styles = StyleSheet.create({
   },
   groupParent: {
     width: "100%",
-    height: 749,
+    height: "100%",
   },
   sentMoney: {
     flex: 1,

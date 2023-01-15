@@ -8,9 +8,9 @@ import { SelectCountry } from 'react-native-element-dropdown';
 import {useState} from "react";
 
 const data = [
-  { label: 'United Kingdom' },
-  { label: 'European Economic Area (EEA)' },
-  { label: 'Other' },
+  { label: 'United Kingdom', value: '44' },
+  { label: 'United States of America', value: '1' },
+  { label: 'India', value: '91' },
 ];
 
 const CountryOfResidence = () => {
@@ -42,7 +42,7 @@ const CountryOfResidence = () => {
           </Text>
           <Text style={[styles.hello2, styles.helloTypo, styles.helloTypo1]}>
             <Text style={styles.theTermsAnd}>
-              The terms and services which apply to you, will{" "}
+              The terms and services which apply to you, will{"\n"}
             </Text>
             <Text style={styles.theTermsAnd}>
               depend on your country of residence.
@@ -112,7 +112,7 @@ const CountryOfResidence = () => {
           labelField="label"
           valueField="value"
           placeholder={!isFocus ? 'United Kingdom' : 'Country'}
-          searchPlaceholder="Select"
+          searchPlaceholder="Search..."
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
@@ -188,8 +188,7 @@ const styles = StyleSheet.create({
   },
   hello: {
     marginTop: -141.52,
-    left: "50%",
-    marginLeft: -80,
+    left: 95,
   },
   rectangleParent: {
     bottom: 92,
@@ -215,7 +214,6 @@ const styles = StyleSheet.create({
     marginTop: 4.74,
     left: 1,
     lineHeight: 20,
-    width: "100%",
   },
   helloParent: {
     left: 2,
@@ -238,8 +236,7 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "40%",
-    left: "50%",
-    marginLeft:-80,
+    left: "22.7%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -267,16 +264,15 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   groupParent: {
-    width: "100%",
-    height: "100%",
+    width: 330,
+    height: 654,
   },
   countryOfResidence: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingBottom: GlobalStyles.Padding.padding_7xs,
     paddingRight: 20,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.gray_100,
+    backgroundColor: GlobalStyles.Color.white,
   },
   text: {
     fontSize: 30,

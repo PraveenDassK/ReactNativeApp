@@ -19,7 +19,7 @@ const SendContact = ({navigation}) => {
           <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
             +440123456789{"\n"}
           </Text>
-          <Text style={[styles.hello2, styles.helloTypo, styles.helloTypo1]}>
+          <Text style={[styles.hello2, styles.helloTypo, styles.helloTypo3]}>
             Joined September 2022
           </Text>
           <Image
@@ -28,32 +28,19 @@ const SendContact = ({navigation}) => {
             source={require("../assets/group-303373.png")}
           />
         </View>
+
         <View style={styles.groupContainer}>
-          <View style={[styles.helloGroup, styles.helloPosition]}>
-            <Text style={[styles.hello3, styles.helloTypo]}>£20</Text>
-            <Image
-              style={[styles.groupInner, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-30410.png")}
-            />
+          <View style={[styles.helloContainer, styles.helloPosition]}>
+            <Text style={[styles.twentyPosition, styles.helloTypo]}>£20</Text>
           </View>
           <View style={[styles.helloContainer, styles.helloPosition]}>
-            <Text style={[styles.hello3, styles.helloTypo]}>£50</Text>
-            <Image
-              style={[styles.groupIcon, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-304101.png")}
-            />
+            <Text style={[styles.fiftyPosition, styles.helloTypo]}>£50</Text>
           </View>
-          <View style={[styles.groupView, styles.groupPosition1]}>
-            <Text style={[styles.hello3, styles.helloTypo]}>£100</Text>
-            <Image
-              style={[styles.groupChild1, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-30410.png")}
-            />
+          <View style={[styles.helloContainer, styles.helloPosition]}>
+            <Text style={[styles.hundredPosition, styles.helloTypo]}>£100</Text>
           </View>
         </View>
+
         <View style={[styles.helloParent1, styles.helloParent1Position]}>
           <Text style={[styles.hello6, styles.helloTypo]}>Pay</Text>
           <TextInput style={[styles.hello7, styles.helloTypo2, styles.helloTypo4]}
@@ -62,16 +49,7 @@ const SendContact = ({navigation}) => {
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
-        <View style={styles.helloParent2}>
-          <TextInput style={[styles.hello8, styles.helloTypo, styles.helloTypo1]}
-            placeholder={"Add a note"}/>
-          
-          <Image
-            style={styles.iconMaterialKeyboardVoice}
-            resizeMode="cover"
-            source={require("../assets/icon-materialkeyboardvoice.png")}
-          />
-        </View>
+
         <View style={[styles.maskGroup236, styles.helloParent1Position]} />
         <Pressable
           style={styles.groupPressable}
@@ -96,30 +74,52 @@ const styles = StyleSheet.create({
     right: -10,
     top: 0,
     position: "absolute",
+    width:"100%"
+  },
+  twentyPosition: {
+    left: "-25%",
+    top: "20%",
+    width:"100%"
+  },
+  fiftyPosition: {
+    left: "0%",
+    top: "20%",
+    width:"100%"
+  },
+  hundredPosition: {
+    left: "25%",
+    top: "20%",
+    width:"100%"
   },
   helloTypo2: {
-    textAlign: "left",
+    textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
+    left: "0%",
+
   },
   helloTypo3: {
     color: GlobalStyles.Color.indigo_100,
     fontSize: GlobalStyles.FontSize.size_4xl,
-    textAlign: "left",
+    textAlign: "center",
+    width:"100%"
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloTypo: {
     color: GlobalStyles.Color.gray_700,
-    textAlign: "left",
+    textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
+    fontSize: GlobalStyles.FontSize.size_base,
     position: "absolute",
+    width:"100%"
   },
   helloTypo1: {
-    fontSize: GlobalStyles.FontSize.size_base,
+    fontSize: GlobalStyles.FontSize.size_7xl,
     color: GlobalStyles.Color.gray_700,
+    width:"100%"
   },
   helloPosition: {
-    width: 80,
+    width: "100%",
     bottom: 0,
     top: 0,
     position: "absolute",
@@ -132,13 +132,15 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloParent1Position: {
-    right: 22,
-    left: 53,
+    right: "10%",
+    left: "10%",
     top: "50%",
+    width:"80%",
     position: "absolute",
   },
   helloTypo4: {
-    textAlign: "left",
+    textAlign: "center",
+    width:"100%"
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   lineViewPosition: {
@@ -161,7 +163,6 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 80,
-    left: 12,
     fontWeight: "700",
   },
   hello1: {
@@ -170,24 +171,22 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: 138,
-    left: 0,
+    width:"100%"
   },
   groupItem: {
-    right: 39,
     bottom: 106,
-    left: 43,
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
+    resizeMode:"contain",
     top: 0,
     position: "absolute",
+    left:"25%",
+    width:"40%",
+    height:"40%",
   },
   helloParent: {
     width: "80%",
     height: 172,
     top:"5%",
-    marginLeft: "-15%",
-    left: "50%",
+    left: "10%",
     position: "absolute",
   },
   hello3: {
@@ -206,8 +205,7 @@ const styles = StyleSheet.create({
     marginLeft: -7.71,
   },
   helloContainer: {
-    marginLeft: -27.5,
-    left: "50%",
+    left: "0%",
   },
   groupChild1: {
     marginLeft: -7.22,
@@ -221,16 +219,16 @@ const styles = StyleSheet.create({
     left: "5%",
     right: "5%",
     top: "50%",
+    width:"80%",
     position: "absolute",
   },
   hello6: {
-    left: "40%",
+    left: "0%",
     fontSize: GlobalStyles.FontSize.size_xl,
     top: 0,
   },
   hello7: {
     top: 28,
-    left: "25%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 37,
     color: GlobalStyles.Color.blue_100,
@@ -246,6 +244,7 @@ const styles = StyleSheet.create({
   helloParent1: {
     marginTop: -64.5,
     height: 98,
+    width: "100%",
   },
   hello8: {
     top: 5,
@@ -293,8 +292,9 @@ const styles = StyleSheet.create({
     left: 10,
   },
   hello9: {
-    top: "10%",
-    left: "48.56%",
+    top: "0%",
+    left: "50%",
+    textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -307,13 +307,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupParent: {
-    width: "99%",
+    width: "100%",
     height: "100%",
     alignItems: "center",
   },
   sendContact: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

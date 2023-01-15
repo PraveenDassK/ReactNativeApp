@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
-const ProofVerified = () => {
+const ProofVerified = ({navigation}) => {
   //const navigation = useNavigation();
 
   return (

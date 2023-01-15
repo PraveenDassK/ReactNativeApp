@@ -42,15 +42,15 @@ const Pin = () => {
           onPress={() => {
             enterNumber(4)
           }}
+          style={[styles.button]}
         >
-          <View style={[styles.button]}>
             <Text style={[styles.hello2, styles.helloTypo2]}>4</Text>
-          </View>
         </Pressable>
         <Pressable
           onPress={() => {
             enterNumber(7)
           }}
+          style={[styles.button]}
         >
         <Text style={[styles.hello3, styles.helloTypo2]}>7</Text>
         </Pressable>
@@ -58,6 +58,7 @@ const Pin = () => {
           onPress={() => {
             enterNumber(2)
           }}
+          style={[styles.button]}
         >
         <Text style={[styles.hello4, styles.helloTypo1]}>2</Text>
         </Pressable>
@@ -65,6 +66,7 @@ const Pin = () => {
           onPress={() => {
             enterNumber(5)
           }}
+          style={[styles.button]}
         >
           <Text style={[styles.hello5, styles.helloTypo1]}>5</Text>
           </Pressable>
@@ -72,6 +74,7 @@ const Pin = () => {
           onPress={() => {
             enterNumber(8)
           }}
+          style={[styles.button]}
         >
           <Text style={[styles.hello6, styles.helloTypo1]}>8</Text>
           </Pressable>
@@ -79,6 +82,7 @@ const Pin = () => {
           onPress={() => {
             enterNumber(0)
           }}
+          style={[styles.button]}
         >
           <Text style={[styles.hello7, styles.helloTypo1]}>0</Text>
           </Pressable>
@@ -86,6 +90,7 @@ const Pin = () => {
           onPress={() => {
             enterNumber(3)
           }}
+          style={[styles.button]}
         >
           <Text style={[styles.hello8, styles.helloTypo]}>3</Text>
           </Pressable>
@@ -93,6 +98,7 @@ const Pin = () => {
           onPress={() => {
             enterNumber(6)
           }}
+          style={[styles.button]}
         >
           <Text style={[styles.hello9, styles.helloTypo]}>6</Text>
           </Pressable>
@@ -100,6 +106,7 @@ const Pin = () => {
           onPress={() => {
             enterNumber(9)
           }}
+          style={[styles.button]}
         >
           <Text style={[styles.hello10, styles.helloTypo]}>9</Text>
           </Pressable>
@@ -140,7 +147,7 @@ const Pin = () => {
 
 const styles = StyleSheet.create({
   button:{
-    width:100,
+    width:"10%",
   },
   groupPosition: {
     height: 65,
@@ -167,19 +174,19 @@ const styles = StyleSheet.create({
   helloTypo2: {
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_9xl,
-    left: 45,
+    left: "200%",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
   },
   helloTypo1: {
-    left: 153,
+    left: "500%",
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_9xl,
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
   },
   helloTypo: {
-    left: 262,
+    left: "800%",
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_9xl,
     color: GlobalStyles.Color.indigo_100,
@@ -273,8 +280,8 @@ const styles = StyleSheet.create({
     top: 377,
   },
   iconIonicMdBackspace: {
-    left: 230,
-    top: 450,
+    left: "75%",
+    top: "850%",
   },
   rectangleView: {
     height: "100%",
@@ -298,12 +305,12 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello11: {
-    top: "40%",
-    left: "40.8%",
+    top: "35%",
+    width:"100%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
-    textAlign: "left",
+    color: GlobalStyles.Color.white,
+    textAlign: "center",
     position: "absolute",
   },
   groupParent: {
@@ -311,7 +318,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     width: "100%",
-    height: 654,
+    height: "100%",
   },
   pin: {
     backgroundColor: "#f3f0f4",

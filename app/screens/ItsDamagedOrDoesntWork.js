@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   wrapper: {
-    marginTop: -6.5,
+    marginTop: -8,
     left: 23,
   },
   rectangleGroup: {
@@ -328,7 +328,6 @@ const styles = StyleSheet.create({
   itsDamagedOrDoesntWork: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

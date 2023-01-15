@@ -3,7 +3,7 @@ import { Text, StyleSheet, Pressable, View } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const BusinessAddress2 = () => {
+const BusinessAddress2 = ({navigation}) => {
   return (
     <View style={styles.businessAddress2}>
       

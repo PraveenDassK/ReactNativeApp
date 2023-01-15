@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
 
-const Account2 = () => {
+const Account2 = ({navigation}) => {
   return (
     <Screen>
     <View style={styles.account2}>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     fontSize: GlobalStyles.FontSize.size_base,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
+    textAlign: "center",
     position: "absolute",
   },
   emailPosition: {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 17,
     fontSize: GlobalStyles.FontSize.size_lg,
-    left: 24,
+    width:"100%",
     top: "50%",
     position: "absolute",
   },
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 6,
     fontSize: GlobalStyles.FontSize.size_4xl,
-    textAlign: "left",
+    textAlign: "center",
+    width:"100%",
     fontWeight: "700",
     position: "absolute",
     color: GlobalStyles.Color.indigo_100,
@@ -101,17 +102,20 @@ const styles = StyleSheet.create({
   },
   yayYourDetails: {
     margin: GlobalStyles.Margin.margin_8xs,
+    textAlign:"center",
+    width:"100%"
   },
   hello1: {
     top: "47.46%",
-    left: "14.42%",
     color: GlobalStyles.Color.indigo_100,
     lineHeight: 14,
     fontSize: GlobalStyles.FontSize.size_base,
+    textAlign:"center",
+    width:"100%"
   },
   hello2: {
     top: "93.29%",
-    left: "36.2%",
+    width:"100%",
     color: GlobalStyles.Color.blue_100,
   },
   pleaseCheckYourEmailAndCl: {
@@ -124,12 +128,12 @@ const styles = StyleSheet.create({
     marginTop: 33.5,
   },
   iconZocialEmail: {
-    marginTop: -127.1,
-    marginLeft: -48.55,
-    left: "50%",
-    width: 97,
-    height: 66,
+    marginTop: -200,
     opacity: 0.42,
+    left:"25%",
+    height:"25%",
+    width:"50%",
+    resizeMode:"contain",
   },
   helloParent: {
     width: "100%",
@@ -149,7 +153,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     paddingRight: GlobalStyles.Padding.padding_7xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },

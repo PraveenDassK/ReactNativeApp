@@ -176,7 +176,7 @@ const AccountMainBusiness = ({navigation}) => {
         <Text
           style={[styles.history1, styles.historyTypo1, styles.historyPosition]}
         >
-          Carbon Assects
+          Carbon Assets
         </Text>
         <Image
           style={[styles.groupIcon, styles.groupLayout]}
@@ -1487,14 +1487,13 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   historyParent: {
-    width: 356,
+    width: "100%",
     height: 2447,
   },
   account: {
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_11xs,
-    paddingTop: GlobalStyles.Padding.padding_5xs,
     paddingRight: GlobalStyles.Padding.padding_11xs,
     backgroundColor: GlobalStyles.Color.gray_200,
   },

@@ -140,11 +140,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello1: {
-    top: "40%",
+    top: "30%",
     left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   hello2: {
     marginTop: -6,

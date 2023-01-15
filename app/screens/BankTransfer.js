@@ -1,23 +1,17 @@
 import * as React from "react";
 import { Text, StyleSheet, Image, View, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
 const BankTransfer = ({navigation}) => {
   return (
     <View style={styles.bankTransfer}>
-      <View style={styles.bankTransferParent}>
       <Pressable
-        
+        style={styles.bankTransferParent}
         onPress={() => navigation.navigate("Account3")}
       >
         <Text style={styles.bankTransfer1}>Bank Transfer</Text>
-        <View style={styles.iconIonicIosArrowForwardWrapper}>
-          <Image
-            style={styles.iconIonicIosArrowForward}
-            resizeMode="cover"
-            source={require("../assets/icon-carbonytearrowforward.png")}
-          />
-        </View>
+
       </Pressable>
       <Text
         style={[styles.hello, styles.mt39_75, styles.mr281, styles.helloTypo1]}
@@ -125,7 +119,6 @@ const BankTransfer = ({navigation}) => {
         style={[styles.hello14, styles.mt_3_25, styles.mr30, styles.helloTypo]}
       >{`Monthly - Next : 01 October  `}</Text>
     </View>
-    </View>
   );
 };
 
@@ -143,13 +136,13 @@ const styles = StyleSheet.create({
     marginLeft: GlobalStyles.Margin.margin_7xs,
   },
   mt22_75: {
-    marginTop: GlobalStyles.Margin.margin_5xs,
+    marginTop: GlobalStyles.Margin.margin_3xs,
   },
   mt23_75: {
     marginTop: 23.75,
   },
   mt_53_25: {
-    marginTop: -433.25,
+    marginTop: -53.25,
   },
   mr261: {
     marginRight: 261,
@@ -161,7 +154,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   mt_647_25: {
-    marginTop: -307.25,
+    marginTop: -647.25,
   },
   mt_403_25: {
     marginTop: -403.25,
@@ -233,8 +226,8 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    width: "100%",
-    height: "100%",
+    width: 375,
+    height: 749,
     backgroundColor: GlobalStyles.Color.white,
   },
   hello: {
@@ -296,7 +289,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     width: "100%",
-    backgroundColor: GlobalStyles.Color.gray_100,
+    backgroundColor: GlobalStyles.Color.white,
   },
 });
 

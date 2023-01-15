@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SecurityAndPrivacy = () => {
+const SecurityAndPrivacy = ({navigation}) => {
   return (
     <View style={styles.securityAndPrivacy}>
       <Text style={[styles.hello, styles.mr_546]}>Security</Text>
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   helloParent: {
-    width: 305,
+    width: "100%",
     height: 335,
   },
   arrowPosition: {

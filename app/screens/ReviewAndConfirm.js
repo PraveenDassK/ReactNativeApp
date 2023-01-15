@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   helloLayout: {
     height: 45,
     right: "5%",
+    width: "100%"
   },
   helloTypo: {
     color: GlobalStyles.Color.blue_100,
@@ -68,8 +69,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloContainerPosition: {
-    top: "50%",
+    top: 300,
     position: "absolute",
+    width:"100%"
   },
   helloContainerPosition1: {
     top: 350,
@@ -104,12 +106,13 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 40,
-    marginLeft: "30%",
+    marginLeft: "20%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     position: "absolute",
+    width:"80%"
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_base,
@@ -128,8 +131,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello3: {
-    left: "70%",
+    left: "30%",
     textAlign: "right",
+    width:"50%"
   },
   helloGroup: {
     top: 108,
@@ -137,8 +141,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello6: {
-    left: "70%",
+    left: "30%",
     textAlign: "right",
+    width:"50%"
   },
   helloContainer: {
     marginTop: "-30%",
@@ -197,19 +202,19 @@ const styles = StyleSheet.create({
   },
   hello11: {
     top: "30%",
-    left: "39.26%",
+    width:"100%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
-    textAlign: "left",
+    textAlign: "center",
     position: "absolute",
   },
   groupParent: {
-    right: "10%",
+    left: "10%",
     bottom: 88,
     height: 60,
-    left: "10%",
     position: "absolute",
+    width:"80%"
   },
   helloParent: {
     borderTopLeftRadius: GlobalStyles.Border.br_6xl,

@@ -5,44 +5,30 @@ import GlobalStyles from "../../GlobalStyles";
 
 const AddFunds = ({navigation}) =>{
   return (
-    <Pressable
-      style={styles.addFunds}
-      onPress={() => navigation.navigate("Account3")}
-    >
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Add Funds</Text>
-        <View style={[styles.groupParent, styles.parentPosition]}>
-          <View style={styles.helloGroup}>
+
+        <View style={[styles.groupParent, styles.presetPosition]}>
+
+          <View style={styles.twentyPosition}>
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
               £20
             </Text>
-            <Image
-              style={[styles.groupChild, styles.groupPosition1]}
-              resizeMode="cover"
-              source={require("../assets/icon-doubleup.png")}
-            />
           </View>
-          <View style={styles.helloContainer}>
+
+          <View style={styles.fiftyPosition}>
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
               £50
             </Text>
-            <Image
-              style={[styles.groupItem, styles.groupPosition1]}
-              resizeMode="cover"
-              source={require("../assets/icon-doubleup.png")}
-            />
           </View>
-          <View style={[styles.groupView, styles.groupViewPosition]}>
+
+          <View style={[styles.hundredPosition]}>
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
               £100
             </Text>
-            <Image
-              style={[styles.groupInner, styles.groupPosition1]}
-              resizeMode="cover"
-              source={require("../assets/icon-doubleup.png")}
-            />
           </View>
         </View>
+
         <View style={[styles.helloParent1, styles.parentPosition]}>
           <Text style={[styles.hello4, styles.helloColor, styles.helloTypo1]}>
             Pay
@@ -51,18 +37,9 @@ const AddFunds = ({navigation}) =>{
           <View style={styles.lineView} />
         </View>
         <View style={[styles.helloParent11, styles.parentPosition]}>
-          <TextInput style={[styles.hello5, styles.helloTypo1]} placeholder={"£100"}>
-            
-          </TextInput>
+          <TextInput style={[styles.hello5, styles.helloTypo1]} placeholder={"£100"}/>
         </View>
-        <View style={[styles.helloParent2, styles.iconPosition]}>
-          <TextInput style={[styles.hello6, styles.helloTypo]} placeholder={"Add a note"}/>
-          <Image
-            style={[styles.iconMaterialKeyboardVoice, styles.iconPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-speech.png")}
-          />
-        </View>
+
         <View style={[styles.groupContainer, styles.groupPosition]}>
           <View
             style={[
@@ -71,11 +48,7 @@ const AddFunds = ({navigation}) =>{
               styles.groupViewPosition,
             ]}
           >
-            <Image
-              style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/icon-carbonytearrowforward.png")}
-            />
+
           </View>
           <Text style={[styles.hello7, styles.helloTypo]}>Select Account</Text>
           <View style={styles.helloParent3}>
@@ -105,7 +78,6 @@ const AddFunds = ({navigation}) =>{
           <Text style={[styles.hello10, styles.helloTypo1]}>Add Funds</Text>
         </Pressable>
       </View>
-    </Pressable>
   );
 };
 
@@ -115,6 +87,23 @@ const styles = StyleSheet.create({
     top: "50%",
     position: "absolute",
     paddingRight: 120,
+    width:"80%"
+
+  },
+  twentyPosition: {
+    left: "50%",
+    top: "600%",
+    width:"100%"
+  },
+  fiftyPosition: {
+    left: "75%",
+    top: "600%",
+    width:"100%"
+  },
+  hundredPosition: {
+    left: "100%",
+    top: "600%",
+    width:"100%"
   },
   helloColor: {
     color: GlobalStyles.Color.gray_700,
@@ -134,10 +123,12 @@ const styles = StyleSheet.create({
   groupViewPosition: {
     bottom: 0,
     right: 0,
+    width:"100%"
   },
   iconPosition: {
-    top: "50%",
+    top: "100%",
     position: "absolute",
+    
   },
   helloTypo: {
     fontSize: GlobalStyles.FontSize.size_base,
@@ -162,12 +153,12 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 39,
-    left: "38%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
-    textAlign: "left",
+    textAlign: "center",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
+    width:"100%"
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_7xl,
@@ -242,7 +233,7 @@ const styles = StyleSheet.create({
     marginTop: -75.5,
     right: 32,
     height: 178,
-    width: 300,
+    width: "100%",
   },
   hello6: {
     left: 13,
@@ -327,12 +318,13 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello10: {
-    top: "30%",
-    left: "40.5%",
+    top: "25%",
+    width:"100%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
     textAlign: "center",
+
   },
   groupPressable: {
     right: 24,
@@ -356,7 +348,6 @@ const styles = StyleSheet.create({
   },
   addFunds: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

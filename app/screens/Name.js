@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, TextInput, Pressable } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
-const Name = () => {
+const Name = ({navigation}) => {
   //const navigation = useNavigation();
 
   return (
@@ -39,10 +39,13 @@ const Name = () => {
           style={[styles.groupChild, styles.groupBorder]}
           keyboardType="default"
         />
-        <View style={[styles.groupItem, styles.groupBorder]} />
+        <TextInput 
+          style={[styles.groupItem, styles.groupBorder]} 
+          keyboardType="default"
+        />
         <Pressable
           style={[styles.groupContainer, styles.groupContainerPosition]}
-          onPress={() => navigation.navigate("ProofOfResidencyListA")}
+          onPress={() => navigation.navigate("ProofOfResidencyList")}
         >
           <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
             <View style={styles.groupInner} />
@@ -58,8 +61,9 @@ const Name = () => {
 const styles = StyleSheet.create({
   helloTypo: {
     //fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
+    textAlign: "center",
     position: "absolute",
+    width:"100%"
   },
   nameTypo: {
     fontSize: GlobalStyles.FontSize.size_base,
@@ -92,11 +96,12 @@ const styles = StyleSheet.create({
   hello: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    textAlign: "left",
+    textAlign: "center",
     color: GlobalStyles.Color.indigo_100,
     left: 0,
     top: 0,
     position: "absolute",
+    width:"100%"
   },
   hello1: {
     marginTop: 14.74,
@@ -105,7 +110,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     left: 2,
-    width: 263,
+    width: "100%",
     height: 57,
     top: 0,
     position: "absolute",
@@ -147,10 +152,9 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "40%",
-    left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   groupContainer: {
     height: 60,
