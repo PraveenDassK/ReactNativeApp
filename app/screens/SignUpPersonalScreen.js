@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable } from "react-native";
+import { GestureDetector, Gesture, Directions } from "react-native-gesture-handler"
 import { Formik } from "formik";
 import * as Yup from 'yup';
 
@@ -10,6 +11,7 @@ import GlobalStyles from "../../GlobalStyles";
 import otpApi from "../api/otp";
 import Screen from "../components/Screen";
 import FormField from "../components/forms/FormField"
+import SwipeUp from "../components/SwipeUp"
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
@@ -18,7 +20,17 @@ const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
+
+
+
+
 const SignUpPersonalScreen = ({ navigation }) => {
+
+  // const flingGesture = Gesture.Fling()
+  // .direction(Directions.UP)
+  // .onStart(()=>console.log("start"))
+  // .onEnd(()=> navigation.navigate("Login"));
+
   const prefix = "44"
 
   const authContext = useContext(AuthContext)
@@ -37,6 +49,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
 
   return (
     <Screen>
+      <SwipeUp>
     <View style={styles.signUpPersonal}>
       <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
         <View style={[styles.hello1, styles.enterColor]}>
@@ -117,8 +130,16 @@ const SignUpPersonalScreen = ({ navigation }) => {
             </>
           )}
         </Formik>
+      <View style={styles.swipeUp}>
+        <Text>Swipe up if you already have an account</Text>
+      </View>
+       {/* <GestureDetector gesture={flingGesture}>
+        <Text>Swipe up if you already have an account</Text>
+        </GestureDetector> */}
+        
 
     </View>
+    </SwipeUp>
     </Screen>
   );
 };
@@ -618,6 +639,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
+  swipeUp : {
+  alignItems: "center",
+  justifyContent: "center",
+   top:50
+  }
 });
 
 export default SignUpPersonalScreen;
