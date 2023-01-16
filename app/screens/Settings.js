@@ -1,9 +1,13 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
 const Settings = ({navigation}) => {
+  const account="12345677";
+  const sortcode="12-34-56";
+  const fullname="Full Name";
+  const plan="Standard";
 
   return (
     <View style={styles.settings}>
@@ -18,8 +22,8 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/path-33370.png")}
         />
-        <Text style={styles.hello}>Full Name</Text>
-        <Text style={styles.hello1}>Standard</Text>
+        <Text style={styles.hello}>{fullname}</Text>
+        <Text style={styles.hello1}>{plan}</Text>
         <Image
           style={[
             styles.groupChild,
@@ -55,8 +59,8 @@ const Settings = ({navigation}) => {
           </Text>
         </View>
         <View style={[styles.wrapper, styles.wrapperPosition]}>
-          <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]}>
-            12345678
+          <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]} >
+            {account}
           </Text>
         </View>
         {/* <Image
@@ -82,7 +86,7 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/icon-materialcontentcopy.png")}
         />
-        <Text style={[styles.text1, styles.textTypo]}>12-34-56</Text>
+        <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
         <View style={[styles.historyParent, styles.iconContentLayout]}>
         <Pressable
           onPress={() => navigation.navigate("AccountMain")}

@@ -101,7 +101,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="">
+  <Stack.Navigator initialRouteName="SetLimit">
  
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
