@@ -363,7 +363,6 @@ const styles = StyleSheet.create({
   sendMoney: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_sm,
     backgroundColor: GlobalStyles.Color.white,
   },
 });

@@ -177,7 +177,7 @@ const AccountMain = ({navigation}) => {
         <Text
           style={[styles.history1, styles.historyTypo1, styles.historyPosition]}
         >
-          Carbon Assects
+          Carbon Assets
         </Text>
         <Image
           style={[styles.groupIcon, styles.groupLayout]}
@@ -206,15 +206,7 @@ const AccountMain = ({navigation}) => {
           <Pressable
           onPress={() => navigation.navigate("BankTransfer")}
           >
-          <Image
-            style={[
-              styles.transfer1Icon,
-              styles.iconLayout,
-              styles.iconPosition,
-            ]}
-            resizeMode="cover"
-            source={require("../assets/transfer-1.png")}
-          />
+
           </Pressable>
         </View>
 
@@ -1486,7 +1478,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_11xs,
-    paddingTop: GlobalStyles.Padding.padding_2xs,
     paddingRight: GlobalStyles.Padding.padding_11xs,
     backgroundColor: GlobalStyles.Color.gray_200,
   },

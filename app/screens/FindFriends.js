@@ -8,11 +8,6 @@ const FindFriends = () => {
 
   return (
     <View style={styles.findFriends}>
-      <Image
-          style={styles.iconIonicIosArrowForward}
-          resizeMode="cover"
-          source={require("../assets/icon-whitearrow.png")}
-        />
       <View style={styles.groupParent}>
       
 
@@ -60,7 +55,7 @@ const FindFriends = () => {
 
 const styles = StyleSheet.create({
   helloParentPosition: {
-    left: 0,
+    left: 100,
     right: 0,
     top: 0,
     position: "absolute",
@@ -88,26 +83,27 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello: {
-    left: 2,
+    left:22,
     fontSize: GlobalStyles.FontSize.size_8xl,
-    fontWeight: "700",
+    fontWeight: "00",
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     top: 0,
     position: "absolute",
   },
   allowAccessTo: {
-    margin: GlobalStyles.Margin.margin_8xs,
+    margin: GlobalStyles.Margin.margin_6xs,
   },
   hello1: {
-    marginTop: -282.52,
-    left: 3,
+    marginTop: -200.52,
+    left: -80,
     fontSize: GlobalStyles.FontSize.size_base,
     lineHeight: 20,
     color: GlobalStyles.Color.gray_700,
     top: "50%",
     textAlign: "left",
     position: "absolute",
+    width:"100%",
   },
   groupChild: {
     backgroundColor: GlobalStyles.Color.blue_100,
@@ -119,18 +115,19 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello2: {
-    top: "40%",
+    top: "50%",
     left: "31.9%",
     color: GlobalStyles.Color.black,
   },
   groupContainer: {
     bottom: 76,
+    width:"100%",
   },
   groupItem: {
     backgroundColor: GlobalStyles.Color.gray_700,
   },
   hello3: {
-    top: "38.33%",
+    top: "48.33%",
     left: "38.96%",
     color: GlobalStyles.Color.white,
   },
@@ -138,18 +135,20 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   groupInner: {
-    marginTop: -153.67,
-    right: 22,
-    left: 21,
-    maxWidth: "100%",
+    
+    marginTop: -39.67,
+    right: 2,
+    left: "50%",
+    marginLeft:-140,
+   width:293,
     overflow: "hidden",
-    height: 249,
-    top: "50%",
-    position: "absolute",
+    height: 259,
+    top: "40%",
+    position: "relative",
   },
   iconIonicIosArrowForward: {
     marginTop: 50,
-    left: 26,
+    left: 36,
     width: 11,
     height: 6,
     top: "70%",
@@ -157,15 +156,17 @@ const styles = StyleSheet.create({
   },
   groupParent: {
     width: "100%",
-    height: 652,
+    height: "100%",
   },
   findFriends: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_2xs,
+    // paddingTop: GlobalStyles.Padding.padding_2xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
+    paddingBottom: GlobalStyles.Padding.padding_8xs,
     width: "100%",
+
   },
 });
 

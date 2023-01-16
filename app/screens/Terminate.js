@@ -28,13 +28,14 @@ const Terminate = ({navigation}) => {
               ]}
             >
               <View style={[styles.groupChild, styles.groupPosition]} />
-              <View
+              <Pressable
                 style={[
                   styles.maskGroup236,
                   styles.helloPosition,
                   styles.helloParentPosition,
                 ]}
-              />
+                onPress={() => navigation.navigate("CardSettings")}
+                />
             </View>
             <Text style={[styles.hello1, styles.helloTypo]}>No</Text>
           </View>

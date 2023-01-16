@@ -32,7 +32,7 @@ const BankTransferAmount = ({navigation}) => {
           <Text style={[styles.hello2, styles.helloTypo2, styles.helloTypo3]}>
           {"\n" + accountCode}
           </Text>
-          <Text style={[styles.hello3, styles.helloTypo, styles.helloTypo1]}>
+          <Text style={[styles.hello3, styles.helloTypo, styles.helloTypo3]}>
           {"\n" + sortCode}
           </Text>
         </View>
@@ -44,11 +44,6 @@ const BankTransferAmount = ({navigation}) => {
               }}
             >
             <Text style={[styles.hello4, styles.helloTypo]}>£20</Text>
-            <Image
-              style={[styles.groupItem, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-30409.png")}
-            />
             </Pressable>
           </View>
 
@@ -59,11 +54,7 @@ const BankTransferAmount = ({navigation}) => {
             >
           <View style={[styles.helloContainer, styles.helloPosition]}>
             <Text style={[styles.hello4, styles.helloTypo]}>£50</Text>
-            <Image
-              style={[styles.groupInner, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-30410.png")}
-            />
+
           </View>
           </Pressable>
 
@@ -74,11 +65,7 @@ const BankTransferAmount = ({navigation}) => {
             >
             <View style={[styles.groupView, styles.groupPosition1]}>
               <Text style={[styles.hello4, styles.helloTypo]}>£100</Text>
-              <Image
-                style={[styles.groupIcon, styles.groupPosition]}
-                resizeMode="cover"
-                source={require("../assets/group-30408.png")}
-              />
+
             </View>
           </Pressable>
 
@@ -134,6 +121,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.indigo_100,
     fontSize: GlobalStyles.FontSize.size_4xl,
     textAlign: "center",
+    width:"100%"
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloTypo: {
@@ -166,7 +154,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloTypo4: {
-    textAlign: "left",
+    textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   lineViewPosition: {
@@ -204,10 +192,8 @@ const styles = StyleSheet.create({
     left: 25,
   },
   helloParent: {
-    marginLeft: -180,
     top: "10%",
-    width: "50%",
-    left: "50%",
+    width: "100%",
     position: "absolute",
   },
   hello4: {
@@ -266,6 +252,7 @@ const styles = StyleSheet.create({
   helloParent1: {
     marginTop: "-20%",
     height: 125,
+    width:"100%"
   },
   hello9: {
     top: 5,
@@ -314,7 +301,8 @@ const styles = StyleSheet.create({
   },
   hello10: {
     top: "40%",
-    left: "43.56%",
+    width:"100%",
+    textAlign:"center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -332,7 +320,6 @@ const styles = StyleSheet.create({
   },
   bankTransferAmount: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

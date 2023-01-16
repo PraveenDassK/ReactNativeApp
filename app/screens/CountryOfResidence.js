@@ -270,7 +270,6 @@ const styles = StyleSheet.create({
   countryOfResidence: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: 20,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,

@@ -611,7 +611,7 @@ const styles = StyleSheet.create({
   },
   groupShadowBox: {
     height: 88,
-    width: "40%",
+    width: "50%",
     top: 177,
     shadowOpacity: 1,
     elevation: 6,

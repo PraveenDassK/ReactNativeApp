@@ -283,8 +283,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   text: {
-    marginTop: -6,
-    width: 8,
+    marginTop: -8,
+    width: 10,
     textAlign: "left",
   },
   wrapper: {
@@ -328,7 +328,6 @@ const styles = StyleSheet.create({
   iWasAVictimOfFraudOrThe: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

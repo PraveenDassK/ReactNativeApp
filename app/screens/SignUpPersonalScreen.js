@@ -189,13 +189,11 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   networkPosition1: {
-    width: 17,
     marginTop: -3,
     top: "50%",
     position: "absolute",
   },
   networkLayout: {
-    width: 3,
     backgroundColor: GlobalStyles.Color.gray_1400,
     borderRadius: GlobalStyles.Border.br_7xs,
     bottom: 0,
@@ -219,7 +217,6 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   homeLayout: {
-    width: 134,
     backgroundColor: GlobalStyles.Color.black,
     borderRadius: GlobalStyles.Border.br_8xl,
     height: 5,
@@ -230,7 +227,6 @@ const styles = StyleSheet.create({
   },
   viewShadowBox: {
     height: 46,
-    width: 117,
     elevation: 0,
     shadowRadius: 0,
     shadowColor: "#0101FD",
@@ -248,7 +244,6 @@ const styles = StyleSheet.create({
     left: "50%",
   },
   labelPosition: {
-    width: 118,
     color: GlobalStyles.Color.black,
     left: 0,
     position: "absolute",
@@ -257,13 +252,11 @@ const styles = StyleSheet.create({
   viewPosition1: {
     height: 47,
     marginTop: 3.5,
-    width: 117,
     top: "50%",
     position: "absolute",
   },
   numberPosition: {
     top: 1,
-    width: 118,
     color: GlobalStyles.Color.black,
     // fontFamily: GlobalStyles.FontFamily.sFProDisplay,
     fontSize: GlobalStyles.FontSize.size_7xl,
@@ -275,14 +268,12 @@ const styles = StyleSheet.create({
   viewPosition: {
     marginTop: -50.5,
     height: 47,
-    width: 117,
     top: "50%",
     position: "absolute",
   },
   signUpPersonalChild: {
     backgroundColor: GlobalStyles.Color.gray_300,
     height: 812,
-    width: 375,
   },
   icon: {
     height: "100%",
@@ -300,7 +291,6 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_base,
   },
   iconIonicIosArrowDown: {
-    width: 8,
     height: 5,
   },
   getStartedWith: {
@@ -415,7 +405,7 @@ const styles = StyleSheet.create({
   },
   statusBarBlack: {
     height: 44,
-    width: 375,
+    width: "100%",
   },
   component1981Child: {
     right: 24,
@@ -496,7 +486,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   number1: {
-    height: 31,
+    height: "100%",
   },
   view1: {
     right: 0,
@@ -588,7 +578,7 @@ const styles = StyleSheet.create({
   },
   component1981: {
     height: 850,
-    width: 375,
+    width: "100%",
   },
   component1971Child: {
     right: 0,

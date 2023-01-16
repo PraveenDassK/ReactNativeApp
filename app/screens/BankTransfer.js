@@ -3,7 +3,7 @@ import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 
-const BankTransfer = () => {
+const BankTransfer = ({navigation}) => {
   return (
     <View style={styles.bankTransfer}>
       <Pressable
@@ -11,13 +11,7 @@ const BankTransfer = () => {
         onPress={() => navigation.navigate("Account3")}
       >
         <Text style={styles.bankTransfer1}>Bank Transfer</Text>
-        <View style={styles.iconIonicIosArrowForwardWrapper}>
-          <Image
-            style={styles.iconIonicIosArrowForward}
-            resizeMode="cover"
-            source={require("../assets/icon-carbonytearrowforward.png")}
-          />
-        </View>
+
       </Pressable>
       <Text
         style={[styles.hello, styles.mt39_75, styles.mr281, styles.helloTypo1]}
@@ -293,7 +287,6 @@ const styles = StyleSheet.create({
   },
   bankTransfer: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_md,
     alignItems: "center",
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,

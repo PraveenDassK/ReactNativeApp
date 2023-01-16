@@ -4,7 +4,7 @@ import carbonApi from "../api/test_api_list"
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Account = () => {
+const Account = ({navigation}) => {
   return (
     <View style={styles.account}>
       <View style={styles.helloParent}>
@@ -38,7 +38,7 @@ const Account = () => {
           <View style={[styles.limitsParent, styles.parentPosition]}>
             <Pressable
               style={styles.limitsPosition}
-              onPress={() => navigation.navigate("SpendingLimit3")}
+              onPress={() => navigation.navigate("SpendingLimit")}
             >
               <Text style={[styles.limits1Typo, styles.limits1SpaceBlock]}>
                 Limits
@@ -46,13 +46,8 @@ const Account = () => {
             </Pressable>
             <Pressable
               style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
-              onPress={() => navigation.navigate("SpendingLimit3")}
+              onPress={() => navigation.navigate("Statments")}
             >
-              <Image
-                style={styles.icon}
-                resizeMode="cover"
-                source={("../assets/icon-carbonyteuparrow.png")}
-              />
             </Pressable>
           </View>
           <Pressable
@@ -68,11 +63,6 @@ const Account = () => {
             >
               Account verification letter
             </Text>
-            <Image
-              style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/icon-carbonyteuparrow.png")}
-            />
           </Pressable>
         </View>
         <Image
@@ -91,6 +81,9 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "700",
     position: "absolute",
+    
+   
+    
   },
   groupChildPosition: {
     height: 155,
@@ -115,7 +108,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   limits1SpaceBlock: {
-    marginTop: -7,
+    marginTop: -3,
     color: GlobalStyles.Color.gray_1400,
     lineHeight: 14,
   },
@@ -160,6 +153,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     left: 6,
     position: "absolute",
+    
   },
   hello3: {
     marginTop: -104.25,
@@ -169,7 +163,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   groupChild: {
-    marginTop: -77.5,
+    marginTop: -70.5,
     right: 1,
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.white,
@@ -220,17 +214,16 @@ const styles = StyleSheet.create({
     right: 0,
   },
   helloParent: {
-    width: 327,
-    height: 371,
+    width: "100%",
+    height: "100%",
   },
   account: {
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_8xs,
-    paddingTop: GlobalStyles.Padding.padding_7xl,
-    paddingRight: GlobalStyles.Padding.padding_8xs,
-    alignItems: "center",
+    paddingTop: GlobalStyles.Padding.padding_6xl,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    paddingLeft:"10%",
+    paddingRight:"10%",
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

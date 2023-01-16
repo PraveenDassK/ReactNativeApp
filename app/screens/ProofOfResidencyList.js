@@ -5,11 +5,6 @@ import GlobalStyles from "../../GlobalStyles";
 const ProofOfResidencyList = () => {
   return (
     <View style={styles.proofOfResidencyListA1}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-whitearrow.png")}
-          />
       <View style={styles.groupParent}>
         <View style={styles.helloParent}>
           <Text style={styles.hello}>Proof of Residency</Text>
@@ -200,7 +195,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     left: 3,
-    width: 275,
+    width: "100%",
     height: 57,
     top: 0,
     position: "absolute",
@@ -313,7 +308,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   groupParent: {
-    width: 328,
+    width: "100%",
     height: 497,
   },
   proofOfResidencyListA1: {

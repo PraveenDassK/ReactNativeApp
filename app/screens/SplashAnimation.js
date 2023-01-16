@@ -39,11 +39,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     maxWidth: "100%",
     width:"100%",
+    top:"45%",
     alignItems: 'center',
   },
   helloFlexBox: {
     textAlign: "center",
     position: "absolute",
+    width:"100%"
   },
   maskGroup261: {
     right: 0,
@@ -52,18 +54,17 @@ const styles = StyleSheet.create({
     height: 132,
   },
   layer12Icon: {
-    marginTop: -165.5,
-    marginLeft: -63.5,
-    left: "50%",
-    width: 128,
-    height: 136,
-    top: "50%",
+    width: "50%",
+    height: "50%",
+    left:"25%",
+    top:"15%",
+    resizeMode:"contain",
     position: "absolute",
     
   },
   hello: {
     top: 0,
-    left: 100,
+    width: "100%",
     fontSize: GlobalStyles.FontSize.size_10xl,
     color: GlobalStyles.Color.indigo_100,
   },
@@ -75,14 +76,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   maskGroup259: {
-    marginTop: -140.5,
-    height: 337,
-    top: "50%",
+    height: "50%",
+    resizeMode:"contain",
+    top: "0%",
     width:"100%"
   },
   maskGroup261Parent: {
     width: "100%",
-    height: 605,
+    height: "100%",
   },
   logoAnimation3: {
     backgroundColor: GlobalStyles.Color.gray_300,

@@ -6,17 +6,13 @@ import GlobalStyles from "../../GlobalStyles";
 const PushNotification = ({navigation}) => {
   return (
     <View style={styles.pushNotification}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-whitearrow.png")}
-          />
+
       <View style={styles.groupParent}>
         <View style={[styles.helloParent, styles.parentPosition]}>
           <Text style={styles.hello}>Notify Me</Text>
           <Pressable
             style={[styles.groupContainer, styles.groupPosition1]}
-            onPress={() => navigation.navigate("FindFriends")}
+            onPress={() => navigation.navigate("Settings")}
           >
             <View style={[styles.rectangleParent, styles.parentPosition]}>
               <View style={[styles.groupChild, styles.groupPosition]} />
@@ -36,7 +32,9 @@ const PushNotification = ({navigation}) => {
               finances, carbon spending and much more...
             </Text>
           </Text>
-          <View style={[styles.groupView, styles.groupPosition1]}>
+          <Pressable style={[styles.groupView, styles.groupPosition1]}
+            onPress={() => navigation.navigate("Settings")}
+          >
             <View style={[styles.rectangleParent, styles.parentPosition]}>
               <View style={[styles.groupItem, styles.groupPosition]} />
               <View style={[styles.maskGroup236, styles.parentPosition]} />
@@ -44,7 +42,7 @@ const PushNotification = ({navigation}) => {
             <Text style={[styles.hello3, styles.helloTypo, styles.helloTypo1]}>
               Not Now
             </Text>
-          </View>
+          </Pressable>
         </View>
         <Image
           style={[styles.groupInner, styles.hello2Position]}
@@ -87,17 +85,18 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_lg,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
+    textAlign: "center",
+    width:"100%",
   },
   hello2Position: {
     top: "50%",
-    position: "absolute",
   },
   hello: {
     left: 2,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
-    textAlign: "left",
+    textAlign: "center",
     top: 0,
     position: "absolute",
   },
@@ -113,9 +112,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello1: {
-    top: "40%",
-    left: "15.64%",
-    color: GlobalStyles.Color.black,
+    top: "30%",
+    textAlign: "center",
+    width:"100%",
+    color: GlobalStyles.Color.white,
   },
   groupContainer: {
     bottom: 76,
@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "38.33%",
-    left: "38.96%",
+    textAlign: "center",
+    width:"100%",
     color: GlobalStyles.Color.white,
   },
   groupView: {
@@ -147,14 +148,14 @@ const styles = StyleSheet.create({
   },
   groupInner: {
     marginTop: -221.89,
-    left: 28,
-    maxWidth: "100%",
+    height:"50%",
+    width:"50%",
     overflow: "hidden",
-    height: 350,
     right: 0,
+    left:"25%",
   },
   groupParent: {
-    width: 345,
+    width: "100%",
     height: 652,
   },
   arrowPosition: {
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     paddingRight: 5,
     width: "100%",
   },

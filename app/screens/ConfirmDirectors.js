@@ -1,16 +1,13 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable,ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const ConfirmDirectors = () => {
+const ConfirmDirectors = ({navigation}) => {
 
 
   return (
-    <Pressable
-      style={styles.confirmDirectors}
-      onPress={() => navigation.navigate("LogoAnimation1")}
-    >
+    <ScrollView>
       <View style={styles.groupParent}>
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloFlexBox, styles.helloColor]}>
@@ -208,11 +205,15 @@ const ConfirmDirectors = () => {
             <View style={styles.groupInner} />
             <View style={styles.maskGroup236} />
           </View>
+          <Pressable
+          onPress={() => navigation.navigate("AccountMain")}
+        >
           <Text style={[styles.hello18, styles.helloFlexBox]}>Confirm{"\n"}</Text>
+        </Pressable>
         </View>
         <Pressable
           style={[styles.rectangleGroup, styles.groupPosition]}
-          onPress={() => navigation.navigate("DirectorsOrPartners2")}
+          onPress={() => navigation.navigate("AccountMain")}
         >
           <View style={styles.groupInner} />
           <Image
@@ -222,7 +223,7 @@ const ConfirmDirectors = () => {
           />
         </Pressable>
       </View>
-    </Pressable>
+      </ScrollView>
   );
 };
 
@@ -424,7 +425,7 @@ const styles = StyleSheet.create({
   },
   hello18: {
     top: "40%",
-    left: "36.22%",
+    left: "20%",
     fontSize: GlobalStyles.FontSize.size_lg,
     lineHeight: 10,
     textTransform: "uppercase",
@@ -455,7 +456,6 @@ const styles = StyleSheet.create({
   confirmDirectors: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

@@ -4,7 +4,6 @@ import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Settings = ({navigation}) => {
-  
 
   return (
     <View style={styles.settings}>
@@ -86,7 +85,7 @@ const Settings = ({navigation}) => {
         <Text style={[styles.text1, styles.textTypo]}>12-34-56</Text>
         <View style={[styles.historyParent, styles.iconContentLayout]}>
         <Pressable
-          onPress={() => navigation.navigate("Account")}
+          onPress={() => navigation.navigate("AccountMain")}
         >
           <Text style={[styles.history, styles.historyTypo]}>Account</Text>
           </Pressable>

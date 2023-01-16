@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   wrapper: {
-    marginTop: -6.5,
+    marginTop: -8,
     left: 23,
   },
   rectangleParent: {

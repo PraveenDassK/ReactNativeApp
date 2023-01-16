@@ -18,6 +18,7 @@ const validationSchema = Yup.object().shape({
 
 
 const Name = ({navigation}) => {
+const Name = ({navigation}) => {
   //const navigation = useNavigation();
   const { user, setUser } = useContext(AuthContext)
 
@@ -109,8 +110,9 @@ const Name = ({navigation}) => {
 const styles = StyleSheet.create({
   helloTypo: {
     //fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
+    textAlign: "center",
     position: "absolute",
+    width:"100%"
   },
   nameTypo: {
     fontSize: GlobalStyles.FontSize.size_base,
@@ -143,12 +145,12 @@ const styles = StyleSheet.create({
   hello: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
-    textAlign: "left",
+    textAlign: "center",
     color: GlobalStyles.Color.indigo_100,
     left: 0,
     top: 0,
     position: "absolute",
+    width:"100%"
   },
   hello1: {
     marginTop: 14.74,
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     left: 2,
-    width: 263,
+    width: "100%",
     height: 57,
     top: 0,
     position: "absolute",
@@ -202,10 +204,9 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "40%",
-    left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   groupContainer: {
     height: 60,
