@@ -29,7 +29,7 @@ const FindFriends = ({navigation}) => {
           </Text>
           <Pressable
             style={[styles.groupContainer, styles.groupPosition1]}
-            onPress={() => navigation.navigate("AccountMain")}
+            onPress={() => navigation.navigate("Account3")}
           >
             <View style={[styles.helloParent, styles.helloParentPosition]}>
               <View style={[styles.groupChild, styles.groupPosition]} />
@@ -39,7 +39,7 @@ const FindFriends = ({navigation}) => {
           </Pressable>
           <Pressable
             style={[styles.groupPressable, styles.groupPosition1]}
-            onPress={() => navigation.navigate("AccountMain ")}
+            onPress={() => navigation.navigate("Account3")}
           >
             <View style={[styles.helloParent, styles.helloParentPosition]}>
               <View style={[styles.groupItem, styles.groupPosition]} />

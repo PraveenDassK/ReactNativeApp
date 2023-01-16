@@ -4,7 +4,7 @@ import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const AddBeneficiarySuccess = ({navigation}) => {
-  
+  const user="Ortiz Tyrese";
 
   return (
     <Screen>
@@ -18,7 +18,7 @@ const AddBeneficiarySuccess = ({navigation}) => {
         </View>
         <Text style={[styles.hello, styles.helloTypo]}>
           <Text style={styles.yourTransferTo}>
-            Your Transfer to Ortiz Tyrese
+            Your Transfer to {user}
           </Text>
           <Text style={styles.yourTransferTo}>{"\n"}is on its way!</Text>
         </Text>

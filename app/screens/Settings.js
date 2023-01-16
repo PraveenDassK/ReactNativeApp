@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
-import api from "../api/login"
+import api from "../api/api_list"
 import AuthContext from "../auth/context";
 
 const Settings = ({navigation}) => {
@@ -10,6 +10,7 @@ const Settings = ({navigation}) => {
   const [sortcode, setSortCode] = useState(null)
   const [fullname, setName] = useState(null)
   const [plan, setPlan] = useState(null)
+  const [balance, setBal] = useState(null)
 
   const authContext = useContext(AuthContext)
 
@@ -18,15 +19,11 @@ const Settings = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await api.getListings();
-    console.log(response.data.details)
-    setAccNum(response.data.details.accountDetails[0].accountNo)
-    setSortCode("22-33-44-55")
-    setName(response.data.details.customerDetails[0].firstName)
-    setPlan(response.data.details.accountDetails[0].accountType + " ACCOUNT")
+    const response = await api.GetAccountByCustomer();
+    const data = response.data.details.content[0]
+    console.log(data)
+    setSortCode("22-33-44")
   }
-
-  console.log("Num:" + account)
 
   return (
     <View style={styles.settings}>
@@ -215,14 +212,14 @@ const styles = StyleSheet.create({
   },
   textSpaceBlock: {
     marginTop: -6,
-    textAlign: "right",
+    textAlign: "center",
   },
   iconContentLayout: {
     height: 16,
     position: "absolute",
   },
   iconContentPosition: {
-    marginLeft: 98.35,
+    marginLeft: 60,
     height: 16,
     top: "50%",
     width: 14,
