@@ -165,61 +165,101 @@
     const GetAddressesByPostcode_endpoint = '/authverifymodule/GetAddressesByPostcode';
     const GetAddressesByPostcode = () => client.get(GetAddressesByPostcode_endpoint); 
 
+email
+phoneNumber
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendLoginOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SendLoginOTP = (  ) => client.post('/authverifymodule/SendLoginOTP', {  });
+    const SendLoginOTP = ( companyName ) => client.post('/authverifymodule/SendLoginOTP', { companyName });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     email
+     phoneNumber
+*/
+email
+emailOTP
+phoneNumber
+phoneOTP
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyLoginOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const VerifyLoginOTP = (  ) => client.post('/authverifymodule/VerifyLoginOTP', {  });
+    const VerifyLoginOTP = ( companyName ) => client.post('/authverifymodule/VerifyLoginOTP', { companyName });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     email
+     emailOTP
+     phoneNumber
+     phoneOTP
+*/
+customerID
+tokenId
+DeviceId
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SaveTokenDetails -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SaveTokenDetails = (  ) => client.post('/authverifymodule/SaveTokenDetails', {  });
+    const SaveTokenDetails = ( companyName ) => client.post('/authverifymodule/SaveTokenDetails', { companyName });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     customerID
+     tokenId
+     DeviceId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendNotification -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SendNotification = (  ) => client.post('/authverifymodule/SendNotification', {  });
+    const SendNotification = ( companyName ) => client.post('/authverifymodule/SendNotification', { companyName });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /KYCCheck -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const KYCCheck = (  ) => client.post('/authverifymodule/KYCCheck', {  });
+    const KYCCheck = ( companyName ) => client.post('/authverifymodule/KYCCheck', { companyName });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /KYBCheck -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const KYBCheck = (  ) => client.post('/authverifymodule/KYBCheck', {  });
+    const KYBCheck = ( companyName ) => client.post('/authverifymodule/KYBCheck', { companyName });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     CompanyName
+     CompanyID
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /FaceComparisonAsync -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const FaceComparisonAsync = (  ) => client.post('/authverifymodule/FaceComparisonAsync', {  });
+    const FaceComparisonAsync = ( companyName ) => client.post('/authverifymodule/FaceComparisonAsync', { companyName });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CropDocument -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CropDocument = (  ) => client.post('/authverifymodule/CropDocument', {  });
+    const CropDocument = ( companyName ) => client.post('/authverifymodule/CropDocument', { companyName });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /ClassifyAndVerify -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const ClassifyAndVerify = (  ) => client.post('/authverifymodule/ClassifyAndVerify', {  });
+    const ClassifyAndVerify = ( companyName ) => client.post('/authverifymodule/ClassifyAndVerify', { companyName });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyDocument -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const VerifyDocument = (  ) => client.post('/authverifymodule/VerifyDocument', {  });
+    const VerifyDocument = ( companyName ) => client.post('/authverifymodule/VerifyDocument', { companyName });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SetToggles -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SetToggles = (  ) => client.post('/cardmodule/SetToggles', {  });
+    const SetToggles = ( companyName ) => client.post('/cardmodule/SetToggles', { companyName });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     accountId
+     onlineTransactions
+     swipePayments
+     atmWithdrawals
+     contactlessPayments
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetToggles -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -241,7 +281,7 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/CreateTokenizedUser -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Earthly_CreateTokenizedUser = (  ) => client.post('/ecomodule/Earthly/CreateTokenizedUser', {  });
+    const Earthly_CreateTokenizedUser = ( companyName ) => client.post('/ecomodule/Earthly/CreateTokenizedUser', { companyName });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/GetCompanyImpacts -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -267,13 +307,19 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/Checkout -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Earthly_Checkout = (  ) => client.post('/ecomodule/Earthly/Checkout', {  });
+    const Earthly_Checkout = ( userId, projectId ) => client.post('/ecomodule/Earthly/Checkout', { userId, projectId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GenerateReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const GenerateReferralCode = (  ) => client.post('/referralmodule/GenerateReferralCode', {  });
+    const GenerateReferralCode = ( userId, projectId ) => client.post('/referralmodule/GenerateReferralCode', { userId, projectId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     userId
+     typeOfUser
+     nameOfReferred
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -283,18 +329,41 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UseReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const UseReferralCode = (  ) => client.post('/referralmodule/UseReferralCode', {  });
+    const UseReferralCode = ( userId, projectId ) => client.post('/referralmodule/UseReferralCode', { userId, projectId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     referralCode
+     status
+*/
+email
+phoneNumber
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendRegistrationOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SendRegistrationOTP = (  ) => client.post('/regmodule/SendRegistrationOTP', {  });
+    const SendRegistrationOTP = ( userId, projectId ) => client.post('/regmodule/SendRegistrationOTP', { userId, projectId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     email
+     phoneNumber
+*/
+email
+emailOTP
+phoneNumber
+phoneOTP
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyRegistrationOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const VerifyRegistrationOTP = (  ) => client.post('/regmodule/VerifyRegistrationOTP', {  });
+    const VerifyRegistrationOTP = ( userId, projectId ) => client.post('/regmodule/VerifyRegistrationOTP', { userId, projectId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     email
+     emailOTP
+     phoneNumber
+     phoneOTP
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCustomerDetais -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -304,12 +373,12 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SaveCustomerAccountDetails -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SaveCustomerAccountDetails = (  ) => client.post('/regmodule/SaveCustomerAccountDetails', {  });
+    const SaveCustomerAccountDetails = ( userId, projectId ) => client.post('/regmodule/SaveCustomerAccountDetails', { userId, projectId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SaveCompanyDetails -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SaveCompanyDetails = (  ) => client.post('/regmodule/SaveCompanyDetails', {  });
+    const SaveCompanyDetails = ( userId, projectId ) => client.post('/regmodule/SaveCompanyDetails', { userId, projectId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetTransactionList/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -320,8 +389,13 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DisputeTransaction -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const DisputeTransaction = (  ) => client.post('/transactionmodule/DisputeTransaction', {  });
+    const DisputeTransaction = ( accountId ) => client.post('/transactionmodule/DisputeTransaction', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     accountId
+     transactionId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendReminder -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -337,8 +411,14 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SetBudget -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SetBudget = (  ) => client.post('/transactionmodule/SetBudget', {  });
+    const SetBudget = ( accountId ) => client.post('/transactionmodule/SetBudget', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     accountId
+     periodType
+     amount
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetBudget -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -372,28 +452,43 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreatePrivateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreatePrivateCustomer = (  ) => client.post('/walletmodule/Enfuce/CreatePrivateCustomer', {  });
+    const Enfuce_CreatePrivateCustomer = ( accountId ) => client.post('/walletmodule/Enfuce/CreatePrivateCustomer', { accountId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCorporateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreateCorporateCustomer = (  ) => client.post('/walletmodule/Enfuce/CreateCorporateCustomer', {  });
+    const Enfuce_CreateCorporateCustomer = ( accountId ) => client.post('/walletmodule/Enfuce/CreateCorporateCustomer', { accountId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdatePrivateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdatePrivateCustomer = (  ) => client.patch('/walletmodule/Enfuce/UpdatePrivateCustomer', {  });
+    const Enfuce_UpdatePrivateCustomer = ( accountId ) => client.patch('/walletmodule/Enfuce/UpdatePrivateCustomer', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     id
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCorporateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdateCorporateCustomer = (  ) => client.patch('/walletmodule/Enfuce/UpdateCorporateCustomer', {  });
+    const Enfuce_UpdateCorporateCustomer = ( accountId ) => client.patch('/walletmodule/Enfuce/UpdateCorporateCustomer', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     id
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdateCustomer = (  ) => client.post('/walletmodule/Enfuce/UpdateCustomer', {  });
+    const Enfuce_UpdateCustomer = ( accountId ) => client.post('/walletmodule/Enfuce/UpdateCustomer', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     id
+     propertyToUpdate
+     role
+     dummy
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyId -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -409,32 +504,44 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCreditAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreateCreditAccount = (  ) => client.post('/walletmodule/Enfuce/CreateCreditAccount', {  });
+    const Enfuce_CreateCreditAccount = ( accountId ) => client.post('/walletmodule/Enfuce/CreateCreditAccount', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     customerId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateDebitAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreateDebitAccount = (  ) => client.post('/walletmodule/Enfuce/CreateDebitAccount', {  });
+    const Enfuce_CreateDebitAccount = ( accountId ) => client.post('/walletmodule/Enfuce/CreateDebitAccount', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     customerId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreatePrepaidAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreatePrepaidAccount = (  ) => client.post('/walletmodule/Enfuce/CreatePrepaidAccount', {  });
+    const Enfuce_CreatePrepaidAccount = ( accountId ) => client.post('/walletmodule/Enfuce/CreatePrepaidAccount', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     customerId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/ViewPIN -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_ViewPIN = (  ) => client.post('/walletmodule/Enfuce/ViewPIN', {  });
+    const Enfuce_ViewPIN = ( accountId ) => client.post('/walletmodule/Enfuce/ViewPIN', { accountId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetTZPKforSetPIN -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_GetTZPKforSetPIN = (  ) => client.post('/walletmodule/Enfuce/GetTZPKforSetPIN', {  });
+    const Enfuce_GetTZPKforSetPIN = ( accountId ) => client.post('/walletmodule/Enfuce/GetTZPKforSetPIN', { accountId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/SetPIN -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_SetPIN = (  ) => client.post('/walletmodule/Enfuce/SetPIN', {  });
+    const Enfuce_SetPIN = ( accountId ) => client.post('/walletmodule/Enfuce/SetPIN', { accountId });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetInvoiceById -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -451,8 +558,14 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCard -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreateCard = (  ) => client.post('/walletmodule/Enfuce/CreateCard', {  });
+    const Enfuce_CreateCard = ( accountId ) => client.post('/walletmodule/Enfuce/CreateCard', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     customerid
+     accountid
+     cardRole
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCard/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -473,8 +586,16 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/FXExchangeRates -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_FXExchangeRates = (  ) => client.post('/walletmodule/Enfuce/FXExchangeRates', {  });
+    const Enfuce_FXExchangeRates = ( id ) => client.post('/walletmodule/Enfuce/FXExchangeRates', { id });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     paymentScheme
+     fromAmount
+     fromCurrency
+     issuerMarkupPercentage
+     toCurrency
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyCustomerID -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -490,18 +611,68 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateDebitAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdateDebitAccount = (  ) => client.patch('/walletmodule/Enfuce/UpdateDebitAccount', {  });
+    const Enfuce_UpdateDebitAccount = ( accountid ) => client.patch('/walletmodule/Enfuce/UpdateDebitAccount', { accountid });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     id
+     address.address1
+     address.address2
+     address.address3
+     address.address4
+     address.city
+     address.country
+     address.region
+     address.zipCode
+     closureReason
+     customerId
+     name
+     number
+     paymentReference.number
+     paymentReference.type
+     reason
+     segment
+     status
+     usageLimits
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdatePrepaidAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdatePrepaidAccount = (  ) => client.patch('/walletmodule/Enfuce/UpdatePrepaidAccount', {  });
+    const Enfuce_UpdatePrepaidAccount = ( accountid ) => client.patch('/walletmodule/Enfuce/UpdatePrepaidAccount', { accountid });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     id
+     address.address1
+     address.address2
+     address.address3
+     address.address4
+     address.city
+     address.country
+     address.region
+     address.zipCode
+     closureReason
+     customerId
+     name
+     number
+     paymentReference.number
+     paymentReference.type
+     reason
+     segment
+     status
+     usageLimits
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdateAccount = (  ) => client.post('/walletmodule/Enfuce/UpdateAccount', {  });
+    const Enfuce_UpdateAccount = ( accountid ) => client.post('/walletmodule/Enfuce/UpdateAccount', { accountid });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     id
+     propertyToUpdate
+     dummy
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCustomer/{cid} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -511,13 +682,19 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateNewCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateNewCustomer = (  ) => client.post('/walletmodule/CreateNewCustomer', {  });
+    const CreateNewCustomer = ( cid ) => client.post('/walletmodule/CreateNewCustomer', { cid });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UploadDocument -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const UploadDocument = (  ) => client.post('/walletmodule/UploadDocument', {  });
+    const UploadDocument = ( cid ) => client.post('/walletmodule/UploadDocument', { cid });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     fileName
+     content
+     group
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateDDMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -558,7 +735,7 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DDMandateWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const DDMandateWebhook = (  ) => client.post('/walletmodule/DDMandateWebhook', {  });
+    const DDMandateWebhook = ( id ) => client.post('/walletmodule/DDMandateWebhook', { id });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCollectionActivities -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -595,18 +772,91 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /PayInWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const PayInWebhook = (  ) => client.post('/walletmodule/PayInWebhook', {  });
+    const PayInWebhook = ( collectionScheduleId ) => client.post('/walletmodule/PayInWebhook', { collectionScheduleId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     Type
+     Payee.Name
+     Payee.Address.addressLine1
+     Payee.Address.addressLine2
+     Payee.Address.country
+     Payee.Address.postCode
+     Payee.Address.postTown
+     Payee.Identifier.Type
+     Payee.Identifier.SortCode
+     Payee.Identifier.AccountNumber
+     Payer.Name
+     Payer.Address.addressLine1
+     Payer.Address.addressLine2
+     Payer.Address.country
+     Payer.Address.postCode
+     Payer.Address.postTown
+     Payer.Identifier.Type
+     Payer.Identifier.SortCode
+     Payer.Identifier.AccountNumber
+     Amount
+     EventId
+     Currency
+     DateTime
+     AccountId
+     EventName
+     EventTime
+     PaymentAppliedTime
+     PayerName
+     PaymentId
+     SchemeInfo.Id
+     ReturnReason
+     TransactionId
+     PaymentReference
+     AccountExternalRef
+     OriginatedOverseas
+     OriginatingPayment.Institution.Id
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UpcomingDDCollectionCreditWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const UpcomingDDCollectionCreditWebhook = (  ) => client.post('/walletmodule/UpcomingDDCollectionCreditWebhook', {  });
+    const UpcomingDDCollectionCreditWebhook = ( collectionScheduleId ) => client.post('/walletmodule/UpcomingDDCollectionCreditWebhook', { collectionScheduleId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     EventId
+     Currency
+     AccountId
+     EventName
+     EventTime
+     SchemeInfo.Id
+     SchemeInfo.Name
+     CollectionDate
+     ServiceUserNumber
+     AccountExternalRef
+     TotalCollectionAmount
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DDCollectionStatusWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const DDCollectionStatusWebhook = (  ) => client.post('/walletmodule/DDCollectionStatusWebhook', {  });
+    const DDCollectionStatusWebhook = ( collectionScheduleId ) => client.post('/walletmodule/DDCollectionStatusWebhook', { collectionScheduleId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     accountBid
+     sun
+     mandateId
+     currency
+     amount
+     returnReason
+     representable
+     CollectionId
+     collectionStatus
+     collectionDate
+     mandateReference
+     payer.name
+     payer.identifier.type
+     payer.identifier.accountNumber
+     payer.identifier.sortCode
+     returnReasonCode
+     ddDirection
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SuspendMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -629,13 +879,39 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateCustomerPCMIndividual -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateCustomerPCMIndividual = (  ) => client.post('/walletmodule/CreateCustomerPCMIndividual', {  });
+    const CreateCustomerPCMIndividual = ( id ) => client.post('/walletmodule/CreateCustomerPCMIndividual', { id });
 
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateCustomerPCMBusiness -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateCustomerPCMBusiness = (  ) => client.post('/walletmodule/CreateCustomerPCMBusiness', {  });
+    const CreateCustomerPCMBusiness = ( id ) => client.post('/walletmodule/CreateCustomerPCMBusiness', { id });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     registeredAddress.addressLine1
+     registeredAddress.addressLine2
+     registeredAddress.postTown
+     registeredAddress.postCode
+     registeredAddress.country
+     tradingAddress.addressLine1
+     tradingAddress.addressLine2
+     tradingAddress.postTown
+     tradingAddress.postCode
+     tradingAddress.country
+     associates
+     documentInfo
+     customerTrust.trustNature
+     taxProfile.taxIdentifier
+     externalReference
+     name
+     companyRegNumber
+     industryCode
+     tcsVersion
+     type
+     expectedMonthlySpend
+     legalEntity
+     provisionalCustomerId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateAccounts/{CustomerId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -650,8 +926,95 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /FutureDated -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const FutureDated = (  ) => client.post('/walletmodule/FutureDated', {  });
+    const FutureDated = ( customerId ) => client.post('/walletmodule/FutureDated', { customerId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     sourceAccountId
+     destination.type
+     destination.id
+     destination.iban
+     destination.accountNumber
+     destination.sortCode
+     destination.name
+     destination.address.addressLine1
+     destination.address.addressLine2
+     destination.address.postTown
+     destination.address.postCode
+     destination.address.country
+     destination.birthdate
+     destination.emailAddress
+     destination.phoneNumber
+     destination.bic
+     destination.countrySpecificDetails.bankName
+     destination.countrySpecificDetails.bankAddress
+     destination.countrySpecificDetails.bankCity
+     destination.countrySpecificDetails.bankBranchName
+     destination.countrySpecificDetails.bankBranchCode
+     destination.countrySpecificDetails.bankCode
+     destination.countrySpecificDetails.chineseId
+     destination.countrySpecificDetails.province
+     destination.countrySpecificDetails.business
+     currency
+     amount
+     reference
+     externalReference
+     endToEndReference
+     regulatoryReporting.type
+     regulatoryReporting.regulatoryAuthority.authorityName
+     regulatoryReporting.regulatoryAuthority.authorityCountry
+     regulatoryReporting.structuredRegulatoryReporting.code
+     regulatoryReporting.structuredRegulatoryReporting.amount
+     regulatoryReporting.structuredRegulatoryReporting.currencyCode
+     regulatoryReporting.structuredRegulatoryReporting.information
+     paymentDate
+     overseasPaymentDetail.ultimatePayer.name
+     overseasPaymentDetail.ultimatePayer.address.addressLine1
+     overseasPaymentDetail.ultimatePayer.address.addressLine2
+     overseasPaymentDetail.ultimatePayer.address.postTown
+     overseasPaymentDetail.ultimatePayer.address.postCode
+     overseasPaymentDetail.ultimatePayer.address.country
+     overseasPaymentDetail.ultimatePayer.birthDetails.dateOfBirth
+     overseasPaymentDetail.ultimatePayer.birthDetails.cityOfBirth
+     overseasPaymentDetail.ultimatePayer.birthDetails.countryOfBirth
+     overseasPaymentDetail.ultimatePayer.officialIdentification.drivingLicenceNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.customerNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.socialSecurityNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.passportNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.idCardNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.otherIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.bankPartyIdentification
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.centralBankIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.clearingIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.certificateOfIncorporationNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.countryIdCode
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.customerNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.dataUniversalNumberingSystem
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.employerIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.gs1glnIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.sirenCode
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.siretCode
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.taxIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.bicIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.ibeiIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.beiIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.eanglnIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.chipsUniversalIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.genericIdentification3
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.genericIdentificationIssr
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.iban
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.bban
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.upic
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.otherAccountNumber
+     overseasPaymentDetail.ultimatePayer.bic
+     overseasPaymentDetail.originalPaymentDetails.amount
+     overseasPaymentDetail.originalPaymentDetails.exchangeRate
+     overseasPaymentDetail.originalPaymentDetails.currency
+     overseasPaymentDetail.chargeDetails.bearer
+     overseasPaymentDetail.chargeDetails.amount
+     overseasPaymentDetail.chargeDetails.currency
+     overseasPaymentDetail.additionalRemittanceInformation
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /PaymentApproval -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -661,13 +1024,104 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /BlockSpecificAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const BlockSpecificAccount = (  ) => client.post('/walletmodule/BlockSpecificAccount', {  });
+    const BlockSpecificAccount = ( customerId ) => client.post('/walletmodule/BlockSpecificAccount', { customerId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     AccountId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendMoneyProcedureImplementation -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SendMoneyProcedureImplementation = (  ) => client.post('/walletmodule/SendMoneyProcedureImplementation', {  });
+    const SendMoneyProcedureImplementation = ( customerId ) => client.post('/walletmodule/SendMoneyProcedureImplementation', { customerId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     sourceAccountId
+     destination.type
+     destination.id
+     destination.iban
+     destination.accountNumber
+     destination.sortCode
+     destination.name
+     destination.address.addressLine1
+     destination.address.addressLine2
+     destination.address.postTown
+     destination.address.postCode
+     destination.address.country
+     destination.birthdate
+     destination.emailAddress
+     destination.phoneNumber
+     destination.bic
+     destination.countrySpecificDetails.bankName
+     destination.countrySpecificDetails.bankAddress
+     destination.countrySpecificDetails.bankCity
+     destination.countrySpecificDetails.bankBranchName
+     destination.countrySpecificDetails.bankBranchCode
+     destination.countrySpecificDetails.bankCode
+     destination.countrySpecificDetails.chineseId
+     destination.countrySpecificDetails.province
+     destination.countrySpecificDetails.business
+     currency
+     amount
+     reference
+     externalReference
+     endToEndReference
+     regulatoryReporting.type
+     regulatoryReporting.regulatoryAuthority.authorityName
+     regulatoryReporting.regulatoryAuthority.authorityCountry
+     regulatoryReporting.structuredRegulatoryReporting.code
+     regulatoryReporting.structuredRegulatoryReporting.amount
+     regulatoryReporting.structuredRegulatoryReporting.currencyCode
+     regulatoryReporting.structuredRegulatoryReporting.information
+     paymentDate
+     overseasPaymentDetail.ultimatePayer.name
+     overseasPaymentDetail.ultimatePayer.address.addressLine1
+     overseasPaymentDetail.ultimatePayer.address.addressLine2
+     overseasPaymentDetail.ultimatePayer.address.postTown
+     overseasPaymentDetail.ultimatePayer.address.postCode
+     overseasPaymentDetail.ultimatePayer.address.country
+     overseasPaymentDetail.ultimatePayer.birthDetails.dateOfBirth
+     overseasPaymentDetail.ultimatePayer.birthDetails.cityOfBirth
+     overseasPaymentDetail.ultimatePayer.birthDetails.countryOfBirth
+     overseasPaymentDetail.ultimatePayer.officialIdentification.drivingLicenceNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.customerNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.socialSecurityNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.passportNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.idCardNumber
+     overseasPaymentDetail.ultimatePayer.officialIdentification.otherIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.bankPartyIdentification
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.centralBankIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.clearingIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.certificateOfIncorporationNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.countryIdCode
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.customerNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.dataUniversalNumberingSystem
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.employerIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.gs1glnIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.sirenCode
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.siretCode
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.taxIdNumber
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.bicIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.ibeiIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.beiIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.eanglnIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.chipsUniversalIdentifier
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.genericIdentification3
+     overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.genericIdentificationIssr
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.iban
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.bban
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.upic
+     overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.otherAccountNumber
+     overseasPaymentDetail.ultimatePayer.bic
+     overseasPaymentDetail.originalPaymentDetails.amount
+     overseasPaymentDetail.originalPaymentDetails.exchangeRate
+     overseasPaymentDetail.originalPaymentDetails.currency
+     overseasPaymentDetail.chargeDetails.bearer
+     overseasPaymentDetail.chargeDetails.amount
+     overseasPaymentDetail.chargeDetails.currency
+     overseasPaymentDetail.additionalRemittanceInformation
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -709,8 +1163,39 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /InboundPayment -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const InboundPayment = (  ) => client.post('/walletmodule/InboundPayment', {  });
+    const InboundPayment = ( id ) => client.post('/walletmodule/InboundPayment', { id });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     accountId
+     payerDetail.identifier.type
+     payerDetail.identifier.accountNumber
+     payerDetail.identifier.sortCode
+     payerDetail.identifier.iban
+     payerDetail.identifier.bic
+     payerDetail.address.addressLine1
+     payerDetail.address.addressLine2
+     payerDetail.address.country
+     payerDetail.address.postCode
+     payerDetail.address.postTown
+     payerDetail.name
+     payeeDetail.identifier.type
+     payeeDetail.identifier.accountNumber
+     payeeDetail.identifier.sortCode
+     payeeDetail.identifier.iban
+     payeeDetail.identifier.bic
+     payeeDetail.address.addressLine1
+     payeeDetail.address.addressLine2
+     payeeDetail.address.country
+     payeeDetail.address.postCode
+     payeeDetail.address.postTown
+     payeeDetail.name
+     description
+     amount
+     type
+     transactionDate
+     numberOfTransactions
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetMandatesAccount/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -720,18 +1205,119 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelMandateOutbound -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CancelMandateOutbound = (  ) => client.post('/walletmodule/CancelMandateOutbound', {  });
+    const CancelMandateOutbound = ( accountId ) => client.post('/walletmodule/CancelMandateOutbound', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     accountId
+     cancellationCode
+     mandateId
+     merchantNumber
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /RejectCollection -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const RejectCollection = (  ) => client.post('/walletmodule/RejectCollection', {  });
+    const RejectCollection = ( accountId ) => client.post('/walletmodule/RejectCollection', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     claimBId
+     rejectCode
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /BatchPayment -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const BatchPayment = (  ) => client.post('/walletmodule/BatchPayment', {  });
+    const BatchPayment = ( accountId ) => client.post('/walletmodule/BatchPayment', { accountId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     externalReference
+     strictProcessing
+     payment.sourceAccountId
+     payment.destination.type
+     payment.destination.iban
+     payment.destination.id
+     payment.destination.accountNumber
+     payment.destination.sortCode
+     payment.destination.name
+     payment.destination.address.addressLine1
+     payment.destination.address.addressLine2
+     payment.destination.address.country
+     payment.destination.address.postCode
+     payment.destination.address.postTown
+     payment.destination.birthdate
+     payment.destination.emailAddress
+     payment.destination.phoneNumber
+     payment.destination.bic
+     payment.destination.CountrySpecificDetails.bankName
+     payment.destination.CountrySpecificDetails.bankAddress
+     payment.destination.CountrySpecificDetails.bankCity
+     payment.destination.CountrySpecificDetails.bankBranchName
+     payment.destination.CountrySpecificDetails.bankBranchCode
+     payment.destination.CountrySpecificDetails.bankCode
+     payment.destination.CountrySpecificDetails.chineseId
+     payment.destination.CountrySpecificDetails.province
+     payment.destination.CountrySpecificDetails.business
+     payment.currency
+     payment.amount
+     payment.reference
+     payment.externalReference
+     payment.endToEndReference
+     payment.regulatoryReporting.type
+     payment.regulatoryReporting.regulatoryAuthority.authorityName
+     payment.regulatoryReporting.regulatoryAuthority.authorityCountry
+     payment.regulatoryReporting.structuredRegulatoryReporting.code
+     payment.regulatoryReporting.structuredRegulatoryReporting.amount
+     payment.regulatoryReporting.structuredRegulatoryReporting.information
+     payment.paymentDate
+     payment.overseasPaymentDetail.ultimatePayer.name
+     payment.overseasPaymentDetail.ultimatePayer.address.addressLine1
+     payment.overseasPaymentDetail.ultimatePayer.address.addressLine2
+     payment.overseasPaymentDetail.ultimatePayer.address.country
+     payment.overseasPaymentDetail.ultimatePayer.address.postCode
+     payment.overseasPaymentDetail.ultimatePayer.address.postTown
+     payment.overseasPaymentDetail.ultimatePayer.birthDetails.dateOfBirth
+     payment.overseasPaymentDetail.ultimatePayer.birthDetails.cityOfBirth
+     payment.overseasPaymentDetail.ultimatePayer.birthDetails.countryOfBirth
+     payment.overseasPaymentDetail.ultimatePayer.officialIdentification.drivingLicenceNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdentification.customerNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdentification.socialSecurityNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdentification.passportNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdentification.idCardNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdentification.otherIdNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.bankPartyIdentification
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.centralBankIdNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.clearingIdNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.certificateOfIncorporationNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.countryIdCode
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.customerNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.dataUniversalNumberingSystem
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.employerIdNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.gs1glnIdentifier
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.otherIdNumbsirenCodeer
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.siretCode
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.taxIdNumber
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.bicIdentifier
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.ibeiIdentifier
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.beiIdentifier
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.eanglnIdentifier
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.chipsUniversalIdentifier
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.genericIdentification3
+     payment.overseasPaymentDetail.ultimatePayer.officialIdDetailOrgs.genericIdentificationIssr
+     payment.overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.iban
+     payment.overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.bban
+     payment.overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.upic
+     payment.overseasPaymentDetail.ultimatePayer.overseasAccountIdentifier.otherAccountNumber
+     payment.overseasPaymentDetail.ultimatePayer.bic
+     payment.overseasPaymentDetail.originalPaymentDetails.amount
+     payment.overseasPaymentDetail.originalPaymentDetails.exchangeRate
+     payment.overseasPaymentDetail.originalPaymentDetails.currency
+     payment.overseasPaymentDetail.chargeDetails.bearer
+     payment.overseasPaymentDetail.chargeDetails.amount
+     payment.overseasPaymentDetail.chargeDetails.currency
+     payment.overseasPaymentDetail.additionalRemittanceInformation
+     payment.fxQuoteId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /EditSpecificRule/{ruleId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -758,8 +1344,26 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateRule -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateRule = (  ) => client.post('/walletmodule/CreateRule', {  });
+    const CreateRule = ( ruleId ) => client.post('/walletmodule/CreateRule', { ruleId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     data.daysToRun
+     data.frequency
+     data.splits
+     data.conditionalSplits
+     data.conditionalSplitConfig.destinationId
+     data.conditionalSplitConfig.percent
+     data.conditionalSplitConfig.conditionAmount
+     data.conditionalSplitConfig.conditionDone
+     data.destinationId
+     data.balanceToLeave
+     data.triggerBalance
+     data.sourceId
+     type
+     name
+     accountId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DeleteRule/{rIds} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
@@ -827,18 +1431,34 @@
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/CreateAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Wallet_CreateAccount = (  ) => client.post('/walletmodule/Wallet/CreateAccount', {  });
+    const Wallet_CreateAccount = ( customerId ) => client.post('/walletmodule/Wallet/CreateAccount', { customerId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     customerId
+     phoneNumber
+     email
+     customerType
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/CreateNewBeneficiary -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Wallet_CreateNewBeneficiary = (  ) => client.post('/walletmodule/Wallet/CreateNewBeneficiary', {  });
+    const Wallet_CreateNewBeneficiary = ( customerId ) => client.post('/walletmodule/Wallet/CreateNewBeneficiary', { customerId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     cid
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/DeleteBeneficiaries -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Wallet_DeleteBeneficiaries = (  ) => client.delete('/walletmodule/Wallet/DeleteBeneficiaries', {  });
+    const Wallet_DeleteBeneficiaries = ( customerId ) => client.delete('/walletmodule/Wallet/DeleteBeneficiaries', { customerId });
 
+
+/* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
+     cid
+     bId
+*/
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/RetrieveBeneficiaries -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
