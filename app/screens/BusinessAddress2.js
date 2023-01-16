@@ -60,8 +60,9 @@ const BusinessAddress2 = ({ navigation }) => {
            keyboardType="default" 
            onBlur={() => setFieldTouched("postCode")}
            onChangeText={handleChange("postCode")}
+           placeholder={"Enter your postcode"}
           style={[styles.hello, styles.helloTypo]}>
-            Enter your postcode
+            
           </TextInput>
           <View style={{ position: "absolute", top:70}}>
           <ErrorMessage error={errors.postCode} visible={touched.postCode}/>
@@ -201,10 +202,11 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "40%",
-    left: "28.83%",
+    left: "50%",
+    marginLeft:-40,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
@@ -213,7 +215,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   postcodeParent: {
-    width: 326,
+    width: "100%",
     height: 332,
   },
   businessAddress2: {

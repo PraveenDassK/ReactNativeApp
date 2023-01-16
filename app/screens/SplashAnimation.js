@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
     
   },
   hello: {
+    textAlign: "center",
+    marginleft: -20,
     top: 0,
     left: 100,
     fontSize: GlobalStyles.FontSize.size_10xl,
