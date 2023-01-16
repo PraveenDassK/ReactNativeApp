@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupParent: {
-    width: "200%",
+    width: "100%",
     height: "100%",
   },
   bankTransferAmount: {
