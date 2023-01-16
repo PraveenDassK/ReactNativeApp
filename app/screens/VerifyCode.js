@@ -1,9 +1,14 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Pressable,Image } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, View, Pressable,Image, TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const VerifyCode = ({navigation}) => {
-
+  const [one, setOne] = useState("")
+  const [two, setTwo] = useState("")
+  const [three, setThree] = useState("")
+  const [four, setFour] = useState("")
+  const [five, setFive] = useState("")
+  const [six, setSix] = useState("")
   return (
     <View style={styles.verifyCode}>
       <View style={styles.helloParent}>
@@ -31,18 +36,57 @@ const VerifyCode = ({navigation}) => {
           </View>
           <Text style={[styles.hello2, styles.textTypo]}>Verify</Text>
         </Pressable>
-        <View style={[styles.groupItem, styles.groupLayout]} />
-        <View style={[styles.groupInner, styles.groupLayout]} />
-        <View style={[styles.rectangleView, styles.groupChildBorder]} />
-        <View style={[styles.groupChild1, styles.groupChildBorder]} />
-        <View style={[styles.groupChild2, styles.groupChildBorder]} />
-        <View style={[styles.groupChild3, styles.groupChildBorder]} />
-        <Text style={[styles.text, styles.textTypo]}>1</Text>
+        <View style={[styles.groupItem, styles.groupChildBorder]} >
+          <TextInput
+          textAlign="center"
+          keyboardType="numeric"
+          onChangeText={newText => setOne(newText)}
+           />
+        </View>
+
+        <View style={[styles.groupInner, styles.groupChildBorder]} >
+          <TextInput 
+          textAlign="center"
+          keyboardType="numeric"
+          onChangeText={newText => setTwo(newText)}
+           />
+        </View>
+
+        <View style={[styles.rectangleView, styles.groupChildBorder]} >
+        <TextInput 
+          textAlign="center"
+          keyboardType="numeric"
+          onChangeText={newText => setThree(newText)}
+           />
+        </View>
+        <View style={[styles.groupChild1, styles.groupChildBorder]}>
+        <TextInput 
+          textAlign="center"
+          keyboardType="numeric"
+          onChangeText={newText => setFour(newText)}
+           />
+        </View>
+        <View style={[styles.groupChild2, styles.groupChildBorder]}>
+        <TextInput 
+          textAlign="center"
+          keyboardType="numeric"
+          onChangeText={newText => setFive(newText)}
+           />
+        </View>
+        <View style={[styles.groupChild3, styles.groupChildBorder]}>
+        <TextInput 
+          textAlign="center"
+          keyboardType="numeric"
+          onChangeText={newText => setSix(newText)}
+           />
+        </View>
+        {/* <Text style={[styles.text, styles.textTypo]}>1</Text> */}
         <Text style={[styles.resendCodeIn0010, styles.hello1Typo]}>
           Resend Code in 00:10
         </Text>
       </View>
-    </View>
+      </View>
+
   );
 };
 
@@ -69,12 +113,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupLayout: {
-    height: 42,
-    width: 42,
+    height: "5%",
+    width: "5%",
     borderWidth: 1,
     borderStyle: "solid",
     borderRadius: GlobalStyles.Border.br_2xs,
-    marginTop: -43.5,
+    marginTop: -40.5,
     top: "50%",
     position: "absolute",
     backgroundColor: GlobalStyles.Color.white,
@@ -128,7 +172,8 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "40%",
-    left: "41.72%",
+    left: "50%",
+    marginLeft:-25,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -137,12 +182,12 @@ const styles = StyleSheet.create({
     height: 60,
   },
   groupItem: {
-    borderColor: "#0101fd",
-    left: 6,
+    marginLeft:-163,
+    left: "50%",
   },
   groupInner: {
     marginLeft: -103,
-    borderColor: "#ff4b4b",
+    //borderColor: "#ff4b4b",
     left: "50%",
   },
   rectangleView: {
@@ -158,7 +203,8 @@ const styles = StyleSheet.create({
     left: "50%",
   },
   groupChild3: {
-    right: 6,
+    marginLeft: 116,
+    left: "50%",
   },
   text: {
     marginTop: -38.5,

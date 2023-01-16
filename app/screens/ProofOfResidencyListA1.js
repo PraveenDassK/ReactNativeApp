@@ -1,8 +1,41 @@
-import * as React from "react";
+import React,{ useEffect, useState} from "react";
+import * as ImagePicker from "expo-image-picker"
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const ProofOfResidencyListA1 = () => {
+  const [imageUri, setImageUri] = useState();
+  const [base64, setBase64] = useState()
+
+  const requestPermission = async () => {
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync()
+    if (!granted) alert('You need to enable permission to access the library')
+  }
+
+  const selectImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        base64: true
+      })
+
+      console.log(result)
+     
+      if (!result.canceled) {
+        setImageUri(result.assets[0].uri)
+        setBase64(result.assets[0].base64)
+      }
+
+    } catch (error) {
+      console.log("Error reading an image", error)
+    }
+  }
+
+  useEffect(() => {
+    requestPermission();
+  }, [])
+
+
   return (
     <View style={styles.proofOfResidencyListA1}>
       <Image
@@ -20,11 +53,13 @@ const ProofOfResidencyListA1 = () => {
         <Text style={styles.yourCountry}>Your Country</Text>
         <View style={styles.unitedKingdomParent}>
           <Text style={styles.unitedKingdom}>United Kingdom</Text>
-          <Image
+          {/* <Image
             style={[styles.maskGroup288, styles.maskGroup288Position]}
             resizeMode="cover"
             source={require("../assets/image-ukflag.png")}
           />
+            source={require("../assets/mask-group-288@3x.png")}
+          /> */}
         </View>
         <Text style={[styles.hello2, styles.helloTypo]}>
           Select one document from below categories
@@ -47,11 +82,13 @@ const ProofOfResidencyListA1 = () => {
             <Text style={styles.bankBuilding}>HMRC tax{'\n'}</Text>
             <Text style={styles.bankBuilding}>statement</Text>
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
             resizeMode="cover"
             source={require("../assets/icon-carbonyteforwardarrow@3x.png")}
           />
+            source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
+          /> */}
         </View>
         <View
           style={[
@@ -70,14 +107,15 @@ const ProofOfResidencyListA1 = () => {
             <Text style={styles.bankBuilding}>insurance{'\n'}</Text>
             <Text style={styles.bankBuilding}>certificate</Text>
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconIonicIosArrowForward1, styles.iconPosition]}
             resizeMode="cover"
-            source={require("../assets/icon-carbonyteforwardarrow.png")}
-          />
+            source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
+          /> */}
         </View>
         <View
           style={[styles.councilTaxOrUtilityBillParent, styles.parentShadowBox]}
+          onPress={selectImage}
         >
           <Text
             style={[
@@ -85,15 +123,17 @@ const ProofOfResidencyListA1 = () => {
               styles.councilTaxOrUtilityBillTypo,
             ]}
           >
-            <Text style={styles.bankBuilding}>Council tax {'\n'}</Text>
+            <Text onPress={selectImage}style={styles.bankBuilding}>Council tax {'\n'}</Text>
             <Text style={styles.bankBuilding}>or {'\n'}</Text>
             <Text style={styles.bankBuilding}>utility bill</Text>
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconIonicIosArrowForward1, styles.iconPosition]}
             resizeMode="cover"
             source={require("../assets/icon-carbonyteforwardarrow.png")}
           />
+            source={require("../assets/icon-ioniciosarrowforward19@3x.png")}
+          /> */}
         </View>
         <Text style={[styles.hello3, styles.helloTypo, styles.helloPosition]}>
           Select one document from below categories
@@ -107,13 +147,18 @@ const ProofOfResidencyListA1 = () => {
           <Text style={[styles.underReview, styles.underReviewPosition]}>
             Under Review
           </Text>
-          <Image
+          {/* <Image
             style={[styles.iconAwesomeCheckCircle, styles.maskGroup288Position]}
             resizeMode="cover"
             source={require("../assets/icon-bluecheck.png")}
-          />
+          /> */}
         </View>
       </View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      
+      {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200, zIndex: 7 }} />}
+      {base64 && <Text>{base64}</Text>}
+    </View>
     </View>
   );
 };

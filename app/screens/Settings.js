@@ -1,9 +1,30 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/login"
+import AuthContext from "../auth/context";
 
 const Settings = ({navigation}) => {
+  const [account, setAccNum] = useState(null)
+  const [sortcode, setSortCode] = useState(null)
+  const [fullname, setName] = useState(null)
+  const [plan, setPlan] = useState(null)
+
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.getListings();
+    console.log(response.data.details)
+    console.log(response.data.details.accountDetails.accountId)
+    setAccNum(response.data.details.accountDetails.accountId)
+  }
+  console.log(account)
+
 
   return (
     <View style={styles.settings}>
@@ -18,8 +39,8 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/path-33370.png")}
         />
-        <Text style={styles.hello}>Full Name</Text>
-        <Text style={styles.hello1}>Standard</Text>
+        <Text style={styles.hello}>{fullname}</Text>
+        <Text style={styles.hello1}>{plan}</Text>
         <Image
           style={[
             styles.groupChild,
@@ -55,8 +76,8 @@ const Settings = ({navigation}) => {
           </Text>
         </View>
         <View style={[styles.wrapper, styles.wrapperPosition]}>
-          <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]}>
-            12345678
+          <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]} >
+            {account}
           </Text>
         </View>
         {/* <Image
@@ -82,7 +103,7 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/icon-materialcontentcopy.png")}
         />
-        <Text style={[styles.text1, styles.textTypo]}>12-34-56</Text>
+        <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
         <View style={[styles.historyParent, styles.iconContentLayout]}>
         <Pressable
           onPress={() => navigation.navigate("AccountMain")}

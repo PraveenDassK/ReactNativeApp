@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View,
   KeyboardAvoidingView,
   TextInput,
@@ -11,7 +11,10 @@ import { View,
 import GlobalStyles from "../../GlobalStyles";
 
 const AddBeneficiary = ({navigation}) => {
-  
+  const [bankName, setBankName] = useState("")
+  const [accountName, setAccountName] = useState("")
+  const [iban, setIban] = useState("")
+  const [sortCode, setSortCode] = useState("")
 
   return (
     <KeyboardAvoidingView
@@ -36,7 +39,9 @@ const AddBeneficiary = ({navigation}) => {
           >
             Name of the Bank
           </Text>
-          <TextInput style={[styles.hello3, styles.helloTypo]} placeholder={"Bank Name"}/>
+          <TextInput style={[styles.hello3, styles.helloTypo]} 
+          placeholder={"Bank Name"}
+          onChangeText={newText => setBankName(newText)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <View style={[styles.helloGroup, styles.groupPosition]}>
@@ -45,7 +50,9 @@ const AddBeneficiary = ({navigation}) => {
           >
             Account Name
           </Text>
-          <TextInput style={[styles.hello3, styles.helloTypo]} placeholder={"Ortiz Tyrese"}/>
+          <TextInput style={[styles.hello3, styles.helloTypo]} 
+          placeholder={"Ortiz Tyrese"}
+          onChangeText = {newText => setAccountName(newText)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <View style={[styles.groupView, styles.groupPosition]}>
@@ -54,7 +61,9 @@ const AddBeneficiary = ({navigation}) => {
           >
             International Bank Account Number (IBAN)
           </Text>
-          <TextInput style={[styles.hello3, styles.helloTypo]}placeholder={"01234567890"}/>
+          <TextInput style={[styles.hello3, styles.helloTypo]}
+          placeholder={"01234567890"}
+          onChangeText={newText => setIban(newText)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <Pressable
@@ -80,6 +89,7 @@ const AddBeneficiary = ({navigation}) => {
           <TextInput
             style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
             placeholder={"00 - 00 - 00"}
+            onChangeText={newText => setSortCode(newText)}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
@@ -244,6 +254,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
+    paddingTop: GlobalStyles.Padding.padding_xs,
   },
 });
 
