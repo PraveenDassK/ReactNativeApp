@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import {
   Text,
   StyleSheet,
@@ -7,9 +7,39 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { Formik } from "formik"
+import * as Yup from 'yup';
+
+import AuthContext from "../auth/context";
+import Button from "../components/Button"
+import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
+import loginApi from "../api/login";
+import Screen from "../components/Screen";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+  phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
+})
 
 const Login = ({navigation}) => {
+
+  const prefix = "44"
+
+  const { setUser } = useContext(AuthContext);
+
+  const handleSubmit = async ({ email, phoneNumber }) => {
+    phoneNumber = prefix + phoneNumber
+    const result = await loginApi.login({ email, phoneNumber})
+    setUser({ email, phoneNumber })
+
+    console.log(result.data)
+    if (!result.ok) return  alert('Could not send otp')
+    // alert('Success')
+    
+    navigation.navigate("OTPVerificationPersonal", { registration: false })
+  }
+
   return (
     <View style={styles.signUpPersonal3}>
       <View style={styles.helloParent}>
@@ -24,21 +54,53 @@ const Login = ({navigation}) => {
           <Text
             style={styles.weWillSend}
           >We will send an OTP to verify your number and email ID.</Text>
-        </Text>
-        <Pressable 
-          style={styles.groupChild} 
-          onPress={() => navigation.navigate("AccountMain")}
+        </Text>  
+        <Formik
+          initialValues={{email:'', phoneNumber: ''}}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
         >
-              <Text style={[styles.hello3, styles.helloFlexBox]} >Continue</Text>
-        </Pressable>
-        <TextInput
-          style={[styles.groupItem, styles.groupBorder]}
-          keyboardType="numeric"
-        />
-        <TextInput
-          style={[styles.groupInner, styles.groupBorder]}
-          keyboardType="default"
-        />
+          {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+            <>
+           <View 
+            style={styles.groupChild} 
+          >
+                <Text onPress={handleSubmit} style={[styles.hello3, styles.helloFlexBox]} >Continue</Text>
+          </View>
+        
+          <TextInput
+          placeholder="in the house"
+            keyboardType="numeric" 
+            autoCorrect="none" 
+            onBlur={() => setFieldTouched("phoneNumber")}
+            onChangeText={handleChange("phoneNumber")}
+            style={[styles.groupItem, styles.groupBorder]}
+           
+          />
+          <View style={styles.phoneError}>
+            <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
+
+          </View>
+
+          <TextInput
+          placeholder="wtf"
+            autoCapitalize="none"
+            autoCorrect="none" 
+            textContentType="emailAdress"
+            keyboardType="email-address"
+            onBlur={() => setFieldTouched('email')}
+            onChangeText={handleChange('email')}
+            style={[styles.groupInner, styles.groupBorder]}
+            
+          />
+          <View style={styles.emailError}>
+
+           <ErrorMessage error={errors.email} visible={touched.email} />
+          </View>
+         
+          </>
+          )}
+        </Formik>
         <Text style={[styles.enterYourEmailId, styles.enterPosition]}>
           Enter your Email ID
         </Text>
@@ -48,6 +110,16 @@ const Login = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  emailError: {
+    zIndex:15,
+    position: 'absolute',
+    bottom: 380
+  },
+  phoneError: {
+    zIndex:35,
+    position: 'absolute',
+   bottom: 490
+  },
   helloTypo: {
     color: GlobalStyles.Color.gray_700,
     fontSize: GlobalStyles.FontSize.size_base,

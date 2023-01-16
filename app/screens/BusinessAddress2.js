@@ -60,8 +60,9 @@ const BusinessAddress2 = ({ navigation }) => {
            keyboardType="default" 
            onBlur={() => setFieldTouched("postCode")}
            onChangeText={handleChange("postCode")}
+           placeholder={"Enter your postcode"}
           style={[styles.hello, styles.helloTypo]}>
-            Enter your postcode
+            
           </TextInput>
           <View style={{ position: "absolute", top:70}}>
           <ErrorMessage error={errors.postCode} visible={touched.postCode}/>

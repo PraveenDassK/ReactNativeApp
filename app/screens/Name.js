@@ -15,9 +15,6 @@ const validationSchema = Yup.object().shape({
   lastName: Yup.string().required().label("Last name")
 })
 
-
-
-
 const Name = ({navigation}) => {
   //const navigation = useNavigation();
   const { user, setUser } = useContext(AuthContext)
@@ -66,9 +63,10 @@ const Name = ({navigation}) => {
               {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
             <TextInput
-               keyboardType="default" 
-               onBlur={() => setFieldTouched("firstName")}
-               onChangeText={handleChange("firstName")}
+              autoCorrect="none" 
+              keyboardType="default" 
+              onBlur={() => setFieldTouched("firstName")}
+              onChangeText={handleChange("firstName")}
               style={[styles.groupChild, styles.groupBorder,styles.inputText]}
               
             />
@@ -76,6 +74,7 @@ const Name = ({navigation}) => {
                 <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
             </View>
             <TextInput 
+                autoCorrect="none" 
                 keyboardType="default" 
                 onBlur={() => setFieldTouched("lastName")}
                 onChangeText={handleChange("lastName")}

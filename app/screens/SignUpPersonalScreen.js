@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable } from "react-native";
-import { GestureDetector, Gesture, Directions } from "react-native-gesture-handler"
 import { Formik } from "formik";
 import * as Yup from 'yup';
 
@@ -10,19 +9,14 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
 import otpApi from "../api/otp";
 import Screen from "../components/Screen";
-import FormField from "../components/forms/FormField"
 import SwipeUp from "../components/SwipeUp"
 
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
-
-
-
-
 
 const SignUpPersonalScreen = ({ navigation }) => {
 
@@ -33,18 +27,18 @@ const SignUpPersonalScreen = ({ navigation }) => {
 
   const prefix = "44"
 
-  const authContext = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext)
 
   const handleSubmit = async ({ email, phoneNumber }) => {
     phoneNumber = prefix + phoneNumber
     const result = await otpApi.otp({ email, phoneNumber })
-    authContext.setUser({ email, phoneNumber })
+    setUser({ email, phoneNumber })
 
     console.log(result.data)
     if (!result.ok) return  alert('Could not send otp')
     // alert('Success')
     
-    navigation.navigate("OTPVerificationPersonal")
+    navigation.navigate("OTPVerificationPersonal", { registration: true })
   }
 
   return (
