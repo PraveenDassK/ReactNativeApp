@@ -90,7 +90,7 @@ import CarbonCart from "./app/screens/CarbonCart";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="MyCards">
+  <Stack.Navigator initialRouteName="Onboarding3">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
