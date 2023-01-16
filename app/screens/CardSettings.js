@@ -1,10 +1,30 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
 
 const CardSettings = ({navigation}) => {
-  
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled1, setIsEnabled1] = useState(false);
+  const [isEnabled2, setIsEnabled2] = useState(false);
+  const [isEnabled3, setIsEnabled3] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
+  const toggleSwitch2= () => setIsEnabled2(previousState => !previousState);
+  const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
+  const authContext=useContext(AuthContext)
 
+  useEffect(()=>{
+    loadData()
+  },[])
+
+  const loadData = async () => {
+    const response = await api.getListings();
+    console.log(response.data.details)
+    console.log(response.data.details.accountDetails.accountId)
+    setAccNum(response.data.details.accountDetails.accountId)
+  }
+  
   return (
     <View style={styles.cardSettings}>
      
@@ -359,36 +379,35 @@ const CardSettings = ({navigation}) => {
             />
           </View>
           <View style={[styles.rectangleParent1, styles.rectangleParentLayout]}>
-            <View style={styles.groupChild1} />
-            <Image
-              style={styles.ellipseIcon}
-              resizeMode="cover"
-              source={require("../assets/ellipse-350.png")}
-            />
+          <Switch  
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch}
+            ios_backgroundColor="#3e3e3e"
+            value={isEnabled} />
           </View>
           <View style={[styles.rectangleParent2, styles.rectangleParentLayout]}>
-            <View style={styles.groupChild1} />
-            <Image
-              style={styles.ellipseIcon}
-              resizeMode="cover"
-              source={require("../assets/ellipse-350.png")}
-            />
+            <Switch  
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch1}
+            ios_backgroundColor="#3e3e3e"
+            value={isEnabled1} />
+            
           </View>
           <View style={[styles.rectangleParent3, styles.rectangleParentLayout]}>
-            <View style={styles.groupChild1} />
-            <Image
-              style={styles.ellipseIcon}
-              resizeMode="cover"
-              source={require("../assets/ellipse-350.png")}
-            />
+          <Switch  
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch2}
+            value={isEnabled2} />
           </View>
           <View style={[styles.rectangleParent4, styles.rectangleParentLayout]}>
-            <View style={styles.groupChild1} />
-            <Image
-              style={styles.ellipseIcon}
-              resizeMode="cover"
-              source={require("../assets/ellipse-350.png")}
-            />
+          <Switch  
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch3}
+            value={isEnabled3} />
           </View>
         </View>
       </View>

@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View, Pressable,TextInput,Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const SetLimit = ({navigation}) => {
-
+  const amountSpent="£22.33";
+  const [amount, setAmount] = useState("")
   return (
     <View style={styles.setLimit}>
        
@@ -18,13 +19,14 @@ const SetLimit = ({navigation}) => {
         <TextInput style={[styles.hello1, styles.helloColor, styles.helloTypo]}
           placeholder = "£0"
           keyboardType="numeric"
+          onChangeText={newText => setAmount(newText)}
         />
         <Text style={[styles.hello3, styles.helloPosition, styles.helloColor1]}>
           GBP
         </Text>
         <Text
           style={[styles.hello4, styles.helloPosition, styles.helloColor]}
-        >{`Spent this month : £22.33 `}</Text>
+        >{`Spent this month : `}{amountSpent}</Text>
         <Pressable
           style={[styles.groupParent, styles.parentPosition]}
           onPress={() => navigation.navigate("SpendingLimit")}
@@ -138,7 +140,8 @@ const styles = StyleSheet.create({
   },
   hello5: {
     top: "38.33%",
-    left: "38.96%",
+    left: "50.00%",
+    marginLeft:-20,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,

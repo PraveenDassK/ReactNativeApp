@@ -120,8 +120,9 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "40%",
-    left: "31.9%",
-    color: GlobalStyles.Color.black,
+    left: "50%",
+    marginLeft:-60,
+    color: GlobalStyles.Color.white,
   },
   groupContainer: {
     bottom: 76,
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "38.33%",
-    left: "38.96%",
+    left: "50%",
+    marginLeft:-35,
     color: GlobalStyles.Color.white,
   },
   groupPressable: {
@@ -140,10 +142,11 @@ const styles = StyleSheet.create({
   groupInner: {
     marginTop: -153.67,
     right: 22,
-    left: 21,
-    maxWidth: "100%",
+    left: "50%",
+    marginLeft:-130,
     overflow: "hidden",
-    height: 249,
+    height: 259,
+    width:294,
     top: "50%",
     position: "absolute",
   },

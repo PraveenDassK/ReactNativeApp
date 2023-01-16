@@ -1,9 +1,29 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
 
 const Settings = ({navigation}) => {
+  const [account, setAccNum] = useState(null)
+  const [sortcode, setSortCode] = useState(null)
+  const [fullname, setName] = useState(null)
+  const [plan, setPlan] = useState(null)
+  const [balance, setBal] = useState(null)
+
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccountByCustomer();
+    const data = response.data.details.content[0]
+    console.log(data)
+    setSortCode("22-33-44")
+  }
 
   return (
     <View style={styles.settings}>
@@ -18,8 +38,8 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/path-33370.png")}
         />
-        <Text style={styles.hello}>Full Name</Text>
-        <Text style={styles.hello1}>Standard</Text>
+        <Text style={styles.hello}>{fullname}</Text>
+        <Text style={styles.hello1}>{plan}</Text>
         <Image
           style={[
             styles.groupChild,
@@ -55,8 +75,8 @@ const Settings = ({navigation}) => {
           </Text>
         </View>
         <View style={[styles.wrapper, styles.wrapperPosition]}>
-          <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]}>
-            12345678
+          <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]} >
+            {account}
           </Text>
         </View>
         {/* <Image
@@ -82,7 +102,7 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/icon-materialcontentcopy.png")}
         />
-        <Text style={[styles.text1, styles.textTypo]}>12-34-56</Text>
+        <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
         <View style={[styles.historyParent, styles.iconContentLayout]}>
         <Pressable
           onPress={() => navigation.navigate("AccountMain")}
@@ -192,14 +212,14 @@ const styles = StyleSheet.create({
   },
   textSpaceBlock: {
     marginTop: -6,
-    textAlign: "right",
+    textAlign: "center",
   },
   iconContentLayout: {
     height: 16,
     position: "absolute",
   },
   iconContentPosition: {
-    marginLeft: 98.35,
+    marginLeft: 60,
     height: 16,
     top: "50%",
     width: 14,
