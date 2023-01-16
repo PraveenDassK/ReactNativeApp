@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
   },
   hello5: {
     top: "38.33%",
-    left: "38.96%",
+    left: "50.00%",
+    marginLeft:-20,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
