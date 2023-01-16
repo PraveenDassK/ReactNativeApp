@@ -81,6 +81,9 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "700",
     position: "absolute",
+    
+   
+    
   },
   groupChildPosition: {
     height: 155,
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   limits1SpaceBlock: {
-    marginTop: -7,
+    marginTop: -3,
     color: GlobalStyles.Color.gray_1400,
     lineHeight: 14,
   },
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     left: 6,
     position: "absolute",
+    
   },
   hello3: {
     marginTop: -104.25,
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   groupChild: {
-    marginTop: -77.5,
+    marginTop: -70.5,
     right: 1,
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.white,
@@ -219,7 +223,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingLeft:"10%",
     paddingRight:"10%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

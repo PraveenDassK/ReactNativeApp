@@ -42,7 +42,7 @@ container: {
     aspectRatio: 53.98/85.60,
     borderRadius: 5,
 }, ProgressBar: {
-top: "32.5%",
+top: "22.5%",
 alignSelf: 'center',
 height: "1%",
 resizeMode: 'contain',

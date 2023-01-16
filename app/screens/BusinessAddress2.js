@@ -1,29 +1,53 @@
-import * as React from "react";
-import { Text, StyleSheet, Pressable, View } from "react-native";
+import React, { useContext } from "react";
+import { Text, StyleSheet,  View, TextInput } from "react-native";
+import { Formik } from "formik"
+import * as Yup from 'yup'
 
+import AuthContext from "../auth/context";
+import Button from "../components/Button";
+import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
+import Screen from "../components/Screen";
 
-const BusinessAddress2 = ({navigation}) => {
+const validationSchema = Yup.object().shape({
+  postCode: Yup.string().required().label("Post code"),
+
+})
+
+const BusinessAddress2 = ({ navigation }) => {
+  
+  const {setUser } = useContext(AuthContext)
+
+  const handleSubmit = ({ postCode }) => {
+    setUser(prevUser => ({...prevUser, postCode}))
+    console.log(postCode)
+    navigation.navigate("PersonalAddress")
+  }
+
   return (
     <View style={styles.businessAddress2}>
       
       <View style={styles.postcodeParent}>
-      
-     
-          
         <Text
           style={[styles.postcode, styles.hello1Position, styles.postcodeTypo]}
         >
           Postcode
         </Text>
-        <Pressable
+        <View
           style={styles.dontKnowPostcode}
           onPress={() => navigation.navigate("PersonalAddress")}
         >
-          <Text style={[styles.dontKnowPostcode1, styles.postcodeTypo]}>
+          {/* <Text style={[styles.dontKnowPostcode1, styles.postcodeTypo]}>
             Don't know postcode?
-          </Text>
-        </Pressable>
+          </Text> */}
+        </View>
+        <Formik
+          initialValues={{postCode:""}}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          >
+              {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+            <>
         <View
           style={[
             styles.helloWrapper,
@@ -31,9 +55,17 @@ const BusinessAddress2 = ({navigation}) => {
             styles.helloWrapperPosition,
           ]}
         >
-          <Text style={[styles.hello, styles.helloTypo]}>
+
+          <TextInput
+           keyboardType="default" 
+           onBlur={() => setFieldTouched("postCode")}
+           onChangeText={handleChange("postCode")}
+          style={[styles.hello, styles.helloTypo]}>
             Enter your postcode
-          </Text>
+          </TextInput>
+          <View style={{ position: "absolute", top:70}}>
+          <ErrorMessage error={errors.postCode} visible={touched.postCode}/>
+          </View>
         </View>
         <View style={styles.helloParent}>
           <Text style={[styles.hello1, styles.hello1Position]}>
@@ -46,7 +78,7 @@ const BusinessAddress2 = ({navigation}) => {
             <Text style={styles.byLawWe}>account</Text>
           </Text>
         </View>
-        <Pressable
+        <View
           style={[styles.groupParent, styles.parentPosition]}
           onPress={() => navigation.navigate("BusinessChooseAddress")}
         >
@@ -54,8 +86,11 @@ const BusinessAddress2 = ({navigation}) => {
             <View style={[styles.groupChild, styles.groupChildLayout]} />
             <View style={[styles.maskGroup236, styles.helloWrapperPosition]} />
           </View>
-          <Text style={styles.hello3}>Search Address</Text>
-        </Pressable>
+          <Text style={styles.hello3} onPress={handleSubmit}>Continue</Text>
+        </View>
+        </>
+          )}
+          </Formik>
       </View>
     </View>
   );
@@ -81,6 +116,8 @@ const styles = StyleSheet.create({
     left: 0,
   },
   helloTypo: {
+    color: GlobalStyles.Color.gray_700,
+    textAlign: "left",
     color: GlobalStyles.Color.gray_700,
     textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,

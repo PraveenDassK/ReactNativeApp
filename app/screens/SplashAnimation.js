@@ -1,10 +1,13 @@
 import * as React from "react";
-import { Image, StyleSheet, Text, View, Pressable } from "react-native";
+import { Image, StyleSheet, Text, View, Pressable, Animated } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
+import FadeInView from "../components/fadeInview";
+
 const LogoAnimation3 = ({navigation}) => {
   return (
+    <FadeInView>
     <Pressable
       style={styles.logoAnimation3}
       onPress={() => navigation.navigate("Onboarding1")}
@@ -27,6 +30,7 @@ const LogoAnimation3 = ({navigation}) => {
         />
       </View>
     </Pressable>
+    </FadeInView>
   );
 };
 
@@ -35,13 +39,11 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     maxWidth: "100%",
     width:"100%",
-    top:"45%",
     alignItems: 'center',
   },
   helloFlexBox: {
     textAlign: "center",
     position: "absolute",
-    width:"100%"
   },
   maskGroup261: {
     right: 0,
@@ -50,17 +52,18 @@ const styles = StyleSheet.create({
     height: 132,
   },
   layer12Icon: {
-    width: "50%",
-    height: "50%",
-    left:"25%",
-    top:"15%",
-    resizeMode:"contain",
+    marginTop: -165.5,
+    marginLeft: -63.5,
+    left: "50%",
+    width: 128,
+    height: 136,
+    top: "50%",
     position: "absolute",
     
   },
   hello: {
     top: 0,
-    width: "100%",
+    left: 100,
     fontSize: GlobalStyles.FontSize.size_10xl,
     color: GlobalStyles.Color.indigo_100,
   },
@@ -72,14 +75,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   maskGroup259: {
-    height: "50%",
-    resizeMode:"contain",
-    top: "0%",
+    marginTop: -140.5,
+    height: 337,
+    top: "50%",
     width:"100%"
   },
   maskGroup261Parent: {
     width: "100%",
-    height: "100%",
+    height: 605,
   },
   logoAnimation3: {
     backgroundColor: GlobalStyles.Color.gray_300,

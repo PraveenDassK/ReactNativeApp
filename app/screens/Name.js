@@ -1,60 +1,109 @@
-import * as React from "react";
-import { Text, StyleSheet, View, TextInput, Pressable } from "react-native";
+import React, { useContext } from "react";
+import { Text, StyleSheet, View, TextInput, } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
+import { Formik } from "formik"
+import * as Yup from 'yup'
+
+import AuthContext from "../auth/context";
+import Button from "../components/Button";
+import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
+import Screen from "../components/Screen";
+
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required().label("First name"),
+  lastName: Yup.string().required().label("Last name")
+})
+
+
+
 
 const Name = ({navigation}) => {
   //const navigation = useNavigation();
+  const { user, setUser } = useContext(AuthContext)
+
+  const handleSubmit = ({firstName, lastName}) => {
+    setUser(prev => ({...prev, firstName, lastName}))
+    console.log(user)
+    navigation.navigate("ProofOfResidencyList")
+  }
 
   return (
-    <View style={styles.name}>
-      <View style={styles.groupParent}>
-        <View style={styles.helloParent}>
-          <Text style={styles.hello}>Your Full Name</Text>
-          <Text style={[styles.hello1, styles.helloTypo, styles.nameTypo]}>
-            Your name should match your documents.
-          </Text>
-        </View>
-        <Text
-          style={[
-            styles.firstName,
-            styles.helloTypo,
-            styles.nameTypo,
-            styles.namePosition,
-          ]}
-        >
-          First Name
-        </Text>
-        <Text
-          style={[
-            styles.lastName,
-            styles.helloTypo,
-            styles.nameTypo,
-            styles.namePosition,
-          ]}
-        >
-          Last Name
-        </Text>
-        <TextInput
-          style={[styles.groupChild, styles.groupBorder]}
-          keyboardType="default"
-        />
-        <TextInput 
-          style={[styles.groupItem, styles.groupBorder]} 
-          keyboardType="default"
-        />
-        <Pressable
-          style={[styles.groupContainer, styles.groupContainerPosition]}
-          onPress={() => navigation.navigate("ProofOfResidencyList")}
-        >
-          <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
-            <View style={styles.groupInner} />
-            <View style={styles.maskGroup236} />
+    <Screen>
+      <View style={styles.name}>
+        <View style={styles.groupParent}>
+          <View style={styles.helloParent}>
+            <Text style={styles.hello}>Your Full Name</Text>
+            <Text style={[styles.hello1, styles.helloTypo, styles.nameTypo]}>
+              Your name should match your documents.
+            </Text>
           </View>
-          <Text style={[styles.hello2, styles.helloTypo]}>Continue</Text>
-        </Pressable>
+          <Text
+            style={[
+              styles.firstName,
+              styles.helloTypo,
+              styles.nameTypo,
+              styles.namePosition,
+            ]}
+          >
+            First Name 
+          </Text>
+          <Text
+            style={[
+              styles.lastName,
+              styles.helloTypo,
+              styles.nameTypo,
+              styles.namePosition,
+            ]}
+          >
+            Last Name
+          </Text>
+          <Formik
+          initialValues={{firstName:"", lastName:""}}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          >
+              {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+            <>
+            <TextInput
+               keyboardType="default" 
+               onBlur={() => setFieldTouched("firstName")}
+               onChangeText={handleChange("firstName")}
+              style={[styles.groupChild, styles.groupBorder,styles.inputText]}
+              
+            />
+              <View style={{ position: "absolute", top:190}}>
+                <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
+            </View>
+            <TextInput 
+                keyboardType="default" 
+                onBlur={() => setFieldTouched("lastName")}
+                onChangeText={handleChange("lastName")}
+                style={[styles.groupItem, styles.groupBorder, styles.inputText]} 
+               
+            />
+            <View style={{ position: "absolute", top:300}}>
+                <ErrorMessage error={errors.lastName} visible={touched.lastName}/>
+            </View>
+            <View
+              style={[styles.groupContainer, styles.groupContainerPosition]}
+            >
+              {/* <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
+                <View style={styles.groupInner} />
+                <View style={styles.maskGroup236} />
+              </View> */}
+              {/* <Text style={[styles.hello2, styles.helloTypo]} onPress={() => navigation.navigate("ProofOfResisendcyListA1")}>Continue</Text> */}
+            </View>
+            <View style={{ top: 350 }}>
+
+              <Button title="Continue" color="blue" onPress={handleSubmit} />
+            </View>
+            </>
+          )}
+          </Formik>
+        </View>
       </View>
-    </View>
+    </Screen>
   );
 };
 
@@ -115,6 +164,9 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
+  inputText: {
+    padding: 10
+  },
   firstName: {
     marginTop: -104.5,
   },
@@ -160,7 +212,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   groupParent: {
-    width: "100%",
+    width: 326,
     height: 411,
   },
   name: {
