@@ -17,7 +17,7 @@ const validationSchema = Yup.object().shape({
 
 
 
-const Name = ({navigation}) => {
+
 const Name = ({navigation}) => {
   //const navigation = useNavigation();
   const { user, setUser } = useContext(AuthContext)
