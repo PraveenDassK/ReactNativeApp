@@ -108,7 +108,7 @@ const DOB = ({ navigation }) => {
     if (!result.ok || !result.data.result) return alert('Could not complete setup') 
    
     setUser(prev => ({...prev, dob: dateOfBirth}))
-    navigation.navigate("SignUp")
+    navigation.navigate("Success")
   }
 
 

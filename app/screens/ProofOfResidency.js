@@ -73,7 +73,7 @@ const ProofOfResidency = ({ navigation }) => {
     if (!result.ok || !result.data.result) return alert('Could not verify documents') 
 
     setUser(prev => ({...prev, frontImage, backImage, documentType}))
-    navigation.navigate("PostCodeSignUp")
+    navigation.navigate("BusinessAddress2")
 
   }
 
@@ -142,7 +142,7 @@ const ProofOfResidency = ({ navigation }) => {
       
     </View> */}
     <View style={styles.continueButton}>
-     <Button title="Continue" color="blue" onPress={handleSubmit}/>  
+     <Button title="Continue" color="blue" onPress={() => handleSubmit(user)}/>  
     </View>
    </Screen>
   );

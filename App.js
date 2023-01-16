@@ -14,26 +14,25 @@ import Onboarding3 from "./app/screens/Onboarding3"
 
 import GlobalStyles from "./GlobalStyles";
 
-import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
-import OTPVerificationPersonal from "./app/screens/OTPVerificationPersonal";
-import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
 import Account from "./app/screens/Account"
 import AuthContext from "./app/auth/context";
 import BusinessAddress2 from "./app/screens/BusinessAddress2"
-import Carbon from "./app/screens/Carbon"
 import CountryOfResidence from "./app/screens/CountryOfResidence"
-import GlobalStyles from "./GlobalStyles";
-import Name from "./app/screens/Name";
+import Carbon from "./app/screens/Carbon"
+import CarbonProject from "./app/screens/CarbonProject"
+import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
+
+import DOB from "./app/screens/DOB"
+import OTPVerificationPersonal from "./app/screens/OTPVerificationPersonal";
+import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
+
+
 import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
 import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
 import ProofOfResidencyListA1 from "./app/screens/ProofOfResidencyListA1";
-import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
+
 import ProofOfResidency from "./app/screens/ProofOfResidency";
-import PersonalAddress from "./app/screens/PersonalAddress";
-import DOB from "./app/screens/DOB"
-import CarbonProject from "./app/screens/CarbonProject"
-import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
-import CountryOfResidence from "./app/screens/CountryOfResidence"
+
 import SignUpPersonal from "./app/screens/SignUpPersonal"
 import FaceScan from "./app/screens/FaceScan"
 import BiometrixComplete from "./app/screens/BiometrixComplete"
@@ -56,7 +55,7 @@ import ReviewAndConfirm from "./app/screens/ReviewAndConfirm"
 import SendAccountSelection from "./app/screens/SendAccountSelection"
 import MyCards from "./app/screens/MyCards"
 import ProofVerified from "./app/screens/ProofVerified"
-import BusinessAddress2 from "./app/screens/BusinessAddress2"
+
 import AddFunds from "./app/screens/AddFunds"
 import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
 import FreezeCard from "./app/screens/FreezeCard";
@@ -64,7 +63,7 @@ import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
 import SpendingLimit from "./app/screens/SpendingLimit";
 import CarbonSpending from "./app/screens/CarbonSpending";
-import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
+
 import ItsDamagedOrDoesntWork from "./app/screens/ItsDamagedOrDoesntWork";
 import IWasAVictimOfFraudOrThe from "./app/screens/IWasAVictimOfFraudOrThe";
 import Terminate from "./app/screens/Terminate";
@@ -80,7 +79,7 @@ import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
 import PushNotification from "./app/screens/PushNotifications";
-import DOB from "./app/screens/DOB"
+
 import RequestContact from "./app/screens/RequestContact"
 import Requested from "./app/screens/Requested"
 import Settings from "./app/screens/Settings";
@@ -101,7 +100,7 @@ import CarbonCart from "./app/screens/CarbonCart";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="PersonalAddress">
+  <Stack.Navigator initialRouteName="">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
@@ -111,7 +110,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
     <Stack.Screen  name="Login" component={Login}/>
 
-    <Stack.Screen  name="OTPVerificationPersonal" component={OTPVerificationPersonal}/>
+    <Stack.Screen  name="OTPVerificationPersonal" component={OTPVerificationPersonal2}/>
     <Stack.Screen  name="BiometrixComplete" component={BiometrixComplete}/>
 
     <Stack.Screen  name="Pin" component={Pin}/>
@@ -120,7 +119,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Name" component={Name}/>
 
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyList}/>
+    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidency}/>
     <Stack.Screen name="ProofVerified" component={ProofVerified}/>
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback} from "react";
+import React, { useContext, useEffect, useState, useCallback, useRef} from "react";
 import {
   Text,
   StyleSheet,
@@ -20,16 +20,16 @@ import otpVerificationAPI from '../api/otpVerification'
 import otpAPI from '../api/otp'
 
 const validationSchema = Yup.object().shape({
-  pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
-  pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
-  pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
-  pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
-  eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
-  eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
-  eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
-  eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
+  pVer1: Yup.number().min(0).max(9).label("P Ver1"),
+  pVer2: Yup.number().min(0).max(9).label("P Ver2"),
+  pVer3: Yup.number().min(0).max(9).label("P Ver3"),
+  pVer4: Yup.number().min(0).max(9).label("P Ver4"),
+  eVer1: Yup.number().min(0).max(9).label("E Ver1"),
+  eVer2: Yup.number().min(0).max(9).label("E Ver2"),
+  eVer3: Yup.number().min(0).max(9).label("E Ver3"),
+  eVer4: Yup.number().min(0).max(9).label("E Ver4"),
 
-})
+}) // add required if necessary
 
 const OTPVerificationPersonal2 = ({ navigation }) => {
 
@@ -41,7 +41,17 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
     eVer1:'', 
     eVer2:'',
     eVer3:'',
-    eVer4:''}
+    eVer4:''
+  }
+
+  const pVer1Ref = useRef() 
+  const pVer2Ref = useRef() 
+  const pVer3Ref = useRef() 
+  const pVer4Ref = useRef() 
+  const eVer1Ref = useRef() 
+  const eVer2Ref = useRef()
+  const eVer3Ref = useRef()
+  const eVer4Ref = useRef()
 
   const [count, setCount] = useState(45)
   // const [resendOTP, setResendOTP] = useState(null)
@@ -127,12 +137,20 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
                <TextInput 
+                autoCorrect="none" 
+                autoFocus={true}
                 maxLength={1}
                 placeholder="1"
                 keyboardType="numeric" 
-                autoCorrect="none" 
                 onBlur={() => setFieldTouched("eVer1")}
-                onChangeText={handleChange("eVer1")}
+                onChangeText={(value)=> {
+                  handleChange("eVer1")
+                  if(value) eVer2Ref.current.focus()
+                }}
+                ref={eVer1Ref}
+                onSubmitEditing={()=> {
+                  eVer2Ref.current.focus()
+                }}
                 style={[styles.groupChild, styles.groupLayout, styles.inputText]}
               />
               <ErrorMessage error={errors.eVer1} visible={touched.eVer1}/>
@@ -144,7 +162,15 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
                 keyboardType="numeric" 
                 autoCorrect="none" 
                 onBlur={() => setFieldTouched("pVer1")}
-                onChangeText={handleChange("pVer1")}
+                onChangeText={(value) => {
+                  handleChange("pVer1")
+                  if(value) pVer2Ref.current.focus()
+                }}
+                ref={pVer1Ref}
+                returnKeyType="next"
+                onSubmitEditing={()=> {
+                  pVer2Ref.current.focus()
+                }}
                 style={[styles.groupChildPosition, styles.groupLayout, styles.inputText]} 
               />
               <ErrorMessage error={errors.pVer1} visible={touched.pVer1}/>
@@ -163,7 +189,15 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
               keyboardType="numeric" 
               autoCorrect="none" 
               onBlur={() => setFieldTouched("eVer2")}
-              onChangeText={handleChange("eVer2")}
+              onChangeText={(value) => {
+                handleChange("eVer2")
+                if(value) eVer3Ref.current.focus()
+              }}
+              ref={eVer2Ref}
+              returnKeyType="next"
+              onSubmitEditing={()=> {
+                eVer3Ref.current.focus()
+              }}
               style={[styles.groupInner, styles.groupInnerBorder, styles.inputText]} 
             />
             <ErrorMessage error={errors.eVer2} visible={touched.eVer2}/>
@@ -173,7 +207,15 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
               keyboardType="numeric" 
               autoCorrect="none" 
               onBlur={() => setFieldTouched("pVer2")}
-              onChangeText={handleChange("pVer2")}
+              onChangeText={(value) => {
+                handleChange("pVer2")
+                if(value) pVer3Ref.current.focus()
+              }}
+              ref={pVer2Ref}
+              returnKeyType="next"
+              onSubmitEditing={()=> {
+                pVer3Ref.current.focus()
+              }}
               style={[styles.groupInnerBorder, styles.groupChildPosition, styles.inputText]} 
             />
             <ErrorMessage error={errors.pVer2} visible={touched.pVer2}/>
@@ -184,7 +226,15 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
                   keyboardType="numeric" 
                   autoCorrect="none" 
                   onBlur={() => setFieldTouched("eVer3")}
-                  onChangeText={handleChange("eVer3")}
+                  onChangeText={(value ) => {
+                   handleChange("eVer3")
+                    if(value) eVer4Ref.current.focus()
+                  }}
+                  ref={eVer3Ref}
+                  returnKeyType="next"
+                  onSubmitEditing={()=> {
+                    eVer4Ref.current.focus()
+                  }}
                 style={[styles.rectangleTextinput, styles.groupChild1Border, styles.inputText]} 
                 />
                 <ErrorMessage error={errors.eVer3} visible={touched.eVer3}/>
@@ -198,7 +248,15 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
                   keyboardType="numeric" 
                   autoCorrect="none" 
                   onBlur={() => setFieldTouched("pVer3")}
-                  onChangeText={handleChange("pVer3")}
+                  onChangeText={(value) => {
+                    handleChange("pVer3")
+                    if(value) pVer4Ref.current.focus()
+                  }}
+                  ref={pVer3Ref}
+                  returnKeyType="next"
+                  onSubmitEditing={()=> {
+                    pVer4Ref.current.focus()
+                  }}
                   style={[styles.groupChild1Border, styles.groupChildPosition, styles.inputText]} 
                 />
             <ErrorMessage error={errors.pVer3} visible={touched.pVer3}/>
@@ -229,7 +287,15 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
                   keyboardType="numeric" 
                   autoCorrect="none" 
                   onBlur={() => setFieldTouched("eVer4")}
-                  onChangeText={handleChange("eVer4")}
+                  onChangeText={(value) => {
+                    handleChange("eVer4")
+                    if(value) pVer1Ref.current.focus()
+                  }}
+                  ref={eVer4Ref}
+                  returnKeyType="next"
+                  onSubmitEditing={() => {
+                    pVer1Ref.current.focus()
+                  }}
                   style={[styles.groupChild4, styles.groupChildBorder1, styles.inputText]} 
                 />
             <ErrorMessage error={errors.eVer4} visible={touched.eVer4}/>
@@ -241,6 +307,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
                   autoCorrect="none" 
                   onBlur={() => setFieldTouched("pVer4")}
                   onChangeText={handleChange("pVer4")}
+                  ref={pVer4Ref}
                   style={[styles.groupChildBorder1, styles.groupChildPosition, styles.inputText]}
                 />
             <ErrorMessage error={errors.pVer4} visible={touched.pVer4}/>

@@ -1,10 +1,13 @@
 import * as React from "react";
-import { Image, StyleSheet, Text, View, Pressable } from "react-native";
+import { Image, StyleSheet, Text, View, Pressable, Animated } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
+import FadeInView from "../components/fadeInview";
+
 const LogoAnimation3 = ({navigation}) => {
   return (
+    <FadeInView>
     <Pressable
       style={styles.logoAnimation3}
       onPress={() => navigation.navigate("Onboarding1")}
@@ -27,6 +30,7 @@ const LogoAnimation3 = ({navigation}) => {
         />
       </View>
     </Pressable>
+    </FadeInView>
   );
 };
 

@@ -32,7 +32,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
     if (!result.ok) return  alert('Could not send otp')
     // alert('Success')
     
-    navigation.navigate("OTPVerification")
+    navigation.navigate("OTPVerificationPersonal")
   }
 
   return (
@@ -95,6 +95,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
     </Text>
     <TextInput
     autoCapitalize="none"
+    autoCorrect="none" 
     textContentType="emailAdress"
     keyboardType="email-address"
     onBlur={() => setFieldTouched('email')}
