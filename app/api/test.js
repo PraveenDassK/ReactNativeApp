@@ -166,245 +166,362 @@
     const GetAddressesByPostcode = () => client.get(GetAddressesByPostcode_endpoint); 
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /KYBCheck -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendLoginOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const KYBCheck = (  ) => client.post('/authverifymodule/KYBCheck', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SetToggles -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const SetToggles = (  ) => client.post('/cardmodule/SetToggles', {  }); 
+    const SendLoginOTP = (  ) => client.post('/authverifymodule/SendLoginOTP', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetToggles -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyLoginOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const VerifyLoginOTP = (  ) => client.post('/authverifymodule/VerifyLoginOTP', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SaveTokenDetails -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SaveTokenDetails = (  ) => client.post('/authverifymodule/SaveTokenDetails', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendNotification -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SendNotification = (  ) => client.post('/authverifymodule/SendNotification', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /KYCCheck -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const KYCCheck = (  ) => client.post('/authverifymodule/KYCCheck', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /KYBCheck -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const KYBCheck = (  ) => client.post('/authverifymodule/KYBCheck', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /FaceComparisonAsync -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const FaceComparisonAsync = (  ) => client.post('/authverifymodule/FaceComparisonAsync', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CropDocument -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const CropDocument = (  ) => client.post('/authverifymodule/CropDocument', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /ClassifyAndVerify -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const ClassifyAndVerify = (  ) => client.post('/authverifymodule/ClassifyAndVerify', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyDocument -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const VerifyDocument = (  ) => client.post('/authverifymodule/VerifyDocument', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SetToggles -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SetToggles = (  ) => client.post('/cardmodule/SetToggles', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetToggles -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetToggles_endpoint = '/cardmodule/GetToggles';
-    const GetToggles = () => client.get(GetToggles_endpoint); 
+    const GetToggles = () => client.get(GetToggles_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/GetProjectById -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/GetProjectById -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Earthly_GetProjectById_endpoint = '/ecomodule/Earthly/GetProjectById';
-    const Earthly_GetProjectById = () => client.get(Earthly_GetProjectById_endpoint); 
+    const Earthly_GetProjectById = () => client.get(Earthly_GetProjectById_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/GetUserImpacts/{userId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/GetProjectList -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Earthly_GetProjectList_endpoint = '/ecomodule/Earthly/GetProjectList';
+    const Earthly_GetProjectList = () => client.get(Earthly_GetProjectList_endpoint);
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/CreateTokenizedUser -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Earthly_CreateTokenizedUser = (  ) => client.post('/ecomodule/Earthly/CreateTokenizedUser', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/GetCompanyImpacts -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Earthly_GetCompanyImpacts_endpoint = '/ecomodule/Earthly/GetCompanyImpacts';
+    const Earthly_GetCompanyImpacts = () => client.get(Earthly_GetCompanyImpacts_endpoint);
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/GetUserImpacts/{userId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Earthly_GetUserImpacts_userId_endpoint = '/ecomodule/Earthly/GetUserImpacts/{userId}';
-    const Earthly_GetUserImpacts_userId = () => client.get(Earthly_GetUserImpacts_userId_endpoint); 
+    const Earthly_GetUserImpacts_userId = () => client.get(Earthly_GetUserImpacts_userId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/RewardUser/{userId}/{projectId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/RewardUser/{userId}/{projectId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Earthly_RewardUser_userId_projectId = ( userId, projectId ) => client.post('/ecomodule/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId }); 
+    const Earthly_RewardUser_userId_projectId = ( userId, projectId ) => client.post('/ecomodule/Earthly/RewardUser/{userId}/{projectId}', { userId, projectId });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
      userId
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GenerateReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Earthly/Checkout -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const GenerateReferralCode = (  ) => client.post('/referralmodule/GenerateReferralCode', {  }); 
+    const Earthly_Checkout = (  ) => client.post('/ecomodule/Earthly/Checkout', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GenerateReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const GenerateReferralCode = (  ) => client.post('/referralmodule/GenerateReferralCode', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const VerifyReferralCode_endpoint = '/referralmodule/VerifyReferralCode';
-    const VerifyReferralCode = () => client.get(VerifyReferralCode_endpoint); 
+    const VerifyReferralCode = () => client.get(VerifyReferralCode_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UseReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UseReferralCode -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const UseReferralCode = (  ) => client.post('/referralmodule/UseReferralCode', {  }); 
+    const UseReferralCode = (  ) => client.post('/referralmodule/UseReferralCode', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCustomerDetais -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendRegistrationOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SendRegistrationOTP = (  ) => client.post('/regmodule/SendRegistrationOTP', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /VerifyRegistrationOTP -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const VerifyRegistrationOTP = (  ) => client.post('/regmodule/VerifyRegistrationOTP', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCustomerDetais -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetCustomerDetais_endpoint = '/regmodule/GetCustomerDetais';
-    const GetCustomerDetais = () => client.get(GetCustomerDetais_endpoint); 
+    const GetCustomerDetais = () => client.get(GetCustomerDetais_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetTransactionList/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SaveCustomerAccountDetails -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SaveCustomerAccountDetails = (  ) => client.post('/regmodule/SaveCustomerAccountDetails', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SaveCompanyDetails -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SaveCompanyDetails = (  ) => client.post('/regmodule/SaveCompanyDetails', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetTransactionList/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetTransactionList_accountId_endpoint = '/transactionmodule/GetTransactionList/{accountId}';
-    const GetTransactionList_accountId = () => client.get(GetTransactionList_accountId_endpoint); 
+    const GetTransactionList_accountId = () => client.get(GetTransactionList_accountId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DisputeTransaction -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DisputeTransaction -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const DisputeTransaction = (  ) => client.post('/transactionmodule/DisputeTransaction', {  }); 
+    const DisputeTransaction = (  ) => client.post('/transactionmodule/DisputeTransaction', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendReminder -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendReminder -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const SendReminder_endpoint = '/transactionmodule/SendReminder';
-    const SendReminder = () => client.get(SendReminder_endpoint); 
+    const SendReminder = () => client.get(SendReminder_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CarbonCalculation -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CarbonCalculation -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const CarbonCalculation_endpoint = '/transactionmodule/CarbonCalculation';
-    const CarbonCalculation = () => client.get(CarbonCalculation_endpoint); 
+    const CarbonCalculation = () => client.get(CarbonCalculation_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SetBudget -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SetBudget -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SetBudget = (  ) => client.post('/transactionmodule/SetBudget', {  }); 
+    const SetBudget = (  ) => client.post('/transactionmodule/SetBudget', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetBudget -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetBudget -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetBudget_endpoint = '/transactionmodule/GetBudget';
-    const GetBudget = () => client.get(GetBudget_endpoint); 
+    const GetBudget = () => client.get(GetBudget_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DownloadTransaction -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DownloadTransaction -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const DownloadTransaction_endpoint = '/transactionmodule/DownloadTransaction';
-    const DownloadTransaction = () => client.get(DownloadTransaction_endpoint); 
+    const DownloadTransaction = () => client.get(DownloadTransaction_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetDDMandates/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetDDMandates/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetDDMandates_accountId_endpoint = '/transactionmodule/GetDDMandates/{accountId}';
-    const GetDDMandates_accountId = () => client.get(GetDDMandates_accountId_endpoint); 
+    const GetDDMandates_accountId = () => client.get(GetDDMandates_accountId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetCustomerbyId -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetCustomerbyId -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetCustomerbyId_endpoint = '/walletmodule/Enfuce/GetCustomerbyId';
-    const Enfuce_GetCustomerbyId = () => client.get(Enfuce_GetCustomerbyId_endpoint); 
+    const Enfuce_GetCustomerbyId = () => client.get(Enfuce_GetCustomerbyId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetCustomerbyCustomerNumber -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetCustomerbyCustomerNumber -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetCustomerbyCustomerNumber_endpoint = '/walletmodule/Enfuce/GetCustomerbyCustomerNumber';
-    const Enfuce_GetCustomerbyCustomerNumber = () => client.get(Enfuce_GetCustomerbyCustomerNumber_endpoint); 
+    const Enfuce_GetCustomerbyCustomerNumber = () => client.get(Enfuce_GetCustomerbyCustomerNumber_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdatePrivateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreatePrivateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdatePrivateCustomer = (  ) => client.patch('/walletmodule/Enfuce/UpdatePrivateCustomer', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCorporateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const Enfuce_UpdateCorporateCustomer = (  ) => client.patch('/walletmodule/Enfuce/UpdateCorporateCustomer', {  }); 
+    const Enfuce_CreatePrivateCustomer = (  ) => client.post('/walletmodule/Enfuce/CreatePrivateCustomer', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCorporateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdateCustomer = (  ) => client.post('/walletmodule/Enfuce/UpdateCustomer', {  }); 
+    const Enfuce_CreateCorporateCustomer = (  ) => client.post('/walletmodule/Enfuce/CreateCorporateCustomer', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyId -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdatePrivateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_UpdatePrivateCustomer = (  ) => client.patch('/walletmodule/Enfuce/UpdatePrivateCustomer', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCorporateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_UpdateCorporateCustomer = (  ) => client.patch('/walletmodule/Enfuce/UpdateCorporateCustomer', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_UpdateCustomer = (  ) => client.post('/walletmodule/Enfuce/UpdateCustomer', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyId -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetAccountbyId_endpoint = '/walletmodule/Enfuce/GetAccountbyId';
-    const Enfuce_GetAccountbyId = () => client.get(Enfuce_GetAccountbyId_endpoint); 
+    const Enfuce_GetAccountbyId = () => client.get(Enfuce_GetAccountbyId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyAccountNumber -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyAccountNumber -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetAccountbyAccountNumber_endpoint = '/walletmodule/Enfuce/GetAccountbyAccountNumber';
-    const Enfuce_GetAccountbyAccountNumber = () => client.get(Enfuce_GetAccountbyAccountNumber_endpoint); 
+    const Enfuce_GetAccountbyAccountNumber = () => client.get(Enfuce_GetAccountbyAccountNumber_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCreditAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCreditAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreateCreditAccount = (  ) => client.post('/walletmodule/Enfuce/CreateCreditAccount', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateDebitAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const Enfuce_CreateDebitAccount = (  ) => client.post('/walletmodule/Enfuce/CreateDebitAccount', {  }); 
+    const Enfuce_CreateCreditAccount = (  ) => client.post('/walletmodule/Enfuce/CreateCreditAccount', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreatePrepaidAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateDebitAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreatePrepaidAccount = (  ) => client.post('/walletmodule/Enfuce/CreatePrepaidAccount', {  }); 
+    const Enfuce_CreateDebitAccount = (  ) => client.post('/walletmodule/Enfuce/CreateDebitAccount', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetInvoiceById -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreatePrepaidAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_CreatePrepaidAccount = (  ) => client.post('/walletmodule/Enfuce/CreatePrepaidAccount', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/ViewPIN -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_ViewPIN = (  ) => client.post('/walletmodule/Enfuce/ViewPIN', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetTZPKforSetPIN -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_GetTZPKforSetPIN = (  ) => client.post('/walletmodule/Enfuce/GetTZPKforSetPIN', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/SetPIN -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_SetPIN = (  ) => client.post('/walletmodule/Enfuce/SetPIN', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetInvoiceById -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetInvoiceById_endpoint = '/walletmodule/GetInvoiceById';
-    const GetInvoiceById = () => client.get(GetInvoiceById_endpoint); 
+    const GetInvoiceById = () => client.get(GetInvoiceById_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetTransactionsandAuthorizationsById -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetTransactionsandAuthorizationsById -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetTransactionsandAuthorizationsById_endpoint = '/walletmodule/GetTransactionsandAuthorizationsById';
-    const GetTransactionsandAuthorizationsById = () => client.get(GetTransactionsandAuthorizationsById_endpoint); 
+    const GetTransactionsandAuthorizationsById = () => client.get(GetTransactionsandAuthorizationsById_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCard -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/CreateCard -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_CreateCard = (  ) => client.post('/walletmodule/Enfuce/CreateCard', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCard/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const Enfuce_UpdateCard_id = ( id ) => client.patch('/walletmodule/Enfuce/UpdateCard/{id}', { id }); 
+    const Enfuce_CreateCard = (  ) => client.post('/walletmodule/Enfuce/CreateCard', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetCardByAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateCard/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_UpdateCard_id = ( id ) => client.patch('/walletmodule/Enfuce/UpdateCard/{id}', { id });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetCardByAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetCardByAccount_endpoint = '/walletmodule/Enfuce/GetCardByAccount';
-    const Enfuce_GetCardByAccount = () => client.get(Enfuce_GetCardByAccount_endpoint); 
+    const Enfuce_GetCardByAccount = () => client.get(Enfuce_GetCardByAccount_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetECBExchangeRates -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetECBExchangeRates -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetECBExchangeRates_endpoint = '/walletmodule/Enfuce/GetECBExchangeRates';
-    const Enfuce_GetECBExchangeRates = () => client.get(Enfuce_GetECBExchangeRates_endpoint); 
+    const Enfuce_GetECBExchangeRates = () => client.get(Enfuce_GetECBExchangeRates_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/FXExchangeRates -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/FXExchangeRates -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_FXExchangeRates = (  ) => client.post('/walletmodule/Enfuce/FXExchangeRates', {  }); 
+    const Enfuce_FXExchangeRates = (  ) => client.post('/walletmodule/Enfuce/FXExchangeRates', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyCustomerID -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountbyCustomerID -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetAccountbyCustomerID_endpoint = '/walletmodule/Enfuce/GetAccountbyCustomerID';
-    const Enfuce_GetAccountbyCustomerID = () => client.get(Enfuce_GetAccountbyCustomerID_endpoint); 
+    const Enfuce_GetAccountbyCustomerID = () => client.get(Enfuce_GetAccountbyCustomerID_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountHierarchy/{accountid} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/GetAccountHierarchy/{accountid} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Enfuce_GetAccountHierarchy_accountid_endpoint = '/walletmodule/Enfuce/GetAccountHierarchy/{accountid}';
-    const Enfuce_GetAccountHierarchy_accountid = () => client.get(Enfuce_GetAccountHierarchy_accountid_endpoint); 
+    const Enfuce_GetAccountHierarchy_accountid = () => client.get(Enfuce_GetAccountHierarchy_accountid_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateDebitAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateDebitAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdateDebitAccount = (  ) => client.patch('/walletmodule/Enfuce/UpdateDebitAccount', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdatePrepaidAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const Enfuce_UpdatePrepaidAccount = (  ) => client.patch('/walletmodule/Enfuce/UpdatePrepaidAccount', {  }); 
+    const Enfuce_UpdateDebitAccount = (  ) => client.patch('/walletmodule/Enfuce/UpdateDebitAccount', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdatePrepaidAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Enfuce_UpdateAccount = (  ) => client.post('/walletmodule/Enfuce/UpdateAccount', {  }); 
+    const Enfuce_UpdatePrepaidAccount = (  ) => client.patch('/walletmodule/Enfuce/UpdatePrepaidAccount', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCustomer/{cid} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Enfuce/UpdateAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Enfuce_UpdateAccount = (  ) => client.post('/walletmodule/Enfuce/UpdateAccount', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCustomer/{cid} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetCustomer_cid_endpoint = '/walletmodule/GetCustomer/{cid}';
-    const GetCustomer_cid = () => client.get(GetCustomer_cid_endpoint); 
+    const GetCustomer_cid = () => client.get(GetCustomer_cid_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UploadDocument -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateNewCustomer -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const UploadDocument = (  ) => client.post('/walletmodule/UploadDocument', {  }); 
+    const CreateNewCustomer = (  ) => client.post('/walletmodule/CreateNewCustomer', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateDDMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UploadDocument -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateDDMandate_id = ( id ) => client.post('/walletmodule/CreateDDMandate/{id}', { id }); 
+    const UploadDocument = (  ) => client.post('/walletmodule/UploadDocument', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateDDMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const CreateDDMandate_id = ( id ) => client.post('/walletmodule/CreateDDMandate/{id}', { id });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
@@ -424,30 +541,35 @@
      reference
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetMandates -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetMandates -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetMandates_endpoint = '/walletmodule/GetMandates';
-    const GetMandates = () => client.get(GetMandates_endpoint); 
+    const GetMandates = () => client.get(GetMandates_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CancelMandate_id = ( id ) => client.post('/walletmodule/CancelMandate/{id}', { id }); 
+    const CancelMandate_id = ( id ) => client.post('/walletmodule/CancelMandate/{id}', { id });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
      id
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCollectionActivities -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DDMandateWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const DDMandateWebhook = (  ) => client.post('/walletmodule/DDMandateWebhook', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetCollectionActivities -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetCollectionActivities_endpoint = '/walletmodule/GetCollectionActivities';
-    const GetCollectionActivities = () => client.get(GetCollectionActivities_endpoint); 
+    const GetCollectionActivities = () => client.get(GetCollectionActivities_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateCollectionSchedule/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateCollectionSchedule/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateCollectionSchedule_id = ( id ) => client.post('/walletmodule/CreateCollectionSchedule/{id}', { id }); 
+    const CreateCollectionSchedule_id = ( id ) => client.post('/walletmodule/CreateCollectionSchedule/{id}', { id });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
@@ -461,34 +583,34 @@
      regularPaymentAmount
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelDDCollection/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelDDCollection/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CancelDDCollection_id = ( id ) => client.post('/walletmodule/CancelDDCollection/{id}', { id }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelDDCollectionSchedule/{collectionScheduleId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const CancelDDCollectionSchedule_collectionScheduleId = ( collectionScheduleId ) => client.post('/walletmodule/CancelDDCollectionSchedule/{collectionScheduleId}', { collectionScheduleId }); 
+    const CancelDDCollection_id = ( id ) => client.post('/walletmodule/CancelDDCollection/{id}', { id });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /PayInWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelDDCollectionSchedule/{collectionScheduleId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const PayInWebhook = (  ) => client.post('/walletmodule/PayInWebhook', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UpcomingDDCollectionCreditWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const UpcomingDDCollectionCreditWebhook = (  ) => client.post('/walletmodule/UpcomingDDCollectionCreditWebhook', {  }); 
+    const CancelDDCollectionSchedule_collectionScheduleId = ( collectionScheduleId ) => client.post('/walletmodule/CancelDDCollectionSchedule/{collectionScheduleId}', { collectionScheduleId });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DDCollectionStatusWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /PayInWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const DDCollectionStatusWebhook = (  ) => client.post('/walletmodule/DDCollectionStatusWebhook', {  }); 
+    const PayInWebhook = (  ) => client.post('/walletmodule/PayInWebhook', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SuspendMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UpcomingDDCollectionCreditWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const SuspendMandate_id = ( id ) => client.post('/walletmodule/SuspendMandate/{id}', { id }); 
+    const UpcomingDDCollectionCreditWebhook = (  ) => client.post('/walletmodule/UpcomingDDCollectionCreditWebhook', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DDCollectionStatusWebhook -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const DDCollectionStatusWebhook = (  ) => client.post('/walletmodule/DDCollectionStatusWebhook', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SuspendMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SuspendMandate_id = ( id ) => client.post('/walletmodule/SuspendMandate/{id}', { id });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
@@ -496,23 +618,28 @@
      cancelAllScheduledPayments
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /ReinstateMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /ReinstateMandate/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const ReinstateMandate_id = ( id ) => client.post('/walletmodule/ReinstateMandate/{id}', { id }); 
+    const ReinstateMandate_id = ( id ) => client.post('/walletmodule/ReinstateMandate/{id}', { id });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
      id
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateCustomerPCMBusiness -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateCustomerPCMIndividual -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateCustomerPCMBusiness = (  ) => client.post('/walletmodule/CreateCustomerPCMBusiness', {  }); 
+    const CreateCustomerPCMIndividual = (  ) => client.post('/walletmodule/CreateCustomerPCMIndividual', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateAccounts/{CustomerId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateCustomerPCMBusiness -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateAccounts_CustomerId = ( customerId ) => client.post('/walletmodule/CreateAccounts/{CustomerId}', { customerId }); 
+    const CreateCustomerPCMBusiness = (  ) => client.post('/walletmodule/CreateCustomerPCMBusiness', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateAccounts/{CustomerId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const CreateAccounts_CustomerId = ( customerId ) => client.post('/walletmodule/CreateAccounts/{CustomerId}', { customerId });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
@@ -521,36 +648,36 @@
      currency
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /FutureDated -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /FutureDated -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const FutureDated = (  ) => client.post('/walletmodule/FutureDated', {  }); 
+    const FutureDated = (  ) => client.post('/walletmodule/FutureDated', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /PaymentApproval -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /PaymentApproval -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const PaymentApproval_endpoint = '/walletmodule/PaymentApproval';
-    const PaymentApproval = () => client.get(PaymentApproval_endpoint); 
+    const PaymentApproval = () => client.get(PaymentApproval_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /BlockSpecificAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /BlockSpecificAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const BlockSpecificAccount = (  ) => client.post('/walletmodule/BlockSpecificAccount', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendMoneyProcedureImplementation -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const SendMoneyProcedureImplementation = (  ) => client.post('/walletmodule/SendMoneyProcedureImplementation', {  }); 
+    const BlockSpecificAccount = (  ) => client.post('/walletmodule/BlockSpecificAccount', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /SendMoneyProcedureImplementation -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const SendMoneyProcedureImplementation = (  ) => client.post('/walletmodule/SendMoneyProcedureImplementation', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetAccount_id_endpoint = '/walletmodule/GetAccount/{id}';
-    const GetAccount_id = () => client.get(GetAccount_id_endpoint); 
+    const GetAccount_id = () => client.get(GetAccount_id_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /EditAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /EditAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const EditAccount_id = ( id ) => client.put('/walletmodule/EditAccount/{id}', { id }); 
+    const EditAccount_id = ( id ) => client.put('/walletmodule/EditAccount/{id}', { id });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
@@ -558,57 +685,57 @@
      externalReference
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetAccountByCustomer/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetAccountByCustomer/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetAccountByCustomer_id_endpoint = '/walletmodule/GetAccountByCustomer/{id}';
-    const GetAccountByCustomer_id = () => client.get(GetAccountByCustomer_id_endpoint); 
+    const GetAccountByCustomer_id = () => client.get(GetAccountByCustomer_id_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetTransactions/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetTransactions/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetTransactions_id_endpoint = '/walletmodule/GetTransactions/{id}';
-    const GetTransactions_id = () => client.get(GetTransactions_id_endpoint); 
+    const GetTransactions_id = () => client.get(GetTransactions_id_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UnblockAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /UnblockAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const UnblockAccount_id = ( id ) => client.post('/walletmodule/UnblockAccount/{id}', { id }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CloseAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const CloseAccount_id = ( id ) => client.post('/walletmodule/CloseAccount/{id}', { id }); 
+    const UnblockAccount_id = ( id ) => client.post('/walletmodule/UnblockAccount/{id}', { id });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /InboundPayment -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CloseAccount/{id} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const InboundPayment = (  ) => client.post('/walletmodule/InboundPayment', {  }); 
+    const CloseAccount_id = ( id ) => client.post('/walletmodule/CloseAccount/{id}', { id });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetMandatesAccount/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /InboundPayment -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const InboundPayment = (  ) => client.post('/walletmodule/InboundPayment', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetMandatesAccount/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetMandatesAccount_accountId_endpoint = '/walletmodule/GetMandatesAccount/{accountId}';
-    const GetMandatesAccount_accountId = () => client.get(GetMandatesAccount_accountId_endpoint); 
+    const GetMandatesAccount_accountId = () => client.get(GetMandatesAccount_accountId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelMandateOutbound -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CancelMandateOutbound -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CancelMandateOutbound = (  ) => client.post('/walletmodule/CancelMandateOutbound', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /RejectCollection -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const RejectCollection = (  ) => client.post('/walletmodule/RejectCollection', {  }); 
+    const CancelMandateOutbound = (  ) => client.post('/walletmodule/CancelMandateOutbound', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /BatchPayment -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /RejectCollection -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const BatchPayment = (  ) => client.post('/walletmodule/BatchPayment', {  }); 
+    const RejectCollection = (  ) => client.post('/walletmodule/RejectCollection', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /EditSpecificRule/{ruleId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /BatchPayment -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const EditSpecificRule_ruleId = ( ruleId ) => client.put('/walletmodule/EditSpecificRule/{ruleId}', { ruleId }); 
+    const BatchPayment = (  ) => client.post('/walletmodule/BatchPayment', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /EditSpecificRule/{ruleId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const EditSpecificRule_ruleId = ( ruleId ) => client.put('/walletmodule/EditSpecificRule/{ruleId}', { ruleId });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
@@ -629,31 +756,31 @@
      name
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateRule -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateRule -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateRule = (  ) => client.post('/walletmodule/CreateRule', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DeleteRule/{rIds} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const DeleteRule_rIds = ( rIds ) => client.delete('/walletmodule/DeleteRule/{rIds}', { rIds }); 
+    const CreateRule = (  ) => client.post('/walletmodule/CreateRule', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetSpecificRules/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DeleteRule/{rIds} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const DeleteRule_rIds = ( rIds ) => client.delete('/walletmodule/DeleteRule/{rIds}', { rIds });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetSpecificRules/{accountId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetSpecificRules_accountId_endpoint = '/walletmodule/GetSpecificRules/{accountId}';
-    const GetSpecificRules_accountId = () => client.get(GetSpecificRules_accountId_endpoint); 
+    const GetSpecificRules_accountId = () => client.get(GetSpecificRules_accountId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetRules/{accountId}/{rtype} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /GetRules/{accountId}/{rtype} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const GetRules_accountId_rtype_endpoint = '/walletmodule/GetRules/{accountId}/{rtype}';
-    const GetRules_accountId_rtype = () => client.get(GetRules_accountId_rtype_endpoint); 
+    const GetRules_accountId_rtype = () => client.get(GetRules_accountId_rtype_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateNewBeneficiary/{cid} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /CreateNewBeneficiary/{cid} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const CreateNewBeneficiary_cid = ( cid ) => client.post('/walletmodule/CreateNewBeneficiary/{cid}', { cid }); 
+    const CreateNewBeneficiary_cid = ( cid ) => client.post('/walletmodule/CreateNewBeneficiary/{cid}', { cid });
 
 
 /* *-*-*-*-*-*-*-*-*-*- BODY -*-*-*-*-*-*-*-*-*-*
@@ -687,35 +814,33 @@
      address.country
 */
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DeleteBeneficiaries/{cid}/{bId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /DeleteBeneficiaries/{cid}/{bId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const DeleteBeneficiaries_cid_bId = ( cid, bId ) => client.delete('/walletmodule/DeleteBeneficiaries/{cid}/{bId}', { cid, bId }); 
+    const DeleteBeneficiaries_cid_bId = ( cid, bId ) => client.delete('/walletmodule/DeleteBeneficiaries/{cid}/{bId}', { cid, bId });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /RetrieveBeneficiaries/{customerId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /RetrieveBeneficiaries/{customerId} -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const RetrieveBeneficiaries_customerId_endpoint = '/walletmodule/RetrieveBeneficiaries/{customerId}';
-    const RetrieveBeneficiaries_customerId = () => client.get(RetrieveBeneficiaries_customerId_endpoint); 
+    const RetrieveBeneficiaries_customerId = () => client.get(RetrieveBeneficiaries_customerId_endpoint);
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/CreateAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/CreateAccount -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Wallet_CreateAccount = (  ) => client.post('/walletmodule/Wallet/CreateAccount', {  }); 
-
-
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/CreateNewBeneficiary -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
-
-    const Wallet_CreateNewBeneficiary = (  ) => client.post('/walletmodule/Wallet/CreateNewBeneficiary', {  }); 
+    const Wallet_CreateAccount = (  ) => client.post('/walletmodule/Wallet/CreateAccount', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/DeleteBeneficiaries -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/CreateNewBeneficiary -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-    const Wallet_DeleteBeneficiaries = (  ) => client.delete('/walletmodule/Wallet/DeleteBeneficiaries', {  }); 
+    const Wallet_CreateNewBeneficiary = (  ) => client.post('/walletmodule/Wallet/CreateNewBeneficiary', {  });
 
 
-// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/RetrieveBeneficiaries -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/DeleteBeneficiaries -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+    const Wallet_DeleteBeneficiaries = (  ) => client.delete('/walletmodule/Wallet/DeleteBeneficiaries', {  });
+
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- /Wallet/RetrieveBeneficiaries -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
     const Wallet_RetrieveBeneficiaries_endpoint = '/walletmodule/Wallet/RetrieveBeneficiaries';
-    const Wallet_RetrieveBeneficiaries = () => client.get(Wallet_RetrieveBeneficiaries_endpoint); 
-
-    const SendLoginOTP = (email, phoneNumber) => client.post('/SendLoginOTP', { email, phoneNumber });
+    const Wallet_RetrieveBeneficiaries = () => client.get(Wallet_RetrieveBeneficiaries_endpoint);
