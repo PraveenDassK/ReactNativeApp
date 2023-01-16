@@ -20,11 +20,13 @@ const Settings = ({navigation}) => {
   const loadData = async () => {
     const response = await api.getListings();
     console.log(response.data.details)
-    console.log(response.data.details.accountDetails.accountId)
-    setAccNum(response.data.details.accountDetails.accountId)
+    setAccNum(response.data.details.accountDetails[0].accountNo)
+    setSortCode("22-33-44-55")
+    setName(response.data.details.customerDetails[0].firstName)
+    setPlan(response.data.details.accountDetails[0].accountType + " ACCOUNT")
   }
-  console.log(account)
 
+  console.log("Num:" + account)
 
   return (
     <View style={styles.settings}>
