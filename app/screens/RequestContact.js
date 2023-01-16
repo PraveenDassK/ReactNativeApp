@@ -1,8 +1,22 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const RequestContact = ({navigation}) => {
+  const [amount, setAmount] = useState("")
+  const [note, setNote] = useState("")
+  const [userData, setCode] = useState("")
+  const reciver = "Me";
+  const sortCode = "00-00-00"
+  const accountCode = "01234567890"  
+  let payment = (amount ? amount : 1).toString()
+
+  console.log(payment)
+
+  const requestContact = (amount) => {
+    console.log(amount)
+    navigation.navigate("Requested")
+  }
  
   return (
     <View style={styles.requestContact}>
@@ -35,15 +49,27 @@ const RequestContact = ({navigation}) => {
 
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.helloContainer, styles.groupViewPosition]}>
+          <Pressable
+              onPress={() => {
+                setAmount(20)
+              }}
+            >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
               £20
             </Text>
+            </Pressable>
 
           </View>
           <View style={[styles.groupView, styles.groupViewPosition]}>
+          <Pressable
+              onPress={() => {
+                setAmount(50)
+              }}
+            >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
               £50
             </Text>
+            </Pressable>
 
           </View>
           <View
@@ -53,9 +79,15 @@ const RequestContact = ({navigation}) => {
               styles.parentPosition1,
             ]}
           >
+            <Pressable
+              onPress={() => {
+                setAmount(100)
+              }}
+            >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
               £100
             </Text>
+            </Pressable>
 
           </View>
         </View>
@@ -63,7 +95,7 @@ const RequestContact = ({navigation}) => {
           <Text style={[styles.hello7, styles.helloTypo1, styles.helloColor]}>
             Request{"\n"}
           </Text>
-          <TextInput style={[styles.hello8, styles.helloTypo1]} placeholder="£500" keyboardType="numeric"/>
+          <TextInput style={[styles.hello8, styles.helloTypo1]} placeholder={"£"+payment} keyboardType="numeric"/>
           <View
             style={[
               styles.lineView,
@@ -74,7 +106,7 @@ const RequestContact = ({navigation}) => {
         </View>
         <Pressable
           style={styles.groupPressable}
-          onPress={() => navigation.navigate("Requested")}
+          onPress={() => requestContact(amount)}
         >
           <View
             style={[
@@ -130,7 +162,7 @@ const styles = StyleSheet.create({
   },
   helloParent2Position: {
     left: 50,
-    top: "50%",
+    top: "47%",
     position: "absolute",
   },
   groupViewPosition: {
@@ -159,9 +191,9 @@ const styles = StyleSheet.create({
     top: 148,
   },
   groupChild: {
-    left:"50%",
-    height:"30%",
-    height:"30%",
+    left:"25%",
+    height:"40%",
+    width:"50%",
     top: 0,
     resizeMode:"contain",
     position: "absolute",
@@ -287,6 +319,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
     textAlign: "center",
+    top:"10%"
   },
   groupPressable: {
     bottom: 49,

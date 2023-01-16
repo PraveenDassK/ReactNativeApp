@@ -1,31 +1,61 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { Text, StyleSheet, Image, View, Pressable,TextInput } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
 const AddFunds = ({navigation}) =>{
+  const [amount, setAmount] = useState("")
+  const [note, setNote] = useState("")
+  const [userData, setCode] = useState("")
+  const reciver = "Me";
+  const sortCode = "00-00-00"
+  const accountCode = "01234567890"  
+  let payment = (amount ? amount : 1).toString()
+
+  console.log(payment)
+
+  const addFunds = (amount) => {
+    console.log(amount)
+    navigation.navigate("ReviewAndConfirm")
+  }
   return (
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Add Funds</Text>
 
         <View style={[styles.groupParent, styles.presetPosition]}>
-
           <View style={styles.twentyPosition}>
+          <Pressable
+              onPress={() => {
+                setAmount(20)
+              }}
+            >
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
               £20
             </Text>
+            </Pressable>
           </View>
 
           <View style={styles.fiftyPosition}>
+          <Pressable
+              onPress={() => {
+                setAmount(50)
+              }}
+            >
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
               £50
             </Text>
+            </Pressable>
           </View>
-
           <View style={[styles.hundredPosition]}>
+          <Pressable
+              onPress={() => {
+                setAmount(100)
+              }}
+            >
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
               £100
             </Text>
+            </Pressable>
           </View>
         </View>
 
@@ -37,7 +67,8 @@ const AddFunds = ({navigation}) =>{
           <View style={styles.lineView} />
         </View>
         <View style={[styles.helloParent11, styles.parentPosition]}>
-          <TextInput style={[styles.hello5, styles.helloTypo1]} placeholder={"£100"}/>
+          <TextInput style={[styles.hello5, styles.helloTypo1]} keyboardType="numeric"
+           placeholder= {"£" + payment}/>
         </View>
 
         <View style={[styles.groupContainer, styles.groupPosition]}>
@@ -69,7 +100,7 @@ const AddFunds = ({navigation}) =>{
         </View>
         <Pressable
           style={[styles.groupPressable, styles.groupPosition]}
-          onPress={() => navigation.navigate("ReviewAndConfirm")}
+          onPress={() => addFunds(amount)}
         >
           <View style={[styles.rectangleParent, styles.groupViewPosition]}>
             <View style={[styles.rectangleView, styles.rectangleViewLayout]} />

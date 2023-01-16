@@ -1,67 +1,124 @@
-import * as React from "react";
-import { StyleSheet, View, Pressable, Text, Image, TextInput } from "react-native";
-
+import React, { useContext, useEffect, useState, Keyboard } from "react";
+import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const SendContact = ({navigation}) => {
-  
+  const [amount, setAmount] = useState("")
+  const [note, setNote] = useState("")
+  const [userData, setCode] = useState("")
+  const reciver = "Me";
+  const sortCode = "00-00-00"
+  const accountCode = "01234567890"  
+  let payment = (amount ? amount : 1).toString()
+
+  console.log(payment)
+
+  const sendContact = (amount) => {
+    console.log(amount)
+    navigation.navigate("SentMoney")
+  }
+ 
   return (
-    <View style={styles.sendContact}>
+    <View style={styles.requestContact}>
       <View style={styles.groupParent}>
-        <Pressable
-          style={[styles.groupChild, styles.groupPosition1]}
-          onPress={() => navigation.navigate("SentMoney")}
-        />
         <View style={styles.helloParent}>
-          <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
-            Hudson Maia{"\n"}
-          </Text>
-          <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
-            +440123456789{"\n"}
-          </Text>
-          <Text style={[styles.hello2, styles.helloTypo, styles.helloTypo3]}>
+          <Text
+            style={[
+              styles.hello,
+              styles.helloTypo1,
+              styles.helloColor,
+              styles.helloTypo2,
+            ]}
+          >
             Joined September 2022
           </Text>
           <Image
-            style={styles.groupItem}
+            style={styles.groupChild}
             resizeMode="cover"
             source={require("../assets/group-303373.png")}
           />
+          <Text style={[styles.hello1, styles.helloTypo]}>Hudson Maia{'\n'}</Text>
+          <Text style={[styles.hello2, styles.helloTypo]}>+440123456789</Text>
         </View>
+        <View
+          style={[
+            styles.groupItem,
+            styles.groupPosition1,
+          ]}
+        />
 
-        <View style={styles.groupContainer}>
-          <View style={[styles.helloContainer, styles.helloPosition]}>
-            <Text style={[styles.twentyPosition, styles.helloTypo]}>£20</Text>
+        <View style={[styles.groupContainer, styles.helloParent2Position]}>
+          <View style={[styles.helloContainer, styles.groupViewPosition]}>
+          <Pressable
+              onPress={() => {
+                setAmount(20)
+              }}
+            >
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+              £20
+            </Text>
+            </Pressable>
+
           </View>
-          <View style={[styles.helloContainer, styles.helloPosition]}>
-            <Text style={[styles.fiftyPosition, styles.helloTypo]}>£50</Text>
+          <View style={[styles.groupView, styles.groupViewPosition]}>
+          <Pressable
+              onPress={() => {
+                setAmount(50)
+              }}
+            >
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+              £50
+            </Text>
+            </Pressable>
+
           </View>
-          <View style={[styles.helloContainer, styles.helloPosition]}>
-            <Text style={[styles.hundredPosition, styles.helloTypo]}>£100</Text>
+          <View
+            style={[
+              styles.helloParent1,
+              styles.parentPosition,
+              styles.parentPosition1,
+            ]}
+          >
+            <Pressable
+              onPress={() => {
+                setAmount(100)
+              }}
+            >
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+              £100
+            </Text>
+            </Pressable>
+
           </View>
         </View>
-
-        <View style={[styles.helloParent1, styles.helloParent1Position]}>
-          <Text style={[styles.hello6, styles.helloTypo]}>Pay</Text>
-          <TextInput style={[styles.hello7, styles.helloTypo2, styles.helloTypo4]}
-          keyboardType="numeric"
-           placeholder="£500" 
+        <View style={[styles.helloParent2, styles.helloParent2Position]}>
+          <Text style={[styles.hello7, styles.helloTypo1, styles.helloColor]}>
+            Pay{"\n"}
+          </Text>
+          <TextInput style={[styles.hello8, styles.helloTypo1]} placeholder={"£"+payment} keyboardType="numeric"/>
+          <View
+            style={[
+              styles.lineView,
+              styles.parentPosition,
+              styles.lineViewBorder,
+            ]}
           />
-          <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
-
-        <View style={[styles.maskGroup236, styles.helloParent1Position]} />
         <Pressable
           style={styles.groupPressable}
-          onPress={() => navigation.navigate("SentMoney")}
+          onPress={() => sendContact(amount)}
         >
-          <View style={[styles.rectangleParent, styles.groupPosition1]}>
+          <View
+            style={[
+              styles.rectangleParent,
+              styles.parentPosition,
+              styles.parentPosition1,
+            ]}
+          >
             <View style={styles.rectangleView} />
-            <View style={[styles.maskGroup2361, styles.lineViewPosition]} />
+            <View style={[styles.maskGroup236, styles.parentPosition]} />
           </View>
-          <Text style={[styles.hello9, styles.helloTypo2, styles.helloTypo4]}>
-            Send
-          </Text>
+          <Text style={styles.hello9}>Send</Text>
         </Pressable>
       </View>
     </View>
@@ -69,85 +126,208 @@ const SendContact = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  groupPosition1: {
-    bottom: 0,
-    right: -10,
-    top: 0,
-    position: "absolute",
-    width:"100%"
-  },
-  twentyPosition: {
-    left: "-25%",
-    top: "20%",
-    width:"100%"
-  },
-  fiftyPosition: {
-    left: "0%",
-    top: "20%",
-    width:"100%"
-  },
-  hundredPosition: {
-    left: "25%",
-    top: "20%",
-    width:"100%"
-  },
-  helloTypo2: {
+  helloTypo1: {
     textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
-    left: "0%",
-
   },
-  helloTypo3: {
+  helloColor: {
+    color: GlobalStyles.Color.gray_700,
+    textAlign: "center",
+  },
+  helloTypo2: {
+    fontSize: GlobalStyles.FontSize.size_base,
+    color: GlobalStyles.Color.gray_700,
+    width:"100%",
+    textAlign:"center",
+  },
+  helloTypo: {
     color: GlobalStyles.Color.indigo_100,
     fontSize: GlobalStyles.FontSize.size_4xl,
     textAlign: "center",
-    width:"100%"
     // fontFamily: GlobalStyles.FontFamily.helvetica,
-  },
-  helloTypo: {
-    color: GlobalStyles.Color.gray_700,
-    textAlign: "center",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_base,
     position: "absolute",
-    width:"100%"
   },
-  helloTypo1: {
-    fontSize: GlobalStyles.FontSize.size_7xl,
-    color: GlobalStyles.Color.gray_700,
-    width:"100%"
+  lineViewBorder: {
+    height: 2,
+    borderTopWidth: 1,
+    borderColor: "#707070",
+    borderStyle: "solid",
   },
-  helloPosition: {
-    width: "100%",
+  groupPosition1: {
+    left: "22%",
+    right:0,
+    top: "50%",
+    position: "absolute",
+  },
+  helloParent2Position: {
+    left: 50,
+    top: "47%",
+    position: "absolute",
+  },
+  groupViewPosition: {
+    width: 62,
     bottom: 0,
     top: 0,
     position: "absolute",
   },
   groupPosition: {
-    height: 17,
+    height: "17%",
     width: 18,
-    left: "50%",
     bottom: 0,
+    left: "50%",
     position: "absolute",
   },
-  helloParent1Position: {
+  parentPosition: {
     right: "10%",
-    left: "10%",
-    top: "50%",
-    width:"80%",
     position: "absolute",
   },
-  helloTypo4: {
-    textAlign: "center",
-    width:"100%"
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+  parentPosition1: {
+    bottom: 0,
+    right: 0,
+    top: 0,
   },
-  lineViewPosition: {
-    right: "5%",
-    position: "absolute",
+  hello: {
+    top: 148,
   },
   groupChild: {
+    left:"25%",
+    height:"40%",
+    width:"50%",
+    top: 0,
+    resizeMode:"contain",
+    position: "absolute",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  hello1: {
+    top: 90,
+    width:"100%",
+    textAlign:"center",
+    fontWeight: "700",
+  },
+  hello2: {
+    top: 120,
+    width:"100%",
+    textAlign:"center",
+  },
+  helloParent: {
+    top: 44,
+    height: 172,
+    width:"100%",
+    position: "absolute",
+  },
+  groupItem: {
+    marginTop: 31.75,
+    right: 32,
+  },
+  hello3: {
+    top: 5,
+    left: 23,
+  },
+  iconMaterialKeyboardVoice: {
+    marginTop: -9.35,
+    right: 16,
+    width: 14,
+    height: 19,
+    top: "50%",
+    position: "absolute",
+  },
+  helloGroup: {
+    marginTop: 44.5,
+    borderRadius: GlobalStyles.Border.br_5xl,
+    backgroundColor: GlobalStyles.Color.gray_200,
+    height: 42,
+    right: 31,
+  },
+  hello4: {
+    fontSize: GlobalStyles.FontSize.size_7xl,
+    lineHeight: 32,
+    top: 0,
+    left: 0,
+  },
+  groupInner: {
+    marginLeft: -7.94,
+  },
+  helloContainer: {
+    left: 0,
+  },
+  groupIcon: {
+    marginLeft: -7.71,
+  },
+  groupView: {
+    marginLeft: -27.5,
+    left: "50%",
+  },
+  groupChild1: {
+    marginLeft: -7.22,
+  },
+  helloParent1: {
+    width: 76,
+  },
+  groupContainer: {
+    marginTop: 149,
+    height: 50,
+    right: 31,
+  },
+  hello7: {
+    width:"100%",
+    textAlign:"center",
+    fontSize: GlobalStyles.FontSize.size_xl,
+    top: 0,
+  },
+  hello8: {
+    top: 28,
+    width:"100%",
+    fontSize: GlobalStyles.FontSize.size_13xl,
+    lineHeight: 27,
+    color: GlobalStyles.Color.blue_100,
+  },
+  lineView: {
+    bottom: -1,
+    left: -1,
+  },
+  helloParent2: {
+    marginTop: -64.5,
+    height: 98,
+    right: 32,
+  },
+  rectangleView: {
+    height: "100%",
+    top: "-20%",
+    right: "0%",
+    bottom: "0%",
+    left: "5%",
+    borderRadius: GlobalStyles.Border.br_lg,
+    backgroundColor: GlobalStyles.Color.blue_100,
+    position: "absolute",
+    width: "90%",
+  },
+  maskGroup236: {
+    bottom: 13,
+    top: 0,
+    left: 0,
+  },
+  rectangleParent: {
+    left: 0,
+  },
+  hello9: {
+    width:"100%",
+    textAlign:"center",
+    textAlignVertical: "center",
+    fontSize: GlobalStyles.FontSize.size_lg,
+    textTransform: "uppercase",
+    color: GlobalStyles.Color.white,
+    textAlign: "center",
+    top:"10%"
+  },
+  groupPressable: {
+    bottom: 49,
+    height: 60,
+    width:"100%",
+    position: "absolute",
+  },
+  groupParent: {
     borderTopLeftRadius: GlobalStyles.Border.br_4xl,
     borderTopRightRadius: GlobalStyles.Border.br_4xl,
     shadowColor: "rgba(1, 1, 253, 0.1)",
@@ -158,161 +338,13 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    left: 0,
+    width: "100%",
+    height: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
-  hello: {
-    top: 80,
-    fontWeight: "700",
-  },
-  hello1: {
-    top: 110,
-    left: 0,
-  },
-  hello2: {
-    top: 138,
-    width:"100%"
-  },
-  groupItem: {
-    bottom: 106,
-    resizeMode:"contain",
-    top: 0,
-    position: "absolute",
-    left:"25%",
-    width:"40%",
-    height:"40%",
-  },
-  helloParent: {
-    width: "80%",
-    height: 172,
-    top:"5%",
-    left: "10%",
-    position: "absolute",
-  },
-  hello3: {
-    fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 35,
-    left: 15,
-    top: 0,
-  },
-  groupInner: {
-    marginLeft: -7.94,
-  },
-  helloGroup: {
-    left: 0,
-  },
-  groupIcon: {
-    marginLeft: -7.71,
-  },
-  helloContainer: {
-    left: "0%",
-  },
-  groupChild1: {
-    marginLeft: -7.22,
-  },
-  groupView: {
-    width: 80,
-  },
-  groupContainer: {
-    marginTop: 119,
-    height: 50,
-    left: "5%",
-    right: "5%",
-    top: "50%",
-    width:"80%",
-    position: "absolute",
-  },
-  hello6: {
-    left: "0%",
-    fontSize: GlobalStyles.FontSize.size_xl,
-    top: 0,
-  },
-  hello7: {
-    top: 28,
-    fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 37,
-    color: GlobalStyles.Color.blue_100,
-  },
-  lineView: {
-    bottom: "-1%",
-    left: "-6%",
-    borderStyle: "solid",
-    borderColor: "#707070",
-    borderTopWidth: 1,
-    height: 2,
-  },
-  helloParent1: {
-    marginTop: -64.5,
-    height: 98,
-    width: "100%",
-  },
-  hello8: {
-    top: 5,
-    left: 13,
-  },
-  iconMaterialKeyboardVoice: {
-    marginTop: -9.35,
-    right: 16,
-    width: 14,
-    height: 19,
-    top: "50%",
-    position: "absolute",
-  },
-  helloParent2: {
-    marginTop: 44.5,
-    left: "10%",
-    borderRadius: GlobalStyles.Border.br_5xl,
-    backgroundColor: GlobalStyles.Color.gray_200,
-    height: 42,
-    right: "8%",
-    top: "50%",
-    position: "absolute",
-  },
-  maskGroup236: {
-    marginTop: 129.5,
-    height: 47,
-  },
-  rectangleView: {
-    height: "100%",
-    top: "-30%",
-    right: "0%",
-    bottom: "0%",
-    left: "2%",
-    borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.blue_100,
-    position: "absolute",
-    width: "100%",
-  },
-  maskGroup2361: {
-    bottom: 13,
-    left: 0,
-    top: 0,
-  },
-  rectangleParent: {
-    left: 10,
-  },
-  hello9: {
-    top: "0%",
-    left: "50%",
-    textAlign: "center",
-    fontSize: GlobalStyles.FontSize.size_lg,
-    textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
-  },
-  groupPressable: {
-    right: "10%",
-    bottom: "5%",
-    left: "5%",
-    height: 60,
-    position: "absolute",
-  },
-  groupParent: {
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-  },
-  sendContact: {
+  requestContact: {
     flex: 1,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },
