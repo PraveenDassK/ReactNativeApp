@@ -2,12 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/login"
+import AuthContext from "../auth/context";
 
 const Settings = ({navigation}) => {
-  const account="12345677";
-  const sortcode="12-34-56";
-  const fullname="Full Name";
-  const plan="Standard";
+  const [account, setAccNum] = useState(null)
+  const [sortcode, setSortCode] = useState(null)
+  const [fullname, setName] = useState(null)
+  const [plan, setPlan] = useState(null)
+
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.getListings();
+    console.log(response.data.details)
+    console.log(response.data.details.accountDetails.accountId)
+    setAccNum(response.data.details.accountDetails.accountId)
+  }
+  console.log(account)
+
 
   return (
     <View style={styles.settings}>
