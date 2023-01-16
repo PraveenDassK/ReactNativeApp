@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View, Pressable, Image,TextInput } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const SelectBank1 = ({navigation}) => {
-
+  const [username, setUserName] = useState("")
+  const [password, setPassword] = useState("")
   return (
     <Screen>
     <View style={styles.selectBank1}>
@@ -18,8 +19,12 @@ const SelectBank1 = ({navigation}) => {
             enabling Carbonyte to retrieve your personal data.
           </Text>
         </Text>
-        <TextInput style={[styles.username, styles.usernameTypo]} placeholder={"Username"}/>
-        <TextInput style={[styles.password, styles.usernameTypo]} placeholder={"Password"}/>
+        <TextInput style={[styles.username, styles.usernameTypo]} 
+        placeholder={"Username"}
+        onChangeText={newText => setUserName(newText)}/>
+        <TextInput style={[styles.password, styles.usernameTypo]} 
+        placeholder={"Password"}
+        onChangeText={newText => setPassword(newText)}/>
         <TextInput style={[styles.groupChild, styles.groupBorder]} placeholder={""} />
         <TextInput style={[styles.groupItem, styles.groupBorder]} />
         <Pressable
