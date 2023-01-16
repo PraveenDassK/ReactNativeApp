@@ -203,8 +203,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello8: {
-    top: "20.33%",
-    left: "38.26%",
+    top: "0.33%",
+    left: "50%",
+    marginLeft: -20,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
     left: -1,
   },
   helloParent1: {
-    marginTop: 80.75,
+    marginTop: 100.75,
     left: 26,
     height: 32,
     right: 40,

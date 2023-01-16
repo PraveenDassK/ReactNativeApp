@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
   },
   iconPosition: {
     top: "100%",
+
     position: "absolute",
     
   },
@@ -193,8 +194,9 @@ const styles = StyleSheet.create({
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 32,
+    lineHeight: 42,
     left: "-25%",
+    top:10,
     textAlign: "left",
   },
   groupChild: {
@@ -233,6 +235,7 @@ const styles = StyleSheet.create({
     right: 31,
   },
   hello4: {
+    top:"100%",
     left: "65%",
     fontSize: GlobalStyles.FontSize.size_xl,
     textAlign: "left",
@@ -240,7 +243,7 @@ const styles = StyleSheet.create({
   hello5: {
     top: 18,
     left: "65%",
-    fontSize: GlobalStyles.FontSize.size_12xl,
+    fontSize: GlobalStyles.FontSize.size_6xl,
     lineHeight: 57,
     color: GlobalStyles.Color.blue_100,
     textAlign: "left",
@@ -309,7 +312,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.indigo_100,
   },
   iconFeatherCreditCard: {
-    marginTop: -11.5,
+    marginTop: -25.5,
     width: 29,
     height: 21,
     left: 0,
