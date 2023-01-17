@@ -1,11 +1,68 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable, ScrollView } from "react-native";
+import React,{ useEffect, useState,useContext } from "react";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const AccountMain = ({navigation}) => {
-  
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+import Button from "../components/Button"
 
+import moment from 'moment';
+
+const AccountMain = ({navigation}) => {
+  //Saves all the data from the API call
+  const [data, setData] = useState(null)
+  const [balance, setBalance] = useState(null)
+
+  const [status, setStatus] = useState(null)
+  const authContext = useContext(AuthContext)
+
+  const [transactionData, setTransactionData] = useState(null)
+
+  const date = moment().format('ll')
+
+  //Calls the API once during load
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  //Gets the data for the user
+  const loadData = async () => {
+    const response = await api.GetAccount();
+    const data = response.data.details
+
+    setBalance(data.availableBalance)
+
+
+    //Verified calculation 
+    setStatus(data.status != "ACTIVE")
+
+      //Load the data for transactions
+      const transactionCall = await api.GetTransactions();
+      const transactionData = transactionCall.data.details
+
+      //Format the data for transactions
+      const numberOfTransactions = transactionData.totalSize
+      let transactionList = [];
+      for(let i = 0; i < 4; i++){
+        let dataHold = transactionData.content[i]
+        transactionList.push(dataHold)
+      }
+      setTransactionData( {
+        "numTransaction" : numberOfTransactions,
+        "transactions" : transactionList
+      })
+  }
+
+  let currency = (transactionData ? transactionData.transactions[0].amount : "£")
+  console.log(currency)
+  
+  /**
+   * @dev Data needed for this page
+   *      Verification status
+   *      Wallet balance
+   *      Recent transactios
+   */
   return (
     <ScrollView>
     <Screen>
@@ -341,10 +398,10 @@ const AccountMain = ({navigation}) => {
         >
           <Text style={styles.hello20}>
             <Text style={styles.text5}>£</Text>
-            <Text style={styles.text6}>0.00</Text>
+            <Text style={styles.text6}>{balance}</Text>
           </Text>
           <Text style={styles.totalWalletBalance}>Total Wallet Balance</Text>
-          <Text style={styles.july192022}>July 19, 2022</Text>
+          <Text style={styles.july192022}>{date}</Text>
         </View>
 
         {
@@ -368,32 +425,32 @@ const AccountMain = ({navigation}) => {
             styles.helloParent3Position,
           ]}
         />
-        <Text style={styles.youAreAlmostReadyWithYour}>
-          <Text
-            style={styles.youAreAlmost}
-          >{`You are almost ready with your account, Avail more benefits by choosing our card plans  `}</Text>
-          <Text style={styles.text7}>
-            <Text style={styles.drylandsProtectionKasigau} />
-            <Text />
+          <Text style={styles.youAreAlmostReadyWithYour}>
+            <Text
+              style={styles.youAreAlmost}
+            >{`You are almost ready with your account, Avail more benefits by choosing our card plans  `}</Text>
+            <Text style={styles.text7}>
+              <Text style={styles.drylandsProtectionKasigau} />
+              <Text />
+            </Text>
           </Text>
-        </Text>
-        <Text
-          style={[styles.congratulations, styles.applyNowPosition]}
-        >{`\n `}Congratulations!</Text>
-        <Text
-          style={[styles.applyNow, styles.applyNowPosition]}
-        >{`\n `}Apply Now {">"}</Text>
-        <View style={styles.path33217Parent}>
-          <Image
-            style={[styles.path33217Icon, styles.iconGroupLayout]}
-            resizeMode="cover"
-            source={require("../assets/image-loadingcircleaccountmain.png")}
-          />
           <Text
-            style={[styles.text9, styles.historyTypo1, styles.historyPosition]}
-          >
-            70%
-          </Text>
+            style={[styles.congratulations, styles.applyNowPosition]}
+          >{`\n `}Congratulations!</Text>
+          <Text
+            style={[styles.applyNow, styles.applyNowPosition]}
+          >{`\n `}Apply Now {">"}</Text>
+          <View style={styles.path33217Parent}>
+            <Image
+              style={[styles.path33217Icon, styles.iconGroupLayout]}
+              resizeMode="cover"
+              source={require("../assets/image-loadingcircleaccountmain.png")}
+            />
+            <Text
+              style={[styles.text9, styles.historyTypo1, styles.historyPosition]}
+            >
+              70%
+            </Text>
         </View>
 
         {
