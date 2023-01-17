@@ -3,8 +3,14 @@ import { Text, StyleSheet, View, Pressable,TextInput,Image } from "react-native"
 import GlobalStyles from "../../GlobalStyles";
 
 const SetLimit = ({navigation}) => {
-  const amountSpent="£22.33";
-  const [amount, setAmount] = useState("")
+ // const amountSpent="£22.33";
+  //const [amount, setAmount] = useState("")
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("SpendingLimit")
+  }
+  const [account, setAccNum] = useState(null)
+  const [amount, setAmount] = useState(null)
   return (
     <View style={styles.setLimit}>
        
@@ -17,7 +23,7 @@ const SetLimit = ({navigation}) => {
         </View>
         
         <TextInput style={[styles.hello1, styles.helloColor, styles.helloTypo]}
-          placeholder = "£0"
+          placeholder = {"£"+amount}
           keyboardType="numeric"
           onChangeText={newText => setAmount(newText)}
         />
@@ -26,10 +32,10 @@ const SetLimit = ({navigation}) => {
         </Text>
         <Text
           style={[styles.hello4, styles.helloPosition, styles.helloColor]}
-        >{`Spent this month : `}{amountSpent}</Text>
+        >{`Spent this month : `}{amount}</Text>
         <Pressable
           style={[styles.groupParent, styles.parentPosition]}
-          onPress={() => navigation.navigate("SpendingLimit")}
+          onPress={() => navigate()}
         >
           <View style={[styles.rectangleParent, styles.parentPosition]}>
             <View style={styles.groupItem} />
