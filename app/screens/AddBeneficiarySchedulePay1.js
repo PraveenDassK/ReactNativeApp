@@ -3,6 +3,8 @@ import { Text, StyleSheet, View, Pressable,TextInput } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
+
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 const AddBeneficiarySchedulePay1 = ({navigation}) => {
  
 
@@ -78,10 +80,10 @@ const AddBeneficiarySchedulePay1 = ({navigation}) => {
 
 const styles = StyleSheet.create({
   groupParentPosition: {
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
+    bottom: verticalScale(0),
+    left: horizontalScale(0),
+    right: horizontalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   helloTypo: {
@@ -90,23 +92,23 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupPosition1: {
-    right: 0,
-    left: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
     position: "absolute",
   },
   groupContainerPosition: {
-    height: 60,
-    left: 25,
+    height: verticalScale(60),
+    left: horizontalScale(25),
     top: "50%",
     position: "absolute",
   },
   groupPosition: {
-    right: 40,
-    height: 60,
+    right: horizontalScale(40),
+    height: verticalScale(60),
   },
   hello: {
-    marginLeft: -56.5,
-    top: 39,
+    marginLeft: horizontalScale(-56.5),
+    top: verticalScale(39),
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
@@ -120,63 +122,63 @@ const styles = StyleSheet.create({
     borderTopRightRadius: GlobalStyles.Border.br_4xl,
     shadowColor: "rgba(1, 1, 253, 0.1)",
     shadowOffset: {
-      width: 0,
-      height: -3,
+      width: horizontalScale(0),
+      height: verticalScale(-3),
     },
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    left: 0,
+    left: horizontalScale(0),
     backgroundColor: GlobalStyles.Color.white,
-    bottom: 0,
+    bottom: verticalScale(0),
   },
   groupParent: {
-    left: 0,
+    left: horizontalScale(0),
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_base,
     color: GlobalStyles.Color.gray_700,
-    left: 0,
-    top: 0,
+    left: horizontalScale(0),
+    top: verticalScale(0),
   },
   hello2: {
-    top: 24,
-    left: 96,
+    top: verticalScale(24),
+    left: horizontalScale(96),
     fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 37,
+    lineHeight: verticalScale(37),
     color: GlobalStyles.Color.blue_100,
   },
   groupChild: {
-    bottom: -1,
+    bottom: verticalScale(-1),
     borderStyle: "solid",
     borderColor: "#707070",
     borderTopWidth: 1,
-    height: 2,
-    left: 0,
+    height: verticalScale(2),
+    left: horizontalScale(0),
   },
   helloParent: {
-    marginTop: 52.5,
-    height: 64,
-    left: 25,
+    marginTop: verticalScale(52.5),
+    height: verticalScale(64),
+    left: horizontalScale(25),
     top: "50%",
-    right: 40,
+    right: horizontalScale(40),
     position: "absolute",
   },
   hello4: {
-    top: 28,
-    left: 1,
+    top: verticalScale(28),
+    left: horizontalScale(1),
     fontSize: GlobalStyles.FontSize.size_6xl,
     color: GlobalStyles.Color.indigo_100,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloGroup: {
-    marginTop: -255.5,
+    marginTop: verticalScale(-255.5),
   },
   helloContainer: {
-    marginTop: -153.5,
+    marginTop: verticalScale(-153.5),
   },
   groupView: {
-    marginTop: -50.5,
+    marginTop: verticalScale(-50.5),
   },
   rectangleView: {
     height: "100%",
@@ -190,9 +192,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   maskGroup236: {
-    bottom: 13,
-    left: 0,
-    top: 0,
+    bottom: verticalScale(13),
+    left: horizontalScale(0),
+    top: verticalScale(0),
   },
   hello9: {
     top: "30%",
@@ -202,12 +204,12 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.white,
   },
   groupContainer: {
-    marginTop: 264.5,
-    right: 24,
+    marginTop: verticalScale(264.5),
+    right: horizontalScale(24),
   },
   addBeneficiarySchedulePayInner: {
     width: "100%",
-    height: 749,
+    height: verticalScale(749),
   },
   addBeneficiarySchedulePay: {
     flex: 1,
@@ -217,5 +219,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
 });
+
+
 
 export default AddBeneficiarySchedulePay1;
