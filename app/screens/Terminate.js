@@ -3,7 +3,10 @@ import { Text, StyleSheet, View, Pressable,Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Terminate = ({navigation}) => {
-  
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("CardSettings")
+  }
 
   return (
     <View style={styles.terminate}>
@@ -34,7 +37,7 @@ const Terminate = ({navigation}) => {
                   styles.helloPosition,
                   styles.helloParentPosition,
                 ]}
-                onPress={() => navigation.navigate("CardSettings")}
+                onPress={() => navigate()}
                 />
             </View>
             <Text style={[styles.hello1, styles.helloTypo]}>No</Text>

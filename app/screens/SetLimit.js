@@ -9,8 +9,9 @@ const SetLimit = ({navigation}) => {
     console.log("Function")
     navigation.navigate("SpendingLimit")
   }
-  const [account, setAccNum] = useState(null)
-  const [amount, setAmount] = useState(null)
+  const [amountspent, setAmountspent] = useState(null)
+  const [amount, setAmount] = useState(0)
+  const [currency, setcurrency] = useState(null)
   return (
     <View style={styles.setLimit}>
        
@@ -28,11 +29,11 @@ const SetLimit = ({navigation}) => {
           onChangeText={newText => setAmount(newText)}
         />
         <Text style={[styles.hello3, styles.helloPosition, styles.helloColor1]}>
-          GBP
+          {currency}
         </Text>
         <Text
           style={[styles.hello4, styles.helloPosition, styles.helloColor]}
-        >{`Spent this month : `}{amount}</Text>
+        >{`Spent this month : `}{amountspent}</Text>
         <Pressable
           style={[styles.groupParent, styles.parentPosition]}
           onPress={() => navigate()}

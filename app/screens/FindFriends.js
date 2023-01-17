@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const FindFriends = () => {
+const FindFriends = (navigation) => {
   
 
   return (
@@ -24,7 +24,7 @@ const FindFriends = () => {
           </Text>
           <Pressable
             style={[styles.groupContainer, styles.groupPosition1]}
-            onPress={() => navigation.navigate("Account3")}
+            onPress={() => navigation.navigate("")}
           >
             <View style={[styles.helloParent, styles.helloParentPosition]}>
               <View style={[styles.groupChild, styles.groupPosition]} />
@@ -34,7 +34,7 @@ const FindFriends = () => {
           </Pressable>
           <Pressable
             style={[styles.groupPressable, styles.groupPosition1]}
-            onPress={() => navigation.navigate("Account3")}
+            onPress={() => navigation.navigate("")}
           >
             <View style={[styles.helloParent, styles.helloParentPosition]}>
               <View style={[styles.groupItem, styles.groupPosition]} />
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "50%",
+    marginleft:-22,
     left: "31.9%",
     color: GlobalStyles.Color.black,
   },
