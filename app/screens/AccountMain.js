@@ -56,7 +56,6 @@ const AccountMain = ({navigation}) => {
 
   let currency = (transactionData ? transactionData.transactions[0].amount : "£")
   console.log(currency)
-  console.log(transactionData.transactions[0])
   
   /**
    * @dev Data needed for this page
@@ -303,30 +302,30 @@ const AccountMain = ({navigation}) => {
             source={require("../assets/cashwithdraw.png")}
           />
           <View style={styles.groupContainer}>
-            <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
+            {/* <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>{transactionData.transactions[4].account.customerName}</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[4].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
                   <Text style={styles.total}>September 22, 2022</Text>
                   <Text style={styles.total}>12:06 PM</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>{transactionData.transactions[4].amount}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[4].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
                 source={require("../assets/freshsupermarket.png")}
               />
-            </View>
+            </View> */}
             <View style={[styles.groupParent2, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>{transactionData.transactions[3].account.customerName}</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[3].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
                   <Text style={styles.total}>September 22, 2022</Text>
                   <Text style={styles.total}>12:06 PM</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>{transactionData.transactions[3].amount}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[3].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
@@ -335,13 +334,13 @@ const AccountMain = ({navigation}) => {
             </View>
             <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
               <View style={[styles.lanceBogrolContainer, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>{transactionData.transactions[2].account.customerName}</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[2].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
                   <Text style={styles.total}>September 22, 2022</Text>
                   <Text style={styles.total}>12:06 PM</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>{transactionData.transactions[2].amount}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[2].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
@@ -350,13 +349,13 @@ const AccountMain = ({navigation}) => {
             </View>
             <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>{transactionData.transactions[1].account.customerName}</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[1].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
                   <Text style={styles.total}>September 22, 2022</Text>
                   <Text style={styles.total}>12:06 PM</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>{transactionData.transactions[1].amount}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[1].amount:""}</Text>
               <Image
                 style={[styles.maskGroup16, styles.groupPosition]}
                 resizeMode="cover"
@@ -365,13 +364,13 @@ const AccountMain = ({navigation}) => {
             </View>
             <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>{transactionData.transactions[0].account.customerName}</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[0].account.customerName:" "}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>{transactionData.transactions[0].transactionDate}</Text>
+                  <Text style={styles.total}>{transactionData ? transactionData.transactions[0].transactionDate: " "}</Text>
                   <Text style={styles.total}>12:06 PM</Text>
                 </Text>
               </View>
-              <Text style={[styles.text4, styles.textTypo]}>{transactionData.transactions[0].amount}</Text>
+              <Text style={[styles.text4, styles.textTypo]}>{transactionData ? transactionData.transactions[0].amount:" "}</Text>
               <Image
                 style={[styles.groupChild7, styles.groupPosition]}
                 resizeMode="cover"
