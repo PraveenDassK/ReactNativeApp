@@ -1,19 +1,40 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import api from "../api/api_list"
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const SendAccountSelection = ({navigation}) => {
+  const[name,setName]=useState(null)
+  const[number,setnumber]=useState(null)
+  const [plan, setPlan] = useState(null)
+  const [account, setAccNum] = useState(null)
 
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccountByCustomer();
+    const accountresponse = await api.GetCustomerDetails();
+    const data = response.data.details.content[0]
+    const accountdata = accountresponse.data.details.accountDetails[0]
+    const phonedata = accountresponse.data.details.phoneNumbers[0]
+    console.log(data)
+    setName(data.name)
+    setnumber(phonedata.phoneNo)
+    setAccNum(data.identifiers[0].accountNumber)
+    setPlan(accountdata.accountType)
+  }
   return (
     <View style={styles.sendAccountSelection}>
       <View style={styles.groupParent}>
         <View style={styles.groupChild} />
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
-            Hudson Maia
+            {name}
           </Text>
           <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
-            +440123456789
+            {number}
           </Text>
           <Text style={[styles.hello2, styles.helloTypo1]}>
             Joined September 2022
@@ -111,15 +132,15 @@ const SendAccountSelection = ({navigation}) => {
               styles.helloParent2Layout,
             ]}
           />
-          <View style={[styles.helloParent5, styles.helloParentPosition]}>
+          {/* <View style={[styles.helloParent5, styles.helloParentPosition]}>
             <Text style={[styles.hello11, styles.helloTypo]}>
-              XYZ Bank ****1234
+              {account}
             </Text>
             <Text style={[styles.hello12, styles.helloTypo1]}>
-              Current Account
+              {plan}
             </Text>
             <View style={styles.groupChild2} />
-          </View>
+          </View> */}
           <Pressable
             style={styles.groupWrapper}
             onPress={() => navigation.navigate("SelectBank")}
@@ -140,11 +161,11 @@ const SendAccountSelection = ({navigation}) => {
           <View style={[styles.groupChild3, styles.groupChildPosition]} />
           <View style={[styles.groupChild4, styles.groupChildPosition]} />
           <View style={[styles.helloParent7, styles.helloParentPosition]}>
-            <Text style={[styles.hello11, styles.helloTypo]}>
-              XYZ Bank ****1234
+            <Text style={[styles.hello11, styles.helloTypo12]}>
+            {account}
             </Text>
             <Text style={[styles.hello12, styles.helloTypo1]}>
-              Current Account
+              {plan}
             </Text>
             <View style={styles.groupChild2} />
           </View>
@@ -248,6 +269,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     position: "absolute",
   },
+  helloTypo12: {
+    right: 30,
+    fontSize: GlobalStyles.FontSize.size_base,
+    textAlign: "left",
+    position: "absolute",
+  },
   bank2IconPosition: {
     left: "0%",
     bottom: "0%",
@@ -285,12 +312,12 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 100,
-    left: 12,
+    left: 8,
     fontWeight: "700",
   },
   hello1: {
     top: 130,
-    left: 0,
+    left: 8,
   },
   hello2: {
     top: 158,
