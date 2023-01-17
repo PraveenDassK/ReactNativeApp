@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     left: 3,
-    width: "100%",
+    width: 275,
     height: 57,
     top: 0,
     position: "absolute",
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   groupParent: {
-    width: "100%",
+    width: 328,
     height: 497,
   },
   proofOfResidencyListA1: {
