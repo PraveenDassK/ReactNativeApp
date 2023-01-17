@@ -9,6 +9,7 @@ const VerifyCode = ({navigation}) => {
   const [four, setFour] = useState("")
   const [five, setFive] = useState("")
   const [six, setSix] = useState("")
+
   return (
     <View style={styles.verifyCode}>
       <View style={styles.helloParent}>
@@ -40,7 +41,7 @@ const VerifyCode = ({navigation}) => {
           <TextInput
           textAlign="center"
           keyboardType="numeric"
-          onChangeText={newText => setOne(newText)}
+          onChangeText={one => setOne(one)}
            />
         </View>
 
@@ -48,7 +49,7 @@ const VerifyCode = ({navigation}) => {
           <TextInput 
           textAlign="center"
           keyboardType="numeric"
-          onChangeText={newText => setTwo(newText)}
+          onChangeText={two => setTwo(two)}
            />
         </View>
 
@@ -56,28 +57,28 @@ const VerifyCode = ({navigation}) => {
         <TextInput 
           textAlign="center"
           keyboardType="numeric"
-          onChangeText={newText => setThree(newText)}
+          onChangeText={three => setThree(three)}
            />
         </View>
         <View style={[styles.groupChild1, styles.groupChildBorder]}>
         <TextInput 
           textAlign="center"
           keyboardType="numeric"
-          onChangeText={newText => setFour(newText)}
+          onChangeText={four => setFour(four)}
            />
         </View>
         <View style={[styles.groupChild2, styles.groupChildBorder]}>
         <TextInput 
           textAlign="center"
           keyboardType="numeric"
-          onChangeText={newText => setFive(newText)}
+          onChangeText={five => setFive(five)}
            />
         </View>
         <View style={[styles.groupChild3, styles.groupChildBorder]}>
         <TextInput 
           textAlign="center"
           keyboardType="numeric"
-          onChangeText={newText => setSix(newText)}
+          onChangeText={six => setSix(six)}
            />
         </View>
         {/* <Text style={[styles.text, styles.textTypo]}>1</Text> */}

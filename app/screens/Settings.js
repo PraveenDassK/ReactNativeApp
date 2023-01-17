@@ -20,7 +20,7 @@ const Settings = ({navigation}) => {
   
   const loadData = async () => {
     const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.getListings();
+    const accountresponse = await api.GetCustomerDetails();
     const data = response.data.details.content[0]
     const accountdata = accountresponse.data.details.accountDetails[0]
     console.log(data)
