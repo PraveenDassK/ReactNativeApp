@@ -3,6 +3,8 @@ import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 
+import api from "../api/api_list"
+
 const CardSettings = ({navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
@@ -14,17 +16,34 @@ const CardSettings = ({navigation}) => {
   const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
   const authContext=useContext(AuthContext)
 
-  useEffect(()=>{
-    loadData()
-  },[])
 
-  const loadData = async () => {
-    const response = await api.getListings();
-    console.log(response.data.details)
-    console.log(response.data.details.accountDetails.accountId)
-    setAccNum(response.data.details.accountDetails.accountId)
-  }
+  useEffect(() => {
+    getSettings()
+  },[])
   
+  const getSettings = async () => {
+    const response = await api.GetToggles()
+    const data = response.data.details
+    console.log(data)
+    data.onlineTransactions ? setIsEnabled(true): null
+    data.swipePayments ? setIsEnabled1(true): null
+    data.atmWithdrawals ? setIsEnabled2(true): null
+    data.contactlessPayments ? setIsEnabled3(true): null
+  }
+
+  const sendRequest = async () => {
+    const response = await api.SetToggles(
+      isEnabled,
+      isEnabled1,
+      isEnabled2,
+      isEnabled3
+    );
+    console.log(response)
+
+
+  }
+  //sendRequest()
+
   return (
     <View style={styles.cardSettings}>
      
@@ -383,7 +402,6 @@ const CardSettings = ({navigation}) => {
             trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
             thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
             onValueChange={toggleSwitch}
-            ios_backgroundColor="#3e3e3e"
             value={isEnabled} />
           </View>
           <View style={[styles.rectangleParent2, styles.rectangleParentLayout]}>
@@ -391,7 +409,6 @@ const CardSettings = ({navigation}) => {
             trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
             thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
             onValueChange={toggleSwitch1}
-            ios_backgroundColor="#3e3e3e"
             value={isEnabled1} />
             
           </View>
@@ -473,6 +490,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
+    top: "-10%"
   },
   paymentsParentLayout: {
     height: 41,
@@ -525,6 +543,7 @@ const styles = StyleSheet.create({
   },
   spendingLimit: {
     margin: GlobalStyles.Margin.margin_8xs,
+    top: "20%"
   },
   setMonthlySpending: {
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -690,7 +709,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     width: "100%",
-    height: 689,
+    height: "100%",
   },
   arrowPosition: {
     top: "6%",
@@ -698,7 +717,6 @@ const styles = StyleSheet.create({
   },
   arrowCircle: {
     marginTop: "100%",
-    marginRight: 303.54,
     width: "100%",
     height: 15,
   },                                
