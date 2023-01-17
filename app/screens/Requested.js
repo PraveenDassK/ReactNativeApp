@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 458,
-    left: "25%",
+    left: "10%",
+    marginLeft:-10,
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     fontWeight: "700",

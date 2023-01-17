@@ -4,6 +4,10 @@ import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const PushNotification = ({navigation}) => {
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("Settings")
+  }
   return (
     <View style={styles.pushNotification}>
 
@@ -12,7 +16,7 @@ const PushNotification = ({navigation}) => {
           <Text style={styles.hello}>Notify Me</Text>
           <Pressable
             style={[styles.groupContainer, styles.groupPosition1]}
-            onPress={() => navigation.navigate("Settings")}
+            onPress={() => navigate()}
           >
             <View style={[styles.rectangleParent, styles.parentPosition]}>
               <View style={[styles.groupChild, styles.groupPosition]} />
