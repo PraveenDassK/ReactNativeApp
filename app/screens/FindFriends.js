@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
   },
   groupContainer: {
     bottom: 76,
-    width:"100%",
   },
   groupItem: {
     backgroundColor: GlobalStyles.Color.gray_700,

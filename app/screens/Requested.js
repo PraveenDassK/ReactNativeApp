@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 458,
-    left: 69,
+    left: "25%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     fontWeight: "700",
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
   },
   groupParent: {
-    width: 375,
+    width: "100%",
     height: 749,
   },
   requested: {

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
+
 const VerifyYourIdentity = ({navigation}) => {
 
   return (
