@@ -13,7 +13,7 @@ const data = [
   { label: 'India', value: '91' },
 ];
 
-const CountryOfResidence = () => {
+const CountryOfResidence = ({navigation}) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -42,7 +42,7 @@ const CountryOfResidence = () => {
           </Text>
           <Text style={[styles.hello2, styles.helloTypo, styles.helloTypo1]}>
             <Text style={styles.theTermsAnd}>
-              The terms and services which apply to you, will{"\n"}
+              The terms and services which apply to you, will{" "}
             </Text>
             <Text style={styles.theTermsAnd}>
               depend on your country of residence.
@@ -74,11 +74,12 @@ const CountryOfResidence = () => {
                 styles.groupPosition2,
               ]}
             />
-            <View style={[styles.maskGroup236, styles.groupPosition1]} />
-          </Pressable>
-          <Text style={[styles.hello3, styles.helloTypo]}>
+             <Text style={[styles.hello3, styles.helloTypo]}>
             Accept and Continue
           </Text>
+            <View style={[styles.maskGroup236, styles.groupPosition1]} />
+          </Pressable>
+         
         </View>
         {/* <View
           style={[
@@ -188,7 +189,8 @@ const styles = StyleSheet.create({
   },
   hello: {
     marginTop: -141.52,
-    left: 95,
+    left: "50%",
+    marginLeft: -70,
   },
   rectangleParent: {
     bottom: 92,
@@ -236,7 +238,8 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "40%",
-    left: "22.7%",
+    left: "50%",
+    marginLeft:-80,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -264,12 +267,13 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   groupParent: {
-    width: 330,
+    width: "100%",
     height: 654,
   },
   countryOfResidence: {
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
+    paddingLeft: GlobalStyles.Padding.padding_10xs,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: 20,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,

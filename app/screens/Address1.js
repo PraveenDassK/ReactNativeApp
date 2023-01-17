@@ -165,8 +165,8 @@ const styles = StyleSheet.create({
   findFriends: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_2xs,
+    paddingLeft: GlobalStyles.Padding.padding_8xs,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },
