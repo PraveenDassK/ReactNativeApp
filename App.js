@@ -101,7 +101,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="ReplaceCard">
+  <Stack.Navigator initialRouteName="TerminatedCard">
  
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
