@@ -2,6 +2,8 @@ import * as React from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 const AddBeneficiarySuccess = ({navigation}) => {
   const user="Ortiz Tyrese";
@@ -38,10 +40,10 @@ const AddBeneficiarySuccess = ({navigation}) => {
 
 const styles = StyleSheet.create({
   groupPosition: {
-    left: 0,
-    bottom: 0,
-    right: 0,
-    top: 0,
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
+    right: horizontalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   helloTypo: {
@@ -57,8 +59,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: GlobalStyles.Border.br_4xl,
     shadowColor: "rgba(1, 1, 253, 0.05)",
     shadowOffset: {
-      width: 0,
-      height: 3,
+      width: horizontalScale(0),
+      height: verticalScale(3),
     },
     shadowRadius: 6,
     elevation: 6,
@@ -69,12 +71,12 @@ const styles = StyleSheet.create({
     margin: GlobalStyles.Margin.margin_8xs,
   },
   hello: {
-    top: 458,
-    marginTop: -18.06,
-    marginLeft: -133.56,
+    top: verticalScale(458),
+    marginTop: verticalScale(-100),
+    marginLeft: horizontalScale(-125),
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
-    lineHeight: 24,
+    lineHeight: verticalScale(24),
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
@@ -82,15 +84,16 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   iconAwesomeCheckCircle: {
-    marginTop: -188.06,
-    marginLeft: -93.56,
+    marginTop: verticalScale(-200),
+    marginLeft: horizontalScale(-80),
     left: "50%",
-    width: 187,
-    height: 187,
+    width: horizontalScale(150),
+    height: verticalScale(150),
+    resizeMode:'contain',
   },
   hello1: {
-    marginTop: 250.06,
-    marginLeft: -53.56,
+    marginTop: verticalScale(250),
+    marginLeft: horizontalScale(-67),
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
@@ -106,5 +109,6 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
+
 
 export default AddBeneficiarySuccess;

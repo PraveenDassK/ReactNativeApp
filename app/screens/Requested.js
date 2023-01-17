@@ -4,7 +4,8 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Requested = ({navigation}) => {
-  
+  let amount = 500
+  let name = "Maia"
   return (
     <Pressable
       style={styles.requested}
@@ -15,8 +16,8 @@ const Requested = ({navigation}) => {
           <View style={[styles.groupChild, styles.groupPosition]} />
         </View>
         <Text style={[styles.hello, styles.helloTypo]}>
-          <Text style={styles.youHaveRequested}>You have requested £500{'\n'}</Text>
-          <Text style={styles.youHaveRequested}>from Hudson Maia</Text>
+          <Text style={styles.youHaveRequested}>You have requested £{amount}{'\n'}</Text>
+          <Text style={styles.youHaveRequested}>from {name}</Text>
         </Text>
         <Image
           style={[styles.iconAwesomeCheckCircle, styles.hello1Position]}
@@ -64,14 +65,13 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 458,
-    left: "10%",
-    marginLeft:-10,
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
     textAlign: "center",
+    width:"100%"
   },
   iconAwesomeCheckCircle: {
     marginTop: -138.06,

@@ -101,7 +101,11 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
+<<<<<<< HEAD
   <Stack.Navigator initialRouteName="FindFriends">
+=======
+  <Stack.Navigator initialRouteName="SendEnterPIN">
+>>>>>>> b1be07887a2d3405abff7bed2d4a627b971bab14
  
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
