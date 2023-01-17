@@ -4,7 +4,10 @@ import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const FindFriends = (navigation) => {
-  
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("AccountMain")
+  }
 
   return (
     <View style={styles.findFriends}>
