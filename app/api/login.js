@@ -1,15 +1,15 @@
+import client from "./client";
 
-import client from "./client"
+const endpoint = 
+'https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC11875'
+;
 
-const endpoint = '/authverifymodule/SendLoginOTP'
-
-const loginOTP = ({email, phoneNumber}) => client.post(endpoint, { email, phoneNumber }, {params: { email, phoneNumber}});
-
-
-const verifyEndpoint = '/regmodule/VerifyRegistrationOTP'
-const loginOtpVerification = (credentials) => client.post(verifyEndpoint, credentials, {params: credentials});
+const getListings = () => client.get(endpoint);
+const SendLoginOTP = () => client.post("https://api.carbonyte.io/authverifymodule/SendLoginOTP?email=ryan.s%40carbonyte.io&phoneNumber=447494560838");
+const GetAccountByCustomer = () => client.get("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/C121ZFD6")
 
 export default {
-    loginOTP,
-    loginOtpVerification
-}
+    getListings,
+    SendLoginOTP,
+    GetAccountByCustomer
+  };
