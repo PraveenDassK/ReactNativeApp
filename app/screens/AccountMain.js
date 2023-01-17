@@ -19,8 +19,9 @@ const AccountMain = ({navigation}) => {
 
   const [transactionData, setTransactionData] = useState(null)
 
-  const date = moment().format('ll')
+  const todaydate = moment().format('ll')
 
+  
   //Calls the API once during load
   useEffect(() => {
     loadData()
@@ -56,6 +57,12 @@ const AccountMain = ({navigation}) => {
 
   let currency = (transactionData ? transactionData.transactions[0].amount : "£")
   console.log(currency)
+  let date = (transactionData? transactionData.transactions[0].transactionDate : "0")
+  let date1 = (transactionData? transactionData.transactions[1].transactionDate : "0")
+  let date2 = (transactionData? transactionData.transactions[2].transactionDate : "0")
+  let date3 = (transactionData? transactionData.transactions[3].transactionDate : "0")
+  console.log(moment(date).format('d MMM YYYY'))
+  console.log(moment(date).format('H:mma'))
   
   /**
    * @dev Data needed for this page
@@ -321,11 +328,11 @@ const AccountMain = ({navigation}) => {
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[3].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>September 22, 2022</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date3).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date3).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[3].amount:""}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[3].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
@@ -336,11 +343,11 @@ const AccountMain = ({navigation}) => {
               <View style={[styles.lanceBogrolContainer, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[2].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>September 22, 2022</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date2).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date2).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[2].amount:""}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[2].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
@@ -351,11 +358,11 @@ const AccountMain = ({navigation}) => {
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[1].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>September 22, 2022</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date1).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date1).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[1].amount:""}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[1].amount:""}</Text>
               <Image
                 style={[styles.maskGroup16, styles.groupPosition]}
                 resizeMode="cover"
@@ -366,11 +373,11 @@ const AccountMain = ({navigation}) => {
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[0].account.customerName:" "}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>{transactionData ? transactionData.transactions[0].transactionDate: " "}</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text4, styles.textTypo]}>{transactionData ? transactionData.transactions[0].amount:" "}</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[0].amount:" "}</Text>
               <Image
                 style={[styles.groupChild7, styles.groupPosition]}
                 resizeMode="cover"
@@ -401,7 +408,7 @@ const AccountMain = ({navigation}) => {
             <Text style={styles.text6}>{balance}</Text>
           </Text>
           <Text style={styles.totalWalletBalance}>Total Wallet Balance</Text>
-          <Text style={styles.july192022}>{date}</Text>
+          <Text style={styles.july192022}>{todaydate}</Text>
         </View>
 
         {
@@ -1219,7 +1226,7 @@ const styles = StyleSheet.create({
   moneyTransfer: {
     color: GlobalStyles.Color.gray_900,
     left: 0,
-    bottom: -10,
+    bottom: -4,
     width:200,
     letterSpacing: 1,
   },
