@@ -1,11 +1,16 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
+//import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const ReplaceCard = ({navigation}) => {
+const ReplaceCard = ({navigation}) => 
   //Comment
-  const cardName = "Carbonyte Standard - 7761"
+  // const cardName = "Carbonyte Standard - 7761"
+  {
+    const [cardname, setCardname] = useState(null)
+    
+  
   
   return (
     <Screen>
@@ -92,7 +97,7 @@ const ReplaceCard = ({navigation}) => {
             >
               <Text style={styles.carbonyteStandard7761}>
                 <Text style={[styles.carbonyteStandard, styles.itWasLostTypo]}>
-                  {cardName}
+                  {cardname}
                 </Text>
               </Text>
               <Text style={styles.carbonyteStandard7761}>
