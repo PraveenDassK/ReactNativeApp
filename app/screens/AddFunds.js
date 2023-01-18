@@ -27,7 +27,7 @@ const AddFunds = ({navigation}) =>{
 
   const addFunds = (amount) => {
     console.log(amount)
-    navigation.navigate("ReviewAndConfirm")
+    navigation.navigate("ReviewAndConfirm",{amount: amount})
   }
   return (
       <View style={styles.helloParent}>
