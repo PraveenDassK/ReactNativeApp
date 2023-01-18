@@ -1,73 +1,36 @@
-import React, { useContext, useEffect, useState, Keyboard } from "react";
-import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-native";
+import React, { useContext, useEffect, useState} from "react";
+import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import api from "../api/api_list"
-//import AuthContext from "../auth/context";
 
 const RequestContact = ({navigation}) => {
   const [amount, setAmount] = useState("")
-  const [note, setNote] = useState("")
   const [userData, setCode] = useState("")
-  const [account, setAccNum] = useState(null)
-  const [sortcode, setSortCode] = useState(null)
-  const [fullname, setName] = useState(null)
-  const[number,setnumber]=useState(null)
-  const [plan, setPlan] = useState(null)
-  const [balance, setBal] = useState(null)
-  const [currency, setCurrency] = useState(null)
-  //const authContext = useContext(AuthContext)
+  const reciver = "Me";
+  const sortCode = "00-00-00"
+  const accountCode = "01234567890"  
 
-  useEffect(() => {
-    loadData()
-  },[])
-  
-  const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetCustomerDetails();
-    const data1 = await api.GetAccount()
-    console.log(data1)
-    const data = response.data.details.content[0]
-    const accountdata = accountresponse.data.details.accountDetails[0]
-    const phonedata = accountresponse.data.details.phoneNumbers[0]
-    console.log(data)
-    setSortCode(data.identifiers[0].sortCode)
-    setAccNum(data.identifiers[0].accountNumber)
-    setName(data.name)
-    setBal(data.balance)
-    setnumber(phonedata.phoneNo)
-    setPlan(accountdata.accountType)
-    setCurrency(data.currency)
-  }  
+  let fromName = "Nik"
   let payment = (amount ? amount : 1).toString()
-
+  Keyboard.dismiss()
   console.log(payment)
 
   const requestContact = (amount) => {
     console.log(amount)
-    navigation.navigate("Requested")
+    navigation.navigate("Requested",{amount: amount, name: fromName})
   }
+
  
   return (
     <View style={styles.requestContact}>
-      <View style={styles.groupParent}>
+      <Pressable 
+        style={styles.groupParent}
+        onPress={Keyboard.dismiss}
+      >
         <View style={styles.helloParent}>
-          <Text
-            style={[
-              styles.hello,
-              styles.helloTypo1,
-              styles.helloColor,
-              styles.helloTypo2,
-            ]}
-          >
-            Joined September 2022
-          </Text>
-          <Image
-            style={styles.groupChild}
-            resizeMode="cover"
-            source={require("../assets/group-303373.png")}
-          />
-          <Text style={[styles.hello1, styles.helloTypo]}>{fullname}{'\n'}</Text>
-          <Text style={[styles.hello2, styles.helloTypo]}>{number}</Text>
+
+          <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
+          <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
+          <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
         </View>
         <View
           style={[
@@ -124,7 +87,9 @@ const RequestContact = ({navigation}) => {
           <Text style={[styles.hello7, styles.helloTypo1, styles.helloColor]}>
             Request{"\n"}
           </Text>
-          <TextInput style={[styles.hello8, styles.helloTypo1]} placeholder={"£"+payment} keyboardType="numeric"/>
+          <TextInput style={[styles.hello8, styles.helloTypo1]} 
+            placeholder={"£"+payment} keyboardType="numeric"
+          />
           <View
             style={[
               styles.lineView,
@@ -149,7 +114,7 @@ const RequestContact = ({navigation}) => {
           </View>
           <Text style={styles.hello9}>Request</Text>
         </Pressable>
-      </View>
+      </Pressable>
     </View>
   );
 };
@@ -240,6 +205,11 @@ const styles = StyleSheet.create({
     width:"100%",
     textAlign:"center",
   },
+  hello5: {
+    top: 150,
+    width:"100%",
+    textAlign:"center",
+  },
   helloParent: {
     top: 44,
     height: 172,
@@ -309,8 +279,7 @@ const styles = StyleSheet.create({
     top: 28,
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 27,
-    color: GlobalStyles.Color.blue_100,
+    color: GlobalStyles.Color.gray_700,
   },
   lineView: {
     bottom: -1,
@@ -346,7 +315,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "center",
     top:"10%"
   },
@@ -373,7 +342,6 @@ const styles = StyleSheet.create({
   },
   requestContact: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },
