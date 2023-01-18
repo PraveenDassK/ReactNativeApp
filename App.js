@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import 'expo-dev-menu';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from "@react-navigation/native";
 
 import SplashAnimation from "./app/screens/SplashAnimation";
@@ -98,13 +99,27 @@ import CarbonCart from "./app/screens/CarbonCart";
 
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
+
+const TabNavigator = () => (
+  <Tab.Navigator
+  
+  >
+    <Tab.Screen name="AccountTab" component={Account}/>
+    {/* <Tab.Screen name="Analysis" component={Analytics}/> */}
+    <Tab.Screen name="CarbonTab" component={Carbon}/>
+    <Tab.Screen name="Profile" component={Settings}/>
+
+  </Tab.Navigator>
+)
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="Carbon">
-
+  <Stack.Navigator 
+    initialRouteName="Carbon"
+    
+  >
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
-
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
@@ -130,7 +145,7 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
-    <Stack.Screen  name="Account" component={Account}/>
+    <Stack.Screen  name="Account" component={TabNavigator}/>
 
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
@@ -142,7 +157,7 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="Requested" component={Requested}/>
 
-    <Stack.Screen  name="Settings" component={Settings}/>
+    <Stack.Screen  name="Settings" component={TabNavigator}/>
     <Stack.Screen  name="SecurityAndPrivacy" component={SecurityAndPrivacy}/>
     
     <Stack.Screen  name="Analytics" component={Analytics}/>
@@ -191,7 +206,7 @@ const StackNavigator = () => (
     <Stack.Screen name="SpendingLimit" component={SpendingLimit}/> 
     <Stack.Screen name="SetLimit" component={SetLimit}/>
 
-    <Stack.Screen name="Carbon" component={Carbon}/>
+    <Stack.Screen name="Carbon" component={TabNavigator}/>
     <Stack.Screen name="Carbon22" component={Carbon22}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>
