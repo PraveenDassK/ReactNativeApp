@@ -70,7 +70,7 @@ const Carbon = ({ navigation }) => {
             </Text> */}
 
         
-            <Button title="CALCULATE CARBON FOOTPRINT" color="blue" onPress={() => console.log("Calulate carbon footprint")}/>
+            <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" onPress={() => console.log("Calulate carbon footprint")}/>
             <View style={styles.subContainer}>
                     <Text 
                     numberOflines={3}
@@ -92,7 +92,7 @@ const Carbon = ({ navigation }) => {
                 </View>
             </View>
             <View style={{marginTop: verticalScale(20)}}>
-                <Button title="VISIT YOUR VIRTUAL FOREST" color='none' style={{borderColor: 'blue', borderWidth: horizontalScale(1),}} textColor={{color: 'blue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
+                <Button title="VISIT YOUR VIRTUAL FOREST" color='none' style={{borderColor: 'babyBlue', borderWidth: horizontalScale(1),}} textColor={{color: 'babyBlue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
                 
             </View>
             
@@ -140,7 +140,7 @@ const Carbon = ({ navigation }) => {
                                 style={styles.description}
                             >{item.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}...</Text>
                         </View>
-                        <Button title="ADD TO CART" color='blue' onPress={() => console.log('Add to cart')}/>
+                        <Button title="ADD TO CART" color='babyBlue' onPress={() => console.log('Add to cart')}/>
                         <View style={styles.benifitsContainer}>
                             {item.tags.length ? (
                                 <View >   

@@ -101,7 +101,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="SignUpPersonalScreen">
+  <Stack.Navigator initialRouteName="Carbon">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
