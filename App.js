@@ -101,21 +101,42 @@ import CarbonCart from "./app/screens/CarbonCart";
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-const TabNavigator = () => (
+const AccountNavigator = () => (
   <Tab.Navigator
   
   >
-    <Tab.Screen name="AccountTab" component={Account}/>
-    {/* <Tab.Screen name="Analysis" component={Analytics}/> */}
-    <Tab.Screen name="CarbonTab" component={Carbon}/>
-    <Tab.Screen name="Profile" component={Settings}/>
+    <Tab.Screen 
+      name="AccountTab" 
+      component={Account}
+      options={{
+        title: "Account"
+      }}
+      />
+    <Tab.Screen 
+      name="Analysis" 
+      component={Analytics}
+      options={{
+        
+      }}
+      />
+    <Tab.Screen 
+      name="CarbonTab" 
+      component={Carbon}
+      options={{
+        title: "Carbon"
+      }}
+    />
+    <Tab.Screen 
+      name="Profile" 
+      component={Settings}
+    />
 
   </Tab.Navigator>
 )
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="AddFunds">
+  <Stack.Navigator initialRouteName="Account">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
@@ -143,7 +164,7 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
-    <Stack.Screen  name="Account" component={TabNavigator}/>
+    <Stack.Screen  name="Account" component={AccountNavigator}/>
 
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
@@ -155,10 +176,10 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="Requested" component={Requested}/>
 
-    <Stack.Screen  name="Settings" component={TabNavigator}/>
+    <Stack.Screen  name="Settings" component={AccountNavigator}/>
     <Stack.Screen  name="SecurityAndPrivacy" component={SecurityAndPrivacy}/>
     
-    <Stack.Screen  name="Analytics" component={Analytics}/>
+    <Stack.Screen  name="Analytics" component={AccountNavigator}/>
     <Stack.Screen  name="DOB" component={DOB}/>
     <Stack.Screen  name="PushNotification" component={PushNotification}/>
 
@@ -204,7 +225,7 @@ const StackNavigator = () => (
     <Stack.Screen name="SpendingLimit" component={SpendingLimit}/> 
     <Stack.Screen name="SetLimit" component={SetLimit}/>
 
-    <Stack.Screen name="Carbon" component={TabNavigator}/>
+    <Stack.Screen name="Carbon" component={AccountNavigator}/>
     <Stack.Screen name="Carbon22" component={Carbon22}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>
