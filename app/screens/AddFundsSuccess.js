@@ -4,7 +4,9 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-const AddFundsSuccess = ({navigation}) => {
+const AddFundsSuccess = ({route,navigation}) => {
+  console.log(route.params.amount)
+  let amount = route.params.amount
   return (
       <View style={styles.addFundsSuccess}>
         <Pressable
@@ -23,7 +25,7 @@ const AddFundsSuccess = ({navigation}) => {
               <Text style={styles.congratulations1}> </Text>
             </Text>
             <Text style={styles.congratulations}>
-              <Text style={styles.added1}>{`£500.00 added `}</Text>
+              <Text style={styles.added1}>{"\n"}£{amount}{` added `}</Text>
             </Text>
             <Text style={styles.congratulations}>
               <Text style={styles.added1}>successfully</Text>

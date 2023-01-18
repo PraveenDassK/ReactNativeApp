@@ -51,7 +51,7 @@ const ReviewAndConfirm = ({navigation,route}) => {
         />
         <Pressable
           style={styles.groupParent}
-          onPress={() => navigation.navigate("AddFundsSuccess")}
+          onPress={() => navigation.navigate("AddFundsSuccess",{amount: amount})}
         >
           <View style={[styles.rectangleParent, styles.maskGroup236Position]}>
             <View style={styles.groupInner} />
