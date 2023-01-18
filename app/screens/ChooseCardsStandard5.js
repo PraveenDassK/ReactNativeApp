@@ -1,10 +1,11 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { StyleSheet, View, Text, Pressable, Image, ScrollView } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
 const ChooseCardsStandard5 = ({navigation}) => {
   return (
+    <ScrollView>
     <Screen>
     <View style={styles.chooseCardsStandard5}>
       <View style={styles.groupParent}>
@@ -31,15 +32,15 @@ const ChooseCardsStandard5 = ({navigation}) => {
           <Text style={styles.purchaseProject}>but also grow{"\n"}</Text>
           <Text style={styles.purchaseProject}>your hand print!</Text>
         </Text>
-        <View style={[styles.helloWrapper, styles.helloPosition]}>
-          <Text style={[styles.hello2, styles.helloFlexBox]}>7</Text>
+        <View style={[styles.helloWrapper21, styles.helloPosition12]}>
+          <Text style={[styles.hello2, styles.helloFlexBox12]}>7</Text>
         </View>
-        <Text style={[styles.totalAssets, styles.tonsPosition]}>
+        <Text style={[styles.totalAssets, styles.tonsPosition12]}>
           <Text style={styles.purchaseProject}>
             <Text style={styles.total1}>{`Total `}</Text>
           </Text>
           <Text style={styles.purchaseProject}>
-            <Text style={styles.assets1}>Assets</Text>
+            <Text style={styles.assets1}>{"\n"}Assets</Text>
           </Text>
         </Text>
         <View style={styles.co2RemovedWrapper}>
@@ -51,7 +52,7 @@ const ChooseCardsStandard5 = ({navigation}) => {
         </View>
         <Text style={[styles.tons, styles.tonsPosition]}> Tons</Text>
         <View style={[styles.helloContainer, styles.helloPosition]}>
-          <Text style={[styles.hello2, styles.helloFlexBox]}> 1,39</Text>
+          <Text style={[styles.hello21, styles.helloFlexBox]}> 1,39</Text>
         </View>
         <Image
           style={[styles.treeIcon, styles.treeIconLayout]}
@@ -129,6 +130,7 @@ const ChooseCardsStandard5 = ({navigation}) => {
       </View>
     </View>
     </Screen>
+    </ScrollView>
   );
 };
 
@@ -159,10 +161,28 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
   },
+  helloFlexBox12: {
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    position: "absolute",
+  },
   helloPosition: {
     height: 40,
     bottom: 506,
     left: "50%",
+    position: "absolute",
+  },
+  helloPosition12: {
+    height: 40,
+    bottom: 506,
+    left: "10%",
+    position: "absolute",
+  },
+  tonsPosition12: {
+    left: "42%",
+    fontSize: GlobalStyles.FontSize.size_base,
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
     position: "absolute",
   },
   tonsPosition: {
@@ -209,7 +229,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloTypo: {
-    lineHeight: 15,
+    lineHeight: 20,
     fontSize: GlobalStyles.FontSize.size_2xl,
     left: "91.41%",
     textAlign: "left",
@@ -244,7 +264,8 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: "40%",
-    left: "25.77%",
+    left: "50%",
+    marginLeft: -70,
     fontSize: GlobalStyles.FontSize.size_lg,
     lineHeight: 17,
     textTransform: "uppercase",
@@ -260,11 +281,11 @@ const styles = StyleSheet.create({
   groupItem: {
     left: 3,
     backgroundColor: "rgba(65, 160, 57, 0.17)",
-    width: 111,
+    width: "35%",
   },
   groupInner: {
     backgroundColor: "rgba(136, 136, 136, 0.13)",
-    width: 201,
+    width: "60%",
     right: 0,
   },
   rectangleView: {
@@ -283,7 +304,8 @@ const styles = StyleSheet.create({
     bottom: 83,
   },
   hello1: {
-    left: 5,
+    marginLeft: 100,
+  left:-65,
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: 28,
     fontWeight: "700",
@@ -294,8 +316,23 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     left: "0%",
+    marginLeft: -40,
     top: "0%",
     color: GlobalStyles.Color.indigo_100,
+  },
+  hello21: {
+    marginLeft: -30,
+    width: 300,
+    fontSize: GlobalStyles.FontSize.size_12xl,
+    fontWeight: "700",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    left: "50%",
+    top: "-10%",
+    color: GlobalStyles.Color.indigo_100,
+  },
+  helloWrapper21: {
+    marginLeft: 10,
+    width: 22,
   },
   helloWrapper: {
     marginLeft: -143.42,
@@ -311,7 +348,7 @@ const styles = StyleSheet.create({
   totalAssets: {
     marginLeft: -112.65,
     bottom: 517,
-    width: 60,
+    width:"40%" ,
     fontSize: GlobalStyles.FontSize.size_base,
   },
   co: {
@@ -322,15 +359,15 @@ const styles = StyleSheet.create({
     textAlignVertical: "sub",
   },
   co2Removed: {
-    marginTop: -7,
+    marginTop: "-17%",
     width: 93,
     top: "50%",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     left: 0,
   },
   co2RemovedWrapper: {
-    marginTop: -209.94,
-    right: 15,
+    marginTop: -159.94,
+    right: 30,
     width: 92,
     height: 14,
     top: "48%",
@@ -339,14 +376,15 @@ const styles = StyleSheet.create({
   tons: {
     marginTop: -206,
     marginLeft: 54.53,
-    width: 36,
+    width: "95%",
     fontSize: GlobalStyles.FontSize.size_base,
     fontWeight: "700",
     top: "50%",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloContainer: {
-    marginLeft: -40.89,
+    
+    marginLeft: -50.89,
     width: 89,
   },
   treeIcon: {

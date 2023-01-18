@@ -3,6 +3,7 @@ import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-nativ
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
+import moment from "moment";
 
 const SendContact = ({navigation}) => {
   const [amount, setAmount] = useState("")
@@ -25,18 +26,15 @@ const SendContact = ({navigation}) => {
     const response = await api.GetAccountByCustomer();
     const accountresponse = await api.GetCustomerDetails();
     const data = response.data.details.content[0]
-    // const accountdata = accountresponse.data.details.accountDetails[0]
-    // const phonedata = accountresponse.data.details.phoneNumbers[0]
-    const acc= await api.GetAccount()
-    const det = acc.data.details.associates[0]
-    console.log(det)
+    const accountdata = accountresponse.data.details.accountDetails[0]
+    const phonedata = accountresponse.data.details.phoneNumbers[0]
     console.log(data)
     setSortCode(data.identifiers[0].sortCode)
     setAccNum(data.identifiers[0].accountNumber)
     setName(data.name)
     setBal(data.balance)
-    // setnumber(phonedata.phoneNo)
-    // setPlan(accountdata.accountType)
+    setnumber(phonedata.phoneNo)
+    setPlan(accountdata.accountType)
     setCurrency(data.currency)
   } 
   let payment = (amount ? amount : 1).toString()
@@ -45,8 +43,9 @@ const SendContact = ({navigation}) => {
 
   const sendContact = (amount) => {
     console.log(amount)
-    navigation.navigate("SentMoney")
+    navigation.navigate("SentMoney",{amount: amount,fullname: fullname})
   }
+  let date = (payment? payment.createdDate: "0")
  
   return (
     <View style={styles.requestContact}>
@@ -60,7 +59,7 @@ const SendContact = ({navigation}) => {
               styles.helloTypo2,
             ]}
           >
-            Joined September 2022
+            Joined {moment(date).format('MMMM YYYY')}
           </Text>
           <Image
             style={styles.groupChild}
