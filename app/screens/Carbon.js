@@ -16,7 +16,6 @@ import AuthContext from '../auth/context'
 
 
 const Carbon = ({ navigation }) => {
-    console.log(Dimensions.get('screen'))
 
     const [data, setData] = useState(null)
   const { setUser } = useContext(AuthContext)
@@ -27,7 +26,7 @@ const Carbon = ({ navigation }) => {
   
   const loadData = async () => {
     const response = await carbonApi.getListings();
-    console.log(response.data.details.data[0].tags)
+   
     setData(response.data.details.data)
   }
 
@@ -41,8 +40,6 @@ const Carbon = ({ navigation }) => {
     })
 
 }
-
-  
 
 
   return (
@@ -82,26 +79,26 @@ const Carbon = ({ navigation }) => {
                         At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transcation
                     </Text>
             </View>
-            <View style={[styles.subTitle, {marginTop: 100}]}>
+            <View style={[styles.subTitle, { marginTop: verticalScale(100)}]}>
                 <View style={styles.investNature} >
                     <Text style={styles.title}>Invest in Nature</Text>
                 </View>
                 <View style={{alignItems:"flex-start", justifyContent: 'center'}}>
                     <Image 
                         resizeMode='contain'
-                        style={{width:120, height: 120}}
+                        style={{width: horizontalScale(120) , height: verticalScale(120)}}
                         source={require('../assets/image-twotrees.png')}
                     />
                 </View>
             </View>
-            <View style={{marginTop: 20}}>
-                <Button title="VISIT YOUR VIRTUAL FOREST" color='none' style={{borderColor: 'blue', borderWidth: 1,}} textColor={{color: 'blue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
+            <View style={{marginTop: verticalScale(20)}}>
+                <Button title="VISIT YOUR VIRTUAL FOREST" color='none' style={{borderColor: 'blue', borderWidth: horizontalScale(1),}} textColor={{color: 'blue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
                 
             </View>
             
                 <Text style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</Text>
                 <Text style={styles.description}>We only profile high-quality projects that meet our minimun standards in relation to carbon + biodiversity + social benifits</Text>
-                <Text style={[styles.textSub, {marginTop: 50}]}>Select your project</Text>
+                <Text style={[styles.textSub, {marginTop: verticalScale(50)}]}>Select your project</Text>
            
             </View>
 
@@ -152,7 +149,7 @@ const Carbon = ({ navigation }) => {
                             ): null }
                             <View style={{flexWrap: "wrap", flexDirection: "row"}}>
                                 {item.tags.map((tag, index)=> (
-                                    <View key={index} style={index !== 0 ? styles.tagsContainer: [styles.tagsContainer, {marginLeft: 0}]}>
+                                    <View key={index} style={index !== 0 ? styles.tagsContainer: [styles.tagsContainer, {marginLeft: horizontalScale(0) }]}>
                                         <Text style={styles.tags}>{tag}</Text>
                                     </View>
                                 ))}
@@ -184,7 +181,7 @@ const styles = StyleSheet.create({
     },
     description:{
         color: "grey",
-        marginTop: 10,
+        marginTop: verticalScale(10),
         textAlign: "left"
 
         
@@ -194,25 +191,26 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     listImage: {
-        borderRadius: 15
+        borderRadius: moderateScale(15)
     },
     listImageContainer: {
-        height: 200
+        height: verticalScale(200)
     },
     listItems: {
-        marginTop: 20,
-        borderRadius: 15,
-        paddingVertical:20,
-        paddingHorizontal:14,
+        marginTop: verticalScale(20),
+        borderRadius: moderateScale(15),
+        paddingVertical: verticalScale(20),
+        paddingHorizontal: horizontalScale(14) ,
         backgroundColor: 'white',
         width: '100%',
         alignItems: 'center'
     },
     mainContainer: {
-        padding:25,
+        paddingHorizontal: horizontalScale(25),
+        paddingVertical: verticalScale(25)
     },
     priceSub: {
-        fontSize: 30,
+        fontSize: moderateScale(30),
         fontWeight: "bold"
     },
     tags : {
@@ -220,11 +218,11 @@ const styles = StyleSheet.create({
     },
     tagsContainer: {
         backgroundColor: "#f3f5f5",
-        borderRadius: 10,
-        marginLeft: 10,
-        marginTop: 10,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
+        borderRadius: moderateScale(10),
+        marginLeft: horizontalScale(10),
+        marginTop: verticalScale(10),
+        paddingVertical: verticalScale(5),
+        paddingHorizontal: horizontalScale(10),
     },
     text: {
         fontWeight: "bold",
@@ -253,13 +251,14 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         flexDirection: 'row',
-        marginTop: 10
+        marginTop: verticalScale(10)
 
     },
     subContainer:{
-        marginTop: 20,
-        borderRadius: 15,
-        padding:20,
+        marginTop: verticalScale(20),
+        borderRadius: moderateScale(15),
+        paddingVertical: verticalScale(20),
+        paddingHorizontal: horizontalScale(20),
         backgroundColor: 'white',
         width: '100%'
     },
