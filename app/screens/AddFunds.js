@@ -3,6 +3,13 @@ import { Text, StyleSheet, Image, View, Pressable,TextInput } from "react-native
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
+import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
+
+const data = [
+  { label: 'Data1', value: '1' },
+  { label: 'Data2', value: '2' },
+  { label: 'Data3', value: '3' },
+];
 
 const AddFunds = ({navigation}) =>{
   const [amount, setAmount] = useState("")
@@ -29,6 +36,19 @@ const AddFunds = ({navigation}) =>{
     console.log(amount)
     navigation.navigate("ReviewAndConfirm",{amount: amount})
   }
+
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+          Dropdown label
+        </Text>
+      );
+    }
+    return null;
+  };
   return (
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Add Funds</Text>
@@ -83,7 +103,7 @@ const AddFunds = ({navigation}) =>{
         </View>
 
         <View style={[styles.groupContainer, styles.groupPosition]}>
-          <View
+          {/* <View
             style={[
               styles.iconIonicIosArrowForwardWrapper,
               styles.rectangleViewLayout,
@@ -91,7 +111,27 @@ const AddFunds = ({navigation}) =>{
             ]}
           >
 
-          </View>
+          </View> */}
+          <Dropdown
+          style={[ styles.iconIonicIosArrowForwardWrapper,
+            styles.rectangleViewLayout,
+            styles.groupViewPosition,
+            isFocus && { borderColor: 'blue' }]}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Placeholder' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
           <Text style={[styles.hello7, styles.helloTypo]}>Select Account</Text>
           <View style={styles.helloParent3}>
             <Text
