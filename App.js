@@ -18,8 +18,8 @@ import Account from "./app/screens/Account"
 import AuthContext from "./app/auth/context";
 import BusinessAddress2 from "./app/screens/BusinessAddress2"
 import CountryOfResidence from "./app/screens/CountryOfResidence"
-import Carbon from "./app/screens/Carbon"
-import Carbon2 from "./app/screens/Carbon2";
+import Carbon22 from "./app/screens/Carbon22"
+import Carbon from "./app/screens/Carbon";
 import CarbonProject from "./app/screens/CarbonProject"
 import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
 
@@ -102,7 +102,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="Carbon2">
+  <Stack.Navigator initialRouteName="Carbon">
  
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
@@ -194,7 +194,7 @@ const StackNavigator = () => (
     <Stack.Screen name="SetLimit" component={SetLimit}/>
 
     <Stack.Screen name="Carbon" component={Carbon}/>
-    <Stack.Screen name="Carbon2" component={Carbon2}/>
+    <Stack.Screen name="Carbon22" component={Carbon22}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>
 

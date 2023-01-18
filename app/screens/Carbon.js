@@ -1,15 +1,25 @@
-import React,{ useEffect, useState,useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
-import GlobalStyles from "../../GlobalStyles";
+import React, {useContext, useState, useEffect} from 'react'
+import { StyleSheet,  View, Dimensions, Image, ScrollView, FlatList} from 'react-native'
 
+import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 import carbonApi from "../api/carbon"
-import AuthContext from "../auth/context";
-import Button from "../components/Button"
+import Button from '../components/Button'
+import Text from "../components/Text"
+import Screen from '../components/Screen'
+import AuthContext from '../auth/context'
 
 
-const Carbon = ({navigation}) => {
-  const [data, setData] = useState(null)
-  const authContext = useContext(AuthContext)
+
+
+
+
+
+
+const Carbon = ({ navigation }) => {
+    console.log(Dimensions.get('screen'))
+
+    const [data, setData] = useState(null)
+  const { setUser } = useContext(AuthContext)
 
   useEffect(() => {
     loadData()
@@ -17,136 +27,251 @@ const Carbon = ({navigation}) => {
   
   const loadData = async () => {
     const response = await carbonApi.getListings();
-    console.log(response.data.details.data)
+    console.log(response.data.details.data[0].tags)
     setData(response.data.details.data)
   }
 
-  const switchProject = (_ID) => {
-    console.log("Navigate to:"+_ID)
-    authContext.setUser({ID : _ID})    
-    navigation.navigate("CarbonProject")
-  }
+  const capitalized =(words)=>{
+ 
+   return  words.split("").map((word, index) => {
+        if(index === 0){
+            return word
+        }
+        return word.toLowerCase()
+    })
 
-  var projects = []
+}
 
-  const formatData = () => {
-    if(data != null){
-      data.map(element => {
-        projects.push(
-          <View key = {element.id} style={styles.projectBox}>
-            <Text> 
-              {element.displayName} 
-            </Text>
-            
-            <Image 
-              style={{height: 100, width:200}}
-              source={
-                element.image != "" ? {uri:element.image} : require("../assets/icon-bluecheck.png")
-              }
-            />
+  
 
-            <Text>
-              {element.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}... 
-            </Text>
-
-            <Pressable onPress = {() => switchProject(element.id)} style={[styles.mainFont, styles.button]}>
-              <Text style = {styles.mainFont}>
-                More details
-              </Text>
-            </Pressable>
-          </View>
-        )
-      });
-    }
-  }
-  formatData()
 
   return (
-    <View>
-      <ScrollView>
+    <Screen>
 
-        <Text style={[styles.hello, styles.helloColor, styles.helloTypo6]}>
-          <Text style={styles.titleFont}>Remove Carbon,Restore Nature</Text>
-        </Text>
-        <Image
-          style={[styles.image88Icon, styles.image88IconLayout]}
-          resizeMode="cover"
-          source={require("../assets/image-tree.png")}
-        />
-
-        <Pressable
-          style={[styles.groupParent, styles.groupPosition]}
-          onPress={() => navigation.navigate("ChooseCardsStandard5")}
-        >
-          <Text style={[styles.mainFont, styles.button]}>
-            Calculate Carbon Footprint
-          </Text>
-        </Pressable>
-
-        <View style={[styles.groupChild, styles.iconLayout]} />
-        <View style={styles.helloWrapper}>
-          <Text >
-            <Text >
-              <Text style={styles.mainFont}>
-                At Carbonyte we help you to track, reduce and calculate your CO2 emission from your daily transcation
-              </Text>
+        <View style={styles.mainContainer}>
+            <FlatList
+                ListHeaderComponent={
+                    <View
+            style={styles.container}>
+            <Text 
+                onPress={()=> console.log("onpress")} 
+                style={styles.title}
+            >Remove Carbon, Restore Nature
             </Text>
-          </Text>
+            <View style={styles.treeContiner}>
+                <Image 
+                resizeMode='contain'
+                style={{
+                    width: horizontalScale(250),
+                    height: verticalScale(400) 
+                }}
+                source={require("../assets/image-tree.png")}
+                />
+            </View>
+            {/* <Text>
+                At Carbonyte we help you to track, reduce and calvulate your C0<Text style={{fontSize: 15, lineHeight: 37}}>2</Text>emission from your daily transcation
+            </Text> */}
+
+        
+            <Button title="CALCULATE CARBON FOOTPRINT" color="blue" onPress={() => console.log("Calulate carbon footprint")}/>
+            <View style={styles.subContainer}>
+                    <Text 
+                    numberOflines={3}
+                    style={styles.text}
+                    >
+                        At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transcation
+                    </Text>
+            </View>
+            <View style={[styles.subTitle, {marginTop: 100}]}>
+                <View style={styles.investNature} >
+                    <Text style={styles.title}>Invest in Nature</Text>
+                </View>
+                <View style={{alignItems:"flex-start", justifyContent: 'center'}}>
+                    <Image 
+                        resizeMode='contain'
+                        style={{width:120, height: 120}}
+                        source={require('../assets/image-twotrees.png')}
+                    />
+                </View>
+            </View>
+            <View style={{marginTop: 20}}>
+                <Button title="VISIT YOUR VIRTUAL FOREST" color='none' style={{borderColor: 'blue', borderWidth: 1,}} textColor={{color: 'blue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
+                
+            </View>
+            
+                <Text style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</Text>
+                <Text style={styles.description}>We only profile high-quality projects that meet our minimun standards in relation to carbon + biodiversity + social benifits</Text>
+                <Text style={[styles.textSub, {marginTop: 50}]}>Select your project</Text>
+           
+            </View>
+
+                }
+                data={data} 
+                keyExtractor={data => data.id.toString()}
+                renderItem={({ item }) => (
+                    <View style={styles.listItems}>
+                        
+                        <Image
+                        resizeMode={item.image !== "" ? 'stretch': 'contain'}
+                        style={[styles.listImage, {
+                            width: horizontalScale(300),
+                            height: verticalScale(180) 
+                        }]}
+                        source={
+                            
+                            item.image != "" ? {uri:item.image} : require("../assets/icon-bluecheck.png")
+                        } />
+                    
+                        <View style={styles.subTitle}>
+                            <View style={styles.subTitleText}>
+                                <Text
+                                    style={styles.textSub}
+                                >{item.displayName}</Text>
+                            </View>
+                            <View style={styles.subTitlePrice}>
+                                <Text
+                                style={styles.priceSub}
+                                >£1.45
+                                </Text>
+                                <Text style={styles.tree}>
+                                    /{capitalized(item.asset.type)}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={{width: '100%',alignItems: "flex-start"}}>
+                            <Text
+                                style={styles.description}
+                            >{item.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}...</Text>
+                        </View>
+                        <Button title="ADD TO CART" color='blue' onPress={() => console.log('Add to cart')}/>
+                        <View style={styles.benifitsContainer}>
+                            {item.tags.length ? (
+                                <View >   
+                                <Text style={[styles.tags, styles.tree]}>Co-benifits</Text>
+                                </View>
+                            ): null }
+                            <View style={{flexWrap: "wrap", flexDirection: "row"}}>
+                                {item.tags.map((tag, index)=> (
+                                    <View key={index} style={index !== 0 ? styles.tagsContainer: [styles.tagsContainer, {marginLeft: 0}]}>
+                                        <Text style={styles.tags}>{tag}</Text>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+                    </View>
+                )
+            }
+            />
         </View>
+       
+        
 
 
-
-        <Text style={styles.mainFont}>
-          Remove your carbon footprint and restore nature in seconds with our
-          revolutionary instant purchase platform. Just choose what you want to
-          balance – personal, business or travel impact – then go climate
-          positive.
-          We only profile high-quality projects that meet our minimum standards
-          in relation to carbon + biodiversity + social benefits
-        </Text>
-
-        {projects}
-      </ScrollView>
-    </View>
+       
+    </Screen>
+    
   )
-};
+}
 
 const styles = StyleSheet.create({
-  titleFont: {
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
-  mainFont: {
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
+    benifitsContainer: {
+        width: "100%"
+    },
+    container: {
+        backgroundColor: "#f3f5f5",
+        flex:1,
+    
+    },
+    description:{
+        color: "grey",
+        marginTop: 10,
+        textAlign: "left"
 
-  rectanglePressable: {
-    borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
-  },
+        
+    },
+    investNature: {
+        alignItems: "flex-start",
+        justifyContent: "center"
+    },
+    listImage: {
+        borderRadius: 15
+    },
+    listImageContainer: {
+        height: 200
+    },
+    listItems: {
+        marginTop: 20,
+        borderRadius: 15,
+        paddingVertical:20,
+        paddingHorizontal:14,
+        backgroundColor: 'white',
+        width: '100%',
+        alignItems: 'center'
+    },
+    mainContainer: {
+        padding:25,
+    },
+    priceSub: {
+        fontSize: 30,
+        fontWeight: "bold"
+    },
+    tags : {
+        color: "grey"
+    },
+    tagsContainer: {
+        backgroundColor: "#f3f5f5",
+        borderRadius: 10,
+        marginLeft: 10,
+        marginTop: 10,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+    },
+    text: {
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "#1B2356"
+    },
+    textSub: {
+        fontWeight: "bold",
+        textAlign: "left",
+        color: "#1B2356"
 
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: 'blue',
-  },
+    },
+    title: {
+        fontSize: moderateScale(30),
+        fontWeight: 'bold',
+        lineHeight: verticalScale(30),
+        width: '70%',
+        
+    },
+    tree: {
+        fontWeight: 'bold'
+    },
+    treeContiner: {
+        alignItems: 'center',
+        marginTop: verticalScale(10),
+    },
+    subTitle: {
+        flexDirection: 'row',
+        marginTop: 10
 
-  projectBox: {
-    flex: 1,
-    alignContent: "center",
-    justifyContent: "center",
-    width: "95%",
-    backgroundColor: "light-grey"
-  }
+    },
+    subContainer:{
+        marginTop: 20,
+        borderRadius: 15,
+        padding:20,
+        backgroundColor: 'white',
+        width: '100%'
+    },
+    subTitleText: {
+        flex:1,
+        fontWeight: 'bold'
+    },
+    subTitlePrice: {
+        flex:1,
+        alignItems: "flex-end"
+    }
 
+})
 
-});
-
-export default Carbon;
+export default Carbon
