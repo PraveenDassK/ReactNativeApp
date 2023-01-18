@@ -4,10 +4,15 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
 
 const AddFundsSuccess = ({navigation}) => {
+  //  const [bankName, setBankName] = useState("")
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("AccountMain")
+  }
   return (
       <View style={styles.addFundsSuccess}>
         <Pressable
-          onPress={() => navigation.navigate("AccountMain")}
+          onPress={() => navigate()}
         >   
         <View style={styles.iconAwesomeCheckCircleParent}>
           <Image
@@ -16,7 +21,7 @@ const AddFundsSuccess = ({navigation}) => {
           />
           <Text style={[styles.hello, styles.helloFlexBox]}>
             <Text style={styles.congratulations}>
-              <Text style={styles.congratulations1}>Congratulations!</Text>
+              <Text style={styles.congratulations1}>Congratulations!{"\n"}</Text>
             </Text>
             <Text style={styles.congratulations}>
               <Text style={styles.congratulations1}> </Text>
@@ -25,7 +30,7 @@ const AddFundsSuccess = ({navigation}) => {
               <Text style={styles.added1}>{`£500.00 added `}</Text>
             </Text>
             <Text style={styles.congratulations}>
-              <Text style={styles.added1}>successfully</Text>
+              <Text style={styles.added1}>{"\n"}successfully</Text>
             </Text>
           </Text>
           <Text style={[styles.hello1, styles.helloFlexBox]}>
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
   },
   iconAwesomeCheckCircle: {
 
-    height:"50%",
+    height:"35%",
     width:"100%",
     position: "absolute",
     resizeMode:"contain",

@@ -4,12 +4,16 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Requested = ({navigation}) => {
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("AccountMain")
+  }
   let amount = 500
   let name = "Maia"
   return (
     <Pressable
       style={styles.requested}
-      onPress={() => navigation.navigate("AccountMain")}
+      onPress={() => navigate()}
     >
       <View style={styles.groupParent}>
         <View style={styles.groupPosition}>
