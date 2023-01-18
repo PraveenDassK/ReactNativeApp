@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
-// import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
 const AddBeneficiarySuccess = ({navigation}) => {
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   hello: {
     top: verticalScale(458),
     marginTop: verticalScale(-100),
-    marginLeft: horizontalScale(-125),
+    marginLeft: horizontalScale(-130),
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: verticalScale(24),
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     marginTop: verticalScale(250),
-    marginLeft: horizontalScale(-67),
+    marginLeft: horizontalScale(-70),
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,

@@ -9,7 +9,7 @@ import { View,
   Pressable,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-// import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 const AddBeneficiary = ({navigation}) => {
   const [bankName, setBankName] = useState("")
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello: {
-    marginLeft: horizontalScale(-75.5),
+    marginLeft: horizontalScale(-40),
     top: verticalScale(39),
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello8: {
-    top: "0.33%",
+    top: "15%",
     left: "50%",
     marginLeft: horizontalScale(-20),
     fontSize: GlobalStyles.FontSize.size_lg,

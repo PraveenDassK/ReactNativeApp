@@ -2,6 +2,8 @@ import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 const FindFriends = ({navigation}) => {
   
@@ -25,7 +27,7 @@ const FindFriends = ({navigation}) => {
             <Text style={styles.allowAccessTo}>
               money from your friends more easily, split bills
             </Text>
-            <Text style={styles.allowAccessTo}>and much more.</Text>
+            <Text style={styles.allowAccessTo}> and much more.</Text>
           </Text>
           <Pressable
             style={[styles.groupContainer, styles.groupPosition1]}
@@ -50,7 +52,6 @@ const FindFriends = ({navigation}) => {
         </View>
         <Image
           style={styles.groupInner}
-          resizeMode="cover"
           source={require("../assets/image-friendsearch.png")}
         />
       </View>
@@ -60,15 +61,15 @@ const FindFriends = ({navigation}) => {
 
 const styles = StyleSheet.create({
   helloParentPosition: {
-    left: 0,
-    right: 0,
-    top: 0,
+    left: horizontalScale(0),
+    right: horizontalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   groupPosition1: {
-    height: 60,
-    left: 0,
-    right: 0,
+    height: verticalScale(60),
+    left: horizontalScale(0),
+    right: horizontalScale(0),
     position: "absolute",
   },
   groupPosition: {
@@ -84,26 +85,26 @@ const styles = StyleSheet.create({
   helloTypo: {
     textTransform: "uppercase",
     fontSize: GlobalStyles.FontSize.size_lg,
-    textAlign: "left",
+    alignItems: 'center',
     position: "absolute",
   },
   hello: {
-    left: 2,
+    left: horizontalScale(2),
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
-    top: 0,
+    top: verticalScale(0),
     position: "absolute",
   },
   allowAccessTo: {
     margin: GlobalStyles.Margin.margin_8xs,
   },
   hello1: {
-    marginTop: -282.52,
-    left: 3,
+    marginTop: verticalScale(-282.52),
+    left: horizontalScale(3),
     fontSize: GlobalStyles.FontSize.size_base,
-    lineHeight: 20,
+    lineHeight: verticalScale(20),
     color: GlobalStyles.Color.gray_700,
     top: "50%",
     textAlign: "left",
@@ -113,19 +114,19 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.blue_100,
   },
   maskGroup236: {
-    bottom: 13,
+    bottom: verticalScale(13),
   },
   helloParent: {
-    bottom: 0,
+    bottom: verticalScale(0),
   },
   hello2: {
-    top: "40%",
+    top: verticalScale(20),
     left: "50%",
-    marginLeft:-60,
     color: GlobalStyles.Color.white,
+    width: "100%",
   },
   groupContainer: {
-    bottom: 76,
+    bottom: verticalScale(76),
   },
   groupItem: {
     backgroundColor: GlobalStyles.Color.gray_700,
@@ -133,34 +134,35 @@ const styles = StyleSheet.create({
   hello3: {
     top: "38.33%",
     left: "50%",
-    marginLeft:-35,
+    marginLeft: horizontalScale(-35),
     color: GlobalStyles.Color.white,
   },
   groupPressable: {
-    bottom: 0,
+    bottom: verticalScale(0),
   },
   groupInner: {
-    marginTop: -153.67,
-    right: 22,
+    marginTop: verticalScale(-153.67),
+    right: horizontalScale(22),
     left: "50%",
-    marginLeft:-130,
+    marginLeft: horizontalScale(-130),
     overflow: "hidden",
-    height: 259,
-    width:294,
+    height: verticalScale(259),
+    width: horizontalScale(294),
     top: "50%",
     position: "absolute",
+    resizeMode:'contain',
   },
   iconIonicIosArrowForward: {
-    marginTop: 50,
-    left: 26,
-    width: 11,
-    height: 6,
+    marginTop: verticalScale(50),
+    left: horizontalScale(26),
+    width: horizontalScale(11),
+    height: verticalScale(6),
     top: "70%",
     position: "absolute",
   },
   groupParent: {
     width: "100%",
-    height: 652,
+    height: verticalScale(652),
   },
   findFriends: {
     backgroundColor: GlobalStyles.Color.gray_100,
@@ -171,5 +173,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
 
 export default FindFriends;

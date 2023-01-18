@@ -2,6 +2,7 @@ import * as React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 const AddFundsSuccess = ({navigation}) => {
   return (
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   helloFlexBox: {
     textAlign: "center",
     position: "absolute",
-    top:"50%",
+    top:"60%",
     width:"100%",
   },
   iconAwesomeCheckCircle: {
@@ -56,17 +57,18 @@ const styles = StyleSheet.create({
   },
   congratulations: {
     margin: GlobalStyles.Margin.margin_8xs,
+
   },
   added1: {
   },
   hello: {
-    top: 219,
+    top: verticalScale(219),
     fontSize: GlobalStyles.FontSize.size_4xl,
-    lineHeight: 24,
+    lineHeight: verticalScale(24),
     color: GlobalStyles.Color.indigo_100,
   },
   hello1: {
-    marginTop: 241.5,
+    marginTop: verticalScale(200),
     top: "50%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
   iconAwesomeCheckCircleParent: {
     width: "100%",
     height: "100%",
+    top: verticalScale(-10),
   },
   addFundsSuccess: {
     flex: 1,
@@ -83,5 +86,7 @@ const styles = StyleSheet.create({
     paddingLeft: "5%",
   },
 });
+
+
 
 export default AddFundsSuccess;

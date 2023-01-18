@@ -40,7 +40,6 @@ import Pin from "./app/screens/Pin"
 import Success from "./app/screens/Success"
 import Name from "./app/screens/Name"
 import Login from "./app/screens/Login";
-import SendEnterPIN from "./app/screens/SendEnterPIN";
 import BusinessChooseAddress from "./app/screens/BusinessChooseAddress";
 import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
 import ChooseCardsElite from "./app/screens/ChooseCardsElite";
@@ -57,7 +56,7 @@ import MyCards from "./app/screens/MyCards"
 import ProofVerified from "./app/screens/ProofVerified"
 
 import AddFunds from "./app/screens/AddFunds"
-import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
+//import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
 import FreezeCard from "./app/screens/FreezeCard";
 import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
@@ -70,11 +69,11 @@ import Terminate from "./app/screens/Terminate";
 import TerminatedCard from "./app/screens/TerminatedCard";
 import ItWasLost from "./app/screens/ItWasLost";
 import ReplaceCard from "./app/screens/ReplaceCard";
-// import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
+import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
 import BankTransferAmount from "./app/screens/BankTransferAmount";
 import VerifyCode1 from "./app/screens/VerifyCode1";
 import VerifyCode from "./app/screens/VerifyCode";
-// import AddBeneficiary from "./app/screens/AddBeneficiary";
+import AddBeneficiary from "./app/screens/AddBeneficiary";
 import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
@@ -90,9 +89,9 @@ import SelectBank from "./app/screens/SelectBank";
 import SelectBank1 from "./app/screens/SelectBank1";
 import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
 import AddFundsSuccess from "./app/screens/AddFundsSuccess";
+import AddBeneficiarySchedulePay1 from "./app/screens/AddBeneficiarySchedulePay1";
 
-import AccountMain from "./app/screens/AccountMain";
-import AccountMainBusiness from "./app/screens/AccountMainBusiness";
+
 import SendContact from "./app/screens/SendContact";
 import CarbonCart from "./app/screens/CarbonCart";
 
@@ -101,8 +100,8 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="SpendingLimit">
- 
+  <Stack.Navigator initialRouteName="SignUpPersonalScreen">
+
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
@@ -112,7 +111,7 @@ const StackNavigator = () => (
     
     
     
-
+    <Stack.Screen  name="AddBeneficiarySchedulePay1" component={AddBeneficiarySchedulePay1}/>
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
     <Stack.Screen  name="Login" component={Login}/>
 
@@ -131,8 +130,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
     <Stack.Screen  name="Account" component={Account}/>
-    <Stack.Screen  name="AccountMain" component={AccountMain}/>
-    <Stack.Screen  name="AccountMainBusiness" component={AccountMainBusiness}/>
+
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
     <Stack.Screen  name="SendMoney" component={SendMoney}/>
@@ -177,8 +175,8 @@ const StackNavigator = () => (
     <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
     <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
 
-    {/* <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
-    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/> */}
+    <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
+    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/>
 
     <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
     <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
@@ -199,8 +197,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
 
     <Stack.Screen name="ChooseCardsPremium" component={ChooseCardsPremium}/>
-    <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>
-    <Stack.Screen name="SendEnterPIN" component={SendEnterPIN}/>
+
 
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
 

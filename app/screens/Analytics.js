@@ -2,6 +2,8 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 const Analytics = ({navigation}) => {
   return (
@@ -887,7 +889,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_2xl,
-    width:100,
+    width: 100,
     bottom: -10,
     left: 0,
   },
@@ -1404,7 +1406,7 @@ const styles = StyleSheet.create({
   history3: {
     marginLeft: 21.5,
     left: "50%",
-    marginTop:-8,
+    marginTop: -8,
   },
   history4: {
     right: -1,
