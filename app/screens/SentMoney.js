@@ -3,8 +3,10 @@ import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const SentMoney = ({navigation}) => {
-  
+const SentMoney = ({route,navigation}) => {
+  console.log(route.params.amount)
+  let amount = route.params.amount
+  let fullname = route.params.fullname
 
   return (
     <Pressable
@@ -27,9 +29,9 @@ const SentMoney = ({navigation}) => {
         </View>
         <Text style={[styles.hello1, styles.helloTypo]}>
           <Text style={styles.youveSent}>{`You've sent `}</Text>
-          <Text style={styles.text}>{`£3,420 `}</Text>
-          <Text style={styles.youveSent}>{`to `}</Text>
-          <Text style={styles.text}>Robert Dyla</Text>
+          <Text style={styles.text}>{`£`}{amount}</Text>
+          <Text style={styles.youveSent}>{` to `}</Text>
+          <Text style={styles.text}>{fullname}</Text>
         </Text>
         <Image
           style={[styles.iconAwesomeCheckCircle, styles.containerPosition]}
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloWrapperPosition: {
-    top:"300%",
+    top:"380%",
     width:"100%",
 
   },
@@ -94,8 +96,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello: {
-    marginTop: 332.5,
-    left: 120,
+    marginTop: 302.5,
+    left: "50%",
+    marginLeft:-60,
     fontSize: GlobalStyles.FontSize.size_xs,
     top: "50%",
   },
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_base,
     lineHeight: 25,
     left: 0,
-    top: 0,
+    top:0,
     color: GlobalStyles.Color.gray_700,
   },
   helloContainer: {
@@ -176,7 +179,7 @@ const styles = StyleSheet.create({
   sentMoney: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_md,
+    paddingTop: GlobalStyles.Padding.padding_xs,
     backgroundColor: GlobalStyles.Color.white,
   },
 });
