@@ -116,7 +116,8 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 40,
-    marginLeft: "20%",
+    marginLeft: -90,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     width:"50%"
   },
   helloContainer: {
-    marginTop: "-30%",
+    marginTop: "-25%",
     left: "10%",
   },
   groupChild: {
