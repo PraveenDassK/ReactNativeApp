@@ -490,7 +490,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
-    top: "-10%"
+    top: "-5%"
   },
   paymentsParentLayout: {
     height: 41,
@@ -542,8 +542,8 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   spendingLimit: {
-    margin: GlobalStyles.Margin.margin_8xs,
-    top: "20%"
+    margin: GlobalStyles.Margin.margin_xs,
+    top: "25%"
   },
   setMonthlySpending: {
     // fontFamily: GlobalStyles.FontFamily.helvetica,
