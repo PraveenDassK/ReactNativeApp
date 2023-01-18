@@ -1,18 +1,29 @@
 import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { Text, StyleSheet, Image, View, Pressable,TextInput } from "react-native";
-
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
 
 const AddFunds = ({navigation}) =>{
   const [amount, setAmount] = useState("")
   const [note, setNote] = useState("")
   const [userData, setCode] = useState("")
-  const reciver = "Me";
-  const sortCode = "00-00-00"
-  const accountCode = "01234567890"  
+  const [balance,setBalance] = useState("")
+  const authContext = useContext(AuthContext)
   let payment = (amount ? amount : 1).toString()
 
   console.log(payment)
+
+  useEffect(() => {
+    loadData()
+  },[])
+
+  const loadData = async () => {
+    const response = await api.GetAccountByCustomer();
+    const data = response.data.details.content[0]
+    console.log(data)
+    setBal(data.balance)
+  }
 
   const addFunds = (amount) => {
     console.log(amount)
@@ -89,7 +100,7 @@ const AddFunds = ({navigation}) =>{
               XYZ Card
             </Text>
             <Text style={[styles.hello9, styles.helloPosition]}>
-              £12,534.00
+              {"£"}{balance}
             </Text>
             <Image
               style={[styles.iconFeatherCreditCard, styles.iconPosition]}

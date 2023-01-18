@@ -3,9 +3,10 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Requested = ({navigation}) => {
-  let amount = 500
-  let name = "Maia"
+const Requested = ({route}) => {
+  console.log(route.params.amount)
+  let amount = route.params.amount
+  let name = route.params.name
   return (
     <Pressable
       style={styles.requested}
