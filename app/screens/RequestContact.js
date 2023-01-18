@@ -11,8 +11,6 @@ const RequestContact = ({navigation}) => {
 
   let fromName = "Nik"
   let payment = (amount ? amount : 1).toString()
-  Keyboard.dismiss()
-  console.log(payment)
 
   const requestContact = (amount) => {
     console.log(amount)
@@ -43,7 +41,7 @@ const RequestContact = ({navigation}) => {
           <View style={[styles.helloContainer, styles.groupViewPosition]}>
           <Pressable
               onPress={() => {
-                setAmount(20)
+                setAmount("20")
               }}
             >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
@@ -55,7 +53,7 @@ const RequestContact = ({navigation}) => {
           <View style={[styles.groupView, styles.groupViewPosition]}>
           <Pressable
               onPress={() => {
-                setAmount(50)
+                setAmount("50")
               }}
             >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
@@ -73,7 +71,7 @@ const RequestContact = ({navigation}) => {
           >
             <Pressable
               onPress={() => {
-                setAmount(100)
+                setAmount("100")
               }}
             >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
@@ -89,6 +87,7 @@ const RequestContact = ({navigation}) => {
           </Text>
           <TextInput style={[styles.hello8, styles.helloTypo1]} 
             placeholder={"£"+payment} keyboardType="numeric"
+            onChangeText = {newText => setAmount(newText)}
           />
           <View
             style={[
