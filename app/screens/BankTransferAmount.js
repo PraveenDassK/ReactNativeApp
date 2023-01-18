@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: 80,
-    left: 25,
+    left: 0,
   },
   helloParent: {
     top: "10%",

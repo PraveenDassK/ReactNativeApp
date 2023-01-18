@@ -22,7 +22,7 @@ const AddFunds = ({navigation}) =>{
     const response = await api.GetAccountByCustomer();
     const data = response.data.details.content[0]
     console.log(data)
-    setBal(data.balance)
+    setBalance(data.balance)
   }
 
   const addFunds = (amount) => {
