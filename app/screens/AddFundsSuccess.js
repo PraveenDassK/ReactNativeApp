@@ -1,35 +1,42 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-const AddFundsSuccess = () => {
+const AddFundsSuccess = ({route,navigation}) => {
+  console.log(route.params.amount)
+  let amount = route.params.amount
   return (
-    <View style={styles.addFundsSuccess}>
-      <View style={styles.iconAwesomeCheckCircleParent}>
-        <Image
-          style={styles.iconAwesomeCheckCircle}
-          resizeMode="cover"
-          source={require("../assets/icon-bluecheck.png")}
-        />
-        <Text style={[styles.hello, styles.helloFlexBox]}>
-          <Text style={styles.congratulations}>
-            <Text style={styles.congratulations1}>Congratulations!</Text>
+      <View style={styles.addFundsSuccess}>
+        <Pressable
+          onPress={() => navigate()}
+        >   
+        <View style={styles.iconAwesomeCheckCircleParent}>
+          <Image
+            style={styles.iconAwesomeCheckCircle}
+            source={require("../assets/icon-bluecheck.png")}
+          />
+          <Text style={[styles.hello, styles.helloFlexBox]}>
+            <Text style={styles.congratulations}>
+              <Text style={styles.congratulations1}>Congratulations!{"\n"}</Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.congratulations1}> </Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.added1}>{"\n"}£{amount}{` added `}</Text>
+            </Text>
+            <Text style={styles.congratulations}>
+              <Text style={styles.added1}>{"\n"}successfully</Text>
+            </Text>
           </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.congratulations1}> </Text>
+          <Text style={[styles.hello1, styles.helloFlexBox]}>
+            Tap anywhere to continue
           </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.added1}>{`£500.00 added `}</Text>
-          </Text>
-          <Text style={styles.congratulations}>
-            <Text style={styles.added1}>successfully</Text>
-          </Text>
-        </Text>
-        <Text style={[styles.hello1, styles.helloFlexBox]}>
-          Tap anywhere to continue
-        </Text>
+        </View>
+    </Pressable>
       </View>
-    </View>
   );
 };
 
@@ -37,50 +44,51 @@ const styles = StyleSheet.create({
   helloFlexBox: {
     textAlign: "center",
     position: "absolute",
+    top:"60%",
+    width:"100%",
   },
   iconAwesomeCheckCircle: {
-    top: 0,
-    right: 0,
-    left: 0,
-    maxWidth: "100%",
-    overflow: "hidden",
-    height: 180,
+
+    height:"35%",
+    width:"100%",
     position: "absolute",
+    resizeMode:"contain",
   },
   congratulations1: {
     fontWeight: "700",
   },
   congratulations: {
     margin: GlobalStyles.Margin.margin_8xs,
+
   },
   added1: {
   },
   hello: {
-    top: 219,
-    left: 10,
+    top: verticalScale(219),
     fontSize: GlobalStyles.FontSize.size_4xl,
-    lineHeight: 24,
+    lineHeight: verticalScale(24),
     color: GlobalStyles.Color.indigo_100,
   },
   hello1: {
-    marginTop: 241.5,
+    marginTop: verticalScale(200),
     top: "50%",
-    left: 22,
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
   },
   iconAwesomeCheckCircleParent: {
-    width: 180,
-    height: 507,
+    width: "100%",
+    height: "100%",
+    top: verticalScale(-10),
   },
   addFundsSuccess: {
-    backgroundColor: GlobalStyles.Color.white,
     flex: 1,
     width: "100%",
-    paddingLeft: 98,
-    paddingTop: GlobalStyles.Padding.padding_11xl,
-    paddingRight: 97,
+    paddingTop: GlobalStyles.Padding.padding_5xl,
+    paddingRight: "5%",
+    paddingLeft: "5%",
   },
 });
+
+
 
 export default AddFundsSuccess;

@@ -1,17 +1,26 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState, Route } from "react";
+//import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const ReviewAndConfirm = () => {
-
+const ReviewAndConfirm = ({navigation,route}) => {
+  console.log(route.params.amount)
+  let amount = route.params.amount
+  const [fee, setFee] = useState(null)
+    // const [plan, setPlan] = useState(null)
+    // const [balance, setBal] = useState(null)
+    // const [currency, setCurrency] = useState(null)
+    // const authContext = useContext(AuthContext)
+  
+  
   return (
     <View style={styles.reviewAndConfirm}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Review and Confirm</Text>
         <View style={[styles.helloGroup, styles.helloLayout]}>
           <Text style={styles.hello1}>From</Text>
-          <Text style={styles.hello2}>Daily Saving</Text>
-          <Text style={[styles.hello3, styles.helloTypo]}>- £ 500.00</Text>
+          <Text style={styles.hello2}>Daily Saving </Text>
+          <Text style={[styles.hello3, styles.helloTypo]}>-{amount}</Text>
         </View>
         <View
           style={[
@@ -22,7 +31,7 @@ const ReviewAndConfirm = () => {
         >
           <Text style={styles.hello1}>To</Text>
           <Text style={styles.hello2}>Visa *0000</Text>
-          <Text style={[styles.hello6, styles.helloTypo]}>- £ 500.00</Text>
+          <Text style={[styles.hello6, styles.helloTypo]}>-{amount}</Text>
         </View>
         <View style={[styles.groupChild, styles.groupPosition]} />
         <View style={[styles.groupItem, styles.groupPosition]} />
@@ -30,19 +39,19 @@ const ReviewAndConfirm = () => {
         <Text style={[styles.hello8, styles.helloPosition]}>
           Est. completion date
         </Text>
-        <Text style={[styles.hello9, styles.helloPosition1]}>£ 0.00</Text>
+        <Text style={[styles.hello9, styles.helloPosition1]}>{fee}</Text>
         <Text style={[styles.hello10, styles.helloPosition]}>Today</Text>
         <Image
           style={[
             styles.iconIonicIosArrowForward,
-            styles.helloContainerPosition,
+            styles.helloContainerPosition1,
           ]}
           resizeMode="cover"
-          source={require("../assets/icon-carbonyteuparrow.png")}
+          source={require("../assets/icon-ioniciosarrowforward13.png")}
         />
         <Pressable
           style={styles.groupParent}
-          onPress={() => navigation.navigate("AddFundsSuccess")}
+          onPress={() => navigation.navigate("AddFundsSuccess",{amount: amount})}
         >
           <View style={[styles.rectangleParent, styles.maskGroup236Position]}>
             <View style={styles.groupInner} />
@@ -58,37 +67,42 @@ const ReviewAndConfirm = () => {
 const styles = StyleSheet.create({
   helloLayout: {
     height: 45,
-    right: 40,
+    right: "5%",
+    width: "100%"
   },
   helloTypo: {
     color: GlobalStyles.Color.blue_100,
     fontSize: GlobalStyles.FontSize.size_2xl,
-    top: 10,
+    top: 25,
     textAlign: "right",
     position: "absolute",
   },
   helloContainerPosition: {
-    top: "50%",
+    top: "45%",
+    position: "absolute",
+    width:"100%"
+  },
+  helloContainerPosition1: {
+    top: 350,
     position: "absolute",
   },
   groupPosition: {
     height: 2,
-    width: 139,
+    width: "30%",
     borderTopWidth: 1,
     borderColor: "#707070",
     borderStyle: "solid",
-    marginTop: -204.27,
-    top: "50%",
+    marginTop: 180,
     position: "absolute",
   },
   helloPosition1: {
-    top: 275,
+    top: "45%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
     position: "absolute",
   },
   helloPosition: {
-    top: 303,
+    top: "48%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
     position: "absolute",
@@ -101,23 +115,25 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 40,
-    left: 92,
+    marginLeft: -90,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     position: "absolute",
+    width:"80%"
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_base,
     color: GlobalStyles.Color.gray_700,
     left: 0,
-    top: 0,
+    top: 10,
     textAlign: "left",
     position: "absolute",
   },
   hello2: {
-    top: 29,
+    top: "89%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
     left: 0,
@@ -125,27 +141,29 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello3: {
-    left: 228,
+    left: "30%",
     textAlign: "right",
+    width:"50%"
   },
   helloGroup: {
     top: 108,
-    left: 26,
+    left: "10%",
     position: "absolute",
   },
   hello6: {
-    left: 229,
+    left: "30%",
     textAlign: "right",
+    width:"50%"
   },
   helloContainer: {
-    marginTop: -18.5,
-    left: 25,
+    marginTop: "-25%",
+    left: "10%",
   },
   groupChild: {
-    left: 25,
+    left: "10%",
   },
   groupItem: {
-    right: 40,
+    right: "10%",
     width: 139,
     borderTopWidth: 1,
     borderColor: "#707070",
@@ -153,24 +171,24 @@ const styles = StyleSheet.create({
     marginTop: -204.27,
   },
   hello7: {
-    left: 25,
+    left: "10%",
     textAlign: "left",
   },
   hello8: {
-    left: 25,
+    left:"10%",
     textAlign: "left",
   },
   hello9: {
-    left: 302,
+    right: "10%",
     textAlign: "right",
   },
   hello10: {
-    left: 303,
+    right: "10%",
     textAlign: "right",
   },
   iconIonicIosArrowForward: {
-    marginTop: -207.29,
-    marginLeft: -13.5,
+    marginTop: -170,
+    marginLeft: -4.5,
     left: "50%",
     width: 12,
     height: 7,
@@ -182,7 +200,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
     width: "100%",
   },
@@ -193,20 +211,20 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello11: {
-    top: "40%",
-    left: "39.26%",
+    top: "30%",
+    width:"100%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
-    textAlign: "left",
+    color: GlobalStyles.Color.white,
+    textAlign: "center",
     position: "absolute",
   },
   groupParent: {
-    right: 24,
-    bottom: 48,
+    left: "10%",
+    bottom: 88,
     height: 60,
-    left: 25,
     position: "absolute",
+    width:"80%"
   },
   helloParent: {
     borderTopLeftRadius: GlobalStyles.Border.br_6xl,
@@ -219,15 +237,15 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
   reviewAndConfirm: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_sm,
+    paddingTop: GlobalStyles.Padding.padding_11xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

@@ -1,9 +1,44 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
+import { Text, StyleSheet, View, Image, Pressable, TextInput, ScrollView } from "react-native";
+import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
+
 import GlobalStyles from "../../GlobalStyles";
 
-const DirectorsOrPartners = () => {
+const roledata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const countrydata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const nationalitydata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const occupationdata = [
+  { label: 'United Kingdom', value: '1' },
+  { label: 'United States of America', value: '2' },
+  { label: 'India', value: '3' },
+];
+const DirectorsOrPartners = ({navigation}) => {
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+          Dropdown label
+        </Text>
+      );
+    }
+    return null;
+  };
   return (
+    <ScrollView>
     <View style={styles.directorsOrPartners}>
       <View style={styles.identityProofParent}>
         <Text style={[styles.identityProof, styles.nameTypo, styles.nameTypo1]}>
@@ -35,8 +70,8 @@ const DirectorsOrPartners = () => {
               styles.currentPosition,
             ]}
           >
-            <Text style={styles.current}>Current</Text>
-            <Text style={styles.current}>signed</Text>
+            <Text style={styles.current}>Current{"\n"}</Text>
+            <Text style={styles.current}>signed{"\n"}</Text>
             <Text style={styles.current}>passport </Text>
           </Text>
           <View style={[styles.groupItem, styles.groupLayout]} />
@@ -61,8 +96,8 @@ const DirectorsOrPartners = () => {
             ]}
           >
             <Text style={styles.current}>Current</Text>
-            <Text style={styles.current}>photo-card</Text>
-            <Text style={styles.current}>driving license </Text>
+            <Text style={styles.current}>{"\n"}photo-card</Text>
+            <Text style={styles.current}>{"\n"}driving license </Text>
           </Text>
           <View style={[styles.helloPosition1, styles.groupLayout]} />
           <Image
@@ -80,7 +115,7 @@ const DirectorsOrPartners = () => {
         >
           <Text style={[styles.birthCertificate, styles.helloTypo]}>
             <Text style={styles.current}>Birth</Text>
-            <Text style={styles.current}>Certificate </Text>
+            <Text style={styles.current}>{"\n"}Certificate </Text>
           </Text>
           <View style={[styles.rectangleView, styles.groupLayout]} />
           <Image
@@ -89,7 +124,7 @@ const DirectorsOrPartners = () => {
             source={require("../assets/icon-carbonytedownarrow.png")}
           />
         </View>
-        <View
+        {/* <View
           style={[
             styles.iconIonicIosArrowDownParent,
             styles.groupChildLayout,
@@ -105,7 +140,34 @@ const DirectorsOrPartners = () => {
           <Text style={[styles.hello, styles.helloTypo]}>
             Select the occupation
           </Text>
-        </View>
+        </View> */}
+
+<Dropdown
+          style={[ styles.iconIonicIosArrowDownParent,
+            styles.groupChildLayout,
+            styles.groupChildPosition,
+            styles.groupChildBorder,
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={occupationdata}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the occupation' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+        
         <Text style={[styles.firstName, styles.nameTypo, styles.nameTypo1]}>
           First Name
         </Text>
@@ -226,7 +288,7 @@ const DirectorsOrPartners = () => {
           <Text style={styles.hello1}>Directors or Partners</Text>
           <Text style={[styles.hello2, styles.helloTypo]}>
             <Text style={styles.current}>
-              Carbonyte would like to know details of any
+              Carbonyte would like to know details of any{"\n"}
             </Text>
             <Text style={styles.current}>
               Associates - usually the Directors or Partners
@@ -234,24 +296,24 @@ const DirectorsOrPartners = () => {
           </Text>
         </View>
 
-        <Text style={[styles.hello3, styles.helloPosition1, styles.helloTypo]}>
-          Enter the first name
-        </Text>
-        <Text style={[styles.hello4, styles.helloPosition1, styles.helloTypo]}>
-          Enter the second name
-        </Text>
-        <Text style={[styles.hello5, styles.helloPosition]}>
-          Enter the address line 1
-        </Text>
-        <Text style={[styles.hello6, styles.helloPosition]}>
-          Enter the address line 2
-        </Text>
-        <Text style={[styles.hello7, styles.helloPosition]}>
-          Enter the Town or city
-        </Text>
-        <Text style={[styles.hello8, styles.helloPosition]}>
-          Enter the postcode
-        </Text>
+        <Text style={[styles.hello3, styles.helloPosition1, styles.helloTypo]}
+          placeholder={"Enter the first name"}
+        />
+        <TextInput style={[styles.hello4, styles.helloPosition1, styles.helloTypo]}
+          placeholder={"Enter the second name"}
+        />
+        <TextInput style={[styles.hello5, styles.helloPosition]}
+          placeholder={"Enter the address line 1"}
+        />
+        <TextInput style={[styles.hello6, styles.helloPosition]}
+          placeholder={"Enter the address line 2"}
+        />
+        <TextInput style={[styles.hello7, styles.helloPosition]}
+          placeholder={"Enter the Town or city"}
+        />
+        <TextInput style={[styles.hello8, styles.helloPosition]}
+          placeholder={"Enter the postcode"}
+        />
         
         <View
           style={[
@@ -261,7 +323,7 @@ const DirectorsOrPartners = () => {
             styles.groupChildBorder,
           ]}
         >
-          <Text style={[styles.hello, styles.helloTypo]}>dd-mm-yyyy</Text>
+          <Text style={[styles.hello, styles.helloTypo]} placeholder={"dd-mm-yyyy"}/>
           <View style={styles.groupChild6} />
           <View style={styles.layer}>
             <View style={styles.vrstva98}>
@@ -275,7 +337,7 @@ const DirectorsOrPartners = () => {
             </View>
           </View>
         </View>
-        <View
+        {/* <View
           style={[
             styles.iconIonicIosArrowDownGroup,
             styles.groupChildLayout,
@@ -287,28 +349,61 @@ const DirectorsOrPartners = () => {
             style={styles.iconIonicIosArrowDown}
             resizeMode="cover"
             source={require("../assets/icon-carbonytedownarrow.png")}
-          />
-          <Text style={[styles.hello, styles.helloTypo]}>
-            Select the nationality
-          </Text>
-        </View>
-        <View
-          style={[
-            styles.iconIonicIosArrowDownContainer,
+          /> */}
+           <Dropdown
+          style={[ styles.iconIonicIosArrowDownGroup,
             styles.groupChildLayout,
             styles.groupChildPosition,
             styles.groupChildBorder,
-          ]}
-        >
-          <Image
-            style={styles.iconIonicIosArrowDown}
-            resizeMode="cover"
-            source={require("../assets/icon-carbonytedownarrow.png")}
-          />
-          <Text style={[styles.hello, styles.helloTypo]}>
-            Select the country of residence
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={nationalitydata}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the nationality' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+          {/* <Text style={[styles.hello, styles.helloTypo]}>
+            Select the nationality
           </Text>
-        </View>
+        </View> */}
+          <Dropdown
+          style={[ styles.iconIonicIosArrowDownContainer,
+            styles.groupChildLayout,
+            styles.groupChildPosition,
+            styles.groupChildBorder,
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={countrydata}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the country of residence' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
         <View
           style={[
             styles.helloContainer,
@@ -317,7 +412,7 @@ const DirectorsOrPartners = () => {
             styles.groupChildBorder,
           ]}
         >
-          <Text style={[styles.hello, styles.helloTypo]}>dd-mm-yyyy</Text>
+          <TextInput style={[styles.hello, styles.helloTypo]} placeholder={"dd-mm-yyyy"}/>
           <View style={styles.groupChild6} />
           <View style={styles.layer}>
             <View style={styles.vrstva98}>
@@ -331,21 +426,32 @@ const DirectorsOrPartners = () => {
             </View>
           </View>
         </View>
-        <View
-          style={[
-            styles.iconIonicIosArrowDownParent1,
+        
+          <Dropdown
+          style={[ styles.iconIonicIosArrowDownParent1,
             styles.groupChildLayout,
             styles.groupChildPosition,
             styles.groupChildBorder,
-          ]}
-        >
-          <Image
-            style={styles.iconIonicIosArrowDown}
-            resizeMode="cover"
-            source={require("../assets/icon-carbonytedownarrow.png")}
-          />
-          <Text style={[styles.hello, styles.helloTypo]}>Select the role</Text>
-        </View>
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={roledata}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select the role' : '....'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
         <Pressable
           style={[styles.groupParent, styles.groupChildLayout]}
           onPress={() => navigation.navigate("ConfirmDirectors")}
@@ -373,6 +479,7 @@ const DirectorsOrPartners = () => {
         </Pressable>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -535,8 +642,8 @@ const styles = StyleSheet.create({
     left: 20,
   },
   currentPhotoCardDrivingLicParent: {
-    marginLeft: -57,
-    left: "50%",
+    //marginLeft: -57,
+    left: "30%",
   },
   birthCertificate: {
     marginTop: 26.89,
@@ -556,6 +663,7 @@ const styles = StyleSheet.create({
   birthCertificateParent: {
     width: 114,
     height: 148,
+    left:"65%",
     shadowOpacity: 1,
     elevation: 20,
     shadowRadius: 20,
@@ -813,7 +921,7 @@ const styles = StyleSheet.create({
     right: "0%",
     bottom: "0%",
     left: "0%",
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
     width: "100%",
@@ -832,9 +940,9 @@ const styles = StyleSheet.create({
     top: "40%",
     left: "34.65%",
     fontSize: GlobalStyles.FontSize.size_lg,
-    lineHeight: 10,
+    lineHeight: 20,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
     position: "absolute",
   },
@@ -857,15 +965,15 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   identityProofParent: {
-    width: 350,
+    width: "100%",
     height: 2127,
   },
   directorsOrPartners: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
+    paddingBottom: GlobalStyles.Padding.padding_7xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

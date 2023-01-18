@@ -1,42 +1,73 @@
-import * as React from "react";
-import { Text, StyleSheet, Pressable, View, TextInput } from "react-native";
+import React, { useContext } from "react";
+import { Text, StyleSheet,  View, TextInput } from "react-native";
+import { Formik } from "formik"
+import * as Yup from 'yup'
 
+import AuthContext from "../auth/context";
+import Button from "../components/Button";
+import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
+import Screen from "../components/Screen";
 
-const BusinessAddress2 = () => {
-    const [postcode, onChangePostcode] = React.useState(null);
+const validationSchema = Yup.object().shape({
+  postCode: Yup.string().required().label("Post code"),
+
+})
+
+const BusinessAddress2 = ({ navigation }) => {
+  
+  const {setUser } = useContext(AuthContext)
+
+  const handleSubmit = ({ postCode }) => {
+    setUser(prevUser => ({...prevUser, postCode}))
+    console.log(postCode)
+    navigation.navigate("PersonalAddress")
+  }
 
   return (
     <View style={styles.businessAddress2}>
       
       <View style={styles.postcodeParent}>
-      
-     
-          
         <Text
           style={[styles.postcode, styles.hello1Position, styles.postcodeTypo]}
         >
           Postcode
         </Text>
-        <Pressable
+        <View
           style={styles.dontKnowPostcode}
           onPress={() => navigation.navigate("PersonalAddress")}
         >
-          <Text style={[styles.dontKnowPostcode1, styles.postcodeTypo]}>
+          {/* <Text style={[styles.dontKnowPostcode1, styles.postcodeTypo]}>
             Don't know postcode?
-          </Text>
-        </Pressable>
-
-        <TextInput
+          </Text> */}
+        </View>
+        <Formik
+          initialValues={{postCode:""}}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          >
+              {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+            <>
+        <View
           style={[
             styles.helloWrapper,
             styles.groupChildLayout,
             styles.helloWrapperPosition,
           ]}
-          placeholder = "Postcode"
-          onChangeText = {onChangePostcode}
-        />
+        >
 
+          <TextInput
+           keyboardType="default" 
+           onBlur={() => setFieldTouched("postCode")}
+           onChangeText={handleChange("postCode")}
+           placeholder={"Enter your postcode"}
+          style={[styles.hello, styles.helloTypo]}>
+            
+          </TextInput>
+          <View style={{ position: "absolute", top:70}}>
+          <ErrorMessage error={errors.postCode} visible={touched.postCode}/>
+          </View>
+        </View>
         <View style={styles.helloParent}>
           <Text style={[styles.hello1, styles.hello1Position]}>
             Your Address
@@ -48,7 +79,7 @@ const BusinessAddress2 = () => {
             <Text style={styles.byLawWe}>account</Text>
           </Text>
         </View>
-        <Pressable
+        <View
           style={[styles.groupParent, styles.parentPosition]}
           onPress={() => navigation.navigate("BusinessChooseAddress")}
         >
@@ -56,8 +87,11 @@ const BusinessAddress2 = () => {
             <View style={[styles.groupChild, styles.groupChildLayout]} />
             <View style={[styles.maskGroup236, styles.helloWrapperPosition]} />
           </View>
-          <Text style={styles.hello3}>Search Address</Text>
-        </Pressable>
+          <Text style={styles.hello3} onPress={handleSubmit}>Continue</Text>
+        </View>
+        </>
+          )}
+          </Formik>
       </View>
     </View>
   );
@@ -77,15 +111,16 @@ const styles = StyleSheet.create({
   groupChildLayout: {
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
-    
   },
   helloWrapperPosition: {
     right: 0,
     left: 0,
-    color: GlobalStyles.Color.gray_1000
-
   },
   helloTypo: {
+    color: GlobalStyles.Color.gray_700,
+    textAlign: "left",
+    color: GlobalStyles.Color.gray_700,
+    textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
@@ -130,7 +165,6 @@ const styles = StyleSheet.create({
   hello1: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     top: 0,
     textAlign: "left",
   },
@@ -168,10 +202,11 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "40%",
-    left: "28.83%",
+    left: "50%",
+    marginLeft:-40,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
@@ -180,7 +215,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   postcodeParent: {
-    width: 326,
+    width: "100%",
     height: 332,
   },
   businessAddress2: {

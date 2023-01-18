@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 100,
     fontSize: GlobalStyles.FontSize.size_10xl,
-    // fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
   },
   quickSecuredBanking: {
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     color: GlobalStyles.Color.blue_100,
-    width: 326,
+    width: "100%",
     top: "50%",
   },
   maskGroup259: {

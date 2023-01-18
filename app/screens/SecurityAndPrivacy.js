@@ -2,14 +2,9 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SecurityAndPrivacy = () => {
+const SecurityAndPrivacy = ({navigation}) => {
   return (
     <View style={styles.securityAndPrivacy}>
-      <Image
-            style={[styles.arrowCircle, styles.arrowPosition]}
-            resizeMode="cover"
-            source={require("../assets/icon-whitearrow.png")}
-        />
       <Text style={[styles.hello, styles.mr_546]}>Security</Text>
       <View style={[styles.helloParent, styles.mt1021, styles.mr40]}>
         <Text style={styles.hello1}>Security and Privacy</Text>
@@ -32,63 +27,38 @@ const SecurityAndPrivacy = () => {
         </Text>
         <View style={[styles.rectangleParent, styles.groupLayout]}>
           <View style={[styles.groupChild1, styles.groupChildPosition]} />
-          <Image
-            style={[styles.ellipseIcon, styles.ellipseIconLayout]}
-            resizeMode="cover"
-            source={require("../assets/ellipse-350@3x.png")}
-          />
         </View>
         <View style={[styles.rectangleGroup, styles.groupLayout]}>
           <View style={[styles.groupChild2, styles.groupChildPosition]} />
-          <Image
-            style={[styles.groupChild3, styles.ellipseIconLayout]}
-            resizeMode="cover"
-            source={require("../assets/ellipse-350@3x.png")}
-          />
         </View>
         <View style={[styles.rectangleContainer, styles.groupLayout]}>
           <View style={[styles.groupChild2, styles.groupChildPosition]} />
-          <Image
-            style={[styles.groupChild3, styles.ellipseIconLayout]}
-            resizeMode="cover"
-            source={require("../assets/ellipse-350@3x.png")}
-          />
         </View>
         <View style={[styles.groupView, styles.groupLayout]}>
           <View style={[styles.groupChild2, styles.groupChildPosition]} />
-          <Image
-            style={[styles.groupChild3, styles.ellipseIconLayout]}
-            resizeMode="cover"
-            source={require("../assets/ellipse-350@3x.png")}
-          />
         </View>
         <Image
           style={[styles.iconMetroEye, styles.iconPosition]}
           resizeMode="cover"
-          source={require("../assets/icon-metroeye@3x.png")}
+          source={require("../assets/icon-view.png")}
         />
         <Image
           style={[styles.iconAwesomeUserFriends, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/icon-awesomeuserfriends@3x.png")}
+          source={require("../assets/icon-profileplaceholder.png")}
         />
         <Image
           style={[styles.iconFeatherMessageCircle, styles.iconLayout]}
           resizeMode="cover"
-          source={require("../assets/icon-feathermessagecircle@3x.png")}
+          source={require("../assets/icon-speechbubble.png")}
         />
         <View style={[styles.rectangleParent, styles.groupLayout]}>
           <View style={[styles.groupChild1, styles.groupChildPosition]} />
-          <Image
-            style={[styles.ellipseIcon, styles.ellipseIconLayout]}
-            resizeMode="cover"
-            source={require("../assets/ellipse-350@3x.png")}
-          />
         </View>
         <Image
           style={[styles.iconFaceId, styles.iconPosition]}
           resizeMode="cover"
-          source={require("../assets/iconfaceid@3x.png")}
+          source={require("../assets/icon-faceid.png")}
         />
       </View>
     </View>
@@ -278,7 +248,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   helloParent: {
-    width: 305,
+    width: "100%",
     height: 335,
   },
   arrowPosition: {

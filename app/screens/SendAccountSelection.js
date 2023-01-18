@@ -1,19 +1,40 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import api from "../api/api_list"
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SendAccountSelection = () => {
+const SendAccountSelection = ({navigation}) => {
+  const[name,setName]=useState(null)
+  const[number,setnumber]=useState(null)
+  const [plan, setPlan] = useState(null)
+  const [account, setAccNum] = useState(null)
 
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccountByCustomer();
+    const accountresponse = await api.GetCustomerDetails();
+    const data = response.data.details.content[0]
+    const accountdata = accountresponse.data.details.accountDetails[0]
+    const phonedata = accountresponse.data.details.phoneNumbers[0]
+    console.log(data)
+    setName(data.name)
+    setnumber(phonedata.phoneNo)
+    setAccNum(data.identifiers[0].accountNumber)
+    setPlan(accountdata.accountType)
+  }
   return (
     <View style={styles.sendAccountSelection}>
       <View style={styles.groupParent}>
         <View style={styles.groupChild} />
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
-            Hudson Maia
+            {name}
           </Text>
           <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
-            +440123456789
+            {number}
           </Text>
           <Text style={[styles.hello2, styles.helloTypo1]}>
             Joined September 2022
@@ -111,15 +132,15 @@ const SendAccountSelection = () => {
               styles.helloParent2Layout,
             ]}
           />
-          <View style={[styles.helloParent5, styles.helloParentPosition]}>
+          {/* <View style={[styles.helloParent5, styles.helloParentPosition]}>
             <Text style={[styles.hello11, styles.helloTypo]}>
-              XYZ Bank ****1234
+              {account}
             </Text>
             <Text style={[styles.hello12, styles.helloTypo1]}>
-              Current Account
+              {plan}
             </Text>
             <View style={styles.groupChild2} />
-          </View>
+          </View> */}
           <Pressable
             style={styles.groupWrapper}
             onPress={() => navigation.navigate("SelectBank")}
@@ -140,15 +161,19 @@ const SendAccountSelection = () => {
           <View style={[styles.groupChild3, styles.groupChildPosition]} />
           <View style={[styles.groupChild4, styles.groupChildPosition]} />
           <View style={[styles.helloParent7, styles.helloParentPosition]}>
-            <Text style={[styles.hello11, styles.helloTypo]}>
-              XYZ Bank ****1234
+            <Text style={[styles.hello11, styles.helloTypo12]}>
+            {account}
             </Text>
             <Text style={[styles.hello12, styles.helloTypo1]}>
-              Current Account
+              {plan}
             </Text>
             <View style={styles.groupChild2} />
           </View>
-          <View style={[styles.groupParent1, styles.groupParent1Position]}>
+          <Pressable
+            style={styles.groupWrapper1}
+            onPress={() => navigation.navigate("SendEnterPIN")}
+          >
+          <View style={[styles.groupParent1, styles.groupParent1Position1]}>
             <View style={styles.rectangleParent}>
               <View style={[styles.groupChild6, styles.bank2IconPosition]} />
               <View style={styles.maskGroup2361} />
@@ -159,6 +184,7 @@ const SendAccountSelection = () => {
               Send
             </Text>
           </View>
+          </Pressable>
         </View>
       </View>
     </View>
@@ -225,6 +251,11 @@ const styles = StyleSheet.create({
     right: 24,
     position: "absolute",
   },
+  groupParent1Position1: {
+    left: 0,
+    right: 0,
+    position: "absolute",
+  },
   helloParentPosition: {
     height: 32,
     width: 181,
@@ -234,6 +265,12 @@ const styles = StyleSheet.create({
   },
   helloTypo: {
     right: -1,
+    fontSize: GlobalStyles.FontSize.size_base,
+    textAlign: "left",
+    position: "absolute",
+  },
+  helloTypo12: {
+    right: 30,
     fontSize: GlobalStyles.FontSize.size_base,
     textAlign: "left",
     position: "absolute",
@@ -275,12 +312,12 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 100,
-    left: 12,
+    left: 8,
     fontWeight: "700",
   },
   hello1: {
     top: 130,
-    left: 0,
+    left: 8,
   },
   hello2: {
     top: 158,
@@ -288,16 +325,17 @@ const styles = StyleSheet.create({
     left: 0,
   },
   groupItem: {
-    right: 39,
-    bottom: 106,
-    left: 43,
-    top: 0,
+    right: 49,
+    bottom: 156,
+    left: 0,
+    top: -30,
     position: "absolute",
   },
   helloParent: {
-    marginLeft: -74.5,
+    marginLeft: -63.56,
+    left: "50%",
     top: 44,
-    width: 149,
+    width: "100%",
     height: 172,
     left: "50%",
     position: "absolute",
@@ -391,8 +429,9 @@ const styles = StyleSheet.create({
     height: 47,
   },
   hello10: {
-    top: 36,
-    left: 99,
+    top: "3%",
+    marginLeft: -83.56,
+    left: "50%",
     color: GlobalStyles.Color.gray_700,
   },
   rectangleView: {
@@ -401,7 +440,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   hello11: {
-    top: 2,
+    top: "2%",
     color: GlobalStyles.Color.gray_700,
   },
   hello12: {
@@ -448,6 +487,14 @@ const styles = StyleSheet.create({
     top: "50%",
     position: "absolute",
   },
+  groupWrapper1: {
+    marginTop: 156,
+    right: 38,
+    height: 53,
+    left: 36,
+    top: "50%",
+    position: "absolute",
+  },
   groupChild3: {
     marginTop: -91.5,
   },
@@ -460,7 +507,7 @@ const styles = StyleSheet.create({
   groupChild6: {
     right: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     width: "100%",
   },
   maskGroup2361: {
@@ -479,10 +526,11 @@ const styles = StyleSheet.create({
   },
   hello16: {
     top: "40%",
-    left: "43.56%",
+    marginLeft: -23.56,
+    left: "50%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   groupParent1: {
     bottom: 49,
@@ -491,20 +539,20 @@ const styles = StyleSheet.create({
   helloParent4: {
     borderTopLeftRadius: GlobalStyles.Border.br_7xl,
     borderTopRightRadius: GlobalStyles.Border.br_7xl,
-    height: 456,
+    height: "60%",
+    width:"100%",
     left: 0,
     bottom: 0,
     right: 0,
   },
   groupParent: {
-    width: 375,
-    height: 749,
+    width: "100%",
+    height: "100%",
   },
   sendAccountSelection: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_md,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

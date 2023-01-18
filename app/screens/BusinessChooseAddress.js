@@ -1,8 +1,29 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View, Pressable, Image, TextInput } from "react-native";
+import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 import GlobalStyles from "../../GlobalStyles";
 
-const BusinessChooseAddress = () => {
+const data = [
+  { label: 'United Kingdom', value: '44' },
+  { label: 'United States of America', value: '1' },
+  { label: 'India', value: '91' },
+];
+
+const BusinessChooseAddress = ({navigation}) => {
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+          Dropdown label
+        </Text>
+      );
+    }
+    return null;
+  };
+  const [postcode, setPostCode] = useState("")
   return (
     <View style={styles.businessChooseAddress}>
       <View style={styles.groupParent}>
@@ -34,11 +55,12 @@ const BusinessChooseAddress = () => {
               styles.helloWrapperBorder,
             ]}
             placeholder ="Postcode"
+            onChangeText={newText => setPostCode(newText)}
           />
 
           <Pressable
             style={[styles.groupContainer, styles.helloWrapperPosition]}
-            onPress={() => navigation.navigate("BusinessChooseAddress1")}
+            onPress={() => navigation.navigate("DOB")}
           >
             <View style={[styles.rectangleParent, styles.parentPosition]}>
               <View style={styles.groupChild} />
@@ -46,7 +68,7 @@ const BusinessChooseAddress = () => {
             </View>
             <Text style={[styles.hello1, styles.helloFlexBox]}>Continue</Text>
           </Pressable>
-          <View
+          {/* <View
             style={[
               styles.iconIonicIosArrowDownParent,
               styles.helloWrapperPosition,
@@ -61,7 +83,31 @@ const BusinessChooseAddress = () => {
             <Text style={[styles.hello2, styles.helloTypo]}>
               Select your company address
             </Text>
-          </View>
+          </View> */}
+          <Dropdown
+          style={[styles.iconIonicIosArrowDownParent,
+            styles.helloWrapperPosition,
+            styles.helloWrapperBorder,
+            isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'United Kingdom' : 'Country'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
         </View>
         <View style={styles.helloParent}>
           <Text
@@ -146,7 +192,7 @@ const styles = StyleSheet.create({
     right: "0%",
     bottom: "0%",
     left: "0%",
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     borderRadius: GlobalStyles.Border.br_lg,
     position: "absolute",
     width: "100%",
@@ -161,10 +207,11 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "40%",
-    left: "38.04%",
+    left: "50%",
+    marginLeft:-40,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   groupContainer: {
     bottom: 0,
@@ -211,7 +258,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 413,
   },
   businessChooseAddress: {
@@ -221,6 +268,57 @@ const styles = StyleSheet.create({
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,
+  },
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  iconIonicIosArrowDownDropdown: {
+    marginTop: -170,
+    borderStyle: "solid",
+    borderColor: "#e8e8e8",
+    borderWidth: 1,
+    top: "50%",
+    backgroundColor: GlobalStyles.Color.white,
+  },
+   container: {
+    backgroundColor: 'white',
+    padding: 16,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 2,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color:  GlobalStyles.Color.blue_100,
+    left: 10.
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    color:  GlobalStyles.Color.blue_100,
+    left: 10.
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+    right: 10,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

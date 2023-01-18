@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const ChooseCardsElite = () => {
   return (
+    <ScrollView>
     <View style={styles.chooseCardsElite}>
       <View style={styles.component2375Parent}>
         <View
@@ -1283,6 +1284,8 @@ const ChooseCardsElite = () => {
         </View>
       </View>
     </View>
+    </ScrollView>
+
   );
 };
 
@@ -1308,14 +1311,14 @@ const styles = StyleSheet.create({
     marginTop: -576.52,
     textAlign: "left",
     color: GlobalStyles.Color.blue_100,
-    lineHeight: 20,
+    lineHeight: 30,
     top: "50%",
   },
   helloPosition1: {
     marginTop: -546.52,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
-    lineHeight: 20,
+    lineHeight: 30,
     fontSize: GlobalStyles.FontSize.size_7xl,
     top: "50%",
     position: "absolute",
@@ -1376,7 +1379,7 @@ const styles = StyleSheet.create({
   rectangleLayout: {
     marginTop: -482.93,
     height: 684,
-    width: 326,
+    width: "100%",
   },
   wrapperPosition1: {
     left: 48,
@@ -1714,7 +1717,7 @@ const styles = StyleSheet.create({
     top: 1314,
   },
   rectangleParent: {
-    width: 326,
+    width: "100%",
     left: 0,
   },
   groupItem: {
@@ -1892,6 +1895,8 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     left: 0,
+    height:"100%",
+    width:"100%",
   },
   groupIcon: {
     height: "6.35%",
@@ -2110,7 +2115,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
     width: "100%",
   },
@@ -2126,12 +2131,12 @@ const styles = StyleSheet.create({
     left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
   },
   groupParent4: {
     marginTop: -374.82,
     height: 60,
-    width: 326,
+    width: "100%",
     top: "50%",
   },
   hello8: {

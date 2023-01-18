@@ -1,11 +1,12 @@
 import * as React from "react";
-import { StyleSheet, View, Image, Text, Pressable } from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const MyCards = () => {
+const MyCards = ({navigation}) => {
   
   return (
+    <ScrollView>
     <View style={styles.myCards}>
       <View style={styles.groupParent}>
         <Pressable
@@ -114,7 +115,7 @@ const MyCards = () => {
               <Image
                 style={[styles.groupItem, styles.groupPosition]}
                 resizeMode="cover"
-                source={require("../assets/rectangle-502@3x.png")}
+                source={require("../assets/image-person.png")}
               />
             </View>
           </View>
@@ -130,7 +131,7 @@ const MyCards = () => {
         </View>
         <Pressable
           style={styles.wrapper}
-          onPress={() => navigation.navigate("SendEnterPIN1")}
+          onPress={() => navigation.navigate("CardSettings")}
         >
           <Image
             style={styles.icon}
@@ -157,25 +158,21 @@ const MyCards = () => {
               <Image
                 style={[styles.path33118Icon, styles.groupIconLayout]}
                 resizeMode="cover"
-                source={require("../assets/path-3311810@3x.png")}
+                source={require("../assets/rectangle-yellowbig.png")}
               />
               <View style={[styles.maskGroup236, styles.groupPosition1]}>
                 <Image
                   style={[styles.groupIcon, styles.groupIconLayout]}
                   resizeMode="cover"
-                  source={require("../assets/logo-carbonytetext18@3x.png")}
+                  source={require("../assets/logo-carbonytetext.png")}
                 />
                 <Image
                   style={[styles.groupChild1, styles.groupIconLayout]}
                   resizeMode="cover"
-                  source={require("../assets/logo-carbonytetextlarge20@3x.png")}
+                  source={require("../assets/logo-carbonytetextlarge.png")}
                 />
                 <View style={styles.rectangleView} />
-                <Image
-                  style={[styles.rectangleIcon, styles.groupIconLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/rectangle-262042@3x.png")}
-                />
+
                 <View style={styles.bWrapper}>
                   <Text style={[styles.b, styles.bTypo, styles.bTypo1]}>B</Text>
                 </View>
@@ -187,22 +184,23 @@ const MyCards = () => {
             <Image
               style={styles.groupChild2}
               resizeMode="cover"
-              source={require("../assets/image-chip20@3x.png")}
+              source={require("../assets/image-chip.png")}
             />
             <Image
               style={styles.groupChild3}
               resizeMode="cover"
-              source={require("../assets/logo-visa18@3x.png")}
+              source={require("../assets/logo-visa.png")}
             />
             <Image
               style={styles.groupChild4}
               resizeMode="cover"
-              source={require("../assets/icon-contactless19@3x.png")}
+              source={require("../assets/icon-contactless.png")}
             />
           </View>
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -228,7 +226,6 @@ const styles = StyleSheet.create({
   historyTypo: {
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
-    //fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     fontWeight: "700",
     position: "absolute",
   },
@@ -393,7 +390,7 @@ const styles = StyleSheet.create({
   moneyTransfer: {
     fontSize: GlobalStyles.FontSize.size_3xs,
     color: GlobalStyles.Color.gray_900,
-    bottom: 0,
+    bottom: -10,
     left: 0,
     letterSpacing: 1,
   },
@@ -483,7 +480,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello: {
-    left: "27.73%",
+    left: "50%",
+    marginLeft: -80.5,
   },
   groupInner: {
     borderRadius: GlobalStyles.Border.br_lg,
@@ -505,13 +503,16 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello1: {
-    left: "56.8%",
+    left: "50%",
+    marginLeft: 30,
   },
   path33118Icon: {
     right: -60,
     bottom: -60,
     top: 0,
     left: 0,
+    width:"100%",
+    height:"100%",
   },
   groupIcon: {
     height: "6.35%",
@@ -604,7 +605,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupParent: {
-    width: 375,
+    width: "100%",
     height: 987,
   },
   myCards: {

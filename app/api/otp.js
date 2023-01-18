@@ -1,6 +1,6 @@
 import client from "./client";
 
-const endpoint = '/SendRegistrationOTP'
+const endpoint = '/regmodule/SendRegistrationOTP'
 const otp = ({email, phoneNumber}) => client.post(endpoint, { email, phoneNumber }, {params: { email, phoneNumber}});
 
 
