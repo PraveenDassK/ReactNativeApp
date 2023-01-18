@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     height: verticalScale(60),
   },
   hello: {
-    marginLeft: horizontalScale(-56.5),
+    marginLeft: horizontalScale(-40),
     top: verticalScale(39),
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
   hello9: {
     top: "30%",
-    left: "39.26%",
+    left: "42.5%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,

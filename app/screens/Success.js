@@ -2,6 +2,8 @@ import * as React from "react";
 import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 const Success = ({navigation}) => {
 
@@ -41,17 +43,19 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "70%",
-    left: 0,
+    //left: horizontalScale(10),
+    width: "100%",
     textAlign:"center",
     fontSize: GlobalStyles.FontSize.size_2xl,
-    lineHeight: 25,
+    lineHeight: verticalScale(25),
     color: GlobalStyles.Color.indigo_100,
   },
   groupChild: {
-    width:"50%",
-    height:"50%",
-    top:"0%",
-    left:"25%",
+    width: horizontalScale(150),
+    height: verticalScale(250),
+
+    top:"15%",
+    left:"30%",
     resizeMode:"contain"
   },
   helloParent: {
@@ -64,5 +68,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
 
 export default Success;

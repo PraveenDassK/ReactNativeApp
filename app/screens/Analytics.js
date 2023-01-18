@@ -2,56 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-import api from "../api/api_list"
-import AuthContext from "../auth/context";
-import moment from 'moment';
-
-
 const Analytics = ({navigation}) => {
-
-  const [balance, setBal] = useState(0)
-  const [transactions, setTrans] = useState([])
-  const [totalSpend, setTotal] = useState(0)
-  const [totalTransactions, setTotalTrans] = useState(0)
-
-  const [recentTransactions, setRecent] = useState([])
-  const [transactionCategories, setCat] = useState()
-  
-  const authContext = useContext(AuthContext)
-
-  useEffect(() => {
-    loadData()
-  },[])
-  
-  const loadData = async () => {
-    const response = await api.GetAccount();
-    const data = response.data.details.balance
-    setBal(data)
-
-    const transactionCall = await api.GetTransactions()
-    const transData = transactionCall.data.details
-    let total = 0
-    let transCat = {}
-
-    transData.content.forEach(transaction => {
-      total += transaction.amount
-      transCat[transaction.type] = transCat[transaction.type] ? transCat[transaction.type] + transaction.amount : transaction.amount;
-    })
-
-    setTotalTrans(transData.totalSize)
-    setTotal(total)
-    setRecent([transData.content[1],transData.content[1],transData.content[2]])
-    setCat(transCat)
-
-    const acc= await api.GetAccount()
-    const det = acc.data.details.associates
-    
-  }
-  let date = (recentTransactions? recentTransactions[0].transactionDate : "0")
-  let date1 = (recentTransactions? recentTransactions[1].transactionDate : "0")
-  let date2 = (recentTransactions? recentTransactions[2].transactionDate : "0")
-  console.log(transactionCategories)
-
   return (
     <ScrollView>
     <View style={styles.analytics}>
