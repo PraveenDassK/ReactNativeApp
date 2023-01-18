@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Route } from "react";
 //import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const ReviewAndConfirm = ({navigation}) => {
-  
-    const [saving, setSaving] = useState(null)
-    const [savings2, setSavings2] = useState(null)
-    const [fee, setFee] = useState(null)
+const ReviewAndConfirm = ({navigation,route}) => {
+  console.log(route.params.amount)
+  let amount = route.params.amount
+  const [fee, setFee] = useState(null)
     // const [plan, setPlan] = useState(null)
     // const [balance, setBal] = useState(null)
     // const [currency, setCurrency] = useState(null)
@@ -21,7 +20,7 @@ const ReviewAndConfirm = ({navigation}) => {
         <View style={[styles.helloGroup, styles.helloLayout]}>
           <Text style={styles.hello1}>From</Text>
           <Text style={styles.hello2}>Daily Saving </Text>
-          <Text style={[styles.hello3, styles.helloTypo]}>{saving}</Text>
+          <Text style={[styles.hello3, styles.helloTypo]}>-{amount}</Text>
         </View>
         <View
           style={[
@@ -32,7 +31,7 @@ const ReviewAndConfirm = ({navigation}) => {
         >
           <Text style={styles.hello1}>To</Text>
           <Text style={styles.hello2}>Visa *0000</Text>
-          <Text style={[styles.hello6, styles.helloTypo]}>{savings2}</Text>
+          <Text style={[styles.hello6, styles.helloTypo]}>-{amount}</Text>
         </View>
         <View style={[styles.groupChild, styles.groupPosition]} />
         <View style={[styles.groupItem, styles.groupPosition]} />
