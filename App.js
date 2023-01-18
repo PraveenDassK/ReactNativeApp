@@ -18,7 +18,8 @@ import Account from "./app/screens/Account"
 import AuthContext from "./app/auth/context";
 import BusinessAddress2 from "./app/screens/BusinessAddress2"
 import CountryOfResidence from "./app/screens/CountryOfResidence"
-import Carbon from "./app/screens/Carbon"
+import Carbon22 from "./app/screens/Carbon22"
+import Carbon from "./app/screens/Carbon";
 import CarbonProject from "./app/screens/CarbonProject"
 import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
 
@@ -40,7 +41,6 @@ import Pin from "./app/screens/Pin"
 import Success from "./app/screens/Success"
 import Name from "./app/screens/Name"
 import Login from "./app/screens/Login";
-import SendEnterPIN from "./app/screens/SendEnterPIN";
 import BusinessChooseAddress from "./app/screens/BusinessChooseAddress";
 import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
 import ChooseCardsElite from "./app/screens/ChooseCardsElite";
@@ -57,7 +57,7 @@ import MyCards from "./app/screens/MyCards"
 import ProofVerified from "./app/screens/ProofVerified"
 
 import AddFunds from "./app/screens/AddFunds"
-import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
+//import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
 import FreezeCard from "./app/screens/FreezeCard";
 import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
@@ -90,9 +90,9 @@ import SelectBank from "./app/screens/SelectBank";
 import SelectBank1 from "./app/screens/SelectBank1";
 import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
 import AddFundsSuccess from "./app/screens/AddFundsSuccess";
+import AddBeneficiarySchedulePay1 from "./app/screens/AddBeneficiarySchedulePay1";
 
-import AccountMain from "./app/screens/AccountMain";
-import AccountMainBusiness from "./app/screens/AccountMainBusiness";
+
 import SendContact from "./app/screens/SendContact";
 import CarbonCart from "./app/screens/CarbonCart";
 
@@ -101,8 +101,8 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="ChooseCardsStandard5">
- 
+  <Stack.Navigator initialRouteName="SentMoney">
+
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
@@ -112,7 +112,7 @@ const StackNavigator = () => (
     
     
     
-
+    <Stack.Screen  name="AddBeneficiarySchedulePay1" component={AddBeneficiarySchedulePay1}/>
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
     <Stack.Screen  name="Login" component={Login}/>
 
@@ -131,8 +131,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
     <Stack.Screen  name="Account" component={Account}/>
-    <Stack.Screen  name="AccountMain" component={AccountMain}/>
-    <Stack.Screen  name="AccountMainBusiness" component={AccountMainBusiness}/>
+
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
     <Stack.Screen  name="SendMoney" component={SendMoney}/>
@@ -192,15 +191,15 @@ const StackNavigator = () => (
     <Stack.Screen name="SpendingLimit" component={SpendingLimit}/> 
     <Stack.Screen name="SetLimit" component={SetLimit}/>
 
-    <Stack.Screen  name="Carbon" component={Carbon}/>
+    <Stack.Screen name="Carbon" component={Carbon}/>
+    <Stack.Screen name="Carbon22" component={Carbon22}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>
 
     <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
 
     <Stack.Screen name="ChooseCardsPremium" component={ChooseCardsPremium}/>
-    <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>
-    <Stack.Screen name="SendEnterPIN" component={SendEnterPIN}/>
+
 
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
 

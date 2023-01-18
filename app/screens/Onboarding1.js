@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, View, Pressable, SafeAreaView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 const Onboarding1 = ({navigation}) => {
   return (

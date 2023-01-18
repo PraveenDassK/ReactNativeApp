@@ -1,44 +1,34 @@
-import React, { useContext, useEffect, useState, Keyboard } from "react";
-import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-native";
+import React, { useContext, useEffect, useState} from "react";
+import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const RequestContact = ({navigation}) => {
   const [amount, setAmount] = useState("")
-  const [note, setNote] = useState("")
   const [userData, setCode] = useState("")
   const reciver = "Me";
   const sortCode = "00-00-00"
   const accountCode = "01234567890"  
-  let payment = (amount ? amount : 1).toString()
 
-  console.log(payment)
+  let fromName = "Nik"
+  let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
     console.log(amount)
-    navigation.navigate("Requested")
+    navigation.navigate("Requested",{amount: amount, name: fromName})
   }
+
  
   return (
     <View style={styles.requestContact}>
-      <View style={styles.groupParent}>
+      <Pressable 
+        style={styles.groupParent}
+        onPress={Keyboard.dismiss}
+      >
         <View style={styles.helloParent}>
-          <Text
-            style={[
-              styles.hello,
-              styles.helloTypo1,
-              styles.helloColor,
-              styles.helloTypo2,
-            ]}
-          >
-            Joined September 2022
-          </Text>
-          <Image
-            style={styles.groupChild}
-            resizeMode="cover"
-            source={require("../assets/group-303373.png")}
-          />
-          <Text style={[styles.hello1, styles.helloTypo]}>Hudson Maia{'\n'}</Text>
-          <Text style={[styles.hello2, styles.helloTypo]}>+440123456789</Text>
+
+          <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
+          <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
+          <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
         </View>
         <View
           style={[
@@ -51,7 +41,7 @@ const RequestContact = ({navigation}) => {
           <View style={[styles.helloContainer, styles.groupViewPosition]}>
           <Pressable
               onPress={() => {
-                setAmount(20)
+                setAmount("20")
               }}
             >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
@@ -63,7 +53,7 @@ const RequestContact = ({navigation}) => {
           <View style={[styles.groupView, styles.groupViewPosition]}>
           <Pressable
               onPress={() => {
-                setAmount(50)
+                setAmount("50")
               }}
             >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
@@ -81,7 +71,7 @@ const RequestContact = ({navigation}) => {
           >
             <Pressable
               onPress={() => {
-                setAmount(100)
+                setAmount("100")
               }}
             >
             <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
@@ -95,7 +85,10 @@ const RequestContact = ({navigation}) => {
           <Text style={[styles.hello7, styles.helloTypo1, styles.helloColor]}>
             Request{"\n"}
           </Text>
-          <TextInput style={[styles.hello8, styles.helloTypo1]} placeholder={"£"+payment} keyboardType="numeric"/>
+          <TextInput style={[styles.hello8, styles.helloTypo1]} 
+            placeholder={"£"+payment} keyboardType="numeric"
+            onChangeText = {newText => setAmount(newText)}
+          />
           <View
             style={[
               styles.lineView,
@@ -120,7 +113,7 @@ const RequestContact = ({navigation}) => {
           </View>
           <Text style={styles.hello9}>Request</Text>
         </Pressable>
-      </View>
+      </Pressable>
     </View>
   );
 };
@@ -211,6 +204,11 @@ const styles = StyleSheet.create({
     width:"100%",
     textAlign:"center",
   },
+  hello5: {
+    top: 150,
+    width:"100%",
+    textAlign:"center",
+  },
   helloParent: {
     top: 44,
     height: 172,
@@ -280,8 +278,7 @@ const styles = StyleSheet.create({
     top: 28,
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 27,
-    color: GlobalStyles.Color.blue_100,
+    color: GlobalStyles.Color.gray_700,
   },
   lineView: {
     bottom: -1,
@@ -317,7 +314,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "center",
     top:"10%"
   },
@@ -344,7 +341,6 @@ const styles = StyleSheet.create({
   },
   requestContact: {
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },

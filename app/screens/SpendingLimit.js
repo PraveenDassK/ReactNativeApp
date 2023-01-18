@@ -1,10 +1,36 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
-import Screen from "../components/Screen";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
+import Screen from "../components/Screen";
+import api from "../api/api_list"
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 const SpendingLimit = ({navigation}) => {
- 
+  const [isEnabled, setIsEnabled] = useState(false);
+  const authContext=useContext(AuthContext)
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  useEffect(() => {
+    getSpendingLimit()
+  },[])
+
+  const getSpendingLimit = async () => {
+    const response = await api.GetToggles()
+    const data = response.data.details
+    console.log(data)
+    data.onlineTransactions ? setIsEnabled(true): null
+  }
+
+  const sendRequest = async () => {
+    const response = await api.SetToggles(
+      isEnabled,
+    );
+    console.log(response)
+
+
+  }
 
   return (
     <Screen>
@@ -56,12 +82,11 @@ const SpendingLimit = ({navigation}) => {
             style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
             onPress={() => navigation.navigate("SetLimit")}
           >
-            <View style={styles.groupItem} />
-            <Image
-              style={[styles.groupInner, styles.groupLayout]}
-              resizeMode="cover"
-              source={require("../assets/ellipse-350.png")}
-            />
+            <Switch  
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch}
+            value={isEnabled} />
           </Pressable>
           <Image
             style={[styles.groupIcon, styles.groupLayout]}
@@ -128,7 +153,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
     left: "50%",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
+    textAlign: "center",
     position: "absolute",
   },
   hello: {
@@ -221,13 +246,13 @@ const styles = StyleSheet.create({
   },
   hello2: {
     marginTop: 59,
-    marginLeft: -27,
+    marginLeft: -30,
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
     fontWeight: "700",
   },
   hello3: {
-    marginLeft: -40,
+    marginLeft: -35,
     bottom: 16,
     fontSize: GlobalStyles.FontSize.size_3xs,
   },
