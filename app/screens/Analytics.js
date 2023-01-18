@@ -2,7 +2,53 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+import moment from 'moment';
+
+
 const Analytics = ({navigation}) => {
+
+  const [balance, setBal] = useState(0)
+  const [transactions, setTrans] = useState([])
+  const [totalSpend, setTotal] = useState(0)
+  const [totalTransactions, setTotalTrans] = useState(0)
+
+  const [recentTransactions, setRecent] = useState([])
+  const [transactionCategories, setCat] = useState()
+  
+
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccount();
+    const data = response.data.details.balance
+    setBal(data)
+
+    const transactionCall = await api.GetTransactions()
+    const transData = transactionCall.data.details
+    let total = 0
+    let transCat = {}
+
+    transData.content.forEach(transaction => {
+      total += transaction.amount
+      transCat[transaction.type] = transCat[transaction.type] ? transCat[transaction.type] + transaction.amount : transaction.amount;
+    })
+
+    setTotalTrans(transData.totalSize)
+    setTotal(total)
+    setRecent([transData.content[1],transData.content[1],transData.content[2]])
+    setCat(transCat)
+
+    const acc= await api.GetAccount()
+    const det = acc.data.details.associates
+    console.log(det)
+  }
+
   return (
     <ScrollView>
     <View style={styles.analytics}>
@@ -335,11 +381,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                {recentTransactions[0].account.name}
+                Wallmart
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>{moment(date).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
-                <Text style={styles.noOf}>{moment(date).format('H:mma')}</Text>
+                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
+                <Text style={styles.noOf}>12:06 PM</Text>
               </Text>
             </View>
             <Image
@@ -347,7 +393,7 @@ const Analytics = ({navigation}) => {
               resizeMode="cover"
               source={require("../assets/walmarticon.png")}
             />
-            <Text style={[styles.text12, styles.textTypo1]}>£{recentTransactions[0].amount}</Text>
+            <Text style={[styles.text12, styles.textTypo1]}>£1458</Text>
             <Text style={[styles.text13, styles.textTypo]}>
               <Text style={styles.kgCo4}>7.2 kg CO</Text>
               <Text style={styles.text14}>2</Text>
@@ -362,11 +408,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                {recentTransactions[1].account.name}
+                Adidas
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>{moment(date1).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
-                <Text style={styles.noOf}>{moment(date1).format('H:mma')}</Text>
+                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
+                <Text style={styles.noOf}>12:06 PM</Text>
               </Text>
             </View>
             <Image
@@ -390,11 +436,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                {recentTransactions[2].account.name}
+                Grocery Market
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>{moment(date2).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
-                <Text style={styles.noOf}>{moment(date2).format('H:mma')}</Text>
+                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
+                <Text style={styles.noOf}>12:06 PM</Text>
               </Text>
             </View>
             <Image
@@ -407,7 +453,7 @@ const Analytics = ({navigation}) => {
               resizeMode="cover"
               source={require("../assets/group-30454.png")}
             />
-            <Text style={[styles.text15, styles.textTypo1]}>£{recentTransactions[2].amount}</Text>
+            <Text style={[styles.text15, styles.textTypo1]}>£1458</Text>
             <Text style={[styles.text16, styles.textTypo]}>
               <Text style={styles.kgCo4}>7.2 kg CO</Text>
               <Text style={styles.text14}>2</Text>
@@ -423,7 +469,7 @@ const Analytics = ({navigation}) => {
             resizeMode="cover"
             source={require("../assets/icon-withdraw.png")}
           />
-          <Text style={[styles.text18, styles.textTypo1]}>£{recentTransactions[1].amount}</Text>
+          <Text style={[styles.text18, styles.textTypo1]}>£1458</Text>
           <Text style={[styles.text19, styles.textTypo]}>
             <Text style={styles.kgCo4}>7.2 kg CO</Text>
             <Text style={styles.text14}>2</Text>
@@ -1242,11 +1288,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lanceBogrol5: {
-    marginTop: -25,
+    marginTop: -18,
     fontWeight: "700",
   },
   moneyTransfer: {
-    marginTop: -10,
+    marginTop: -4,
   },
   text12: {
     marginTop: -15,
