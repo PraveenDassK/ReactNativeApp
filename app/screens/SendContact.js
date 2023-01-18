@@ -3,6 +3,7 @@ import { Text, StyleSheet, Image, View, Pressable, TextInput } from "react-nativ
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
+import moment from "moment";
 
 const SendContact = ({navigation}) => {
   const [amount, setAmount] = useState("")
@@ -42,8 +43,9 @@ const SendContact = ({navigation}) => {
 
   const sendContact = (amount) => {
     console.log(amount)
-    navigation.navigate("SentMoney")
+    navigation.navigate("SentMoney",{amount: amount,fullname: fullname})
   }
+  let date = (payment? payment.createdDate: "0")
  
   return (
     <View style={styles.requestContact}>
@@ -57,7 +59,7 @@ const SendContact = ({navigation}) => {
               styles.helloTypo2,
             ]}
           >
-            Joined September 2022
+            Joined {moment(date).format('MMMM YYYY')}
           </Text>
           <Image
             style={styles.groupChild}
