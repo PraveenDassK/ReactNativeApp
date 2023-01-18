@@ -1,6 +1,9 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
+
 const TerminatedCard = ({navigation}) => {
 
 
@@ -9,7 +12,7 @@ const TerminatedCard = ({navigation}) => {
       <View style={styles.brokenCreditCardParent}>
         <Image
           style={[styles.brokenCreditCardIcon, styles.groupParentPosition]}
-          resizeMode="cover"
+          resizeMode="contain"
           source={require("../assets/brokencreditcard.png")}
         />
         <Text style={[styles.hello, styles.helloTypo]}>
@@ -21,9 +24,9 @@ const TerminatedCard = ({navigation}) => {
           style={[styles.groupParent, styles.groupParentPosition]}
           onPress={() => navigation.navigate("CardSettings")}
         >
-          <View style={[styles.rectangleParent, styles.maskGroup236Position]}>
+          <View style={[styles.rectangleParent]}>
             <View style={styles.groupChild} />
-            <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
+            <View style={[styles.maskGroup236]} />
           </View>
           <Text style={[styles.hello1, styles.helloTypo]}>GO Back</Text>
         </Pressable>
@@ -34,83 +37,68 @@ const TerminatedCard = ({navigation}) => {
 
 const styles = StyleSheet.create({
   groupParentPosition: {
-    left: "50%",
+    width: "100%",
     position: "absolute",
   },
   helloTypo: {
     textAlign: "center",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   maskGroup236Position: {
-    right: 0,
-    left: 0,
-    top: 0,
-    position: "absolute",
+    right: "50%",
+    left: "50%",
+    top: verticalScale(0),
+
   },
   brokenCreditCardIcon: {
-    marginLeft: -69,
-    width: 125,
-    height: 85,
-    top: 0,
-    left: "50%",
-  },
-  yourCardHas: {
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
+    width: "20%",
+    height: "20%",
+    top: "25%",
+      },
+  yourCardHas: {},
   hello: {
-    marginTop: "2%",
-    top: "50%",
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 30,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
-    left: "50%",
-    marginLeft:-180,
     textAlign: "center",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    width: "100%",
+    top: "50%",
   },
   groupChild: {
     height: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.blue_100,
-    position: "absolute",
     width: "100%",
+    alignItems: 'center'
   },
   maskGroup236: {
-    bottom: 13,
   },
   rectangleParent: {
-    bottom: 0,
+    bottom: verticalScale(0),
+    width: "30%",
+    left: horizontalScale(130),
   },
   hello1: {
     top: "35%",
-    marginLeft:-30,
-    left: "50%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: "black",
+    width: "100%"
   },
   groupParent: {
-    marginLeft: "-30%",
-    width: "70%",
-    height: "20%",
-    bottom: 0,
+    width: "40%",
+    height: verticalScale(50),
+    bottom: verticalScale(0),
   },
   brokenCreditCardParent: {
     width: "100%",
-    height: 328,
+    height: "80%",
+
   },
   terminatedCard: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
-    paddingLeft: 93,
-    paddingTop: 162,
-    paddingRight: 72,
+    height: "100%",
     width: "100%",
   },
 });
