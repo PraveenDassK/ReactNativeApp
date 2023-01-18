@@ -1,14 +1,41 @@
 import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { StyleSheet, View, Text, Image, TextInput, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
 
 const BankTransferAmount = ({navigation}) => {
   const [amount, setAmount] = useState("")
   const [note, setNote] = useState("")
   const [userData, setCode] = useState("")
-  const reciver = "Me";
-  const sortCode = "00-00-00"
-  const accountCode = "01234567890"  
+  const [account, setAccNum] = useState(null)
+  const [sortcode, setSortCode] = useState(null)
+  const [fullname, setName] = useState(null)
+  const[number,setnumber]=useState(null)
+  const [plan, setPlan] = useState(null)
+  const [balance, setBal] = useState(null)
+  const [currency, setCurrency] = useState(null)
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccountByCustomer();
+    const accountresponse = await api.GetCustomerDetails();
+    const data = response.data.details.content[0]
+    const accountdata = accountresponse.data.details.accountDetails[0]
+    const phonedata = accountresponse.data.details.phoneNumbers[0]
+    console.log(data)
+    setSortCode(data.identifiers[0].sortCode)
+    setAccNum(data.identifiers[0].accountNumber)
+    setName(data.name)
+    setBal(data.balance)
+    setnumber(phonedata.phoneNo)
+    setPlan(accountdata.accountType)
+    setCurrency(data.currency)
+  } 
   let payment = (amount ? amount : 1).toString()
 
   console.log(payment)
@@ -24,16 +51,16 @@ const BankTransferAmount = ({navigation}) => {
         <View style={[styles.groupChild, styles.groupPosition1]} />
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
-            {reciver}
+            {fullname}
           </Text>
           <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
             {"\n"}Receiver
           </Text>
           <Text style={[styles.hello2, styles.helloTypo2, styles.helloTypo3]}>
-          {"\n" + accountCode}
+          {"\n" + number}
           </Text>
           <Text style={[styles.hello3, styles.helloTypo, styles.helloTypo3]}>
-          {"\n" + sortCode}
+          {"\n" + sortcode}
           </Text>
         </View>
         <View style={styles.groupContainer}>
@@ -158,7 +185,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   lineViewPosition: {
-    right: 0,
+    right: "15%",
     position: "absolute",
   },
   groupChild: {
@@ -180,7 +207,7 @@ const styles = StyleSheet.create({
     left: 2,
   },
   hello1: {
-    left: 9,
+    left: 0,
     top: -10,
   },
   hello2: {
@@ -224,26 +251,28 @@ const styles = StyleSheet.create({
   groupContainer: {
     marginTop: 149,
     height: 50,
-    left: 33,
-    right: 31,
+    left:50,
+    right: 50,
     top: "50%",
     position: "absolute",
   },
   hello7: {
     left: "50%",
+    marginLeft:-50,
     fontSize: GlobalStyles.FontSize.size_xl,
     top: 0,
   },
   hello8: {
     top: 28,
-    left: "35%",
+    left: "50%",
+    marginLeft:-100,
     fontSize: GlobalStyles.FontSize.size_13xl,
     lineHeight: 37,
     color: GlobalStyles.Color.blue_100,
   },
   lineView: {
     bottom: -1,
-    left: -1,
+    left: 0,
     borderStyle: "solid",
     borderColor: "#707070",
     borderTopWidth: 1,
@@ -272,7 +301,7 @@ const styles = StyleSheet.create({
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.gray_200,
     height: 42,
-    right: 31,
+    right: "7%",
     top: "50%",
     position: "absolute",
   },

@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
-// import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
 const AddBeneficiarySuccess = ({navigation}) => {
