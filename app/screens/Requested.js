@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
   },
   hello1: {
     marginTop: 332.5,
-    left: 120,
+    left: "50%",
+    marginLeft:-60,
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
   },
