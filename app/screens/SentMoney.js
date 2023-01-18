@@ -8,10 +8,15 @@ const SentMoney = ({route,navigation}) => {
   let amount = route.params.amount
   let fullname = route.params.fullname
 
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("AccountMain")
+  }
+
   return (
     <Pressable
       style={styles.sentMoney}
-      onPress={() => navigation.navigate("AccountMain")}
+      onPress={() => navigate()}
     >
       <View style={styles.groupParent}>
         <View style={[styles.helloWrapperPosition, styles.wrapperPosition]}>
@@ -54,7 +59,7 @@ const SentMoney = ({route,navigation}) => {
             <Text style={styles.youveUsed1}>
               You've used 1 of your 100 monthly free local
             </Text>
-            <Text style={styles.youveUsed1}>{`transfers allowance `}</Text>
+            <Text style={styles.youveUsed1}>{` transfers allowance `}</Text>
           </Text>
         </View>
       </View>
@@ -96,9 +101,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello: {
-    marginTop: 302.5,
-    left: "50%",
-    marginLeft:-60,
+   marginStart:"10%",
+  marginBottom:-20,
+    marginTop: 330.5,
+    left: "30%",
     fontSize: GlobalStyles.FontSize.size_xs,
     top: "50%",
   },
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.blue_100,
   },
   hello1: {
-    top: "75%",
+    top: "50%",
     left: "5%",
     right: "5%",
     fontSize: GlobalStyles.FontSize.size_4xl,
@@ -159,8 +165,9 @@ const styles = StyleSheet.create({
     margin: GlobalStyles.Margin.margin_8xs,
   },
   hello2: {
+  marginVertical:-120,
     fontSize: GlobalStyles.FontSize.size_base,
-    lineHeight: 25,
+    lineHeight: 20,
     left: 0,
     top:0,
     color: GlobalStyles.Color.gray_700,

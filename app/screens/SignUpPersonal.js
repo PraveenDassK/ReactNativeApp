@@ -11,6 +11,7 @@ import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
 
 const SignUpPersonal = () => {
+  
   return (
     <Screen>
     <View style={styles.signUpPersonal3}>

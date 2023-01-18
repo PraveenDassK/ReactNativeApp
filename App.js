@@ -70,11 +70,11 @@ import Terminate from "./app/screens/Terminate";
 import TerminatedCard from "./app/screens/TerminatedCard";
 import ItWasLost from "./app/screens/ItWasLost";
 import ReplaceCard from "./app/screens/ReplaceCard";
-import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
+// import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
 import BankTransferAmount from "./app/screens/BankTransferAmount";
 import VerifyCode1 from "./app/screens/VerifyCode1";
 import VerifyCode from "./app/screens/VerifyCode";
-import AddBeneficiary from "./app/screens/AddBeneficiary";
+// import AddBeneficiary from "./app/screens/AddBeneficiary";
 import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
@@ -101,7 +101,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="SendContact">
+  <Stack.Navigator initialRouteName="SentMoney">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
 
@@ -176,8 +176,8 @@ const StackNavigator = () => (
     <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
     <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
 
-    <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
-    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/>
+    {/* <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
+    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/> */}
 
     <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
     <Stack.Screen  name="ItWasLost" component={ItWasLost}/>

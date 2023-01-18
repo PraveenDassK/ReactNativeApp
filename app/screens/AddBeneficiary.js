@@ -9,7 +9,7 @@ import { View,
   Pressable,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+// import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 const AddBeneficiary = ({navigation}) => {
   const [bankName, setBankName] = useState("")

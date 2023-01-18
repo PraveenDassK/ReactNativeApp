@@ -283,13 +283,15 @@ const styles = StyleSheet.create({
     bottom: 83,
   },
   hello1: {
-    left: 5,
+    marginLeft: 100,
+  left:-65,
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: 28,
     fontWeight: "700",
     top: 0,
   },
   hello2: {
+    marginRight: -300,
     fontSize: GlobalStyles.FontSize.size_12xl,
     fontWeight: "700",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -311,7 +313,7 @@ const styles = StyleSheet.create({
   totalAssets: {
     marginLeft: -112.65,
     bottom: 517,
-    width: 60,
+    width:"40%" ,
     fontSize: GlobalStyles.FontSize.size_base,
   },
   co: {
@@ -322,7 +324,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "sub",
   },
   co2Removed: {
-    marginTop: -7,
+    marginTop: "-17%",
     width: 93,
     top: "50%",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -339,14 +341,15 @@ const styles = StyleSheet.create({
   tons: {
     marginTop: -206,
     marginLeft: 54.53,
-    width: 36,
+    width: "95%",
     fontSize: GlobalStyles.FontSize.size_base,
     fontWeight: "700",
     top: "50%",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   helloContainer: {
-    marginLeft: -40.89,
+    
+    marginLeft: -50.89,
     width: 89,
   },
   treeIcon: {

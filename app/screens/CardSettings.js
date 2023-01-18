@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupInnerLayout: {
-    borderRadius: GlobalStyles.Border.br_5xl,
+    borderRadius: GlobalStyles.Border.br_7xl,
     backgroundColor: GlobalStyles.Color.white,
     left: 0,
   },
@@ -615,6 +615,7 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     width: 192,
     bottom: 0,
+   
   },
   globeIcon: {
     width: 18,
@@ -709,7 +710,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     width: "100%",
-    height: "100%",
+    height: 730,
   },
   arrowPosition: {
     top: "6%",
