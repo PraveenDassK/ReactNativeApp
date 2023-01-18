@@ -98,6 +98,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
         styles.enterColor,
       ]}
     >
+      
       Enter your Email ID
     </Text>
     <TextInput
