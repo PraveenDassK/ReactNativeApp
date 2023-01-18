@@ -1,11 +1,54 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+import moment from 'moment';
 
 
 const Analytics = ({navigation}) => {
+
+  const [balance, setBal] = useState(0)
+  const [transactions, setTrans] = useState([])
+  const [totalSpend, setTotal] = useState(0)
+  const [totalTransactions, setTotalTrans] = useState(0)
+
+  const [recentTransactions, setRecent] = useState([])
+  const [transactionCategories, setCat] = useState()
+  
+
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccount();
+    const data = response.data.details.balance
+    setBal(data)
+
+    const transactionCall = await api.GetTransactions()
+    const transData = transactionCall.data.details
+    let total = 0
+    let transCat = {}
+
+    transData.content.forEach(transaction => {
+      total += transaction.amount
+      transCat[transaction.type] = transCat[transaction.type] ? transCat[transaction.type] + transaction.amount : transaction.amount;
+    })
+
+    setTotalTrans(transData.totalSize)
+    setTotal(total)
+    setRecent([transData.content[1],transData.content[1],transData.content[2]])
+    setCat(transCat)
+
+    const acc= await api.GetAccount()
+    const det = acc.data.details.associates
+    console.log(det)
+  }
+
   return (
     <ScrollView>
     <View style={styles.analytics}>
@@ -14,12 +57,11 @@ const Analytics = ({navigation}) => {
           <View style={[styles.helloParent, styles.helloPosition]}>
             <Text style={[styles.hello, styles.helloTypo3]}>Total Spend</Text>
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo2]}>
-              £ 1200.00
+              £ {totalSpend}
             </Text>
           </View>
           <Text style={[styles.hello2, styles.helloPosition]}>
-            <Text style={styles.noOf}>No. of{" "}</Text>
-            <Text style={styles.noOf}>Payments</Text>
+            <Text style={styles.noOf}>Payments {totalTransactions}</Text>
           </Text>
           <Text style={[styles.hello3, styles.helloTypo2]}>1000</Text>
           <Image
@@ -41,7 +83,7 @@ const Analytics = ({navigation}) => {
               <Text style={styles.noOf}>Spendings</Text>
             </Text>
             <Text style={[styles.hello5, styles.helloColor, styles.helloTypo2]}>
-              £ 500.00
+              £ {balance}
             </Text>
           </View>
           <Image
@@ -53,7 +95,7 @@ const Analytics = ({navigation}) => {
         <View style={[styles.groupParent1, styles.groupParentPosition1]}>
           <View style={[styles.helloContainer, styles.helloGroupPosition]}>
             <Text style={[styles.hello6, styles.helloTypo3]}>Balance</Text>
-            <Text style={[styles.hello7, styles.helloColor]}>£ 500.00</Text>
+            <Text style={[styles.hello7, styles.helloColor]}>£ {balance}</Text>
           </View>
           <Image
             style={[styles.groupChild, styles.iconLayout]}
@@ -641,7 +683,7 @@ const styles = StyleSheet.create({
   },
   helloTypo2: {
     lineHeight: 24,
-    textAlign: "left",
+    textAlign: "center",
     position: "absolute",
   },
   iconLayout: {
@@ -889,7 +931,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     fontSize: GlobalStyles.FontSize.size_2xl,
-    width: 100,
+    width:100,
     bottom: -10,
     left: 0,
   },
@@ -1406,7 +1448,7 @@ const styles = StyleSheet.create({
   history3: {
     marginLeft: 21.5,
     left: "50%",
-    marginTop: -8,
+    marginTop:-8,
   },
   history4: {
     right: -1,
