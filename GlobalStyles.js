@@ -58,7 +58,7 @@ const GlobalStyles = {
     gray_1700: "#1a1a1a",
     gray_1800: "rgba(0, 0, 0, 0.87)",
     gray_1900: "rgba(0, 0, 0, 0)",
-    blue_100: "#d8ebf9",
+    blue_100: "#0101FD",
     indigo_100: "#00003d",
     white: "#fff",
     black: "#000",
