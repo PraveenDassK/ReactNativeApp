@@ -1,11 +1,75 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable, ScrollView } from "react-native";
+import React,{ useEffect, useState,useContext } from "react";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const AccountMain = ({navigation}) => {
-  
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+import Button from "../components/Button"
 
+import moment from 'moment';
+
+const AccountMain = ({navigation}) => {
+  //Saves all the data from the API call
+  const [data, setData] = useState(null)
+  const [balance, setBalance] = useState(null)
+
+  const [status, setStatus] = useState(null)
+  const authContext = useContext(AuthContext)
+
+  const [transactionData, setTransactionData] = useState(null)
+
+  const todaydate = moment().format('ll')
+
+  
+  //Calls the API once during load
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  //Gets the data for the user
+  const loadData = async () => {
+    const response = await api.GetAccount();
+    const data = response.data.details
+
+    setBalance(data.availableBalance)
+
+
+    //Verified calculation 
+    setStatus(data.status != "ACTIVE")
+
+      //Load the data for transactions
+      const transactionCall = await api.GetTransactions();
+      const transactionData = transactionCall.data.details
+
+      //Format the data for transactions
+      const numberOfTransactions = transactionData.totalSize
+      let transactionList = [];
+      for(let i = 0; i < 4; i++){
+        let dataHold = transactionData.content[i]
+        transactionList.push(dataHold)
+      }
+      setTransactionData( {
+        "numTransaction" : numberOfTransactions,
+        "transactions" : transactionList
+      })
+  }
+
+  let currency = (transactionData ? transactionData.transactions[0].amount : "£")
+  console.log(currency)
+  let date = (transactionData? transactionData.transactions[0].transactionDate : "0")
+  let date1 = (transactionData? transactionData.transactions[1].transactionDate : "0")
+  let date2 = (transactionData? transactionData.transactions[2].transactionDate : "0")
+  let date3 = (transactionData? transactionData.transactions[3].transactionDate : "0")
+  console.log(moment(date).format('d MMM YYYY'))
+  console.log(moment(date).format('H:mma'))
+  
+  /**
+   * @dev Data needed for this page
+   *      Verification status
+   *      Wallet balance
+   *      Recent transactios
+   */
   return (
     <ScrollView>
     <Screen>
@@ -245,30 +309,30 @@ const AccountMain = ({navigation}) => {
             source={require("../assets/cashwithdraw.png")}
           />
           <View style={styles.groupContainer}>
-            <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
+            {/* <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>Grocery Market</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[4].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
                   <Text style={styles.total}>September 22, 2022</Text>
                   <Text style={styles.total}>12:06 PM</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
+              <Text style={[styles.text, styles.textTypo]}>{transactionData ? transactionData.transactions[4].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
                 source={require("../assets/freshsupermarket.png")}
               />
-            </View>
+            </View> */}
             <View style={[styles.groupParent2, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>Grocery Market</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[3].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>September 22, 2022</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date3).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date3).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[3].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
@@ -277,13 +341,13 @@ const AccountMain = ({navigation}) => {
             </View>
             <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
               <View style={[styles.lanceBogrolContainer, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>Grocery Market</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[2].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>September 22, 2022</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date2).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date2).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[2].amount:""}</Text>
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
@@ -292,13 +356,13 @@ const AccountMain = ({navigation}) => {
             </View>
             <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>Spotify Music</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[1].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>September 22, 2022</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date1).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date1).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text, styles.textTypo]}>- £50.00</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[1].amount:""}</Text>
               <Image
                 style={[styles.maskGroup16, styles.groupPosition]}
                 resizeMode="cover"
@@ -307,13 +371,13 @@ const AccountMain = ({navigation}) => {
             </View>
             <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={styles.lanceBogrol}>Lance Bogrol</Text>
+                <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[0].account.customerName:" "}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>September 22, 2022</Text>
-                  <Text style={styles.total}>12:06 PM</Text>
+                  <Text style={styles.total}>{moment(date).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date).format('H:mma')}</Text>
                 </Text>
               </View>
-              <Text style={[styles.text4, styles.textTypo]}>+ £350.00</Text>
+              <Text style={[styles.text, styles.textTypo]}>{"-£"}{transactionData ? transactionData.transactions[0].amount:" "}</Text>
               <Image
                 style={[styles.groupChild7, styles.groupPosition]}
                 resizeMode="cover"
@@ -341,10 +405,10 @@ const AccountMain = ({navigation}) => {
         >
           <Text style={styles.hello20}>
             <Text style={styles.text5}>£</Text>
-            <Text style={styles.text6}>0.00</Text>
+            <Text style={styles.text6}>{balance}</Text>
           </Text>
           <Text style={styles.totalWalletBalance}>Total Wallet Balance</Text>
-          <Text style={styles.july192022}>July 19, 2022</Text>
+          <Text style={styles.july192022}>{todaydate}</Text>
         </View>
 
         {
@@ -368,32 +432,32 @@ const AccountMain = ({navigation}) => {
             styles.helloParent3Position,
           ]}
         />
-        <Text style={styles.youAreAlmostReadyWithYour}>
-          <Text
-            style={styles.youAreAlmost}
-          >{`You are almost ready with your account, Avail more benefits by choosing our card plans  `}</Text>
-          <Text style={styles.text7}>
-            <Text style={styles.drylandsProtectionKasigau} />
-            <Text />
+          <Text style={styles.youAreAlmostReadyWithYour}>
+            <Text
+              style={styles.youAreAlmost}
+            >{`You are almost ready with your account, Avail more benefits by choosing our card plans  `}</Text>
+            <Text style={styles.text7}>
+              <Text style={styles.drylandsProtectionKasigau} />
+              <Text />
+            </Text>
           </Text>
-        </Text>
-        <Text
-          style={[styles.congratulations, styles.applyNowPosition]}
-        >{`\n `}Congratulations!</Text>
-        <Text
-          style={[styles.applyNow, styles.applyNowPosition]}
-        >{`\n `}Apply Now {">"}</Text>
-        <View style={styles.path33217Parent}>
-          <Image
-            style={[styles.path33217Icon, styles.iconGroupLayout]}
-            resizeMode="cover"
-            source={require("../assets/image-loadingcircleaccountmain.png")}
-          />
           <Text
-            style={[styles.text9, styles.historyTypo1, styles.historyPosition]}
-          >
-            70%
-          </Text>
+            style={[styles.congratulations, styles.applyNowPosition]}
+          >{`\n `}Congratulations!</Text>
+          <Text
+            style={[styles.applyNow, styles.applyNowPosition]}
+          >{`\n `}Apply Now {">"}</Text>
+          <View style={styles.path33217Parent}>
+            <Image
+              style={[styles.path33217Icon, styles.iconGroupLayout]}
+              resizeMode="cover"
+              source={require("../assets/image-loadingcircleaccountmain.png")}
+            />
+            <Text
+              style={[styles.text9, styles.historyTypo1, styles.historyPosition]}
+            >
+              70%
+            </Text>
         </View>
 
         {
@@ -1162,7 +1226,8 @@ const styles = StyleSheet.create({
   moneyTransfer: {
     color: GlobalStyles.Color.gray_900,
     left: 0,
-    bottom: 0,
+    bottom: -4,
+    width:200,
     letterSpacing: 1,
   },
   lanceBogrolParent: {

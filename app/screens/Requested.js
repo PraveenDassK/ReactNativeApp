@@ -3,8 +3,10 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Requested = ({navigation}) => {
-  
+const Requested = ({route}) => {
+  console.log(route.params.amount)
+  let amount = route.params.amount
+  let name = route.params.name
   return (
     <Pressable
       style={styles.requested}
@@ -15,8 +17,8 @@ const Requested = ({navigation}) => {
           <View style={[styles.groupChild, styles.groupPosition]} />
         </View>
         <Text style={[styles.hello, styles.helloTypo]}>
-          <Text style={styles.youHaveRequested}>You have requested £500{'\n'}</Text>
-          <Text style={styles.youHaveRequested}>from Hudson Maia</Text>
+          <Text style={styles.youHaveRequested}>You have requested £{amount}{'\n'}</Text>
+          <Text style={styles.youHaveRequested}>from {name}</Text>
         </Text>
         <Image
           style={[styles.iconAwesomeCheckCircle, styles.hello1Position]}
@@ -64,13 +66,13 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 458,
-    left: 69,
     fontSize: GlobalStyles.FontSize.size_4xl,
     lineHeight: 24,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
     position: "absolute",
     textAlign: "center",
+    width:"100%"
   },
   iconAwesomeCheckCircle: {
     marginTop: -138.06,
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_700,
   },
   groupParent: {
-    width: 375,
+    width: "100%",
     height: 749,
   },
   requested: {

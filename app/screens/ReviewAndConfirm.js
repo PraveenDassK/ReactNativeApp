@@ -1,17 +1,27 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
+//import * as React from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const ReviewAndConfirm = ({navigation}) => {
-
+  
+    const [saving, setSaving] = useState(null)
+    const [savings2, setSavings2] = useState(null)
+    const [fee, setFee] = useState(null)
+    // const [plan, setPlan] = useState(null)
+    // const [balance, setBal] = useState(null)
+    // const [currency, setCurrency] = useState(null)
+    // const authContext = useContext(AuthContext)
+  
+  
   return (
     <View style={styles.reviewAndConfirm}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>Review and Confirm</Text>
         <View style={[styles.helloGroup, styles.helloLayout]}>
           <Text style={styles.hello1}>From</Text>
-          <Text style={styles.hello2}>Daily Saving</Text>
-          <Text style={[styles.hello3, styles.helloTypo]}>- £ 500.00</Text>
+          <Text style={styles.hello2}>Daily Saving </Text>
+          <Text style={[styles.hello3, styles.helloTypo]}>{saving}</Text>
         </View>
         <View
           style={[
@@ -22,7 +32,7 @@ const ReviewAndConfirm = ({navigation}) => {
         >
           <Text style={styles.hello1}>To</Text>
           <Text style={styles.hello2}>Visa *0000</Text>
-          <Text style={[styles.hello6, styles.helloTypo]}>- £ 500.00</Text>
+          <Text style={[styles.hello6, styles.helloTypo]}>{savings2}</Text>
         </View>
         <View style={[styles.groupChild, styles.groupPosition]} />
         <View style={[styles.groupItem, styles.groupPosition]} />
@@ -30,7 +40,7 @@ const ReviewAndConfirm = ({navigation}) => {
         <Text style={[styles.hello8, styles.helloPosition]}>
           Est. completion date
         </Text>
-        <Text style={[styles.hello9, styles.helloPosition1]}>£ 0.00</Text>
+        <Text style={[styles.hello9, styles.helloPosition1]}>{fee}</Text>
         <Text style={[styles.hello10, styles.helloPosition]}>Today</Text>
         <Image
           style={[
@@ -69,7 +79,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloContainerPosition: {
-    top: 300,
+    top: "45%",
     position: "absolute",
     width:"100%"
   },
@@ -123,7 +133,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello2: {
-    top: 29,
+    top: "89%",
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
     left: 0,

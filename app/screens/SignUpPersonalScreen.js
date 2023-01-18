@@ -10,6 +10,8 @@ import GlobalStyles from "../../GlobalStyles";
 import otpApi from "../api/otp";
 import Screen from "../components/Screen";
 import SwipeUp from "../components/SwipeUp"
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 
 
@@ -71,7 +73,6 @@ const SignUpPersonalScreen = ({ navigation }) => {
               <TextInput 
               
                 keyboardType="numeric" 
-                autoCorrect="none" 
                 onBlur={() => setFieldTouched("phoneNumber")}
                 onChangeText={handleChange("phoneNumber")}
                 style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
@@ -103,7 +104,6 @@ const SignUpPersonalScreen = ({ navigation }) => {
     </Text>
     <TextInput
     autoCapitalize="none"
-    autoCorrect="none" 
     textContentType="emailAdress"
     keyboardType="email-address"
     onBlur={() => setFieldTouched('email')}
@@ -119,7 +119,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
      <ErrorMessage error={errors.email} visible={touched.email}/>
     <View style={styles.button}>
 
-      <Button title="Continue" color="blue" onPress={handleSubmit} />
+      <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
     </View>
             
             </>
@@ -141,13 +141,15 @@ const SignUpPersonalScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   continueButton:{
-    backgroundColor:"#0101FD",
+    //backgroundColor:"#0101FD",
     color:"#0101FD",
   },
   button:{
-    marginTop:50,
-    color:"#0101FD",
-    backgroundColor:"#0101FD",
+    marginTop: verticalScale(220),
+    //color:"#0101FD",
+    backgroundColor:"#D8EBF9",
+    color: "#1A1A1A",
+    borderRadius: 15,
   },
   mt2: {
     marginTop: GlobalStyles.Margin.margin_31xs,
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
     marginLeft: GlobalStyles.Margin.margin_37xl,
   },
   mt295: {
-    marginTop: 295,
+    marginTop: verticalScale(295),
   },
   ml184: {
     marginLeft: GlobalStyles.Margin.margin_71xl,
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     marginTop: GlobalStyles.Margin.margin_20xs,
   },
   mt_850: {
-    marginTop: -850,
+    marginTop: verticalScale(-850),
   },
   ml24: {
     marginLeft: GlobalStyles.Margin.margin_8xs,
@@ -199,50 +201,50 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   text1Typo: {
-    textAlign: "left",
+    textAlign: "right",
     color: GlobalStyles.Color.gray_800,
     top: "50%",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   networkPosition1: {
-    marginTop: -3,
+    marginTop: verticalScale(-3),
     top: "50%",
     position: "absolute",
   },
   networkLayout: {
     backgroundColor: GlobalStyles.Color.gray_1400,
     borderRadius: GlobalStyles.Border.br_7xs,
-    bottom: 0,
+    bottom: verticalScale(0),
   },
   networkPosition: {
     left: "50%",
     position: "absolute",
   },
   childBorder: {
-    borderWidth: 1,
-    borderColor: "#0101FD",
+    //borderWidth: 1,
+    //borderColor: "#0101FD",
     borderStyle: "solid",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.white,
   },
   backgroundPosition: {
     backgroundColor: GlobalStyles.Color.gray_1700,
-    right: 0,
-    left: 0,
-    bottom: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
     position: "absolute",
   },
   homeLayout: {
     backgroundColor: GlobalStyles.Color.black,
     borderRadius: GlobalStyles.Border.br_8xl,
-    height: 5,
+    height: verticalScale(5),
   },
   keysPosition: {
-    left: 6,
+    left: horizontalScale(6),
     position: "absolute",
   },
   viewShadowBox: {
-    height: 46,
+    height: verticalScale(46),
     elevation: 0,
     shadowRadius: 0,
     shadowColor: "#0101FD",
@@ -250,89 +252,90 @@ const styles = StyleSheet.create({
     borderRadius: GlobalStyles.Border.br_5xs,
     shadowOpacity: 1,
     shadowOffset: {
-      width: 0,
-      height: 3,
+      width: horizontalScale(0),
+      height: verticalScale(3),
     },
     position: "absolute",
   },
   viewPosition2: {
-    marginLeft: -58.5,
+    marginLeft: horizontalScale(-58.5),
     left: "50%",
   },
   labelPosition: {
     color: GlobalStyles.Color.black,
-    left: 0,
+    left: horizontalScale(0),
     position: "absolute",
     textAlign: "center",
   },
   viewPosition1: {
-    height: 47,
-    marginTop: 3.5,
+    height: verticalScale(47),
+    marginTop: verticalScale(3.5),
     top: "50%",
     position: "absolute",
   },
   numberPosition: {
-    top: 1,
+    top: verticalScale(1),
     color: GlobalStyles.Color.black,
     // fontFamily: GlobalStyles.FontFamily.sFProDisplay,
     fontSize: GlobalStyles.FontSize.size_7xl,
     letterSpacing: 0,
-    left: 0,
+    left: horizontalScale(0),
     position: "absolute",
     textAlign: "center",
   },
   viewPosition: {
-    marginTop: -50.5,
-    height: 47,
+    marginTop: verticalScale(-50.5),
+    height: verticalScale(47),
     top: "50%",
     position: "absolute",
   },
   signUpPersonalChild: {
     backgroundColor: GlobalStyles.Color.gray_300,
-    height: 812,
+    height: verticalScale(812),
   },
   icon: {
     height: "100%",
     width: "100%",
   },
   wrapper: {
-    width: 55,
-    height: 45,
+    width: horizontalScale(55),
+    height: verticalScale(45),
   },
   hello: {
-    lineHeight: 16,
+    lineHeight: verticalScale(16),
     textAlign: "center",
     color: GlobalStyles.Color.gray_800,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
   },
   iconIonicIosArrowDown: {
-    height: 5,
+    height: verticalScale(5),
   },
   getStartedWith: {
     margin: GlobalStyles.Margin.margin_33xs,
     fontSize: 28,
   },
   hello1: {
-    
+
     fontSize: GlobalStyles.FontSize.size_8xl,
-    lineHeight: 30,
+    lineHeight: verticalScale(30),
     textAlign: "left",
     fontWeight: "700",
-   
+
   },
   enterYourMobileNumber: {
-    left: 0,
-    bottom: 0,
+  top: verticalScale(140),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
     textAlign: "left",
     position: "absolute",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     fontSize: GlobalStyles.FontSize.size_base,
   },
   hello2: {
-    marginTop: -6.52,
-    left: 3,
-    lineHeight: 20,
+    marginTop: verticalScale(-6.52),
+    left: horizontalScale(3),
+    lineHeight: verticalScale(20),
     top: "50%",
     textAlign: "left",
     position: "absolute",
@@ -340,7 +343,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     width: "100%",
-    height: 164,
+    height: verticalScale(164),
   },
   rectangle: {
     shadowColor: "rgba(0, 0, 0, 0.05)",
@@ -348,133 +351,133 @@ const styles = StyleSheet.create({
     elevation: 6,
     shadowOpacity: 1,
     shadowOffset: {
-      width: 0,
-      height: 3,
+      width: horizontalScale(0),
+      height: verticalScale(3),
     },
-    right: 0,
-    left: 0,
-    bottom: 0,
-    top: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
+    top: verticalScale(0),
     position: "absolute",
     backgroundColor: GlobalStyles.Color.white,
   },
   text: {
     fontSize: GlobalStyles.FontSize.size_4xl,
-    lineHeight: 24,
+    lineHeight: verticalScale(24),
     fontWeight: "500",
     // fontFamily: GlobalStyles.FontFamily.roboto,
     color: GlobalStyles.Color.gray_1900,
     letterSpacing: 0,
-    left: 0,
+    left: horizontalScale(0),
     textAlign: "left",
-    top: 0,
+    top: verticalScale(0),
     position: "absolute",
   },
   time: {
-    width: 40,
-    left: 0,
-    bottom: 0,
-    top: 0,
+    width: horizontalScale(40),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   batteryIcon: {
-    height: 11,
-    width: 22,
-    marginTop: -3,
-    right: 0,
+    height: verticalScale(11),
+    width: horizontalScale(22),
+    marginTop: verticalScale(-3),
+    right: horizontalScale(0),
     top: "50%",
     position: "absolute",
   },
   wifiIcon: {
-    right: 37,
-    height: 12,
+    right: horizontalScale(37),
+    height: verticalScale(12),
   },
   networkChild: {
-    height: 4,
-    left: 0,
+    height: verticalScale(4),
+    left: horizontalScale(0),
     position: "absolute",
   },
   networkItem: {
-    marginLeft: -3.5,
-    height: 6,
+    marginLeft: horizontalScale(-3.5),
+    height: verticalScale(6),
   },
   networkInner: {
-    marginLeft: 0.5,
-    height: 9,
+    marginLeft: horizontalScale(0.5),
+    height: verticalScale(9),
   },
   rectangleView: {
-    right: 0,
-    top: 0,
+    right: horizontalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   network: {
-    right: 68,
-    height: 11,
+    right: horizontalScale(68),
+    height: verticalScale(11),
   },
   statusBar: {
-    marginTop: -15,
-    right: 16,
-    left: 15,
-    height: 26,
+    marginTop: verticalScale(-15),
+    right: horizontalScale(16),
+    left: horizontalScale(15),
+    height: verticalScale(26),
     top: "50%",
     position: "absolute",
   },
   statusBarBlack: {
-    height: 44,
+    height: verticalScale(44),
     width: "100%",
   },
   component1981Child: {
-    right: 24,
-    bottom: 790,
-    left: 111,
-    top: 0,
+   right: horizontalScale(0),
+    bottom: verticalScale(790),
+    left: horizontalScale(65),
+    top: verticalScale(0),
     position: "absolute",
-    width: '57%'
+    //width: '100%'
   },
   backgroundBackground: {
-    top: 0,
+    top: verticalScale(0),
   },
   background1: {
     backgroundColor: GlobalStyles.Color.gray_600,
-    right: 0,
-    left: 0,
-    bottom: 0,
-    top: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   background: {
-    right: 0,
-    left: 0,
-    bottom: 0,
-    top: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   homeIndicator1: {
-    marginTop: 3,
-    marginLeft: -66.5,
+    marginTop: verticalScale(3),
+    marginLeft: horizontalScale(-66.5),
     top: "50%",
   },
   homeIndicatorLightPortr: {
-    height: 34,
+    height: verticalScale(34),
   },
   deleteIcon: {
-    right: 44,
-    bottom: 15,
-    width: 24,
-    height: 18,
+    right: horizontalScale(44),
+    bottom: verticalScale(15),
+    width: horizontalScale(24),
+    height: verticalScale(18),
     position: "absolute",
   },
   number: {
-    marginTop: -16,
-    height: 30,
+    marginTop: verticalScale(-16),
+    height: verticalScale(30),
     // fontFamily: GlobalStyles.FontFamily.sFProDisplay,
     fontSize: GlobalStyles.FontSize.size_7xl,
-    width: 118,
+    width: horizontalScale(118),
     letterSpacing: 0,
     top: "50%",
   },
   view: {
-    bottom: 0,
+    bottom: verticalScale(0),
   },
   keyBackground: {
     elevation: 0,
@@ -484,20 +487,20 @@ const styles = StyleSheet.create({
     borderRadius: GlobalStyles.Border.br_5xs,
     shadowOpacity: 1,
     shadowOffset: {
-      width: 0,
-      height: 3,
+      width: horizontalScale(0),
+      height: verticalScale(3),
     },
-    right: 0,
-    left: 0,
-    bottom: 0,
-    top: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   label: {
-    bottom: 5,
+    bottom: verticalScale(5),
     fontSize: GlobalStyles.FontSize.size_3xs,
     letterSpacing: 2,
-    height: 12,
+    height: verticalScale(12),
     fontWeight: "700",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
@@ -505,41 +508,41 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   view1: {
-    right: 0,
+    right: horizontalScale(0),
   },
   view3: {
-    left: 0,
+    left: horizontalScale(0),
   },
   view4: {
-    right: 0,
+    right: horizontalScale(0),
   },
   view6: {
-    left: 0,
+    left: horizontalScale(0),
   },
   number7: {
-    height: 30,
+    height: verticalScale(30),
   },
   view7: {
-    right: 0,
-    top: 0,
+    right: horizontalScale(0),
+    top: verticalScale(0),
   },
   view8: {
-    top: 0,
+    top: verticalScale(0),
   },
   view9: {
-    left: 0,
-    top: 0,
+    left: horizontalScale(0),
+    top: verticalScale(0),
   },
   keys: {
-    top: 6,
-    right: 6,
-    height: 207,
+    top: verticalScale(6),
+    right: horizontalScale(6),
+    height: verticalScale(207),
   },
   keyboardNumberic: {
-    height: 291,
-    right: 0,
-    left: 0,
-    bottom: 0,
+    height: verticalScale(291),
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
     position: "absolute",
   },
   groupChild: {
@@ -554,91 +557,95 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   maskGroup236: {
-    bottom: 13,
-    right: 0,
-    left: 0,
-    top: 0,
+    bottom: verticalScale(13),
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   rectangleParent: {
-    marginTop: -30,
-    height: 60,
-    right: 0,
+    marginTop: verticalScale(-30),
+    height: verticalScale(60),
+    right: horizontalScale(0),
     top: "50%",
-    left: 0,
+    left: horizontalScale(0),
     position: "absolute",
   },
   component2083: {
-    height: 60,
-    right: 0,
-    left: 0,
-    top: 0,
+    height: verticalScale(60),
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   hello3: {
     top: "36.67%",
     left: "38.04%",
     fontSize: GlobalStyles.FontSize.size_lg,
-    lineHeight: 17,
+    lineHeight: verticalScale(17),
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
     textAlign: "left",
     position: "absolute",
   },
   component2083Parent: {
-    top: 382,
-    right: 25,
-    left: 25,
-    height: 60,
+    top: verticalScale(382),
+    right: horizontalScale(25),
+    left: horizontalScale(25),
+    height: verticalScale(60),
     position: "absolute",
   },
   component1981: {
-    height: 850,
+    height: verticalScale(850),
     width: "100%",
   },
   component1971Child: {
-    right: 0,
-    left: 0,
-    bottom: 0,
-    top: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    bottom: verticalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   text1: {
-    marginTop: -8,
-    marginLeft: -2,
+    marginTop: verticalScale(-10),
+    marginLeft: horizontalScale(0),
     fontSize: GlobalStyles.FontSize.size_xl,
     top: "50%",
     textAlign: "left",
   },
   maskGroup288: {
-    top: 19,
-    bottom: 19,
+    top: verticalScale(19),
+    bottom: verticalScale(19),
     maxHeight: "100%",
-    height:20,
-    width: 22,
+    height: verticalScale(20),
+    width: horizontalScale(20),
+    resizeMode: "contain",
   },
   component1971: {
-    width: 70,
-    height: 60,
+    width: horizontalScale(60),
+    height: verticalScale(60),
+    maxWidth: 80,
   },
   signUpPersonalItem: {
     width: "100%",
-    height: 60,
+    height: verticalScale(60),
   },
   enterYourEmailId: {
+  top: verticalScale(-5),
     textAlign: "left",
     fontSize: GlobalStyles.FontSize.size_base,
   },
   signUpPersonal: {
-    paddingHorizontal:35,
+    paddingHorizontal: horizontalScale(35),
     flex: 1,
     width: "100%",
   },
   swipeUp : {
   alignItems: "center",
   justifyContent: "center",
-   top:50
+   top: verticalScale(50),
   }
 });
+
 
 export default SignUpPersonalScreen;

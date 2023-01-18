@@ -1,9 +1,14 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable,Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 const Terminate = ({navigation}) => {
-  
+  const navigate = () => {
+    console.log("Function")
+    navigation.navigate("CardSettings")
+  }
 
   return (
     <View style={styles.terminate}>
@@ -34,7 +39,7 @@ const Terminate = ({navigation}) => {
                   styles.helloPosition,
                   styles.helloParentPosition,
                 ]}
-                onPress={() => navigation.navigate("CardSettings")}
+                onPress={() => navigate()}
                 />
             </View>
             <Text style={[styles.hello1, styles.helloTypo]}>No</Text>
@@ -67,41 +72,35 @@ const Terminate = ({navigation}) => {
 
 const styles = StyleSheet.create({
   helloPosition: {
-    left: "50%",
-    top: 0,
-    position: "absolute",
   },
   helloPosition1: {
-    left: "50%",
-    marginLeft: -120,
-    top: 0,
+    width: "100%",
+    left: horizontalScale(8),
+    top: verticalScale(0),
     position: "absolute",
   },
   helloParentPosition: {
-    right: 0,
-    left: 0,
-    top: 0,
+    right: horizontalScale(0),
+    left: horizontalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   groupPosition1: {
     height: "25%",
-    width: 200,
+    width: horizontalScale(200),
     left: "50%",
-    marginLeft: -92.5,
+    marginLeft: horizontalScale(-92.5),
     position: "absolute",
   },
   groupPosition: {
     borderRadius: GlobalStyles.Border.br_lg,
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    top: "0%",
     height: "100%",
     position: "absolute",
     width: "100%",
   },
   helloTypo: {
     textAlign: "center",
+    color: "black",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textTransform: "uppercase",
     fontSize: GlobalStyles.FontSize.size_lg,
@@ -113,64 +112,59 @@ const styles = StyleSheet.create({
   },
   hello: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 30,
+    lineHeight: verticalScale(30),
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
-    textAlign: "left",
-    left: 0,
-    top: 0,
+    textAlign: "center",
     position: "absolute",
   },
   groupChild: {
     backgroundColor: GlobalStyles.Color.blue_100,
   },
   maskGroup236: {
-    bottom: 13,
+    bottom: verticalScale(13),
   },
   helloParent: {
-    bottom: 0,
+    bottom: verticalScale(0),
   },
   hello1: {
-    left: "42.47%",
+    width: "100%",
     color: GlobalStyles.Color.white,
   },
   groupParent: {
-    bottom: 0,
+    bottom: verticalScale(0),
   },
   groupItem: {
     backgroundColor: GlobalStyles.Color.white,
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    top: "0%",
+
     height: "100%",
   },
   hello2: {
-    left: "39.73%",
+    width: "100%",
     color: GlobalStyles.Color.blue_100,
   },
   groupContainer: {
-    marginTop: -21.5,
+    marginTop: verticalScale(-21.5),
     top: "50%",
   },
   terminateInner: {
     width: "100%",
-    height: 235,
+    height: verticalScale(235),
   },
   arrowPosition: {
     top: "6%",
     position: "absolute",
   },
   arrowCircle: {
-    marginTop: -10.11,
-    marginRight: 303.54,
-    width: 15,
-    height: 15,
+    marginTop: verticalScale(-10.11),
+    marginRight: horizontalScale(303.54),
+    width: horizontalScale(15),
+    height: verticalScale(15),
   },
   terminate: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_6xs,
-    paddingTop: 220,
+    paddingTop: verticalScale(220),
     paddingRight: GlobalStyles.Padding.padding_4xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

@@ -1,6 +1,5 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Analytics = ({navigation}) => {
@@ -12,12 +11,11 @@ const Analytics = ({navigation}) => {
           <View style={[styles.helloParent, styles.helloPosition]}>
             <Text style={[styles.hello, styles.helloTypo3]}>Total Spend</Text>
             <Text style={[styles.hello1, styles.helloColor, styles.helloTypo2]}>
-              £ 1200.00
+              £ {totalSpend}
             </Text>
           </View>
           <Text style={[styles.hello2, styles.helloPosition]}>
-            <Text style={styles.noOf}>No. of{" "}</Text>
-            <Text style={styles.noOf}>Payments</Text>
+            <Text style={styles.noOf}>Payments {totalTransactions}</Text>
           </Text>
           <Text style={[styles.hello3, styles.helloTypo2]}>1000</Text>
           <Image
@@ -39,7 +37,7 @@ const Analytics = ({navigation}) => {
               <Text style={styles.noOf}>Spendings</Text>
             </Text>
             <Text style={[styles.hello5, styles.helloColor, styles.helloTypo2]}>
-              £ 500.00
+              £ {balance}
             </Text>
           </View>
           <Image
@@ -51,7 +49,7 @@ const Analytics = ({navigation}) => {
         <View style={[styles.groupParent1, styles.groupParentPosition1]}>
           <View style={[styles.helloContainer, styles.helloGroupPosition]}>
             <Text style={[styles.hello6, styles.helloTypo3]}>Balance</Text>
-            <Text style={[styles.hello7, styles.helloColor]}>£ 500.00</Text>
+            <Text style={[styles.hello7, styles.helloColor]}>£ {balance}</Text>
           </View>
           <Image
             style={[styles.groupChild, styles.iconLayout]}
@@ -337,11 +335,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                Wallmart
+                {recentTransactions[0].account.name}
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
+                <Text style={styles.noOf}>{moment(date).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
+                <Text style={styles.noOf}>{moment(date).format('H:mma')}</Text>
               </Text>
             </View>
             <Image
@@ -349,7 +347,7 @@ const Analytics = ({navigation}) => {
               resizeMode="cover"
               source={require("../assets/walmarticon.png")}
             />
-            <Text style={[styles.text12, styles.textTypo1]}>£1458</Text>
+            <Text style={[styles.text12, styles.textTypo1]}>£{recentTransactions[0].amount}</Text>
             <Text style={[styles.text13, styles.textTypo]}>
               <Text style={styles.kgCo4}>7.2 kg CO</Text>
               <Text style={styles.text14}>2</Text>
@@ -364,11 +362,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                Adidas
+                {recentTransactions[1].account.name}
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
+                <Text style={styles.noOf}>{moment(date1).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
+                <Text style={styles.noOf}>{moment(date1).format('H:mma')}</Text>
               </Text>
             </View>
             <Image
@@ -392,11 +390,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                Grocery Market
+                {recentTransactions[2].account.name}
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
+                <Text style={styles.noOf}>{moment(date2).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
+                <Text style={styles.noOf}>{moment(date2).format('H:mma')}</Text>
               </Text>
             </View>
             <Image
@@ -409,7 +407,7 @@ const Analytics = ({navigation}) => {
               resizeMode="cover"
               source={require("../assets/group-30454.png")}
             />
-            <Text style={[styles.text15, styles.textTypo1]}>£1458</Text>
+            <Text style={[styles.text15, styles.textTypo1]}>£{recentTransactions[2].amount}</Text>
             <Text style={[styles.text16, styles.textTypo]}>
               <Text style={styles.kgCo4}>7.2 kg CO</Text>
               <Text style={styles.text14}>2</Text>
@@ -425,7 +423,7 @@ const Analytics = ({navigation}) => {
             resizeMode="cover"
             source={require("../assets/icon-withdraw.png")}
           />
-          <Text style={[styles.text18, styles.textTypo1]}>£1458</Text>
+          <Text style={[styles.text18, styles.textTypo1]}>£{recentTransactions[1].amount}</Text>
           <Text style={[styles.text19, styles.textTypo]}>
             <Text style={styles.kgCo4}>7.2 kg CO</Text>
             <Text style={styles.text14}>2</Text>
@@ -639,7 +637,7 @@ const styles = StyleSheet.create({
   },
   helloTypo2: {
     lineHeight: 24,
-    textAlign: "left",
+    textAlign: "center",
     position: "absolute",
   },
   iconLayout: {
@@ -1244,11 +1242,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lanceBogrol5: {
-    marginTop: -18,
+    marginTop: -25,
     fontWeight: "700",
   },
   moneyTransfer: {
-    marginTop: -4,
+    marginTop: -10,
   },
   text12: {
     marginTop: -15,

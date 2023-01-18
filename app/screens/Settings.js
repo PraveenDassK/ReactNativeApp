@@ -11,7 +11,7 @@ const Settings = ({navigation}) => {
   const [fullname, setName] = useState(null)
   const [plan, setPlan] = useState(null)
   const [balance, setBal] = useState(null)
-
+  const [currency, setCurrency] = useState(null)
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -20,9 +20,16 @@ const Settings = ({navigation}) => {
   
   const loadData = async () => {
     const response = await api.GetAccountByCustomer();
+    const accountresponse = await api.GetCustomerDetails();
     const data = response.data.details.content[0]
+    const accountdata = accountresponse.data.details.accountDetails[0]
     console.log(data)
-    setSortCode("22-33-44")
+    setSortCode(data.identifiers[0].sortCode)
+    setAccNum(data.identifiers[0].accountNumber)
+    setName(data.name)
+    setBal(data.balance)
+    setPlan(accountdata.accountType)
+    setCurrency(data.currency)
   }
 
   return (
@@ -71,7 +78,7 @@ const Settings = ({navigation}) => {
               styles.textSpaceBlock,
             ]}
           >
-          British Pounds
+          {currency}
           </Text>
         </View>
         <View style={[styles.wrapper, styles.wrapperPosition]}>
@@ -354,14 +361,14 @@ const styles = StyleSheet.create({
     marginTop: -93,
   },
   britishPounds: {
-    marginLeft: "-1%",
+    marginLeft: "45%",
   },
   britishPoundsWrapper: {
     marginTop: -153,
     width: 88,
   },
   text: {
-    marginLeft: "-10%",
+    marginLeft: "-5%",
   },
   wrapper: {
     width: 53,
@@ -381,7 +388,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     marginTop: -92,
-    marginLeft: "17%",
+    marginLeft: "18%",
   },
   history: {
     left: 0,

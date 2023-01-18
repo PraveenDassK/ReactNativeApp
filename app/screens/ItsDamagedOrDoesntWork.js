@@ -213,7 +213,8 @@ const styles = StyleSheet.create({
     margin: GlobalStyles.Margin.margin_8xs,
   },
   hello: {
-    left: "50%",
+    left: "30%",
+    marginLeft:-30,
     fontSize: GlobalStyles.FontSize.size_7xl,
     lineHeight: 30,
     color: GlobalStyles.Color.indigo_100,

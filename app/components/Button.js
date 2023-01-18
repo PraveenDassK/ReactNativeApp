@@ -26,10 +26,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   text: {
-    color: colors.white,
-    fontSize: 18,
+    color: colors.black,
+    fontSize: 15,
+
     textTransform: "uppercase",
-    fontWeight: "bold",
+    fontWeight: "400",
   },
 });
 
