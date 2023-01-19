@@ -4,46 +4,26 @@ import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 
-const BankTransferAmount = ({navigation}) => {
+const BankTransferAmount = ({route,navigation}) => {
   const [amount, setAmount] = useState("")
   const [note, setNote] = useState("")
-  const [userData, setCode] = useState("")
-  const [account, setAccNum] = useState(null)
-  const [sortcode, setSortCode] = useState(null)
-  const [fullname, setName] = useState(null)
-  const[number,setnumber]=useState(null)
-  const [plan, setPlan] = useState(null)
-  const [balance, setBal] = useState(null)
-  const [currency, setCurrency] = useState(null)
   const authContext = useContext(AuthContext)
 
-  useEffect(() => {
-    loadData()
-  },[])
-  
-  const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetCustomerDetails();
-    const data = response.data.details.content[0]
-    const accountdata = accountresponse.data.details.accountDetails[0]
-    const phonedata = accountresponse.data.details.phoneNumbers[0]
-    console.log(data)
-    setSortCode(data.identifiers[0].sortCode)
-    setAccNum(data.identifiers[0].accountNumber)
-    setName(data.name)
-    setBal(data.balance)
-    setnumber(phonedata.phoneNo)
-    setPlan(accountdata.accountType)
-    setCurrency(data.currency)
-  } 
   let payment = (amount ? amount : 1).toString()
 
   console.log(payment)
-
   const send = (amount) => {
     console.log(amount)
-    navigation.navigate("Pin")
+    navigation.navigate("Pin",{
+      amount: amount, 
+      name: accountName,
+      successScreen: "Success"
+    })
   }
+  let bankName = route.params.bankName
+  let accountName = route.params.accountName
+  let iban = route.params.iban
+  let sortCode = route.params.sortCode
 
   return (
     <View style={styles.bankTransferAmount}>
@@ -51,16 +31,13 @@ const BankTransferAmount = ({navigation}) => {
         <View style={[styles.groupChild, styles.groupPosition1]} />
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
-            {fullname}
+            {accountName}
           </Text>
           <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
             {"\n"}Receiver
           </Text>
-          <Text style={[styles.hello2, styles.helloTypo2, styles.helloTypo3]}>
-          {"\n" + number}
-          </Text>
           <Text style={[styles.hello3, styles.helloTypo, styles.helloTypo3]}>
-          {"\n" + sortcode}
+          {"\n" + sortCode}
           </Text>
         </View>
         <View style={styles.groupContainer}>
@@ -102,6 +79,7 @@ const BankTransferAmount = ({navigation}) => {
           <TextInput style={[styles.hello8, styles.helloTypo2, styles.helloTypo4]}
            keyboardType="numeric"
            placeholder= {"£" + payment}
+           onChangeText = {amount => setAmount(amount)}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>

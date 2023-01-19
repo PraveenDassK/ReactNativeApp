@@ -3,8 +3,6 @@ import { Text, StyleSheet, View, Pressable,TextInput,Image } from "react-native"
 import GlobalStyles from "../../GlobalStyles";
 
 const SetLimit = ({navigation}) => {
- // const amountSpent="£22.33";
-  //const [amount, setAmount] = useState("")
   const navigate = () => {
     console.log("Function")
     navigation.navigate("SpendingLimit")
