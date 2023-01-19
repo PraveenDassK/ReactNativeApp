@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, Switch, Button } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen";
@@ -78,16 +78,18 @@ const SpendingLimit = ({navigation}) => {
               source={require("../assets/meter-1.png")}
             />
           </View>
-          <Pressable
+          <Switch  
             style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
-            onPress={() => navigation.navigate("SetLimit")}
-          >
-            <Switch  
             trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
             thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
             onValueChange={toggleSwitch}
-            value={isEnabled} />
-          </Pressable>
+            value={isEnabled}
+            />
+          <Pressable
+            style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
+            onPress={() => navigation.navigate("SetLimit")}
+            title="Set Limit"
+          />
           <Image
             style={[styles.groupIcon, styles.groupLayout]}
             resizeMode="cover"
