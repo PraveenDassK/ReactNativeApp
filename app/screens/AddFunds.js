@@ -355,6 +355,7 @@ const styles = StyleSheet.create({
     height: "100%",
     top: "-20%",
     left: "5%",
+
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: "#D8EBF9",
     position: "absolute",
@@ -379,10 +380,10 @@ const styles = StyleSheet.create({
     top:"15%"
   },
   groupPressable: {
-    bottom: verticalScale(49),
+  top: "80%",
     height: verticalScale(60),
     width:"100%",
-    position: "absolute",
+    position: "relative",
   },
   groupParent: {
 
