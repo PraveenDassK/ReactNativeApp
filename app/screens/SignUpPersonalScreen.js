@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     color:"#0101FD",
   },
   button:{
-    marginTop: verticalScale(220),
+    marginTop: verticalScale(150),
     //color:"#0101FD",
     backgroundColor:"#D8EBF9",
     color: "#1A1A1A",

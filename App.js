@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import 'expo-dev-menu';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from "@react-navigation/native";
 
 import SplashAnimation from "./app/screens/SplashAnimation";
@@ -70,11 +71,11 @@ import Terminate from "./app/screens/Terminate";
 import TerminatedCard from "./app/screens/TerminatedCard";
 import ItWasLost from "./app/screens/ItWasLost";
 import ReplaceCard from "./app/screens/ReplaceCard";
-// import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
+import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
 import BankTransferAmount from "./app/screens/BankTransferAmount";
 import VerifyCode1 from "./app/screens/VerifyCode1";
 import VerifyCode from "./app/screens/VerifyCode";
-// import AddBeneficiary from "./app/screens/AddBeneficiary";
+import AddBeneficiary from "./app/screens/AddBeneficiary";
 import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
@@ -98,13 +99,50 @@ import CarbonCart from "./app/screens/CarbonCart";
 
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
+
+const AccountNavigator = () => (
+  <Tab.Navigator
+  
+  >
+    <Tab.Screen 
+      name="AccountTab" 
+      component={Account}
+      options={{
+        title: "Account"
+      }}
+      />
+    <Tab.Screen 
+      name="Analysis" 
+      component={Analytics}
+      options={{
+        
+      }}
+      />
+    <Tab.Screen 
+      name="CarbonTab" 
+      component={Carbon}
+      options={{
+        title: "Carbon"
+      }}
+    />
+    <Tab.Screen 
+      name="Profile" 
+      component={Settings}
+    />
+
+  </Tab.Navigator>
+)
 const StackNavigator = () => (
   
 
+<<<<<<< HEAD
   <Stack.Navigator initialRouteName="FindFriends">
+=======
+  <Stack.Navigator initialRouteName="AddBeneficiary">
+>>>>>>> 5710411fd99c3017c4d53b7296a8de29242b7a5a
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
-
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
@@ -130,7 +168,7 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
-    <Stack.Screen  name="Account" component={Account}/>
+    <Stack.Screen  name="Account" component={AccountNavigator}/>
 
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
@@ -142,10 +180,10 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="Requested" component={Requested}/>
 
-    <Stack.Screen  name="Settings" component={Settings}/>
+    <Stack.Screen  name="Settings" component={AccountNavigator}/>
     <Stack.Screen  name="SecurityAndPrivacy" component={SecurityAndPrivacy}/>
     
-    <Stack.Screen  name="Analytics" component={Analytics}/>
+    <Stack.Screen  name="Analytics" component={AccountNavigator}/>
     <Stack.Screen  name="DOB" component={DOB}/>
     <Stack.Screen  name="PushNotification" component={PushNotification}/>
 
@@ -176,8 +214,8 @@ const StackNavigator = () => (
     <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
     <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
 
-    {/* <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
-    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/> */}
+    <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
+    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/>
 
     <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
     <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
@@ -191,7 +229,7 @@ const StackNavigator = () => (
     <Stack.Screen name="SpendingLimit" component={SpendingLimit}/> 
     <Stack.Screen name="SetLimit" component={SetLimit}/>
 
-    <Stack.Screen name="Carbon" component={Carbon}/>
+    <Stack.Screen name="Carbon" component={AccountNavigator}/>
     <Stack.Screen name="Carbon22" component={Carbon22}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>

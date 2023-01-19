@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Requested = ({route}) => {
+const Requested = ({route,navigation}) => {
   console.log(route.params.amount)
   let amount = route.params.amount
   let name = route.params.name

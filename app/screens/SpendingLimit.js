@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, Switch, Button } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen";
@@ -7,7 +7,7 @@ import api from "../api/api_list"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
-const SpendingLimit = ({navigation}) => {
+const SpendingLimit = ({route,navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const authContext=useContext(AuthContext)
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -31,6 +31,16 @@ const SpendingLimit = ({navigation}) => {
 
 
   }
+
+  const calculatePercentage = () => {
+    const percent = amountSpent / limit;
+  }
+
+  const amountSpent = 90;
+  const limit = 100;
+
+  const percent = ((amountSpent / limit) * 100) + "%";
+  console.log(percent)
 
   return (
     <Screen>
@@ -78,30 +88,32 @@ const SpendingLimit = ({navigation}) => {
               source={require("../assets/meter-1.png")}
             />
           </View>
-          <Pressable
+          <Switch  
             style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
-            onPress={() => navigation.navigate("SetLimit")}
-          >
-            <Switch  
             trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
             thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
             onValueChange={toggleSwitch}
-            value={isEnabled} />
-          </Pressable>
-          <Image
-            style={[styles.groupIcon, styles.groupLayout]}
-            resizeMode="cover"
-            source={require("../assets/group-275793.png")}
+            value={isEnabled}
+            />
+          <Pressable
+            style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
+            onPress={() => navigation.navigate("SetLimit")}
+            title="Set Limit"
           />
-          <Text style={[styles.hello1, styles.helloPosition]}>£22.33</Text>
-        <Text style={[styles.hello2, styles.helloPosition]}>
-          Spent this {"\n"}month
-        </Text>
+
+          <Text style={[styles.amountText]}>
+            Amount spent this month
+          </Text>
+
+          <View style={[styles.amountContainer]}>
+            <View style={[styles.amountScale]} width = {percent}>
+
+            </View>
+          </View>
+
+
         </View>
         
-        <Text style={[styles.hello3, styles.helloPosition]}>
-          Limit is toggled off
-        </Text>
         <Text
           style={[
             styles.theLimitDeterminesTheAmoun,
@@ -112,11 +124,7 @@ const SpendingLimit = ({navigation}) => {
           The limit determines the amount that can be spent or withdrawn using
           this card per month
         </Text>
-        <Image
-          style={styles.cardIcon}
-          resizeMode="cover"
-          source={require("../assets/card.png")}
-        />
+
       </View>
     </View>
     </Screen>
@@ -124,6 +132,27 @@ const SpendingLimit = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  amountText:{
+    width:"100%",
+    textAlign:"center",
+    top:"30%",
+    fontSize:"20%",
+  },
+  amountContainer:{
+    width:"90%",
+    left: "5%",
+    height:"10%",
+    backgroundColor:"grey",
+    top:"40%",
+    borderRadius: 20
+
+  },
+  amountScale:{
+    height:"100%",
+    backgroundColor:"blue",
+    borderRadius: 20
+  },
+
   limitFlexBox: {
     textAlign: "left",
     position: "absolute",
