@@ -18,10 +18,10 @@ const FindFriends = (navigation) => {
           <Text style={styles.hello}>Find your friends</Text>
           <Text style={styles.hello1}>
             <Text style={styles.allowAccessTo}>
-              Allow access to contacts to send and request
+              Allow access to contacts to send and request{" "}
             </Text>
             <Text style={styles.allowAccessTo}>
-              money from your friends more easily, split bills
+              money from your friends more easily, split bills{" "}
             </Text>
             <Text style={styles.allowAccessTo}>and much more.</Text>
           </Text>
@@ -58,6 +58,7 @@ const FindFriends = (navigation) => {
 
 const styles = StyleSheet.create({
   helloParentPosition: {
+    textAlign:"left",
     left: 100,
     right: 0,
     top: 0,
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
   groupPosition: {
     borderRadius: GlobalStyles.Border.br_lg,
     left: "-10%",
+    marginLeft: -85,
     bottom: "0%",
     right: "0%",
     top: "0%",
@@ -82,13 +84,14 @@ const styles = StyleSheet.create({
   helloTypo: {
     textTransform: "uppercase",
     fontSize: GlobalStyles.FontSize.size_lg,
-    textAlign: "left",
+    textAlign: "right",
     position: "absolute",
   },
   hello: {
-    left:"50%",
-    marginLeft:-140,
-    fontSize: GlobalStyles.FontSize.size_8xl,
+    left:"40%",
+    textAlign:"left",
+    marginLeft:-200,
+    fontSize: GlobalStyles.FontSize.size_11xl,
     fontWeight: "00",
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     marginTop: -280.52,
-    left: -80,
+    left: -100,
     fontSize: GlobalStyles.FontSize.size_base,
     lineHeight: 20,
     color: GlobalStyles.Color.gray_700,
@@ -119,9 +122,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   hello2: {
-    top: "50%",
-    marginleft:-22,
-    left: "50%",
+    top: "40%",
+    
+    marginleft: -100,
+    left: "10%",
     color: GlobalStyles.Color.white,
   },
   groupContainer: {
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "48.33%",
-    left: "38.96%",
+    left: "15.96%",
     color: GlobalStyles.Color.white,
   },
   groupPressable: {
