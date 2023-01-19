@@ -7,7 +7,7 @@ import api from "../api/api_list"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
-const SpendingLimit = ({navigation}) => {
+const SpendingLimit = ({route,navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const authContext=useContext(AuthContext)
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);

@@ -4,7 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 
-const BankTransferAmount = ({navigation}) => {
+const BankTransferAmount = ({route,navigation}) => {
   const [amount, setAmount] = useState("")
   const [note, setNote] = useState("")
   const [userData, setCode] = useState("")
@@ -44,6 +44,10 @@ const BankTransferAmount = ({navigation}) => {
     console.log(amount)
     navigation.navigate("Pin")
   }
+  let bankName = route.params.bankName
+  let accountName = route.params.accountName
+  let iban = route.params.iban
+  let sortCode = route.params.sortCode
 
   return (
     <View style={styles.bankTransferAmount}>
@@ -51,16 +55,13 @@ const BankTransferAmount = ({navigation}) => {
         <View style={[styles.groupChild, styles.groupPosition1]} />
         <View style={styles.helloParent}>
           <Text style={[styles.hello, styles.helloTypo2, styles.helloTypo3]}>
-            {fullname}
+            {accountName}
           </Text>
           <Text style={[styles.hello1, styles.helloTypo2, styles.helloTypo3]}>
             {"\n"}Receiver
           </Text>
-          <Text style={[styles.hello2, styles.helloTypo2, styles.helloTypo3]}>
-          {"\n" + number}
-          </Text>
           <Text style={[styles.hello3, styles.helloTypo, styles.helloTypo3]}>
-          {"\n" + sortcode}
+          {"\n" + sortCode}
           </Text>
         </View>
         <View style={styles.groupContainer}>
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   hello: {
-    top: 34,
+    top: 54,
     left: 2,
   },
   hello1: {

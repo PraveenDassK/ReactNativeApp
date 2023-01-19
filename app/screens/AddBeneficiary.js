@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState} from "react";
 import { View,
   KeyboardAvoidingView,
   TextInput,
@@ -9,13 +9,23 @@ import { View,
   Pressable,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-// import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
 
-const AddBeneficiary = ({navigation}) => {
+const AddBeneficiary = ({route,navigation}) => {
   const [bankName, setBankName] = useState("")
   const [accountName, setAccountName] = useState("")
   const [iban, setIban] = useState("")
   const [sortCode, setSortCode] = useState("")
+  const addBeneficiary = (bankName,accountName,iban,sortCode) => {
+    navigation.navigate("BankTransferAmount",
+    {bankName: bankName,
+      accountName: accountName,
+    iban:iban,
+    sortCode:sortCode})
+  }
+  
 
   return (
     <KeyboardAvoidingView
@@ -42,7 +52,8 @@ const AddBeneficiary = ({navigation}) => {
           </Text>
           <TextInput style={[styles.hello3, styles.helloTypo]} 
           placeholder={"Bank Name"}
-          onChangeText={newText => setBankName(newText)}/>
+
+          onChangeText={bankName => setBankName(bankName)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <View style={[styles.helloGroup, styles.groupPosition]}>
@@ -53,7 +64,7 @@ const AddBeneficiary = ({navigation}) => {
           </Text>
           <TextInput style={[styles.hello3, styles.helloTypo]} 
           placeholder={"Ortiz Tyrese"}
-          onChangeText = {newText => setAccountName(newText)}/>
+          onChangeText = {accountName => setAccountName(accountName)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <View style={[styles.groupView, styles.groupPosition]}>
@@ -64,12 +75,13 @@ const AddBeneficiary = ({navigation}) => {
           </Text>
           <TextInput style={[styles.hello3, styles.helloTypo]}
           placeholder={"01234567890"}
-          onChangeText={newText => setIban(newText)}/>
+          keyboardType="numeric"
+          onChangeText={iban => setIban(iban)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <Pressable
           style={[styles.groupFrame, styles.groupPosition]}
-          onPress={() => navigation.navigate("BankTransferAmount")}
+          onPress={() => addBeneficiary(bankName,accountName,iban,sortCode)}
         >
           <View style={[styles.groupWrapper, styles.wrapperPosition]}>
             <View style={[styles.groupWrapper, styles.wrapperPosition]}>
@@ -90,7 +102,8 @@ const AddBeneficiary = ({navigation}) => {
           <TextInput
             style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
             placeholder={"00 - 00 - 00"}
-            onChangeText={newText => setSortCode(newText)}
+            keyboardType="numeric"
+            onChangeText={sortCode => setSortCode(sortCode)}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
