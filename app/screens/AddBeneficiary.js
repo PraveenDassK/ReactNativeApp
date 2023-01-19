@@ -10,18 +10,11 @@ import { View,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const AddBeneficiary = ({route,navigation}) => {
+const AddBeneficiary = ({navigation}) => {
   const [bankName, setBankName] = useState("")
   const [accountName, setAccountName] = useState("")
   const [iban, setIban] = useState("")
   const [sortCode, setSortCode] = useState("")
-  const addBeneficiary = (bankName,accountName,iban,sortCode) => {
-    navigation.navigate("BankTransferAmount",
-    {bankName: bankName,
-      accountName: accountName,
-    iban:iban,
-    sortCode:sortCode})
-  }
   
 
   return (
@@ -78,7 +71,13 @@ const AddBeneficiary = ({route,navigation}) => {
         </View>
         <Pressable
           style={[styles.groupFrame, styles.groupPosition]}
-          onPress={() => addBeneficiary(bankName,accountName,iban,sortCode)}
+          onPress={() => {
+            navigation.navigate("BankTransferAmount",
+            {bankName: bankName,
+              accountName: accountName,
+            iban:iban,
+            sortCode:sortCode})
+          }}
         >
           <View style={[styles.groupWrapper, styles.wrapperPosition]}>
             <View style={[styles.groupWrapper, styles.wrapperPosition]}>
