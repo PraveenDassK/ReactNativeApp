@@ -1,130 +1,90 @@
-import React, { useContext, useEffect, useState, Keyboard } from "react";
-import { Text, StyleSheet, Image, View, Pressable,TextInput } from "react-native";
+import React, { useContext, useEffect, useState} from "react";
+import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
+
 import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 
-const data = [
-  { label: 'Data1', value: '1' },
-  { label: 'Data2', value: '2' },
-  { label: 'Data3', value: '3' },
-];
-
-const AddFunds = ({navigation}) =>{
-  const [amount, setAmount] = useState("")
-  const [note, setNote] = useState("")
-  const [userData, setCode] = useState("")
-  const [balance,setBalance] = useState("")
+const AddFunds = ({navigation}) => {
+  //Card data
   const authContext = useContext(AuthContext)
-  let payment = (amount ? amount : 1).toString()
-
-  console.log(payment)
-
-  useEffect(() => {
-    loadData()
-  },[])
-
-  const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const data = response.data.details.content[0]
-    console.log(data)
-    setBalance(data.balance)
-  }
-
-  const addFunds = (amount) => {
-    console.log(amount)
-    navigation.navigate("ReviewAndConfirm",{amount: amount})
-  }
+  const [data, setData] = useState({})
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const renderLabel = () => {
-    if (value || isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: 'blue' }]}>
-          Dropdown label
-        </Text>
-      );
+
+  const [cardData, setCard] = useState([]);
+
+  //let cardData = [{label: "01614842", value: "01614842"}]
+  //Calls the API once during load
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  //Gets the data for the user
+  const loadData = async () => {
+    const response = await api.GetAccount();
+    const data = response.data.details
+
+    let accountList = {
+      label: data.identifiers[0].accountNumber,
+      value: data.identifiers[0].accountNumber
     }
-    return null;
-  };
+
+    console.log(accountList)
+    setCard(prevArray => [accountList])
+  }
+
+  console.log(cardData)
+  //Screen components
+  const [amount, setAmount] = useState("")
+  const [userData, setCode] = useState("")
+  const reciver = "";
+  const sortCode = ""
+  const accountCode = ""  
+  let fromName = ""
+
+  let payment = (amount ? amount : 1).toString()
+
+  const requestContact = (amount) => {
+    console.log(amount)
+    navigation.navigate("Pin",{
+      amount: amount, 
+      name: value,
+      successScreen: "Success",
+      successText: "Your funds have been sent",
+      finishScreen: "AccountMain"
+    })
+  }
+  console.log(amount)
+ 
   return (
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>Add Funds</Text>
+    <View style={styles.requestContact}>
+      <Pressable 
+        style={styles.groupParent}
+        onPress={Keyboard.dismiss}
+      >
+        <View style={styles.helloParent}>
 
-        <View style={[styles.groupParent, styles.presetPosition]}>
-          <View style={styles.twentyPosition}>
-          <Pressable
-              onPress={() => {
-                setAmount(20)
-              }}
-            >
-            <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
-              £20
-            </Text>
-            </Pressable>
-          </View>
-
-          <View style={styles.fiftyPosition}>
-          <Pressable
-              onPress={() => {
-                setAmount(50)
-              }}
-            >
-            <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
-              £50
-            </Text>
-            </Pressable>
-          </View>
-          <View style={[styles.hundredPosition]}>
-          <Pressable
-              onPress={() => {
-                setAmount(100)
-              }}
-            >
-            <Text style={[styles.hello1, styles.helloColor, styles.helloTypo1]}>
-              £100
-            </Text>
-            </Pressable>
-          </View>
-        </View>
-
-        <View style={[styles.helloParent1, styles.parentPosition]}>
-          <Text style={[styles.hello4, styles.helloColor, styles.helloTypo1]}>
-            Pay
-          </Text>
-        
-          <View style={styles.lineView} />
-        </View>
-        <View style={[styles.helloParent11, styles.parentPosition]}>
-          <TextInput style={[styles.hello5, styles.helloTypo1]} keyboardType="numeric"
-           placeholder= {"£" + payment}/>
-        </View>
-
-        <View style={[styles.groupContainer, styles.groupPosition]}>
-          {/* <View
-            style={[
-              styles.iconIonicIosArrowForwardWrapper,
-              styles.rectangleViewLayout,
-              styles.groupViewPosition,
-            ]}
-          >
-
-          </View> */}
+          <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
+          <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
+          <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
+          <View style={[styles.selectBox]}>
           <Dropdown
-          style={[ styles.iconIonicIosArrowForwardWrapper,
-            styles.rectangleViewLayout,
-            styles.groupViewPosition,
+          style={[ styles.iconIonicIosArrowDownParent,
+            styles.groupChildLayout,
+            styles.groupChildPosition,
+            styles.groupChildBorder,
             isFocus && { borderColor: 'blue' }]}
-          data={data}
-          search
+          iconStyle={styles.iconStyle}
+          data={cardData}
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder={!isFocus ? 'Placeholder' : '....'}
-          searchPlaceholder="Search..."
-          value={value}
+          placeholder={!isFocus ? 'Select a card' : '....'}
+          value={cardData}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
@@ -132,306 +92,325 @@ const AddFunds = ({navigation}) =>{
             setIsFocus(false);
           }}
         />
-          <Text style={[styles.hello7, styles.helloTypo]}>Select Account</Text>
-          <View style={styles.helloParent3}>
-            <Text
-              style={[styles.hello8, styles.helloPosition, styles.helloColor]}
-            >
-              XYZ Card
-            </Text>
-            <Text style={[styles.hello9, styles.helloPosition]}>
-              {"£"}{balance}
-            </Text>
-            <Image
-              style={[styles.iconFeatherCreditCard, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/icon-outlinecreditcard.png")}
-            />
           </View>
         </View>
-        <Pressable
-          style={[styles.groupPressable, styles.groupPosition]}
-          onPress={() => addFunds(amount)}
-        >
-          <View style={[styles.rectangleParent, styles.groupViewPosition]}>
-            <View style={[styles.rectangleView, styles.rectangleViewLayout]} />
-            <View style={styles.maskGroup236} />
+
+        
+        <View
+          style={[
+            styles.groupItem,
+            styles.groupPosition1,
+          ]}
+        />
+
+        <View style={[styles.groupContainer, styles.helloParent2Position]}>
+          <View style={[styles.helloContainer, styles.groupViewPosition]}>
+          <Pressable
+              onPress={() => {
+                setAmount("20")
+              }}
+            >
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+              £20
+            </Text>
+            </Pressable>
+
           </View>
-          <Text style={[styles.hello10, styles.helloTypo1]}>Add Funds</Text>
+          <View style={[styles.groupView, styles.groupViewPosition]}>
+          <Pressable
+              onPress={() => {
+                setAmount("50")
+              }}
+            >
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+              £50
+            </Text>
+            </Pressable>
+
+          </View>
+          <View
+            style={[
+              styles.helloParent1,
+              styles.parentPosition,
+              styles.parentPosition1,
+            ]}
+          >
+            <Pressable
+              onPress={() => {
+                setAmount("100")
+              }}
+            >
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+              £100
+            </Text>
+            </Pressable>
+
+          </View>
+        </View>
+        <View style={[styles.helloParent2, styles.helloParent2Position]}>
+          <Text style={[styles.hello7, styles.helloTypo1, styles.helloColor]}>
+            Request{"\n"}
+          </Text>
+          <TextInput style={[styles.hello8, styles.helloTypo1]} 
+            placeholder={"£"+payment} keyboardType="numeric"
+            onChangeText = {newText => setAmount(newText)}
+          />
+          <View
+            style={[
+              styles.lineView,
+              styles.parentPosition,
+              styles.lineViewBorder,
+            ]}
+          />
+        </View>
+        <Pressable
+          style={styles.groupPressable}
+          onPress={() => requestContact(amount)}
+        >
+          <View
+            style={[
+              styles.rectangleParent,
+              styles.parentPosition,
+              styles.parentPosition1,
+            ]}
+          >
+            <View style={styles.rectangleView} />
+            <View style={[styles.maskGroup236, styles.parentPosition]} />
+          </View>
+          <Text style={styles.hello9}>Request</Text>
         </Pressable>
-      </View>
+      </Pressable>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  parentPosition: {
-    left: 33,
-    top: "50%",
+  selectBox:{
+    backgroundColor:"pink",
+    width:"100%",
+    height: "50%",
+  },
+  helloTypo1: {
+    textAlign: "center",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
-    paddingRight: 120,
-    width:"80%"
-
-  },
-  twentyPosition: {
-    left: "50%",
-    top: "600%",
-    width:"100%"
-  },
-  fiftyPosition: {
-    left: "75%",
-    top: "600%",
-    width:"100%"
-  },
-  hundredPosition: {
-    left: "100%",
-    top: "600%",
-    width:"100%"
   },
   helloColor: {
     color: GlobalStyles.Color.gray_700,
-    top: 0,
+    textAlign: "center",
   },
-  helloTypo1: {
+  helloTypo2: {
+    fontSize: GlobalStyles.FontSize.size_base,
+    color: GlobalStyles.Color.gray_700,
+    width:"100%",
+    textAlign:"center",
+  },
+  helloTypo: {
+    color: GlobalStyles.Color.indigo_100,
+    fontSize: GlobalStyles.FontSize.size_4xl,
+    textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
+  lineViewBorder: {
+    height: 2,
+    borderTopWidth: 1,
+    borderColor: "#707070",
+    borderStyle: "solid",
+  },
   groupPosition1: {
-    height: 17,
-    width: 18,
-    left: "-2%",
-    bottom: 0,
+    left: "22%",
+    right:0,
+    top: "50%",
+    position: "absolute",
+  },
+  helloParent2Position: {
+    left: 50,
+    top: "47%",
     position: "absolute",
   },
   groupViewPosition: {
+    width: 62,
     bottom: 0,
-    right: 0,
-    width:"100%"
-  },
-  iconPosition: {
-    top: "100%",
-
-    position: "absolute",
-    
-  },
-  helloTypo: {
-    fontSize: GlobalStyles.FontSize.size_base,
-    color: GlobalStyles.Color.gray_700,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
+    top: 0,
     position: "absolute",
   },
   groupPosition: {
-    left: "5%",
+    height: "17%",
+    width: 18,
+    bottom: 0,
+    left: "50%",
     position: "absolute",
   },
-  rectangleViewLayout: {
-    borderRadius: GlobalStyles.Border.br_lg,
+  parentPosition: {
+    right: "10%",
     position: "absolute",
   },
-  helloPosition: {
-    left: 44,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    position: "absolute",
+  parentPosition1: {
+    bottom: 0,
+    right: 0,
+    top: 0,
   },
   hello: {
-    top: 39,
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    fontWeight: "700",
-    textAlign: "center",
-    color: GlobalStyles.Color.indigo_100,
-    position: "absolute",
-    width:"100%"
-  },
-  hello1: {
-    fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 42,
-    left: "-25%",
-    top:10,
-    textAlign: "left",
+    top: 148,
   },
   groupChild: {
-    marginLeft: -7.94,
-  },
-  helloGroup: {
-    width: 80,
-    left: 40,
-    bottom: 0,
+    left:"25%",
+    height:"40%",
+    width:"50%",
     top: 0,
+    resizeMode:"contain",
+    position: "absolute",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  hello1: {
+    top: 90,
+    width:"100%",
+    textAlign:"center",
+    fontWeight: "700",
+  },
+  hello2: {
+    top: 120,
+    width:"100%",
+    textAlign:"center",
+  },
+  hello5: {
+    top: 150,
+    width:"100%",
+    textAlign:"center",
+  },
+  helloParent: {
+    top: 44,
+    height: 172,
+    width:"100%",
     position: "absolute",
   },
   groupItem: {
-    marginLeft: -7.71,
-  },
-  helloContainer: {
-    marginLeft: 37.5,
-    left: "50%",
-    width: 80,
-    bottom: 0,
-    top: 0,
-    position: "absolute",
-  },
-  groupInner: {
-    marginLeft: 1.22,
-  },
-  groupView: {
-    width: 80,
-    right: 0,
-    top: 0,
-    position: "absolute",
-  },
-  groupParent: {
-    marginTop: 149,
-    height: 50,
-    right: 31,
-  },
-  hello4: {
-    top:"100%",
-    left: "65%",
-    fontSize: GlobalStyles.FontSize.size_xl,
-    textAlign: "left",
-  },
-  hello5: {
-    top: 18,
-    left: "65%",
-    fontSize: GlobalStyles.FontSize.size_6xl,
-    lineHeight: 57,
-    color: GlobalStyles.Color.blue_100,
-    textAlign: "left",
-  },
-  lineView: {
-    bottom: -1,
-    left: -1,
-    borderStyle: "solid",
-    borderColor: "#707070",
-    borderTopWidth: 1,
-    height: 2,
-    right: 0,
-    position: "absolute",
-  },
-  helloParent1: {
-    marginTop: -105.5,
+    marginTop: 31.75,
     right: 32,
-    height: 98,
   },
-  helloParent11: {
-    marginTop: -75.5,
-    right: 32,
-    height: 178,
-    width: "100%",
-  },
-  hello6: {
-    left: 13,
-    top: 10,
+  hello3: {
+    top: 5,
+    left: 23,
   },
   iconMaterialKeyboardVoice: {
     marginTop: -9.35,
     right: 16,
     width: 14,
     height: 19,
+    top: "50%",
+    position: "absolute",
   },
-  helloParent2: {
-    marginTop: 15.5,
-    left: 32,
+  helloGroup: {
+    marginTop: 44.5,
     borderRadius: GlobalStyles.Border.br_5xl,
-    height: 42,
     backgroundColor: GlobalStyles.Color.gray_200,
+    height: 42,
     right: 31,
   },
-  iconIonicIosArrowForward: {
-    marginTop: -3,
-    right: 14,
-    width: 11,
-    height: 6,
-  },
-  iconIonicIosArrowForwardWrapper: {
-    top: 19,
-    backgroundColor: GlobalStyles.Color.gray_200,
-    right: 0,
+  hello4: {
+    fontSize: GlobalStyles.FontSize.size_7xl,
+    lineHeight: 32,
+    top: 0,
     left: 0,
+  },
+  groupInner: {
+    marginLeft: -7.94,
+  },
+  helloContainer: {
+    left: 0,
+  },
+  groupIcon: {
+    marginLeft: -7.71,
+  },
+  groupView: {
+    marginLeft: -27.5,
+    left: "50%",
+  },
+  groupChild1: {
+    marginLeft: -7.22,
+  },
+  helloParent1: {
+    width: 76,
+  },
+  groupContainer: {
+    marginTop: 149,
+    height: 50,
+    right: 31,
   },
   hello7: {
-    left: 0,
+    width:"100%",
+    textAlign:"center",
+    fontSize: GlobalStyles.FontSize.size_xl,
     top: 0,
   },
   hello8: {
-    fontSize: GlobalStyles.FontSize.size_xs,
+    top: 28,
+    width:"100%",
+    fontSize: GlobalStyles.FontSize.size_13xl,
+    color: GlobalStyles.Color.gray_700,
   },
-  hello9: {
-    fontSize: GlobalStyles.FontSize.size_2xl,
-    top: 15,
-    color: GlobalStyles.Color.indigo_100,
+  lineView: {
+    bottom: -1,
+    left: -1,
   },
-  iconFeatherCreditCard: {
-    marginTop: -25.5,
-    width: 29,
-    height: 21,
-    left: 0,
-  },
-  helloParent3: {
-    bottom: 7,
-    left: 14,
-    width: 134,
-    height: 33,
-    position: "absolute",
-  },
-  groupContainer: {
-    top: 93,
-    right: "5%",
-    height: 69,
+  helloParent2: {
+    marginTop: -64.5,
+    height: 98,
+    right: 32,
   },
   rectangleView: {
     height: "100%",
-    top: "0%",
+    top: "-20%",
     right: "0%",
     bottom: "0%",
-    left: "0%",
+    left: "5%",
+    borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.blue_100,
-    width: "100%",
+    position: "absolute",
+    width: "90%",
   },
   maskGroup236: {
     bottom: 13,
-    right: 0,
-    left: 0,
     top: 0,
-    position: "absolute",
+    left: 0,
   },
   rectangleParent: {
-    right: 0,
     left: 0,
-    top: 0,
-    position: "absolute",
   },
-  hello10: {
-    top: "25%",
+  hello9: {
     width:"100%",
+    textAlign:"center",
+    textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "center",
-
+    top:"10%"
   },
   groupPressable: {
-    right: 24,
-    bottom: "5%",
+    bottom: 49,
     height: 60,
+    width:"100%",
+    position: "absolute",
   },
-  helloParent: {
-    borderTopLeftRadius: GlobalStyles.Border.br_6xl,
-    borderTopRightRadius: GlobalStyles.Border.br_6xl,
-    shadowColor: "rgba(1, 1, 253, 0.05)",
+  groupParent: {
+    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
+    borderTopRightRadius: GlobalStyles.Border.br_4xl,
+    shadowColor: "rgba(1, 1, 253, 0.1)",
     shadowOffset: {
       width: 0,
-      height: -10,
+      height: -3,
     },
-    shadowRadius: 50,
-    elevation: 50,
+    shadowRadius: 20,
+    elevation: 20,
     shadowOpacity: 1,
     width: "100%",
     height: "100%",
     backgroundColor: GlobalStyles.Color.white,
   },
-  addFunds: {
+  requestContact: {
     flex: 1,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
