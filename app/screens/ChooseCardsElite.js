@@ -4,7 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const ChooseCardsElite = () => {
   return (
-    <ScrollView>
+    <ScrollView  >
     <View style={styles.chooseCardsElite}>
       <View style={styles.component2375Parent}>
         <View
@@ -250,7 +250,7 @@ const ChooseCardsElite = () => {
                 >{`Carbon Calculator `}</Text>
               </Text>
             </Text>
-            <Text
+            <Text 
               style={[styles.carbonOffset, styles.perksCardPosition]}
             >{`Carbon Offset `}</Text>
             <Text
@@ -278,7 +278,7 @@ const ChooseCardsElite = () => {
             >
               Set Spending Limits per card or Wallet
             </Text>
-            <Text
+            <Text 
               style={[
                 styles.realtimeOverviewOfAllSpend,
                 styles.allTypo,
@@ -319,7 +319,7 @@ const ChooseCardsElite = () => {
               ]}
             >
               <Text style={styles.accountFeatures}>
-                <Text
+                <Text 
                   style={styles.accountFeatures1}
                 >{`International Payments:  `}</Text>
               </Text>
@@ -993,11 +993,11 @@ const ChooseCardsElite = () => {
                     source={require("../assets/logo-carbonytetext.png")}
                   />
                   <View style={styles.rectangleView} />
-                  <Image
+                  {/* <Image
                     style={[styles.rectangleIcon, styles.groupIconLayout]}
                     resizeMode="cover"
                     source={require("../assets/image-card.png")}
-                  />
+                  /> */}
                   <View style={[styles.bWrapper, styles.bWrapperPosition]}>
                     <Text style={[styles.b, styles.helloFlexBox]}>B</Text>
                   </View>
@@ -1291,6 +1291,7 @@ const ChooseCardsElite = () => {
 
 const styles = StyleSheet.create({
   parentPosition: {
+    
     bottom: 0,
     left: 0,
   },
@@ -1916,13 +1917,15 @@ const styles = StyleSheet.create({
   },
   rectangleView: {
     height: "33.14%",
-    width: "108.22%",
+    width: "100.22%",
     top: "68.51%",
     right: "-3.68%",
     bottom: "-1.65%",
-    left: "-4.55%",
+    left: "-0.55%",
     backgroundColor: GlobalStyles.Color.gray_1700,
     position: "absolute",
+    borderBottomRightRadius:24,
+    borderBottomLeftRadius:24,
   },
   rectangleIcon: {
     height: "13.04%",
@@ -2111,13 +2114,19 @@ const styles = StyleSheet.create({
   groupChild19: {
     height: "100%",
     top: "0%",
-    right: "0%",
+    right: "10%",
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.blue_100,
-    position: "absolute",
-    width: "100%",
+   marginLeft:189,
+   marginRight:10,
+    width: "30%",
+    position: 'absolute',
+    
+
+alignItems: 'center',
+justifyContent: 'center',
   },
   maskGroup236: {
     bottom: 13,
@@ -2128,7 +2137,8 @@ const styles = StyleSheet.create({
   },
   hello7: {
     top: "40%",
-    left: "38.04%",
+    left: "50.04%",
+    marginLeft: -65,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -2166,7 +2176,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 121,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 
