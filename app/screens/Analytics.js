@@ -17,7 +17,6 @@ const Analytics = ({navigation}) => {
   const [recentTransactions, setRecent] = useState([])
   const [transactionCategories, setCat] = useState()
   
-
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -46,8 +45,12 @@ const Analytics = ({navigation}) => {
 
     const acc= await api.GetAccount()
     const det = acc.data.details.associates
-    console.log(det)
+    
   }
+  let date = (recentTransactions? recentTransactions[0].transactionDate : "0")
+  let date1 = (recentTransactions? recentTransactions[1].transactionDate : "0")
+  let date2 = (recentTransactions? recentTransactions[2].transactionDate : "0")
+  console.log(transactionCategories)
 
   return (
     <ScrollView>
@@ -381,11 +384,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                Wallmart
+                {recentTransactions[0].account.name}
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
+                <Text style={styles.noOf}>{moment(date).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
+                <Text style={styles.noOf}>{moment(date).format('H:mma')}</Text>
               </Text>
             </View>
             <Image
@@ -393,7 +396,7 @@ const Analytics = ({navigation}) => {
               resizeMode="cover"
               source={require("../assets/walmarticon.png")}
             />
-            <Text style={[styles.text12, styles.textTypo1]}>£1458</Text>
+            <Text style={[styles.text12, styles.textTypo1]}>£{recentTransactions[0].amount}</Text>
             <Text style={[styles.text13, styles.textTypo]}>
               <Text style={styles.kgCo4}>7.2 kg CO</Text>
               <Text style={styles.text14}>2</Text>
@@ -408,11 +411,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                Adidas
+                {recentTransactions[1].account.name}
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
+                <Text style={styles.noOf}>{moment(date1).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
+                <Text style={styles.noOf}>{moment(date1).format('H:mma')}</Text>
               </Text>
             </View>
             <Image
@@ -436,11 +439,11 @@ const Analytics = ({navigation}) => {
                   styles.lancePosition,
                 ]}
               >
-                Grocery Market
+                {recentTransactions[2].account.name}
               </Text>
               <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
+                <Text style={styles.noOf}>{moment(date2).format('d MMM YYYY')}{"\n"}{"\n"}</Text>
+                <Text style={styles.noOf}>{moment(date2).format('H:mma')}</Text>
               </Text>
             </View>
             <Image
@@ -453,7 +456,7 @@ const Analytics = ({navigation}) => {
               resizeMode="cover"
               source={require("../assets/group-30454.png")}
             />
-            <Text style={[styles.text15, styles.textTypo1]}>£1458</Text>
+            <Text style={[styles.text15, styles.textTypo1]}>£{recentTransactions[2].amount}</Text>
             <Text style={[styles.text16, styles.textTypo]}>
               <Text style={styles.kgCo4}>7.2 kg CO</Text>
               <Text style={styles.text14}>2</Text>
@@ -469,7 +472,7 @@ const Analytics = ({navigation}) => {
             resizeMode="cover"
             source={require("../assets/icon-withdraw.png")}
           />
-          <Text style={[styles.text18, styles.textTypo1]}>£1458</Text>
+          <Text style={[styles.text18, styles.textTypo1]}>£{recentTransactions[1].amount}</Text>
           <Text style={[styles.text19, styles.textTypo]}>
             <Text style={styles.kgCo4}>7.2 kg CO</Text>
             <Text style={styles.text14}>2</Text>
@@ -1288,11 +1291,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lanceBogrol5: {
-    marginTop: -18,
+    marginTop: -25,
     fontWeight: "700",
   },
   moneyTransfer: {
-    marginTop: -4,
+    marginTop: -10,
   },
   text12: {
     marginTop: -15,
