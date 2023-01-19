@@ -262,18 +262,6 @@ const AccountMain = ({navigation}) => {
           />
         </Pressable>
 
-        <View style={[styles.bankTransferParent, styles.parentShadowBox]}>
-
-          <Text style={[styles.bankTransfer, styles.myCardsPosition]}>
-            Bank Transfer
-          </Text>
-          <Pressable
-          onPress={() => navigation.navigate("BankTransfer")}
-          >
-
-          </Pressable>
-        </View>
-
         <Pressable
           style={[styles.myCardsWrapper, styles.parentShadowBox]}
           onPress={() => navigation.navigate("MyCards")}
