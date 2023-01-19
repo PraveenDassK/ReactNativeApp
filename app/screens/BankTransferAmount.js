@@ -7,42 +7,18 @@ import AuthContext from "../auth/context";
 const BankTransferAmount = ({route,navigation}) => {
   const [amount, setAmount] = useState("")
   const [note, setNote] = useState("")
-  const [userData, setCode] = useState("")
-  const [account, setAccNum] = useState(null)
-  const [sortcode, setSortCode] = useState(null)
-  const [fullname, setName] = useState(null)
-  const[number,setnumber]=useState(null)
-  const [plan, setPlan] = useState(null)
-  const [balance, setBal] = useState(null)
-  const [currency, setCurrency] = useState(null)
   const authContext = useContext(AuthContext)
 
-  useEffect(() => {
-    loadData()
-  },[])
-  
-  const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetCustomerDetails();
-    const data = response.data.details.content[0]
-    const accountdata = accountresponse.data.details.accountDetails[0]
-    const phonedata = accountresponse.data.details.phoneNumbers[0]
-    console.log(data)
-    setSortCode(data.identifiers[0].sortCode)
-    setAccNum(data.identifiers[0].accountNumber)
-    setName(data.name)
-    setBal(data.balance)
-    setnumber(phonedata.phoneNo)
-    setPlan(accountdata.accountType)
-    setCurrency(data.currency)
-  } 
   let payment = (amount ? amount : 1).toString()
 
   console.log(payment)
-
   const send = (amount) => {
     console.log(amount)
-    navigation.navigate("Pin")
+    navigation.navigate("Pin",{
+      amount: amount, 
+      name: accountName,
+      successScreen: "Success"
+    })
   }
   let bankName = route.params.bankName
   let accountName = route.params.accountName
@@ -103,6 +79,7 @@ const BankTransferAmount = ({route,navigation}) => {
           <TextInput style={[styles.hello8, styles.helloTypo2, styles.helloTypo4]}
            keyboardType="numeric"
            placeholder= {"£" + payment}
+           onChangeText = {amount => setAmount(amount)}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
@@ -204,7 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   hello: {
-    top: 54,
+    top: 34,
     left: 2,
   },
   hello1: {

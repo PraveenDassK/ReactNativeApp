@@ -42,7 +42,7 @@ const CardSettings = ({navigation}) => {
 
 
   }
-  //sendRequest()
+  sendRequest()
 
   return (
     <View style={styles.cardSettings}>
@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupInnerLayout: {
-    borderRadius: GlobalStyles.Border.br_7xl,
+    borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.white,
     left: 0,
   },
@@ -490,7 +490,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
-    top: "-5%"
+    top: "-10%"
   },
   paymentsParentLayout: {
     height: 41,
@@ -542,8 +542,8 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   spendingLimit: {
-    margin: GlobalStyles.Margin.margin_xs,
-    top: "25%"
+    margin: GlobalStyles.Margin.margin_8xs,
+    top: "20%"
   },
   setMonthlySpending: {
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -615,7 +615,6 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     width: 192,
     bottom: 0,
-   
   },
   globeIcon: {
     width: 18,
@@ -710,7 +709,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     width: "100%",
-    height: 730,
+    height: "100%",
   },
   arrowPosition: {
     top: "6%",

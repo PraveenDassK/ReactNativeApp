@@ -32,6 +32,16 @@ const SpendingLimit = ({route,navigation}) => {
 
   }
 
+  const calculatePercentage = () => {
+    const percent = amountSpent / limit;
+  }
+
+  const amountSpent = 90;
+  const limit = 100;
+
+  const percent = ((amountSpent / limit) * 100) + "%";
+  console.log(percent)
+
   return (
     <Screen>
     <View style={styles.spendingLimit}>
@@ -90,20 +100,20 @@ const SpendingLimit = ({route,navigation}) => {
             onPress={() => navigation.navigate("SetLimit")}
             title="Set Limit"
           />
-          <Image
-            style={[styles.groupIcon, styles.groupLayout]}
-            resizeMode="cover"
-            source={require("../assets/group-275793.png")}
-          />
-          <Text style={[styles.hello1, styles.helloPosition]}>£22.33</Text>
-        <Text style={[styles.hello2, styles.helloPosition]}>
-          Spent this {"\n"}month
-        </Text>
+
+          <Text style={[styles.amountText]}>
+            Amount spent this month
+          </Text>
+
+          <View style={[styles.amountContainer]}>
+            <View style={[styles.amountScale]} width = {percent}>
+
+            </View>
+          </View>
+
+
         </View>
         
-        <Text style={[styles.hello3, styles.helloPosition]}>
-          Limit is toggled off
-        </Text>
         <Text
           style={[
             styles.theLimitDeterminesTheAmoun,
@@ -114,11 +124,7 @@ const SpendingLimit = ({route,navigation}) => {
           The limit determines the amount that can be spent or withdrawn using
           this card per month
         </Text>
-        <Image
-          style={styles.cardIcon}
-          resizeMode="cover"
-          source={require("../assets/card.png")}
-        />
+
       </View>
     </View>
     </Screen>
@@ -126,6 +132,27 @@ const SpendingLimit = ({route,navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  amountText:{
+    width:"100%",
+    textAlign:"center",
+    top:"30%",
+    fontSize:"20%",
+  },
+  amountContainer:{
+    width:"90%",
+    left: "5%",
+    height:"10%",
+    backgroundColor:"grey",
+    top:"40%",
+    borderRadius: 20
+
+  },
+  amountScale:{
+    height:"100%",
+    backgroundColor:"blue",
+    borderRadius: 20
+  },
+
   limitFlexBox: {
     textAlign: "left",
     position: "absolute",
