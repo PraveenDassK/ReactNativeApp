@@ -1,8 +1,20 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, View, Image, Pressable, Switch, Button } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
+
 
 const SecurityAndPrivacy = ({navigation}) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled1, setIsEnabled1] = useState(false);
+  const [isEnabled2, setIsEnabled2] = useState(false);
+  const [isEnabled3, setIsEnabled3] = useState(false);
+  const authContext=useContext(AuthContext)
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
+  const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
+  const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
+
   return (
     <View style={styles.securityAndPrivacy}>
       <Text style={[styles.hello, styles.mr_546]}>Security</Text>
@@ -26,16 +38,40 @@ const SecurityAndPrivacy = ({navigation}) => {
           Messaging with friends
         </Text>
         <View style={[styles.rectangleParent, styles.groupLayout]}>
-          <View style={[styles.groupChild1, styles.groupChildPosition]} />
+          <Switch  
+            style={[styles.groupChildPosition]}
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+            />
         </View>
         <View style={[styles.rectangleGroup, styles.groupLayout]}>
-          <View style={[styles.groupChild2, styles.groupChildPosition]} />
+        <Switch  
+            style={[styles.groupChildPosition]}
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled1 ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch1}
+            value={isEnabled1}
+            />
         </View>
         <View style={[styles.rectangleContainer, styles.groupLayout]}>
-          <View style={[styles.groupChild2, styles.groupChildPosition]} />
+        <Switch  
+            style={[styles.groupChildPosition]}
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled2 ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch2}
+            value={isEnabled2}
+            />
         </View>
         <View style={[styles.groupView, styles.groupLayout]}>
-          <View style={[styles.groupChild2, styles.groupChildPosition]} />
+        <Switch  
+            style={[styles.groupChildPosition]}
+            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
+            thumbColor={isEnabled3 ?'#f4f3f4' : '#f4f3f4'}
+            onValueChange={toggleSwitch3}
+            value={isEnabled3}
+            />
         </View>
         <Image
           style={[styles.iconMetroEye, styles.iconPosition]}
@@ -52,9 +88,6 @@ const SecurityAndPrivacy = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/icon-speechbubble.png")}
         />
-        <View style={[styles.rectangleParent, styles.groupLayout]}>
-          <View style={[styles.groupChild1, styles.groupChildPosition]} />
-        </View>
         <Image
           style={[styles.iconFaceId, styles.iconPosition]}
           resizeMode="cover"
@@ -70,10 +103,10 @@ const styles = StyleSheet.create({
     marginRight: -546,
   },
   mt1021: {
-    marginTop: 1021,
+    marginTop: "5%",
   },
   mr40: {
-    marginRight: 40,
+    marginRight: 5,
   },
   groupPosition: {
     height: 57,
@@ -194,7 +227,7 @@ const styles = StyleSheet.create({
     width: 161,
   },
   groupChild1: {
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
   ellipseIcon: {
     right: "6.52%",
