@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   groupPosition: {
     borderRadius: GlobalStyles.Border.br_lg,
-    left: "0%",
+    left: "-10%",
     bottom: "0%",
     right: "0%",
     top: "0%",
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello: {
-    left:22,
+    left:"50%",
+    marginLeft:-140,
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "00",
     color: GlobalStyles.Color.indigo_100,
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     margin: GlobalStyles.Margin.margin_6xs,
   },
   hello1: {
-    marginTop: -200.52,
+    marginTop: -280.52,
     left: -80,
     fontSize: GlobalStyles.FontSize.size_base,
     lineHeight: 20,
@@ -120,8 +121,8 @@ const styles = StyleSheet.create({
   hello2: {
     top: "50%",
     marginleft:-22,
-    left: "31.9%",
-    color: GlobalStyles.Color.black,
+    left: "50%",
+    color: GlobalStyles.Color.white,
   },
   groupContainer: {
     bottom: 76,
