@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   groupChild: {
     height: "100%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: "#D8EBF9",
     width: "100%",
     alignItems: 'center'
   },
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: "black",
-    width: "100%"
+    width: "100%",
+
   },
   groupParent: {
     width: "40%",
