@@ -8,13 +8,6 @@ import Text from "../components/Text"
 import Screen from '../components/Screen'
 import AuthContext from '../auth/context'
 
-
-
-
-
-
-
-
 const Carbon = ({ navigation }) => {
 
     const [data, setData] = useState(null)
@@ -38,10 +31,32 @@ const Carbon = ({ navigation }) => {
         }
         return word.toLowerCase()
     })
+  }
 
-}
+  const [cart,setCart] = useState([])
+  let amount = 0
+  //Buy functions
+  const addToCart = (ID) => {
+    let arrobj = {
+      "projectId": ID,
+      "amount": 1
+    }
+    setCart(prevArray => [...prevArray, arrobj])
+    amount++;
+    console.log(arrobj)
+    checkout()
+  }
 
+  const checkout = () => {
+    let obj = {
+      "userId": "A121BXVM",
+      "projectLists": cart,
+      "sourceAccountId": "A121BXVM",
+      "totalAmount": amount
+    }
+    console.log(obj)
 
+  }
   return (
     <Screen>
 
@@ -140,7 +155,7 @@ const Carbon = ({ navigation }) => {
                                 style={styles.description}
                             >{item.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}...</Text>
                         </View>
-                        <Button title="ADD TO CART" color='babyBlue' onPress={() => console.log('Add to cart')}/>
+                        <Button title="ADD TO CART" color='babyBlue' onPress={() => addToCart(item.id)}/>
                         <View style={styles.benifitsContainer}>
                             {item.tags.length ? (
                                 <View >   

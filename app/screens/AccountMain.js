@@ -26,7 +26,7 @@ const AccountMain = ({navigation}) => {
   useEffect(() => {
     loadData()
   },[])
-  
+
   //Gets the data for the user
   const loadData = async () => {
     const response = await api.GetAccount();

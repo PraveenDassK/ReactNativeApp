@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState} from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-
 
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
@@ -43,9 +41,9 @@ const AddFunds = ({navigation}) => {
   //Screen components
   const [amount, setAmount] = useState("")
   const [userData, setCode] = useState("")
-  const reciver = "e11fc";
-  const sortCode = "11-11-11"
-  const accountCode = "1111-1111"
+  const reciver = "";
+  const sortCode = ""
+  const accountCode = ""  
   let fromName = ""
 
   let payment = (amount ? amount : 1).toString()
@@ -73,19 +71,22 @@ const AddFunds = ({navigation}) => {
           <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
           <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
           <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
-          <Text style={[styles.Select_account, styles.helloTypo]}>Select Account</Text>
           <View style={[styles.selectBox]}>
-          <Dropdown style={styles.dropdownStyle}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
+          <Dropdown
+          style={[ styles.iconIonicIosArrowDownParent,
+            styles.groupChildLayout,
+            styles.groupChildPosition,
+            styles.groupChildBorder,
+            isFocus && { borderColor: 'blue' }]}
           iconStyle={styles.iconStyle}
           data={cardData}
-          maxHeight={50}
+          maxHeight={300}
           labelField="label"
           valueField="value"
           placeholder={!isFocus ? 'Select a card' : '....'}
           value={cardData}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
           onChange={item => {
             setValue(item.value);
             setIsFocus(false);
@@ -103,25 +104,25 @@ const AddFunds = ({navigation}) => {
         />
 
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
-          <View style={[styles.hello4, styles.groupViewPosition]}>
+          <View style={[styles.helloContainer, styles.groupViewPosition]}>
           <Pressable
               onPress={() => {
                 setAmount("20")
               }}
             >
-            <Text style={[styles.hello4, styles.helloColor]}>
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
               £20
             </Text>
             </Pressable>
 
           </View>
-          <View style={[]}>
+          <View style={[styles.groupView, styles.groupViewPosition]}>
           <Pressable
               onPress={() => {
                 setAmount("50")
               }}
             >
-            <Text style={[styles.hello4, styles.helloColor]}>
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
               £50
             </Text>
             </Pressable>
@@ -139,7 +140,7 @@ const AddFunds = ({navigation}) => {
                 setAmount("100")
               }}
             >
-            <Text style={[styles.hello4, styles.helloColor]}>
+            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
               £100
             </Text>
             </Pressable>
@@ -147,7 +148,7 @@ const AddFunds = ({navigation}) => {
           </View>
         </View>
         <View style={[styles.helloParent2, styles.helloParent2Position]}>
-          <Text style={[styles.hello7]}>
+          <Text style={[styles.hello7, styles.helloTypo1, styles.helloColor]}>
             Request{"\n"}
           </Text>
           <TextInput style={[styles.hello8, styles.helloTypo1]} 
@@ -184,30 +185,11 @@ const AddFunds = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
- dropdownStyle: {
-    width: "95%",
-    marginLeft: "2.5%",
-    backgroundColor: "#F6F5F8",
-  }, selectedTextStyle: {
-    color: "black",
-    marginLeft: "15%",
-    marginTop: "1.5%"
-  },
   selectBox:{
     backgroundColor:"pink",
-    width:"90%",
-    marginLeft: "5%",
-    marginRight: "5%",
-    marginTop: "5%",
-    height: "30%",
-    borderRadius: 15,
-    backgroundColor: "#F6F5F8",
+    width:"100%",
+    height: "50%",
   },
-  Select_account: {
-    top: verticalScale(-5),
-    left: "5.5%",
-  }, inputSearchStyle: {
-    width: 100},
   helloTypo1: {
     textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -231,27 +213,32 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lineViewBorder: {
-    height: verticalScale(2),
+    height: 2,
     borderTopWidth: 1,
     borderColor: "#707070",
     borderStyle: "solid",
   },
-  groupPosition1: {},
-  helloParent2Position: {
-    width: "100%",
+  groupPosition1: {
+    left: "22%",
+    right:0,
     top: "50%",
     position: "absolute",
   },
+  helloParent2Position: {
+    left: 50,
+    top: "47%",
+    position: "absolute",
+  },
   groupViewPosition: {
-    width: "25%",
-    bottom: verticalScale(0),
-    top: verticalScale(0),
+    width: 62,
+    bottom: 0,
+    top: 0,
     position: "absolute",
   },
   groupPosition: {
     height: "17%",
-    width: horizontalScale(18),
-    bottom: verticalScale(0),
+    width: 18,
+    bottom: 0,
     left: "50%",
     position: "absolute",
   },
@@ -260,114 +247,137 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   parentPosition1: {
-    bottom: verticalScale(0),
-    right: horizontalScale(0),
-    top: verticalScale(0),
+    bottom: 0,
+    right: 0,
+    top: 0,
   },
   hello: {
-    top: verticalScale(148),
+    top: 148,
   },
-  groupChild: {},
+  groupChild: {
+    left:"25%",
+    height:"40%",
+    width:"50%",
+    top: 0,
+    resizeMode:"contain",
+    position: "absolute",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   hello1: {
+    top: 90,
+    width:"100%",
     textAlign:"center",
     fontWeight: "700",
   },
   hello2: {
-    top: verticalScale(120),
+    top: 120,
     width:"100%",
     textAlign:"center",
   },
   hello5: {
-    top: verticalScale(150),
+    top: 150,
     width:"100%",
     textAlign:"center",
   },
   helloParent: {
-    top: verticalScale(44),
-    height: verticalScale(172),
+    top: 44,
+    height: 172,
     width:"100%",
     position: "absolute",
   },
-  groupItem: {},
-  hello3: {},
+  groupItem: {
+    marginTop: 31.75,
+    right: 32,
+  },
+  hello3: {
+    top: 5,
+    left: 23,
+  },
   iconMaterialKeyboardVoice: {
-
+    marginTop: -9.35,
+    right: 16,
+    width: 14,
+    height: 19,
     top: "50%",
     position: "absolute",
   },
   helloGroup: {
-    marginTop: verticalScale(44.5),
+    marginTop: 44.5,
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.gray_200,
-    height: verticalScale(42),
-    right: horizontalScale(31),
+    height: 42,
+    right: 31,
   },
   hello4: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: verticalScale(32),
-    top: verticalScale(0),
-    width: "100%",
+    lineHeight: 32,
+    top: 0,
+    left: 0,
   },
   groupInner: {
-    marginLeft: horizontalScale(-7.94),
+    marginLeft: -7.94,
   },
   helloContainer: {
-    width: "100%",
-    left: "10%",
-
+    left: 0,
   },
-  groupIcon: {},
+  groupIcon: {
+    marginLeft: -7.71,
+  },
   groupView: {
+    marginLeft: -27.5,
     left: "50%",
   },
-  groupChild1: {},
+  groupChild1: {
+    marginLeft: -7.22,
+  },
   helloParent1: {
-    width: horizontalScale(76),
+    width: 76,
   },
   groupContainer: {
-    marginTop: verticalScale(150),
-    height: verticalScale(50),
-    width: "100%"
+    marginTop: 149,
+    height: 50,
+    right: 31,
   },
   hello7: {
     width:"100%",
     textAlign:"center",
     fontSize: GlobalStyles.FontSize.size_xl,
+    top: 0,
   },
   hello8: {
-    top: verticalScale(28),
-    textAlign: "center",
+    top: 28,
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     color: GlobalStyles.Color.gray_700,
   },
   lineView: {
-  top: verticalScale(110),
-  width: "90%",
-  left: "5%",
-    bottom: verticalScale(-1),
-
+    bottom: -1,
+    left: -1,
   },
   helloParent2: {
-
+    marginTop: -64.5,
+    height: 98,
+    right: 32,
   },
   rectangleView: {
     height: "100%",
     top: "-20%",
+    right: "0%",
+    bottom: "0%",
     left: "5%",
-
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: "#D8EBF9",
+    backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
     width: "90%",
   },
   maskGroup236: {
-
-    top: verticalScale(0),
-    left: horizontalScale(0),
+    bottom: 13,
+    top: 0,
+    left: 0,
   },
   rectangleParent: {
-    left: horizontalScale(0),
+    left: 0,
   },
   hello9: {
     width:"100%",
@@ -377,20 +387,21 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
     textAlign: "center",
-    top:"15%"
+    top:"10%"
   },
   groupPressable: {
-  top: "80%",
-    height: verticalScale(60),
+    bottom: 49,
+    height: 60,
     width:"100%",
-    position: "relative",
+    position: "absolute",
   },
   groupParent: {
-
+    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
+    borderTopRightRadius: GlobalStyles.Border.br_4xl,
     shadowColor: "rgba(1, 1, 253, 0.1)",
     shadowOffset: {
-      width: horizontalScale(0),
-      height: verticalScale(-3),
+      width: 0,
+      height: -3,
     },
     shadowRadius: 20,
     elevation: 20,
