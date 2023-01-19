@@ -136,11 +136,7 @@ const AccountNavigator = () => (
 const StackNavigator = () => (
   
 
-<<<<<<< HEAD
-  <Stack.Navigator initialRouteName="FindFriends">
-=======
   <Stack.Navigator initialRouteName="AddBeneficiary">
->>>>>>> 5710411fd99c3017c4d53b7296a8de29242b7a5a
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
