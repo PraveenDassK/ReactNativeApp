@@ -20,15 +20,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 15,
-    paddingVertical: 25,
+    paddingHorizontal: 5,
+    paddingVertical: 15,
     width: "100%",
     marginVertical: 10,
   },
   text: {
     color: colors.black,
     fontSize: 15,
-
     textTransform: "uppercase",
     fontWeight: "400",
   },

@@ -74,8 +74,11 @@ const AddFunds = ({navigation}) => {
           <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
           <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
           <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
+          
           <Text style={[styles.Select_account, styles.helloTypo]}>Select Account</Text>
-          <View style={[styles.selectBox]}>
+          <View style={[styles.selectBox]}
+          >
+            
           <Dropdown style={styles.dropdownStyle}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
@@ -149,7 +152,7 @@ const AddFunds = ({navigation}) => {
         </View>
         <View style={[styles.helloParent2, styles.helloParent2Position]}>
           <Text style={[styles.hello7]}>
-            Request{"\n"}
+            Pay{"\n"}
           </Text>
           <TextInput style={[styles.hello8, styles.helloTypo1]} 
             placeholder={"£"+payment} keyboardType="numeric"
@@ -177,7 +180,7 @@ const AddFunds = ({navigation}) => {
             <View style={styles.rectangleView} />
             <View style={[styles.maskGroup236, styles.parentPosition]} />
           </View>
-          <Text style={styles.hello9}>Request</Text>
+          <Text style={styles.hello9}>ADD FUNDS</Text>
         </Pressable>
       </Pressable>
     </View>
@@ -305,7 +308,7 @@ const styles = StyleSheet.create({
   },
   hello4: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: verticalScale(32),
+    lineHeight: verticalScale(65),
     top: verticalScale(0),
     width: "100%",
   },
@@ -376,7 +379,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "center",
     top:"15%"
   },

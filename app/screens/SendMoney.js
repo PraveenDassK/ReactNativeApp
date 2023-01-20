@@ -26,7 +26,8 @@ const SendMoney = ({navigation}) => {
     const details = benList[Id]
     navigation.navigate("BankTransferAmount",
     {bankName: "FakeName",
-      accountName: details.destinationIdentifier.accountNumber,
+      accountName: details.name,
+      accountNumber: details.destinationIdentifier.accountNumber,
       iban:details.destinationIdentifier.iban,
       sortCode:details.destinationIdentifier.sortCode,
     }) 
@@ -46,7 +47,10 @@ const SendMoney = ({navigation}) => {
             {item.name}
           </Text>
           <Text>
-            {item.phoneNumber}
+            +{item.phoneNumber}
+          </Text>
+          <Text>
+            {item.destinationIdentifier.accountNumber}
           </Text>
         </View>
       </Pressable>
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
     width:"100%",
     top: "10%",
     textAlign: "center",
-    fontSize: GlobalStyles.FontSize.size_4xl,
+    fontSize: GlobalStyles.FontSize.size_6xl,
   },
   benBox:{
     width:"100%",
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
     width:"100%",
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_xl,
-    color: "black",
+    color: "white",
     top : "100%",
   },
   benList:{

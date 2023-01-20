@@ -5,7 +5,7 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 
 const ChooseCardsElite = () => {
   return (
-    <ScrollView >
+    <ScrollView>
     <View style={styles.chooseCardsContainer}>
     <Text style={styles.ChooseCards}>Choose Cards</Text>
 
@@ -90,6 +90,7 @@ const ChooseCardsElite = () => {
         <View style={styles.featureListRow}>
                              <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
                              <Text style={styles.featureListText}>Automatic Payroll</Text>
+
         </View>
 
         <View style={styles.featureListRow}>
@@ -121,17 +122,7 @@ const ChooseCardsElite = () => {
 };
 
 const styles = StyleSheet.create({
-chooseCardsContainer: {
-flex: 1,
-width: "100%",
-height: "100%",
-backgroundColor: "#F6F5F8"
-},
-navBar: {
-marginTop: "5%",
-width: "100%",
-
-}, Standard: {
+Standard: {
 position: "absolute",
 left: "7.5%",
 textAlign: "left",
