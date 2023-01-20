@@ -1,16 +1,38 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
-import carbonApi from "../api/test_api_list"
+import React, { useContext, useEffect, useState } from "react";
+import { Image, StyleSheet, Text, View, Pressable } from "react-native";
+import carbonApi from "../api/api_list"
 
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
 
 const Account = ({navigation}) => {
+  const [balance, setBal] = useState(null)
+  const [fullname, setName] = useState(null)
+  const [plan, setPlan] = useState(null)
+
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccount();
+    //
+    const data = response.data.details
+    console.log(data)
+
+    setName(data.customerName)
+    setBal(data.balance)
+  }
+
   return (
     <View style={styles.account}>
       <View style={styles.helloParent}>
-        <Text style={styles.hello}>Full Name</Text>
-        <Text style={[styles.hello1, styles.helloTypo]}>£0.00</Text>
-        <Text style={styles.hello2}>Standard</Text>
+        <Text style={styles.hello}>{fullname}</Text>
+        <Text style={[styles.hello1, styles.helloTypo]}>£{balance}</Text>
+        <Text style={styles.hello2}>Standard Account</Text>
         <Text style={[styles.hello3, styles.helloTypo]}>Manage</Text>
         <View style={[styles.rectangleParent, styles.groupChildPosition]}>
           <View style={[styles.groupChild, styles.groupChildPosition]} />
@@ -81,9 +103,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "700",
     position: "absolute",
-    
-   
-    
   },
   groupChildPosition: {
     height: 155,
@@ -108,7 +127,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   limits1SpaceBlock: {
-    marginTop: -3,
+    marginTop: -7,
     color: GlobalStyles.Color.gray_1400,
     lineHeight: 14,
   },
@@ -142,7 +161,7 @@ const styles = StyleSheet.create({
   hello1: {
     top: 1,
     right: 10,
-    color: GlobalStyles.Color.blue_100,
+    color: GlobalStyles.Color.black,
     fontSize: GlobalStyles.FontSize.size_4xl,
     //fontFamily: GlobalStyles.FontFamily.helvetica,
   },
@@ -153,7 +172,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     left: 6,
     position: "absolute",
-    
   },
   hello3: {
     marginTop: -104.25,
@@ -163,7 +181,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   groupChild: {
-    marginTop: -70.5,
+    marginTop: -77.5,
     right: 1,
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.white,
@@ -223,7 +241,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingLeft:"10%",
     paddingRight:"10%",
-    backgroundColor: GlobalStyles.Color.gray_100,
+    backgroundColor: GlobalStyles.Color.white,
   },
 });
 
