@@ -108,7 +108,6 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
     const countdownId = setInterval(countdown, 1000)
-
     return () => {
       clearInterval(countdownId);
     };

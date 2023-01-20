@@ -8,7 +8,7 @@ const GetAccountByCustomer = () => client.get("https://api.carbonyte.io/walletmo
 const GetCustomer = () => client.get("https://api.carbonyte.io/walletmodule/GetCustomer/C121ZFD6")
 
 const GetAccount = () => client.get("https://api.carbonyte.io/walletmodule/GetAccount/A121BXVM")
-const GetTransactions = () =>  client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A121BXVM")
+const GetTransactions = () =>  client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A121BXVM?size=500")
 
 const SetToggles = (
   online,
