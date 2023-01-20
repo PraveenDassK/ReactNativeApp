@@ -108,7 +108,6 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
     const countdownId = setInterval(countdown, 1000)
-
     return () => {
       clearInterval(countdownId);
     };
@@ -340,7 +339,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
         </Text>
         {/* <Pressable style={styles.rectanglePressable} /> */}
         <View style={styles.button}>
-          <Button title="Verify" color="blue" onPress={handleSubmit} />
+          <Button title="Verify" color="babyBlue" onPress={handleSubmit} />
        </View>
         </>
           )}

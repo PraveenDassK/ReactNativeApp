@@ -3,6 +3,8 @@ import * as ImagePicker from "expo-image-picker"
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
+import Screen from "../components/Screen";
+
 const ProofOfResidencyListA1 = () => {
   const [imageUri, setImageUri] = useState();
   const [base64, setBase64] = useState()
@@ -37,6 +39,7 @@ const ProofOfResidencyListA1 = () => {
 
 
   return (
+    <Screen style={{backgroundColor: "#f3f5f5"}}>
     <View style={styles.proofOfResidencyListA1}>
       <Image
             style={[styles.arrowCircle, styles.arrowPosition]}
@@ -160,6 +163,7 @@ const ProofOfResidencyListA1 = () => {
       {base64 && <Text>{base64}</Text>}
     </View>
     </View>
+    </Screen>
   );
 };
 

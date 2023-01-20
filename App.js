@@ -48,7 +48,8 @@ import ChooseCardsElite from "./app/screens/ChooseCardsElite";
 import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
 import SendMoney from "./app/screens/SendMoney"
 import BankTransfer from "./app/screens/BankTransfer"
-import Analytics from "./app/screens/Analytics"
+import Analytics from "./app/screens/Analytics";
+import Analysis from "./app/screens/Analysis"
 import SecurityAndPrivacy from "./app/screens/SecurityAndPrivacy"
 import FindFriends from "./app/screens/FindFriends"
 import PersonalAddress from "./app/screens/PersonalAddress"
@@ -93,7 +94,7 @@ import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
 import AddFundsSuccess from "./app/screens/AddFundsSuccess";
 import AddBeneficiarySchedulePay1 from "./app/screens/AddBeneficiarySchedulePay1";
 
-
+import Account2 from "./app/screens/Account";
 import SendContact from "./app/screens/SendContact";
 import CarbonCart from "./app/screens/CarbonCart";
 
@@ -103,7 +104,9 @@ const Tab = createMaterialTopTabNavigator();
 
 const AccountNavigator = () => (
   <Tab.Navigator
-  
+    screenOptions={{
+    headerShown: false
+  }}
   >
     <Tab.Screen 
       name="AccountTab" 
@@ -113,7 +116,7 @@ const AccountNavigator = () => (
       }}
       />
     <Tab.Screen 
-      name="Analysis" 
+      name="Analysiss" 
       component={Analytics}
       options={{
         
@@ -136,15 +139,13 @@ const AccountNavigator = () => (
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="AddFunds">
+  <Stack.Navigator initialRouteName="ProofOfResidencyList">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
-    
-    
-    
+    <Stack.Screen  name="Account2" component={Account2}/>
     
     <Stack.Screen  name="AddBeneficiarySchedulePay1" component={AddBeneficiarySchedulePay1}/>
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
@@ -159,12 +160,12 @@ const StackNavigator = () => (
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Name" component={Name}/>
 
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidency}/>
+    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyListA1}/>
     <Stack.Screen name="ProofVerified" component={ProofVerified}/>
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
-    <Stack.Screen  name="Account" component={AccountNavigator}/>
+    <Stack.Screen  name="Account" component={Account}/>
 
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
@@ -176,10 +177,12 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="Requested" component={Requested}/>
 
-    <Stack.Screen  name="Settings" component={AccountNavigator}/>
+    <Stack.Screen  name="Settings" component={Settings}/>
     <Stack.Screen  name="SecurityAndPrivacy" component={SecurityAndPrivacy}/>
-    
-    <Stack.Screen  name="Analytics" component={AccountNavigator}/>
+
+
+    <Stack.Screen  name="Analysis" component={Analysis}/>
+    <Stack.Screen  name="Analytics" component={Analytics}/>
     <Stack.Screen  name="DOB" component={DOB}/>
     <Stack.Screen  name="PushNotification" component={PushNotification}/>
 
@@ -225,7 +228,7 @@ const StackNavigator = () => (
     <Stack.Screen name="SpendingLimit" component={SpendingLimit}/> 
     <Stack.Screen name="SetLimit" component={SetLimit}/>
 
-    <Stack.Screen name="Carbon" component={AccountNavigator}/>
+    <Stack.Screen name="Carbon" component={Carbon}/>
     <Stack.Screen name="Carbon22" component={Carbon22}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>

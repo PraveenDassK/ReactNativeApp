@@ -24,7 +24,9 @@ const AccountMain = ({navigation}) => {
   
   //Calls the API once during load
   useEffect(() => {
-    loadData()
+    const unsubscribe = navigation.addListener('focus',  () => {
+      loadData()
+    })
   },[])
 
   //Gets the data for the user
@@ -56,13 +58,12 @@ const AccountMain = ({navigation}) => {
   }
 
   let currency = (transactionData ? transactionData.transactions[0].amount : "£")
-  console.log(currency)
   let date = (transactionData? transactionData.transactions[0].transactionDate : "0")
   let date1 = (transactionData? transactionData.transactions[1].transactionDate : "0")
   let date2 = (transactionData? transactionData.transactions[2].transactionDate : "0")
   let date3 = (transactionData? transactionData.transactions[3].transactionDate : "0")
-  console.log(moment(date).format('d MMM YYYY'))
-  console.log(moment(date).format('H:mma'))
+  console.log(date2)
+  console.log(moment(date2).format('MMMM Do YY'))
   
   /**
    * @dev Data needed for this page
@@ -316,7 +317,7 @@ const AccountMain = ({navigation}) => {
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[3].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>{moment(date3).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date3).format('MMM Do Y')}{"\n"}</Text>
                   <Text style={styles.total}>{moment(date3).format('H:mma')}</Text>
                 </Text>
               </View>
@@ -324,14 +325,14 @@ const AccountMain = ({navigation}) => {
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
-                source={require("../assets/freshsupermarket.png")}
+                source={require("../assets/image-profileplaceholder.png")}
               />
             </View>
             <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
               <View style={[styles.lanceBogrolContainer, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[2].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>{moment(date2).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date2).format('MMM Do Y')}{"\n"}</Text>
                   <Text style={styles.total}>{moment(date2).format('H:mma')}</Text>
                 </Text>
               </View>
@@ -339,14 +340,14 @@ const AccountMain = ({navigation}) => {
               <Image
                 style={styles.maskGroup14}
                 resizeMode="cover"
-                source={require("../assets/freshsupermarket.png")}
+                source={require("../assets/image-profileplaceholder.png")}
               />
             </View>
             <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[1].account.customerName:""}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>{moment(date1).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date1).format('MMM Do Y')}{"\n"}</Text>
                   <Text style={styles.total}>{moment(date1).format('H:mma')}</Text>
                 </Text>
               </View>
@@ -354,14 +355,14 @@ const AccountMain = ({navigation}) => {
               <Image
                 style={[styles.maskGroup16, styles.groupPosition]}
                 resizeMode="cover"
-                source={require("../assets/spotify-16.png")}
+                source={require("../assets/image-profileplaceholder.png")}
               />
             </View>
             <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
               <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                 <Text style={styles.lanceBogrol}>{transactionData ? transactionData.transactions[0].account.customerName:" "}</Text>
                 <Text style={[styles.moneyTransfer, styles.helloTypo2]}>
-                  <Text style={styles.total}>{moment(date).format('d MMM YYYY')}{"\n"}</Text>
+                  <Text style={styles.total}>{moment(date).format('MMM Do Y')}{"\n"}</Text>
                   <Text style={styles.total}>{moment(date).format('H:mma')}</Text>
                 </Text>
               </View>
@@ -369,7 +370,7 @@ const AccountMain = ({navigation}) => {
               <Image
                 style={[styles.groupChild7, styles.groupPosition]}
                 resizeMode="cover"
-                source={require("../assets/image-person.png")}
+                source={require("../assets/image-profileplaceholder.png")}
               />
             </View>
           </View>
@@ -550,9 +551,7 @@ const AccountMain = ({navigation}) => {
             <Text style={styles.total}>You have planted 5 trees</Text>
             <Text style={styles.total}>{`\n  `}with Advance Card purchase</Text>
           </Text>
-
         </Pressable>
-        
       </View>
     </View>
     </Screen>
@@ -1232,6 +1231,7 @@ const styles = StyleSheet.create({
     left: 12,
     top: "50%",
     position: "absolute",
+    borderRadius: GlobalStyles.Border.br_xs,
   },
   groupParent1: {
     bottom: 0,
@@ -1249,6 +1249,7 @@ const styles = StyleSheet.create({
   },
   maskGroup16: {
     marginTop: -17,
+    borderRadius: GlobalStyles.Border.br_xs,
   },
   groupParent4: {
     marginTop: -103.5,
