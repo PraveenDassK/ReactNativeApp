@@ -16,12 +16,12 @@ const BankTransferAmount = ({route,navigation}) => {
   let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
-    console.log(amount)
+    console.log("Transfer to"+ accountName +" of £" + amount+" successful")
     navigation.navigate("Pin",{
       amount: amount, 
       name: accountName,
-      successScreen: "Transfer to"+ {accountName}+" of" +{amount}+" successful",
-      successText: "Send to"+ {accountName}+" of" +{amount}+" successful" 
+      successScreen: "Sucsess",
+      successText: "Send to"+ accountName +" of" + amount +" successful" 
     })
   }
   const {accountName} = route.params
