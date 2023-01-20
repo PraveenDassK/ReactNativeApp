@@ -7,40 +7,45 @@ import api from "../api/api_list"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
-const SpendingLimit = ({route,navigation}) => {
+const SpendingLimit = ({navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const authContext=useContext(AuthContext)
+  const authContext = useContext(AuthContext)
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  useEffect(() => {
-    getSpendingLimit()
-  },[])
+  const [monthLim, setMonLim] = useState(0);
+  const [spend, setSpend] = useState(0);
+  const [percent, setPercent] = useState("0%");
 
-  const getSpendingLimit = async () => {
-    const response = await api.GetToggles()
+  
+  //Calls the API once during load
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  //Gets the data for the user
+  const loadData = async () => {
+    //Gets the data from the api
+    const response = await api.GetLimit();
+    //Then isolate the useful data
     const data = response.data.details
     console.log(data)
-    data.onlineTransactions ? setIsEnabled(true): null
+
+    //If there is a limit
+    setPercent((50/data.monthlyAmount)*100 + "%")
   }
 
   const sendRequest = async () => {
     const response = await api.SetToggles(
       isEnabled,
     );
-    console.log(response)
-
-
   }
-
-  const calculatePercentage = () => {
-    const percent = amountSpent / limit;
-  }
-
-  const amountSpent = 90;
-  const limit = 100;
-
-  const percent = ((amountSpent / limit) * 100) + "%";
   console.log(percent)
+  let percentBar =           
+  <View style={[styles.amountContainer]}>
+    <View style={[styles.amountScale]} width = {percent}>
+
+    </View>
+  </View>
 
   return (
     <Screen>

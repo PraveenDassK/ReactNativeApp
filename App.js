@@ -136,7 +136,7 @@ const AccountNavigator = () => (
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="Settings">
+  <Stack.Navigator initialRouteName="AddFunds">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
