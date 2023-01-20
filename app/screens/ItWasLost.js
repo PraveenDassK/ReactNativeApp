@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
 
-const ItWasLost = () => {
+const ItWasLost = ({navigation}) => {
+  
   return (
     <View style={styles.itWasLost}>
       <View style={styles.helloParent}>
@@ -150,13 +152,17 @@ const ItWasLost = () => {
             </Text>
           </View>
         </View>
-        <View style={[styles.groupParent, styles.groupPosition]}>
+        <Pressable
+          style={[styles.groupParent, styles.groupPosition]}
+          onPress={() => navigation.navigate("CardSettings")}
+        >
           <View style={[styles.groupView, styles.groupPosition]}>
             <View style={styles.groupChild2} />
             <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
           </View>
           <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
-        </View>
+        
+        </Pressable>
       </View>
     </View>
   );

@@ -4,7 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const ChooseCardsElite = () => {
   return (
-    <ScrollView  >
+    <ScrollView>
     <View style={styles.chooseCardsElite}>
       <View style={styles.component2375Parent}>
         <View
@@ -156,6 +156,7 @@ const ChooseCardsElite = () => {
                 styles.payPosition,
               ]}
             >
+              
               <Text style={styles.accountFeatures}>
                 <Text style={styles.accountFeatures1}>Payments:</Text>
               </Text>
@@ -867,7 +868,7 @@ const ChooseCardsElite = () => {
                 <Text style={styles.mobileSetUp}>Trade Mark Registration</Text>
               </Text>
               <Text style={styles.accountFeatures}>
-                <Text style={styles.mobileSetUp}>Desktop Support</Text>
+                <Text style={styles.mobileSetUp}>Desktop Support </Text>
               </Text>
               <Text style={styles.mobileSetUp} />
             </Text>
@@ -1788,7 +1789,7 @@ const styles = StyleSheet.create({
   invoicePaymentsForeignExFe1: {
     width: 270,
     color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
+    fontWeight: "900",
   },
   invoicePaymentsForeignExFeWrapper: {
     bottom: 32,

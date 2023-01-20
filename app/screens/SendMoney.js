@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     width:"100%",
     top: "10%",
     textAlign: "center",
-    fontSize: GlobalStyles.FontSize.size_4xl,
+    fontSize: GlobalStyles.FontSize.size_6xl,
   },
   benBox:{
     width:"100%",
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     width:"100%",
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_xl,
-    color: "black",
+    color: "white",
     top : "100%",
   },
   benList:{
