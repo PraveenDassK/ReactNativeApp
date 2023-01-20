@@ -13,24 +13,33 @@ const SendMoney = ({navigation}) => {
     getSettings()
   },[])
   
+  //API
   const getSettings = async () => {
     const response = await api.RetriveBenificiaries()
     const data = response.data.details.content
     setBen(data)
   }
-
+  //Sending
   const sendDetails = (Id) => {
     console.log(Id)
+    console.log(benList[Id])
+    const details = benList[Id]
+    navigation.navigate("BankTransferAmount",
+    {bankName: "FakeName",
+      accountName: details.destinationIdentifier.accountNumber,
+      iban:details.destinationIdentifier.iban,
+      sortCode:details.destinationIdentifier.sortCode,
+    }) 
   }
-  
+  //Rendering
   let benText = ""
   if(benList.length != 0){
     let beniter = []
 
-    benList.forEach(item => {
+    benList.forEach((item,i) => {
       beniter.push(
       <Pressable
-        onPress={details => {sendDetails(item.name)}}
+        onPress={details => {sendDetails(i)}}
       >
         <View style = {styles.benBoxCon}>
           <Text>
@@ -44,7 +53,6 @@ const SendMoney = ({navigation}) => {
 
       )
     })
-
     benText = 
     <View style = {styles.listBoxContainer}>
         {beniter}
