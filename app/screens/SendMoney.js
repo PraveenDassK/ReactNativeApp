@@ -26,7 +26,8 @@ const SendMoney = ({navigation}) => {
     const details = benList[Id]
     navigation.navigate("BankTransferAmount",
     {bankName: "FakeName",
-      accountName: details.destinationIdentifier.accountNumber,
+      accountName: details.name,
+      accountNumber: details.destinationIdentifier.accountNumber,
       iban:details.destinationIdentifier.iban,
       sortCode:details.destinationIdentifier.sortCode,
     }) 
@@ -46,7 +47,10 @@ const SendMoney = ({navigation}) => {
             {item.name}
           </Text>
           <Text>
-            {item.phoneNumber}
+            +{item.phoneNumber}
+          </Text>
+          <Text>
+            {item.destinationIdentifier.accountNumber}
           </Text>
         </View>
       </Pressable>
