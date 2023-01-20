@@ -95,7 +95,7 @@ const Name = ({navigation}) => {
             </View>
             <View style={{ top: 350 }}>
 
-              <Button title="Continue" color="blue" onPress={handleSubmit} />
+              <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
             </View>
             </>
           )}
