@@ -7,7 +7,7 @@ import api from "../api/api_list"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
-const SpendingLimit = ({navigation}) => {
+const SpendingLimit = ({navigation,route}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const authContext = useContext(AuthContext)
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -16,10 +16,17 @@ const SpendingLimit = ({navigation}) => {
   const [spend, setSpend] = useState(0);
   const [percent, setPercent] = useState("0%");
 
-  
+  console.log(route)
+  if(route.params) {
+    //loadData()
+    return true
+}
+
   //Calls the API once during load
   useEffect(() => {
-    loadData()
+    const unsubscribe = navigation.addListener('focus',  () => {
+      loadData()
+    })
   },[])
   
   //Gets the data for the user
