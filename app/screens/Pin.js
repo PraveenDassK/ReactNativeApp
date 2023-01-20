@@ -4,6 +4,9 @@ import GlobalStyles from "../../GlobalStyles";
 import ReactNativePinView from 'react-native-pin-view';
 import Icon from "react-native-vector-icons/Ionicons"
 
+import AuthContext from '../auth/context'
+import api from "../api/api_list"
+
 const Pin = ({route,navigation}) => {
   let title = route.params.title ? route.params.title : "Enter Pin"
 
@@ -25,13 +28,13 @@ const Pin = ({route,navigation}) => {
   }, [enteredPin])
   console.log(enteredPin)
 
-  const checkPin = () => {
+  const checkPin = async () => {
     if (enteredPin != "0000"){
       alert("Pin is incorrect")
-
       return;
     } 
-    navigation.navigate(route.params.successScreen,{"params" : route.params})
+    const response = await api.SendFunds();
+    navigation.navigate("Success",{"params" : route.params})
   }
 
   return (

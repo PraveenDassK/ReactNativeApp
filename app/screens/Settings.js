@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View, Pressable } from "react-native";
+import { Image, StyleSheet, Text, View, Pressable, Clipboard } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
@@ -14,22 +14,35 @@ const Settings = ({navigation}) => {
   const [currency, setCurrency] = useState(null)
   const authContext = useContext(AuthContext)
 
+  console.log(account)
   useEffect(() => {
     loadData()
   },[])
   
   const loadData = async () => {
     const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetCustomerDetails();
-    const data = response.data.details.content[0]
-    const accountdata = accountresponse.data.details.accountDetails[0]
-    console.log(data)
-    setSortCode(data.identifiers[0].sortCode)
-    setAccNum(data.identifiers[0].accountNumber)
-    setName(data.name)
-    setBal(data.balance)
-    setPlan(accountdata.accountType)
-    setCurrency(data.currency)
+    const accountresponse = await api.GetAccount();
+    const data = response.data
+    const accountdata = accountresponse.data.details
+
+    setPlan("CurrentAccount")
+    setName(accountdata.customerName)
+    setBal(accountdata.balance)
+    setSortCode(accountdata.identifiers[0].sortCode)
+    setAccNum(accountdata.identifiers[0].accountNumber)
+    setCurrency(data.currency ? data.currency : "GBP")
+  }
+
+  const copyAccount = () => {
+    console.log("Copied")
+    alert("Account code copied")
+    Clipboard.setString(account);
+  }
+
+  const copySort = () => {
+    console.log("Copied")
+    alert("Sort code copied")
+    Clipboard.setString(sortcode);
   }
 
   return (
@@ -56,14 +69,17 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/ellipse-3158.png")}
         />
-        <View style={styles.helloParent}>
+        <Pressable
+          style={styles.helloParent}
+          onPress = {() =>navigation.navigate("Login")} 
+        >
           <Text style={styles.hello2}>Log out</Text>
           <Image
             style={styles.iconOpenAccountLogout}
             resizeMode="cover"
             source={require("../assets/icon-openaccountlogout.png")}
           />
-        </View>
+        </Pressable>
         <Text style={styles.hello3}>{`Terms & Conditions`}</Text>
         <Text style={styles.hello4}>{`Accounts details `}</Text>
         <View style={styles.groupItem} />
@@ -81,11 +97,13 @@ const Settings = ({navigation}) => {
           {currency}
           </Text>
         </View>
-        <View style={[styles.wrapper, styles.wrapperPosition]}>
+        <Pressable style={[styles.wrapper, styles.wrapperPosition]}
+          onPress={() => copyAccount()}
+        >
           <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]} >
             {account}
           </Text>
-        </View>
+        </Pressable>
         {/* <Image
           style={[styles.maskGroup241, styles.groupLayout]}
           resizeMode="cover"
@@ -100,15 +118,16 @@ const Settings = ({navigation}) => {
           resizeMode="cover"
           source={require("../assets/icon-materialcontentcopy.png")}
         />
-        <Image
-          style={[
-            styles.iconMaterialContentCopy1,
-            styles.iconContentLayout,
-            styles.iconContentPosition,
-          ]}
-          resizeMode="cover"
-          source={require("../assets/icon-materialcontentcopy.png")}
-        />
+
+          <Image
+            style={[
+              styles.iconMaterialContentCopy1,
+              styles.iconContentLayout,
+              styles.iconContentPosition,
+            ]}
+            resizeMode="cover"
+            source={require("../assets/icon-materialcontentcopy.png")}
+          />
         <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
         <View style={[styles.historyParent, styles.iconContentLayout]}>
         <Pressable
@@ -230,6 +249,7 @@ const styles = StyleSheet.create({
     height: 16,
     top: "50%",
     width: 14,
+    
     left: "50%",
   },
   historyTypo: {
@@ -250,7 +270,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloTypo: {
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     fontSize: GlobalStyles.FontSize.size_lg,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
@@ -258,7 +278,7 @@ const styles = StyleSheet.create({
   },
   helloPosition: {
     top: "40%",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     fontSize: GlobalStyles.FontSize.size_lg,
   },
   path33370Icon: {
@@ -291,7 +311,7 @@ const styles = StyleSheet.create({
   },
   hello2: {
     left: "33.76%",
-    color: GlobalStyles.Color.blue_100,
+    color: GlobalStyles.Color.black,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     top: "0%",
     fontSize: GlobalStyles.FontSize.size_base,

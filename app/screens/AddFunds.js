@@ -27,31 +27,33 @@ const AddFunds = ({navigation}) => {
   
   //Gets the data for the user
   const loadData = async () => {
-    const response = await api.GetAccount();
-    const data = response.data.details
+    const response = await api.GetAccountByCustomer();
+    const data = response.data.details.content
+    setData(data)
 
+    const accountNum = data[0].identifiers[0].accountNumber
+    console.log(accountNum)
     let accountList = {
-      label: data.identifiers[0].accountNumber,
-      value: data.identifiers[0].accountNumber
+      label: data[0].identifiers[0].accountNumber,
+      value: data[0].identifiers[0].accountNumber
     }
-
-    console.log(accountList)
     setCard(prevArray => [accountList])
   }
 
-  console.log(cardData)
   //Screen components
   const [amount, setAmount] = useState("")
   const [userData, setCode] = useState("")
-  const reciver = "e11fc";
-  const sortCode = ""
-  const accountCode = ""
+  console.log(data)
+  const reciver = "Current Balance : "
+  const sortCode =  "Current Balance : "
+  const accountCode = "Card ID : "
   let fromName = ""
 
   let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
     console.log(amount)
+    if(amount){alert("!")}
     navigation.navigate("Pin",{
       amount: amount, 
       name: value,
@@ -60,7 +62,6 @@ const AddFunds = ({navigation}) => {
       finishScreen: "AccountMain"
     })
   }
-  console.log(amount)
  
   return (
     <View style={styles.requestContact}>
@@ -113,7 +114,7 @@ const AddFunds = ({navigation}) => {
               }}
             >
             <Text style={[styles.hello4, styles.helloColor]}>
-              £20
+              £20 
             </Text>
             </Pressable>
 
@@ -358,6 +359,7 @@ const styles = StyleSheet.create({
     height: "100%",
     top: "-20%",
     left: "5%",
+
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: "#D8EBF9",
     position: "absolute",
@@ -382,10 +384,10 @@ const styles = StyleSheet.create({
     top:"15%"
   },
   groupPressable: {
-    bottom: verticalScale(49),
+  top: "80%",
     height: verticalScale(60),
     width:"100%",
-    position: "absolute",
+    position: "relative",
   },
   groupParent: {
 

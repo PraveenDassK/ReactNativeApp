@@ -13,26 +13,61 @@ const SendMoney = ({navigation}) => {
     getSettings()
   },[])
   
+  //API
   const getSettings = async () => {
     const response = await api.RetriveBenificiaries()
     const data = response.data.details.content
     setBen(data)
   }
-  
+  //Sending
+  const sendDetails = (Id) => {
+    console.log(Id)
+    console.log(benList[Id])
+    const details = benList[Id]
+    navigation.navigate("BankTransferAmount",
+    {bankName: "FakeName",
+      accountName: details.name,
+      accountNumber: details.destinationIdentifier.accountNumber,
+      iban:details.destinationIdentifier.iban,
+      sortCode:details.destinationIdentifier.sortCode,
+    }) 
+  }
+  //Rendering
   let benText = ""
   if(benList.length != 0){
+    let beniter = []
+
+    benList.forEach((item,i) => {
+      beniter.push(
+      <Pressable
+        onPress={details => {sendDetails(i)}}
+      >
+        <View style = {styles.benBoxCon}>
+          <Text>
+            {item.name}
+          </Text>
+          <Text>
+            +{item.phoneNumber}
+          </Text>
+          <Text>
+            {item.destinationIdentifier.accountNumber}
+          </Text>
+        </View>
+      </Pressable>
+
+      )
+    })
     benText = 
     <View style = {styles.listBoxContainer}>
-
+        {beniter}
     </View>
-
+    console.log(benText)
   }else{
     benText = 
     <Text style = {styles.failToFind}>
       No Accounts Found
     </Text>
   }
-  console.log(benList)
 
 return (
   <View style={styles.requested}>
@@ -130,7 +165,6 @@ const styles = StyleSheet.create({
   listBoxContainer:{
     width:"100%",
     height:"50%",
-    left:"10%",
     backgroundColor:"grey"
   },
   searchBox:{
@@ -144,6 +178,10 @@ const styles = StyleSheet.create({
     height:"60%",
     left: "10%",
     top:"20%",
+  },
+  benBoxCon:{
+    width:"100%",
+    backgroundColor:"white"
   }
 });
 

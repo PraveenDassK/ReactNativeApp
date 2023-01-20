@@ -4,26 +4,27 @@ import GlobalStyles from "../../GlobalStyles";
 import BankTransfer from "./BankTransfer";
 
 const BankTransferAmount = ({route,navigation}) => {
-  console.log(route.params.sortCode)
+  console.log(route.params)
+  
+  //Yes I know this looks horrible
   const [amount, setAmount] = useState("")
   const [userData, setCode] = useState("")
-  const reciver = "Me";
-  // const sortCode = "00-00-00"
-  const accountCode = "01234567890"  
-
-  let fromName = "Nik"
+  const reciver = route.params.accountName;
+  const sortCode = route.params.sortCode;
+  const accountCode = route.params.accountNumber;
+  
   let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
-    console.log(amount)
+    console.log("Transfer to"+ accountName +" of £" + amount+" successful")
     navigation.navigate("Pin",{
       amount: amount, 
-      name: fromName,
-      successScreen: "Success"
+      name: accountName,
+      successScreen: "Sucsess",
+      successText: "Send to"+ accountName +" of" + amount +" successful" 
     })
   }
   const {accountName} = route.params
-  const {sortCode} = route.params
  
   return (
     <View style={styles.requestContact}>
