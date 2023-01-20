@@ -147,10 +147,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
     <Stack.Screen  name="Account2" component={Account2}/>
     
-    
-    
-    
-    
     <Stack.Screen  name="AddBeneficiarySchedulePay1" component={AddBeneficiarySchedulePay1}/>
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
     <Stack.Screen  name="Login" component={Login}/>
