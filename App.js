@@ -160,7 +160,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Name" component={Name}/>
 
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyListA1}/>
+    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyList}/>
     <Stack.Screen name="ProofVerified" component={ProofVerified}/>
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
