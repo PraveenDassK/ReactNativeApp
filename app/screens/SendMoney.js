@@ -18,21 +18,44 @@ const SendMoney = ({navigation}) => {
     const data = response.data.details.content
     setBen(data)
   }
+
+  const sendDetails = (Id) => {
+    console.log(Id)
+  }
   
   let benText = ""
   if(benList.length != 0){
+    let beniter = []
+
+    benList.forEach(item => {
+      beniter.push(
+      <Pressable
+        onPress={details => {sendDetails(item.name)}}
+      >
+        <View style = {styles.benBoxCon}>
+          <Text>
+            {item.name}
+          </Text>
+          <Text>
+            {item.phoneNumber}
+          </Text>
+        </View>
+      </Pressable>
+
+      )
+    })
+
     benText = 
     <View style = {styles.listBoxContainer}>
-
+        {beniter}
     </View>
-
+    console.log(benText)
   }else{
     benText = 
     <Text style = {styles.failToFind}>
       No Accounts Found
     </Text>
   }
-  console.log(benList)
 
 return (
   <View style={styles.requested}>
@@ -130,7 +153,6 @@ const styles = StyleSheet.create({
   listBoxContainer:{
     width:"100%",
     height:"50%",
-    left:"10%",
     backgroundColor:"grey"
   },
   searchBox:{
@@ -144,6 +166,10 @@ const styles = StyleSheet.create({
     height:"60%",
     left: "10%",
     top:"20%",
+  },
+  benBoxCon:{
+    width:"100%",
+    backgroundColor:"white"
   }
 });
 
