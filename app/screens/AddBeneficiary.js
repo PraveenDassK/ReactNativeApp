@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState} from "react";
 import { View,
   KeyboardAvoidingView,
   TextInput,
@@ -9,13 +9,13 @@ import { View,
   Pressable,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-// import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 const AddBeneficiary = ({navigation}) => {
   const [bankName, setBankName] = useState("")
   const [accountName, setAccountName] = useState("")
   const [iban, setIban] = useState("")
   const [sortCode, setSortCode] = useState("")
+  
 
   return (
     <KeyboardAvoidingView
@@ -42,7 +42,8 @@ const AddBeneficiary = ({navigation}) => {
           </Text>
           <TextInput style={[styles.hello3, styles.helloTypo]} 
           placeholder={"Bank Name"}
-          onChangeText={newText => setBankName(newText)}/>
+
+          onChangeText={bankName => setBankName(bankName)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <View style={[styles.helloGroup, styles.groupPosition]}>
@@ -53,7 +54,7 @@ const AddBeneficiary = ({navigation}) => {
           </Text>
           <TextInput style={[styles.hello3, styles.helloTypo]} 
           placeholder={"Ortiz Tyrese"}
-          onChangeText = {newText => setAccountName(newText)}/>
+          onChangeText = {accountName => setAccountName(accountName)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <View style={[styles.groupView, styles.groupPosition]}>
@@ -64,12 +65,19 @@ const AddBeneficiary = ({navigation}) => {
           </Text>
           <TextInput style={[styles.hello3, styles.helloTypo]}
           placeholder={"01234567890"}
-          onChangeText={newText => setIban(newText)}/>
+          keyboardType="numeric"
+          onChangeText={iban => setIban(iban)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <Pressable
           style={[styles.groupFrame, styles.groupPosition]}
-          onPress={() => navigation.navigate("BankTransferAmount")}
+          onPress={() => {
+            navigation.navigate("BankTransferAmount",
+            {bankName: bankName,
+              accountName: accountName,
+            iban:iban,
+            sortCode:sortCode})
+          }}
         >
           <View style={[styles.groupWrapper, styles.wrapperPosition]}>
             <View style={[styles.groupWrapper, styles.wrapperPosition]}>
@@ -90,7 +98,8 @@ const AddBeneficiary = ({navigation}) => {
           <TextInput
             style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
             placeholder={"00 - 00 - 00"}
-            onChangeText={newText => setSortCode(newText)}
+            keyboardType="numeric"
+            onChangeText={sortCode => setSortCode(sortCode)}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>
@@ -106,15 +115,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapperPosition: {
-    bottom: verticalScale(10),
-    left: horizontalScale(0),
-    right: horizontalScale(0),
-    top: verticalScale(-10),
+    bottom: 10,
+    left: 0,
+    right: 0,
+    top: -10,
     position: "absolute",
   },
   groupPosition: {
-    height: verticalScale(60),
-    left: horizontalScale(25),
+    height: 60,
+    left: 25,
     top: "50%",
     position: "absolute",
   },
@@ -124,8 +133,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   helloPosition: {
-    top: verticalScale(0),
-    left: horizontalScale(0),
+    top: 0,
+    left: 0,
   },
   helloTypo: {
     fontSize: GlobalStyles.FontSize.size_6xl,
@@ -135,17 +144,17 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lineViewPosition: {
-    height: verticalScale(2),
+    height: 2,
     borderTopWidth: 1,
     borderColor: "#707070",
     borderStyle: "solid",
-    bottom: verticalScale(-1),
-    right: horizontalScale(0),
+    bottom: -1,
+    right: 0,
     position: "absolute",
   },
   hello: {
-    marginLeft: horizontalScale(-40),
-    top: verticalScale(39),
+    marginLeft: -75.5,
+    top: 39,
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_4xl,
     fontWeight: "700",
@@ -158,42 +167,42 @@ const styles = StyleSheet.create({
     borderTopRightRadius: GlobalStyles.Border.br_4xl,
     shadowColor: "rgba(1, 1, 253, 0.1)",
     shadowOffset: {
-      width: horizontalScale(0),
-      height: verticalScale(-3),
+      width: 0,
+      height: -3,
     },
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    left: horizontalScale(0),
+    left: 0,
     backgroundColor: GlobalStyles.Color.white,
-    bottom: verticalScale(0),
+    bottom: 0,
   },
   groupWrapper: {
-    left: horizontalScale(0),
+    left: 0,
   },
   hello2: {
     fontSize: GlobalStyles.FontSize.size_base,
     color: GlobalStyles.Color.gray_700,
-    left: horizontalScale(0),
+    left: 0,
   },
   hello3: {
-    top: verticalScale(28),
-    left: horizontalScale(1),
+    top: 28,
+    left: 1,
   },
   groupChild: {
-    left: horizontalScale(0),
+    left: 0,
   },
   helloParent: {
-    marginTop: verticalScale(-255.5),
-    right: horizontalScale(40),
+    marginTop: -255.5,
+    right: 40,
   },
   helloGroup: {
-    marginTop: verticalScale(-153.5),
-    right: horizontalScale(40),
+    marginTop: -153.5,
+    right: 40,
   },
   groupView: {
-    marginTop: verticalScale(-50.5),
-    right: horizontalScale(40),
+    marginTop: -50.5,
+    right: 40,
   },
   rectangleView: {
     height: "100%",
@@ -207,43 +216,42 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   maskGroup236: {
-    bottom: verticalScale(13),
-    left: horizontalScale(0),
-    right: horizontalScale(0),
-    top: verticalScale(0),
+    bottom: 13,
+    left: 0,
+    right: 0,
+    top: 0,
     position: "absolute",
   },
   hello8: {
-    top: "15%",
-    left: "50%",
-    marginLeft: horizontalScale(-20),
+    top: "20.33%",
+    left: "38.26%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
   },
   groupFrame: {
-    marginTop: verticalScale(234.5),
-    right: horizontalScale(24),
+    marginTop: 234.5,
+    right: 24,
   },
   helloFrame: {
-    marginTop: verticalScale(52.5),
-    width: horizontalScale(73),
-    height: verticalScale(14),
-    left: horizontalScale(25),
+    marginTop: 52.5,
+    width: 73,
+    height: 14,
+    left: 25,
     top: "50%",
     position: "absolute",
   },
   hello10: {
-    left: horizontalScale(0),
+    left: 0,
   },
   lineView: {
-    left: horizontalScale(-1),
+    left: -1,
   },
   helloParent1: {
-    marginTop: verticalScale(100.75),
-    left: horizontalScale(26),
-    height: verticalScale(32),
-    right: horizontalScale(40),
+    marginTop: 80.75,
+    left: 26,
+    height: 32,
+    right: 40,
     top: "50%",
     position: "absolute",
   },

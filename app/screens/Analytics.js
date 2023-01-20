@@ -77,9 +77,9 @@ const Analytics = ({navigation}) => {
 
     const acc= await api.GetAccount()
     const det = acc.data.details.associates
-    console.log(det)
    
   } 
+  console.log(transactionCategories)
 
 
 

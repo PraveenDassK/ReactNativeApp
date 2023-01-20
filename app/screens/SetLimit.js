@@ -1,20 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Pressable,TextInput,Image } from "react-native";
+import { Text, StyleSheet, View, Pressable,TextInput,Image ,Keyboard} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+
 const SetLimit = ({navigation}) => {
- // const amountSpent="£22.33";
-  //const [amount, setAmount] = useState("")
-  const navigate = () => {
-    console.log("Function")
+
+  //Sent call when navigating away
+  const navigate = async() => {
+    const response = await api.SetLimit(amount)
     navigation.navigate("SpendingLimit")
   }
   const [amountspent, setAmountspent] = useState(null)
-  const [amount, setAmount] = useState(0)
-  const [currency, setcurrency] = useState(null)
+  const [amount, setAmount] = useState("0")
+  const [currency, setcurrency] = useState("GBP")
+
   return (
     <View style={styles.setLimit}>
-       
+      <Pressable 
+        style={styles.groupParent}
+        onPress={Keyboard.dismiss}
+      >
       <View style={styles.helloParent}>
         <Text style={[styles.hello, styles.helloColor1]}>
           Set a monthly limit
@@ -45,6 +52,7 @@ const SetLimit = ({navigation}) => {
           <Text style={[styles.hello5, styles.helloTypo]}>Set limit</Text>
         </Pressable>
       </View>
+      </Pressable>
     </View>
   );
 };
@@ -151,7 +159,7 @@ const styles = StyleSheet.create({
     marginLeft:-20,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "center",
   },
   groupParent: {

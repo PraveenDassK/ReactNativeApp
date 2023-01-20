@@ -26,7 +26,7 @@ const AccountMain = ({navigation}) => {
   useEffect(() => {
     loadData()
   },[])
-  
+
   //Gets the data for the user
   const loadData = async () => {
     const response = await api.GetAccount();
@@ -261,18 +261,6 @@ const AccountMain = ({navigation}) => {
             source={require("../assets/send-1.png")}
           />
         </Pressable>
-
-        <View style={[styles.bankTransferParent, styles.parentShadowBox]}>
-
-          <Text style={[styles.bankTransfer, styles.myCardsPosition]}>
-            Bank Transfer
-          </Text>
-          <Pressable
-          onPress={() => navigation.navigate("BankTransfer")}
-          >
-
-          </Pressable>
-        </View>
 
         <Pressable
           style={[styles.myCardsWrapper, styles.parentShadowBox]}

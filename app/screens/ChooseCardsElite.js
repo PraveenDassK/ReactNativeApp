@@ -156,6 +156,7 @@ const ChooseCardsElite = () => {
                 styles.payPosition,
               ]}
             >
+              
               <Text style={styles.accountFeatures}>
                 <Text style={styles.accountFeatures1}>Payments:</Text>
               </Text>
@@ -867,7 +868,7 @@ const ChooseCardsElite = () => {
                 <Text style={styles.mobileSetUp}>Trade Mark Registration</Text>
               </Text>
               <Text style={styles.accountFeatures}>
-                <Text style={styles.mobileSetUp}>Desktop Support</Text>
+                <Text style={styles.mobileSetUp}>Desktop Support </Text>
               </Text>
               <Text style={styles.mobileSetUp} />
             </Text>
@@ -1311,14 +1312,14 @@ const styles = StyleSheet.create({
     marginTop: -576.52,
     textAlign: "left",
     color: GlobalStyles.Color.blue_100,
-    lineHeight: 30,
+    lineHeight: 20,
     top: "50%",
   },
   helloPosition1: {
     marginTop: -546.52,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
-    lineHeight: 30,
+    lineHeight: 20,
     fontSize: GlobalStyles.FontSize.size_7xl,
     top: "50%",
     position: "absolute",
@@ -1787,7 +1788,7 @@ const styles = StyleSheet.create({
   invoicePaymentsForeignExFe1: {
     width: 270,
     color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
+    fontWeight: "900",
   },
   invoicePaymentsForeignExFeWrapper: {
     bottom: 32,
@@ -2115,7 +2116,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: GlobalStyles.Color.gray_500,
     position: "absolute",
     width: "100%",
   },
@@ -2126,13 +2127,7 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
-  hello7: {
-    top: "40%",
-    left: "38.04%",
-    fontSize: GlobalStyles.FontSize.size_lg,
-    textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
-  },
+  
   groupParent4: {
     marginTop: -374.82,
     height: 60,

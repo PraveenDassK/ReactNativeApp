@@ -72,11 +72,11 @@ import Terminate from "./app/screens/Terminate";
 import TerminatedCard from "./app/screens/TerminatedCard";
 import ItWasLost from "./app/screens/ItWasLost";
 import ReplaceCard from "./app/screens/ReplaceCard";
-// import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
+import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
 import BankTransferAmount from "./app/screens/BankTransferAmount";
 import VerifyCode1 from "./app/screens/VerifyCode1";
 import VerifyCode from "./app/screens/VerifyCode";
-// import AddBeneficiary from "./app/screens/AddBeneficiary";
+import AddBeneficiary from "./app/screens/AddBeneficiary";
 import Address1 from "./app/screens/Address1";
 import ConfirmDirectors from "./app/screens/ConfirmDirectors";
 import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
@@ -94,7 +94,7 @@ import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
 import AddFundsSuccess from "./app/screens/AddFundsSuccess";
 import AddBeneficiarySchedulePay1 from "./app/screens/AddBeneficiarySchedulePay1";
 
-
+import Account2 from "./app/screens/Account";
 import SendContact from "./app/screens/SendContact";
 import CarbonCart from "./app/screens/CarbonCart";
 
@@ -139,12 +139,14 @@ const AccountNavigator = () => (
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="Analytics">
+  <Stack.Navigator initialRouteName="SendMoney">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
+    <Stack.Screen  name="Account2" component={Account2}/>
+    
     
     
     
@@ -215,8 +217,8 @@ const StackNavigator = () => (
     <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
     <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
 
-    {/* <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
-    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/> */}
+    <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
+    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/>
 
     <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
     <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
