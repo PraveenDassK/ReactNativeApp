@@ -34,7 +34,7 @@ const Pin = ({route,navigation}) => {
       return;
     } 
     const response = await api.SendFunds();
-    navigation.navigate(route.params.successScreen,{"params" : route.params})
+    navigation.navigate("Success",{"params" : route.params})
   }
 
   return (

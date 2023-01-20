@@ -5,7 +5,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const Success = ({route,navigation}) => {
   console.log(route.params)
-  const text = route.params.successText ? route.params.successText : "Successful"
+  const text = route.params.successText ? route.params.successScreen : "Successful"
   const path = route.params.finishScreen ? route.params.finishScreen : "AccountMain"
   console.log(text)
   return (
