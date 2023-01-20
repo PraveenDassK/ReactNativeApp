@@ -1,12 +1,5 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -15,19 +8,46 @@ import {
   moderateScale,
 } from "../config/scaling";
 
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+import moment from 'moment';
+
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
 
 const MyCards = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
   const toggleChecked = () => setChecked((value) => !value);
+
+  //Transactions
+  const [recentTransactions, setRecent] = useState([])
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const transactionCall = await api.GetTransactions()
+    const transData = transactionCall.data.details
+    for(let i = 0; i  < 4; i++){
+      setRecent(oldArray => [...oldArray, transData.content[i]]);
+    }
+  }
+  console.log(recentTransactions)
+
+  //CardFreezing
+  const [cardFrozen, setFrozen] = useState(false)
+  const toggleCard = () => {
+    setFrozen(!cardFrozen)
+  }
+
   return (
     <ScrollView>
       <View style={styles.myCards}>
         <View style={styles.groupParent}>
           <Pressable
             style={[styles.groupContainer, styles.groupShadowBox]}
-            onPress={() => navigation.navigate("Account3")}
           >
             <View style={styles.rectangleParent}>
               <View style={styles.groupChild} />
@@ -154,6 +174,7 @@ const MyCards = ({ navigation }) => {
               }}
               source={require("../assets/image-cardyellow.png")}
             />
+            {cardFrozen ?             
             <Image
               style={{
                 width: horizontalScale(200),
@@ -164,18 +185,21 @@ const MyCards = ({ navigation }) => {
                 left: horizontalScale(60),
               }}
               source={require("../assets/cardFrozen.png")}
-            />
+            /> : 
+            null}
+
           </View>
 
           <Pressable
             style={styles.wrapper}
-            onPress={() => navigation.navigate("CardSettings")}
+            onPress={() => toggleCard()}
           >
             <Image
               style={styles.icon}
               resizeMode="contain"
               source={require("../assets/icon-freeze.png")}
             />
+
           </Pressable>
 
           <Pressable
@@ -190,8 +214,8 @@ const MyCards = ({ navigation }) => {
           </Pressable>
         </View>
               <View style={{top: "-48.5%", width: "100%", backgroundColor: "red"}}>
-              <Text style={{position: "absolute", left: "24.5%", width: "19%", textAlign: "center"}}>SETTINGS</Text>
-              <Text style={{position: "absolute", left: "55%", width: "19%", textAlign: "center"}}>FREEZE</Text>
+              <Text style={{position: "absolute", left: "24.5%", width: "19%", textAlign: "center"}}>Freeze</Text>
+              <Text style={{position: "absolute", left: "55%", width: "19%", textAlign: "center"}}>Settings</Text>
               </View>
         </View>
     </ScrollView>

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState} from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
@@ -25,31 +27,33 @@ const AddFunds = ({navigation}) => {
   
   //Gets the data for the user
   const loadData = async () => {
-    const response = await api.GetAccount();
-    const data = response.data.details
+    const response = await api.GetAccountByCustomer();
+    const data = response.data.details.content
+    setData(data)
 
+    const accountNum = data[0].identifiers[0].accountNumber
+    console.log(accountNum)
     let accountList = {
-      label: data.identifiers[0].accountNumber,
-      value: data.identifiers[0].accountNumber
+      label: data[0].identifiers[0].accountNumber,
+      value: data[0].identifiers[0].accountNumber
     }
-
-    console.log(accountList)
     setCard(prevArray => [accountList])
   }
 
-  console.log(cardData)
   //Screen components
   const [amount, setAmount] = useState("")
   const [userData, setCode] = useState("")
-  const reciver = "";
-  const sortCode = ""
-  const accountCode = ""  
+  console.log(data)
+  const reciver = "Current Balance : "
+  const sortCode =  "Current Balance : "
+  const accountCode = "Card ID : "
   let fromName = ""
 
   let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
     console.log(amount)
+    if(amount){alert("!")}
     navigation.navigate("Pin",{
       amount: amount, 
       name: value,
@@ -58,7 +62,6 @@ const AddFunds = ({navigation}) => {
       finishScreen: "AccountMain"
     })
   }
-  console.log(amount)
  
   return (
     <View style={styles.requestContact}>
@@ -71,22 +74,19 @@ const AddFunds = ({navigation}) => {
           <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
           <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
           <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
+          <Text style={[styles.Select_account, styles.helloTypo]}>Select Account</Text>
           <View style={[styles.selectBox]}>
-          <Dropdown
-          style={[ styles.iconIonicIosArrowDownParent,
-            styles.groupChildLayout,
-            styles.groupChildPosition,
-            styles.groupChildBorder,
-            isFocus && { borderColor: 'blue' }]}
+          <Dropdown style={styles.dropdownStyle}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={cardData}
-          maxHeight={300}
+          maxHeight={50}
           labelField="label"
           valueField="value"
           placeholder={!isFocus ? 'Select a card' : '....'}
           value={cardData}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
           onChange={item => {
             setValue(item.value);
             setIsFocus(false);
@@ -104,25 +104,25 @@ const AddFunds = ({navigation}) => {
         />
 
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
-          <View style={[styles.helloContainer, styles.groupViewPosition]}>
+          <View style={[styles.hello4, styles.groupViewPosition]}>
           <Pressable
               onPress={() => {
                 setAmount("20")
               }}
             >
-            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
-              £20
+            <Text style={[styles.hello4, styles.helloColor]}>
+              £20 
             </Text>
             </Pressable>
 
           </View>
-          <View style={[styles.groupView, styles.groupViewPosition]}>
+          <View style={[]}>
           <Pressable
               onPress={() => {
                 setAmount("50")
               }}
             >
-            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+            <Text style={[styles.hello4, styles.helloColor]}>
               £50
             </Text>
             </Pressable>
@@ -140,7 +140,7 @@ const AddFunds = ({navigation}) => {
                 setAmount("100")
               }}
             >
-            <Text style={[styles.hello4, styles.helloTypo1, styles.helloColor]}>
+            <Text style={[styles.hello4, styles.helloColor]}>
               £100
             </Text>
             </Pressable>
@@ -148,7 +148,7 @@ const AddFunds = ({navigation}) => {
           </View>
         </View>
         <View style={[styles.helloParent2, styles.helloParent2Position]}>
-          <Text style={[styles.hello7, styles.helloTypo1, styles.helloColor]}>
+          <Text style={[styles.hello7]}>
             Request{"\n"}
           </Text>
           <TextInput style={[styles.hello8, styles.helloTypo1]} 
@@ -185,11 +185,30 @@ const AddFunds = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+ dropdownStyle: {
+    width: "95%",
+    marginLeft: "2.5%",
+    backgroundColor: "#F6F5F8",
+  }, selectedTextStyle: {
+    color: "black",
+    marginLeft: "15%",
+    marginTop: "1.5%"
+  },
   selectBox:{
     backgroundColor:"pink",
-    width:"100%",
-    height: "50%",
+    width:"90%",
+    marginLeft: "5%",
+    marginRight: "5%",
+    marginTop: "5%",
+    height: "30%",
+    borderRadius: 15,
+    backgroundColor: "#F6F5F8",
   },
+  Select_account: {
+    top: verticalScale(-5),
+    left: "5.5%",
+  }, inputSearchStyle: {
+    width: 100},
   helloTypo1: {
     textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -213,32 +232,27 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lineViewBorder: {
-    height: 2,
+    height: verticalScale(2),
     borderTopWidth: 1,
     borderColor: "#707070",
     borderStyle: "solid",
   },
-  groupPosition1: {
-    left: "22%",
-    right:0,
+  groupPosition1: {},
+  helloParent2Position: {
+    width: "100%",
     top: "50%",
     position: "absolute",
   },
-  helloParent2Position: {
-    left: 50,
-    top: "47%",
-    position: "absolute",
-  },
   groupViewPosition: {
-    width: 62,
-    bottom: 0,
-    top: 0,
+    width: "25%",
+    bottom: verticalScale(0),
+    top: verticalScale(0),
     position: "absolute",
   },
   groupPosition: {
     height: "17%",
-    width: 18,
-    bottom: 0,
+    width: horizontalScale(18),
+    bottom: verticalScale(0),
     left: "50%",
     position: "absolute",
   },
@@ -247,137 +261,114 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   parentPosition1: {
-    bottom: 0,
-    right: 0,
-    top: 0,
+    bottom: verticalScale(0),
+    right: horizontalScale(0),
+    top: verticalScale(0),
   },
   hello: {
-    top: 148,
+    top: verticalScale(148),
   },
-  groupChild: {
-    left:"25%",
-    height:"40%",
-    width:"50%",
-    top: 0,
-    resizeMode:"contain",
-    position: "absolute",
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+  groupChild: {},
   hello1: {
-    top: 90,
-    width:"100%",
     textAlign:"center",
     fontWeight: "700",
   },
   hello2: {
-    top: 120,
+    top: verticalScale(120),
     width:"100%",
     textAlign:"center",
   },
   hello5: {
-    top: 150,
+    top: verticalScale(150),
     width:"100%",
     textAlign:"center",
   },
   helloParent: {
-    top: 44,
-    height: 172,
+    top: verticalScale(44),
+    height: verticalScale(172),
     width:"100%",
     position: "absolute",
   },
-  groupItem: {
-    marginTop: 31.75,
-    right: 32,
-  },
-  hello3: {
-    top: 5,
-    left: 23,
-  },
+  groupItem: {},
+  hello3: {},
   iconMaterialKeyboardVoice: {
-    marginTop: -9.35,
-    right: 16,
-    width: 14,
-    height: 19,
+
     top: "50%",
     position: "absolute",
   },
   helloGroup: {
-    marginTop: 44.5,
+    marginTop: verticalScale(44.5),
     borderRadius: GlobalStyles.Border.br_5xl,
     backgroundColor: GlobalStyles.Color.gray_200,
-    height: 42,
-    right: 31,
+    height: verticalScale(42),
+    right: horizontalScale(31),
   },
   hello4: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: 32,
-    top: 0,
-    left: 0,
+    lineHeight: verticalScale(32),
+    top: verticalScale(0),
+    width: "100%",
   },
   groupInner: {
-    marginLeft: -7.94,
+    marginLeft: horizontalScale(-7.94),
   },
   helloContainer: {
-    left: 0,
+    width: "100%",
+    left: "10%",
+
   },
-  groupIcon: {
-    marginLeft: -7.71,
-  },
+  groupIcon: {},
   groupView: {
-    marginLeft: -27.5,
     left: "50%",
   },
-  groupChild1: {
-    marginLeft: -7.22,
-  },
+  groupChild1: {},
   helloParent1: {
-    width: 76,
+    width: horizontalScale(76),
   },
   groupContainer: {
-    marginTop: 149,
-    height: 50,
-    right: 31,
+    marginTop: verticalScale(150),
+    height: verticalScale(50),
+    width: "100%"
   },
   hello7: {
     width:"100%",
     textAlign:"center",
     fontSize: GlobalStyles.FontSize.size_xl,
-    top: 0,
   },
   hello8: {
-    top: 28,
+    top: verticalScale(28),
+    textAlign: "center",
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     color: GlobalStyles.Color.gray_700,
   },
   lineView: {
-    bottom: -1,
-    left: -1,
+  top: verticalScale(110),
+  width: "90%",
+  left: "5%",
+    bottom: verticalScale(-1),
+
   },
   helloParent2: {
-    marginTop: -64.5,
-    height: 98,
-    right: 32,
+
   },
   rectangleView: {
     height: "100%",
     top: "-20%",
-    right: "0%",
-    bottom: "0%",
     left: "5%",
+
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.blue_100,
+    backgroundColor: "#D8EBF9",
     position: "absolute",
     width: "90%",
   },
   maskGroup236: {
-    bottom: 13,
-    top: 0,
-    left: 0,
+
+    top: verticalScale(0),
+    left: horizontalScale(0),
   },
   rectangleParent: {
-    left: 0,
+    left: horizontalScale(0),
   },
   hello9: {
     width:"100%",
@@ -387,21 +378,20 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
     textAlign: "center",
-    top:"10%"
+    top:"15%"
   },
   groupPressable: {
-    bottom: 49,
-    height: 60,
+  top: "80%",
+    height: verticalScale(60),
     width:"100%",
-    position: "absolute",
+    position: "relative",
   },
   groupParent: {
-    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
-    borderTopRightRadius: GlobalStyles.Border.br_4xl,
+
     shadowColor: "rgba(1, 1, 253, 0.1)",
     shadowOffset: {
-      width: 0,
-      height: -3,
+      width: horizontalScale(0),
+      height: verticalScale(-3),
     },
     shadowRadius: 20,
     elevation: 20,
