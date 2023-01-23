@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   titleContainter:{
     width:"80%",
-    height:"30%",
+    height:180,
     left:"10%"
   },
   titleText:{
@@ -144,14 +144,14 @@ const styles = StyleSheet.create({
     width:"100%",
     textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_xl,
-    color: "white",
+    color: "black",
     top : "100%",
   },
   benList:{
     width:"80%",
     height:"70%",
     left:"10%",
-    top: "-5%"
+    top: "-3%"
   },
   recentText:{
     colour: "grey",

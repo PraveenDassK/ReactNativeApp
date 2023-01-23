@@ -93,7 +93,7 @@ import TermsAndConditions from "./app/screens/TermsAndConditions";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="SendContact">
+  <Stack.Navigator initialRouteName="SendMoney">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="TestEnviro" component={TestEnviro}/>
     <Stack.Screen  name="TermsAndConditions" component={TermsAndConditions}/>
