@@ -31,7 +31,7 @@ import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
 
 import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
 import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
-import ProofOfResidencyListA1 from "./app/screens/ProofOfResidencyListA1";
+// import ProofOfResidencyListA1 from "./app/screens/ProofOfResidencyListA1";
 
 import ProofOfResidency from "./app/screens/ProofOfResidency";
 
@@ -45,7 +45,7 @@ import Login from "./app/screens/Login";
 import BusinessChooseAddress from "./app/screens/BusinessChooseAddress";
 import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
 import ChooseCardsElite from "./app/screens/ChooseCardsElite";
-import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
+// import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
 import SendMoney from "./app/screens/SendMoney"
 import BankTransfer from "./app/screens/BankTransfer"
 import Analytics from "./app/screens/Analytics";
@@ -139,7 +139,7 @@ const AccountNavigator = () => (
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="AccountMain">
+  <Stack.Navigator initialRouteName="">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
@@ -160,7 +160,7 @@ const StackNavigator = () => (
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Name" component={Name}/>
 
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyList}/>
+    <Stack.Screen  name="ProofOfResidency" component={ProofOfResidency}/>
     <Stack.Screen name="ProofVerified" component={ProofVerified}/>
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>

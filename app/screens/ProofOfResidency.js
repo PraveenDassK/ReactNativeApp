@@ -1,6 +1,7 @@
 import React,{ useEffect, useState, useContext } from "react";
 import * as ImagePicker from "expo-image-picker"
 import { StyleSheet, View, Image, TouchableHighlight, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import GlobalStyles from "../../GlobalStyles";
 import Text from "../components/Text"
@@ -8,6 +9,8 @@ import Screen from "../components/Screen";
 import Button from "../components/Button"
 import AuthContext from "../auth/context";
 import w2GlobalAPI from "../api/w2Global";
+import Icon from "../components/Icon";
+import CategoryPickerItem from "../components/CategoryPickerItem";
 
 const ProofOfResidency = ({ navigation }) => {
 
@@ -32,7 +35,7 @@ const ProofOfResidency = ({ navigation }) => {
         base64: true
       })
 
-      console.log(result)
+      console.log(result.assets[0])
      
       if (!result.canceled) {
         setImageUri(result.assets[0].uri)
@@ -52,7 +55,7 @@ const ProofOfResidency = ({ navigation }) => {
         base64: true
       })
 
-      console.log(result)
+      console.log(result.assets[0])
      
       if (!result.canceled) {
         setImageUri(result.assets[0].uri)
@@ -67,10 +70,12 @@ const ProofOfResidency = ({ navigation }) => {
   const handleSubmit = async ({ phoneNumber }) => {
     const clientReference = phoneNumber
 
-    const result = await w2GlobalAPI.verifyDocument({ clientReference, documentType, frontImage, backImage})
+    const result = await w2GlobalAPI.verifyDocument(clientReference, documentType, frontImage, backImage)
 
-    console.log('what is this', result.ok, result.data, documentType)
-    if (!result.ok || !result.data.result) return alert('Could not verify documents') 
+    console.log('what is this', result.ok, result.data[0].result)
+   
+    if (!result.ok || !result.data[0].result) return alert('Could not verify documents') 
+  
 
     setUser(prev => ({...prev, frontImage, backImage, documentType}))
     navigation.navigate("BusinessAddress2")
@@ -84,89 +89,156 @@ const ProofOfResidency = ({ navigation }) => {
 
   return (
    
-    <Screen>
-      
-        <View>
-            <Text style={{fontSize: 30}}>Proof of Residency</Text>
-        </View>
-        <View>
-            <Text>Please provide us a proof of your residence</Text>
-        </View>
-
-        <View>
-            <Text>Your Country</Text>
-        </View>
-
-        <View style={styles.signedContainer}>
-        {!frontImage && <View style={styles.selectionContainer}>
-          <TouchableOpacity style={styles.selectionBox1} onPress={() => selectImage("ID3")}>
-              <Text style={styles.selectionText}>Current signed passpoert</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.selectionBox2} onPress={() => selectImage("ID1")}>
-              <Text style={styles.selectionText}>Current photo-card driving license</Text>
-            </TouchableOpacity>
-
-        </View>}
-        </View>
-
-       {frontImage && <View style={styles.reviewHolder}>
-        <View style={styles.reviewContainer}>
-          <Text>Currently Signed</Text>
-          <View style={styles.reviewText}>
-          <Text>Under review</Text>
+    <Screen >
+      <View style={{flex:1, padding: 20}}>
+          <View>
+              <Text style={{fontSize: 26, fontWeight: "700", color: "#00003d"}}>Proof of Residency</Text>
           </View>
-        </View>
-        </View>}
-
-        {frontImage && !backImage && <View style={styles.selectionContainer}>
-          <TouchableOpacity style={styles.selectionBox1} onPress={selectImage2}>
-            <Text style={styles.selectionText}>Back of document</Text>
-          </TouchableOpacity>
-        </View>}
-
-        {backImage && <View style={styles.reviewHolder}>
-        <View style={styles.reviewContainer}>
-          <Text>Currently Signed</Text>
-          <View style={styles.reviewText}>
-          <Text>Under review</Text>
+          <View style={{marginTop:20}}>
+              <Text style={styles.signedSelect}>Please provide us a proof of your residence</Text>
           </View>
-        </View>
-        </View>}
-        
-  
 
+          <CountryOfResidence />
+    
+          <View style={styles.signedContainer}>
+            <Text style={styles.signedSelect}>Select one document from the below categories</Text>
+          {!frontImage && <View style={styles.selectionContainer}>   
+            <ImageSelector title="Current signed passport" onPress={() => selectImage("ID3")} />
+            <ImageSelector title="Current photo-card driving license" onPress={() => selectImage("ID1")}  />
+          </View>}
+          </View>
 
-      {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      
-      {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200, zIndex: 7 }} />}
-      
-    </View> */}
-    <View style={styles.continueButton}>
-     <Button title="Continue" color="blue" onPress={() => handleSubmit(user)}/>  
-    </View>
+        {frontImage &&  <ImageReview /> } 
+
+          {frontImage && !backImage && 
+          <View style={styles.signedContainer}>
+          <Text style={styles.signedSelect}>Select one document from the below categories</Text>
+          <View style={styles.selectionContainer}>
+            <ImageSelector title="Back of document" onPress={selectImage2} />
+            {/* <TouchableOpacity style={styles.selectionBox1} onPress={selectImage2}>
+              <Text style={styles.selectionText}>Back of document</Text>
+            </TouchableOpacity> */}
+          </View>
+          </View>}
+
+          {backImage && (
+            <>
+              <View style={styles.signedContainer}>
+                <Text style={styles.signedSelect}>Select one document from the below categories</Text>
+                <ImageReview />
+              </View>
+
+              <View style={styles.continueButton}>
+              <Button title="Continue"  onPress={() => handleSubmit(user)}/>  
+              </View>
+            </>
+          )}
+
+      </View>
    </Screen>
   );
 };
 
+const CountryOfResidence = () => {
+  return (
+  <View style={{marginTop:50}}>
+    <Text style={{color: "#1B2356", fontSize:14}}>Your Country</Text>
+    <View style={styles.container}>
+    
+    <View style={styles.containerImage}>
+      <TouchableOpacity>
+        <Image
+        style={{width:25, height:25}}
+        resizeMode="cover"
+        source={require("../assets/image-ukflag.png")}
+      />
+      </TouchableOpacity>
+    </View>
+    <View style={styles.containerItem}>
+      <Text style={styles.label}>United Kingdom</Text>
+    </View>
+    </View>
+    </View>
+  )
+}
+
+const  ImageSelector = ({ title, onPress }) => {
+  return (
+    <TouchableOpacity style={styles.selectionBox1} onPress={onPress}>
+            <View style={styles.selectionItem1}> 
+            <Icon name="chevron-up" iconColor="blue" backgroundColor="transparent" size={50}/>
+            </View>
+            <View style={styles.selectionItem2}>
+              <Text style={[styles.selectionText, styles.proofFont]}>{title}</Text>
+            </View>
+      </TouchableOpacity>
+  )
+}
+
+const ImageReview = () => {
+  return(
+    <View style={styles.reviewHolder}>
+    <View style={styles.reviewContainer}>
+      <Text style={styles.proofFont}>Currently Signed</Text>
+      <View style={styles.reviewText}>
+      <Icon name="check-circle" backgroundColor="none" iconColor="blue"/>
+      <View style={styles.reviewSubText}>
+        <Text style={styles.proofFont} >Under review</Text>
+      </View>
+      </View>
+    </View>
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
+  container:{
+    paddingVertical: 15,
+    paddingHorizontal:7,
+    flexDirection: "row",
+    marginTop:5,
+    borderColor:"blue",
+    borderWidth: 1,
+    borderColor: "#e8e8e8",
+    borderStyle: "solid",
+    borderRadius: 10,
+    backgroundColor: "white"
+
+    
+
+  },
+  containerImage: {
+    flex:1
+  },
+  containerItem: {
+    flex:7,
+    justifyContent: "center"
+
+  },
   signedContainer: {
-    marginTop: 50
+    marginTop: 50,
   },
   continueButton: {
     position: "absolute",
     bottom: 50,
+    left: 20,
     width: "100%",
+   
   
   },
   reviewContainer:{
-    backgroundColor: 'grey',
+    backgroundColor:"white",
+    borderWidth: 1,
+    borderColor: "#e8e8e8",
+    borderStyle: "solid",
     width: "83%",
     height: 50, 
     borderRadius: 10,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    padding: 5
+    paddingHorizontal: 10,
+    paddingVertical: 5
     
   },
   reviewHolder: {
@@ -179,20 +251,37 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: "row",
     alignContent: "flex-end",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+   
+    
+  },
+  reviewSubText: {
+    
+    justifyContent:"center"
     
   },
   selectionContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop:10
+    // shadowColor: "grey",
+    // shadowOpacity: 1,
+    // shadowRadius: 10,
+
   },
   selectionBox1: {
-    backgroundColor: "grey",
-    width: 110,
-    height:150,
-    borderRadius: 10,
-    marginHorizontal: 5
+
+    borderWidth: 1,
+    backgroundColor: "white",
+    borderColor: "#e8e8e8",
+    borderStyle: "solid",
+    width: 115,
+    height:140,
+    borderRadius: 17,
+    marginHorizontal: 5,
+   
+  
   },
   selectionBox2: {
     backgroundColor: "red",
@@ -210,8 +299,45 @@ const styles = StyleSheet.create({
 
   },
   selectionText: {
-    textAlign: "center"
+    color: "blue",
+    textAlign: "center",
+    fontSize: 13,
+    fontWeight: "bold"
+
+  },
+  selectionItem1: {
+    alignItems: "center",
+    flex:1,
+    paddingTop:5
+
+
+  },
+  selectionItem2: {
+    flex:3,
+    justifyContent: "flex-end",
+    paddingBottom: 20,
+    paddingHorizontal:10
+  },
+  shadowProp: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  signedSelect: {
+    color: "#999",
+    fontSize: 14
+  },
+  proofFont: {
+    color: "blue",
+    fontWeight: "500",
+    fontSize: 14
+  },
+  label: {
+    fontSize:16
   }
+
+  
 
 });
 
