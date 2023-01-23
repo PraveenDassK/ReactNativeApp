@@ -1,15 +1,42 @@
 import React, { useContext, useEffect, useState} from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
+import api from "../api/api_list"
+
 
 const RequestContact = ({navigation}) => {
   const [amount, setAmount] = useState("")
   const [userData, setCode] = useState("")
-  const reciver = "Me";
-  const sortCode = "00-00-00"
-  const accountCode = "01234567890"  
+  const [accNum, setAccNum] = useState("")
+  const [sortCode, setSortCode] = useState("")
+  const [name, setName] = useState("")
+  // const reciver = "Me";
+  // const sortCode = "00-00-00"
+  // const accountCode = "01234567890"
+  const authContext = useContext(AuthContext)
 
-  let fromName = "Nik"
+  useEffect(() => {
+    loadData()
+  },[])
+  
+  const loadData = async () => {
+    const response = await api.GetAccountByCustomer();
+    const accountresponse = await api.GetCustomerDetails();
+    const data = response.data.details.content[0]
+    const accountdata = accountresponse.data.details.accountDetails[0]
+    const phonedata = accountresponse.data.details.phoneNumbers[0]
+    console.log(data)
+    setSortCode(data.identifiers[0].sortCode)
+    setAccNum(data.identifiers[0].accountNumber)
+    setName(data.name)
+    setBal(data.balance)
+    setnumber(phonedata.phoneNo)
+    setPlan(accountdata.accountType)
+    setCurrency(data.currency)
+  }   
+
+  // let fromName = "Nik"
   let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
@@ -26,8 +53,8 @@ const RequestContact = ({navigation}) => {
       >
         <View style={styles.helloParent}>
 
-          <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
-          <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
+          <Text style={[styles.hello1, styles.helloTypo]}>{name}{'\n'}</Text>
+          <Text style={[styles.hello2, styles.helloTypo]}>{accNum}</Text>
           <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
         </View>
         <View
