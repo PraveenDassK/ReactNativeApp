@@ -7,7 +7,7 @@ import client from "./client";
 const enfuceID = "A12277V1"
 const carbonyteID = "C1220XHD"
 
-const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=' + carbonyteID);
+const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC11875');
 
 const SendLoginOTP = (email) => {
   console.log(email)
