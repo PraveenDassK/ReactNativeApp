@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: "10%",
     paddingTop: GlobalStyles.Padding.padding_7xs,
-    paddingRight: GlobalStyles.Padding.padding_8xs,
+    paddingRight: "10%",
     width: "100%",
     backgroundColor: GlobalStyles.Color.grey,
   },
