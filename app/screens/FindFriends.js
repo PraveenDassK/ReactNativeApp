@@ -29,9 +29,9 @@ const FindFriends = (navigation) => {
             style={[styles.groupContainer, styles.groupPosition1]}
             onPress={() => navigation.navigate("")}
           >
-            <View style={[styles.helloParent, styles.helloParentPosition]}>
+            <View style={[styles.helloParent, styles.helloParentPosition12]}>
               <View style={[styles.groupChild, styles.groupPosition]} />
-              <View style={[styles.maskGroup236, styles.helloParentPosition]} />
+              <View style={[styles.maskGroup236, styles.helloParentPosition12]} />
             </View>
             <Text style={[styles.hello2, styles.helloTypo]}>Allow Access</Text>
           </Pressable>
@@ -39,9 +39,9 @@ const FindFriends = (navigation) => {
             style={[styles.groupPressable, styles.groupPosition1]}
             onPress={() => navigation.navigate("")}
           >
-            <View style={[styles.helloParent, styles.helloParentPosition]}>
+            <View style={[styles.helloParent, styles.helloParentPosition12]}>
               <View style={[styles.groupItem, styles.groupPosition]} />
-              <View style={[styles.maskGroup236, styles.helloParentPosition]} />
+              <View style={[styles.maskGroup236, styles.helloParentPosition12]} />
             </View>
             <Text style={[styles.hello3, styles.helloTypo]}>Not Now</Text>
           </Pressable>
@@ -61,6 +61,14 @@ const styles = StyleSheet.create({
     textAlign:"left",
     left: 100,
     right: 0,
+    top: 0,
+    position: "absolute",
+  },
+
+  helloParentPosition12: {
+    textAlign:"left",
+    left: 40,
+    right: -100,
     top: 0,
     position: "absolute",
   },
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
   hello: {
     left:"40%",
     textAlign:"left",
-    marginLeft:-200,
+    marginLeft:-190,
     fontSize: GlobalStyles.FontSize.size_11xl,
     fontWeight: "00",
     color: GlobalStyles.Color.indigo_100,
@@ -103,7 +111,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     marginTop: -280.52,
-    left: -100,
+    left: -80,
     fontSize: GlobalStyles.FontSize.size_base,
     lineHeight: 20,
     color: GlobalStyles.Color.gray_700,
@@ -125,8 +133,8 @@ const styles = StyleSheet.create({
     top: "40%",
     
     marginleft: -100,
-    left: "10%",
-    color: GlobalStyles.Color.white,
+    left: "13%",
+    color: GlobalStyles.Color.black,
   },
   groupContainer: {
     bottom: 76,
@@ -137,7 +145,7 @@ const styles = StyleSheet.create({
   hello3: {
     top: "48.33%",
     left: "15.96%",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
   },
   groupPressable: {
     bottom: 0,
@@ -169,9 +177,9 @@ const styles = StyleSheet.create({
   findFriends: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
+    // paddingLeft: GlobalStyles.Padding.padding_7xs,
     // paddingTop: GlobalStyles.Padding.padding_2xs,
-    paddingRight: GlobalStyles.Padding.padding_8xs,
+    // paddingRight: GlobalStyles.Padding.padding_8xs,
     paddingBottom: GlobalStyles.Padding.padding_8xs,
     width: "100%",
 

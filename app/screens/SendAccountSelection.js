@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
   },
   hello: {
     top: 100,
-    left: 8,
+    left: 0,
     fontWeight: "700",
   },
   hello1: {
@@ -530,7 +530,7 @@ const styles = StyleSheet.create({
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
   },
   groupParent1: {
     bottom: 49,

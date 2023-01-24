@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
+import AppButton from "../components/Button";
 
 const validationSchema = Yup.object().shape({
   postCode: Yup.string().required().label("Post code"),
@@ -83,11 +84,7 @@ const BusinessAddress2 = ({ navigation }) => {
           style={[styles.groupParent, styles.parentPosition]}
           onPress={() => navigation.navigate("BusinessChooseAddress")}
         >
-          <View style={[styles.rectangleParent, styles.parentPosition]}>
-            <View style={[styles.groupChild, styles.groupChildLayout]} />
-            <View style={[styles.maskGroup236, styles.helloWrapperPosition]} />
-          </View>
-          <Text style={styles.hello3} onPress={handleSubmit}>Continue</Text>
+          <AppButton title="continue" onPress={handleSubmit} />
         </View>
         </>
           )}
@@ -206,7 +203,7 @@ const styles = StyleSheet.create({
     marginLeft:-40,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
@@ -221,7 +218,7 @@ const styles = StyleSheet.create({
   businessAddress2: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
+    paddingTop: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,

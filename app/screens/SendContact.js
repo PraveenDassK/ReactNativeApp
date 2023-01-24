@@ -220,9 +220,10 @@ const styles = StyleSheet.create({
     top: 148,
   },
   groupChild: {
-    left:"25%",
-    height:"40%",
-    width:"50%",
+    left:"50%",
+    marginLeft:-35,
+    height:80,
+    width:80,
     top: 0,
     resizeMode:"contain",
     position: "absolute",
@@ -306,10 +307,11 @@ const styles = StyleSheet.create({
     top: 0,
   },
   hello8: {
-    top: 28,
+    top: "15%",
+    marginTop:20,
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 27,
+    lineHeight: 65,
     color: GlobalStyles.Color.blue_100,
   },
   lineView: {
@@ -346,7 +348,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "center",
     top:"10%"
   },

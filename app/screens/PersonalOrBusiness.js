@@ -4,6 +4,7 @@ import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen"
 import GlobalStyles from "../../GlobalStyles";
+import Button from "../components/Button";
 
 const PersonalOrBusiness = ({ navigation }) => {
 
@@ -17,6 +18,7 @@ const PersonalOrBusiness = ({ navigation }) => {
   const handleBusiness = () => {
     setUser(prev => ({...prev, accountType: 'business'}))
     console.log("navigate to business page g")
+    navigation.navigate('Name')
   }
 
 
@@ -37,19 +39,19 @@ const PersonalOrBusiness = ({ navigation }) => {
             style={[styles.groupParent, styles.groupPosition]}
             onPress={() => navigation.navigate("CountryOfResidence")}
           >
-            <View style={[styles.rectangleParent, styles.maskGroup236Position]}>
+            {/* <View style={[styles.rectangleParent, styles.maskGroup236Position]}>
               <View style={styles.groupItem} />
               <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
             </View>
-            <Text style={[styles.hello1, styles.helloTypo]} onPress={handleBusiness}>Business</Text>
+            <Text style={[styles.hello1, styles.helloTypo]} onPress={handleBusiness}>Business</Text> */}
+            <Button title="business" onPress={handleBusiness}/>
           </Pressable>
           <Pressable style={[styles.rectangleGroup, styles.groupPosition]}
-                      onPress={() => navigation.navigate("Name")}
-                      >
-            <View style={styles.groupItem} />
-            <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
+            onPress={() => navigation.navigate("Name")}
+           >
+            <Button title="personal" onPress={handlePersonal}/>
           </Pressable>
-          <Text style={[styles.hello2, styles.helloTypo]} onPress={handlePersonal}>Personal</Text>
+        
         </View>
       </View>
     </Screen>

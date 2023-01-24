@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     left: "41.41%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
   },
   groupParent: {
     height: 60,
