@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     marginLeft:-80,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "left",
   },
   iconIonicIosArrowDown: {

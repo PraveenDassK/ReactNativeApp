@@ -63,7 +63,7 @@ const Name = ({navigation}) => {
               {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
             <TextInput
-              autoCorrect="none" 
+              // autoCorrect="none" 
               keyboardType="default" 
               onBlur={() => setFieldTouched("firstName")}
               onChangeText={handleChange("firstName")}
@@ -74,7 +74,7 @@ const Name = ({navigation}) => {
                 <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
             </View>
             <TextInput 
-                autoCorrect="none" 
+                // autoCorrect="none" 
                 keyboardType="default" 
                 onBlur={() => setFieldTouched("lastName")}
                 onChangeText={handleChange("lastName")}
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 411,
   },
   name: {
