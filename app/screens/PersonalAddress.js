@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Text, StyleSheet, View,  TextInput} from "react-native";
+import { Text, StyleSheet, View,  TextInput, ScrollView} from "react-native";
 import { Formik } from "formik"
 import * as Yup from 'yup'
 
@@ -30,6 +30,7 @@ const PersonalAddress = ({navigation}) => {
   }
 
   return (
+    <ScrollView>
     <Screen>
     <View style={styles.personalAddress}>
       <View style={styles.buildingNameOrNumberParent}>
@@ -145,6 +146,7 @@ const PersonalAddress = ({navigation}) => {
       </View>
     </View>
     </Screen>
+    </ScrollView>
   );
 };
 
@@ -282,14 +284,14 @@ const styles = StyleSheet.create({
   },
   buildingNameOrNumberParent: {
     width: "100%",
-    height: 683,
+    height: 670,
   },
   personalAddress: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

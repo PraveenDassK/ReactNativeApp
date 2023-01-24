@@ -5,28 +5,43 @@ import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 import GlobalStyles from "../../GlobalStyles";
 
 const roledata = [
-  { label: 'United Kingdom', value: '1' },
-  { label: 'United States of America', value: '2' },
-  { label: 'India', value: '3' },
+  { label: 'Managing Director', value: '1' },
+  { label: 'Officer', value: '2' },
 ];
 const countrydata = [
-  { label: 'United Kingdom', value: '1' },
-  { label: 'United States of America', value: '2' },
-  { label: 'India', value: '3' },
+  { label: 'Antigua & Barbuda', value: '1' },
+  { label: 'Argentina', value: '2' },
+  { label: 'Armenia', value: '3' },
+  { label: 'Aruba', value: '4' },
+  { label: 'Ascension Island', value: '4' },
+  { label: 'Australia', value: '5' },
+  { label: 'Austria', value: '6' },
+  { label: 'Azerbaijan', value: '7' },
+  { label: 'Bahamas', value: '8' },
+  { label: 'Bahrain', value: '9' },
 ];
 const nationalitydata = [
-  { label: 'United Kingdom', value: '1' },
-  { label: 'United States of America', value: '2' },
-  { label: 'India', value: '3' },
+  { label: 'British', value: '1' },
+  { label: 'American', value: '2' },
+  { label: 'Europeon', value: '3' },
 ];
 const occupationdata = [
-  { label: 'United Kingdom', value: '1' },
-  { label: 'United States of America', value: '2' },
-  { label: 'India', value: '3' },
+  { label: 'Architect', value: '1' },
+  { label: 'Engineer', value: '2' },
+  { label: 'Designer', value: '3' },
 ];
 const DirectorsOrPartners = ({navigation}) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [value1, setValue1] = useState(null);
+  const [isFocus1, setIsFocus1] = useState(false);
+  const [value2, setValue2] = useState(null);
+  const [isFocus2, setIsFocus2] = useState(false);
+  const [value3, setValue3] = useState(null);
+  const [isFocus3, setIsFocus3] = useState(false);
+  const [value4, setValue4] = useState(null);
+  const [isFocus4, setIsFocus4] = useState(false);
+
   const renderLabel = () => {
     if (value || isFocus) {
       return (
@@ -355,7 +370,7 @@ const DirectorsOrPartners = ({navigation}) => {
             styles.groupChildLayout,
             styles.groupChildPosition,
             styles.groupChildBorder,
-            isFocus && { borderColor: 'blue' }]}
+            isFocus1 && { borderColor: 'blue' }]}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -365,14 +380,14 @@ const DirectorsOrPartners = ({navigation}) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder={!isFocus ? 'Select the nationality' : '....'}
+          placeholder={!isFocus1 ? 'Select the nationality' : '....'}
           searchPlaceholder="Search..."
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          value={value1}
+          onFocus1={() => setIsFocus1(true)}
+          onBlur1={() => setIsFocus1(false)}
           onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
+            setValue1(item.value);
+            setIsFocus1(false);
           }}
         />
           {/* <Text style={[styles.hello, styles.helloTypo]}>
@@ -384,7 +399,7 @@ const DirectorsOrPartners = ({navigation}) => {
             styles.groupChildLayout,
             styles.groupChildPosition,
             styles.groupChildBorder,
-            isFocus && { borderColor: 'blue' }]}
+            isFocus3 && { borderColor: 'blue' }]}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -394,14 +409,14 @@ const DirectorsOrPartners = ({navigation}) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder={!isFocus ? 'Select the country of residence' : '....'}
+          placeholder={!isFocus3 ? 'Select the country of residence' : '....'}
           searchPlaceholder="Search..."
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          value={value3}
+          onFocus3={() => setIsFocus3(true)}
+          onBlur3={() => setIsFocus3(false)}
           onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
+            setValue3(item.value);
+            setIsFocus3(false);
           }}
         />
         <View
@@ -432,7 +447,7 @@ const DirectorsOrPartners = ({navigation}) => {
             styles.groupChildLayout,
             styles.groupChildPosition,
             styles.groupChildBorder,
-            isFocus && { borderColor: 'blue' }]}
+            isFocus2 && { borderColor: 'blue' }]}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -442,14 +457,14 @@ const DirectorsOrPartners = ({navigation}) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder={!isFocus ? 'Select the role' : '....'}
+          placeholder={!isFocus2 ? 'Select the role' : '....'}
           searchPlaceholder="Search..."
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          value={value2}
+          onFocus2={() => setIsFocus2(true)}
+          onBlur2={() => setIsFocus2(false)}
           onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
+            setValue2(item.value);
+            setIsFocus2(false);
           }}
         />
         <Pressable
@@ -942,7 +957,7 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_lg,
     lineHeight: 20,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "left",
     position: "absolute",
   },
