@@ -216,11 +216,11 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_3xs,
+    paddingLeft: "10%",
     paddingTop: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.grey,
   },
 });
 
