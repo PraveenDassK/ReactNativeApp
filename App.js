@@ -6,6 +6,8 @@ import 'expo-dev-menu';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
 import SplashAnimation from "./app/screens/SplashAnimation";
 
 import Onboarding1 from "./app/screens/Onboarding1"
@@ -35,7 +37,6 @@ import SendEnterPIN from "./app/screens/SendEnterPIN";
 import BusinessChooseAddress from "./app/screens/BusinessChooseAddress";
 import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
 import ChooseCardsElite from "./app/screens/ChooseCardsElite";
-// import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
 import SendMoney from "./app/screens/SendMoney"
 import BankTransfer from "./app/screens/BankTransfer"
 import Analytics from "./app/screens/Analytics"
@@ -54,7 +55,6 @@ import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
 import SpendingLimit from "./app/screens/SpendingLimit";
 import CarbonSpending from "./app/screens/CarbonSpending";
-import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
 import ItsDamagedOrDoesntWork from "./app/screens/ItsDamagedOrDoesntWork";
 import IWasAVictimOfFraudOrThe from "./app/screens/IWasAVictimOfFraudOrThe";
 import Terminate from "./app/screens/Terminate";
@@ -129,7 +129,7 @@ const AccountNavigator = () => (
 )
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="SendAccountSelection">
+  <Stack.Navigator initialRouteName="AccountMain">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="TestEnviro" component={TestEnviro}/>
     <Stack.Screen  name="TermsAndConditions" component={TermsAndConditions}/>
@@ -150,7 +150,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Name" component={Name}/>
 
-    <Stack.Screen  name="ProofOfResidency" component={ProofOfResidency}/>
     <Stack.Screen name="ProofVerified" component={ProofVerified}/>
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
@@ -191,7 +190,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="ConfirmDirectors" component={ConfirmDirectors}/>
 
     <Stack.Screen name="ChooseCardsElite" component={ChooseCardsElite}/>
-
     <Stack.Screen name="CarbonCart1" component={CarbonCart1}/>
     <Stack.Screen name="SentMoney" component={SentMoney}/>
 
@@ -222,8 +220,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="Carbon" component={Carbon}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>
-
-    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
 
     <Stack.Screen name="ChooseCardsPremium" component={ChooseCardsPremium}/>
     <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>

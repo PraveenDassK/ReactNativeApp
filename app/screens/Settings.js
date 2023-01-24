@@ -455,6 +455,7 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
+  
   rectangleParent: {
     left: 0,
     position: "absolute",

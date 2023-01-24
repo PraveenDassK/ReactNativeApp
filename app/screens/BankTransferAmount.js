@@ -20,7 +20,7 @@ const BankTransferAmount = ({route,navigation}) => {
     navigation.navigate("Pin",{
       amount: amount, 
       name: accountName,
-      successScreen: "Sucsess",
+      successScreen: "Success",
       successText: "Send to"+ accountName +" of" + amount +" successful" 
     })
   }

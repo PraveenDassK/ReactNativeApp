@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width:"100%"
   },
   iconAwesomeCheckCircle: {
-    marginTop: -138.06,
+    marginTop: -78.06,
     marginLeft: -93.56,
     left: "50%",
     width: 187,

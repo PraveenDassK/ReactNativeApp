@@ -424,12 +424,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello18: {
-    top: "40%",
-    left: "20%",
+    top: 20,
+    left: "25%",
     fontSize: GlobalStyles.FontSize.size_lg,
-    lineHeight: 10,
+    lineHeight: 20,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   groupContainer: {

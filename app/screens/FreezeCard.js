@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 12,
   },
   rectangleIcon: {
-    height: "13.04%",
+    height: "0.04%",
     width: "21.19%",
     top: "101.17%",
     right: "-91.6%",
