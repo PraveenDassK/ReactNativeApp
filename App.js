@@ -55,7 +55,6 @@ import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
 import SpendingLimit from "./app/screens/SpendingLimit";
 import CarbonSpending from "./app/screens/CarbonSpending";
-import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
 import ItsDamagedOrDoesntWork from "./app/screens/ItsDamagedOrDoesntWork";
 import IWasAVictimOfFraudOrThe from "./app/screens/IWasAVictimOfFraudOrThe";
 import Terminate from "./app/screens/Terminate";
@@ -130,7 +129,7 @@ const AccountNavigator = () => (
 )
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="Carbon">
+  <Stack.Navigator initialRouteName="AccountMain">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="TestEnviro" component={TestEnviro}/>
     <Stack.Screen  name="TermsAndConditions" component={TermsAndConditions}/>
@@ -221,8 +220,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="Carbon" component={Carbon}/>
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>
-
-    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
 
     <Stack.Screen name="ChooseCardsPremium" component={ChooseCardsPremium}/>
     <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>
