@@ -12,7 +12,7 @@ const Onboarding2 = ({navigation}) => {
       <Text
         style={styles.text}
       >
-        Money Exhange Simple, Safe and Secure
+        Money Exchange Simple, Safe and Secure
       </Text>
       <Image
           style={styles.image}
