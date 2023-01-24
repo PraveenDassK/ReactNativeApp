@@ -6,6 +6,8 @@ import 'expo-dev-menu';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
 import SplashAnimation from "./app/screens/SplashAnimation";
 
 import Onboarding1 from "./app/screens/Onboarding1"
@@ -35,7 +37,6 @@ import SendEnterPIN from "./app/screens/SendEnterPIN";
 import BusinessChooseAddress from "./app/screens/BusinessChooseAddress";
 import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
 import ChooseCardsElite from "./app/screens/ChooseCardsElite";
-import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
 import SendMoney from "./app/screens/SendMoney"
 import BankTransfer from "./app/screens/BankTransfer"
 import Analytics from "./app/screens/Analytics"
@@ -91,9 +92,45 @@ import TestEnviro from "./app/screens/TestEnviro";
 import TermsAndConditions from "./app/screens/TermsAndConditions";
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
+
+const AccountNavigator = () => (
+  <Tab.Navigator
+    screenOptions={{
+    headerShown: false
+  }}
+  >
+    <Tab.Screen 
+      name="AccountTab" 
+      component={Account}
+      options={{
+        title: "Account"
+      }}
+      />
+    <Tab.Screen 
+      name="Analysis" 
+      component={Analytics}
+      options={{
+        
+      }}
+      />
+    <Tab.Screen 
+      name="CarbonTab" 
+      component={Carbon}
+      options={{
+        title: "Carbon"
+      }}
+    />
+    <Tab.Screen 
+      name="Profile" 
+      component={Settings}
+    />
+
+  </Tab.Navigator>
+)
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="PersonalOrBusiness">
+  <Stack.Navigator initialRouteName="AccountMain">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="TestEnviro" component={TestEnviro}/>
     <Stack.Screen  name="TermsAndConditions" component={TermsAndConditions}/>
@@ -114,12 +151,11 @@ const StackNavigator = () => (
     <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
     <Stack.Screen  name="Name" component={Name}/>
 
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidencyList}/>
-    <Stack.Screen  name="ProofVerified" component={ProofVerified}/>
+    <Stack.Screen name="ProofVerified" component={ProofVerified}/>
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
-    <Stack.Screen  name="Account" component={Account}/>
+    <Stack.Screen  name="Account" component={AccountNavigator}/>
     <Stack.Screen  name="Account2" component={Account2}/>
     <Stack.Screen  name="AccountMain" component={AccountMain}/>
     <Stack.Screen  name="AccountMainBusiness" component={AccountMainBusiness}/>
@@ -155,7 +191,6 @@ const StackNavigator = () => (
     <Stack.Screen  name="ConfirmDirectors" component={ConfirmDirectors}/>
 
     <Stack.Screen name="ChooseCardsElite" component={ChooseCardsElite}/>
-
     <Stack.Screen name="CarbonCart1" component={CarbonCart1}/>
     <Stack.Screen name="SentMoney" component={SentMoney}/>
 

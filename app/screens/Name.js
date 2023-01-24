@@ -22,7 +22,7 @@ const Name = ({navigation}) => {
   const handleSubmit = ({firstName, lastName}) => {
     setUser(prev => ({...prev, firstName, lastName}))
     console.log(user)
-    navigation.navigate("ProofOfResidencyList")
+    navigation.navigate("ProofOfResidency")
   }
 
   return (
@@ -109,7 +109,7 @@ const Name = ({navigation}) => {
 const styles = StyleSheet.create({
   helloTypo: {
     //fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "center",
+    textAlign: "left",
     position: "absolute",
     width:"100%"
   },
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   hello: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    textAlign: "center",
+    textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     left: 0,
     top: 0,
@@ -216,8 +216,8 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
+    paddingLeft: GlobalStyles.Padding.padding_3xs,
+    paddingTop: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.white,

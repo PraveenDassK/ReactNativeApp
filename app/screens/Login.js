@@ -76,8 +76,6 @@ return (
     <View style={styles.textRow}>
            <Text style={styles.SwipeUp}>Swipe up if you already have an account</Text>
     </View>
-
-
     </View>
     </ScrollView>
 

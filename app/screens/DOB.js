@@ -68,7 +68,7 @@ const DOB = ({ navigation }) => {
 
     console.log("before", accountType, documentType, phoneNumber, email, address, firstName, lastName, postCode, dateOfBirth, dateOfCreation,)
     
-    const result = await registrstion2API.saveCustomerAccountDetails({
+    const result = await registrstion2API.saveCustomerAccountDetails([{
       "id": 0,
       "customerId":"",
       "accountDetails": [
@@ -98,13 +98,17 @@ const DOB = ({ navigation }) => {
           "dob": dateOfBirth,
           "nationalId": "",
           lastName,
-          postCode
+          postCode,
+          "postTown":""
         }
       ],
-      "key": phoneNumber
-    })
+      "key": phoneNumber,
+      "role": "",
+      "ownershipPercentage": 0
 
-  
+    }])
+
+    console.log('what is this', result.ok, result.data)
     if (!result.ok || !result.data.result) return alert('Could not complete setup') 
    
     setUser(prev => ({...prev, dob: dateOfBirth}))
@@ -134,7 +138,7 @@ const DOB = ({ navigation }) => {
         />
         </View >
         <View style={styles.viewDate1}>
-          <Button title="Continue" color="blue" onPress={() => handleSubmit(user)}/>
+          <Button title="Continue" color="babyBlue" onPress={() => handleSubmit(user)}/>
         </View>
     
       </View>
@@ -298,7 +302,7 @@ const styles = StyleSheet.create({
   dob: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
