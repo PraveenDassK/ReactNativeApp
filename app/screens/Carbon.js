@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
-import { StyleSheet,  View, Dimensions, Image, ScrollView, FlatList} from 'react-native'
+import { StyleSheet,  View, Image, FlatList} from 'react-native'
 
 import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 import carbonApi from "../api/carbon"
@@ -7,8 +7,9 @@ import Button from '../components/Button'
 import Text from "../components/Text"
 import Screen from '../components/Screen'
 import AuthContext from '../auth/context'
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
-const Carbon = ({ navigation }) => {
+const Carbon = ({route,navigation }) => {
 
     const [data, setData] = useState(null)
   const { setUser } = useContext(AuthContext)
@@ -113,6 +114,21 @@ const Carbon = ({ navigation }) => {
             
                 <Text style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</Text>
                 <Text style={styles.description}>We only profile high-quality projects that meet our minimun standards in relation to carbon + biodiversity + social benifits</Text>
+                
+                <Pressable
+                    width = "100%"
+                    height = "2%"
+                    backgroundColor = "grey"
+                    onPress = {() =>navigation.navigate("CarbonCart",cart)}
+                    >
+                    <Text
+                        textAlign = "center"
+                        width = "100%"
+                    >
+                        View basket
+                    </Text>
+                </Pressable>
+
                 <Text style={[styles.textSub, {marginTop: verticalScale(50)}]}>Select your project</Text>
            
             </View>
