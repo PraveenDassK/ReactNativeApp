@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     marginLeft:-40,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "left",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",

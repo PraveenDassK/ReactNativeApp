@@ -2,12 +2,21 @@ import client from "./client";
 
 /**
  * @dev customer details endpoint
+ * @todo Get these on login
  */
 const enfuceID = "A12277V1"
 const carbonyteID = "C1220XHD"
 
-const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=' + carbonyteID);
-const SendLoginOTP = () => client.post("https://api.carbonyte.io/authverifymodule/SendLoginOTP?email=ryan.s%40carbonyte.io&phoneNumber=447494560838");
+const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC11875');
+
+const SendLoginOTP = (email) => {
+  console.log(email)
+  return client.post("https://api.carbonyte.io/authverifymodule/SendLoginOTP?email=jack.h%40carbonyte.io&phoneNumber=447494560838")
+};
+const VerifyLoginOTP = (mailOTP,email) => client.post("https://api.carbonyte.io/authverifymodule/VerifyLoginOTP?email="+
+  email+
+  "&emailOTP=" +
+  mailOTP +"&phoneNumber=447494560838&phoneOTP=9090")
 
 const GetAccountByCustomer = () => client.get("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/" + carbonyteID)
 const GetCustomer = () => client.get("https://api.carbonyte.io/walletmodule/GetCustomer/" + carbonyteID)
@@ -22,11 +31,27 @@ const SetLimit = (amount) =>  client.post("https://api.carbonyte.io/transactionm
                               enfuceID + 
                               "&periodType=monthly&amount=" + amount)
 
-const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation?sourceAccountId=" + 
-                              enfuceID + 
-                              "&destination.type=SCAN&destination.id=A1226XEJ&destination.accountNumber=02620614&destination.sortCode=000000&destination.name=Selina%20Wells&currency=GBP&amount=" + 
-                              amount + 
-                              "&reference=salary")
+const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
+  {
+    "sourceAccountId": "A12277V1",
+    "destination": {
+      "type": "SCAN",
+      "id": "A1226WEM",
+      "accountNumber": "02619527",
+      "sortCode": "000000",
+      "name": "Dory Ray",
+      "address": {
+        "addressLine1": "string",
+        "postTown": "London",
+        "postCode": "W2 1AS",
+        "country": "GB"
+      }
+    },
+    "currency": "GBP",
+    "amount": amount,
+    "reference": "friends"
+  }
+)
 
 const SetToggles = (
   online,
@@ -45,7 +70,7 @@ const SetToggles = (
     swipe +"&atmWithdrawals=" + 
     atm + "&contactlessPayments=" + 
     contactless
-  //return client.post(request)
+  return client.post(request)
 }
 const GetToggles = () => client.get("https://api.carbonyte.io/cardmodule/GetToggles?accountId=" + enfuceID)
 
@@ -63,5 +88,6 @@ export default {
     RetriveBenificiaries,
     GetLimit,
     SetLimit,
-    SendFunds
+    SendFunds,
+    VerifyLoginOTP
   };

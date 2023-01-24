@@ -224,10 +224,11 @@ const styles = StyleSheet.create({
   },
   hello8: {
     top: "20.33%",
-    left: "38.26%",
+    left: "50%",
+    marginLeft:-50,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
   },
   groupFrame: {
     marginTop: 234.5,

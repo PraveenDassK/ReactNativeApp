@@ -82,14 +82,15 @@ const styles = StyleSheet.create({
     height: 187,
   },
   hello1: {
-    marginTop: 332.5,
-    left: 120,
+    marginTop: 290.5,
+    left: "50%",
+    marginLeft: -80,
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_700,
   },
   groupParent: {
     width: "100%",
-    height: 749,
+    height: "100%",
   },
   requested: {
     flex: 1,
