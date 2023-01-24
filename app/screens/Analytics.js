@@ -132,7 +132,31 @@ const Analytics = ({navigation}) => {
   return (
           <Screen style={{backgroundColor: "#f3f5f5"}}>
               <ScrollView >
+                
                   <View style={styles.mainContainer}>
+                  <View style={[styles.historyParent, styles.iconContentLayout]}>
+        <Pressable
+          onPress={() => navigation.navigate("AccountMain")}
+        >
+          <Text style={[styles.history, styles.historyTypo]}>Account</Text>
+          </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate("Analytics")}
+        >
+          <Text style={[styles.history1, styles.historyTypo]}>Analysis</Text>
+          </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate("Carbon")}
+        >
+          <Text style={[styles.history2, styles.historyTypo]}>Carbon</Text>
+          </Pressable>
+
+          <Pressable
+          onPress={() => navigation.navigate("Settings")}
+        >  
+          <Text style={styles.history3}>Profile</Text>
+        </Pressable>
+        </View>
                     <Text 
                       onPress={()=> console.log("onpress")} 
                       style={styles.title}
@@ -330,6 +354,29 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
     
   },
+  iconContentLayout: {
+    height: 16,
+    position: "absolute",
+  },
+  historyParent: {
+    top: 0,
+    width: 300,
+    left: 0,
+  },
+  historyTypo: {
+    opacity: 0.3,
+    letterSpacing: 1,
+    fontSize: GlobalStyles.FontSize.size_xl,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    color: GlobalStyles.Color.gray_700,
+    textAlign: "left",
+    top: 0,
+    position: "absolute",
+  },
+  history1: {
+    marginLeft: -66,
+    left: "50%",
+  },
   progressBar: {
     marginTop: 10,
     shadowColor: "grey",
@@ -347,6 +394,34 @@ const styles = StyleSheet.create({
     top: 12
     
  
+  },
+  groupParentPosition: {
+    height: 60,
+    left: "5%",
+    right: "5%",
+    top: "50%",
+    position: "absolute",
+  },
+  groupParent: {
+    marginTop: -46,
+  },
+  groupParent: {
+    marginTop: -46,
+  },
+  history3: {
+    right: -1,
+    letterSpacing: 1,
+    fontSize: GlobalStyles.FontSize.size_xl,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    color: GlobalStyles.Color.gray_800,
+    textAlign: "left",
+    fontWeight: "700",
+    top: 0,
+    position: "absolute",
+  },
+  history2: {
+    marginLeft: 19,
+    left: "50%",
   },
   shopping: {
     flex:2

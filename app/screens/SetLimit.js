@@ -7,14 +7,47 @@ import AuthContext from "../auth/context";
 
 const SetLimit = ({navigation}) => {
 
-  //Sent call when navigating away
-  const navigate = async() => {
-    const response = await api.SetLimit(amount)
-    navigation.navigate("SpendingLimit")
-  }
+
   const [amountspent, setAmountspent] = useState(null)
   const [amount, setAmount] = useState("0")
   const [currency, setcurrency] = useState("GBP")
+  const [validCheck, setValidator] = useState(false)
+
+  /**
+   * @notice Text checker
+   */
+  const checkText = (text) => {
+    setAmount(text)
+    //First check if there is a value
+    if(
+      //First check if there is a value
+      text == " " &&
+      //Then check if it is above a limit
+      text > 1000
+      //Any other checks for the text add it here
+      ){
+      setValidator(false)
+    }else{
+      //If all the checks pass then set the validator to true
+      setValidator(true)
+    }
+  }
+
+  /*
+   * @dev Sent call when navigating awayc
+   * @dev Check the validation before navigating off the page
+   */
+  const navigate = async() => {
+    //Check if the text is valid from the validator
+    if(validCheck){
+      //If it is do this
+      const response = await api.SetLimit(amount)
+      navigation.navigate("SpendingLimit")
+    }else{
+      //If it isn't show an error message here
+      console.log("Invalid")
+    }
+  }
 
   return (
     <View style={styles.setLimit}>

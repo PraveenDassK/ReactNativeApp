@@ -256,6 +256,15 @@ const styles = StyleSheet.create({
     top: "50%",
     position: "absolute",
   },
+  historyParent: {
+    top: 10,
+    width: 300,
+    left: 0,
+  },
+  iconContentLayout: {
+    height: 16,
+    position: "absolute",
+  },
   groupParent: {
     width: "100%",
     height: "110%",
