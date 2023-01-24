@@ -116,7 +116,7 @@ const AccountNavigator = () => (
       }}
       />
     <Tab.Screen 
-      name="Analysiss" 
+      name="Analysis" 
       component={Analytics}
       options={{
         
@@ -139,7 +139,7 @@ const AccountNavigator = () => (
 const StackNavigator = () => (
   
 
-  <Stack.Navigator initialRouteName="">
+  <Stack.Navigator initialRouteName="Login">
 
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
@@ -165,7 +165,7 @@ const StackNavigator = () => (
 
     <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
 
-    <Stack.Screen  name="Account" component={Account}/>
+    <Stack.Screen  name="Account" component={AccountNavigator}/>
 
     <Stack.Screen  name="AddFunds" component={AddFunds}/>
     <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>

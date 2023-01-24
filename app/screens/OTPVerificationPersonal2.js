@@ -20,14 +20,14 @@ import otpVerificationAPI from '../api/otpVerification'
 import otpAPI from '../api/otp'
 
 const validationSchema = Yup.object().shape({
-  pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
-  pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
-  pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
-  pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
-  eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
-  eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
-  eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
-  eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
+  // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
+  // pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
+  // pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
+  // pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
+  // eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
+  // eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
+  // eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
+  // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
 
 }) // add required if necessary
 
