@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
   hello2: {
     top: verticalScale(20),
     left: "50%",
-    color: GlobalStyles.Color.white,
+    marginLeft: horizontalScale(-45),
+    color: GlobalStyles.Color.black,
     width: "100%",
   },
   groupContainer: {
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     top: "38.33%",
     left: "50%",
     marginLeft: horizontalScale(-35),
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
   },
   groupPressable: {
     bottom: verticalScale(0),

@@ -20,14 +20,14 @@ import otpVerificationAPI from '../api/otpVerification'
 import otpAPI from '../api/otp'
 
 const validationSchema = Yup.object().shape({
-  pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
-  pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
-  pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
-  pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
-  eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
-  eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
-  eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
-  eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
+  // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
+  // pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
+  // pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
+  // pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
+  // eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
+  // eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
+  // eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
+  // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
 
 }) // add required if necessary
 
@@ -54,7 +54,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
   const eVer4Ref = useRef()
 
   const [count, setCount] = useState(45)
-  // const [resendOTP, setResendOTP] = useState(null)
+  const [resendOTP, setResendOTP] = useState(null)
   const { user } = useContext(AuthContext)
 
   const countdown = () => {
@@ -70,7 +70,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
     const emailOTP = pVer1  + pVer2 + pVer3 + pVer4 
     const phoneOTP =  eVer1 + eVer2 + eVer3 + eVer4 
     
-    // setResendOTP({email, phoneNumber, emailOTP, phoneOTP})
+    setResendOTP({email, phoneNumber, emailOTP, phoneOTP})
    
     const result = await otpVerificationAPI.otpVerification({email, phoneNumber, emailOTP, phoneOTP})
 
@@ -165,7 +165,6 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
                 }
                 ref={pVer1Ref}
                 returnKeyType="next"
-               
                 style={[styles.groupChildPosition, styles.groupLayout, styles.inputText]} 
               />
               <ErrorMessage error={errors.pVer1} visible={touched.pVer1}/>
@@ -541,7 +540,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f4f7",
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_4xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
+    paddingTop: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
   },

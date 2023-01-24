@@ -18,17 +18,25 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.carbonyte.bankin"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/tree@3x.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.carbonyte.bankin",
+      "versionCode": 1
     },
-    "description":"Carbonyte Banking App",
+    "description": "Carbonyte Banking App",
     "web": {
       "favicon": "./app/assets/tree@3x.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c44c011f-e58a-467d-b5dd-4e9e27e21ed3"
+      }
     }
   }
 }

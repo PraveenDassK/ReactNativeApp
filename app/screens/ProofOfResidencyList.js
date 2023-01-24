@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
   },
   groupParent: {
-    width: 328,
+    width: "100%",
     height: 497,
   },
   proofOfResidencyListA1: {

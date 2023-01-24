@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import { Text, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const ItsDamagedOrDoesntWork = () => {
+const ItsDamagedOrDoesntWork = ({navigation}) => {
   return (
+    <ScrollView>
     <Screen>
     <View style={styles.itsDamagedOrDoesntWork}>
       <View style={styles.helloParent}>
@@ -12,12 +13,13 @@ const ItsDamagedOrDoesntWork = () => {
           <Text style={styles.itsDamagedOr}>It’s damaged or doesn’t</Text>
           <Text style={styles.itsDamagedOr}>{"\n"}work</Text>
         </Text>
-        <View
+        <Pressable
           style={[
             styles.groupParent,
             styles.groupParentPosition,
             styles.parentPosition,
           ]}
+          onPress={() => navigation.navigate("Terminate")}
         >
           <View
             style={[
@@ -25,12 +27,13 @@ const ItsDamagedOrDoesntWork = () => {
               styles.groupParentPosition,
               styles.parentPosition,
             ]}
+            
           >
             <View style={styles.groupChild} />
             <View style={[styles.maskGroup236, styles.groupParentPosition]} />
           </View>
           <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
-        </View>
+        </Pressable>
         <View
           style={[
             styles.rectangleGroup,
@@ -161,6 +164,7 @@ const ItsDamagedOrDoesntWork = () => {
       </View>
     </View>
     </Screen>
+    </ScrollView>
   );
 };
 

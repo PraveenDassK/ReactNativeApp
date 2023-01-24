@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import { Text, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
 
-const IWasAVictimOfFraudOrThe = () => {
+const IWasAVictimOfFraudOrThe = ({navigation}) => {
   return (
+    <ScrollView>
     <Screen>
     <View style={styles.iWasAVictimOfFraudOrThe}>
       <View style={styles.helloParent}>
@@ -12,7 +13,7 @@ const IWasAVictimOfFraudOrThe = () => {
           <Text style={styles.iWasA}>I was a victim of fraud or</Text>
           <Text style={styles.iWasA}>{"\n"}theft</Text>
         </Text>
-        <View
+        <Pressable
           style={[
             styles.groupParent,
             styles.groupParentPosition,
@@ -25,12 +26,13 @@ const IWasAVictimOfFraudOrThe = () => {
               styles.groupParentPosition,
               styles.parentPosition,
             ]}
+            onPress={() => navigation.navigate("Terminate")}
           >
             <View style={styles.groupChild} />
             <View style={[styles.maskGroup236, styles.groupParentPosition]} />
           </View>
           <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
-        </View>
+        </Pressable>
         <View
           style={[
             styles.rectangleGroup,
@@ -161,6 +163,7 @@ const IWasAVictimOfFraudOrThe = () => {
       </View>
     </View>
     </Screen>
+    </ScrollView>
   );
 };
 

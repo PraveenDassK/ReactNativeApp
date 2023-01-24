@@ -4,9 +4,9 @@ import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Success = ({route,navigation}) => {
-  console.log(route.params.params.successText)
-  const text = route.params.params.successText
-  const path = route.params.params.finishScreen ? route.params.finishScreen : "AccountMain"
+  console.log(route?.params?.params?.successText)
+  const text = route?.params?.params?.successText
+  const path = route?.params?.params?.finishScreen ? route.params.finishScreen : "AccountMain"
   console.log(text)
   return (
     <Pressable
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width:"100%"
   },
   iconAwesomeCheckCircle: {
-    marginTop: -138.06,
+    marginTop: -78.06,
     marginLeft: -93.56,
     left: "50%",
     width: 187,

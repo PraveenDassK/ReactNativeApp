@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, Switch,ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 
@@ -45,6 +45,7 @@ const CardSettings = ({navigation}) => {
   sendRequest()
 
   return (
+    <ScrollView>
     <View style={styles.cardSettings}>
      
       <View style={styles.helloParent}>
@@ -429,6 +430,7 @@ const CardSettings = ({navigation}) => {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -441,7 +443,7 @@ const styles = StyleSheet.create({
   },
   cardLayout: {
     lineHeight: 14,
-    width: "43%",
+    width: "90%",
   },
   replaceCardLostStolenNotPosition: {
     marginTop: -13.5,
@@ -490,7 +492,7 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
-    top: "-10%"
+    top: "-1%"
   },
   paymentsParentLayout: {
     height: 41,
@@ -608,12 +610,12 @@ const styles = StyleSheet.create({
     marginTop: -170.5,
   },
   onlineTransactions: {
-    top: 1,
-    width: 257,
+    top: 0,
+    width: "90%",
   },
   internetBasedTransactionsAr: {
     lineHeight: 12,
-    width: 192,
+    width: "90%",
     bottom: 0,
   },
   globeIcon: {
@@ -709,7 +711,7 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     width: "100%",
-    height: "100%",
+    height: 670,
   },
   arrowPosition: {
     top: "6%",

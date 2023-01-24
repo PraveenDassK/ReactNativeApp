@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Text, StyleSheet, View,  TextInput} from "react-native";
+import { Text, StyleSheet, View,  TextInput, ScrollView} from "react-native";
 import { Formik } from "formik"
 import * as Yup from 'yup'
 
@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
+
 
 const validationSchema = Yup.object().shape({
   buildOrHouseNo: Yup.string().required().label("Building name or house number"),
@@ -29,6 +30,7 @@ const PersonalAddress = ({navigation}) => {
   }
 
   return (
+    <ScrollView>
     <Screen>
     <View style={styles.personalAddress}>
       <View style={styles.buildingNameOrNumberParent}>
@@ -68,8 +70,8 @@ const PersonalAddress = ({navigation}) => {
             styles.groupChild,
             styles.groupChildLayout,
             styles.groupChildBorder,
+            {paddingLeft:10}
           ]}
-          placeholder="1"
         />
           <View style={{ position: "absolute", top:190}}>
                 <ErrorMessage error={errors.buildOrHouseNo} visible={touched.buildOrHouseNo}/>
@@ -79,13 +81,7 @@ const PersonalAddress = ({navigation}) => {
           style={[styles.parentPosition, styles.groupChildLayout]}
           
         >
-          
-          <View style={[styles.helloParentPosition, styles.parentPosition]}>
-            <View style={styles.groupItem} />
-            <View style={[styles.maskGroup236, styles.helloParentPosition]} />
-          </View>
-          
-          <Text style={[styles.hello, styles.helloTypo]} onPress={handleSubmit}>Continue</Text>
+          <Button title="continue"  onPress={handleSubmit}/>
         </View>
         <TextInput
           keyboardType="default" 
@@ -95,8 +91,9 @@ const PersonalAddress = ({navigation}) => {
             styles.groupInner,
             styles.groupChildLayout,
             styles.groupChildBorder,
+            {paddingLeft:10}
           ]}
-         placeholder="2"
+        
         />
          <View style={{ position: "absolute", top:313}}>
                 <ErrorMessage error={errors.addressLine1} visible={touched.addressLine1}/>
@@ -109,8 +106,8 @@ const PersonalAddress = ({navigation}) => {
             styles.groupView,
             styles.groupChildLayout,
             styles.groupChildBorder,
+            {paddingLeft:10}
           ]}
-          placeholder="3"
         />
         <View style={{ position: "absolute", top:403}}>
           <ErrorMessage error={errors.addressLine2} visible={touched.addressLine2}/>
@@ -123,27 +120,15 @@ const PersonalAddress = ({navigation}) => {
             styles.groupChild1,
             styles.groupChildLayout,
             styles.groupChildBorder,
+            {paddingLeft:10}
           ]}
-          placeholder="4"
+          
         />
          <View style={{ position: "absolute", top:554}}>
             <ErrorMessage error={errors.townOrCity} visible={touched.townOrCity}/>
         </View>
 
-        <View
-          style={styles.enterPostcode}
-          onPress={() => navigation.navigate("BusinessAddress2")}
-        >
-          <Text
-            style={[
-              styles.enterPostcode1,
-              styles.helloTypo,
-              styles.enterPostcode1Typo,
-            ]}
-          >
-            Enter postcode?
-          </Text>
-        </View>
+      
         <View style={[styles.helloParent, styles.helloParentPosition]}>
           <Text style={[styles.hello1, styles.helloParentPosition]}>
             Your Address
@@ -161,6 +146,7 @@ const PersonalAddress = ({navigation}) => {
       </View>
     </View>
     </Screen>
+    </ScrollView>
   );
 };
 
@@ -298,14 +284,14 @@ const styles = StyleSheet.create({
   },
   buildingNameOrNumberParent: {
     width: "100%",
-    height: 683,
+    height: 670,
   },
   personalAddress: {
     flex: 1,
     paddingLeft: GlobalStyles.Padding.padding_7xs,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.gray_100,
   },
 });
 

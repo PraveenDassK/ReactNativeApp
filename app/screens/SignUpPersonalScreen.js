@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable } from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import AuthContext from "../auth/context";
 import Button from "../components/Button"
 import ErrorMessage from "../components/forms/ErrorMessage";
+import FadeInView from "../components/fadeInview";
 import GlobalStyles from "../../GlobalStyles";
 import otpApi from "../api/otp";
 import Screen from "../components/Screen";
@@ -22,10 +24,6 @@ const validationSchema = Yup.object().shape({
 
 const SignUpPersonalScreen = ({ navigation }) => {
 
-  // const flingGesture = Gesture.Fling()
-  // .direction(Directions.UP)
-  // .onStart(()=>console.log("start"))
-  // .onEnd(()=> navigation.navigate("Login"));
 
   const prefix = "44"
 
@@ -46,17 +44,19 @@ const SignUpPersonalScreen = ({ navigation }) => {
   return (
     <Screen>
       <SwipeUp>
-    <View style={styles.signUpPersonal}>
+    <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
       <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
         <View style={[styles.hello1, styles.enterColor]}>
-          <Text style={[styles.getStartedWith, styles.enterColor,]}>Get Started With</Text>
+          <Text style={[styles.getStartedWith, styles.enterColor]}>Get Started With</Text>
           <Text style={styles.getStartedWith}>Carbonyte</Text>
         </View>
         <Text style={[styles.enterYourMobileNumber, styles.enterColor]}>
           Enter your mobile number
         </Text>
-        <Text styrle={[styles.hello2, styles.text1Typo]}>
-          <Text>{`We will send an OTP to verify `}</Text>
+        <Text style={[styles.hello2, styles.text1Typo]}>
+          <Text>We will send an OTP to verify</Text>
+        </Text>
+        <Text style={[styles.hello2, styles.text1Typo, {top:"60%"}]}>
           <Text >your number and email ID.</Text>
         </Text>
       </View>
@@ -68,10 +68,9 @@ const SignUpPersonalScreen = ({ navigation }) => {
         >
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
-            <View style={[styles.component1981, styles.mt14]}>
+            <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
       
               <TextInput 
-              
                 keyboardType="numeric" 
                 onBlur={() => setFieldTouched("phoneNumber")}
                 onChangeText={handleChange("phoneNumber")}
@@ -126,11 +125,12 @@ const SignUpPersonalScreen = ({ navigation }) => {
           )}
         </Formik>
       <View style={styles.swipeUp}>
-        <Text>Swipe up if you already have an account</Text>
+        <MaterialCommunityIcons name="chevron-up" size={24} color="black" />
+        <FadeInView>
+          <Text>Swipe up if you already have an account</Text>
+        </FadeInView>
       </View>
-       {/* <GestureDetector gesture={flingGesture}>
-        <Text>Swipe up if you already have an account</Text>
-        </GestureDetector> */}
+      
         
 
     </View>
@@ -221,10 +221,23 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   childBorder: {
-    //borderWidth: 1,
-    //borderColor: "#0101FD",
+    borderWidth: 1,
+    borderColor: "#e8e8e8",
     borderStyle: "solid",
     borderRadius: GlobalStyles.Border.br_lg,
+    backgroundColor: GlobalStyles.Color.white,
+    
+  },
+  help: {
+    borderWidth: 1,
+    borderColor: "#e8e8e8",
+    borderStyle: "solid",
+    height: 60,
+    borderRadius: GlobalStyles.Border.br_lg,
+    right: 0,
+    top: "50%",
+    left: 0,
+    position: "absolute",
     backgroundColor: GlobalStyles.Color.white,
   },
   backgroundPosition: {
@@ -597,7 +610,7 @@ const styles = StyleSheet.create({
   },
   component1981: {
     height: verticalScale(850),
-    width: "100%",
+    width: "97%",
   },
   component1971Child: {
     right: horizontalScale(0),

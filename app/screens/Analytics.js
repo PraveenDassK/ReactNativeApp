@@ -176,10 +176,18 @@ const Analytics = ({navigation}) => {
                         <Text style={styles.money}>£ {totalSpend}</Text>
                         <View style={styles.spendConainer}>
                           <View style={styles.noOfPayments}>
-                            <Text>No. of Payments</Text>
+                            <Text style={{
+                                color: "#999",
+                                fontSize: 14
+                            }}>No. of Payments</Text>
                           </View>
                           <View style={styles.payments}>
-                            <Text> {totalTransactions}</Text>
+                            <Text
+                              style={{
+                                color: "#999",
+                                fontSize: 14
+                              }}
+                            > {totalTransactions}</Text>
                           </View>
                         </View>
 
@@ -204,7 +212,9 @@ const Analytics = ({navigation}) => {
                         height={40}
                         borderRadius={13}
                         borderColor={"transparent"}
+                        color={['#42b0f5', '#ad42f5', '#17eb65', '#eb17d5'][index]}
                         unfilledColor={"white"}
+
                       />
                       <View style={styles.progressItems}>
                         <View style={styles.shopping}>
@@ -213,7 +223,12 @@ const Analytics = ({navigation}) => {
                         </View>
                         <View style={styles.spendingAmount}>
                           <Text>£{transactionCategories[transaction].toFixed(2)}</Text>
-                          <Text style={{fontSize:8}}>7.2 kg C02</Text>
+                          <Text 
+                          style={{
+                            fontSize:8,
+                            color: "#999",
+                           
+                          }}>7.2 kg C02</Text>
                         </View>
                       </View>
                       </View>
@@ -307,6 +322,9 @@ const styles = StyleSheet.create({
   avgSpendContainer: {
     backgroundColor: "white",
     borderRadius: moderateScale(15),
+    borderWidth: 1,
+    borderColor: "#e8e8e8",
+    borderStyle: "solid",
     
     paddingHorizontal: horizontalScale(15),
     paddingVertical: verticalScale(15),
@@ -320,6 +338,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: moderateScale(15),
+    borderWidth: 1,
+    borderColor: "#e8e8e8",
+    borderStyle: "solid",
     flex: 1,
     flexDirection: "row",
     marginTop: verticalScale(20),
@@ -446,7 +467,9 @@ const styles = StyleSheet.create({
   totalSpendContainer: {
     backgroundColor: "white",
     borderRadius: moderateScale(15),
-
+    borderWidth: 1,
+    borderColor: "#e8e8e8",
+    borderStyle: "solid",
     paddingHorizontal: horizontalScale(15),
     paddingVertical: verticalScale(15),
     width: 170,
@@ -454,11 +477,13 @@ const styles = StyleSheet.create({
   textSub: {
     fontWeight: "bold",
     textAlign: "left",
-    color: "#1B2356"
+    color: "#1B2356",
+    fontSize:16
+  
 
   },
   title: {
-    fontSize: moderateScale(30),
+    fontSize: moderateScale(28),
     fontWeight: 'bold',
     lineHeight: verticalScale(30),
     width: '70%',
