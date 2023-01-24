@@ -130,11 +130,7 @@ const AccountNavigator = () => (
 )
 const StackNavigator = () => (
   
-<<<<<<< HEAD
-  <Stack.Navigator initialRouteName="AccountMain">
-=======
-  <Stack.Navigator initialRouteName="DirectorsOrPartners">
->>>>>>> 0a0388ee0b4f2b6339bc5bc01350acdc60bced8d
+  <Stack.Navigator initialRouteName="Carbon">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="TestEnviro" component={TestEnviro}/>
     <Stack.Screen  name="TermsAndConditions" component={TermsAndConditions}/>
