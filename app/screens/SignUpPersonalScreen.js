@@ -38,7 +38,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
     if (!result.ok) return  alert('Could not send otp')
     // alert('Success')
     
-    navigation.navigate("OTPVerificationPersonal", { registration: true })
+    navigation.navigate("OTPVerificationPersonal2", { registration: true })
   }
 
   return (

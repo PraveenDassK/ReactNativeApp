@@ -405,14 +405,14 @@ const AccountMain = ({navigation}) => {
         }
         <View style={[styles.groupChild9, styles.groupChild9ShadowBox]} />
         <View style={[styles.groupChild10, styles.childBorder]} />
-          <Pressable
+          {/* <Pressable
               onPress={() => navigation.navigate("AccountMainBusiness")}                      
             >
               <Text style={[styles.business, styles.businessTypo]}>
               Business
               </Text>
-            </Pressable>
-        <Text style={[styles.personal, styles.businessTypo]}>Personal</Text>
+            </Pressable> */}
+        {/* <Text style={[styles.personal, styles.businessTypo]}>Personal</Text> */}
 
         <View
           style={[
@@ -452,7 +452,7 @@ const AccountMain = ({navigation}) => {
         {
           //Top bar links
         }
-        <View style={[styles.historyContainer, styles.addIconLayout]}>
+        {/* <View style={[styles.historyContainer, styles.addIconLayout]}>
           <Text style={[styles.history3, styles.historyTypo]}>
             <Pressable
               onPress={() => navigation.navigate("AccountMain")}                      
@@ -489,7 +489,7 @@ const AccountMain = ({navigation}) => {
               </Text>
             </Pressable>
           </Text>
-        </View>
+        </View> */}
 
 
         <View style={[styles.groupParent6, styles.groupPosition1]}>

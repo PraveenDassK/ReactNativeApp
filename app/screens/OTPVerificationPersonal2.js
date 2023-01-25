@@ -32,6 +32,9 @@ const validationSchema = Yup.object().shape({
 }) // add required if necessary
 
 const OTPVerificationPersonal2 = ({ navigation }) => {
+  const { user } = useContext(AuthContext)
+  const [count, setCount] = useState(45)
+  const [resendOTP, setResendOTP] = useState(null)
 
   const initialValues= {
     pVer1:'', 
@@ -53,14 +56,12 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
   const eVer3Ref = useRef()
   const eVer4Ref = useRef()
 
-  const [count, setCount] = useState(45)
-  const [resendOTP, setResendOTP] = useState(null)
-  const { user } = useContext(AuthContext)
+
+  
 
   const countdown = () => {
     setCount(prev => prev - 1)
 
-   
   }
 
   const handleSubmit = async({pVer1, pVer2, pVer3, pVer4, eVer1, eVer2, eVer3, eVer4, })=> {
@@ -74,7 +75,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
    
     const result = await otpVerificationAPI.otpVerification({email, phoneNumber, emailOTP, phoneOTP})
 
-    console.log('what is this', result.ok, result.data)
+    console.log('what is this Personal2', result.ok, result.data)
     console.log({email, phoneNumber, emailOTP, phoneOTP})
 
     if (!result.ok) return alert('Could not verify otp') 
