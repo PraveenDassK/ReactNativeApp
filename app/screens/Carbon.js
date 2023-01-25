@@ -96,8 +96,7 @@ const Carbon = ({route,navigation }) => {
         
             <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" onPress={() => console.log("Calulate carbon footprint")}/>
             <View style={styles.subContainer}>
-                    <Text 
-                    numberOflines={3}
+                    <Text numberOflines={3}
                     style={styles.text}
                     >
                         At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transcation
