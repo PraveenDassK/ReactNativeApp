@@ -15,6 +15,7 @@ const AddBeneficiary = ({navigation}) => {
   const [accountName, setAccountName] = useState("")
   const [iban, setIban] = useState("")
   const [sortCode, setSortCode] = useState("")
+  const [accNum, setAccNum] = useState("")
   
 
   return (
@@ -44,6 +45,18 @@ const AddBeneficiary = ({navigation}) => {
           placeholder={"Bank Name"}
 
           onChangeText={bankName => setBankName(bankName)}/>
+          <View style={[styles.groupChild, styles.lineViewPosition]} />
+        </View>
+        <View style={[styles.helloParent12, styles.groupPosition]}>
+          <Text
+            style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
+          >
+            Account Number
+          </Text>
+          <TextInput style={[styles.hello3, styles.helloTypo]} 
+          placeholder={"Account Number"}
+
+          onChangeText={accNum => setAccNum(accNum)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <View style={[styles.helloGroup, styles.groupPosition]}>
@@ -194,6 +207,10 @@ const styles = StyleSheet.create({
   },
   helloParent: {
     marginTop: -255.5,
+    right: 40,
+  },
+  helloParent12: {
+    marginTop: 135.5,
     right: 40,
   },
   helloGroup: {

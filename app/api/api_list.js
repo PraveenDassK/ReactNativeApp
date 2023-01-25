@@ -53,6 +53,10 @@ const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule
   }
 )
 
+const AddBeneficiary = (
+
+)=> client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary",)
+
 const SetToggles = (
   online,
   swipe,
