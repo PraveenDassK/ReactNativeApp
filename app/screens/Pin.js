@@ -33,7 +33,8 @@ const Pin = ({route,navigation}) => {
       alert("Pin is incorrect")
       return;
     } 
-    const response = await api.SendFunds();
+    const response = await api.SendFunds(route.params.amount);
+    console.log(response)
     navigation.navigate(route.params.successScreen,{"params" : route.params})
   }
 
