@@ -86,7 +86,7 @@ const Carbon = ({route,navigation }) => {
                     height: verticalScale(400) ,
                     width: "100%",
                 }}
-                source={require("../assets/leafTree.png")}
+                // source={require("../assets/leafTree.png")}
                 />
             </View>
             {/* <Text>

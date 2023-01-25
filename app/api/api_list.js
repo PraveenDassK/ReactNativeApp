@@ -31,6 +31,8 @@ const SetLimit = (amount) =>  client.post("https://api.carbonyte.io/transactionm
                               enfuceID + 
                               "&periodType=monthly&amount=" + amount)
 
+const GetProjectByID = (project) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?companyId=" + project)
+
 const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
   {
     "sourceAccountId": "A12277V1",
@@ -50,6 +52,51 @@ const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule
     "currency": "GBP",
     "amount": amount,
     "reference": "friends"
+  }
+)
+
+const AddBeneficiary = (
+  bankName,
+  accountName,
+  iban,
+  sortCode,
+  accNum
+)=> client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary",
+{ 
+    "externalReference": "", 
+    "name": "Renvick", 
+    "birthdate": "", 
+    "emailAddress": "renvick.f@enigma-tech.io", 
+    "phoneNumber": "08877996688", 
+    "destinationIdentifier": { 
+      "type": "SCAN", 
+      "accountNumber": accNum, 
+      "sortCode": sortCode, 
+      "iban": iban, 
+      "bic": "", 
+      "currency": "GBP", 
+      "countrySpecificDetails": { 
+        "bankName": bankName, 
+        "bankAddress": "", 
+        "bankCity": "", 
+        "bankBranchName": "", 
+        "bankBranchCode": "", 
+        "bankCode": "", 
+        "chineseId": "", 
+        "province": "", 
+        "business": true 
+      } 
+    }, 
+    "defaultReference": "friend",
+    "idToReplace": "",
+    "address": {
+      "addressLine1": "Bucknalls Lane",
+      "addressLine2": "",
+      "postTown": "London",
+      "postCode": "W2 1AS",
+      "country": "GB"
+    },
+    "qualifier": ""
   }
 )
 
@@ -89,5 +136,7 @@ export default {
     GetLimit,
     SetLimit,
     SendFunds,
-    VerifyLoginOTP
+    VerifyLoginOTP,
+    GetProjectByID,
+    Checkout
   };
