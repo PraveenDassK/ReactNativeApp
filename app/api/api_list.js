@@ -31,6 +31,8 @@ const SetLimit = (amount) =>  client.post("https://api.carbonyte.io/transactionm
                               enfuceID + 
                               "&periodType=monthly&amount=" + amount)
 
+const GetProjectByID = (project) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?companyId=" + project)
+
 const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
   {
     "sourceAccountId": "A12277V1",
@@ -89,5 +91,7 @@ export default {
     GetLimit,
     SetLimit,
     SendFunds,
-    VerifyLoginOTP
+    VerifyLoginOTP,
+    GetProjectByID,
+    Checkout
   };
