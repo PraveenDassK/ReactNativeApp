@@ -159,7 +159,7 @@ const GlobalStyles = {
   marginTop: "10%",
   marginLeft: "10%",
   width: "100%",
-  fontSize: 26,
+  fontSize: 28,
   fontWeight: "700",
   },
 

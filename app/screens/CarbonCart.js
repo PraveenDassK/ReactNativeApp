@@ -1,8 +1,11 @@
-import React, {useContext, useState, useEffect} from 'react'
-import { StyleSheet,  View, Text, Image, ScrollView, FlatList} from 'react-native'
+import React, {useContext, useState, useEffect} from 'react';
+import { StyleSheet,  View, Text, Image, ScrollView, FlatList, TouchableOpacity} from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import GlobalStyles from "../../GlobalStyles";
-import carbonApi from "../api/api_list"
+import carbonApi from "../api/api_list";
+import Button from "../components/Button";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
+
 
 const CarbonCart = ({route,navigation }) => {
   const [data, setData] = useState([])
@@ -52,7 +55,6 @@ const CarbonCart = ({route,navigation }) => {
 console.log(data)
 
   return (
-  <ScrollView>
     <View style={styles.mainContainer}>
     <View style={styles.titleTextRow}>
             <Text style={styles.titleText}>Your Cart</Text>
@@ -61,13 +63,13 @@ console.log(data)
     <View style={styles.divContainer}>
 
         <View style={styles.cartTitle}>
-            <Text style={styles.col1}>project</Text>
-            <Text style={styles.col2}>Unit</Text>
-            <Text style={styles.col3}>Price</Text>
+            <Text style={styles.heading1}>Project</Text>
+            <Text style={styles.heading2}>Unit</Text>
+            <Text style={styles.heading3}>Price</Text>
         </View>
 
         <View style={{width: "100%", backgroundColor: "#F6F5F8", height: 2 }}></View>
-
+        <ScrollView>
         <FlatList data={data} renderItem={({item}) => (
             <View style={styles.list}>
                 <Text style={styles.col1}>{item?.name}</Text>
@@ -76,13 +78,24 @@ console.log(data)
             </View>
         )}
         />
-
+        </ScrollView>
+        <View style={{width: "100%", backgroundColor: "#F6F5F8", height: 2 , top: 49}}></View>
+         <View style={{width: "100%", height: 50, top: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor: "white"}}>
+         <View style={styles.cartTitle}>
+                     <Text style={styles.heading1}>Total</Text>
+                     <Text style={styles.heading2}>?</Text>
+                     <Text style={styles.heading3}>£0.00</Text>
+                 </View>
+         </View>
     </View>
 
-
+       <View style={styles.bottom}>
+               <TouchableOpacity style={styles.button}>
+                   <Button title="Buy Projects" color="babyBlue"onPress={()=>setData("")}/>
+               </TouchableOpacity>
+           </View>
 
     </View>
-    </ScrollView>
   );
 };
 
@@ -91,6 +104,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         backgroundColor:  GlobalStyles.DivContainer.backgroundColor,
         width: "100%",
+        flex: 1,
         flex: GlobalStyles.DivContainer.flex,
     },
 
@@ -109,39 +123,82 @@ const styles = StyleSheet.create({
         marginTop: "5%",
         width: "80%",
         backgroundColor: "white",
-        height: "100%",
+        height: verticalScale(400),
         marginLeft: "10%",
-        borderRadius: 15
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
     },
 
     cartTitle: {
-        flexDirection: 'row',
-        width: "100%",
-        justifyContent: "space-around"
-    },
-
-    list: {
+    marginTop: "2.5%",
+    marginBottom: "2.5%",
         flexDirection: 'row',
         width: "100%",
         justifyContent: "space-around",
 
     },
 
-    col1: {
-        flex: 4,
+    list: {
+    paddingTop: "2.5%",
+        flexDirection: 'row',
         width: "100%",
-        textAlign: "center"
+        justifyContent: "space-around",
+
+    },
+
+    heading1: {
+        flex: 5,
+        width: "100%",
+        textAlign: "center",
+        fontWeight: "700",
+                fontSize: 14,
+
+    },
+    heading2: {
+        flex: 2.5,
+        textAlign: "center",
+        fontWeight: "700",
+                fontSize: 14,
+
+    },
+    heading3: {
+        flex: 2.5,
+        textAlign: "center",
+        fontWeight: "700",
+        fontSize: 14,
+    },
+
+
+
+    col1: {
+        paddingLeft: "2.5%",
+        flex: 5,
+        width: "100%",
+        textAlign: "left",
+        fontWeight: "600"
     },
 
     col2:{
-        flex: 3,
+        flex: 2.5,
         textAlign: "center"
     },
 
     col3: {
-        flex: 3,
+        flex: 2.5,
         textAlign: "center"
-    }
+    },
+
+    bottom: {
+            bottom: "5%",
+            flex: 1,
+            justifyContent: 'flex-end',
+
+        },
+
+        button: {
+            width: "80%",
+            left: "10%"
+        }
 });
 
 export default CarbonCart;
