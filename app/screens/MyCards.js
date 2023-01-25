@@ -34,9 +34,8 @@ const MyCards = ({ navigation }) => {
       setRecent(oldArray => [...oldArray, transData.content[i]]);
     }
   }
-  console.log(recentTransactions[0].account.name)
-  console.log(recentTransactions[0].transactionDate)
-  console.log(recentTransactions[0].amount)
+  console.log(recentTransactions)
+
   //CardFreezing
   const [cardFrozen, setFrozen] = useState(false)
   const toggleCard = () => {
@@ -66,7 +65,7 @@ const MyCards = ({ navigation }) => {
             </Text>
 
             <View style={[styles.groupView, styles.groupPosition1]}>
-              {/* <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
+              <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
                 <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                   <Text style={[styles.lanceBogrol, styles.bTypo]}>
                     Grocery Market
@@ -78,7 +77,7 @@ const MyCards = ({ navigation }) => {
                     <Text style={styles.september222022}>12:06 PM</Text>
                   </Text>
                 </View>
-                <Text style={[styles.text, styles.textTypo]}>- £7.00</Text>
+                <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
                 <Image
                   style={styles.maskGroup14}
                   resizeMode="contain"
@@ -103,22 +102,22 @@ const MyCards = ({ navigation }) => {
                   resizeMode="contain"
                   source={require("../assets/icon-supermarketplaceholder.png")}
                 />
-              </View> */}
+              </View>
               <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
                 <View
                   style={[styles.lanceBogrolContainer, styles.lancePosition]}
                 >
                   <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  {recentTransactions[2].account.name}
+                    Grocery Market
                   </Text>
                   <Text style={[styles.moneyTransfer, styles.bTypo]}>
                     <Text style={styles.september222022}>
-                      {moment(recentTransactions[2].transactionDate).format('LL')}
+                      September 22, 2022
                     </Text>
-                    {/* <Text style={styles.september222022}>12:06 PM</Text> */}
+                    <Text style={styles.september222022}>12:06 PM</Text>
                   </Text>
                 </View>
-                <Text style={[styles.text, styles.textTypo]}>- £{recentTransactions[2].amount}</Text>
+                <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
                 <Image
                   style={styles.maskGroup14}
                   resizeMode="contain"
@@ -128,16 +127,16 @@ const MyCards = ({ navigation }) => {
               <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
                 <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                   <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  {recentTransactions[1].account.name}
+                    Spotify Music
                   </Text>
                   <Text style={[styles.moneyTransfer, styles.bTypo]}>
                     <Text style={styles.september222022}>
-                    {moment(recentTransactions[1].transactionDate).format('LL')}
+                      September 22, 2022
                     </Text>
-                    {/* <Text style={styles.september222022}>12:06 PM</Text> */}
+                    <Text style={styles.september222022}>12:06 PM</Text>
                   </Text>
                 </View>
-                <Text style={[styles.text, styles.textTypo]}>- £{recentTransactions[1].amount}</Text>
+                <Text style={[styles.text, styles.textTypo]}>- £50.00</Text>
                 <Image
                   style={[styles.maskGroup16, styles.groupPosition]}
                   resizeMode="contain"
@@ -147,16 +146,16 @@ const MyCards = ({ navigation }) => {
               <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
                 <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
                   <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  {recentTransactions[0].account.name}
+                    Lance Bogrol
                   </Text>
                   <Text style={[styles.moneyTransfer, styles.bTypo]}>
                     <Text style={styles.september222022}>
-                    {moment(recentTransactions[0].transactionDate).format('LL')}
+                      September 22, 2022
                     </Text>
-                    {/* <Text style={styles.september222022}>12:06 PM</Text> */}
+                    <Text style={styles.september222022}>12:06 PM</Text>
                   </Text>
                 </View>
-                <Text style={[styles.text4, styles.textTypo]}>+ £{recentTransactions[0].amount}</Text>
+                <Text style={[styles.text4, styles.textTypo]}>+ £350.00</Text>
                 <Image
                   style={[styles.groupItem, styles.groupPosition]}
                   resizeMode="contain"
