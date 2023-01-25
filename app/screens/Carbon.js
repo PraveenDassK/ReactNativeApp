@@ -86,7 +86,7 @@ const Carbon = ({route,navigation }) => {
                     height: verticalScale(400) ,
                     width: "100%",
                 }}
-                // source={require("../assets/leafTree.png")}
+                source={require("../assets/leafTree.png")}
                 />
             </View>
             {/* <Text>
@@ -172,7 +172,7 @@ const Carbon = ({route,navigation }) => {
                         <Button title="ADD TO CART" color='babyBlue' onPress={() => addToCart(item.id)}/>
                         <View style={styles.benifitsContainer}>
                             {item.tags.length ? (
-                                <View >   
+                                <View >
                                 <Text style={[styles.tags, styles.tree]}>Co-benifits</Text>
                                 </View>
                             ): null }
