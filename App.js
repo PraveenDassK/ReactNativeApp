@@ -90,6 +90,9 @@ import CarbonCart from "./app/screens/CarbonCart";
 import TestEnviro from "./app/screens/TestEnviro";
 import TermsAndConditions from "./app/screens/TermsAndConditions";
 
+import VirtualEcoSystem from "./app/screens/VirtualEcoSystem";
+
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -226,8 +229,9 @@ const StackNavigator = () => (
     <Stack.Screen name="SendEnterPIN" component={SendEnterPIN}/>
 
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
+    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
 
-    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>    
+    <Stack.Screen  name="VirtualEcoSystem" component={VirtualEcoSystem}/>
   </Stack.Navigator>
 )
 
