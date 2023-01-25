@@ -66,7 +66,7 @@ console.log(data)
             <Text style={styles.col3}>Price</Text>
         </View>
 
-        <View style={width: "100%", backgroundColor: "#F6F5F8", }
+        <View style={{width: "100%", backgroundColor: "#F6F5F8", height: 2 }}></View>
 
         <FlatList data={data} renderItem={({item}) => (
             <View style={styles.list}>
