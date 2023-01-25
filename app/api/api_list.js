@@ -56,8 +56,49 @@ const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule
 )
 
 const AddBeneficiary = (
-
-)=> client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary",)
+  bankName,
+  accountName,
+  iban,
+  sortCode,
+  accNum
+)=> client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary",
+{ 
+    "externalReference": "", 
+    "name": "Renvick", 
+    "birthdate": "", 
+    "emailAddress": "renvick.f@enigma-tech.io", 
+    "phoneNumber": "08877996688", 
+    "destinationIdentifier": { 
+      "type": "SCAN", 
+      "accountNumber": accNum, 
+      "sortCode": sortCode, 
+      "iban": iban, 
+      "bic": "", 
+      "currency": "GBP", 
+      "countrySpecificDetails": { 
+        "bankName": bankName, 
+        "bankAddress": "", 
+        "bankCity": "", 
+        "bankBranchName": "", 
+        "bankBranchCode": "", 
+        "bankCode": "", 
+        "chineseId": "", 
+        "province": "", 
+        "business": true 
+      } 
+    }, 
+    "defaultReference": "friend",
+    "idToReplace": "",
+    "address": {
+      "addressLine1": "Bucknalls Lane",
+      "addressLine2": "",
+      "postTown": "London",
+      "postCode": "W2 1AS",
+      "country": "GB"
+    },
+    "qualifier": ""
+  }
+)
 
 const SetToggles = (
   online,
