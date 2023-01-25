@@ -66,6 +66,8 @@ console.log(data)
             <Text style={styles.col3}>Price</Text>
         </View>
 
+        <View style={width: "100%", backgroundColor: "#F6F5F8", }
+
         <FlatList data={data} renderItem={({item}) => (
             <View style={styles.list}>
                 <Text style={styles.col1}>{item?.name}</Text>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     },
 
     divContainer: {
-        marginTop: "10%",
+        marginTop: "5%",
         width: "80%",
         backgroundColor: "white",
         height: "100%",
@@ -116,6 +118,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: "100%",
         justifyContent: "space-around"
+    },
+
+    list: {
+        flexDirection: 'row',
+        width: "100%",
+        justifyContent: "space-around",
+
     },
 
     col1: {
