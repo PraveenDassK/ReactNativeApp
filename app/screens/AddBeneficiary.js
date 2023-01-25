@@ -26,7 +26,9 @@ const AddBeneficiary = ({navigation}) => {
             iban:iban,
             sortCode:sortCode,
           accNum: accNum})
+    console.log(response)
   }
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -93,7 +95,7 @@ const AddBeneficiary = ({navigation}) => {
         </View>
         <Pressable
           style={[styles.groupFrame, styles.groupPosition]}
-          onPress={addBene()}
+          onPress={() => addBene()}
         >
           <View style={[styles.groupWrapper, styles.wrapperPosition]}>
             <View style={[styles.groupWrapper, styles.wrapperPosition]}>

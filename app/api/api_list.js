@@ -61,13 +61,13 @@ const AddBeneficiary = (
   iban,
   sortCode,
   accNum
-)=> client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary",
+)=> client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary/C1220XHD",
 { 
     "externalReference": "", 
-    "name": "Renvick", 
+    "name": accountName, 
     "birthdate": "", 
-    "emailAddress": "renvick.f@enigma-tech.io", 
-    "phoneNumber": "08877996688", 
+    "emailAddress": "", 
+    "phoneNumber": "", 
     "destinationIdentifier": { 
       "type": "SCAN", 
       "accountNumber": accNum, 
@@ -138,5 +138,6 @@ export default {
     SendFunds,
     VerifyLoginOTP,
     GetProjectByID,
-    Checkout
+    Checkout,
+    AddBeneficiary
   };
