@@ -17,7 +17,7 @@ const CarbonCart = ({route,navigation }) => {
     const projectList = route.params
 
     let projects = []
-    await (projectList|| []).forEach(async(element) => {
+    await projectList.forEach(async(element) => {
 
       let project = await carbonApi.GetProjectByID(element.projectId)
       console.log(project)

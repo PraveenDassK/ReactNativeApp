@@ -86,7 +86,7 @@ const Carbon = ({route,navigation }) => {
                     height: verticalScale(400) ,
                     width: "100%",
                 }}
-                // source={require("../assets/leafTree.png")}
+                source={require("../assets/leafTree.png")}
                 />
             </View>
             {/* <Text>
@@ -116,13 +116,15 @@ const Carbon = ({route,navigation }) => {
                 </View>
             </View>
             <View style={{marginTop: verticalScale(20)}}>
-                <Button title="VISIT YOUR VIRTUAL FOREST" color='none' style={{borderColor: 'blue', borderWidth: horizontalScale(1),}} fontColor={{color: 'blue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
-                
+                <View style={styles.doubleButtonDiv}>
+                <Button style={{width: "49%", borderColor: "#D8EBF9", borderWidth: horizontalScale(1.5)}} title="VISIT YOUR VIRTUAL FOREST" color='none' fontColor={{color: 'blue'}} onPress={()=> navigation.navigate("VirtualEcoSystem")}/>
+                <Button style={{width: "49%", borderColor: '#D8EBF9', borderWidth: horizontalScale(1.5)}} title="VISIT YOUR ECO SUMMARY" color='none' fontColor={{color: 'blue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
+                </View>
             </View>
 
-            <View style={{marginBottom: "5%"}}>
+            <View style={{marginBottom: "5%", textAlign: "center"}}>
                 <Text style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</Text>
-                <Text style={styles.description}>We only profile high-quality projects that meet our minimun standards in relation to carbon + biodiversity + social benifits</Text>
+                <Text style={styles.description}>We only profile high-quality projects that meet our minimum standards in relation to carbon + biodiversity + social benefits</Text>
             </View>
                 <Button title="VISIT YOUR CART" color='babyBlue' onPress={()=> navigation.navigate("CarbonCart",cart)}/>
 
@@ -138,10 +140,10 @@ const Carbon = ({route,navigation }) => {
                     <View style={styles.listItems}>
                         
                         <Image
-                        resizeMode={item.image !== "" ? 'stretch': 'contain'}
+                        resizeMode={item.image !== "" ? 'contain': 'contain'}
                         style={[styles.listImage, {
                             width: horizontalScale(300),
-                            height: verticalScale(180) 
+                            height: verticalScale(180)
                         }]}
                         source={
                             
@@ -169,10 +171,13 @@ const Carbon = ({route,navigation }) => {
                                 style={styles.description}
                             >{item.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}...</Text>
                         </View>
-                        <Button title="ADD TO CART" color='babyBlue' onPress={() => addToCart(item.id)}/>
+                        <View style={styles.doubleButtonDiv}>
+                        <Button style={{width: "49%"}} title="ADD TO CART" color='babyBlue' onPress={() => addToCart(item.id)}/>
+                        <Button style={{width: "49%"}} title="Learn More" color='babyBlue' onPress={() => addToCart(item.id)}/>
+                        </View>
                         <View style={styles.benifitsContainer}>
                             {item.tags.length ? (
-                                <View >   
+                                <View >
                                 <Text style={[styles.tags, styles.tree]}>Co-benifits</Text>
                                 </View>
                             ): null }
@@ -211,7 +216,7 @@ const styles = StyleSheet.create({
     description:{
         color: "grey",
         marginTop: verticalScale(10),
-        textAlign: "left"
+        textAlign: "center"
 
         
     },
@@ -320,6 +325,13 @@ const styles = StyleSheet.create({
                 fontWeight: GlobalStyles.Title.fontWeight,
                 color: GlobalStyles.NavBarBottomText.fontColor,
             },
+
+        doubleButtonDiv:{
+            flexDirection: 'row',
+            width: "100%",
+
+            justifyContent: "space-between",
+        }
 
 })
 

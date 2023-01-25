@@ -165,7 +165,6 @@ const styles = StyleSheet.create({
   listBoxContainer:{
     width:"100%",
     height:"50%",
-    backgroundColor:"grey"
   },
   searchBox:{
     width:"100%",
@@ -181,7 +180,10 @@ const styles = StyleSheet.create({
   },
   benBoxCon:{
     width:"100%",
-    backgroundColor:"white"
+    backgroundColor:"white",
+    borderRadius: 50,
+    padding:"5%",
+    marginTop: "2.5%",
   }
 });
 
