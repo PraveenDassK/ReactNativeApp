@@ -206,7 +206,6 @@ const GlobalStyles = {
     width: "80%",
     height10: "10%",
     marginLeft: "10%",
-
     marginTop: "2.5%",
     flex: 1,
     borderRadius: 15
@@ -215,6 +214,20 @@ const GlobalStyles = {
   imageBox: {
     width: "80%",
     imageFit: "100%",
+  },
+
+  NavBar: {
+    fontSize: 14,
+    textAlign: "center",
+    fontWeight: "700",
+    fontColor: "#000000"
+  },
+
+  NavBarBottomText: {
+    fontSize: 14,
+        textAlign: "center",
+        fontWeight: "300",
+        fontColor: "#000000"
   }
 
   };
