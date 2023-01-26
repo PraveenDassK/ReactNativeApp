@@ -54,9 +54,10 @@ const HomeScreenPersonal = ({navigation}) => {
           transactionList.push(dataHold)
 
           pageShow.push(
-            <View
-              style={styles.transactionBox}
+            <Pressable
+              style={[styles.transactionBox,styles.rounded,styles.shadow]}
               key={i}
+              onPress={() => console.log("!")}
             >
               <Image
                 style={[styles.transactionPicture]}
@@ -64,21 +65,21 @@ const HomeScreenPersonal = ({navigation}) => {
                 source={require("../assets/image-profileplaceholder.png")}
               />
               <Text
-                style={styles.transactionText}
+                style={[styles.transactionText,styles.subtitleText]}
               >
                {dataHold.account.customerName}
               </Text>
               <Text
-                style={styles.transactionText}
-              >
-                {dataHold.transactionDate}
+                style={[styles.transactionText,styles.subtitleText]}
+                >
+                {moment(dataHold.transactionDate).format("MMM Do YY")}
               </Text>
               <Text
-                style={styles.transactionText}
-              >
-                {dataHold.amount}
+                style={[styles.transactionText,styles.subtitleText]}
+                >
+                £{dataHold.amount}
               </Text>
-            </View>
+            </Pressable>
           )
         }
         setTransactionData( {
@@ -90,7 +91,10 @@ const HomeScreenPersonal = ({navigation}) => {
     }
   
     let currency = (transactionData ? transactionData.transactions[0].amount : "£")
-    
+
+    const catNames = ["Helth", "fod", "hoose", "sping", "tansport"]
+    const dataPercentages = ["70%","50%","40%","30%","20%"]
+
     /**
      * @dev Data needed for this page
      *      Verification status
@@ -153,7 +157,7 @@ const HomeScreenPersonal = ({navigation}) => {
 
                 <View style={styles.totalWalletBalanceContainer}>
                     <Text style={styles.totalWalletBalanceText}>Total Wallet Balance</Text>
-                    <Text style={styles.BalanceText}>£{balance}</Text>
+                    <Text style={[styles.BalanceText,styles.blueTitle]}>£{balance}</Text>
                     <Text style={styles.dateText}>{todaydate}</Text>
                 </View>
 
@@ -191,57 +195,77 @@ const HomeScreenPersonal = ({navigation}) => {
             {/**
              * @dev Carbon spending section
              */}
-            <View style={styles.carbonSpendingDiv}>
+            <View style={[styles.carbonSpendingDiv,styles.rounded]}>
                 <View style={styles.carbonSpendingTitleDiv}>
-                        <Text style={styles.carbonSpendingText}>Carbon Spending</Text>
+                        <Text style={styles.titleText}>Carbon Spending</Text>
                 </View>
                 {/**
                  * @notice the actual carbon holder
                  */}
                 <View style={styles.carbonItemDiv}>
                   <View style={[styles.estimatedCarbonDiv,styles.shadow]}>
-                    <Text>2400</Text>
+                    <Text style={styles.blueTitle}>2400</Text>
                     <Text>Estimated Kg of CO2</Text>
                   </View>
-                  <View style={[styles.carbonSpendingAnalysysDiv]}>
+                  <View style={[styles.carbonSpendingAnalysysDiv,styles.rounded,styles.shadow]}>
 
-                    <Text>
-                      Cat 1
+                    <Text style={styles.subtitleText}>
+                    {catNames[0]}
                     </Text>
-                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded,styles.shadow]}>
-                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = "20%" backgroundColor = "#E4732D"/>
+                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded]}>
+                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = {dataPercentages[0]} backgroundColor = "#E4732D">
+                        <Text style={styles.barText}>
+                        {dataPercentages[0]}
+                        </Text>
+                      </View>
                     </View>  
 
-                    <Text>
-                      Cat 2
+                    <Text style={styles.subtitleText}>
+                    {catNames[1]}
                     </Text>
-                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded,styles.shadow]}>
-                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = "50%" backgroundColor = "#F3B53F"/>
+                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded]}>
+                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = {dataPercentages[1]} backgroundColor = "#F3B53F">
+                        <Text style={styles.barText}>
+                        {dataPercentages[1]}
+                        </Text>
+                      </View>
                     </View>  
 
-                    <Text>
-                      Cat 3
+                    <Text style={styles.subtitleText}>
+                    {catNames[2]}
                     </Text>
-                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded,styles.shadow]}>
-                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = "80%" backgroundColor = "#DC85F5"/>
+                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded]}>
+                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = {dataPercentages[2]} backgroundColor = "#DC85F5">
+                        <Text style={styles.barText}>
+                        {dataPercentages[2]}
+                        </Text>
+                      </View>
                     </View>  
 
-                    <Text>
-                      Cat 4
+                    <Text style={styles.subtitleText}>
+                    {catNames[3]}
                     </Text>
-                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded,styles.shadow]}>
-                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = "40%" backgroundColor = "#5888F5"/>
+                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded]}>
+                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = {dataPercentages[3]} backgroundColor = "#5888F5">
+                        <Text style={styles.barText}>
+                        {dataPercentages[3]}
+                        </Text>
+                      </View>
                     </View>  
 
-                    <Text>
-                      Cat 5
+                    <Text style={styles.subtitleText}>
+                    {catNames[4]}
                     </Text>
-                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded,styles.shadow]}>
-                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = "60%" backgroundColor = "#5AC661"/>
+                    <View style={[styles.carbonSpendingAnalysysBarBackground,styles.rounded]}>
+                      <View style={[styles.carbonSpendingAnalysysBarProgress,styles.rounded]} width = {dataPercentages[4]} backgroundColor = "#5AC661">
+                        <Text style={styles.barText}>
+                        {dataPercentages[4]}
+                        </Text>
+                      </View>
                     </View>  
 
                     <View style={[styles.carbonAssetsDiv]}>
-                      <Text>
+                      <Text style={styles.titleText}>
                         Carbon Assets
                       </Text>
                       <View style={[styles.tokenBox]}>
@@ -262,37 +286,106 @@ const HomeScreenPersonal = ({navigation}) => {
              * @dev Transactions section
              */}
             <View style={styles.transactionsContainer}>
-              <Text style={styles.carbonSpendingText}>
+              <Text style={styles.titleText}>
                 Recent Transactions
               </Text>
               {transactionTable}
             </View>
 
-            <View style={styles.carbonContainer}>
+            <View style={[styles.carbonContainer,styles.rounded,styles.shadow]}>
+              <View style={styles.treeContainer}>
+                <Image style={styles.treeImage} resizeMode="contain" source={require("../assets/image-tree.png")} />
+              </View>
+             <View width = "100%" height = "40%">
+                <Text style={[styles.congratulationsText]}>
+                  Congratulations!
+                </Text>
+                <Text style={[styles.congratulationsText]}>
+                    You have planted 5 trees with advance card purchase
+                </Text>
+                <Text style={[styles.congratulationsText]}>
+                  View more
+                </Text>
+             </View>
+            </View>
 
+            <View style={[styles.referContainer,styles.rounded,styles.shadow]}>
+              <Text>
+                Refer and Earn 
+              </Text>
+              <Text>
+                Carbon Tokens 
+              </Text>
+              <Text>
+                Refer Now>
+              </Text>
             </View>
 
         </View>
     </ScrollView>  
-  );};
+  );
+};
   
   const styles = StyleSheet.create({
+    congratulationsText:{
+      textAlign:"center",
+      width:"100%",
+      backgroundColor:"black",
+      height:"10%"
+    },
+    titleText:{
+      top: 2,
+      left: 10,
+      fontSize: 18,
+      fontWeight: "700",
+    },
+    subtitleText:{
+      fontSize: 15,
+    },
+    barText:{
+      left:20,
+      top:"25%",
+      fontSize: 15,
+      fontWeight:"bold"
+    },
+    blueTitle:{
+      color:"blue",
+      fontSize:30,
+      fontWeight:"bold",
+    },
+    referContainer:{
+      width:"80%",
+      height:verticalScale(200),
+      left:"10%",
+      backgroundColor:"white",
+      marginTop: "2.5%",
+    },
+    treeContainer:{
+      height:"60%"
+    },
+    treeImage:{
+      height:"100%",
+      width:"100%",
+    },
     carbonContainer:{
-
+      width:"80%",
+      height:verticalScale(400),
+      left:"10%",
+      backgroundColor:"white",
+      marginTop: "2.5%",
     },
     carbonAssetsDiv:{
 
     },
     tokenBox:{
       width:"50%",
-      height:"20%",
+      height:"40%",
       left:"25%",
-      backgroundColor:"lightgrey",
     },
     carbonSpendingAnalysysBarBackground:{
       width:"100%",
       height:"10%",
-      backgroundColor:"lightgrey",
+      backgroundColor:"#f6f5f8",
     },
 
     carbonSpendingAnalysysBarProgress:{
@@ -301,18 +394,18 @@ const HomeScreenPersonal = ({navigation}) => {
     },
     
     rounded:{
-      borderRadius: 50,
+      borderRadius: 15,
     },
     shadow:{
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
-        height: 2,
+        height: 1,
       },
-      shadowOpacity: 0.25,
-      shadowRadius: 5,
+      shadowOpacity: 1,
+      shadowRadius: 1,
 
-      elevation: 5,
+      elevation: 1,
     },
     carbonSpendingAnalysysDiv:{
       backgroundColor:"white",
@@ -330,12 +423,11 @@ const HomeScreenPersonal = ({navigation}) => {
     },
     transactionText:{
       left:"30%",
-      bottom:"80%",
+      bottom:"70%",
     },
     transactionBox:{
       width:"100%",
       height:verticalScale(80),
-      borderRadius: 15,
       marginTop: "2.5%",
       backgroundColor:"white",
     },
@@ -347,7 +439,7 @@ const HomeScreenPersonal = ({navigation}) => {
       marginLeft: "5%",
     },
     transactionsContainer:{
-      height:"50%",
+      height:verticalScale(500),
       width: "80%",
       marginLeft: "10%",
       marginTop: "2.5%",
@@ -361,7 +453,7 @@ const HomeScreenPersonal = ({navigation}) => {
       },
       screen: {
           flex: GlobalStyles.DivContainer.flex,
-          height:2000,
+          height:2100,
       },
   
       NavBarTop: {
