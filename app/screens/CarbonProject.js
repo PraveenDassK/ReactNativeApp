@@ -7,19 +7,19 @@ import AuthContext from "../auth/context";
 import Button from "../components/Button"
 
 
-const CarbonProject = ({navigation}) => {
+const CarbonProject = ({navigation,route}) => {
+  console.log(route.params)
 
   const [data, setData] = useState(null)
   const authContext = useContext(AuthContext)
-  const { user } = useContext(AuthContext)
 
   useEffect(() => {
-    authContext.setUser({ID : "5f96f967a3a85800118be4d1"})
+    authContext.setUser({ID : route.params.Id})
     loadData()
   },[])
   
   const loadData = async () => {
-    const response = await carbonApi.getListingsSingle(user.ID);
+    const response = await carbonApi.getListingsSingle(route.params.Id);
     setData(response.data.details)
   }
   
@@ -29,20 +29,21 @@ const CarbonProject = ({navigation}) => {
     if(data != null){        
         projects.push(
           <View key = {data.id} style={styles.rectanglePressable}>
-            <Text> 
+            <Text style={styles.titleText}> 
               {data.displayName} 
             </Text>
             
             <Image 
-              style={{height: 100, width:200}}
+              style={styles.image}
               source={
                 data.image != "" ? {uri:data.image} : require("../assets/icon-bluecheck.png")
               }
             />
-
-            <Text>
-              {data.description.replace(/<[^>]*>/g, "").trim()}... 
-            </Text>
+            <View style={styles.textBox}>
+              <Text>
+                {data.description.replace(/<[^>]*>/g, "").trim()}... 
+              </Text>
+            </View>
           </View>
         )
     }
@@ -54,17 +55,38 @@ const CarbonProject = ({navigation}) => {
   return (
     <View>
       <ScrollView>
-        {projects}
+        <View style = {styles.page}>
+            {projects}
+        </View>
       </ScrollView>
     </View>
   )
 };
 
 const styles = StyleSheet.create({
-    rectanglePressable: {
-        borderRadius: GlobalStyles.Border.br_lg,
-        backgroundColor: GlobalStyles.Color.gray_500,
-      }
+  rectanglePressable: {
+    borderRadius: GlobalStyles.Border.br_lg,
+  },
+  titleText:{
+    fontWeight:"bold",
+    textAlign:"center",
+    fontSize:30,
+  },
+  page:{
+    borderStartColor:"white",
+    width:"80%",
+    left:"10%",
+    top:"5%",
+    backroundColor: "black"
+  },
+  image:{
+    flex:1,
+    width:"100%",
+    height:200,
+  },
+  textBox:{
+
+  }
 });
 
 export default CarbonProject;
