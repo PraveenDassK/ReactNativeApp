@@ -80,14 +80,6 @@ const Carbon = ({route,navigation }) => {
 
                 </View>
             <View style={styles.treeContainer}>
-                <Image 
-                resizeMode='contain'
-                style={{
-                    height: verticalScale(400) ,
-                    width: "100%",
-                }}
-                source={require("../assets/leafTree.png")}
-                />
             </View>
             {/* <Text>
                 At Carbonyte we help you to track, reduce and calvulate your C0<Text style={{fontSize: 15, lineHeight: 37}}>2</Text>emission from your daily transcation
@@ -143,7 +135,8 @@ const Carbon = ({route,navigation }) => {
                         resizeMode={item.image !== "" ? 'contain': 'contain'}
                         style={[styles.listImage, {
                             width: horizontalScale(300),
-                            height: verticalScale(180)
+                            height: verticalScale(180),
+                            resizeMode: 'contain'
                         }]}
                         source={
                             
@@ -173,7 +166,7 @@ const Carbon = ({route,navigation }) => {
                         </View>
                         <View style={styles.doubleButtonDiv}>
                         <Button style={{width: "49%"}} title="ADD TO CART" color='babyBlue' onPress={() => addToCart(item.id)}/>
-                        <Button style={{width: "49%"}} title="Learn More" color='babyBlue' onPress={() => addToCart(item.id)}/>
+                        <Button style={{width: "49%"}} title="Learn More" color='babyBlue' onPress={() => navigation.navigate("CarbonProject",{"Id" : item.id})}/>
                         </View>
                         <View style={styles.benifitsContainer}>
                             {item.tags.length ? (
