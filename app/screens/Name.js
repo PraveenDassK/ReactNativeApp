@@ -63,7 +63,7 @@ const Name = ({navigation}) => {
               {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
             <TextInput
-              autoCorrect="none" 
+            
               keyboardType="default" 
               onBlur={() => setFieldTouched("firstName")}
               onChangeText={handleChange("firstName")}
@@ -74,7 +74,7 @@ const Name = ({navigation}) => {
                 <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
             </View>
             <TextInput 
-                autoCorrect="none" 
+               
                 keyboardType="default" 
                 onBlur={() => setFieldTouched("lastName")}
                 onChangeText={handleChange("lastName")}

@@ -4,6 +4,7 @@ import { Image, StyleSheet, Text, View, Pressable, Clipboard } from "react-nativ
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
+import authStorage from "../auth/storage";
 
 const Settings = ({navigation}) => {
   const [account, setAccNum] = useState(null)
@@ -12,12 +13,18 @@ const Settings = ({navigation}) => {
   const [plan, setPlan] = useState(null)
   const [balance, setBal] = useState(null)
   const [currency, setCurrency] = useState(null)
-  const authContext = useContext(AuthContext)
+  const { setCurrentUser } = useContext(AuthContext)
 
   console.log(account)
   useEffect(() => {
     loadData()
   },[])
+
+  const handleLogout = () => {
+    setCurrentUser(null)
+    authStorage.removeToken()
+    authStorage.removeSignInSetting()
+  }
   
   const loadData = async () => {
     const response = await api.GetAccountByCustomer();
@@ -71,7 +78,7 @@ const Settings = ({navigation}) => {
         />
         <Pressable
           style={styles.helloParent}
-          onPress = {() =>navigation.navigate("Login")} 
+          onPress = {handleLogout} 
         >
           <Text style={styles.hello2}>Log out</Text>
           <Image

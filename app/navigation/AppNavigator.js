@@ -17,6 +17,7 @@ import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
 import Account from "../screens/Account";
+import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -33,6 +34,15 @@ const StackNavigator = () => {
        
         }}
       />
+      <Stack.Screen 
+        name="SecurityAndPrivacy" 
+        component={SecurityAndPrivacy}
+        options={{
+          title: "SecurityAndPrivacy",
+       
+        }}
+      />
+      
     </Stack.Navigator>
   )
 }

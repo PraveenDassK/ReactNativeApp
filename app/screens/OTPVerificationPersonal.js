@@ -18,6 +18,7 @@ import Button from "../components/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import Form from "../components/forms/Form"
 import loginAPI from '../api/login'
+import authStorage from "../auth/storage";
 
 
 const validationSchema = Yup.object().shape({
@@ -85,6 +86,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     if (!result.data.result) return alert('Could not verify otp') 
     const currentUser = jwtDecode(result?.data?.details)
     setCurrentUser(currentUser)
+    authStorage.storeToken(result?.data?.details)
 
     console.log('authToken', currentUser)
 
@@ -141,7 +143,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
                <TextInput 
-                autoCorrect="none" 
+                
                 autoFocus={true}
                 maxLength={1}
                 placeholder="1"
@@ -161,7 +163,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 maxLength={1}
                 placeholder="1"
                 keyboardType="numeric" 
-                autoCorrect="none" 
+               
                 onBlur={() => setFieldTouched("pVer1")}
                 onChangeText={
                   handleChange("pVer1")
@@ -184,7 +186,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
               maxLength={1}
               placeholder="2"
               keyboardType="numeric" 
-              autoCorrect="none" 
+             
               onBlur={() => setFieldTouched("eVer2")}
               onChangeText={
                 handleChange("eVer2")
@@ -199,7 +201,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
               maxLength={1}
               placeholder="2"
               keyboardType="numeric" 
-              autoCorrect="none" 
+             
               onBlur={() => setFieldTouched("pVer2")}
               onChangeText={
                 handleChange("pVer2")
@@ -215,7 +217,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   placeholder="3"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                
                   onBlur={() => setFieldTouched("eVer3")}
                   onChangeText={
                    handleChange("eVer3")
@@ -234,7 +236,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   placeholder="3"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                  
                   onBlur={() => setFieldTouched("pVer3")}
                   onChangeText={
                     handleChange("pVer3")
@@ -249,7 +251,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
             {/* <TextInput 
                   placeholder="5"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                 
                   onBlur={() => setFieldTouched("eVer5")}
                   onChangeText={handleChange("eVer5")}
                   style={[styles.groupChild2, styles.groupChildBorder2]}
@@ -259,7 +261,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
             {/* <TextInput 
                   placeholder="5"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                 
                   onBlur={() => setFieldTouched("pVer5")}
                   onChangeText={handleChange("pVer5")}
                   style={[styles.groupChildBorder2, styles.groupChildPosition]}
@@ -270,7 +272,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   placeholder="4"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                 
                   onBlur={() => setFieldTouched("eVer4")}
                   onChangeText={
                     handleChange("eVer4")
@@ -286,7 +288,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   placeholder="4"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                 
                   onBlur={() => setFieldTouched("pVer4")}
                   onChangeText={handleChange("pVer4")}
                   ref={pVer4Ref}
@@ -297,7 +299,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
             {/* <TextInput 
                   placeholder="6"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                 
                   onBlur={() => setFieldTouched("pVer6")}
                   onChangeText={handleChange("pVer6")}
                   style={[styles.groupChild6, styles.groupChildBorder]} 
@@ -307,7 +309,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
             {/* <TextInput 
                   placeholder="6"
                   keyboardType="numeric" 
-                  autoCorrect="none" 
+                
                   onBlur={() => setFieldTouched("eVer6")}
                   onChangeText={handleChange("eVer6")}
                   style={[styles.groupChildBorder, styles.groupChildPosition]} 
