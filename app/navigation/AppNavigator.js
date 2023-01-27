@@ -16,10 +16,40 @@ import AccountMain from "../screens/AccountMain";
 import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
+
+//Main screen
 import Account from "../screens/Account";
+
 import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
 
+/**
+ * @notice Screens on account page to navigate to
+ */
+//Add funds
+import AddFunds from "../screens/AddFunds"
 
+//Send money
+import SendMoney from "../screens/SendMoney"
+import AddBeneficiary from "../screens/AddBeneficiary"
+import BankTransferAmount from "../screens/BankTransferAmount"
+
+//Generic
+//Used by add funds and send money
+import Pin from "../screens/Pin"
+import Success from "../screens/Success"
+
+//My cards
+import MyCards from "../screens/MyCards"
+import CardSettings from "../screens/CardSettings"
+
+//No pages for analysis
+
+/**
+ * @notice Screens on the carbon page to navigate to
+ */
+
+
+//Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -34,14 +64,79 @@ const StackNavigator = () => {
        
         }}
       />
+
       <Stack.Screen 
-        name="SecurityAndPrivacy" 
-        component={SecurityAndPrivacy}
+        name="AddFunds" 
+        component={AddFunds}
         options={{
-          title: "SecurityAndPrivacy",
+          title: "AddFunds",
        
         }}
       />
+
+      <Stack.Screen 
+        name="SendMoney" 
+        component={SendMoney}
+        options={{
+          title: "SendMoney",
+       
+        }}
+      />
+
+      <Stack.Screen 
+        name="Pin" 
+        component={Pin}
+        options={{
+          title: "Pin",
+       
+        }}
+      />
+
+    <Stack.Screen 
+        name="Success" 
+        component={Success}
+        options={{
+          title: "Success",
+       
+        }}
+      />
+
+    <Stack.Screen 
+        name="AddBeneficiary" 
+        component={AddBeneficiary}
+        options={{
+          title: "AddBeneficiary",
+       
+        }}
+      />
+
+      <Stack.Screen 
+        name="BankTransferAmount" 
+        component={BankTransferAmount}
+        options={{
+          title: "BankTransferAmount",
+       
+        }}
+      />
+
+    <Stack.Screen 
+        name="MyCards" 
+        component={MyCards}
+        options={{
+          title: "MyCards",
+       
+        }}
+      />
+
+    <Stack.Screen 
+        name="CardSettings" 
+        component={CardSettings}
+        options={{
+          title: "CardSettings",
+       
+        }}
+      />
+
       
     </Stack.Navigator>
   )
