@@ -41,6 +41,17 @@ import Success from "../screens/Success"
 //My cards
 import MyCards from "../screens/MyCards"
 import CardSettings from "../screens/CardSettings"
+import SpendingLimit from "../screens/SpendingLimit"
+import SetLimit from "../screens/SetLimit"
+
+import ReplaceCard from "../screens/ReplaceCard"
+import ItsDamagedOrDoesntWork from "../screens/ItsDamagedOrDoesntWork"
+import ItWasLost from "../screens/ItWasLost"
+import IWasAVictimOfFraudOrThe from "../screens/IWasAVictimOfFraudOrThe"
+import Terminate from "../screens/Terminate"
+import TerminatedCard from "../screens/TerminatedCard"
+
+
 
 //No pages for analysis
 
@@ -54,7 +65,9 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
+  
   return(
+    
     <Stack.Navigator>
       <Stack.Screen 
         name="Account" 
@@ -137,7 +150,73 @@ const StackNavigator = () => {
         }}
       />
 
+    <Stack.Screen 
+        name="SpendingLimit" 
+        component={SpendingLimit}
+        options={{
+          title: "SpendingLimit",
+       
+        }}
+      />
+
+    <Stack.Screen 
+        name="SetLimit" 
+        component={SetLimit}
+        options={{
+          title: "SetLimit",
+       
+        }}
+      />
+
+  <Stack.Screen 
+        name="ReplaceCard" 
+        component={ReplaceCard}
+        options={{
+          title: "ReplaceCard",
+       
+        }}
+      />
       
+      <Stack.Screen 
+        name="ItsDamagedOrDoesntWork" 
+        component={ItsDamagedOrDoesntWork}
+        options={{
+          title: "ItsDamagedOrDoesntWork",
+       
+        }}
+      />
+        <Stack.Screen 
+        name="ItWasLost" 
+        component={ItWasLost}
+        options={{
+          title: "ItWasLost",
+       
+        }}
+      />
+        <Stack.Screen 
+        name="IWasAVictimOfFraudOrThe" 
+        component={IWasAVictimOfFraudOrThe}
+        options={{
+          title: "IWasAVictimOfFraudOrThe",
+       
+        }}
+      />
+        <Stack.Screen 
+        name="Terminate" 
+        component={Terminate}
+        options={{
+          title: "Terminate",
+       
+        }}
+      />
+      <Stack.Screen 
+        name="TerminatedCard" 
+        component={TerminatedCard}
+        options={{
+          title: "TerminatedCard",
+       
+        }}
+      />
     </Stack.Navigator>
   )
 }
