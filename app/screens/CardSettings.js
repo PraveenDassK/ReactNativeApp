@@ -22,7 +22,7 @@ const CardSettings = ({navigation}) => {
   },[])
   
   const getSettings = async () => {
-    const response = await api.GetToggles()
+    const response = await api.GetToggles(authContext.accountID)
     const data = response.data.details
     console.log(data)
     data.onlineTransactions ? setIsEnabled(true): null
@@ -32,7 +32,7 @@ const CardSettings = ({navigation}) => {
   }
 
   const sendRequest = async () => {
-    const response = await api.SetToggles(
+    const response = await api.SetToggles(authContext.accountID,
       isEnabled,
       isEnabled1,
       isEnabled2,

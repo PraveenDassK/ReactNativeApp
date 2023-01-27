@@ -32,7 +32,7 @@ const SpendingLimit = ({navigation,route}) => {
   //Gets the data for the user
   const loadData = async () => {
     //Gets the data from the api
-    const response = await api.GetLimit();
+    const response = await api.GetLimit(authContext.accountID);
     //Then isolate the useful data
     const data = response.data.details
     console.log(data)

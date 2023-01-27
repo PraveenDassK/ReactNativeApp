@@ -27,8 +27,8 @@ const Settings = ({navigation}) => {
   }
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetAccount(authContext.accountID);
+    const response = await api.GetAccountByCustomer(setCurrentUser);
+    const accountresponse = await api.GetAccount(setCurrentUser);
     const data = response.data
     const accountdata = accountresponse.data.details
 

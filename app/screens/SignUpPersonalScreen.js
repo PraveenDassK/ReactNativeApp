@@ -31,7 +31,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
 
   const handleSubmit = async ({ email, phoneNumber }) => {
     phoneNumber = prefix + phoneNumber
-    const result = await otpApi.otp({ email, phoneNumber })
+    const result = await otpApi.otp(setUser,{ email, phoneNumber })
     setUser({ email, phoneNumber })
 
     console.log(result.data)
