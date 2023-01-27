@@ -8,14 +8,10 @@ import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
 import * as LocalAuthentication from 'expo-local-authentication';
 
-
 import AuthContext from "./app/auth/context";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
-
-
-
 
 export default function App() {
 
@@ -24,10 +20,6 @@ const [user, setUser] = useState()
 const [currentUser, setCurrentUser] = useState()
 const [isAuth, setIsAuth] = useState(false)
 // const [isReady, setIsReady] = useState(false)
-
-
-
-
 
 const authenticate = async () => {
   "starting authentication"
@@ -38,8 +30,10 @@ const authenticate = async () => {
     return setIsAuth(false)
   }
   // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
-  console.log('not authenticated', result.success)
-  alert('not authenticated')
+  if(!result.success) {
+    console.log('not authenticated', result.success)
+    alert('not authenticated')
+  }
   // setIsAuth(result.success)
   
 }
