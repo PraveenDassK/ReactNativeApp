@@ -8,7 +8,7 @@ import React,{ useEffect, useState,useContext } from "react";
 const enfuceID = "A12277V1"
 const carbonyteID = "C1220XHD"
 
-const GetCustomerDetails = (Id) => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=' + Id);
+const GetCustomerDetails = (Id) => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC3569');
 
 const SendLoginOTP = (email) => {
   console.log(email)

@@ -25,7 +25,7 @@ const Analysis = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await api.GetAccount();
+    const response = await api.GetAccount(authContext.accountID);
     const data = response.data.details.balance
     setBal(data)
 

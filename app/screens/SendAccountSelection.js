@@ -2,20 +2,24 @@ import React, { useContext, useEffect, useState } from "react";
 import api from "../api/api_list"
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
+
 
 const SendAccountSelection = ({navigation}) => {
   const[name,setName]=useState(null)
   const[number,setnumber]=useState(null)
   const [plan, setPlan] = useState(null)
   const [account, setAccNum] = useState(null)
+  const authContext = useContext(AuthContext)
+
 
   useEffect(() => {
     loadData()
   },[])
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetCustomerDetails();
+    const response = await api.GetAccountByCustomer(authContext.accountID);
+    const accountresponse = await api.GetCustomerDetails(authContext.accountID);
     const data = response.data.details.content[0]
     const accountdata = accountresponse.data.details.accountDetails[0]
     const phonedata = accountresponse.data.details.phoneNumbers[0]

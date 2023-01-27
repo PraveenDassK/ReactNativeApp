@@ -3,8 +3,15 @@ import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, ScrollVi
 import GlobalStyles from "../../GlobalStyles";
 
 const TermsAndConditions = ({route,navigation}) => {
+    const [isSelected, setSelection] = useState(false);
     return(
     <ScrollView>
+        
+        <Text style={[styles.myCards1, styles.historyTypo]}>Terms and conditions</Text>
+        
+        
+      
+        <View style={styles.totalWalletBalanceContainer}>
             <Text>
             Terms and Conditions – Carbonyte (Business) –(Draft)
 Welcome to Carbonyte Website, if you continue browsing and want to use this website, you are
@@ -940,12 +947,49 @@ These Bank Account Terms shall be governed by the laws of England and Wales and 
 dispute under these Bank Account Terms shall be subject to the non-exclusive jurisdiction of the
 courts of England and Wales
         </Text>
+        </View>
+        
     </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
+    historyTypo: {
+        textAlign: "center",
+        color: GlobalStyles.Color.black,
+        fontWeight: "700",
+        fontSize:30,
+        
+      },
+      
+      myCards1:{
+        marginTop:"6%",
+        textAlign: "center",
+      },
+      totalWalletBalanceContainer: {
+        marginTop: "2.5%",
+        width: "80%",
+        backgroundColor: "#FFFFFF",
+       
+        marginLeft: "10%",
+        borderRadius: 15,
+        flexDirection: 'column',
+        padding: "2.5%",
+        justifyContent: "center",
+        marginBottom:"14%"
 
+    },
+    TermsAndConditions: {
+        backgroundColor: GlobalStyles.Color.gray_1100,
+        flex: 1,
+        paddingTop: GlobalStyles.Padding.padding_md,
+        width: "100%",
+        textAlign:"center",
+        paddingRight:GlobalStyles.Padding.padding_md,
+        paddingLeft:GlobalStyles.Padding.padding_md,
+        shadowOpacity:1,
+      },
+      
   });
   
   export default TermsAndConditions;

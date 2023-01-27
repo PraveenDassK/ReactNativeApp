@@ -15,7 +15,7 @@ const getID = () =>{
   return data
 }
 
-const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC11875');
+const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC3569');
 
 const SendLoginOTP = (email) => {
   console.log(email)
