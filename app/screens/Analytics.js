@@ -55,7 +55,7 @@ const Analytics = ({navigation}) => {
   },[recentTransactions])
   
   const loadData = async () => {
-    const response = await api.GetAccount(authContext.accountID);
+    const response = await api.GetAccount();
     const data = response.data.details.balance
     setBal(data)
 
@@ -81,7 +81,7 @@ const Analytics = ({navigation}) => {
   } 
   console.log(transactionCategories)
 
-  var transKeys
+
 
   const transcationKeys = (trans) => {
     return transKeys = Object.keys(trans)
@@ -135,33 +135,9 @@ const Analytics = ({navigation}) => {
                 
                   <View style={styles.mainContainer}>
                   <View style={[styles.historyParent, styles.iconContentLayout]}>
-        <Pressable
-          onPress={() => navigation.navigate("AccountMain")}
-        >
-          <Text style={[styles.history, styles.historyTypo]}>Account</Text>
-          </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Analytics")}
-        >
-          <Text style={[styles.history1, styles.historyTypo]}>Analysis</Text>
-          </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Carbon")}
-        >
-          <Text style={[styles.history2, styles.historyTypo]}>Carbon</Text>
-          </Pressable>
 
-          <Pressable
-          onPress={() => navigation.navigate("Settings")}
-        >  
-          <Text style={styles.history3}>Profile</Text>
-        </Pressable>
         </View>
-                    <Text 
-                      onPress={()=> console.log("onpress")} 
-                      style={styles.title}
-                    >Analytics
-                    </Text>
+
                     <View style={styles.balanceContainer}>
                       <View style={styles.balance}>
                         <Text style={styles.textSub}>Balance</Text>

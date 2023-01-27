@@ -8,7 +8,9 @@ import AuthContext from "../auth/context";
 import Form from "../components/forms/Form";
 
 
-const VirtualEcoSystem = () => {
+const VirtualEcoSystem = ({navigation}) => {
+
+    const forestValue = 10
 return (
 <View style={styles.mainContainer}>
     <View style={styles.titleTextRow}>
@@ -20,7 +22,7 @@ return (
     </View>
 
     <View style={styles.imageBox}>
-        <Image style={styles.image} source={require("../assets/Forest/50.png")}/>
+        <Image style={styles.image} source={require("../assets/Forest/" + forestValue + ".png")}/>
     </View>
     <View style={styles.centerRow}>
         <Text style={styles.centerRowText}>Bring Your Virtual Forest To Life</Text>
@@ -32,7 +34,7 @@ return (
 
     <View style={styles.bottom}>
         <TouchableOpacity style={styles.button}>
-            <Button title="Buy Projects" color="babyBlue"/>
+            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Account")}/>
         </TouchableOpacity>
     </View>
 

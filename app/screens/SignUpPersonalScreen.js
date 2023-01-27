@@ -31,7 +31,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
 
   const handleSubmit = async ({ email, phoneNumber }) => {
     phoneNumber = prefix + phoneNumber
-    const result = await otpApi.otp(setUser,{ email, phoneNumber })
+    const result = await otpApi.otp({ email, phoneNumber })
     setUser({ email, phoneNumber })
 
     console.log(result.data)
@@ -128,6 +128,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
         <MaterialCommunityIcons name="chevron-up" size={24} color="black" />
         <FadeInView>
           <Text>Swipe up if you already have an account</Text>
+          <Button title='login' onPress={()=> navigation.navigate("Login")} />
         </FadeInView>
       </View>
       

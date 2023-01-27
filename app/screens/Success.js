@@ -6,8 +6,8 @@ import GlobalStyles from "../../GlobalStyles";
 const Success = ({route,navigation}) => {
   console.log(route?.params?.params?.successText)
   const text = route?.params?.params?.successText
-  const path = route?.params?.params?.finishScreen ? route.params.finishScreen : "AccountMain"
-  console.log(text)
+  const path = route?.params?.params?.finishScreen ? route.params.finishScreen : "Account"
+  console.log(path)
   return (
     <Pressable
       style={styles.requested}

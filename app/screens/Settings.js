@@ -27,8 +27,8 @@ const Settings = ({navigation}) => {
   }
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer(setCurrentUser);
-    const accountresponse = await api.GetAccount(setCurrentUser);
+    const response = await api.GetAccountByCustomer();
+    const accountresponse = await api.GetAccount();
     const data = response.data
     const accountdata = accountresponse.data.details
 
@@ -143,24 +143,7 @@ const Settings = ({navigation}) => {
             source={require("../assets/icon-materialcontentcopy.png")}
           />
         <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
-        <View style={[styles.historyParent, styles.iconContentLayout]}>
-        <Pressable
-          onPress={() => navigation.navigate("AccountMain")}
-        >
-          <Text style={[styles.history, styles.historyTypo]}>Account</Text>
-          </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Analytics")}
-        >
-          <Text style={[styles.history1, styles.historyTypo]}>Analysis</Text>
-          </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Carbon")}
-        >
-          <Text style={[styles.history2, styles.historyTypo]}>Carbon</Text>
-          </Pressable>
-          <Text style={styles.history3}>Profile</Text>
-        </View>
+
         <Pressable
           style={[styles.groupParent, styles.groupParentPosition]}
           onPress={() => navigation.navigate("ChooseCardsElite")}
@@ -175,7 +158,7 @@ const Settings = ({navigation}) => {
         </Pressable>
         <Pressable
           style={[styles.groupContainer, styles.groupParentPosition]}
-          onPress={() => navigation.navigate("Account")}
+          onPress={() => navigation.navigate("AccountSettings")}
         >
           <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
             <View style={styles.groupInner} />

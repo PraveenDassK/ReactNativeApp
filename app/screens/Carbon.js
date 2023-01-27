@@ -14,14 +14,13 @@ const Carbon = ({route,navigation }) => {
 
     const [data, setData] = useState(null)
   const { setUser } = useContext(AuthContext)
-  const authContext = useContext(AuthContext)
 
   useEffect(() => {
     loadData()
   },[])
   
   const loadData = async () => {
-    const response = await carbonApi.getListings(authContext.accountID);
+    const response = await carbonApi.getListings();
    
     setData(response.data.details.data)
   }
@@ -63,12 +62,6 @@ const Carbon = ({route,navigation }) => {
   console.log(cart)
   return (
     <Screen style={{backgroundColor: "#F6F5F8"}}>
-        <View style={styles.NavBarBottom}>
-                            <Text style={styles.NavBarBottomText}>Account</Text>
-                            <Text style={styles.NavBarBottomText}>Analysis</Text>
-                            <Text style={styles.NavBarBottomText}>Carbon</Text>
-                            <Text style={styles.NavBarBottomText}>Profile</Text>
-                        </View>
 
         <View style={styles.mainContainer}>
             <FlatList

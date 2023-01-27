@@ -5,9 +5,6 @@ import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-import RNSwipeVerify from 'react-native-swipe-verify'
-
-
 
 const SendMoney = ({navigation}) => {
   const [data, setData] = useState({})
@@ -235,13 +232,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700"
   }
-
-
-
-
-
-
-
 });
 
 export default SendMoney;
