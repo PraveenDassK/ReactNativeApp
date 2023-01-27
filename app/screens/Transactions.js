@@ -82,8 +82,11 @@ const Transactions = ({navigation,route}) => {
                   onPress={() => setModalVisible(!modalVisible)}>
                   <Text style={styles.textStyle}>Dismiss</Text>
                 </Pressable>
+                
+                
               </View>
             </View>
+            
           </Modal>
           )
     }
@@ -97,6 +100,7 @@ const Transactions = ({navigation,route}) => {
                     style = {styles.transactionBox}
                     onPress = {() => showTransaction(i)}
                 >
+                  
                     <Text>
                         From: {transaction.account.customerName}
                     </Text>
@@ -107,6 +111,7 @@ const Transactions = ({navigation,route}) => {
                         £{transaction.amount}
                     </Text>
                 </Pressable>
+                
             )
         })
     }
@@ -116,12 +121,19 @@ const Transactions = ({navigation,route}) => {
             <Text>
                 Transactions
             </Text>
+            
+            
             <ScrollView>
+              
                 {transactionList}
                 {modalVisible ? modal() : null}
+                
             </ScrollView>
+            
         </View>
+        
     )
+
 };
 
 const styles = StyleSheet.create({
@@ -136,12 +148,29 @@ const styles = StyleSheet.create({
         padding :"3%",
         marginTop:"2.5%",
     },
-
+    myCards1: {
+      width: "100%",
+      textAlign: "center",
+      fontSize: GlobalStyles.FontSize.size_2xl,
+      textAlign: "center",
+    },
     centeredView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
+      },
+      historyTypo: {
+        textAlign: "center",
+        color: GlobalStyles.Color.indigo_100,
+        fontWeight: "700",
+        position: "absolute",
+      },
+      myCards1: {
+        width: "100%",
+        
+        fontSize: GlobalStyles.FontSize.size_4xl,
+        textAlign: "center",
       },
       modalView: {
         margin: 20,

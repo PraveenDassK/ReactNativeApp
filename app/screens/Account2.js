@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
     paddingRight: GlobalStyles.Padding.padding_7xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },
+  
 });
 
 export default Account2;

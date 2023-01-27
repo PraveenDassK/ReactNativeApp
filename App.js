@@ -55,6 +55,7 @@ import CardSettings from "./app/screens/CardSettings";
 import SetLimit from "./app/screens/SetLimit";
 import SpendingLimit from "./app/screens/SpendingLimit";
 import CarbonSpending from "./app/screens/CarbonSpending";
+import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
 import ItsDamagedOrDoesntWork from "./app/screens/ItsDamagedOrDoesntWork";
 import IWasAVictimOfFraudOrThe from "./app/screens/IWasAVictimOfFraudOrThe";
 import Terminate from "./app/screens/Terminate";
@@ -89,10 +90,8 @@ import CarbonCart from "./app/screens/CarbonCart";
 
 import TestEnviro from "./app/screens/TestEnviro";
 import TermsAndConditions from "./app/screens/TermsAndConditions";
-
-import VirtualEcoSystem from "./app/screens/VirtualEcoSystem";
-
-
+import Transactions from "./app/screens/Transactions";
+import Account11 from "./app/screens/Transactions";
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -132,14 +131,17 @@ const AccountNavigator = () => (
 )
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="Carbon">
+  <Stack.Navigator initialRouteName="Transactions">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
+    <Stack.Screen  name="Transactions" component={Transactions}/>
     <Stack.Screen  name="TestEnviro" component={TestEnviro}/>
     <Stack.Screen  name="TermsAndConditions" component={TermsAndConditions}/>
+    <Stack.Screen  name="Account11" component={Account11}/>
 
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
+    
 
     <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
     <Stack.Screen  name="Login" component={Login}/>
@@ -224,14 +226,15 @@ const StackNavigator = () => (
     <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
     <Stack.Screen name="CarbonCart" component={CarbonCart}/>
 
+    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
+
     <Stack.Screen name="ChooseCardsPremium" component={ChooseCardsPremium}/>
     <Stack.Screen name="SendEnterPIN1" component={SendEnterPIN1}/>
     <Stack.Screen name="SendEnterPIN" component={SendEnterPIN}/>
 
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
-    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
 
-    <Stack.Screen  name="VirtualEcoSystem" component={VirtualEcoSystem}/>
+    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>    
   </Stack.Navigator>
 )
 
