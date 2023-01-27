@@ -1,11 +1,19 @@
 import client from "./client";
-
+import AuthContext from "../auth/context";
+import React,{ useEffect, useState,useContext } from "react";
 /**
  * @dev customer details endpoint
  * @todo Get these on login
  */
 const enfuceID = "A12277V1"
 const carbonyteID = "C1220XHD"
+
+const getID = () =>{
+  const authContext = useContext(AuthContext) 
+  console.log(authContext)
+  const data = authContext.accountID
+  return data
+}
 
 const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC11875');
 
@@ -22,7 +30,11 @@ const GetAccountByCustomer = () => client.get("https://api.carbonyte.io/walletmo
 const GetCustomer = () => client.get("https://api.carbonyte.io/walletmodule/GetCustomer/" + carbonyteID)
 
 const GetAccount = () => client.get("https://api.carbonyte.io/walletmodule/GetAccount/" + enfuceID)
-const GetTransactions = () =>  client.get("https://api.carbonyte.io/walletmodule/GetTransactions/" + enfuceID + "?size=500")
+
+const GetTransactions = (amount) =>  {
+  let toGet = amount ? amount : 10
+  return client.get("https://api.carbonyte.io/walletmodule/GetTransactions/" + enfuceID + "?size=" + toGet)
+}
 
 const RetriveBenificiaries = () => client.get("https://api.carbonyte.io/walletmodule/RetrieveBeneficiaries/" + carbonyteID)
 
@@ -41,7 +53,7 @@ const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule
       "id": "A1226WEM",
       "accountNumber": "02619527",
       "sortCode": "000000",
-      "name": "Dory Ray",
+      "name": "Gorthalax",
       "address": {
         "addressLine1": "string",
         "postTown": "London",
@@ -51,52 +63,7 @@ const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule
     },
     "currency": "GBP",
     "amount": amount,
-    "reference": "friends"
-  }
-)
-
-const AddBeneficiary = (
-  bankName,
-  accountName,
-  iban,
-  sortCode,
-  accNum
-)=> client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary/C1220XHD",
-{ 
-    "externalReference": "", 
-    "name": accountName, 
-    "birthdate": "", 
-    "emailAddress": "", 
-    "phoneNumber": "", 
-    "destinationIdentifier": { 
-      "type": "SCAN", 
-      "accountNumber": accNum, 
-      "sortCode": sortCode, 
-      "iban": iban, 
-      "bic": "", 
-      "currency": "GBP", 
-      "countrySpecificDetails": { 
-        "bankName": bankName, 
-        "bankAddress": "", 
-        "bankCity": "", 
-        "bankBranchName": "", 
-        "bankBranchCode": "", 
-        "bankCode": "", 
-        "chineseId": "", 
-        "province": "", 
-        "business": true 
-      } 
-    }, 
-    "defaultReference": "friend",
-    "idToReplace": "",
-    "address": {
-      "addressLine1": "Bucknalls Lane",
-      "addressLine2": "",
-      "postTown": "London",
-      "postCode": "W2 1AS",
-      "country": "GB"
-    },
-    "qualifier": ""
+    "reference": "tithes"
   }
 )
 
@@ -123,6 +90,13 @@ const GetToggles = () => client.get("https://api.carbonyte.io/cardmodule/GetTogg
 
 const Checkout = (obj) => client.post("https://api.carbonyte.io/ecomodule/Earthly/Checkout",obj)
 
+const DeleteBenificiary = (Id) => client.delete("https://api.carbonyte.io/walletmodule/DeleteBeneficiaries/" + carbonyteID + "/" + Id)
+
+const testAPI = () => {'v'
+  const authContext = useContext(AuthContext) 
+  console.log(authContext)
+}
+
 export default {
     GetCustomerDetails,
     SendLoginOTP,
@@ -139,5 +113,6 @@ export default {
     VerifyLoginOTP,
     GetProjectByID,
     Checkout,
-    AddBeneficiary
+    DeleteBenificiary,
+    testAPI
   };
