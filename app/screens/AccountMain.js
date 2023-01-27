@@ -31,7 +31,7 @@ const HomeScreenPersonal = ({navigation}) => {
   
     //Gets the data for the user
     const loadData = async () => {
-      const response = await api.GetAccount();
+      const response = await api.GetAccount(authContext.accountID);
       const data = response.data.details
   
       setBalance(data.availableBalance)
@@ -317,7 +317,7 @@ const HomeScreenPersonal = ({navigation}) => {
                 Carbon Tokens 
               </Text>
               <Text>
-                Refer Now>
+                Refer Now
               </Text>
             </View>
 
