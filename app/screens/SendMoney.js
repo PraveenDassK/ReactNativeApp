@@ -4,6 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import RNSwipeVerify from 'react-native-swipe-verify'
+
+
 
 const SendMoney = ({navigation}) => {
   const [data, setData] = useState({})
@@ -45,164 +49,199 @@ const SendMoney = ({navigation}) => {
 
     benList.forEach((item,i) => {
       beniter.push(
-      <Pressable
-        onPress={details => {sendDetails(i)}}
-        key={i}
-      >
+      <Pressable onPress={details => {sendDetails(i)}} key={i}>
         <View style = {styles.benBoxCon}>
-          <Text>
-            {item.name}
-          </Text>
-          <Text>
-            +{item.phoneNumber}
-          </Text>
-          <Text>
-            {item.destinationIdentifier.accountNumber}
-          </Text>
+
+          <View style={styles.accountImage}>
+            <Text style={styles.accountName}>{item.name[0]}</Text>
+          </View>
+
+          <View style={styles.accountTextDiv}>
+              <Text style={styles.accountName}>{item.name}</Text>
+              <Text style={styles.accountPhoneNum}>+{item.phoneNumber}</Text>
+              <Text style={styles.accountNum}>{item.destinationIdentifier.accountNumber}</Text>
+          </View>
+
           <Pressable style = {styles.deleteButton} onPress = {(details) => deleteDetails(i)}>
-            <Text>
-              Delete
-            </Text>
+          <Text>Delete</Text>
           </Pressable>
         </View>
 
       </Pressable>
       )
     })
-    benText = 
-    <View style = {styles.listBoxContainer}>
-        {beniter}
-    </View>
-  }else{
-    benText = 
-    <Text style = {styles.failToFind}>
-      No Accounts Found
-    </Text>
-  }
+    benText = <View style = {styles.listBoxContainer}>{beniter}</View> }else{ benText = <Text style = {styles.failToFind}>No Accounts Found</Text>}
 
 return (
-  <View style={styles.requested}>
-    <View style={styles.groupParent}>
+<View style={styles.mainDiv}>
 
-      <View style = {styles.titleContainter} >
-        <Text style = {styles.titleText}>
-          Send Money
-        </Text>
-
-        <Pressable
-          onPress={() => navigation.navigate("AddBeneficiary")}
-          style = {styles.benBox}
-        >
-          <View >
-            <Text style = {styles.benBoxText}>
-             Add benificiary
-            </Text>
-          </View>
-        </Pressable>
-
-      </View>
-
-      <View style = {styles.benList}>
-        <View style = {styles.searchBox}>
-          <TextInput 
-            style = {styles.searchBoxInput}
-            placeholder = "Search"
-          >
-
-          </TextInput>
-        </View>
-        <Text style = {styles.recentText}>
-          Recent
-        </Text>
-        {benText}
-      </View>
-      {}
-
+    <View style={styles.titleTextRow}>
+        <Text style={styles.titleText}>Select Beneficiary</Text>
     </View>
-  </View>
-  );
-};
+
+    <View style={styles.searchBoxDiv}>
+        <Image style={styles.image} source={require("../assets/icon-awesomesearch.png")}/>
+        <TextInput style={styles.textInput}/>
+    </View>
+
+    <View style={styles.subTextDiv}>
+        <Text style={styles.subText}>Recent</Text>
+    </View>
+
+    <View style={styles.peopleIconDiv}>
+        <Pressable style={styles.plusImage} onPress={() => navigation.navigate("AddBeneficiary")}>
+            <Image style={styles.plusImage} source={require("../assets/greyAdd.png")}/>
+        </Pressable>
+        <View style={styles.iconImage}></View>
+    </View>
+
+    <View style={styles.subTextDiv}>
+            <Text style={styles.subText}>Contacts</Text>
+    </View>
+
+    {benText}
+
+</View>
+
+);};
 
 const styles = StyleSheet.create({
-  main:{
+  mainDiv: {
     flex: 1,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: "#FFFFFF",
   },
-  groupParent: {
-    width: "100%",
-    height: "100%",
+
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    marginLeft: GlobalStyles.Title.marginLeft,
+    width: GlobalStyles.Title.width,
   },
-  titleContainter:{
-    width:"80%",
-    height:180,
-    left:"10%"
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
   },
-  titleText:{
-    width:"100%",
-    top: "10%",
-    textAlign: "center",
-    fontSize: GlobalStyles.FontSize.size_6xl,
+
+  searchBoxDiv: {
+    width: "80%",
+    height: verticalScale(45),
+    backgroundColor: "red",
+    marginLeft: "10%",
+    marginTop: "5%",
+    backgroundColor: "#F6F5F8",
+    borderRadius: 15,
+    flexDirection: 'row',
+    justifyContent: "space-around",
   },
-  benBox:{
-    width:"100%",
-    height:"30%",
-    backgroundColor: GlobalStyles.Color.blue_100,
-    top : "30%",
-    borderRadius: 20,
+
+  image: {
+    flex: 1,
+    height: verticalScale(25),
+    width: horizontalScale(25),
+    resizeMode: "contain",
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
-  benBoxText:{
-    width:"100%",
-    textAlign: "center",
-    fontSize: GlobalStyles.FontSize.size_xl,
-    color: "black",
-    top : "100%",
+
+  textInput: {
+  flex: 9,
+  width: "100%",
   },
-  benList:{
-    width:"80%",
-    height:"70%",
-    left:"10%",
-    top: "-3%"
+
+  subTextDiv: {
+    width: "80%",
+    marginLeft: "10%",
+    marginTop: "2.5%",
+
   },
-  recentText:{
-    colour: "grey",
-    fontSize: GlobalStyles.FontSize.size_xl,
+
+  subText: {
+    fontSize: 14,
+    color: "rgba(153, 153, 153, 0.75)"
   },
-  failToFind:{
-    top: "20%",
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    textAlign: "center",
+
+  plusImage: {
+    flex: 1,
+    height: verticalScale(40),
+    width: horizontalScale(40),
+    resizeMode: "contain",
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
+
   },
-  listBoxContainer:{
-    width:"100%",
-    height:"50%",
+
+  peopleIconDiv: {
+      width: "80%",
+      marginLeft: "10%",
+      flexDirection: "row",
+      marginTop: "2.5%",
   },
-  searchBox:{
-    width:"100%",
-    height:"10%",
-    backgroundColor: GlobalStyles.Color.gray_600,
-    borderRadius: 50,
+
+  iconImage: {
+      flex: 9,
+      width: "100%",
   },
-  searchBoxInput:{
-    width:"80%",
-    height:"60%",
-    left: "10%",
-    top:"20%",
+
+  benBoxCon: {
+      marginTop: "2.5%",
+      width: "80%",
+      marginLeft: "10%",
+      backgroundColor: "#F6F5F8",
+      borderRadius: 15,
+      flexDirection: 'row',
+      justifyContent: "space-around",
+      height: verticalScale(65)
   },
-  benBoxCon:{
-    width:"100%",
-    height:"60%",
-    backgroundColor:"white",
-    borderRadius: 50,
-    padding:"5%",
+
+  accountImage:{
+    flex: 2,
+    height: 50,
+    width: 20,
+    borderRadius: 25,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: "white",
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
   },
-  deleteButton:{
-    backgroundColor:"red",
-    height:"40%",
-    width:"20%",
-    left:"50%",
-    bottom:"30%",
+
+  accountTextDiv: {
+  flex: 6,
+  alignSelf: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  },
+
+  deleteButton: {
+    flex: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
+  },
+
+  accountName: {
+    fontSize: 14,
+    fontWeight: "700"
   }
+
+
+
+
+
+
+
 });
 
 export default SendMoney;
