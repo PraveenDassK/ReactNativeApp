@@ -89,9 +89,9 @@ import CarbonCart from "./app/screens/CarbonCart";
 
 import TestEnviro from "./app/screens/TestEnviro";
 import TermsAndConditions from "./app/screens/TermsAndConditions";
-
 import VirtualEcoSystem from "./app/screens/VirtualEcoSystem";
-
+import Transactions from "./app/screens/Transactions";
+import SwitchAccounts from "./app/screens/SwitchAccounts";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -132,11 +132,14 @@ const AccountNavigator = () => (
 )
 const StackNavigator = () => (
   
-  <Stack.Navigator initialRouteName="Carbon">
+  <Stack.Navigator initialRouteName="AccountMain">
     <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
     <Stack.Screen  name="TestEnviro" component={TestEnviro}/>
     <Stack.Screen  name="TermsAndConditions" component={TermsAndConditions}/>
-
+    <Stack.Screen  name="VirtualEcoSystem" component={VirtualEcoSystem}/>
+    <Stack.Screen  name="Transactions" component={Transactions}/>
+    <Stack.Screen  name="SwitchAccounts" component={SwitchAccounts}/>
+    
     <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
     <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
     <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
@@ -229,15 +232,16 @@ const StackNavigator = () => (
     <Stack.Screen name="SendEnterPIN" component={SendEnterPIN}/>
 
     <Stack.Screen  name="FaceScan" component={FaceScan}/>
-    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>
 
-    <Stack.Screen  name="VirtualEcoSystem" component={VirtualEcoSystem}/>
+    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>    
   </Stack.Navigator>
 )
 
 export default function App() {
 
   const [user, setUser] = useState()
+  const [accountID, setAccountID] = useState("A12274AW")
+  const [userID, setUserID] = useState("C1220XHD")
   
   // const [fontsLoaded] = useFonts({
 
@@ -257,7 +261,7 @@ export default function App() {
   // }
 
   return (
-    <AuthContext.Provider value={{user, setUser}}>
+    <AuthContext.Provider value={{user, setUser,accountID, setAccountID,userID, setUserID}}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
