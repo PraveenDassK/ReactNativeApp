@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import {AppState} from 'react-native';
 import 'expo-dev-menu';
 
-
 import { NavigationContainer } from "@react-navigation/native";
 import jwtDecode from 'jwt-decode'
 import * as LocalAuthentication from 'expo-local-authentication';
 
-import AuthContext from "./app/auth/context";
+import AuthContext from "./app/auth/context"
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
