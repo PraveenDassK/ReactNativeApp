@@ -10,6 +10,8 @@ const Transactions = ({navigation,route}) => {
     const [transactionData, setTransactionData] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const [modalId, setModalId] = useState(false);
+    const authContext = useContext(AuthContext)
+
 
     //Calls the API once during load
     useEffect(() => {
@@ -19,7 +21,7 @@ const Transactions = ({navigation,route}) => {
     },[])
 
     const loadData = async () => {
-        const responseBalance = await api.GetAccount();
+        const responseBalance = await api.GetAccount(authContext.accountID);
         const data = responseBalance.data.details
         setBalance(data.availableBalance)
 

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View, Image, Pressable, Switch, Button } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
+import authStorage from "../auth/storage"
 
 
 const SecurityAndPrivacy = ({navigation}) => {
@@ -9,11 +10,61 @@ const SecurityAndPrivacy = ({navigation}) => {
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
-  const authContext=useContext(AuthContext)
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  const { setIsAuth } = useContext(AuthContext)
+
+  useEffect(() =>{
+    restoreSignIn()
+  }, [])
+
+  useEffect(() => {
+    if (isEnabled) {
+      authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
+      console.log("isEnabled", isEnabled)
+      setIsAuth(isEnabled)
+    }
+    if(!isEnabled){
+      authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
+      setIsAuth(isEnabled)
+      console.log("isNotEnabled", isEnabled)
+    }
+    
+  },[isEnabled])
+
+
+const restoreSignIn = async () => {
+  console.log('trying for signIn in security')
+  const token = await authStorage.getSignInSettings()
+  if(!token) return
+  console.log('restore token found in security',token.includes("true"))
+
+  setIsEnabled(token.includes("true"))
+ 
+}
+
+// const restoreSignIn = async () => {
+//   console.log('trying for restore sign in')
+//   const token = await authStorage.getSignInSettings()
+//   if(!token) return
+//   console.log('restore token sign in',token, token.includes('true'))
+//   setIsAuth(token.includes('true'))
+// }
+
+  const toggleSwitch =  () => {
+    console.log('1', isEnabled)
+    setIsEnabled(previousState => (!previousState));
+  
+    // console.log('2',isEnabled)
+  }
+
+  // const setCurrentAuth = () => {
+  //    console.log('setAuth is Enabled value', isEnabled)
+  // }
   const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
   const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
   const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
+
+ 
 
   return (
     <View style={styles.securityAndPrivacy}>

@@ -16,7 +16,7 @@ const Carbon2 = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await carbonApi.getListings();
+    const response = await carbonApi.getListings(authContext.accountID);
     console.log(response.data.details.data)
     setData(response.data.details.data)
   }

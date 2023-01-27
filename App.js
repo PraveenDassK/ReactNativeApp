@@ -1,27 +1,15 @@
-import React, {useCallback, useState} from "react";
-import { View,Text, Image, SafeAreaView, Pressable, StyleSheet, ScrollView } from "react-native";
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import React, { useState, useEffect } from "react";
+import {AppState} from 'react-native';
 import 'expo-dev-menu';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import { NavigationContainer } from "@react-navigation/native";
+import jwtDecode from 'jwt-decode'
+import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
+import * as LocalAuthentication from 'expo-local-authentication';
 
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
-import SplashAnimation from "./app/screens/SplashAnimation";
-
-import Onboarding1 from "./app/screens/Onboarding1"
-import Onboarding2 from "./app/screens/Onboarding2"
-import Onboarding3 from "./app/screens/Onboarding3"
-
-import GlobalStyles from "./GlobalStyles";
-
-import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
-import OTPVerificationPersonal from "./app/screens/OTPVerificationPersonal";
-import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
-import Account from "./app/screens/Account"
-import Account2 from "./app/screens/Account2"
 import AuthContext from "./app/auth/context";
+<<<<<<< HEAD
 import Carbon from "./app/screens/Carbon"
 import CarbonProject from "./app/screens/CarbonProject"
 import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
@@ -237,39 +225,121 @@ const StackNavigator = () => (
     <Stack.Screen  name="CarbonProject" component={CarbonProject}/>    
   </Stack.Navigator>
 )
+=======
+import AppNavigator from "./app/navigation/AppNavigator";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import authStorage from "./app/auth/storage";
+>>>>>>> e7cf3ceba6ad98696eac64a217246648f8aa5781
 
 export default function App() {
 
-  const [user, setUser] = useState()
+
+const [user, setUser] = useState()
+const [currentUser, setCurrentUser] = useState()
+const [isAuth, setIsAuth] = useState(false)
+
+const [accountID, setAccountID] = useState("A12274AW")
+const [userID, setUserID] = useState("C1220XHD")
+// const [isReady, setIsReady] = useState(false)
+
+const authenticate = async () => {
+  "starting authentication"
+  const result = await LocalAuthentication.authenticateAsync()
+  const device = await LocalAuthentication.supportedAuthenticationTypesAsync()
+  if(result.success) {
+    console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
+    return setIsAuth(false)
+  }
+  // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
+  if(!result.success) {
+    console.log('not authenticated', result.success)
+    alert('not authenticated')
+  }
+  // setIsAuth(result.success)
   
-  // const [fontsLoaded] = useFonts({
+}
 
-  //   Roboto: require("./app/assets/fonts/Roboto.ttf")
-  // });
+useEffect(() => {
+  // console.log('auth storage', currentUser === true, signedAuth.signedIn)
+  if(isAuth) {
+    authenticate()
+  }
+  console.log('currentUser & isAuth on load', currentUser, isAuth)
+}, [currentUser, isAuth ])
 
-  // const onLayoutRootView = useCallback(async () => {
-  //   console.log(fontsLoaded)
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
+useEffect(() => {
+  // console.log('auth storage', currentUser === true, signedAuth.signedIn)
+  if(isAuth) {
+    authenticate()
+  }
+  console.log('currentUser & isAuth on load', currentUser, isAuth)
+}, [currentUser, isAuth ])
 
-  // if (!fontsLoaded) {
-    
-  //   return null;
-  // }
+useEffect(() =>{
+  restoreToken()
+  restoreSignIn()
+}, [])
 
-  return (
-    <AuthContext.Provider value={{user, setUser}}>
-      <NavigationContainer>
-        <StackNavigator />
-      </NavigationContainer>
-    </AuthContext.Provider>
-    
-  )
 
- 
+
+
+
+
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, []);
+
+  const handleAppStateChange = (nextAppState) => {
+  if (nextAppState === 'inactive') {
+    console.log('the app is closed');
+    console.log(currentUser)
+    // setCurrentUser(null)
+  }    
+  }
+
+
+
+
+const restoreToken = async () => {
+  console.log('trying for restore token')
+  const token = await authStorage.getToken()
+  if(!token) return
+  console.log('restore token found',token)
+  setCurrentUser(jwtDecode(token))
+}
+
+const restoreSignIn = async () => {
+  console.log('trying for restore sign in')
+  const token = await authStorage.getSignInSettings()
+  if(!token) return
+  console.log('restore token sign in',token, token.includes('true'))
+  setIsAuth(token.includes('true'))
 }
 
 
 
+if(!AppState.currentState) {
+ setIsAuth(null)
+}
+
+  return (
+  
+    <AuthContext.Provider value={{user, setUser, currentUser, setCurrentUser, isAuth, setIsAuth,accountID, setAccountID,userID, setUserID}}>
+      <NavigationContainer>
+
+        {!currentUser ? (
+          <AppNavigator /> 
+        ) :  currentUser ? (
+          <AppNavigator /> 
+        ) : (
+          <AppNavigator />
+        )}
+      </NavigationContainer>
+    </AuthContext.Provider>    
+  )
+}

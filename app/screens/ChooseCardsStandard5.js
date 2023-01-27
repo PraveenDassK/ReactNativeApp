@@ -32,28 +32,8 @@ const ChooseCardsStandard5 = ({navigation}) => {
           <Text style={styles.purchaseProject}>but also grow{"\n"}</Text>
           <Text style={styles.purchaseProject}>your hand print!</Text>
         </Text>
-        <View style={[styles.helloWrapper21, styles.helloPosition12]}>
-          <Text style={[styles.hello2, styles.helloFlexBox12]}>7</Text>
-        </View>
-        <Text style={[styles.totalAssets, styles.tonsPosition12]}>
-          <Text style={styles.purchaseProject}>
-            <Text style={styles.total1}>{`Total `}</Text>
-          </Text>
-          <Text style={styles.purchaseProject}>
-            <Text style={styles.assets1}>{"\n"}Assets</Text>
-          </Text>
-        </Text>
-        <View style={styles.co2RemovedWrapper}>
-          <Text style={[styles.co2Removed, styles.helloFlexBox]}>
-            <Text style={styles.co}>CO</Text>
-            <Text style={styles.text}>2</Text>
-            <Text style={styles.co}> Removed</Text>
-          </Text>
-        </View>
-        <Text style={[styles.tons, styles.tonsPosition]}> Tons</Text>
-        <View style={[styles.helloContainer, styles.helloPosition]}>
-          <Text style={[styles.hello21, styles.helloFlexBox]}> 1,39</Text>
-        </View>
+
+
         <Image
           style={[styles.treeIcon, styles.treeIconLayout]}
           resizeMode="cover"

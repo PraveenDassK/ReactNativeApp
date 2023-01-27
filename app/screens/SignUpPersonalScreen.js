@@ -31,14 +31,14 @@ const SignUpPersonalScreen = ({ navigation }) => {
 
   const handleSubmit = async ({ email, phoneNumber }) => {
     phoneNumber = prefix + phoneNumber
-    const result = await otpApi.otp({ email, phoneNumber })
+    const result = await otpApi.otp(setUser,{ email, phoneNumber })
     setUser({ email, phoneNumber })
 
     console.log(result.data)
     if (!result.ok) return  alert('Could not send otp')
     // alert('Success')
     
-    navigation.navigate("OTPVerificationPersonal", { registration: true })
+    navigation.navigate("OTPVerificationPersonal2", { registration: true })
   }
 
   return (

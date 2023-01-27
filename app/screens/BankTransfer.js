@@ -8,13 +8,13 @@
   const BankTransfer = ({navigation}) => {
     const [data, setData] = useState({})
     const [benList, setBen] = useState([])
-  
+    const authContext = useContext(AuthContext)
     useEffect(() => {
       getSettings()
     },[])
     
     const getSettings = async () => {
-      const response = await api.RetriveBenificiaries()
+      const response = await api.RetriveBenificiaries(authContext.accountID)
       const data = response.data.details.content
       setBen(data)
     }

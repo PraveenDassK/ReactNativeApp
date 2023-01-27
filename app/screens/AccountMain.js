@@ -31,7 +31,7 @@ const HomeScreenPersonal = ({navigation}) => {
   
     //Gets the data for the user
     const loadData = async () => {
-      const response = await api.GetAccount();
+      const response = await api.GetAccount(authContext.accountID);
       const data = response.data.details
   
       setBalance(data.availableBalance)
@@ -92,7 +92,7 @@ const HomeScreenPersonal = ({navigation}) => {
   
     let currency = (transactionData ? transactionData.transactions[0].amount : "£")
 
-    const catNames = ["Helth", "fod", "hoose", "sping", "tansport"]
+    const catNames = ["Health", "Food", "House", "Sping", "Transport"]
     const dataPercentages = ["70%","50%","40%","30%","20%"]
 
     /**
@@ -189,6 +189,13 @@ const HomeScreenPersonal = ({navigation}) => {
                             <Text style={styles.inputBoxText}>My Cards</Text>
                         </View>
                     </Pressable>
+
+                    <Pressable onPress={() => navigation.navigate("SwitchAccounts")} style={styles.inputBox}>
+                    <View style={styles.inputBoxDiv}>
+                     <Image style={styles.inputIcon} resizeMode="contain" source={require("../assets/transfer-1.png")}/>
+                     <Text style={styles.inputBoxText}>SwitchAccount</Text>
+                    </View>
+                    </Pressable>
                 </View>
             </View>
             
@@ -263,19 +270,23 @@ const HomeScreenPersonal = ({navigation}) => {
                         </Text>
                       </View>
                     </View>  
-
+                       <Text style={styles.titleText}>Carbon Assets </Text>
                     <View style={[styles.carbonAssetsDiv]}>
-                      <Text style={styles.titleText}>
-                        Carbon Assets
-                      </Text>
-                      <View style={[styles.tokenBox]}>
-                        <Text>
-                          2 Carbonyte Tokens
-                        </Text>
-                        <Text>
-                          2 Total Assets
-                        </Text>
-                      </View>
+
+
+                        <View style={styles.carbonAssetsDivLeft}>
+                            <Text style={styles.largeNumber}>2</Text>
+                            <Text>Carbonyte Tokens</Text>
+                        </View>
+
+                        <View style={{height: "60%", backgroundColor: "black", alignSelf: 'center', justifyContent: 'center', alignItems: 'center', textAlignVertical: 'center', alignContent: 'center', flex:0.01}}></View>
+
+                        <View style={styles.carbonAssetsDivRight}>
+
+                        <Text style={styles.largeNumber}>2</Text>
+                         <Text>Total Assets</Text>
+                        </View>
+
                     </View>
 
                   </View>
@@ -317,7 +328,7 @@ const HomeScreenPersonal = ({navigation}) => {
                 Carbon Tokens 
               </Text>
               <Text>
-                Refer Now>
+                Refer Now
               </Text>
             </View>
 
@@ -375,7 +386,14 @@ const HomeScreenPersonal = ({navigation}) => {
       marginTop: "2.5%",
     },
     carbonAssetsDiv:{
-
+        marginTop: "2.5%",
+        width: "90%",
+        height: verticalScale(75),
+        backgroundColor: "#F6F5F8",
+        borderRadius: 15,
+        marginLeft: "5%",
+        flexDirection: 'row',
+        justifyContent: "space-around",
     },
     tokenBox:{
       width:"50%",
@@ -419,7 +437,8 @@ const HomeScreenPersonal = ({navigation}) => {
       borderRadius: 15,
       width:"100%",
       height:"10%",
-      padding:"5%",
+      paddingLeft: "5%",
+      paddingTop: "2.5%",
     },
     transactionText:{
       left:"30%",
@@ -439,21 +458,21 @@ const HomeScreenPersonal = ({navigation}) => {
       marginLeft: "5%",
     },
     transactionsContainer:{
-      height:verticalScale(500),
+      height:"auto",
       width: "80%",
       marginLeft: "10%",
-      marginTop: "2.5%",
+      marginTop: "12.5%",
       borderRadius: 15,
     },
 
       carbonItemDiv:{
           width:"100%",
-          height:"150%",
+          height: 700,
           borderRadius: 15,
       },
       screen: {
           flex: GlobalStyles.DivContainer.flex,
-          height:2100,
+          height:"auto",
       },
   
       NavBarTop: {
@@ -605,7 +624,7 @@ const HomeScreenPersonal = ({navigation}) => {
   
       inputBox: {
           backgroundColor: "white",
-          width: "32%",
+          width: "23.5%",
           height: 60,
           flexDirection: 'row',
           borderRadius: 10,
@@ -655,6 +674,32 @@ const HomeScreenPersonal = ({navigation}) => {
           fontSize: 18,
           fontWeight: "700",
   
+      },
+
+      carbonAssetsDivLeft: {
+      display: 'flex',
+      flex: 4.9,
+                flexDirection: 'row',
+                alignSelf: 'center',
+                         justifyContent: 'center',
+                         alignItems: 'center',
+                         textAlignVertical: 'center',
+                         alignContent: 'center',
+      },
+
+      carbonAssetsDivRight: {
+      display: 'flex',
+      flex: 4.9,
+                      flexDirection: 'row',
+                      alignSelf: 'center',
+                               justifyContent: 'center',
+                               alignItems: 'center',
+                               textAlignVertical: 'center',
+                               alignContent: 'center',
+      },
+
+      largeNumber: {
+      fontSize: 50,
       }
   
   

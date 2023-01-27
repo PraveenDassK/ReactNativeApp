@@ -14,13 +14,14 @@ const Carbon = ({route,navigation }) => {
 
     const [data, setData] = useState(null)
   const { setUser } = useContext(AuthContext)
+  const authContext = useContext(AuthContext)
 
   useEffect(() => {
     loadData()
   },[])
   
   const loadData = async () => {
-    const response = await carbonApi.getListings();
+    const response = await carbonApi.getListings(authContext.accountID);
    
     setData(response.data.details.data)
   }

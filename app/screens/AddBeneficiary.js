@@ -17,9 +17,10 @@ const AddBeneficiary = ({navigation}) => {
   const [iban, setIban] = useState("")
   const [sortCode, setSortCode] = useState("")
   const [accNum, setAccNum] = useState("")
+  const authContext = useContext(AuthContext)
 
   const addBene = async () => {
-  const response = await api.AddBeneficiary();
+  const response = await api.AddBeneficiary(authContext.accountID);
     navigation.navigate("BankTransferAmount",
             {bankName: bankName,
               accountName: accountName,
