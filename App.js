@@ -1,383 +1,127 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useState, useEffect } from "react";
+import {AppState} from 'react-native';
+import 'expo-dev-menu';
 
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import jwtDecode from 'jwt-decode'
+import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
+import * as LocalAuthentication from 'expo-local-authentication';
 
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AuthContext from "./app/auth/context";
+import AppNavigator from "./app/navigation/AppNavigator";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import authStorage from "./app/auth/storage";
 
-// import AccountNavigator from "./AccountNavigator";
-// import FeedNavigator from "./FeedNavigator";
-// import ListingEditScreen from "../screens/ListingEditScreen";
-// import NewListingButton from "./NewListingButton";
-// import routes from "./routes";
-// import navigation from "./rootNavigation";
-// import useNotifications from "../hooks/useNotifications";
-import AccountMain from "../screens/AccountMain";
-import Analytics from "../screens/Analytics";
-import Carbon from "../screens/Carbon";
-import Settings from "../screens/Settings";
-
-//Main screen
-import Account from "../screens/Account";
-
-/**
- * @notice Screens on account page to navigate to
- */
-//Add funds
-import AddFunds from "../screens/AddFunds"
-
-//Send money
-import SendMoney from "../screens/SendMoney"
-import AddBeneficiary from "../screens/AddBeneficiary"
-import BankTransferAmount from "../screens/BankTransferAmount"
-
-//Generic
-//Used by add funds and send money
-import Pin from "../screens/Pin"
-import Success from "../screens/Success"
-
-/**
- * @notice Screens for card settings
- */
-import MyCards from "../screens/MyCards"
-import CardSettings from "../screens/CardSettings"
-import SpendingLimit from "../screens/SpendingLimit"
-import SetLimit from "../screens/SetLimit"
-
-import ReplaceCard from "../screens/ReplaceCard"
-import ItsDamagedOrDoesntWork from "../screens/ItsDamagedOrDoesntWork"
-import ItWasLost from "../screens/ItWasLost"
-import IWasAVictimOfFraudOrThe from "../screens/IWasAVictimOfFraudOrThe"
-import Terminate from "../screens/Terminate"
-import TerminatedCard from "../screens/TerminatedCard"
-
-//No pages for analysis
-
-/**
- * @notice Screens on the carbon page to navigate to
- */
-import CarbonCart from "../screens/CarbonCart"
-import CarbonProject from "../screens/CarbonProject"
-import VirtualEcoSystem from "../screens/VirtualEcoSystem"
-import ChooseCardsStandard5 from "../screens/ChooseCardsStandard5"
-
-/**
- * @notice Screens on the settings page to navigate to
- */
-import ChooseCardsElite from "../screens/ChooseCardsElite"
-import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
-import AccountSettings from "../screens/AccountSettings"
-import Transactions from "../screens/Transactions"
-import AccountLetter from "../screens/AccountLetter"
+export default function App() {
 
 
-//Tabs and navs
-const Tab = createMaterialTopTabNavigator();
-const Stack = createNativeStackNavigator();
+const [user, setUser] = useState()
+const [currentUser, setCurrentUser] = useState()
+const [isAuth, setIsAuth] = useState(false)
 
-const StackNavigator = () => {
+const [accountID, setAccountID] = useState("A12274AW")
+const [userID, setUserID] = useState("C1220XHD")
+// const [isReady, setIsReady] = useState(false)
+
+const authenticate = async () => {
+  "starting authentication"
+  const result = await LocalAuthentication.authenticateAsync()
+  const device = await LocalAuthentication.supportedAuthenticationTypesAsync()
+  if(result.success) {
+    console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
+    return setIsAuth(false)
+  }
+  // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
+  if(!result.success) {
+    console.log('not authenticated', result.success)
+    alert('not authenticated')
+  }
+  // setIsAuth(result.success)
   
-  return(
-    
-    <Stack.Navigator initialRouteName="Account">
-      <Stack.Screen 
-        name="Account" 
-        component={AppNavigator}
-        options={{
-          title: "Account",
-       
-        }}
-      />
-
-      <Stack.Screen 
-        name="AddFunds" 
-        component={AddFunds}
-        options={{
-          title: "AddFunds",
-       
-        }}
-      />
-
-      <Stack.Screen 
-        name="SendMoney" 
-        component={SendMoney}
-        options={{
-          title: "SendMoney",
-       
-        }}
-      />
-
-      <Stack.Screen 
-        name="Pin" 
-        component={Pin}
-        options={{
-          title: "Pin",
-       
-        }}
-      />
-
-    <Stack.Screen 
-        name="Success" 
-        component={Success}
-        options={{
-          title: "Success",
-       
-        }}
-      />
-
-    <Stack.Screen 
-        name="AddBeneficiary" 
-        component={AddBeneficiary}
-        options={{
-          title: "AddBeneficiary",
-       
-        }}
-      />
-
-      <Stack.Screen 
-        name="BankTransferAmount" 
-        component={BankTransferAmount}
-        options={{
-          title: "BankTransferAmount",
-       
-        }}
-      />
-
-    <Stack.Screen 
-        name="MyCards" 
-        component={MyCards}
-        options={{
-          title: "MyCards",
-       
-        }}
-      />
-
-    <Stack.Screen 
-        name="CardSettings" 
-        component={CardSettings}
-        options={{
-          title: "CardSettings",
-       
-        }}
-      />
-
-    <Stack.Screen 
-        name="SpendingLimit" 
-        component={SpendingLimit}
-        options={{
-          title: "SpendingLimit",
-       
-        }}
-      />
-
-    <Stack.Screen 
-        name="SetLimit" 
-        component={SetLimit}
-        options={{
-          title: "SetLimit",
-       
-        }}
-      />
-
-  <Stack.Screen 
-        name="ReplaceCard" 
-        component={ReplaceCard}
-        options={{
-          title: "ReplaceCard",
-       
-        }}
-      />
-      
-      <Stack.Screen 
-        name="ItsDamagedOrDoesntWork" 
-        component={ItsDamagedOrDoesntWork}
-        options={{
-          title: "ItsDamagedOrDoesntWork",
-       
-        }}
-      />
-        <Stack.Screen 
-        name="ItWasLost" 
-        component={ItWasLost}
-        options={{
-          title: "ItWasLost",
-       
-        }}
-      />
-        <Stack.Screen 
-        name="IWasAVictimOfFraudOrThe" 
-        component={IWasAVictimOfFraudOrThe}
-        options={{
-          title: "IWasAVictimOfFraudOrThe",
-       
-        }}
-      />
-        <Stack.Screen 
-        name="Terminate" 
-        component={Terminate}
-        options={{
-          title: "Terminate",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="TerminatedCard" 
-        component={TerminatedCard}
-        options={{
-          title: "TerminatedCard",
-       
-        }}
-      />
-
-<Stack.Screen 
-        name="CarbonCart" 
-        component={CarbonCart}
-        options={{
-          title: "CarbonCart",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="CarbonProject" 
-        component={CarbonProject}
-        options={{
-          title: "CarbonProject",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="VirtualEcoSystem" 
-        component={VirtualEcoSystem}
-        options={{
-          title: "VirtualEcoSystem",
-       
-        }}
-      />
-
-    <Stack.Screen 
-        name="ChooseCardsStandard5" 
-        component={ChooseCardsStandard5}
-        options={{
-          title: "ChooseCardsStandard5",
-       
-        }}
-      />
-
-<Stack.Screen 
-        name="ChooseCardsElite" 
-        component={ChooseCardsElite}
-        options={{
-          title: "ChooseCardsElite",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="AccountSettings" 
-        component={AccountSettings}
-        options={{
-          title: "AccountSettings",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="SecurityAndPrivacy" 
-        component={SecurityAndPrivacy}
-        options={{
-          title: "SecurityAndPrivacy",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="Transactions" 
-        component={Transactions}
-        options={{
-          title: "Transactions",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="AccountLetter" 
-        component={AccountLetter}
-        options={{
-          title: "AccountLetter",
-       
-        }}
-      />
-
-    </Stack.Navigator>
-  )
 }
 
-const AppNavigator = () => {
+useEffect(() => {
+  // console.log('auth storage', currentUser === true, signedAuth.signedIn)
+  if(isAuth) {
+    authenticate()
+  }
+  console.log('currentUser & isAuth on load', currentUser, isAuth)
+}, [currentUser, isAuth ])
 
+useEffect(() => {
+  // console.log('auth storage', currentUser === true, signedAuth.signedIn)
+  if(isAuth) {
+    authenticate()
+  }
+  console.log('currentUser & isAuth on load', currentUser, isAuth)
+}, [currentUser, isAuth ])
+
+useEffect(() =>{
+  restoreToken()
+  restoreSignIn()
+}, [])
+
+
+
+
+
+
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, []);
+
+  const handleAppStateChange = (nextAppState) => {
+  if (nextAppState === 'inactive') {
+    console.log('the app is closed');
+    console.log(currentUser)
+    // setCurrentUser(null)
+  }    
+  }
+
+
+
+
+const restoreToken = async () => {
+  console.log('trying for restore token')
+  const token = await authStorage.getToken()
+  if(!token) return
+  console.log('restore token found',token)
+  setCurrentUser(jwtDecode(token))
+}
+
+const restoreSignIn = async () => {
+  console.log('trying for restore sign in')
+  const token = await authStorage.getSignInSettings()
+  if(!token) return
+  console.log('restore token sign in',token, token.includes('true'))
+  setIsAuth(token.includes('true'))
+}
+
+
+
+if(!AppState.currentState) {
+ setIsAuth(null)
+}
 
   return (
-    // <Tab.Navigator>
-    //   <Tab.Screen
-    //     name="Feed"
-    //     component={FeedNavigator}
-    //     options={{
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons name="home" color={color} size={size} />
-    //       ),
-    //     }}
-    //   />
-    //   <Tab.Screen
-    //     name="ListingEdit"
-    //     component={ListingEditScreen}
-    //     options={({ navigation }) => ({
-    //       tabBarButton: () => (
-    //         <NewListingButton
-    //           onPress={() => navigation.navigate(routes.LISTING_EDIT)}
-    //         />
-    //       ),
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons
-    //           name="plus-circle"
-    //           color={color}
-    //           size={size}
-    //         />
-    //       ),
-    //     })}
-    //   />
-    //   <Tab.Screen
-    //     name="Account"
-    //     component={AccountNavigator}
-    //     options={{
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons name="account" color={color} size={size} />
-    //       ),
-    //     }}
-    //   />
-    // </Tab.Navigator>
-    <Tab.Navigator>
-    <Tab.Screen 
-      name="AccountTab" 
-      component={AccountMain}
-      options={{
-        title: "Account"
-      }}
-      />
-    <Tab.Screen 
-      name="Analysis" 
-      component={Analytics}
-      options={{
-        
-      }}
-      />
-    <Tab.Screen 
-      name="CarbonTab" 
-      component={Carbon}
-      options={{
-        title: "Carbon"
-      }}
-    />
-    <Tab.Screen 
-      name="Profile" 
-      component={Settings}
-    />
-  </Tab.Navigator>
-  );
-};
+  
+    <AuthContext.Provider value={{user, setUser, currentUser, setCurrentUser, isAuth, setIsAuth,accountID, setAccountID,userID, setUserID}}>
+      <NavigationContainer>
 
-export default StackNavigator;
+        {!currentUser ? (
+          <AppNavigator /> 
+        ) :  currentUser ? (
+          <AppNavigator /> 
+        ) : (
+          <AppNavigator />
+        )}
+      </NavigationContainer>
+    </AuthContext.Provider>    
+  )
+}
