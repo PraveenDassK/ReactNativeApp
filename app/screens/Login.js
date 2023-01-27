@@ -124,15 +124,6 @@ const Login = ({ navigation }) => {
             </>
           )}
         </Formik>
-      <View style={styles.swipeUp}>
-        <MaterialCommunityIcons name="chevron-up" size={24} color="black" />
-        <FadeInView>
-          <Text>Swipe up if you already have an account</Text>
-        </FadeInView>
-      </View>
-      
-        
-
     </View>
     </SwipeUp>
     </Screen>

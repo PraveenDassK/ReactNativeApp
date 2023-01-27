@@ -1,5 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {GestureHandlerRootView ,gestureHandlerRootHOC} from "react-native-gesture-handler"
+
 import Onboarding1 from "../screens/Onboarding1";
 import Onboarding2 from "../screens/Onboarding2";
 import Onboarding3 from "../screens/Onboarding3";
@@ -32,26 +34,26 @@ const AuthNavigator = () => (
     /> */}
     <Stack.Screen  
       name="SplashAnimation"
-      component={SplashAnimation}
+      component={gestureHandlerRootHOC(SplashAnimation)}
       options={{ headerShown: false }}
     />
-    <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
-    <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
-    <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
+    <Stack.Screen  name="Onboarding1" component={gestureHandlerRootHOC(Onboarding1)}/>
+    <Stack.Screen  name="Onboarding2" component={gestureHandlerRootHOC(Onboarding2)}/>
+    <Stack.Screen  name="Onboarding3" component={gestureHandlerRootHOC(Onboarding3)}/>
 
-    <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
-    <Stack.Screen  name="Login" component={Login}/>
+    <Stack.Screen  name="SignUpPersonalScreen" component={gestureHandlerRootHOC(SignUpPersonalScreen)}/>
+    <Stack.Screen  name="Login" component={gestureHandlerRootHOC(Login)}/>
 
-    <Stack.Screen  name="OTPVerificationPersonal" component={OTPVerificationPersonal}/>
-    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
+    <Stack.Screen  name="OTPVerificationPersonal" component={gestureHandlerRootHOC(OTPVerificationPersonal)}/>
+    <Stack.Screen  name="OTPVerificationPersonal2" component={gestureHandlerRootHOC(OTPVerificationPersonal2)}/>
 
-    <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
-    <Stack.Screen  name="Name" component={Name}/>
-    <Stack.Screen  name="ProofOfResidency" component={ProofOfResidency}/>
-    <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
-    <Stack.Screen  name="PersonalAddress" component={PersonalAddress}/>
-    <Stack.Screen  name="DOB" component={DOB}/>
-    <Stack.Screen  name="Success" component={Success}/>
+    <Stack.Screen  name="PersonalOrBusiness" component={gestureHandlerRootHOC(PersonalOrBusiness)}/>
+    <Stack.Screen  name="Name" component={gestureHandlerRootHOC(Name)}/>
+    <Stack.Screen  name="ProofOfResidency" component={gestureHandlerRootHOC(ProofOfResidency)}/>
+    <Stack.Screen  name="BusinessAddress2" component={gestureHandlerRootHOC(BusinessAddress2)}/>
+    <Stack.Screen  name="PersonalAddress" component={gestureHandlerRootHOC(PersonalAddress)}/>
+    <Stack.Screen  name="DOB" component={gestureHandlerRootHOC(DOB)}/>
+    <Stack.Screen  name="Success" component={gestureHandlerRootHOC(Success)}/>
 
     
   </Stack.Navigator>

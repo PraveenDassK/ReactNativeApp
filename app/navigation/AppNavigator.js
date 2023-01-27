@@ -1,6 +1,8 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import {gestureHandlerRootHOC} from "react-native-gesture-handler"
+
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -28,7 +30,7 @@ const StackNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen 
         name="Account" 
-        component={AppNavigator}
+        component={gestureHandlerRootHOC(AppNavigator)}
         options={{
           title: "Account",
        
@@ -36,84 +38,43 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="SecurityAndPrivacy" 
-        component={SecurityAndPrivacy}
+        component={gestureHandlerRootHOC(SecurityAndPrivacy)}
         options={{
           title: "SecurityAndPrivacy",
        
         }}
       />
-      
     </Stack.Navigator>
   )
 }
 
 const AppNavigator = () => {
-
-
   return (
-    // <Tab.Navigator>
-    //   <Tab.Screen
-    //     name="Feed"
-    //     component={FeedNavigator}
-    //     options={{
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons name="home" color={color} size={size} />
-    //       ),
-    //     }}
-    //   />
-    //   <Tab.Screen
-    //     name="ListingEdit"
-    //     component={ListingEditScreen}
-    //     options={({ navigation }) => ({
-    //       tabBarButton: () => (
-    //         <NewListingButton
-    //           onPress={() => navigation.navigate(routes.LISTING_EDIT)}
-    //         />
-    //       ),
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons
-    //           name="plus-circle"
-    //           color={color}
-    //           size={size}
-    //         />
-    //       ),
-    //     })}
-    //   />
-    //   <Tab.Screen
-    //     name="Account"
-    //     component={AccountNavigator}
-    //     options={{
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons name="account" color={color} size={size} />
-    //       ),
-    //     }}
-    //   />
-    // </Tab.Navigator>
     <Tab.Navigator>
     <Tab.Screen 
       name="AccountTab" 
-      component={AccountMain}
+      component={gestureHandlerRootHOC(AccountMain)}
       options={{
         title: "Account"
       }}
       />
     <Tab.Screen 
       name="Analysis" 
-      component={Analytics}
+      component={gestureHandlerRootHOC(Analytics)}
       options={{
         
       }}
       />
     <Tab.Screen 
       name="CarbonTab" 
-      component={Carbon}
+      component={gestureHandlerRootHOC(Carbon)}
       options={{
         title: "Carbon"
       }}
     />
     <Tab.Screen 
       name="Profile" 
-      component={Settings}
+      component={gestureHandlerRootHOC(Settings)}
     />
   </Tab.Navigator>
   );
