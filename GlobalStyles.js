@@ -58,7 +58,7 @@ const GlobalStyles = {
     gray_1700: "#1a1a1a",
     gray_1800: "rgba(0, 0, 0, 0.87)",
     gray_1900: "rgba(0, 0, 0, 0)",
-    blue_100: "#0101FD",
+    blue_100: "#D8EBF9",
     indigo_100: "#00003d",
     white: "#fff",
     black: "#000",
@@ -154,5 +154,81 @@ const GlobalStyles = {
     br_6xl: 30,
     br_7xl: 40,
   },
-};
+
+  Title: {
+  marginTop: "10%",
+  marginLeft: "10%",
+  width: "100%",
+  fontSize: 28,
+  fontWeight: "700",
+  },
+
+  RowText: {
+    marginTop: "2.5%",
+    marginLeft: "10%",
+    width: "100%",
+    fontSize: 14,
+    fontWeight: "300",
+    fontColor: "#999999"
+  },
+
+
+  CenterRowText: {
+    marginTop: "2.5%",
+    marginLeft: "10%",
+    width: "100%",
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "700",
+    fontColor: "#00003D"
+  },
+
+  CenterRow: {
+    marginLeft: "10%",
+    width: "80%",
+    fontColor: "#00003D"
+  },
+
+  CenterRowSubText: {
+    marginTop: "2.5%",
+    marginLeft: "10%",
+    width: "100%",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "300",
+    fontColor: "#999999"
+  },
+
+
+  DivContainer: {
+    backgroundColor: "#F6F5F8",
+    height: "50%",
+    width: "80%",
+    height10: "10%",
+    marginLeft: "10%",
+    marginTop: "2.5%",
+    flex: 1,
+    borderRadius: 15
+  },
+
+  imageBox: {
+    width: "80%",
+    imageFit: "100%",
+  },
+
+  NavBar: {
+    fontSize: 14,
+    textAlign: "center",
+    fontWeight: "700",
+    fontColor: "#000000"
+  },
+
+  NavBarBottomText: {
+    fontSize: 14,
+        textAlign: "center",
+        fontWeight: "300",
+        fontColor: "#000000"
+  }
+
+  };
 export default GlobalStyles;

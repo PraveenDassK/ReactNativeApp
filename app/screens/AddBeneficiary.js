@@ -9,14 +9,26 @@ import { View,
   Pressable,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list"
 
 const AddBeneficiary = ({navigation}) => {
   const [bankName, setBankName] = useState("")
   const [accountName, setAccountName] = useState("")
   const [iban, setIban] = useState("")
   const [sortCode, setSortCode] = useState("")
-  
+  const [accNum, setAccNum] = useState("")
 
+  const addBene = async () => {
+  const response = await api.AddBeneficiary();
+    navigation.navigate("BankTransferAmount",
+            {bankName: bankName,
+              accountName: accountName,
+            iban:iban,
+            sortCode:sortCode,
+          accNum: accNum})
+    console.log(response)
+  }
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -46,6 +58,18 @@ const AddBeneficiary = ({navigation}) => {
           onChangeText={bankName => setBankName(bankName)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
+        <View style={[styles.helloParent12, styles.groupPosition]}>
+          <Text
+            style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
+          >
+            Account Number
+          </Text>
+          <TextInput style={[styles.hello3, styles.helloTypo]} 
+          placeholder={"Account Number"}
+
+          onChangeText={accNum => setAccNum(accNum)}/>
+          <View style={[styles.groupChild, styles.lineViewPosition]} />
+        </View>
         <View style={[styles.helloGroup, styles.groupPosition]}>
           <Text
             style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
@@ -71,13 +95,7 @@ const AddBeneficiary = ({navigation}) => {
         </View>
         <Pressable
           style={[styles.groupFrame, styles.groupPosition]}
-          onPress={() => {
-            navigation.navigate("BankTransferAmount",
-            {bankName: bankName,
-              accountName: accountName,
-            iban:iban,
-            sortCode:sortCode})
-          }}
+          onPress={() => addBene()}
         >
           <View style={[styles.groupWrapper, styles.wrapperPosition]}>
             <View style={[styles.groupWrapper, styles.wrapperPosition]}>
@@ -196,6 +214,10 @@ const styles = StyleSheet.create({
     marginTop: -255.5,
     right: 40,
   },
+  helloParent12: {
+    marginTop: 135.5,
+    right: 40,
+  },
   helloGroup: {
     marginTop: -153.5,
     right: 40,
@@ -254,6 +276,15 @@ const styles = StyleSheet.create({
     height: 32,
     right: 40,
     top: "50%",
+    position: "absolute",
+  },
+  historyParent: {
+    top: 10,
+    width: 300,
+    left: 0,
+  },
+  iconContentLayout: {
+    height: 16,
     position: "absolute",
   },
   groupParent: {

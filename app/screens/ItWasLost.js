@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import { Text, StyleSheet, View, Image,ScrollView, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const ItWasLost = () => {
+const ItWasLost = ({navigation}) => {
   return (
+    <ScrollView>
     <View style={styles.itWasLost}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>It was lost</Text>
@@ -150,15 +151,17 @@ const ItWasLost = () => {
             </Text>
           </View>
         </View>
-        <View style={[styles.groupParent, styles.groupPosition]}>
+        <Pressable style={[styles.groupParent, styles.groupPosition]}
+        onPress={() => navigation.navigate("Terminate")}>
           <View style={[styles.groupView, styles.groupPosition]}>
             <View style={styles.groupChild2} />
             <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
           </View>
           <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
-        </View>
+        </Pressable>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

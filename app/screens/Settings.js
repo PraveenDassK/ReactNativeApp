@@ -13,9 +13,9 @@ const Settings = ({navigation}) => {
   const [plan, setPlan] = useState(null)
   const [balance, setBal] = useState(null)
   const [currency, setCurrency] = useState(null)
+  const [initials, setInitals] = useState(null)
   const { setCurrentUser } = useContext(AuthContext)
 
-  console.log(account)
   useEffect(() => {
     loadData()
   },[])
@@ -38,6 +38,15 @@ const Settings = ({navigation}) => {
     setSortCode(accountdata.identifiers[0].sortCode)
     setAccNum(accountdata.identifiers[0].accountNumber)
     setCurrency(data.currency ? data.currency : "GBP")
+
+    let name = accountdata.customerName
+    let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
+    
+    if (names.length > 1) {
+      initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
+    }
+    console.log(initialsHold)
+    setInitals(initialsHold)
   }
 
   const copyAccount = () => {
@@ -67,15 +76,13 @@ const Settings = ({navigation}) => {
         />
         <Text style={styles.hello}>{fullname}</Text>
         <Text style={styles.hello1}>{plan}</Text>
-        <Image
+        <Text
           style={[
             styles.groupChild,
             styles.groupLayout,
             styles.groupChildLayout,
           ]}
-          resizeMode="cover"
-          source={require("../assets/ellipse-3158.png")}
-        />
+        >{initials}</Text>
         <Pressable
           style={styles.helloParent}
           onPress = {handleLogout} 
@@ -462,6 +469,7 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
+  
   rectangleParent: {
     left: 0,
     position: "absolute",

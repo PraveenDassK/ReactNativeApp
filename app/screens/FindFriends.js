@@ -68,8 +68,9 @@ const styles = StyleSheet.create({
   helloParentPosition12: {
     textAlign:"left",
     left: 40,
-    right: -100,
+    right: -125,
     top: 0,
+    marginLeft: -9,
     position: "absolute",
   },
   groupPosition1: {
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   hello2: {
     top: "40%",
     
-    marginleft: -100,
+    marginleft: -920,
     left: "13%",
     color: GlobalStyles.Color.black,
   },

@@ -54,6 +54,22 @@ const AddFunds = ({navigation}) => {
   const requestContact = (amount) => {
     console.log(amount)
     if(amount){alert("!")}
+    const checkText = (text) => {
+      setAmount(text)
+      //First check if there is a value
+      if(
+        //First check if there is a value
+        text == " " &&
+        //Then check if it is above a limit
+        text < 1000
+        //Any other checks for the text add it here
+        ){
+        setValidator(false)
+      }else{
+        //If all the checks pass then set the validator to true
+        setValidator(true)
+      }
+    }
     navigation.navigate("Pin",{
       amount: amount, 
       name: value,

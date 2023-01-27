@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   helloTypo: {
     textAlign: "center",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textTransform: "uppercase",
     fontSize: GlobalStyles.FontSize.size_lg,
     position: "absolute",
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
     width: "100%",
   },

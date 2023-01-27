@@ -1,5 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
-import { StyleSheet,  View, Dimensions, Image, ScrollView, FlatList} from 'react-native'
+import { StyleSheet,  View, Image, FlatList} from 'react-native'
+import GlobalStyles from "../../GlobalStyles";
 
 import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 import carbonApi from "../api/carbon"
@@ -7,8 +8,9 @@ import Button from '../components/Button'
 import Text from "../components/Text"
 import Screen from '../components/Screen'
 import AuthContext from '../auth/context'
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
-const Carbon = ({ navigation }) => {
+const Carbon = ({route,navigation }) => {
 
     const [data, setData] = useState(null)
   const { setUser } = useContext(AuthContext)
@@ -57,28 +59,27 @@ const Carbon = ({ navigation }) => {
     console.log(obj)
 
   }
+  console.log(cart)
   return (
-    <Screen>
+    <Screen style={{backgroundColor: "#F6F5F8"}}>
+        <View style={styles.NavBarBottom}>
+                            <Text style={styles.NavBarBottomText}>Account</Text>
+                            <Text style={styles.NavBarBottomText}>Analysis</Text>
+                            <Text style={styles.NavBarBottomText}>Carbon</Text>
+                            <Text style={styles.NavBarBottomText}>Profile</Text>
+                        </View>
 
         <View style={styles.mainContainer}>
             <FlatList
                 ListHeaderComponent={
                     <View
             style={styles.container}>
-            <Text 
-                onPress={()=> console.log("onpress")} 
-                style={styles.title}
-            >Remove Carbon, Restore Nature
-            </Text>
-            <View style={styles.treeContiner}>
-                <Image 
-                resizeMode='contain'
-                style={{
-                    width: horizontalScale(250),
-                    height: verticalScale(400) 
-                }}
-                source={require("../assets/image-tree.png")}
-                />
+            <View style={styles.titleTextRow}>
+                    <Text style={styles.titleText}>Remove Carbon,</Text>
+                    <Text style={styles.titleText}>Restore Nature</Text>
+
+                </View>
+            <View style={styles.treeContainer}>
             </View>
             {/* <Text>
                 At Carbonyte we help you to track, reduce and calvulate your C0<Text style={{fontSize: 15, lineHeight: 37}}>2</Text>emission from your daily transcation
@@ -87,8 +88,7 @@ const Carbon = ({ navigation }) => {
         
             <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" onPress={() => console.log("Calulate carbon footprint")}/>
             <View style={styles.subContainer}>
-                    <Text 
-                    numberOflines={3}
+                    <Text numberOflines={3}
                     style={styles.text}
                     >
                         At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transcation
@@ -96,23 +96,31 @@ const Carbon = ({ navigation }) => {
             </View>
             <View style={[styles.subTitle, { marginTop: verticalScale(100)}]}>
                 <View style={styles.investNature} >
-                    <Text style={styles.title}>Invest in Nature</Text>
+                    <Text style={styles.titleText}>Invest in</Text>
+                    <Text style={styles.titleText}>Nature</Text>
                 </View>
                 <View style={{alignItems:"flex-start", justifyContent: 'center'}}>
                     <Image 
                         resizeMode='contain'
-                        style={{width: horizontalScale(120) , height: verticalScale(120)}}
+                        style={{width: horizontalScale(120), height: verticalScale(120), marginLeft: horizontalScale(100)}}
                         source={require('../assets/image-twotrees.png')}
                     />
                 </View>
             </View>
             <View style={{marginTop: verticalScale(20)}}>
-                <Button title="VISIT YOUR VIRTUAL FOREST" color='none' style={{borderColor: 'babyBlue', borderWidth: horizontalScale(1),}} textColor={{color: 'babyBlue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
-                
+                <View style={styles.doubleButtonDiv}>
+                <Button style={{width: "49%", borderColor: "#D8EBF9", borderWidth: horizontalScale(1.5)}} title="VISIT YOUR VIRTUAL FOREST" color='none' fontColor={{color: 'blue'}} onPress={()=> navigation.navigate("VirtualEcoSystem")}/>
+                <Button style={{width: "49%", borderColor: '#D8EBF9', borderWidth: horizontalScale(1.5)}} title="VISIT YOUR ECO SUMMARY" color='none' fontColor={{color: 'blue'}} onPress={()=> navigation.navigate("ChooseCardsStandard5")}/>
+                </View>
             </View>
-            
+
+            <View style={{marginBottom: "5%", textAlign: "center"}}>
                 <Text style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</Text>
-                <Text style={styles.description}>We only profile high-quality projects that meet our minimun standards in relation to carbon + biodiversity + social benifits</Text>
+                <Text style={styles.description}>We only profile high-quality projects that meet our minimum standards in relation to carbon + biodiversity + social benefits</Text>
+            </View>
+                <Button title="VISIT YOUR CART" color='babyBlue' onPress={()=> navigation.navigate("CarbonCart",cart)}/>
+
+
                 <Text style={[styles.textSub, {marginTop: verticalScale(50)}]}>Select your project</Text>
            
             </View>
@@ -124,10 +132,11 @@ const Carbon = ({ navigation }) => {
                     <View style={styles.listItems}>
                         
                         <Image
-                        resizeMode={item.image !== "" ? 'stretch': 'contain'}
+                        resizeMode={item.image !== "" ? 'contain': 'contain'}
                         style={[styles.listImage, {
                             width: horizontalScale(300),
-                            height: verticalScale(180) 
+                            height: verticalScale(180),
+                            resizeMode: 'contain'
                         }]}
                         source={
                             
@@ -155,10 +164,13 @@ const Carbon = ({ navigation }) => {
                                 style={styles.description}
                             >{item.description.replace(/<[^>]*>/g, "").substring(0,200).trim()}...</Text>
                         </View>
-                        <Button title="ADD TO CART" color='babyBlue' onPress={() => addToCart(item.id)}/>
+                        <View style={styles.doubleButtonDiv}>
+                        <Button style={{width: "49%"}} title="ADD TO CART" color='babyBlue' onPress={() => addToCart(item.id)}/>
+                        <Button style={{width: "49%"}} title="Learn More" color='babyBlue' onPress={() => navigation.navigate("CarbonProject",{"Id" : item.id})}/>
+                        </View>
                         <View style={styles.benifitsContainer}>
                             {item.tags.length ? (
-                                <View >   
+                                <View >
                                 <Text style={[styles.tags, styles.tree]}>Co-benifits</Text>
                                 </View>
                             ): null }
@@ -197,7 +209,7 @@ const styles = StyleSheet.create({
     description:{
         color: "grey",
         marginTop: verticalScale(10),
-        textAlign: "left"
+        textAlign: "center"
 
         
     },
@@ -260,7 +272,7 @@ const styles = StyleSheet.create({
     tree: {
         fontWeight: 'bold'
     },
-    treeContiner: {
+    treeContainer: {
         alignItems: 'center',
         marginTop: verticalScale(10),
     },
@@ -284,7 +296,35 @@ const styles = StyleSheet.create({
     subTitlePrice: {
         flex:1,
         alignItems: "flex-end"
-    }
+    },
+
+    NavBarBottom: {
+            marginTop: "3%",
+            flexDirection: 'row',
+            width: "85%",
+            justifyContent: "space-around",
+            marginLeft: "7.5%"
+
+        },
+
+        NavBarBottomText: {
+            fontSize: GlobalStyles.NavBarBottomText.fontSize,
+            fontWeight: GlobalStyles.NavBarBottomText.fontWeight,
+            color: GlobalStyles.NavBarBottomText.fontColor,
+        },
+
+        titleText: {
+                fontSize: GlobalStyles.Title.fontSize,
+                fontWeight: GlobalStyles.Title.fontWeight,
+                color: GlobalStyles.NavBarBottomText.fontColor,
+            },
+
+        doubleButtonDiv:{
+            flexDirection: 'row',
+            width: "100%",
+
+            justifyContent: "space-between",
+        }
 
 })
 

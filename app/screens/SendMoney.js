@@ -21,8 +21,6 @@ const SendMoney = ({navigation}) => {
   }
   //Sending
   const sendDetails = (Id) => {
-    console.log(Id)
-    console.log(benList[Id])
     const details = benList[Id]
     navigation.navigate("BankTransferAmount",
     {bankName: "FakeName",
@@ -31,6 +29,14 @@ const SendMoney = ({navigation}) => {
       iban:details.destinationIdentifier.iban,
       sortCode:details.destinationIdentifier.sortCode,
     }) 
+  }
+
+  const deleteDetails = async(Id) => {
+    const details = benList[Id].id
+    console.log(details)
+    const response = await api.DeleteBenificiary(details)
+    console.log(response)
+    getSettings()
   }
   //Rendering
   let benText = ""
@@ -41,6 +47,7 @@ const SendMoney = ({navigation}) => {
       beniter.push(
       <Pressable
         onPress={details => {sendDetails(i)}}
+        key={i}
       >
         <View style = {styles.benBoxCon}>
           <Text>
@@ -52,16 +59,20 @@ const SendMoney = ({navigation}) => {
           <Text>
             {item.destinationIdentifier.accountNumber}
           </Text>
+          <Pressable style = {styles.deleteButton} onPress = {(details) => deleteDetails(i)}>
+            <Text>
+              Delete
+            </Text>
+          </Pressable>
         </View>
-      </Pressable>
 
+      </Pressable>
       )
     })
     benText = 
     <View style = {styles.listBoxContainer}>
         {beniter}
     </View>
-    console.log(benText)
   }else{
     benText = 
     <Text style = {styles.failToFind}>
@@ -165,7 +176,6 @@ const styles = StyleSheet.create({
   listBoxContainer:{
     width:"100%",
     height:"50%",
-    backgroundColor:"grey"
   },
   searchBox:{
     width:"100%",
@@ -181,7 +191,17 @@ const styles = StyleSheet.create({
   },
   benBoxCon:{
     width:"100%",
-    backgroundColor:"white"
+    height:"60%",
+    backgroundColor:"white",
+    borderRadius: 50,
+    padding:"5%",
+  },
+  deleteButton:{
+    backgroundColor:"red",
+    height:"40%",
+    width:"20%",
+    left:"50%",
+    bottom:"30%",
   }
 });
 
