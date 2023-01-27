@@ -39,6 +39,7 @@ const authenticate = async () => {
   }
   // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
   console.log('not authenticated', result.success)
+  alert('not authenticated')
   // setIsAuth(result.success)
   
 }
@@ -111,10 +112,6 @@ if(!AppState.currentState) {
  setIsAuth(null)
 }
 
-// if (!isReady) return (
-//     <AppLoading startAsync={restoreToken} onFinish={() => setIsReady(true)} onError={()=> console.log('error')}/>
-// )
-
   return (
   
     <AuthContext.Provider value={{user, setUser, currentUser, setCurrentUser, isAuth, setIsAuth}}>
@@ -128,14 +125,6 @@ if(!AppState.currentState) {
         ) : (
           <AuthNavigator />
         )}
-        {/* <AppNavigator />
-        */}
-        {/* {isAuth ? <AppNavigator /> : <AuthNavigator />} */}
-
-
-
-{/* {!currentUser ? <AuthNavigator /> : 
-         isAuth ? <AppNavigator /> : <AuthNavigator />} */}
       </NavigationContainer>
     </AuthContext.Provider>
     

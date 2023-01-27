@@ -212,7 +212,7 @@ const Analytics = ({navigation}) => {
                         height={40}
                         borderRadius={13}
                         borderColor={"transparent"}
-                        color={['#42b0f5', '#ad42f5', '#17eb65', '#eb17d5'][index]}
+                        color={['#42b0f5', '#ad42f5', '#17eb65', '#eb17d5'][index % 4]}
                         unfilledColor={"white"}
 
                       />
