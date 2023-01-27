@@ -104,7 +104,7 @@ const HomeScreenPersonal = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.screen}>
-        
+
             <View style={styles.divContainer}>
                 <View style={styles.congratulationsContainer}>
                     <View style={styles.progressDiv}>

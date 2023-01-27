@@ -1,15 +1,33 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
-import carbonApi from "../api/test_api_list"
+import api from "../api/api_list"
 
 import GlobalStyles from "../../GlobalStyles";
 
 const AccountSettings = ({navigation}) => {
+  const [name, setName] = useState("")
+  const [balance, setBalance] = useState(0)
+
+  //Calls the API once during load
+  useEffect(() => {
+      const unsubscribe = navigation.addListener('focus',  () => {
+        loadData()
+      })
+    },[])
+
+  const loadData = async() =>{
+      const customer = await api.GetAccount()
+      const data = customer.data.details
+      setName(data.name)
+      setBalance(data.availableBalance)
+      console.log(data)
+  }
+
   return (
     <View style={styles.account}>
       <View style={styles.helloParent}>
-        <Text style={styles.hello}>Full Name</Text>
-        <Text style={[styles.hello1, styles.helloTypo]}>£0.00</Text>
+        <Text style={styles.hello}>{name}</Text>
+        <Text style={[styles.hello1, styles.helloTypo]}>£{balance}</Text>
         <Text style={styles.hello2}>Standard</Text>
         <Text style={[styles.hello3, styles.helloTypo]}>Manage</Text>
         <View style={[styles.rectangleParent, styles.groupChildPosition]}>

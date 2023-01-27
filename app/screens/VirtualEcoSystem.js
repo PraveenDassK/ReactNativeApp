@@ -7,14 +7,31 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Form from "../components/forms/Form";
 
+import api from "../api/api_list";
 
 const VirtualEcoSystem = ({navigation}) => {
 
-    const forestValue = 10
+    const [name, setName] = useState("Your forest")
+
+    //Calls the API once during load
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus',  () => {
+          loadData()
+        })
+      },[])
+
+    const loadData = async() =>{
+        const customer = await api.GetCustomer()
+        const data = customer.data.details
+        console.log(data.name.split(" "))
+        setName(data.name.split(" ")[0] + "'s Forest")
+    }
+
+    const forestValue = 1
 return (
 <View style={styles.mainContainer}>
     <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>Hudson's Forest</Text>
+        <Text style={styles.titleText}>{name}</Text>
     </View>
 
     <View style={styles.subTextRow}>
