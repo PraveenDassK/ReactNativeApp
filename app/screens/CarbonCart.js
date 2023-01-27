@@ -80,8 +80,8 @@ console.log(data)
         />
         </ScrollView>
         <View style={{width: "100%", backgroundColor: "#F6F5F8", height: 2 , top: 49}}></View>
-         <View style={{width: "100%", height: 50, top: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor: "white"}}>
-         <View style={styles.cartTitle}>
+        <View style={{width: "100%", height: 50, top: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor: "white"}}>
+        <View style={styles.cartTitle}>
                      <Text style={styles.heading1}>Total</Text>
                      <Text style={styles.heading2}>?</Text>
                      <Text style={styles.heading3}>£0.00</Text>

@@ -9,7 +9,7 @@
     "splash": {
       "image": "./app/assets/layer-129@3x.png",
       "resizeMode": "contain",
-      "backgroundColor": "blue"
+      "backgroundColor": "pink"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

@@ -128,7 +128,6 @@ const SignUpPersonalScreen = ({ navigation }) => {
         <MaterialCommunityIcons name="chevron-up" size={24} color="black" />
         <FadeInView>
           <Text>Swipe up if you already have an account</Text>
-          <Button title='login' onPress={()=> navigation.navigate("Login")} />
         </FadeInView>
       </View>
       

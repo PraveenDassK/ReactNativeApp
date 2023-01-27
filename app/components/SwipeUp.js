@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { GestureDetector, Gesture, Directions } from "react-native-gesture-handler"
+import {GestureHandlerRootView, GestureDetector, Gesture, Directions } from "react-native-gesture-handler"
 
 
 
@@ -11,9 +11,11 @@ function SwipeUp({children}) {
     .onStart(()=>console.log("start"))
     .onEnd(()=> navigation.navigate("Login"));
   return (
-    <GestureDetector gesture={flingGesture}>
-        { children}
-    </GestureDetector>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <GestureDetector gesture={flingGesture}>
+          { children}
+      </GestureDetector>
+    </GestureHandlerRootView>
   )
 }
 
