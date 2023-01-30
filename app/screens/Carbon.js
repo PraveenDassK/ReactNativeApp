@@ -137,7 +137,7 @@ const Carbon = ({route,navigation }) => {
                             item.image != "" ? {uri:item.image} : require("../assets/icon-bluecheck.png")
                         } />
                     
-                        <View style={styles.subTitle}>{console.log(item)}
+                        <View style={styles.subTitle}>{console.log(item.asset.type)}
                             <View style={styles.subTitleText}>
                                 <Text
                                     style={styles.textSub}
@@ -149,7 +149,7 @@ const Carbon = ({route,navigation }) => {
                                 >£{item.asset.displayAssetPrice}
                                 </Text>
                                 <Text style={styles.tree}>
-                                    /{capitalized(item.asset.type)}
+                                    /{(item.asset.type == "LAND" ? "tCO2e" : item.asset.type)}
                                 </Text>
                             </View>
                         </View>
