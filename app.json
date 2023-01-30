@@ -9,7 +9,7 @@
     "splash": {
       "image": "./app/assets/layer-129@3x.png",
       "resizeMode": "contain",
-      "backgroundColor": "pink"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -38,7 +38,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "c44c011f-e58a-467d-b5dd-4e9e27e21ed3"
+        "projectId": "7605c38a-8a2f-4a89-8782-f5d60ad85874"
       }
     }
   }
