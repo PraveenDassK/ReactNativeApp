@@ -10,6 +10,8 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 const CarbonCart = ({route,navigation }) => {
   const [data, setData] = useState([])
   const [display, setshow] = useState([])
+  const [amount, setAmount] = useState("0")
+  const [price, setPrice] = useState("0")
 
   useEffect(() => {
     loadData()
@@ -34,8 +36,12 @@ const CarbonCart = ({route,navigation }) => {
     });
 
     let show = []
+    let totalItems = 0
+    let totalPrice = 0
 
     data.forEach(item => {
+      totalItems += item.price.amount
+      totalPrice += item.price.price
       show.push(
         <View>
           <Text>
@@ -50,9 +56,13 @@ const CarbonCart = ({route,navigation }) => {
         </View>
       )
     })
+    console.log(totalItems)
     setshow(show)
+    setAmount(totalItems)
+    setPrice(totalPrice)
   }
-console.log(data)
+  
+  console.log(amount)
 
   return (
     <View style={styles.mainContainer}>
@@ -83,8 +93,8 @@ console.log(data)
         <View style={{width: "100%", height: 50, top: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor: "white"}}>
         <View style={styles.cartTitle}>
                      <Text style={styles.heading1}>Total</Text>
-                     <Text style={styles.heading2}>?</Text>
-                     <Text style={styles.heading3}>£0.00</Text>
+                     <Text style={styles.heading2}>{amount}</Text>
+                     <Text style={styles.heading3}>£{price}</Text>
                  </View>
          </View>
     </View>
