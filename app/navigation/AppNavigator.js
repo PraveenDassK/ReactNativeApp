@@ -371,7 +371,7 @@ const AppNavigator = () => {
     <Tab.Navigator>
     <Tab.Screen 
       name="AccountTab" 
-      component={AddBeneficiary}
+      component={Settings}
       options={{
         title: "Account"
       }}
