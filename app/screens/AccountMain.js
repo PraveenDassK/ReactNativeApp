@@ -7,6 +7,8 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
+
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -34,11 +36,11 @@ const HomeScreenPersonal = ({ navigation }) => {
   const todaydate = moment().format("ll");
 
   //Calls the API once during load
-  useEffect(() => {
+  useFocusEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       loadData();
     });
-  }, []);
+  });
 
   //Gets the data for the user
   const loadData = async () => {
