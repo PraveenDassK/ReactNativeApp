@@ -32,7 +32,7 @@ const SpendingLimit = ({navigation,route}) => {
   //Gets the data for the user
   const loadData = async () => {
     //Gets the data from the api
-    const response = await api.GetLimit();
+    const response = await api.GetLimit(authContext.accountID);
     //Then isolate the useful data
     const data = response.data.details
     console.log(data)
@@ -40,9 +40,9 @@ const SpendingLimit = ({navigation,route}) => {
     //If there is a limit
     setPercent((50/data.monthlyAmount)*100 + "%")
   }
-
+  console.log(authContext.accountID)
   const sendRequest = async () => {
-    const response = await api.SetToggles(
+    const response = await api.SetToggles(authContext.accountID,
       isEnabled,
     );
   }

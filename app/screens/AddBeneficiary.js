@@ -9,22 +9,23 @@ import { View,
   Pressable,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
 import api from "../api/api_list"
 
 const AddBeneficiary = ({navigation}) => {
   const [bankName, setBankName] = useState("")
   const [accountName, setAccountName] = useState("")
-  const [iban, setIban] = useState("")
-  const [sortCode, setSortCode] = useState("")
+  const [phoneNumber, setIban] = useState("")
+  const [sortCode, setPhoneNumber] = useState("")
   const [accNum, setAccNum] = useState("")
   const authContext = useContext(AuthContext)
 
   const addBene = async () => {
-  const response = await api.AddBeneficiary();
+  const response = await api.AddBeneficiary(authContext.userID,phoneNumber,accountName,accNum,sortCode);
     navigation.navigate("BankTransferAmount",
             {bankName: bankName,
               accountName: accountName,
-            iban:iban,
+            phoneNumber:phoneNumber,
             sortCode:sortCode,
           accNum: accNum})
     console.log(response)
@@ -86,12 +87,12 @@ const AddBeneficiary = ({navigation}) => {
           <Text
             style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
           >
-            International Bank Account Number (IBAN)
+            Phone Number
           </Text>
           <TextInput style={[styles.hello3, styles.helloTypo]}
           placeholder={"01234567890"}
           keyboardType="numeric"
-          onChangeText={iban => setIban(iban)}/>
+          onChangeText={phoneNumber => setIban(phoneNumber)}/>
           <View style={[styles.groupChild, styles.lineViewPosition]} />
         </View>
         <Pressable
@@ -118,7 +119,7 @@ const AddBeneficiary = ({navigation}) => {
             style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
             placeholder={"00 - 00 - 00"}
             keyboardType="numeric"
-            onChangeText={sortCode => setSortCode(sortCode)}
+            onChangeText={sortCode => setPhoneNumber(sortCode)}
           />
           <View style={[styles.lineView, styles.lineViewPosition]} />
         </View>

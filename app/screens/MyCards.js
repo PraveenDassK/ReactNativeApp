@@ -28,7 +28,7 @@ const MyCards = ({ navigation }) => {
   },[])
   
   const loadData = async () => {
-    const transactionCall = await api.GetTransactions()
+    const transactionCall = await api.GetTransactions(authContext.accountID)
     const transData = transactionCall.data.details
     for(let i = 0; i  < 4; i++){
       setRecent(oldArray => [...oldArray, transData.content[i]]);

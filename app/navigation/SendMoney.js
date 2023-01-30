@@ -9,7 +9,6 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 const SendMoney = ({navigation}) => {
   const [data, setData] = useState({})
   const [benList, setBen] = useState([])
-  const authContext = useContext(AuthContext)
 
   useEffect(() => {
     getSettings()
@@ -17,11 +16,10 @@ const SendMoney = ({navigation}) => {
   
   //API
   const getSettings = async () => {
-    const response = await api.RetriveBenificiaries(authContext.userID)
+    const response = await api.RetriveBenificiaries()
     const data = response.data.details.content
     setBen(data)
   }
-  console.log(authContext.userID)
   //Sending
   const sendDetails = (Id) => {
     const details = benList[Id]
@@ -33,11 +31,11 @@ const SendMoney = ({navigation}) => {
       sortCode:details.destinationIdentifier.sortCode,
     }) 
   }
+
   const deleteDetails = async(Id) => {
-    console.log(authContext.userID)
     const details = benList[Id].id
     console.log(details)
-    const response = await api.DeleteBenificiary(authContext.userID,details)
+    const response = await api.DeleteBenificiary(details)
     console.log(response)
     getSettings()
   }

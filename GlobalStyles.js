@@ -158,7 +158,7 @@ const GlobalStyles = {
   Title: {
   marginTop: "10%",
   marginLeft: "10%",
-  width: "100%",
+  width: "80%",
   fontSize: 28,
   fontWeight: "700",
   },

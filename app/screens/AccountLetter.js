@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
 
-const Account2 = ({navigation}) => {
+const AccountLetter = ({navigation}) => {
   return (
     <Screen>
     <View style={styles.account2}>
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
     paddingRight: GlobalStyles.Padding.padding_7xs,
     backgroundColor: GlobalStyles.Color.gray_100,
   },
-  
 });
 
-export default Account2;
+export default AccountLetter;

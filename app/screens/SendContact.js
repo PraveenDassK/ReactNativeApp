@@ -23,18 +23,19 @@ const SendContact = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetCustomerDetails();
+    const response = await api.GetAccountByCustomer(authContext.userID);
+    const accountresponse = await api.GetCustomerDetails(authContext.accountID);
     const data = response.data.details.content[0]
-    const accountdata = accountresponse.data.details.accountDetails[0]
+    // const accountdata = accountresponse.data.details.accountDetails[0]
     const phonedata = accountresponse.data.details.phoneNumbers[0]
     console.log(data)
+    console.log(accountresponse.data.details)
     setSortCode(data.identifiers[0].sortCode)
     setAccNum(data.identifiers[0].accountNumber)
     setName(data.name)
     setBal(data.balance)
     setnumber(phonedata.phoneNo)
-    setPlan(accountdata.accountType)
+    // setPlan(accountdata.accountType)
     setCurrency(data.currency)
   } 
   let payment = (amount ? amount : 1).toString()

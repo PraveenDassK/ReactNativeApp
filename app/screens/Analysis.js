@@ -25,7 +25,7 @@ const Analysis = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await api.GetAccount();
+    const response = await api.GetAccount(authContext.accountID);
     const data = response.data.details.balance
     setBal(data)
 
@@ -44,7 +44,7 @@ const Analysis = ({navigation}) => {
     setRecent([transData.content[1],transData.content[1],transData.content[2]])
     setCat(transCat)
 
-    const acc= await api.GetAccount()
+    const acc= await api.GetAccount(authContext.accountID)
     const det = acc.data.details.associates
     console.log(det)
    
