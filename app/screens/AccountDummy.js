@@ -6,11 +6,10 @@ import GlobalStyles from "../../GlobalStyles";
 
 const AccountDummy = ({navigation}) => {
 
-  
 
   useLayoutEffect(() => {
     unsubscribe = navigation.addListener('focus', () => {
-      navigation.replace("AccountTab")
+      navigation.navigate("AccountTab")
     });
   },[])
 

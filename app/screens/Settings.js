@@ -265,7 +265,7 @@ const Settings = ({navigation}) => {
             <Text style={[styles.hello11, styles.helloTypo]}>About us</Text>
           </Pressable> */}
         </View>
-         <PanGestureHandler onGestureEvent={swipeRightGestureHandler} >
+         {/* <PanGestureHandler onGestureEvent={swipeRightGestureHandler} >
           <Animated.View 
             style={{
               position: "absolute",
@@ -278,7 +278,7 @@ const Settings = ({navigation}) => {
 
           </Animated.View>
        
-      </PanGestureHandler> 
+      </PanGestureHandler>  */}
       </View>
     </Animated.View>
   );
