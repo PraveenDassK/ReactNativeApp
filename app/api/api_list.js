@@ -97,6 +97,46 @@ const testAPI = () => {'v'
   console.log(authContext)
 }
 
+const AddBeneficiary = (accountName,accNum,sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?cid=C1220XHD",
+
+  {
+   "externalReference": "",
+   "name": "Nithin",
+   "birthdate": "",
+   "emailAddress": "",
+   "phoneNumber": "",
+   "destinationIdentifier": {
+   "type": "SCAN",
+   "accountNumber": "12345678",
+   "sortCode": "123456",
+   "iban": "",
+   "bic": "",
+   "currency": "",
+   "countrySpecificDetails": {
+   "bankName": "",
+   "bankAddress": "",
+   "bankCity": "",
+   "bankBranchName": "",
+   "bankBranchCode": "",
+   "bankCode": "",
+   "chineseId": "",
+   "province": "",
+   "business": false
+   }
+   },
+   "defaultReference": "Friend",
+   "idToReplace": "",
+   "address": {
+   "addressLine1": "",
+   "addressLine2": "",
+   "postTown": "",
+   "postCode": "",
+   "country": ""
+   },
+   "qualifier": ""
+  }
+)
+
 export default {
     GetCustomerDetails,
     SendLoginOTP,
@@ -114,5 +154,6 @@ export default {
     GetProjectByID,
     Checkout,
     DeleteBenificiary,
-    testAPI
+    testAPI,
+    AddBeneficiary
   };

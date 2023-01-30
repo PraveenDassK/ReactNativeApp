@@ -9,6 +9,7 @@ import { View,
   Pressable,
   Keyboard, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import AuthContext from "../auth/context";
 import api from "../api/api_list"
 
 const AddBeneficiary = ({navigation}) => {
@@ -20,7 +21,7 @@ const AddBeneficiary = ({navigation}) => {
   const authContext = useContext(AuthContext)
 
   const addBene = async () => {
-  const response = await api.AddBeneficiary(authContext.accountID);
+  const response = await api.AddBeneficiary(accountName,accNum,sortCode);
     navigation.navigate("BankTransferAmount",
             {bankName: bankName,
               accountName: accountName,
