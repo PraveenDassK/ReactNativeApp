@@ -358,7 +358,7 @@ const AppNavigator = () => {
       name="AccountTab" 
       component={gestureHandlerRootHOC(AccountMain)}
       options={{
-        title: "Account"
+        title: "AccountMain"
       }}
       />
     <Tab.Screen 
