@@ -1,5 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View, Pressable, Clipboard } from "react-native";
+import { PanGestureHandler } from "react-native-gesture-handler";
+import Animated, {
+  Easing,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
 
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
@@ -15,6 +24,8 @@ const Settings = ({navigation}) => {
   const [currency, setCurrency] = useState(null)
   const [initials, setInitals] = useState(null)
   const { setCurrentUser } = useContext(AuthContext)
+  const x = useSharedValue(0)
+  
 
   useEffect(() => {
     loadData()
@@ -61,154 +72,214 @@ const Settings = ({navigation}) => {
     Clipboard.setString(sortcode);
   }
 
+  React.useEffect(() => {
+    const swipeRight = navigation.addListener("state", (event) => {
+      console.log('event listner',event.data.state)
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return swipeRight;
+  }, [navigation]);
+
+  const fn = () => {
+    navigation.navigate("Account")
+  }
+
+  const swipeRightGestureHandler = useAnimatedGestureHandler({
+    onStart: () => {
+      console.log("On Start")
+    },
+    onActive: (event) => {
+      console.log("On Active")
+      x.value = event.translationX
+      
+    },
+    onEnd: (event) => {
+      // 'worklet';
+       console.log("On End", event.velocityX)
+      // if (y.value < -height / 2 || event.velocityY < -500) {
+      //   runOnJS(fn)()
+      //   y.value = withTiming(0, { easing: Easing.linear});
+        
+      // } else {
+      //   // reset
+      //   y.value = withTiming(0, {easing: Easing.linear});
+      // }
+    }
+  })
+
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    transform: [{translateX: withTiming(x.value, 
+      { 
+        duration: 100,
+        easing: Easing.linear
+      })}],
+  }))
+
   return (
-    <View style={styles.settings}>
-      <View style={styles.path33370Parent}>
-        <Image
-          style={[
-            styles.path33370Icon,
-            styles.groupLayout,
-            styles.groupChildLayout,
-            styles.path33370IconPosition,
-          ]}
-          resizeMode="cover"
-          source={require("../assets/path-33370.png")}
-        />
-        <Text style={styles.hello}>{fullname}</Text>
-        <Text style={styles.hello1}>{plan}</Text>
-        <Text
-          style={[
-            styles.groupChild,
-            styles.groupLayout,
-            styles.groupChildLayout,
-          ]}
-        >{initials}</Text>
-        <Pressable
-          style={styles.helloParent}
-          onPress = {handleLogout} 
-        >
-          <Text style={styles.hello2}>Log out</Text>
+    <Animated.View style={[{flex:1},animatedContainerStyle]}>
+      <View style={styles.settings}>
+        <View style={styles.path33370Parent}>
           <Image
-            style={styles.iconOpenAccountLogout}
+            style={[
+              styles.path33370Icon,
+              styles.groupLayout,
+              styles.groupChildLayout,
+              styles.path33370IconPosition,
+            ]}
             resizeMode="cover"
-            source={require("../assets/icon-openaccountlogout.png")}
+            source={require("../assets/path-33370.png")}
           />
-        </Pressable>
-        <Text style={styles.hello3}>{`Terms & Conditions`}</Text>
-        <Text style={styles.hello4}>{`Accounts details `}</Text>
-        <View style={styles.groupItem} />
-        <Text style={[styles.hello5, styles.helloPosition1]}>Currency</Text>
-        <Text style={[styles.hello6, styles.helloPosition1]}>Account</Text>
-        <Text style={[styles.hello7, styles.helloPosition1]}>Sort Code</Text>
-        <View style={[styles.britishPoundsWrapper, styles.wrapperPosition]}>
+          <Text style={styles.hello}>{fullname}</Text>
+          <Text style={styles.hello1}>{plan}</Text>
           <Text
             style={[
-              styles.britishPounds,
-              styles.textTypo,
-              styles.textSpaceBlock,
+              styles.groupChild,
+              styles.groupLayout,
+              styles.groupChildLayout,
             ]}
+          >{initials}</Text>
+          <Pressable
+            style={styles.helloParent}
+            onPress = {handleLogout} 
           >
-          {currency}
-          </Text>
-        </View>
-        <Pressable style={[styles.wrapper, styles.wrapperPosition]}
-          onPress={() => copyAccount()}
-        >
-          <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]} >
-            {account}
-          </Text>
-        </Pressable>
-        {/* <Image
-          style={[styles.maskGroup241, styles.groupLayout]}
-          resizeMode="cover"
-          source={require("../assets/mask-group-241.png")}
-        /> */}
-        <Image
-          style={[
-            styles.iconMaterialContentCopy,
-            styles.iconContentLayout,
-            styles.iconContentPosition,
-          ]}
-          resizeMode="cover"
-          source={require("../assets/icon-materialcontentcopy.png")}
-        />
-
+            <Text style={styles.hello2}>Log out</Text>
+            <Image
+              style={styles.iconOpenAccountLogout}
+              resizeMode="cover"
+              source={require("../assets/icon-openaccountlogout.png")}
+            />
+          </Pressable>
+          <Text style={styles.hello3}>{`Terms & Conditions`}</Text>
+          <Text style={styles.hello4}>{`Accounts details `}</Text>
+          <View style={styles.groupItem} />
+          <Text style={[styles.hello5, styles.helloPosition1]}>Currency</Text>
+          <Text style={[styles.hello6, styles.helloPosition1]}>Account</Text>
+          <Text style={[styles.hello7, styles.helloPosition1]}>Sort Code</Text>
+          <View style={[styles.britishPoundsWrapper, styles.wrapperPosition]}>
+            <Text
+              style={[
+                styles.britishPounds,
+                styles.textTypo,
+                styles.textSpaceBlock,
+              ]}
+            >
+            {currency}
+            </Text>
+          </View>
+          <Pressable style={[styles.wrapper, styles.wrapperPosition]}
+            onPress={() => copyAccount()}
+          >
+            <Text style={[styles.text, styles.textTypo, styles.textSpaceBlock]} >
+              {account}
+            </Text>
+          </Pressable>
+          {/* <Image
+            style={[styles.maskGroup241, styles.groupLayout]}
+            resizeMode="cover"
+            source={require("../assets/mask-group-241.png")}
+          /> */}
           <Image
             style={[
-              styles.iconMaterialContentCopy1,
+              styles.iconMaterialContentCopy,
               styles.iconContentLayout,
               styles.iconContentPosition,
             ]}
             resizeMode="cover"
             source={require("../assets/icon-materialcontentcopy.png")}
           />
-        <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
-        <View style={[styles.historyParent, styles.iconContentLayout]}>
-        <Pressable
-          onPress={() => navigation.navigate("AccountMain")}
-        >
-          <Text style={[styles.history, styles.historyTypo]}>Account</Text>
+
+            <Image
+              style={[
+                styles.iconMaterialContentCopy1,
+                styles.iconContentLayout,
+                styles.iconContentPosition,
+              ]}
+              resizeMode="cover"
+              source={require("../assets/icon-materialcontentcopy.png")}
+            />
+          <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
+          <View style={[styles.historyParent, styles.iconContentLayout]}>
+          <Pressable
+            onPress={() => navigation.navigate("AccountMain")}
+          >
+            <Text style={[styles.history, styles.historyTypo]}>Account</Text>
+            </Pressable>
+          <Pressable
+            onPress={() => navigation.navigate("Analytics")}
+          >
+            <Text style={[styles.history1, styles.historyTypo]}>Analysis</Text>
+            </Pressable>
+          <Pressable
+            onPress={() => navigation.navigate("Carbon")}
+          >
+            <Text style={[styles.history2, styles.historyTypo]}>Carbon</Text>
+            </Pressable>
+            <Text style={styles.history3}>Profile</Text>
+          </View>
+          <Pressable
+            style={[styles.groupParent, styles.groupParentPosition]}
+            onPress={() => navigation.navigate("ChooseCardsElite")}
+          >
+            <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
+              <View style={styles.groupInner} />
+              <View style={styles.maskGroup236} />
+            </View>
+            <Text style={[styles.hello8, styles.helloTypo, styles.helloPosition]}>
+              My Plan
+            </Text>
           </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Analytics")}
-        >
-          <Text style={[styles.history1, styles.historyTypo]}>Analysis</Text>
+          <Pressable
+            style={[styles.groupContainer, styles.groupParentPosition]}
+            onPress={() => navigation.navigate("Account")}
+          >
+            <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
+              <View style={styles.groupInner} />
+              <View style={styles.maskGroup236} />
+            </View>
+            <Text style={[styles.hello8, styles.helloTypo, styles.helloPosition]}>
+              Account
+            </Text>
           </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Carbon")}
-        >
-          <Text style={[styles.history2, styles.historyTypo]}>Carbon</Text>
+          <Pressable
+            style={[styles.groupPressable, styles.groupParentPosition]}
+            onPress={() => navigation.navigate("SecurityAndPrivacy")}
+          >
+            <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
+              <View style={styles.groupInner} />
+              <View style={styles.maskGroup236} />
+            </View>
+            <Text
+              style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
+            >{`Security & Privacy`}</Text>
           </Pressable>
-          <Text style={styles.history3}>Profile</Text>
+          {/* <Pressable
+            style={[styles.groupParent1, styles.groupParentPosition]}
+            onPress={() => navigation.navigate("SecurityAndPrivacy1")}
+          >
+            <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
+              <View style={styles.groupInner} />
+              <View style={styles.maskGroup236} />
+            </View>
+            <Text style={[styles.hello11, styles.helloTypo]}>About us</Text>
+          </Pressable> */}
         </View>
-        <Pressable
-          style={[styles.groupParent, styles.groupParentPosition]}
-          onPress={() => navigation.navigate("ChooseCardsElite")}
-        >
-          <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
-            <View style={styles.groupInner} />
-            <View style={styles.maskGroup236} />
-          </View>
-          <Text style={[styles.hello8, styles.helloTypo, styles.helloPosition]}>
-            My Plan
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.groupContainer, styles.groupParentPosition]}
-          onPress={() => navigation.navigate("Account")}
-        >
-          <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
-            <View style={styles.groupInner} />
-            <View style={styles.maskGroup236} />
-          </View>
-          <Text style={[styles.hello8, styles.helloTypo, styles.helloPosition]}>
-            Account
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.groupPressable, styles.groupParentPosition]}
-          onPress={() => navigation.navigate("SecurityAndPrivacy")}
-        >
-          <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
-            <View style={styles.groupInner} />
-            <View style={styles.maskGroup236} />
-          </View>
-          <Text
-            style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
-          >{`Security & Privacy`}</Text>
-        </Pressable>
-        {/* <Pressable
-          style={[styles.groupParent1, styles.groupParentPosition]}
-          onPress={() => navigation.navigate("SecurityAndPrivacy1")}
-        >
-          <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
-            <View style={styles.groupInner} />
-            <View style={styles.maskGroup236} />
-          </View>
-          <Text style={[styles.hello11, styles.helloTypo]}>About us</Text>
-        </Pressable> */}
+         <PanGestureHandler onGestureEvent={swipeRightGestureHandler} >
+          <Animated.View 
+            style={{
+              position: "absolute",
+              backgroundColor: "red",
+              left:0,
+              bottom:0,
+              width: "100%",
+              height:100,
+          }}>
+
+          </Animated.View>
+       
+      </PanGestureHandler> 
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

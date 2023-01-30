@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable } from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions} from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -13,6 +13,15 @@ import otpApi from "../api/otp";
 import Screen from "../components/Screen";
 import SwipeUp from "../components/SwipeUp"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import { PanGestureHandler } from "react-native-gesture-handler";
+import Animated, {
+  Easing,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
 
 
 
@@ -23,7 +32,10 @@ const validationSchema = Yup.object().shape({
 })
 
 const SignUpPersonalScreen = ({ navigation }) => {
-
+  const { height } = useWindowDimensions()
+  
+  const y = useSharedValue(0)
+  
 
   const prefix = "44"
 
@@ -41,10 +53,47 @@ const SignUpPersonalScreen = ({ navigation }) => {
     navigation.navigate("OTPVerificationPersonal2", { registration: true })
   }
 
+  const fn = () => {
+    navigation.navigate("Login")
+  }
+
+  const swipeUpGestureHandler = useAnimatedGestureHandler({
+    onStart: () => {
+      console.log("On Start")
+    },
+    onActive: (event) => {
+      console.log("On Active")
+      y.value = event.translationY
+      
+    },
+    onEnd: (event) => {
+      'worklet';
+       console.log("On End", event.velocityY)
+      if (y.value < -height / 2 || event.velocityY < -500) {
+        runOnJS(fn)()
+        y.value = withTiming(0, { easing: Easing.linear});
+        
+      } else {
+        // reset
+        y.value = withTiming(0, {easing: Easing.linear});
+      }
+    }
+  })
+
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    transform: [{translateY: withTiming(y.value, 
+      { 
+        duration: 100,
+        easing: Easing.linear
+      })}],
+  }))
+
   return (
+    <Animated.View style={[{flex:1},animatedContainerStyle]}>
     <Screen>
-      <SwipeUp>
+      {/* <SwipeUp> */}
     <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
+      
       <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
         <View style={[styles.hello1, styles.enterColor]}>
           <Text style={[styles.getStartedWith, styles.enterColor]}>Get Started With</Text>
@@ -134,8 +183,24 @@ const SignUpPersonalScreen = ({ navigation }) => {
         
 
     </View>
-    </SwipeUp>
+    {/* </SwipeUp> */}
+    <PanGestureHandler onGestureEvent={swipeUpGestureHandler} >
+        <Animated.View 
+        style={{
+        
+          position: "absolute",
+          backgroundColor: "red",
+          left:0,
+          bottom:0,
+          width: "100%",
+          height:100,
+        }}>
+
+        </Animated.View>
+       
+      </PanGestureHandler> 
     </Screen>
+    </Animated.View>
   );
 };
 

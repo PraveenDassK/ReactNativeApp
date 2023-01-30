@@ -32,12 +32,12 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    if(isAuth) {
-      authenticate()
-    }
-    console.log('currentUser & isAuth on load', currentUser, isAuth)
-  }, [currentUser, isAuth ])
+  // useEffect(() => {
+  //   if(isAuth) {
+  //     authenticate()
+  //   }
+  //   console.log('currentUser & isAuth on load', currentUser, isAuth)
+  // }, [currentUser, isAuth ])
 
   useEffect(() => {
     if(isAuth) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {GestureHandlerRootView ,gestureHandlerRootHOC} from "react-native-gesture-handler"
+import { gestureHandlerRootHOC } from "react-native-gesture-handler"
 
 import Onboarding1 from "../screens/Onboarding1";
 import Onboarding2 from "../screens/Onboarding2";
@@ -42,7 +42,11 @@ const AuthNavigator = () => (
     <Stack.Screen  name="Onboarding3" component={gestureHandlerRootHOC(Onboarding3)}/>
 
     <Stack.Screen  name="SignUpPersonalScreen" component={gestureHandlerRootHOC(SignUpPersonalScreen)}/>
-    <Stack.Screen  name="Login" component={gestureHandlerRootHOC(Login)}/>
+    <Stack.Screen  
+      name="Login" 
+      component={gestureHandlerRootHOC(Login)}
+      options={{ presentation: 'modal' }}
+      />
 
     <Stack.Screen  name="OTPVerificationPersonal" component={gestureHandlerRootHOC(OTPVerificationPersonal)}/>
     <Stack.Screen  name="OTPVerificationPersonal2" component={gestureHandlerRootHOC(OTPVerificationPersonal2)}/>
