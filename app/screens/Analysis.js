@@ -44,7 +44,7 @@ const Analysis = ({navigation}) => {
     setRecent([transData.content[1],transData.content[1],transData.content[2]])
     setCat(transCat)
 
-    const acc= await api.GetAccount()
+    const acc= await api.GetAccount(authContext.accountID)
     const det = acc.data.details.associates
     console.log(det)
    

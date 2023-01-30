@@ -1,76 +1,21 @@
-import * as React from "react";
+import React,{ useLayoutEffect} from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import carbonApi from "../api/test_api_list"
 
 import GlobalStyles from "../../GlobalStyles";
 
-const Account = ({navigation}) => {
+const AccountDummy = ({navigation}) => {
+
+
+  useLayoutEffect(() => {
+    unsubscribe = navigation.addListener('focus', () => {
+      navigation.navigate("AccountTab")
+    });
+  },[])
+
   return (
     <View style={styles.account}>
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>Full Name</Text>
-        <Text style={[styles.hello1, styles.helloTypo]}>£0.00</Text>
-        <Text style={styles.hello2}>Standard</Text>
-        <Text style={[styles.hello3, styles.helloTypo]}>Manage</Text>
-        <View style={[styles.rectangleParent, styles.groupChildPosition]}>
-          <View style={[styles.groupChild, styles.groupChildPosition]} />
-          <View style={[styles.groupItem, styles.groupPosition]} />
-          <View style={[styles.groupInner, styles.groupPosition]} />
-          <Pressable
-            style={[styles.statementsParent, styles.parentPosition]}
-            onPress={() => navigation.navigate("Account1")}
-          >
-            <Text
-              style={[
-                styles.limits1Typo,
-                styles.limits1SpaceBlock,
-                styles.limitsPosition,
-              ]}
-            >
-              Statements
-            </Text>
-            <Image
-              style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
-              resizeMode="cover"
-              source={("../assets/icon-carbonyteuparrow.png")}
-            />
-          </Pressable>
-          <View style={[styles.limitsParent, styles.parentPosition]}>
-            <Pressable
-              style={styles.limitsPosition}
-              onPress={() => navigation.navigate("SpendingLimit")}
-            >
-              <Text style={[styles.limits1Typo, styles.limits1SpaceBlock]}>
-                Limits
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
-              onPress={() => navigation.navigate("Statments")}
-            >
-            </Pressable>
-          </View>
-          <Pressable
-            style={styles.accountVerificationLetterParent}
-            onPress={() => navigation.navigate("Account2")}
-          >
-            <Text
-              style={[
-                styles.accountVerificationLetter,
-                styles.limits1Typo,
-                styles.limitsPosition,
-              ]}
-            >
-              Account verification letter
-            </Text>
-          </Pressable>
-        </View>
-        <Image
-          style={[styles.groupIcon, styles.iconPosition]}
-          resizeMode="cover"
-          source={("../assets/group-31123.png")}
-        />
-      </View>
+      
     </View>
   );
 };
@@ -227,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Account;
+export default AccountDummy;

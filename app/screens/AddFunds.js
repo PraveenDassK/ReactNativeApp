@@ -27,7 +27,7 @@ const AddFunds = ({navigation}) => {
   
   //Gets the data for the user
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer(authContext.accountID);
+    const response = await api.GetAccountByCustomer(authContext.userID);
     const data = response.data.details.content
     setData(data)
 

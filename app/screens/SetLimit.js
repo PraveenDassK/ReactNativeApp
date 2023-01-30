@@ -12,6 +12,8 @@ const SetLimit = ({navigation}) => {
   const [amount, setAmount] = useState("0")
   const [currency, setcurrency] = useState("GBP")
   const [validCheck, setValidator] = useState(false)
+  const authContext = useContext(AuthContext)
+
 
   /**
    * @notice Text checker
@@ -41,7 +43,7 @@ const SetLimit = ({navigation}) => {
     //Check if the text is valid from the validator
     if(validCheck){
       //If it is do this
-      const response = await api.SetLimit(amount)
+      const response = await api.SetLimit(authContext.accountID,amount)
       navigation.navigate("SpendingLimit")
     }else{
       //If it isn't show an error message here

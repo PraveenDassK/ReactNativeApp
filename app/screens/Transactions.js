@@ -24,9 +24,9 @@ const Transactions = ({navigation,route}) => {
         const responseBalance = await api.GetAccount(authContext.accountID);
         const data = responseBalance.data.details
         setBalance(data.availableBalance)
-
+        console.log(authContext.accountID)
         //Load the data for transactions
-        const response = await api.GetTransactions(10);
+        const response = await api.GetTransactions(authContext.accountID,10);
         const transactions = response.data.details.content
         setTransactionData(transactions)
     }

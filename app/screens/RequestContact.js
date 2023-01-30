@@ -21,7 +21,7 @@ const RequestContact = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer(authContext.accountID);
+    const response = await api.GetAccountByCustomer(authContext.userID);
     const accountresponse = await api.GetCustomerDetails(authContext.accountID);
     const data = response.data.details.content[0]
     console.log(data)

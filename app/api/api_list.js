@@ -15,7 +15,7 @@ const getID = () =>{
   return data
 }
 
-const GetCustomerDetails = () => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId=CC3569');
+const GetCustomerDetails = (id) => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId='+id);
 
 const SendLoginOTP = (email) => {
   console.log(email)
@@ -26,21 +26,21 @@ const VerifyLoginOTP = (mailOTP,email) => client.post("https://api.carbonyte.io/
   "&emailOTP=" +
   mailOTP +"&phoneNumber=447494560838&phoneOTP=9090")
 
-const GetAccountByCustomer = () => client.get("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/" + carbonyteID)
-const GetCustomer = () => client.get("https://api.carbonyte.io/walletmodule/GetCustomer/" + carbonyteID)
+const GetAccountByCustomer = (carbonyteid) => client.get("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/" + carbonyteid)
+const GetCustomer = (userid) => client.get("https://api.carbonyte.io/walletmodule/GetCustomer/" + userid)
 
-const GetAccount = () => client.get("https://api.carbonyte.io/walletmodule/GetAccount/" + enfuceID)
+const GetAccount = (enfuceid) => client.get("https://api.carbonyte.io/walletmodule/GetAccount/" + enfuceid)
 
-const GetTransactions = (amount) =>  {
+const GetTransactions = (enfuceid,amount) =>  {
   let toGet = amount ? amount : 10
-  return client.get("https://api.carbonyte.io/walletmodule/GetTransactions/" + enfuceID + "?size=" + toGet)
+  return client.get("https://api.carbonyte.io/walletmodule/GetTransactions/" + enfuceid + "?size=" + toGet)
 }
 
-const RetriveBenificiaries = () => client.get("https://api.carbonyte.io/walletmodule/RetrieveBeneficiaries/" + carbonyteID)
+const RetriveBenificiaries = (carbonyteid) => client.get("https://api.carbonyte.io/walletmodule/RetrieveBeneficiaries/" + carbonyteid)
 
-const GetLimit = () => client.get("https://api.carbonyte.io/transactionmodule/GetBudget?accountId=" + enfuceID)
-const SetLimit = (amount) =>  client.post("https://api.carbonyte.io/transactionmodule/SetBudget?accountId=" + 
-                              enfuceID + 
+const GetLimit = (enfuceid) => client.get("https://api.carbonyte.io/transactionmodule/GetBudget?accountId=" + enfuceid)
+const SetLimit = (enfuceid,amount) =>  client.post("https://api.carbonyte.io/transactionmodule/SetBudget?accountId=" + 
+                              enfuceid + 
                               "&periodType=monthly&amount=" + amount)
 
 const GetProjectByID = (project) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?companyId=" + project)
@@ -67,7 +67,7 @@ const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule
   }
 )
 
-const SetToggles = (
+const SetToggles = (enfuceid,
   online,
   swipe,
   atm,
@@ -79,23 +79,63 @@ const SetToggles = (
   console.log(atm)
   console.log(contactless)
   const request = "https://api.carbonyte.io/cardmodule/SetToggles?accountId=" + 
-    enfuceID +"&onlineTransactions="+ 
+    enfuceid +"&onlineTransactions="+ 
     online +"&swipePayments="+ 
     swipe +"&atmWithdrawals=" + 
     atm + "&contactlessPayments=" + 
     contactless
   return client.post(request)
 }
-const GetToggles = () => client.get("https://api.carbonyte.io/cardmodule/GetToggles?accountId=" + enfuceID)
+const GetToggles = (enfuceid) => client.get("https://api.carbonyte.io/cardmodule/GetToggles?accountId=" + enfuceid)
 
 const Checkout = (obj) => client.post("https://api.carbonyte.io/ecomodule/Earthly/Checkout",obj)
 
-const DeleteBenificiary = (Id) => client.delete("https://api.carbonyte.io/walletmodule/DeleteBeneficiaries/" + carbonyteID + "/" + Id)
+const DeleteBenificiary = (carbonid,Id) => client.delete("https://api.carbonyte.io/walletmodule/DeleteBeneficiaries/" + carbonid + "/" + Id)
 
 const testAPI = () => {'v'
   const authContext = useContext(AuthContext) 
   console.log(authContext)
 }
+
+const AddBeneficiary = (modulrCustomerId,phonenumber,accountName,accNum,sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?modulrCustomerId="+modulrCustomerId,
+
+  {
+   "externalReference": "",
+   "name": accountName,
+   "birthdate": "",
+   "emailAddress": "",
+   "phoneNumber": phonenumber,
+   "destinationIdentifier": {
+   "type": "SCAN",
+   "accountNumber": accNum,
+   "sortCode": sortCode,
+   "iban": "",
+   "bic": "",
+   "currency": "",
+   "countrySpecificDetails": {
+   "bankName": "",
+   "bankAddress": "",
+   "bankCity": "",
+   "bankBranchName": "",
+   "bankBranchCode": "",
+   "bankCode": "",
+   "chineseId": "",
+   "province": "",
+   "business": false
+   }
+   },
+   "defaultReference": "Friend",
+   "idToReplace": "",
+   "address": {
+   "addressLine1": "",
+   "addressLine2": "",
+   "postTown": "",
+   "postCode": "",
+   "country": ""
+   },
+   "qualifier": ""
+  }
+)
 
 export default {
     GetCustomerDetails,
@@ -114,5 +154,6 @@ export default {
     GetProjectByID,
     Checkout,
     DeleteBenificiary,
-    testAPI
+    testAPI,
+    AddBeneficiary
   };

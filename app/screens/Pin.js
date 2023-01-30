@@ -9,7 +9,8 @@ import api from "../api/api_list"
 
 const Pin = ({route,navigation}) => {
   let title = route.params.title ? route.params.title : "Enter Pin"
-
+  console.log(route.params)
+  
   const pinView = useRef(null)
   const [showRemoveButton, setShowRemoveButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
@@ -33,8 +34,20 @@ const Pin = ({route,navigation}) => {
       alert("Pin is incorrect")
       return;
     } 
-    const response = await api.SendFunds(route.params.amount);
-    console.log(response)
+    const response = await api.SendFunds(
+      "A12277V1", 
+      route.params.amount,
+      route.params.beneficiaryData.accountName,
+      route.params.beneficiaryData.accountNumber,
+      route.params.beneficiaryData.sortCode,
+      route.params.beneficiaryData.address
+    );
+    console.log(response.data.result)
+    if (!response.data.result){
+      alert("Transaction unsuccessful")
+      navigation.navigate("Account")
+      return;
+    } 
     navigation.navigate(route.params.successScreen,{"params" : route.params})
   }
 

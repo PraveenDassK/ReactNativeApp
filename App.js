@@ -41,13 +41,12 @@ const authenticate = async () => {
   
 }
 
-useEffect(() => {
-  // console.log('auth storage', currentUser === true, signedAuth.signedIn)
-  if(isAuth) {
-    authenticate()
-  }
-  console.log('currentUser & isAuth on load', currentUser, isAuth)
-}, [currentUser, isAuth ])
+  // useEffect(() => {
+  //   if(isAuth) {
+  //     authenticate()
+  //   }
+  //   console.log('currentUser & isAuth on load', currentUser, isAuth)
+  // }, [currentUser, isAuth ])
 
 useEffect(() => {
   // console.log('auth storage', currentUser === true, signedAuth.signedIn)

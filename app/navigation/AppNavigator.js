@@ -1,7 +1,10 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import { Animated }from "react-native-reanimated";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { gestureHandlerRootHOC } from "react-native-gesture-handler";
+
 
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -18,7 +21,8 @@ import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
 
 //Main screen
-import Account from "../screens/Account";
+import AccountDummy from "../screens/AccountDummy";
+//import SwitchAccount from "../screens/SwitchAccount"
 
 /**
  * @notice Screens on account page to navigate to
@@ -70,16 +74,34 @@ import AccountSettings from "../screens/AccountSettings"
 import Transactions from "../screens/Transactions"
 import AccountLetter from "../screens/AccountLetter"
 
+import TermsAndConditions from "../screens/TermsAndConditions"
+import SwitchAccounts from "../screens/SwitchAccounts"
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const leftToRightAnimation = {
+  cardStyleInterpolator: ({ current, layouts }) => {
+    return {
+      cardStyle: {
+        transform: [
+          {
+            translateX: current.progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [layouts.screen.width, 0],
+            }),
+          },
+        ],
+      },
+    };
+  },
+};
+
 const StackNavigator = () => {
-  
   return(
-    
-    <Stack.Navigator>
+    <Stack.Navigator
+    >
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
@@ -91,7 +113,7 @@ const StackNavigator = () => {
 
       <Stack.Screen 
         name="AddFunds" 
-        component={AddFunds}
+        component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "AddFunds",
        
@@ -100,7 +122,7 @@ const StackNavigator = () => {
 
       <Stack.Screen 
         name="SendMoney" 
-        component={SendMoney}
+        component={gestureHandlerRootHOC(SendMoney)}
         options={{
           title: "SendMoney",
        
@@ -109,7 +131,7 @@ const StackNavigator = () => {
 
       <Stack.Screen 
         name="Pin" 
-        component={Pin}
+        component={gestureHandlerRootHOC(Pin)}
         options={{
           title: "Pin",
        
@@ -118,7 +140,7 @@ const StackNavigator = () => {
 
     <Stack.Screen 
         name="Success" 
-        component={Success}
+        component={gestureHandlerRootHOC(Success)}
         options={{
           title: "Success",
        
@@ -127,7 +149,7 @@ const StackNavigator = () => {
 
     <Stack.Screen 
         name="AddBeneficiary" 
-        component={AddBeneficiary}
+        component={gestureHandlerRootHOC(AddBeneficiary)}
         options={{
           title: "AddBeneficiary",
        
@@ -136,7 +158,7 @@ const StackNavigator = () => {
 
       <Stack.Screen 
         name="BankTransferAmount" 
-        component={BankTransferAmount}
+        component={gestureHandlerRootHOC(BankTransferAmount)}
         options={{
           title: "BankTransferAmount",
        
@@ -145,7 +167,7 @@ const StackNavigator = () => {
 
     <Stack.Screen 
         name="MyCards" 
-        component={MyCards}
+        component={gestureHandlerRootHOC(MyCards)}
         options={{
           title: "MyCards",
        
@@ -154,7 +176,7 @@ const StackNavigator = () => {
 
     <Stack.Screen 
         name="CardSettings" 
-        component={CardSettings}
+        component={gestureHandlerRootHOC(CardSettings)}
         options={{
           title: "CardSettings",
        
@@ -163,7 +185,7 @@ const StackNavigator = () => {
 
     <Stack.Screen 
         name="SpendingLimit" 
-        component={SpendingLimit}
+        component={gestureHandlerRootHOC(SpendingLimit)}
         options={{
           title: "SpendingLimit",
        
@@ -172,7 +194,7 @@ const StackNavigator = () => {
 
     <Stack.Screen 
         name="SetLimit" 
-        component={SetLimit}
+        component={gestureHandlerRootHOC(SetLimit)}
         options={{
           title: "SetLimit",
        
@@ -181,7 +203,7 @@ const StackNavigator = () => {
 
   <Stack.Screen 
         name="ReplaceCard" 
-        component={ReplaceCard}
+        component={gestureHandlerRootHOC(ReplaceCard)}
         options={{
           title: "ReplaceCard",
        
@@ -190,7 +212,7 @@ const StackNavigator = () => {
       
       <Stack.Screen 
         name="ItsDamagedOrDoesntWork" 
-        component={ItsDamagedOrDoesntWork}
+        component={gestureHandlerRootHOC(ItsDamagedOrDoesntWork)}
         options={{
           title: "ItsDamagedOrDoesntWork",
        
@@ -198,7 +220,7 @@ const StackNavigator = () => {
       />
         <Stack.Screen 
         name="ItWasLost" 
-        component={ItWasLost}
+        component={gestureHandlerRootHOC(ItWasLost)}
         options={{
           title: "ItWasLost",
        
@@ -206,7 +228,7 @@ const StackNavigator = () => {
       />
         <Stack.Screen 
         name="IWasAVictimOfFraudOrThe" 
-        component={IWasAVictimOfFraudOrThe}
+        component={gestureHandlerRootHOC(IWasAVictimOfFraudOrThe)}
         options={{
           title: "IWasAVictimOfFraudOrThe",
        
@@ -214,7 +236,7 @@ const StackNavigator = () => {
       />
         <Stack.Screen 
         name="Terminate" 
-        component={Terminate}
+        component={gestureHandlerRootHOC(Terminate)}
         options={{
           title: "Terminate",
        
@@ -222,7 +244,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="TerminatedCard" 
-        component={TerminatedCard}
+        component={gestureHandlerRootHOC(TerminatedCard)}
         options={{
           title: "TerminatedCard",
        
@@ -231,7 +253,7 @@ const StackNavigator = () => {
 
 <Stack.Screen 
         name="CarbonCart" 
-        component={CarbonCart}
+        component={gestureHandlerRootHOC(CarbonCart)}
         options={{
           title: "CarbonCart",
        
@@ -239,7 +261,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="CarbonProject" 
-        component={CarbonProject}
+        component={gestureHandlerRootHOC(CarbonProject)}
         options={{
           title: "CarbonProject",
        
@@ -247,7 +269,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="VirtualEcoSystem" 
-        component={VirtualEcoSystem}
+        component={gestureHandlerRootHOC(VirtualEcoSystem)}
         options={{
           title: "VirtualEcoSystem",
        
@@ -256,7 +278,7 @@ const StackNavigator = () => {
 
     <Stack.Screen 
         name="ChooseCardsStandard5" 
-        component={ChooseCardsStandard5}
+        component={gestureHandlerRootHOC(ChooseCardsStandard5)}
         options={{
           title: "ChooseCardsStandard5",
        
@@ -265,7 +287,7 @@ const StackNavigator = () => {
 
 <Stack.Screen 
         name="ChooseCardsElite" 
-        component={ChooseCardsElite}
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
         options={{
           title: "ChooseCardsElite",
        
@@ -273,7 +295,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="AccountSettings" 
-        component={AccountSettings}
+        component={gestureHandlerRootHOC(AccountSettings)}
         options={{
           title: "AccountSettings",
        
@@ -281,7 +303,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="SecurityAndPrivacy" 
-        component={SecurityAndPrivacy}
+        component={gestureHandlerRootHOC(SecurityAndPrivacy)}
         options={{
           title: "SecurityAndPrivacy",
        
@@ -289,7 +311,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="Transactions" 
-        component={Transactions}
+        component={gestureHandlerRootHOC(Transactions)}
         options={{
           title: "Transactions",
        
@@ -297,10 +319,27 @@ const StackNavigator = () => {
       />
       <Stack.Screen 
         name="AccountLetter" 
-        component={AccountLetter}
+        component={gestureHandlerRootHOC(AccountLetter)}
         options={{
           title: "AccountLetter",
        
+        }}
+      />
+      <Stack.Screen 
+              name="TermsAndConditions" 
+              component={gestureHandlerRootHOC(TermsAndConditions)}
+              options={{
+                title: "TermsAndConditions",
+             
+              }}
+            />
+
+    <Stack.Screen 
+        name="SwitchAccounts" 
+        component={gestureHandlerRootHOC(SwitchAccounts)}
+        options={{
+          title: "SwitchAccounts",
+        
         }}
       />
 
@@ -312,48 +351,12 @@ const AppNavigator = () => {
 
 
   return (
-    // <Tab.Navigator>
-    //   <Tab.Screen
-    //     name="Feed"
-    //     component={FeedNavigator}
-    //     options={{
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons name="home" color={color} size={size} />
-    //       ),
-    //     }}
-    //   />
-    //   <Tab.Screen
-    //     name="ListingEdit"
-    //     component={ListingEditScreen}
-    //     options={({ navigation }) => ({
-    //       tabBarButton: () => (
-    //         <NewListingButton
-    //           onPress={() => navigation.navigate(routes.LISTING_EDIT)}
-    //         />
-    //       ),
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons
-    //           name="plus-circle"
-    //           color={color}
-    //           size={size}
-    //         />
-    //       ),
-    //     })}
-    //   />
-    //   <Tab.Screen
-    //     name="Account"
-    //     component={AccountNavigator}
-    //     options={{
-    //       tabBarIcon: ({ color, size }) => (
-    //         <MaterialCommunityIcons name="account" color={color} size={size} />
-    //       ),
-    //     }}
-    //   />
-    // </Tab.Navigator>
-    <Tab.Navigator>
+    <Tab.Navigator
+    tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}>
+    
     <Tab.Screen 
       name="AccountTab" 
-      component={AccountMain}
+      component={gestureHandlerRootHOC(AccountMain)}
       options={{
         title: "Account"
       }}
@@ -367,14 +370,31 @@ const AppNavigator = () => {
       />
     <Tab.Screen 
       name="CarbonTab" 
-      component={Carbon}
+      component={gestureHandlerRootHOC(Carbon)}
       options={{
         title: "Carbon"
       }}
     />
     <Tab.Screen 
       name="Profile" 
-      component={Settings}
+      component={gestureHandlerRootHOC(Settings)}
+    />
+    <Tab.Screen 
+      name="Loop" 
+      component={gestureHandlerRootHOC(AccountDummy)}
+      options={{
+        headerShown: false,
+        presentation: 'modal',
+        animationTypeForReplace: 'push',
+        animation:'slide_from_left'
+      }}
+      // listeners={({ navigation, route }) => ({
+      //   focus: () => {
+         
+      //     // Do something with the `navigation` object
+      //     navigation.navigate('AccountTab');
+      //   },
+      // })}
     />
   </Tab.Navigator>
   );

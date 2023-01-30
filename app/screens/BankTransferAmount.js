@@ -4,9 +4,6 @@ import GlobalStyles from "../../GlobalStyles";
 import BankTransfer from "./BankTransfer";
 
 const BankTransferAmount = ({route,navigation}) => {
-  console.log(route.params)
-  
-  //Yes I know this looks horrible
   const [amount, setAmount] = useState("")
   const [userData, setCode] = useState("")
   const reciver = route.params.accountName;
@@ -16,12 +13,13 @@ const BankTransferAmount = ({route,navigation}) => {
   let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
-    console.log("Transfer to"+ accountName +" of £" + amount+" successful")
+    console.log("Transfer to "+ accountName +" of £" + amount+" successful")
     navigation.navigate("Pin",{
       amount: amount, 
       name: accountName,
       successScreen: "Success",
-      successText: "Send to"+ accountName +" of" + amount +" successful" 
+      successText: "Transfer to "+ accountName +" of £" + amount +" successful",
+      beneficiaryData: route.params
     })
   }
   const {accountName} = route.params
@@ -107,7 +105,7 @@ const BankTransferAmount = ({route,navigation}) => {
         </View>
         <Pressable
           style={styles.groupPressable}
-          onPress={() => requestContact(amount)}
+          onPress={() => requestContact(payment)}
         >
           <View
             style={[

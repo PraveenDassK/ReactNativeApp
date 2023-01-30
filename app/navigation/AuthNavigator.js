@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {GestureHandlerRootView ,gestureHandlerRootHOC} from "react-native-gesture-handler"
+import { gestureHandlerRootHOC } from "react-native-gesture-handler"
 
 import Onboarding1 from "../screens/Onboarding1";
 import Onboarding2 from "../screens/Onboarding2";
@@ -26,7 +26,9 @@ import SplashAnimation from "../screens/SplashAnimation"
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator initialRouteName="">
+  <Stack.Navigator initialRouteName=""
+  screenOptions={{ headerShown: false }}
+  >
     {/* <Stack.Screen
       name="Welcome"
       component={WelcomeScreen}
@@ -41,8 +43,17 @@ const AuthNavigator = () => (
     <Stack.Screen  name="Onboarding2" component={gestureHandlerRootHOC(Onboarding2)}/>
     <Stack.Screen  name="Onboarding3" component={gestureHandlerRootHOC(Onboarding3)}/>
 
-    <Stack.Screen  name="SignUpPersonalScreen" component={gestureHandlerRootHOC(SignUpPersonalScreen)}/>
-    <Stack.Screen  name="Login" component={gestureHandlerRootHOC(Login)}/>
+    <Stack.Screen  
+    name="SignUpPersonalScreen" 
+    component={gestureHandlerRootHOC(SignUpPersonalScreen)}
+    options={{ title: "Sign Up",
+    headerShown: true }}
+    />
+    <Stack.Screen  
+      name="Login" 
+      component={gestureHandlerRootHOC(Login)}
+      options={{ presentation: 'modal' }}
+      />
 
     <Stack.Screen  name="OTPVerificationPersonal" component={gestureHandlerRootHOC(OTPVerificationPersonal)}/>
     <Stack.Screen  name="OTPVerificationPersonal2" component={gestureHandlerRootHOC(OTPVerificationPersonal2)}/>
