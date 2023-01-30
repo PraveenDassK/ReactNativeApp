@@ -26,7 +26,9 @@ import SplashAnimation from "../screens/SplashAnimation"
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator initialRouteName="">
+  <Stack.Navigator initialRouteName=""
+  screenOptions={{ headerShown: false }}
+  >
     {/* <Stack.Screen
       name="Welcome"
       component={WelcomeScreen}
@@ -41,7 +43,12 @@ const AuthNavigator = () => (
     <Stack.Screen  name="Onboarding2" component={gestureHandlerRootHOC(Onboarding2)}/>
     <Stack.Screen  name="Onboarding3" component={gestureHandlerRootHOC(Onboarding3)}/>
 
-    <Stack.Screen  name="SignUpPersonalScreen" component={gestureHandlerRootHOC(SignUpPersonalScreen)}/>
+    <Stack.Screen  
+    name="SignUpPersonalScreen" 
+    component={gestureHandlerRootHOC(SignUpPersonalScreen)}
+    options={{ title: "Sign Up",
+    headerShown: true }}
+    />
     <Stack.Screen  
       name="Login" 
       component={gestureHandlerRootHOC(Login)}

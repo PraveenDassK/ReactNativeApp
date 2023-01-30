@@ -12,8 +12,6 @@ const AccountDummy = ({navigation}) => {
     unsubscribe = navigation.addListener('focus', () => {
       navigation.replace("AccountTab")
     });
-
-  
   },[])
 
   return (

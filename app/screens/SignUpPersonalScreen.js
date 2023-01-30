@@ -189,7 +189,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
         style={{
         
           position: "absolute",
-          backgroundColor: "red",
+          backgroundColor: "none",
           left:0,
           bottom:0,
           width: "100%",
