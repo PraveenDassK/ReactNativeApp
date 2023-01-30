@@ -69,8 +69,10 @@ const HomeScreenPersonal = ({ navigation }) => {
           key={i}
           onPress={() => console.log("!")}>
           <View style={{height: "100%", flexDirection: "row",}}>
-          <Image style={{marginLeft: "2.5%", flex: 2, width: "100%", height: "90%", borderRadius: 15, alignSelf: "center", justifyContent: "space-evenly", alignItems: "center", textAlignVertical: "center", alignContent: "center"}} resizeMode="contain" source={require("../assets/image-profileplaceholder.png")}/>
-          <View style={{flex: 7, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>A W</Text>
+          </View>
+          <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
               <Text style={{fontSize :14, fontWeight: "700"}}>
                 {dataHold.account.customerName}
               </Text>
@@ -78,7 +80,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 {moment(dataHold.transactionDate).format("MMM Do YY")}
               </Text>
           </View>
-          <View style={{flex: 1, alignSelf: "center", justifyContent: "space-evenly", alignItems: "center", textAlignVertical: "center", alignContent: "center"}}>
+          <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
           <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
             £{dataHold.amount}
           </Text>
@@ -225,7 +227,7 @@ const HomeScreenPersonal = ({ navigation }) => {
            */}
           <View style={styles.carbonItemDiv}>
             <View style={[styles.estimatedCarbonDiv, styles.shadow]}>
-              <View style={{ flex: 2.5 }}>
+              <View style={{ flex: 3.5 }}>
                 <Text style={styles.blueTitle}>2400</Text>
               </View>
               <View style={{ flex: 2.5 }}>
@@ -418,7 +420,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               You have planted 5 trees with advance card purchase
             </Text>
             <Pressable onPress={() => navigation.navigate("VirtualEcoSystem")}>
-            <Text style={{marginTop: verticalScale(20), textAlign: "center",fontSize: 22, fontWeight: "700", color: "blue", marginBottom: "5%"}}>View more</Text>
+            <Text style={{marginTop: verticalScale(20), textAlign: "center",fontSize: 22, fontWeight: "700", color: "blue", marginBottom: "10%"}}>View more</Text>
             </Pressable>
           </View>
           <View style={{marginTop: "5%"}}></View>
@@ -444,7 +446,10 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   subtitleText: {
+  marginLeft: "5%",
+  marginTop: "2.5%",
     fontSize: 15,
+    fontWeight: "700"
   },
   barText: {
     left: 20,
@@ -495,11 +500,13 @@ const styles = StyleSheet.create({
   },
   carbonSpendingAnalysysBarBackground: {
     width: "100%",
-    height: verticalScale(30),
+    height: verticalScale(35),
+    marginTop: "2.5%",
     backgroundColor: "#f6f5f8",
   },
 
   carbonSpendingAnalysysBarProgress: {
+
     height: "100%",
     backgroundColor: "orange",
   },
@@ -737,7 +744,8 @@ const styles = StyleSheet.create({
 
   inputIcon: {
     resizeMode: "contain",
-    height: verticalScale(25),
+    height: verticalScale(20),
+    marginBottom: "2.5%"
   },
 
   inputBoxText: {
