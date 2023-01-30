@@ -22,6 +22,7 @@ const CardSettings = ({navigation}) => {
   },[])
   
   const getSettings = async () => {
+    console.log(authContext.accountID)
     const response = await api.GetToggles(authContext.accountID)
     const data = response.data.details
     console.log(data)

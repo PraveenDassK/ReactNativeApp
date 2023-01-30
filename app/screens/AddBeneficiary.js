@@ -21,7 +21,7 @@ const AddBeneficiary = ({navigation}) => {
   const authContext = useContext(AuthContext)
 
   const addBene = async () => {
-  const response = await api.AddBeneficiary(accountName,accNum,sortCode);
+  const response = await api.AddBeneficiary(authContext.userID,accountName,accNum,sortCode);
     navigation.navigate("BankTransferAmount",
             {bankName: bankName,
               accountName: accountName,

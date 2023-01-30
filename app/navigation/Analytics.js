@@ -55,11 +55,11 @@ const Analytics = ({navigation}) => {
   },[recentTransactions])
   
   const loadData = async () => {
-    const response = await api.GetAccount();
+    const response = await api.GetAccount(authContext.accountID);
     const data = response.data.details.balance
     setBal(data)
 
-    const transactionCall = await api.GetTransactions()
+    const transactionCall = await api.GetTransactions(authContext.accountID)
     const transData = transactionCall.data.details
     let total = 0
     let transCat = {}
@@ -75,7 +75,7 @@ const Analytics = ({navigation}) => {
     setCat(transCat)
     setTrans(transData)
 
-    const acc= await api.GetAccount()
+    const acc= await api.GetAccount(authContext.accountID)
     const det = acc.data.details.associates
    
   } 

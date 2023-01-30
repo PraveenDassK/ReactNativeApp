@@ -51,7 +51,7 @@ const HomeScreenPersonal = ({ navigation }) => {
     setStatus(data.status != "ACTIVE");
 
     //Load the data for transactions
-    const transactionCall = await api.GetTransactions();
+    const transactionCall = await api.GetTransactions(authContext.accountID);
     const transactionData = transactionCall.data.details;
 
     //Format the data for transactions

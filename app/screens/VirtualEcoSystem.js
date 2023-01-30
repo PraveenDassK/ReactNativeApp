@@ -12,6 +12,8 @@ import api from "../api/api_list";
 const VirtualEcoSystem = ({navigation}) => {
 
     const [name, setName] = useState("Your forest")
+    const authContext = useContext(AuthContext)
+
 
     //Calls the API once during load
     useEffect(() => {
@@ -21,7 +23,7 @@ const VirtualEcoSystem = ({navigation}) => {
       },[])
 
     const loadData = async() =>{
-        const customer = await api.GetCustomer()
+        const customer = await api.GetCustomer(authContext.userID)
         const data = customer.data.details
         console.log(data.name.split(" "))
         setName(data.name.split(" ")[0] + "'s Forest")

@@ -40,9 +40,9 @@ const SpendingLimit = ({navigation,route}) => {
     //If there is a limit
     setPercent((50/data.monthlyAmount)*100 + "%")
   }
-
+  console.log(authContext.accountID)
   const sendRequest = async () => {
-    const response = await api.SetToggles(
+    const response = await api.SetToggles(authContext.accountID,
       isEnabled,
     );
   }

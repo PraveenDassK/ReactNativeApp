@@ -7,6 +7,8 @@ import GlobalStyles from "../../GlobalStyles";
 const AccountSettings = ({navigation}) => {
   const [name, setName] = useState("")
   const [balance, setBalance] = useState(0)
+  const authContext = useContext(AuthContext)
+
 
   //Calls the API once during load
   useEffect(() => {
@@ -16,7 +18,7 @@ const AccountSettings = ({navigation}) => {
     },[])
 
   const loadData = async() =>{
-      const customer = await api.GetAccount()
+      const customer = await api.GetAccount(authContext.accountID)
       const data = customer.data.details
       setName(data.name)
       setBalance(data.availableBalance)

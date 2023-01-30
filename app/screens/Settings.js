@@ -15,6 +15,7 @@ const Settings = ({navigation}) => {
   const [currency, setCurrency] = useState(null)
   const [initials, setInitals] = useState(null)
   const { setCurrentUser } = useContext(AuthContext)
+  console.log(setCurrentUser)
 
   useEffect(() => {
     loadData()
@@ -27,8 +28,8 @@ const Settings = ({navigation}) => {
   }
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetAccount();
+    const response = await api.GetAccountByCustomer(setCurrentUser.userID);
+    const accountresponse = await api.GetAccount(setCurrentUser.accountID);
     const data = response.data
     const accountdata = accountresponse.data.details
 
