@@ -417,7 +417,9 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={{textAlign: "center", marginTop: verticalScale(20)}}>
               You have planted 5 trees with advance card purchase
             </Text>
+            <Pressable onPress={() => navigation.navigate("VirtualEcoSystem")}>
             <Text style={{marginTop: verticalScale(20), textAlign: "center",fontSize: 22, fontWeight: "700", color: "blue", marginBottom: "5%"}}>View more</Text>
+            </Pressable>
           </View>
           <View style={{marginTop: "5%"}}></View>
         </View>
