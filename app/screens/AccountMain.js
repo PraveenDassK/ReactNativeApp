@@ -421,6 +421,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View>
           <View style={{marginTop: "5%"}}></View>
         </View>
+        <View style={{marginTop: "5%"}}/>
 
       </View>
     </ScrollView>
