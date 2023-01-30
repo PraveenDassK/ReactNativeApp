@@ -19,6 +19,7 @@ import Settings from "../screens/Settings";
 
 //Main screen
 import Account from "../screens/Account";
+//import SwitchAccount from "../screens/SwitchAccount"
 
 /**
  * @notice Screens on account page to navigate to
@@ -70,16 +71,16 @@ import AccountSettings from "../screens/AccountSettings"
 import Transactions from "../screens/Transactions"
 import AccountLetter from "../screens/AccountLetter"
 
+import TermsAndConditions from "../screens/TermsAndConditions"
+import SwitchAccounts from "../screens/SwitchAccounts"
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  
   return(
-    
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="SwitchAccount">
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
@@ -303,6 +304,23 @@ const StackNavigator = () => {
        
         }}
       />
+      <Stack.Screen 
+              name="TermsAndConditions" 
+              component={TermsAndConditions}
+              options={{
+                title: "TermsAndConditions",
+             
+              }}
+            />
+
+    <Stack.Screen 
+        name="SwitchAccounts" 
+        component={SwitchAccounts}
+        options={{
+          title: "SwitchAccounts",
+        
+        }}
+      />
 
     </Stack.Navigator>
   )
@@ -376,6 +394,7 @@ const AppNavigator = () => {
       name="Profile" 
       component={Settings}
     />
+
   </Tab.Navigator>
   );
 };
