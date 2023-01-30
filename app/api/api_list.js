@@ -97,18 +97,18 @@ const testAPI = () => {'v'
   console.log(authContext)
 }
 
-const AddBeneficiary = (accountName,accNum,sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?cid=C1220XHD",
+const AddBeneficiary = (accountName,accNum,sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?modulrCustomerId=C1220XHD",
 
   {
    "externalReference": "",
-   "name": "Nithin",
+   "name": accountName,
    "birthdate": "",
    "emailAddress": "",
    "phoneNumber": "",
    "destinationIdentifier": {
    "type": "SCAN",
-   "accountNumber": "12345678",
-   "sortCode": "123456",
+   "accountNumber": accNum,
+   "sortCode": sortCode,
    "iban": "",
    "bic": "",
    "currency": "",
