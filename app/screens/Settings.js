@@ -270,7 +270,7 @@ const Settings = ({navigation}) => {
           </Pressable>
           <Pressable
             style={[styles.groupContainer, styles.groupParentPosition]}
-            onPress={() => navigation.navigate("Account")}
+            onPress={() => navigation.navigate("AccountSettings")}
           >
             <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
               <View style={styles.groupInner} />
