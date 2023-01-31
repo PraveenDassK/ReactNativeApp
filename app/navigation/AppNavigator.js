@@ -76,6 +76,10 @@ import AccountLetter from "../screens/AccountLetter"
 
 import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
+import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
+import CarbonSpending from "../screens/CarbonSpending"
+
+import Login from "../screens/Login"
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -99,10 +103,10 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-   return( 
-<Stack.Navigator
-//  initialRouteName="ReplaceCard" 
->
+  return(
+    <Stack.Navigator
+    initialRouteName=""
+    >
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
@@ -343,6 +347,33 @@ const StackNavigator = () => {
         
         }}
       />
+
+    <Stack.Screen 
+        name="Login" 
+        component={Login}
+        options={{
+          title: "Login",
+       
+        }}
+      />
+          
+      <Stack.Screen 
+        name="CarbonTonnesRemoved" 
+        component={CarbonTonnesRemoved}
+        options={{
+          title: "CarbonTonnesRemoved",
+       
+        }}
+      />
+      <Stack.Screen 
+        name="CarbonSpending" 
+        component={CarbonSpending}
+        options={{
+          title: "CarbonSpending",
+       
+        }}
+      />
+
 
     </Stack.Navigator>
   )
