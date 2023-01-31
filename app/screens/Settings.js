@@ -532,7 +532,7 @@ const styles = StyleSheet.create({
     width:"105%"
   },
   wrapper: {
-    width: 53,
+    width: 60,
     marginTop: -123,
   },
   maskGroup241: {
