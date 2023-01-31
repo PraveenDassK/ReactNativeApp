@@ -403,6 +403,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
         <View style={styles.carbonSpendingTitleDiv}>
                   <Text style={styles.titleText}>Recent Transactions</Text>
+                  
                 </View>
         <View style={styles.transactionsContainer}>
           {transactionTable}
@@ -440,6 +441,20 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "black",
     height: "10%",
+  },
+  text4: {
+    right: horizontalScale(29),
+    color: GlobalStyles.Color.turquoise,
+  },
+  textTypo: {
+    textAlign: "right",
+    fontSize: GlobalStyles.FontSize.size_base,
+    marginTop: verticalScale(-6),
+    //fontFamily: GlobalStyles.FontFamily.helvetica,
+    letterSpacing: 1,
+    fontWeight: "700",
+    top: "50%",
+    position: "absolute",
   },
   titleText: {
     top: 2,

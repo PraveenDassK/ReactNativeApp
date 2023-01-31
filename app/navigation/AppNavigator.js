@@ -98,10 +98,7 @@ const leftToRightAnimation = {
   },
 };
 
-const StackNavigator = () => {
-  return(
-    <Stack.Navigator
-    >
+const StackNavigator = () => {  return(    <Stack.Navigator      initialRouteName="Transactions"    >
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
@@ -110,6 +107,7 @@ const StackNavigator = () => {
        
         }}
       />
+      
 
       <Stack.Screen 
         name="AddFunds" 
