@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
     
         elevation: 1,
       },
+      
       transactionBox: {
         width: "100%",
         height: 80,

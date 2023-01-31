@@ -961,7 +961,9 @@ const styles = StyleSheet.create({
         fontSize:30,
         
       },
-      
+      rounded: {
+        borderRadius: 15,
+      },
       myCards1:{
         marginTop:"6%",
         textAlign: "center",

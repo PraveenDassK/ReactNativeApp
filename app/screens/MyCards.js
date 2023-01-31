@@ -24,7 +24,7 @@ const MyCards = ({ navigation }) => {
   const [balanceData, setBalance] = useState(0)
   const [modalVisible, setModalVisible] = useState(false);
   const [modalId, setModalId] = useState(false);
-
+  const [initials, setInitals] = useState(null)
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -33,6 +33,8 @@ const MyCards = ({ navigation }) => {
   
   const loadData = async () => {
     const responseBalance = await api.GetAccount(authContext.accountID);
+    const accountresponse = await api.GetAccount(authContext.accountID);
+        const accountdata = accountresponse.data.details
     const data = responseBalance.data.details
     setBalance(data.availableBalance)
     console.log(authContext.accountID)
@@ -40,6 +42,15 @@ const MyCards = ({ navigation }) => {
     const response = await api.GetTransactions(authContext.accountID,5);
     const transactions = response.data.details.content
     setTransactionData(transactions)
+    let name = accountdata.customerName
+    let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
+
+    if (names.length > 1) {
+      initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
+     }
+    console.log(initialsHold)
+    setInitals(initialsHold)
+
 }
 
 let transactionList = []
@@ -108,22 +119,29 @@ const modal = (Id) => {
 const showData = () => {
     transactionData.forEach((transaction,i) => {
         transactionList.push(
-            <Pressable
-                key = {i}
-                style = {styles.transactionBox}
-                onPress = {() => showTransaction(i)}
-            >
-              
-                <Text>
-                    From: {transaction.account.customerName}
-                </Text>
-                <Text>
-                    {transaction.description}
-                </Text>
-                <Text>
-                    £{transaction.amount}
-                </Text>
-            </Pressable>
+          <Pressable
+          style={[styles.transactionBox, styles.rounded, styles.shadow]}
+          key = {i}
+          onPress = {() => showTransaction(i)}>
+          <View style={{height: "100%", flexDirection: "row",}}>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>{initials}</Text>
+          </View>
+          <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+              <Text style={{fontSize :14, fontWeight: "700"}}>
+                {transaction.account.customerName}
+              </Text>
+              <Text style={{}}>
+                {moment(transaction.transactionDate).format("MMM Do YY")}
+              </Text>
+          </View>
+          <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
+          <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
+            £{transaction.amount}
+          </Text>
+          </View>
+         </View>
+        </Pressable>
             
         )
     })
@@ -566,7 +584,7 @@ const styles = StyleSheet.create({
     left: "10.24%",
     fontSize: GlobalStyles.FontSize.size_2xs,
     letterSpacing: 0,
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.gray_100,
   },
   groupChild2: {
     top: verticalScale(17),
@@ -582,6 +600,18 @@ const styles = StyleSheet.create({
     height: verticalScale(41),
     position: "absolute",
   },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 1,
+
+    elevation: 1,
+  },
+  
   groupChild4: {
     marginLeft: horizontalScale(25.31),
     top: verticalScale(21),
@@ -613,13 +643,13 @@ const styles = StyleSheet.create({
     left:"10%",
     marginTop:"2.5%",
 },
-transactionBox:{
-    backgroundColor:"lightgrey",
-    borderRadius: 15,
-    padding :"3%",
-    marginTop:"2.5%",
-    width:"80%"
-},
+ transactionBox: {
+        width: "100%",
+        height: 80,
+        marginTop: 10,
+        top: 5,
+        backgroundColor: "white",
+      },
 myCards1: {
   width: "100%",
   textAlign: "center",
@@ -681,6 +711,9 @@ centeredView: {
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  rounded: {
+    borderRadius: 15,
   },
 });
 
