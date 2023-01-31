@@ -11,6 +11,8 @@ const Transactions = ({navigation,route}) => {
     const [transactionData, setTransactionData] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const [modalId, setModalId] = useState(false);
+    const [initials, setInitals] = useState(null)
+
     const authContext = useContext(AuthContext)
 
 
@@ -23,6 +25,8 @@ const Transactions = ({navigation,route}) => {
 
     const loadData = async () => {
         const responseBalance = await api.GetAccount(authContext.accountID);
+        const accountresponse = await api.GetAccount(authContext.accountID);
+        const accountdata = accountresponse.data.details
         const data = responseBalance.data.details
         setBalance(data.availableBalance)
         console.log(authContext.accountID)
@@ -30,6 +34,16 @@ const Transactions = ({navigation,route}) => {
         const response = await api.GetTransactions(authContext.accountID,10);
         const transactions = response.data.details.content
         setTransactionData(transactions)
+
+        let name = accountdata.customerName
+        let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
+    
+        if (names.length > 1) {
+          initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
+         }
+        console.log(initialsHold)
+        setInitals(initialsHold)
+  
     }
 
     let transactionList = []
@@ -104,7 +118,7 @@ const Transactions = ({navigation,route}) => {
               onPress = {() => showTransaction(i)}>
               <View style={{height: "100%", flexDirection: "row",}}>
               <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-              <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>A W</Text>
+              <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>{initials}</Text>
               </View>
               <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
                   <Text style={{fontSize :14, fontWeight: "700"}}>
@@ -128,8 +142,8 @@ const Transactions = ({navigation,route}) => {
     showData()
     return (
         <View style={styles.page}>
-            <Text>
-                Transactions
+            <Text style={styles.hello}>
+                Transactions 
             </Text>
             
             
@@ -169,6 +183,11 @@ const styles = StyleSheet.create({
         color: GlobalStyles.Color.indigo_100,
         fontWeight: "700",
         position: "absolute",
+      },
+      hello:{
+        textAlign:"center",
+        fontSize: GlobalStyles.FontSize.size_13xl,
+        fontWeight: "bold",
       },
       myCards1: {
         width: "100%",

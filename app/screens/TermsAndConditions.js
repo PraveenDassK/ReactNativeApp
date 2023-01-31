@@ -979,6 +979,16 @@ const styles = StyleSheet.create({
         marginBottom:"14%"
 
     },
+    hello: {
+      left: 10,
+      fontSize: GlobalStyles.FontSize.size_8xl,
+      fontWeight: "700",
+      fontFamily: GlobalStyles.FontFamily.typoGrotesk,
+      textAlign: "left",
+      color: GlobalStyles.Color.indigo_100,
+      top: 0,
+      position: "absolute",
+    },
     TermsAndConditions: {
         backgroundColor: GlobalStyles.Color.gray_1100,
         flex: 1,

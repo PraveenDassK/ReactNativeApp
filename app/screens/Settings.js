@@ -23,6 +23,8 @@ const Settings = ({navigation}) => {
   const [balance, setBal] = useState(null)
   const [currency, setCurrency] = useState(null)
   const [initials, setInitals] = useState(null)
+  const [iban, setIban] = useState(null)
+  const [status, setStatus] = useState(null)
   const authContext = useContext(AuthContext)
   console.log(authContext)
   const x = useSharedValue(0)
@@ -43,13 +45,24 @@ const Settings = ({navigation}) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const data = response.data
     const accountdata = accountresponse.data.details
-
+    console.log(accountdata.identifiers[0].iban)
+    console.log("-=-===-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=")
+    console.log(accountdata.status)
     setPlan("CurrentAccount")
     setName(accountdata.customerName)
     setBal(accountdata.balance)
     setSortCode(accountdata.identifiers[0].sortCode)
     setAccNum(accountdata.identifiers[0].accountNumber)
     setCurrency(data.currency ? data.currency : "GBP")
+    
+    setStatus(accountdata.status)
+
+    if(accountdata.identifiers[0].iban === null){
+      setIban("Unavailable")
+    }
+    else{
+      setIban(accountdata.identifiers[0].iban)
+    }
 
     let name = accountdata.customerName
     let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
@@ -151,12 +164,15 @@ const Settings = ({navigation}) => {
               source={require("../assets/icon-openaccountlogout.png")}
             />
           </Pressable>
-          <Text style={styles.hello3}>{`Terms & Conditions`}</Text>
+          <Pressable style={styles.hello3} 
+          onPress={() => navigation.navigate("TermsAndConditions")}><Text style={styles.hello3}>Terms & Conditions</Text></Pressable>
           <Text style={styles.hello4}>{`Accounts details `}</Text>
           <View style={styles.groupItem} />
           <Text style={[styles.hello5, styles.helloPosition1]}>Currency</Text>
           <Text style={[styles.hello6, styles.helloPosition1]}>Account</Text>
           <Text style={[styles.hello7, styles.helloPosition1]}>Sort Code</Text>
+          <Text style={[styles.hello81, styles.helloPosition1]}>IBAN</Text>
+          <Text style={[styles.hello82, styles.helloPosition1]}>Status</Text>
           <View style={[styles.britishPoundsWrapper, styles.wrapperPosition]}>
             <Text
               style={[
@@ -166,6 +182,28 @@ const Settings = ({navigation}) => {
               ]}
             >
             {currency}
+            </Text>
+          </View>
+          <View style={[styles.britishPoundsWrapper11, styles.wrapperPosition]}>
+            <Text
+              style={[
+                styles.britishPounds,
+                styles.textTypo,
+                styles.textSpaceBlock,
+              ]}
+            >
+            {iban}
+            </Text>
+          </View>
+          <View style={[styles.britishPoundsWrapper12, styles.wrapperPosition]}>
+            <Text
+              style={[
+                styles.britishPounds,
+                styles.textTypo,
+                styles.textSpaceBlock,
+              ]}
+            >
+            {status}
             </Text>
           </View>
           <Pressable style={[styles.wrapper, styles.wrapperPosition]}
@@ -200,7 +238,7 @@ const Settings = ({navigation}) => {
               source={require("../assets/icon-materialcontentcopy.png")}
             />
           <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
-          <View style={[styles.historyParent, styles.iconContentLayout]}>
+          {/* <View style={[styles.historyParent, styles.iconContentLayout]}>
           <Pressable
             onPress={() => navigation.navigate("AccountMain")}
           >
@@ -217,7 +255,7 @@ const Settings = ({navigation}) => {
             <Text style={[styles.history2, styles.historyTypo]}>Carbon</Text>
             </Pressable>
             <Text style={styles.history3}>Profile</Text>
-          </View>
+          </View> */}
           <Pressable
             style={[styles.groupParent, styles.groupParentPosition]}
             onPress={() => navigation.navigate("ChooseCardsElite")}
@@ -232,7 +270,7 @@ const Settings = ({navigation}) => {
           </Pressable>
           <Pressable
             style={[styles.groupContainer, styles.groupParentPosition]}
-            onPress={() => navigation.navigate("Account")}
+            onPress={() => navigation.navigate("AccountSettings")}
           >
             <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
               <View style={styles.groupInner} />
@@ -422,10 +460,10 @@ const styles = StyleSheet.create({
   },
   hello3: {
     top: "94.09%",
-    marginLeft: -40.56,
+    marginLeft: -20.56,
     left: "50%",
     fontSize: GlobalStyles.FontSize.size_xs,
-    color: GlobalStyles.Color.blue_100,
+    color: GlobalStyles.Color.black,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
@@ -450,7 +488,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 20,
     shadowOpacity: 1,
-    height: 111,
+    height: 175,
     left: "5%",
     right: "5%",
     top: "50%",
@@ -466,6 +504,12 @@ const styles = StyleSheet.create({
   hello7: {
     marginTop: -93,
   },
+  hello81: {
+    marginTop: -63,
+  },
+  hello82: {
+    marginTop: -33,
+  },
   britishPounds: {
     marginLeft: "45%",
   },
@@ -473,11 +517,22 @@ const styles = StyleSheet.create({
     marginTop: -153,
     width: 88,
   },
+  britishPoundsWrapper11: {
+    marginTop: -63,
+    width: 250,
+    marginRight: 40,
+  },
+  britishPoundsWrapper12: {
+    marginTop: -33,
+    width: 88,
+    marginRight:10,
+  },
   text: {
-    marginLeft: "-5%",
+    marginRight:0,
+    width:"105%"
   },
   wrapper: {
-    width: 53,
+    width: 60,
     marginTop: -123,
   },
   maskGroup241: {
@@ -494,7 +549,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     marginTop: -92,
-    marginLeft: "18%",
+    marginLeft: "18.75%",
   },
   history: {
     left: 0,
@@ -551,17 +606,17 @@ const styles = StyleSheet.create({
     left: "50%",
   },
   groupParent: {
-    marginTop: -46,
+    marginTop: 10,
   },
   groupContainer: {
-    marginTop: 27,
+    marginTop: 75,
   },
   hello10: {
     marginLeft: -53.56,
     left: "50%",
   },
   groupPressable: {
-    marginTop: 100,
+    marginTop: 140,
   },
   hello11: {
     top: "36.67%",

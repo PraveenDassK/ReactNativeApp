@@ -8,13 +8,10 @@ import Button from "../components/Button"
 
 
 const CarbonProject = ({navigation,route}) => {
-  console.log(route.params)
-
   const [data, setData] = useState(null)
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
-    authContext.setUser({ID : route.params.Id})
     loadData()
   },[])
   
@@ -23,7 +20,7 @@ const CarbonProject = ({navigation,route}) => {
     setData(response.data.details)
   }
   
-  var projects = [];
+  let projects = [];
 
   const formatData = () => {
     if(data != null){        
@@ -86,7 +83,7 @@ const styles = StyleSheet.create({
   },
   textBox:{
 
-  }
+  },
 });
 
 export default CarbonProject;
