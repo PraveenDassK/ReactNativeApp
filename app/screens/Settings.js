@@ -24,8 +24,8 @@ const Settings = ({navigation}) => {
   const [currency, setCurrency] = useState(null)
   const [initials, setInitals] = useState(null)
   const authContext = useContext(AuthContext)
-  console.log(authContext)
   const x = useSharedValue(0)
+  //{setCurrentUser} = useContext(AuthContext)
   
 
   useEffect(() => {
@@ -33,9 +33,14 @@ const Settings = ({navigation}) => {
   },[])
 
   const handleLogout = () => {
-    setCurrentUser(null)
+    //setCurrentUser(null)
     authStorage.removeToken()
     authStorage.removeSignInSetting()
+    alert("Logout Successfull")
+    /**
+     * @todo Change this to go to the authNavigator tabs
+     */
+    navigation.navigate("Login")
   }
   
   const loadData = async () => {
@@ -57,7 +62,6 @@ const Settings = ({navigation}) => {
     if (names.length > 1) {
       initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
     }
-    console.log(initialsHold)
     setInitals(initialsHold)
   }
 
@@ -190,6 +194,7 @@ const Settings = ({navigation}) => {
             source={require("../assets/icon-materialcontentcopy.png")}
           />
 
+            
             <Image
               style={[
                 styles.iconMaterialContentCopy1,
@@ -199,7 +204,9 @@ const Settings = ({navigation}) => {
               resizeMode="cover"
               source={require("../assets/icon-materialcontentcopy.png")}
             />
-          <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
+            <Text style={[styles.text1, styles.textTypo]}>{sortcode}</Text>
+
+
           <View style={[styles.historyParent, styles.iconContentLayout]}>
           <Pressable
             onPress={() => navigation.navigate("AccountMain")}
@@ -477,7 +484,7 @@ const styles = StyleSheet.create({
     marginLeft: "-5%",
   },
   wrapper: {
-    width: 53,
+    width: 60,
     marginTop: -123,
   },
   maskGroup241: {
