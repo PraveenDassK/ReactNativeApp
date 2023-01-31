@@ -46,8 +46,6 @@ const Analytics = ({navigation}) => {
       const transData = transactionObj(recentTransactions).map((data) => {
         return data.amount
       })
-      console.log("why", data, dates)
-      console.log('herreeee')
       setPriceData(data)
       setDates(dates)
       setDataObj(transData)
@@ -79,7 +77,6 @@ const Analytics = ({navigation}) => {
     const det = acc.data.details.associates
    
   } 
-  console.log(transactionCategories)
 
 
 
@@ -89,21 +86,18 @@ const Analytics = ({navigation}) => {
 
   const transactionData = (transactions) => {
     return transactions.map((transaction) => {
-      console.log('deya',transaction.amount)
       return transaction.amount
     })
   }
 
   const transactionDate = (transactions) => {
     return transactions.map((transaction) => {
-      console.log('deya',transaction.transactionDate)
       return transaction.transactionDate.split("T")[0].split("-")[1]
     })
   }
 
   const transactionObj = (transactions) => {
     const arr =transactions.map((transaction) => {
-      console.log('deya',transaction.amount)
       
       return {amount: transaction.amount, date: transaction.transactionDate.split("T")[0].split("-")[1]}
     })
@@ -125,9 +119,6 @@ const Analytics = ({navigation}) => {
     return  result
   }
 
-
-  console.log(transactionCategories)
-  console.log('here',recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0])
 
   return (
           <Screen style={{backgroundColor: "#f3f5f5"}}>
@@ -226,10 +217,9 @@ const Analytics = ({navigation}) => {
                    
                       {recentTransactions.map((transaction, index) => (
                         
-                      
                       <View  key={index} style={styles.balanceContainer}>
                         <View style={styles.transactionId}>
-                          <Text style={styles.textSub}>{transaction.sourceId}</Text>
+                          <Text style={styles.textSub}>{transaction.description.replace("Payment to ", "")}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LL')}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LT')}</Text>
                         </View>
@@ -247,8 +237,6 @@ const Analytics = ({navigation}) => {
 
 
 const Bazier = ({ priceData, transDate, transObj }) => {
-
-  console.log('finished', transObj)
   
   return(
     <View>
