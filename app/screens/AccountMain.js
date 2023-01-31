@@ -141,7 +141,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               <Text style={styles.congratulationsText}>Congratulations!</Text>
               <Text style={styles.congratulationsSubText}>
                 You are almost ready with your account, Avail more benefits by
-                choosing our card plans
+                choosing our card plans.
               </Text>
               <Text style={styles.applyNowText}>Apply Now</Text>
             </View>

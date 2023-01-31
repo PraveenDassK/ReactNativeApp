@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import api from "../api/api_list"
+import AuthContext from "../auth/context";
 
 import GlobalStyles from "../../GlobalStyles";
 
