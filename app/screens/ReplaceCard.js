@@ -2,13 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 //import * as React from "react";
 import { Text, StyleSheet, View, Pressable, Image } from "react-native";
 import Screen from "../components/Screen";
+import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list";
+
 
 const ReplaceCard = ({navigation}) => 
   //Comment
   // const cardName = "Carbonyte Standard - 7761"
   {
     const [cardname, setCardname] = useState(null)
+  const authContext = useContext(AuthContext);
+    //Calls the API once during load
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus',  () => {
+      loadData()
+    })
+  },[])
+  const loadData = async() =>{
+      setCardname(authContext.accountID)
+      console.log(authContext.accountID)
+  }
     
   
   
@@ -97,12 +111,12 @@ const ReplaceCard = ({navigation}) =>
             >
               <Text style={styles.carbonyteStandard7761}>
                 <Text style={[styles.carbonyteStandard, styles.itWasLostTypo]}>
-                  {cardname}
+                  Account Number: {cardname}
                 </Text>
               </Text>
-              <Text style={styles.carbonyteStandard7761}>
+              {/* <Text style={styles.carbonyteStandard7761}>
                 <Text style={styles.hello1Color}>{"\n"}Mastercard</Text>
-              </Text>
+              </Text> */}
             </Text>
             <Image
               style={styles.iconFeatherCreditCard}
@@ -222,7 +236,7 @@ const styles = StyleSheet.create({
     marginTop: -16,
     left: 38,
     fontSize: GlobalStyles.FontSize.size_base,
-    lineHeight: 18,
+    lineHeight: 28,
   },
   iconFeatherCreditCard: {
     top: 4,

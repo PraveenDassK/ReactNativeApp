@@ -99,9 +99,10 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-  return(
-    <Stack.Navigator
-    >
+   return( 
+<Stack.Navigator
+//  initialRouteName="ReplaceCard" 
+>
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
