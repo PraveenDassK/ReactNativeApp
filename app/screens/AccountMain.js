@@ -75,7 +75,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{dataHold.account.customerName[0]}</Text>
           </View>
           <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-              <Text style={{fontSize :14, fontWeight: "700"}}>
+              <Text style={{fontSize :14, fontWeight: "701"}}>
                 {dataHold.account.customerName}
               </Text>
               <Text style={{}}>
