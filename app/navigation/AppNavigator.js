@@ -104,7 +104,7 @@ const leftToRightAnimation = {
 const StackNavigator = () => {
    return(
      <Stack.Navigator
-      initialRouteName="CardSettings" >
+      initialRouteName="CarbonProject" >
         
       <Stack.Screen 
         name="Account" 
