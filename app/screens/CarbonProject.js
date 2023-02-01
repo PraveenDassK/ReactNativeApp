@@ -45,7 +45,7 @@ const CarbonProject = ({navigation,route}) => {
         )
     }
   }
-
+  
   formatData()
 
 
