@@ -14,6 +14,8 @@ import AuthContext from "../auth/context";
 import moment from 'moment';
 import Screen from "../components/Screen";
 import { NONE } from "apisauce";
+import { Rect, Text as TextSVG, Svg } from "react-native-svg";
+
 
 
 const Analytics = ({navigation}) => {
@@ -204,7 +206,7 @@ const Analytics = ({navigation}) => {
                     
                     
                   </View>
-                 {priceData.length !== 0 ? <Bazier priceData={priceData}  transDate={dates} transObj={dataObj}/> : null}
+                 {priceData.length !== 0 ? <Bazier priceData={priceData}  transDate={dates} transObj={dataObj} style={{backgroundColor: "red"}}/> : null}
                   <View style={styles.mainContainer}>
                   {priceData && console.log(transactionObj(recentTransactions))}
                     <View style={styles.containerSpace}>
@@ -235,49 +237,66 @@ const Analytics = ({navigation}) => {
 
 
 const Bazier = ({ priceData, transDate, transObj }) => {
+  let [tooltipPos,setTooltipPos] = useState(
+    { x:0, y:0, visible:false, value:0 })
 
   console.log('finished', transObj)
-  
+
   return(
-    <View>
+    <View style={{justifyContent: "center", width: "80%", marginLeft: "10%"}}
+    >
   {/* <Text>Bezier Line Chart</Text> */}
 
 
-  <LineChart
-    data={{
-      labels: ["Oct", "Nov", "Dec" ,"Jan", "Feb", "March", "April"],
-      datasets: [
-        {
-          data: [0, 0,0,...transObj, 0,0,0]
-        }
-      ]
-    }}
-    width={Dimensions.get("window").width} // from react-native
+  <LineChart data={{ labels: ["Sep", "Oct", "Nov", "Dec" , "Jan", "Feb"],
+      datasets: [{data: [0, 0, 0, 0,...transObj]}]}}
+    width={Dimensions.get("window").width * .8} // from react-native
     height={220}
     yAxisLabel="£"
     yAxisSuffix=""
     yAxisInterval={1} // optional, defaults to 1
+    withHorizontalLines= {false}
+    withVerticalLines= {false}
+    withHorizontalLabels={false}
+
     chartConfig={{
-      backgroundColor: "blue",
-      backgroundGradientFrom: "blue",
-      backgroundGradientTo: "#D8EBF9",
+      backgroundGradientFrom: "#F6F5F8",
+      backgroundGradientTo: "#F6F5F8",
       decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16
-      },
-      propsForDots: {
-        r: "5",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-      }
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 0
-    }}
+      color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
+      labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
+      fillShadowGradientFrom: "blue",
+      fillShadowGradientTo: "white",
+      strokeWidth: 5,
+      style: {borderRadius: 16},
+      propsForDots: {r: "3",strokeWidth: "8",stroke: `rgba(30, 81, 123, 0.3)`},
+      }}
+    bezier style={{marginVertical: 8,borderRadius: 0}}
+    decorator={() => {
+
+      return tooltipPos.visible ? <View >
+        <Svg>
+            <Rect x={tooltipPos.x - 15} y={tooltipPos.y + 10} width="60" height="30" fill="white" rx={.5} ry={.5} />
+                <TextSVG  x={tooltipPos.x + 15} y={tooltipPos.y + 30} fill="blue" fontSize="10" fontWeight="bold" textAnchor="middle">
+                    {`£ ${tooltipPos.value}`}
+                </TextSVG>
+        </Svg>
+      </View> : null
+      }}
+      onDataPointClick={(data) => {
+        let isSamePoint = (tooltipPos.x === data.x
+                            && tooltipPos.y === data.y)
+        isSamePoint ? setTooltipPos((previousState) => {
+            return {
+                      ...previousState,
+                      value: data.value,
+                      visible: !previousState.visible
+                  }
+        })
+            :
+    setTooltipPos({ x: data.x, value: data.value, y: data.y, visible: true });
+
+}}
   />
 </View>
   )
@@ -411,7 +430,7 @@ const styles = StyleSheet.create({
   shopping: {
     flex:2
   },
-  spendConainer:{
+  spendContainer:{
     flex: 1,
     flexDirection: "row",
     marginTop: verticalScale(20),
