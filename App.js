@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {AppState} from 'react-native';
-import 'expo-dev-menu';
+// import 'expo-dev-menu';
 
 import { NavigationContainer } from "@react-navigation/native";
 import jwtDecode from 'jwt-decode'

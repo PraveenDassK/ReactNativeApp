@@ -255,22 +255,23 @@ const CardSettings = ({navigation}) => {
             </Text>
             <Text
               style={[
+
                 styles.internetBasedTransactionsAr,
-                styles.transactionsPosition,
+                styles.transactionsPosition11,
                 styles.setMonthlySpendingTypo,
               ]}
             >
               <Text style={styles.spendingLimit}>
-              {"\n"}Internet based transactions are generally
+              Internet based transactions are generally
               </Text>
               <Text style={styles.spendingLimit}>
-              {"\n"}high-risk. You can switch them off for extra
+              high-risk. You can switch them off for extra
               </Text>
               <Text style={styles.spendingLimit}>
-              {"\n"}security. Payments you make using mobile
+              security. Payments you make using mobile
               </Text>
               <Text style={styles.spendingLimit}>
-              {"\n"}wallets like Apple Pay won’t be affected.
+              wallets like Apple Pay won’t be affected.
               </Text>
             </Text>
             <Image
@@ -459,7 +460,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   setMonthlySpendingTypo: {
-    fontSize: GlobalStyles.FontSize.size_3xs,
+    fontSize: GlobalStyles.FontSize.size_1xs,
     color: GlobalStyles.Color.gray_800,
   },
   iconPosition: {
@@ -489,11 +490,18 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   transactionsPosition: {
-    left: 28,
+    left: 18,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
     top: "-1%"
+  },
+  transactionsPosition11: {
+    left: 18,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    textAlign: "left",
+    position: "absolute",
+    top: "28%"
   },
   paymentsParentLayout: {
     height: 41,
@@ -545,8 +553,8 @@ const styles = StyleSheet.create({
     // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   spendingLimit: {
-    margin: GlobalStyles.Margin.margin_8xs,
-    top: "20%"
+    margin: GlobalStyles.Margin.margin_10xs,
+    top: "30%"
   },
   setMonthlySpending: {
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -615,9 +623,10 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   internetBasedTransactionsAr: {
-    lineHeight: 12,
+    lineHeight: 13,
+    
     width: "90%",
-    bottom: 0,
+    top: 10,
   },
   globeIcon: {
     width: 18,
@@ -631,7 +640,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   swipePaymentsSometimesCards: {
-    width: 183,
+    width: 283,
     left: 25,
   },
   swipeCardIcon: {
@@ -640,12 +649,12 @@ const styles = StyleSheet.create({
   },
   swipePaymentsSometimesCardsParent: {
     marginTop: -51.5,
-    width: 207,
+    width: 307,
     left: 23,
     top: "50%",
   },
   atmWithdrawalsSometimesCard: {
-    width: 182,
+    width: 382,
     left: 27,
   },
   atmIcon: {

@@ -1,6 +1,7 @@
-import React,{ useEffect, useState,useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import * as React from "react";
+import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import Screen from "../components/Screen";
 
 import api from "../api/carbonSingle"
 import AuthContext from "../auth/context";
@@ -45,7 +46,7 @@ const CarbonProject = ({navigation,route}) => {
         )
     }
   }
-
+  
   formatData()
 
 
@@ -57,18 +58,24 @@ const CarbonProject = ({navigation,route}) => {
         </View>
       </ScrollView>
     </View>
-  )
+    );
 };
 
 const styles = StyleSheet.create({
-  rectanglePressable: {
-    borderRadius: GlobalStyles.Border.br_lg,
+  groupChildPosition: {
+    top: "50%",
+    position: "absolute",
   },
-  titleText:{
-    fontWeight:"bold",
-    textAlign:"center",
-    fontSize:30,
+  helloTypo: {
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    fontWeight: "700",
   },
+  helloTypo1: {
+    lineHeight: 14,
+    fontSize: GlobalStyles.FontSize.size_base,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    textAlign: "center",
+    position: "absolute",},
   page:{
     width:"80%",
     left:"10%",
@@ -77,10 +84,14 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 25,
   },
-  image:{
-    flex:1,
+  emailPosition: {
+    width: 280,
+    textAlign: "center",
+    lineHeight: 17,
+    fontSize: GlobalStyles.FontSize.size_lg,
     width:"100%",
-    height:200,
+    top: "50%",
+    position: "absolute",
   },
   textBox:{
     backgroundColor: "red"
