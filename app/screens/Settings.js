@@ -26,7 +26,6 @@ const Settings = ({navigation}) => {
   const [iban, setIban] = useState(null)
   const [status, setStatus] = useState(null)
   const authContext = useContext(AuthContext)
-  console.log(authContext)
   const x = useSharedValue(0)
   
 
@@ -45,9 +44,6 @@ const Settings = ({navigation}) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const data = response.data
     const accountdata = accountresponse.data.details
-    console.log(accountdata.identifiers[0].iban)
-    console.log("-=-===-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=")
-    console.log(accountdata.status)
     setPlan("CurrentAccount")
     setName(accountdata.customerName)
     setBal(accountdata.balance)
@@ -70,7 +66,6 @@ const Settings = ({navigation}) => {
     if (names.length > 1) {
       initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
     }
-    console.log(initialsHold)
     setInitals(initialsHold)
   }
 
