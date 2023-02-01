@@ -5,6 +5,7 @@ import GlobalStyles from "../../GlobalStyles";
 import api from "../api/carbonSingle"
 import AuthContext from "../auth/context";
 import Button from "../components/Button"
+import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 
 
 const CarbonProject = ({navigation,route}) => {
@@ -36,9 +37,9 @@ const CarbonProject = ({navigation,route}) => {
                 data.image != "" ? {uri:data.image} : require("../assets/icon-bluecheck.png")
               }
             />
-            <View style={{backgroundColor: "grey"}}>
+            <View style={{backgroundColor: "white"}}>
               <Text>
-                {data.description}
+                {data.description.replace(/<[^>]*>/g, "")}
               </Text>
             </View>
           </View>
@@ -63,7 +64,13 @@ const CarbonProject = ({navigation,route}) => {
 
 const styles = StyleSheet.create({
   rectanglePressable: {
-    borderRadius: GlobalStyles.Border.br_lg,
+    marginTop: verticalScale(20),
+    borderRadius: moderateScale(15),
+    paddingVertical: verticalScale(20),
+    paddingHorizontal: horizontalScale(14) ,
+    backgroundColor: 'white',
+    width: '100%',
+    alignItems: 'center'
   },
   titleText:{
     fontWeight:"bold",
