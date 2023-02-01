@@ -255,9 +255,8 @@ const CardSettings = ({navigation}) => {
             </Text>
             <Text
               style={[
-
                 styles.internetBasedTransactionsAr,
-                styles.transactionsPosition11,
+                styles.transactionsPosition,
                 styles.setMonthlySpendingTypo,
               ]}
             >
@@ -460,7 +459,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   setMonthlySpendingTypo: {
-    fontSize: GlobalStyles.FontSize.size_1xs,
+    fontSize: GlobalStyles.FontSize.size_2xs,
     color: GlobalStyles.Color.gray_800,
   },
   iconPosition: {
@@ -490,18 +489,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   transactionsPosition: {
-    left: 18,
+    left: 28,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
     top: "-1%"
-  },
-  transactionsPosition11: {
-    left: 18,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    position: "absolute",
-    top: "28%"
   },
   paymentsParentLayout: {
     height: 41,
@@ -530,7 +522,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   hello1: {
-    top: 118,
+    top: 114,
     fontSize: GlobalStyles.FontSize.size_xs,
     color: GlobalStyles.Color.gray_800,
     // fontFamily: GlobalStyles.FontFamily.helvetica,
@@ -623,7 +615,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   internetBasedTransactionsAr: {
-    lineHeight: 13,
+    lineHeight: 12,
     
     width: "90%",
     top: 10,
