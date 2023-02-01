@@ -76,8 +76,8 @@ const HomeScreenPersonal = ({ navigation }) => {
           key={i}
           onPress={() => navigation.navigate("Transactions")}>
           <View style={{height: "100%", flexDirection: "row",}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>A W</Text>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{dataHold.description.replace("Payment to ", "")[0]}</Text>
           </View>
           <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
               <Text style={{fontSize :14, fontWeight: "700"}}>
