@@ -80,7 +80,7 @@ const Analytics = ({navigation}) => {
 
 
 
-  const transcationKeys = (trans) => {
+  const transactionKeys = (trans) => {
     return transKeys = Object.keys(trans)
   }
 
@@ -137,11 +137,11 @@ const Analytics = ({navigation}) => {
                         <Text style={styles.priceSub}>£ {balance}</Text>
                       </View>
                     </View>
-                    <View style={styles.spendConainer}>
+                    <View style={styles.spendContainer}>
                       <View style={styles.totalSpendContainer}>
                         <Text>Total Spend</Text>
                         <Text style={styles.money}>£ {totalSpend}</Text>
-                        <View style={styles.spendConainer}>
+                        <View style={styles.spendContainer}>
                           <View style={styles.noOfPayments}>
                             <Text style={{
                                 color: "#999",
@@ -160,7 +160,7 @@ const Analytics = ({navigation}) => {
 
                       </View>
                       <View style={styles.avgSpendContainer}>
-                        <Text>Average Monthly Spendings</Text>
+                        <Text>Average Monthly Spending's</Text>
                         <View style={styles.containerSpace}>
 
                           <Text style={styles.money}>£ {balance}</Text>
@@ -168,10 +168,10 @@ const Analytics = ({navigation}) => {
                       </View>
                     </View>
                     <View style={styles.containerSpace}>
-                      <Text style={styles.subTitle}>Spendings</Text>
+                      <Text style={styles.subTitle}>Spending's</Text>
                     </View>
                     <View style={styles.progressContainer}>
-                    {transactionCategories && transcationKeys(transactionCategories).map((transaction, index) =>(
+                    {transactionCategories && transactionKeys(transactionCategories).map((transaction, index) =>(
                       <View style={styles.progressBar} key={index}>
                       <Progress.Bar 
                         progress={transactionCategories[transaction].toFixed(2)/totalSpend} 
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
   shopping: {
     flex:2
   },
-  spendConainer:{
+  spendContainer:{
     flex: 1,
     flexDirection: "row",
     marginTop: verticalScale(20),
