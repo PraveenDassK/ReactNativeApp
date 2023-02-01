@@ -19,7 +19,7 @@ import AccountMain from "../screens/AccountMain";
 import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
-
+import FaceScan from "../screens/FaceScan";
 //Main screen
 import AccountDummy from "../screens/AccountDummy";
 //import SwitchAccount from "../screens/SwitchAccount"
@@ -78,9 +78,8 @@ import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import CarbonSpending from "../screens/CarbonSpending"
-
 import Login from "../screens/Login"
-
+import SignUpPersonal from "../screens/SignUpPersonal";
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -103,10 +102,10 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-  return(
-    <Stack.Navigator
-    initialRouteName="TermsAndConditions"
-    >
+   return(
+     <Stack.Navigator
+      initialRouteName="CardSettings" >
+        
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}

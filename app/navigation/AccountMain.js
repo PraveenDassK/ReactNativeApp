@@ -280,7 +280,7 @@ const HomeScreenPersonal = ({navigation}) => {
                 Carbon Tokens 
               </Text>
               <Text>
-                Refer Now>
+                Refer Now
               </Text>
             </View>
 
