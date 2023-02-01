@@ -124,7 +124,7 @@ const showData = () => {
           key = {i}
           onPress = {() => showTransaction(i)}>
           <View style={{height: "100%", flexDirection: "row",}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "lightgrey", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
           <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>{initials}</Text>
           </View>
           <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
