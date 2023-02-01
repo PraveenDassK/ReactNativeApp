@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   },
   maskPosition: {
     height: verticalScale(47),
-    width: horizontalScale(60),
+    width: horizontalScale(40),
     marginTop: verticalScale(-54.5),
     top: "50%",
     position: "absolute",
@@ -644,7 +644,7 @@ const styles = StyleSheet.create({
     marginTop:"2.5%",
 },
  transactionBox: {
-        width: "100%",
+        width: "80%",
         height: 80,
         marginTop: 10,
         top: 5,

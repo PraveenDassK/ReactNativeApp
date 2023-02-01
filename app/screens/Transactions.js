@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
       },
       hello:{
         textAlign:"center",
-        fontSize: GlobalStyles.FontSize.size_13xl,
+        fontSize: GlobalStyles.FontSize.size_10xl,
         fontWeight: "bold",
       },
       myCards1: {
