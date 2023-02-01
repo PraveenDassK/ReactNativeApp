@@ -4,31 +4,29 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage"
 
-
 const SecurityAndPrivacy = ({navigation}) => {
+
+  const { setIsAuth } = useContext(AuthContext)
+
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
-
-  const { setIsAuth } = useContext(AuthContext)
 
   useEffect(() =>{
     restoreSignIn()
   }, [])
 
   useEffect(() => {
-    if (isEnabled) {
+    if (isEnabled === true) {
       authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
       console.log("isEnabled", isEnabled)
-      setIsAuth(isEnabled)
-    }
-    if(!isEnabled){
+      // potential authenticate()
+      }
+    if(isEnabled === false){
       authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
-      setIsAuth(isEnabled)
       console.log("isNotEnabled", isEnabled)
     }
-    
   },[isEnabled])
 
 
@@ -37,34 +35,13 @@ const restoreSignIn = async () => {
   const token = await authStorage.getSignInSettings()
   if(!token) return
   console.log('restore token found in security',token.includes("true"))
-
   setIsEnabled(token.includes("true"))
- 
 }
 
-// const restoreSignIn = async () => {
-//   console.log('trying for restore sign in')
-//   const token = await authStorage.getSignInSettings()
-//   if(!token) return
-//   console.log('restore token sign in',token, token.includes('true'))
-//   setIsAuth(token.includes('true'))
-// }
-
-  const toggleSwitch =  () => {
-    console.log('1', isEnabled)
-    setIsEnabled(previousState => (!previousState));
-  
-    // console.log('2',isEnabled)
-  }
-
-  // const setCurrentAuth = () => {
-  //    console.log('setAuth is Enabled value', isEnabled)
-  // }
+  const toggleSwitch =  () => setIsEnabled(previousState => !previousState)
   const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
   const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
   const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
-
- 
 
   return (
     <View style={styles.securityAndPrivacy}>

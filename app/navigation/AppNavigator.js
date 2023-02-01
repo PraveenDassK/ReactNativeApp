@@ -101,6 +101,7 @@ const leftToRightAnimation = {
 const StackNavigator = () => {
   return(
     <Stack.Navigator
+    screenOptions={{fullScreenGestureEnable: true}} 
     >
       <Stack.Screen 
         name="Account" 
@@ -363,7 +364,7 @@ const AppNavigator = () => {
       />
     <Tab.Screen 
       name="Analysis" 
-      component={Analytics}
+      component={gestureHandlerRootHOC(Analytics)}
       options={{
         
       }}

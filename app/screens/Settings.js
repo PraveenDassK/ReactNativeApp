@@ -23,8 +23,8 @@ const Settings = ({navigation}) => {
   const [balance, setBal] = useState(null)
   const [currency, setCurrency] = useState(null)
   const [initials, setInitals] = useState(null)
-  const authContext = useContext(AuthContext)
-  console.log(authContext)
+  const { userID, accountID, setCurrentUser } = useContext(AuthContext)
+ 
   const x = useSharedValue(0)
   
 
@@ -39,8 +39,8 @@ const Settings = ({navigation}) => {
   }
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer(authContext.userID);
-    const accountresponse = await api.GetAccount(authContext.accountID);
+    const response = await api.GetAccountByCustomer(userID);
+    const accountresponse = await api.GetAccount(accountID);
     const data = response.data
     const accountdata = accountresponse.data.details
 

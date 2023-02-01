@@ -47,12 +47,16 @@ const AuthNavigator = () => (
     name="SignUpPersonalScreen" 
     component={gestureHandlerRootHOC(SignUpPersonalScreen)}
     options={{ title: "Sign Up",
-    headerShown: true }}
+    headerShown: true,
+   }}
     />
     <Stack.Screen  
       name="Login" 
       component={gestureHandlerRootHOC(Login)}
-      options={{ presentation: 'modal' }}
+      // options={{ presentation: 'modal' }}
+      options={{ 
+        animation: "slide_from_bottom"
+      }}
       />
 
     <Stack.Screen  name="OTPVerificationPersonal" component={gestureHandlerRootHOC(OTPVerificationPersonal)}/>

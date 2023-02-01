@@ -13,7 +13,7 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 const Carbon = ({route,navigation }) => {
 
     const [data, setData] = useState(null)
-  const { setUser } = useContext(AuthContext)
+ const { setUser } = useContext(AuthContext)
 
   useEffect(() => {
     loadData()
