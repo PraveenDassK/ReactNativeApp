@@ -13,6 +13,9 @@ const SecurityAndPrivacy = ({navigation}) => {
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
 
+  const { setIsAuth, settings, setSettings} = useContext(AuthContext)
+  console.log(settings)
+
   useEffect(() =>{
     restoreSignIn()
   }, [])
@@ -38,6 +41,19 @@ const restoreSignIn = async () => {
   setIsEnabled(token.includes("true"))
 }
 
+//Setts the settings when coming ot the page
+useEffect(() =>{
+  setToggles()
+}, [])
+
+const setToggles = () =>{
+  console.log(settings)
+  
+  settings.hideBalance ? toggleSwitch1():null
+  settings.contactAccess ? toggleSwitch2():null
+  settings.transactionSharing ? toggleSwitch3():null
+}
+
   const toggleSwitch =  () => setIsEnabled(previousState => !previousState)
   const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
   const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
@@ -47,7 +63,7 @@ const restoreSignIn = async () => {
     <View style={styles.securityAndPrivacy}>
       <Text style={[styles.hello, styles.mr_546]}>Security</Text>
       <View style={[styles.helloParent, styles.mt1021, styles.mr40]}>
-        <Text style={styles.hello1}>Security and Privacy</Text>
+        <Text style={styles.hello1}>App settings</Text>
         <Text style={styles.changePasscode}>Change Passcode</Text>
         <View style={[styles.groupChild, styles.groupPosition]} />
         <View style={[styles.groupItem, styles.groupPosition]} />
@@ -55,15 +71,15 @@ const restoreSignIn = async () => {
         <View style={[styles.rectangleView, styles.groupPosition]} />
         <Text
           style={[styles.signInWithFaceId, styles.withTypo]}
-        >{`Sign in with face ID `}</Text>
+        >{`Sign in with Biometrics `}</Text>
         <Text style={[styles.hideBalances, styles.withTypo]}>
           Hide balances
         </Text>
         <Text
           style={[styles.shareWithFriends, styles.withTypo]}
-        >{`Share with friends `}</Text>
+        >{`Allow access to conatacts`}</Text>
         <Text style={[styles.messagingWithFriends, styles.withTypo]}>
-          Messaging with friends
+          Allow sharing of transactions
         </Text>
         <View style={[styles.rectangleParent, styles.groupLayout]}>
           <Switch  

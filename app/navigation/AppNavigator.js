@@ -76,6 +76,10 @@ import AccountLetter from "../screens/AccountLetter"
 
 import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
+import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
+import CarbonSpending from "../screens/CarbonSpending"
+
+import Login from "../screens/Login"
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -111,6 +115,7 @@ const StackNavigator = () => {
        
         }}
       />
+      
 
       <Stack.Screen 
         name="AddFunds" 
@@ -343,6 +348,33 @@ const StackNavigator = () => {
         
         }}
       />
+
+    <Stack.Screen 
+        name="Login" 
+        component={Login}
+        options={{
+          title: "Login",
+       
+        }}
+      />
+          
+      <Stack.Screen 
+        name="CarbonTonnesRemoved" 
+        component={CarbonTonnesRemoved}
+        options={{
+          title: "CarbonTonnesRemoved",
+       
+        }}
+      />
+      <Stack.Screen 
+        name="CarbonSpending" 
+        component={CarbonSpending}
+        options={{
+          title: "CarbonSpending",
+       
+        }}
+      />
+
 
     </Stack.Navigator>
   )

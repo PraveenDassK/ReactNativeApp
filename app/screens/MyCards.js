@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -20,7 +20,11 @@ const MyCards = ({ navigation }) => {
   const toggleChecked = () => setChecked((value) => !value);
 
   //Transactions
-  const [recentTransactions, setRecent] = useState([])
+  const [transactionData, setTransactionData] = useState([])
+  const [balanceData, setBalance] = useState(0)
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalId, setModalId] = useState(false);
+  const [initials, setInitals] = useState(null)
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -28,13 +32,121 @@ const MyCards = ({ navigation }) => {
   },[])
   
   const loadData = async () => {
-    const transactionCall = await api.GetTransactions(authContext.accountID)
-    const transData = transactionCall.data.details
-    for(let i = 0; i  < 4; i++){
-      setRecent(oldArray => [...oldArray, transData.content[i]]);
-    }
-  }
-  console.log(recentTransactions)
+    const responseBalance = await api.GetAccount(authContext.accountID);
+    const accountresponse = await api.GetAccount(authContext.accountID);
+        const accountdata = accountresponse.data.details
+    const data = responseBalance.data.details
+    setBalance(data.availableBalance)
+    console.log(authContext.accountID)
+    //Load the data for transactions
+    const response = await api.GetTransactions(authContext.accountID,5);
+    const transactions = response.data.details.content
+    setTransactionData(transactions)
+    let name = accountdata.customerName
+    let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
+
+    if (names.length > 1) {
+      initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
+     }
+    console.log(initialsHold)
+    setInitals(initialsHold)
+
+}
+
+let transactionList = []
+const showTransaction = (Id) => {
+    setModalVisible(true)
+    setModalId(Id)
+}
+
+const reportTransaction = () =>{
+    console.log("Reported")
+}
+const shareTransaction = () =>{
+    console.log("Shared")
+}
+
+const modal = (Id) => {
+    let transaction = transactionData[modalId]
+    console.log(transaction)
+    return (            
+    <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>From: {transaction.account.customerName}</Text>
+            <Text style={styles.modalText}>To: {transaction.description}</Text>
+            <Text style={styles.modalText}>Amount: £{transaction.amount}</Text>
+            <Text style={styles.modalText}>Date: {transaction.transactionDate}</Text>
+            <Text style={styles.modalText}>ID: {transaction.id}</Text>
+            <Text style={styles.modalText}>Source ID: {transaction.sourceId}</Text>
+            <Text style={styles.modalText}>Currency: {transaction.currency}</Text>
+
+            <Pressable
+              style={[styles.button, styles.buttonReport]}
+              onPress={() => reportTransaction()}>
+              <Text style={styles.textStyle}>Report</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => shareTransaction()}>
+              <Text style={styles.textStyle}>Share</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              backgroundColor = "red"
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>Dismiss</Text>
+            </Pressable>
+            
+            
+          </View>
+        </View>
+        
+      </Modal>
+      )
+}
+
+
+const showData = () => {
+    transactionData.forEach((transaction,i) => {
+        transactionList.push(
+          <Pressable
+          style={[styles.transactionBox, styles.rounded, styles.shadow]}
+          key = {i}
+          onPress = {() => showTransaction(i)}>
+          <View style={{height: "100%", flexDirection: "row",}}>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "lightgrey", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>{initials}</Text>
+          </View>
+          <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+              <Text style={{fontSize :14, fontWeight: "700"}}>
+                {transaction.account.customerName}
+              </Text>
+              <Text style={{}}>
+                {moment(transaction.transactionDate).format("MMM Do YY")}
+              </Text>
+          </View>
+          <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
+          <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
+            £{transaction.amount}
+          </Text>
+          </View>
+         </View>
+        </Pressable>
+            
+        )
+    })
+}
+showData()
 
   //CardFreezing
   const [cardFrozen, setFrozen] = useState(false)
@@ -60,109 +172,6 @@ const MyCards = ({ navigation }) => {
             <Text style={[styles.myCards1, styles.historyTypo]}>My Cards</Text>
           </Pressable>
           <View style={styles.historyParent}>
-            <Text style={[styles.history, styles.historyTypo]}>
-              Recent Transactions
-            </Text>
-
-            <View style={[styles.groupView, styles.groupPosition1]}>
-              <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
-                <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                  <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                    Grocery Market
-                  </Text>
-                  <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                    <Text style={styles.september222022}>
-                      September 22, 2022
-                    </Text>
-                    <Text style={styles.september222022}>12:06 PM</Text>
-                  </Text>
-                </View>
-                <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
-                <Image
-                  style={styles.maskGroup14}
-                  resizeMode="contain"
-                  source={require("../assets/icon-supermarketplaceholder.png")}
-                />
-              </View>
-              <View style={[styles.groupParent2, styles.groupParentShadowBox]}>
-                <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                  <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                    Grocery Market
-                  </Text>
-                  <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                    <Text style={styles.september222022}>
-                      September 22, 2022
-                    </Text>
-                    <Text style={styles.september222022}>12:06 PM</Text>
-                  </Text>
-                </View>
-                <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
-                <Image
-                  style={styles.maskGroup14}
-                  resizeMode="contain"
-                  source={require("../assets/icon-supermarketplaceholder.png")}
-                />
-              </View>
-              <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
-                <View
-                  style={[styles.lanceBogrolContainer, styles.lancePosition]}
-                >
-                  <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                    Grocery Market
-                  </Text>
-                  <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                    <Text style={styles.september222022}>
-                      September 22, 2022
-                    </Text>
-                    <Text style={styles.september222022}>12:06 PM</Text>
-                  </Text>
-                </View>
-                <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
-                <Image
-                  style={styles.maskGroup14}
-                  resizeMode="contain"
-                  source={require("../assets/icon-supermarketplaceholder.png")}
-                />
-              </View>
-              <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
-                <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                  <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                    Spotify Music
-                  </Text>
-                  <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                    <Text style={styles.september222022}>
-                      September 22, 2022
-                    </Text>
-                    <Text style={styles.september222022}>12:06 PM</Text>
-                  </Text>
-                </View>
-                <Text style={[styles.text, styles.textTypo]}>- £50.00</Text>
-                <Image
-                  style={[styles.maskGroup16, styles.groupPosition]}
-                  resizeMode="contain"
-                  source={require("../assets/icon-spotifyplaceholder.png")}
-                />
-              </View>
-              <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
-                <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                  <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                    Lance Bogrol
-                  </Text>
-                  <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                    <Text style={styles.september222022}>
-                      September 22, 2022
-                    </Text>
-                    <Text style={styles.september222022}>12:06 PM</Text>
-                  </Text>
-                </View>
-                <Text style={[styles.text4, styles.textTypo]}>+ £350.00</Text>
-                <Image
-                  style={[styles.groupItem, styles.groupPosition]}
-                  resizeMode="contain"
-                  source={require("../assets/image-person.png")}
-                />
-              </View>
-            </View>
             <Image
               style={{
                 width: horizontalScale(200),
@@ -197,9 +206,8 @@ const MyCards = ({ navigation }) => {
             <Image
               style={styles.icon}
               resizeMode="contain"
-              source={require("../assets/icon-freeze.png")}
+              source={cardFrozen ? require("../assets/icon-unfreeze.png") : require("../assets/icon-freeze.png")}
             />
-
           </Pressable>
 
           <Pressable
@@ -212,6 +220,10 @@ const MyCards = ({ navigation }) => {
               source={require("../assets/icon-settings.png")}
             />
           </Pressable>
+              <View top = "55%" left ="10%">
+                {transactionList}
+               {modalVisible ? modal() : null}
+              </View>
         </View>
               <View style={{top: "-48.5%", width: "100%", backgroundColor: "red"}}>
               <Text style={{position: "absolute", left: "24.5%", width: "19%", textAlign: "center"}}>Freeze</Text>
@@ -330,7 +342,7 @@ const styles = StyleSheet.create({
   },
   maskPosition: {
     height: verticalScale(47),
-    width: horizontalScale(60),
+    width: horizontalScale(40),
     marginTop: verticalScale(-54.5),
     top: "50%",
     position: "absolute",
@@ -495,16 +507,14 @@ const styles = StyleSheet.create({
     right: horizontalScale(37),
   },
   icon: {
-    marginLeft: horizontalScale(-114.5),
-    marginTop: verticalScale(-80.5),
     height: "100%",
     width: "100%",
   },
   wrapper: {
     width: horizontalScale(110),
     height: verticalScale(110),
-    left: "50%",
-    top: "50%",
+    left: "20%",
+    top: "42%",
     position: "absolute",
   },
   hello: {
@@ -574,7 +584,7 @@ const styles = StyleSheet.create({
     left: "10.24%",
     fontSize: GlobalStyles.FontSize.size_2xs,
     letterSpacing: 0,
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.gray_100,
   },
   groupChild2: {
     top: verticalScale(17),
@@ -590,6 +600,18 @@ const styles = StyleSheet.create({
     height: verticalScale(41),
     position: "absolute",
   },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 1,
+
+    elevation: 1,
+  },
+  
   groupChild4: {
     marginLeft: horizontalScale(25.31),
     top: verticalScale(21),
@@ -614,6 +636,84 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: GlobalStyles.Padding.padding_md,
     width: "100%",
+  },
+
+  page:{
+    width:"80%",
+    left:"10%",
+    marginTop:"2.5%",
+},
+ transactionBox: {
+        width: "80%",
+        height: 80,
+        marginTop: 10,
+        top: 5,
+        backgroundColor: "white",
+      },
+myCards1: {
+  width: "100%",
+  textAlign: "center",
+  fontSize: GlobalStyles.FontSize.size_2xl,
+  textAlign: "center",
+},
+centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  historyTypo: {
+    textAlign: "center",
+    color: GlobalStyles.Color.indigo_100,
+    fontWeight: "700",
+    position: "absolute",
+  },
+  myCards1: {
+    width: "100%",
+    
+    fontSize: GlobalStyles.FontSize.size_4xl,
+    textAlign: "center",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  buttonReport: {
+    backgroundColor: 'red',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  rounded: {
+    borderRadius: 15,
   },
 });
 

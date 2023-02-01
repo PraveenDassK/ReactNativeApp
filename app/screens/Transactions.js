@@ -2,6 +2,7 @@ import React,{ useEffect, useState,useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
+import moment from "moment";
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 
@@ -10,6 +11,8 @@ const Transactions = ({navigation,route}) => {
     const [transactionData, setTransactionData] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const [modalId, setModalId] = useState(false);
+    const [initials, setInitals] = useState(null)
+
     const authContext = useContext(AuthContext)
 
 
@@ -22,6 +25,8 @@ const Transactions = ({navigation,route}) => {
 
     const loadData = async () => {
         const responseBalance = await api.GetAccount(authContext.accountID);
+        const accountresponse = await api.GetAccount(authContext.accountID);
+        const accountdata = accountresponse.data.details
         const data = responseBalance.data.details
         setBalance(data.availableBalance)
         console.log(authContext.accountID)
@@ -29,6 +34,16 @@ const Transactions = ({navigation,route}) => {
         const response = await api.GetTransactions(authContext.accountID,10);
         const transactions = response.data.details.content
         setTransactionData(transactions)
+
+        let name = accountdata.customerName
+        let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
+    
+        if (names.length > 1) {
+          initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
+         }
+        console.log(initialsHold)
+        setInitals(initialsHold)
+  
     }
 
     let transactionList = []
@@ -97,22 +112,29 @@ const Transactions = ({navigation,route}) => {
     const showData = () => {
         transactionData.forEach((transaction,i) => {
             transactionList.push(
-                <Pressable
-                    key = {i}
-                    style = {styles.transactionBox}
-                    onPress = {() => showTransaction(i)}
-                >
-                  
-                    <Text>
-                        From: {transaction.account.customerName}
-                    </Text>
-                    <Text>
-                        {transaction.description}
-                    </Text>
-                    <Text>
-                        £{transaction.amount}
-                    </Text>
-                </Pressable>
+              <Pressable
+              style={[styles.transactionBox, styles.rounded, styles.shadow]}
+              key = {i}
+              onPress = {() => showTransaction(i)}>
+              <View style={{height: "100%", flexDirection: "row",}}>
+              <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+              <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>{initials}</Text>
+              </View>
+              <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+                  <Text style={{fontSize :14, fontWeight: "700"}}>
+                    {transaction.account.customerName}
+                  </Text>
+                  <Text style={{}}>
+                    {moment(transaction.transactionDate).format("MMM Do YY")}
+                  </Text>
+              </View>
+              <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
+              <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
+                £{transaction.amount}
+              </Text>
+              </View>
+             </View>
+            </Pressable>
                 
             )
         })
@@ -120,8 +142,8 @@ const Transactions = ({navigation,route}) => {
     showData()
     return (
         <View style={styles.page}>
-            <Text>
-                Transactions
+            <Text style={styles.hello}>
+                Transactions 
             </Text>
             
             
@@ -144,12 +166,6 @@ const styles = StyleSheet.create({
         left:"10%",
         marginTop:"2.5%",
     },
-    transactionBox:{
-        backgroundColor:"white",
-        borderRadius: 15,
-        padding :"3%",
-        marginTop:"2.5%",
-    },
     myCards1: {
       width: "100%",
       textAlign: "center",
@@ -167,6 +183,11 @@ const styles = StyleSheet.create({
         color: GlobalStyles.Color.indigo_100,
         fontWeight: "700",
         position: "absolute",
+      },
+      hello:{
+        textAlign:"center",
+        fontSize: GlobalStyles.FontSize.size_10xl,
+        fontWeight: "bold",
       },
       myCards1: {
         width: "100%",
@@ -207,6 +228,28 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
+      },
+      rounded: {
+        borderRadius: 15,
+      },
+      shadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 1,
+    
+        elevation: 1,
+      },
+      
+      transactionBox: {
+        width: "100%",
+        height: 80,
+        marginTop: 10,
+        top: 5,
+        backgroundColor: "white",
       },
       modalText: {
         marginBottom: 15,

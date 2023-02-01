@@ -961,6 +961,9 @@ const styles = StyleSheet.create({
         fontSize:30,
         
       },
+      rounded: {
+        borderRadius: 15,
+      },
       
       myCards1:{
         marginTop:"6%",
@@ -978,6 +981,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginBottom:"14%"
 
+    },
+    hello: {
+      left: 10,
+      fontSize: GlobalStyles.FontSize.size_8xl,
+      fontWeight: "700",
+      fontFamily: GlobalStyles.FontFamily.typoGrotesk,
+      textAlign: "left",
+      color: GlobalStyles.Color.indigo_100,
+      top: 0,
+      position: "absolute",
     },
     TermsAndConditions: {
         backgroundColor: GlobalStyles.Color.gray_1100,

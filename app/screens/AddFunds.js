@@ -33,11 +33,22 @@ const AddFunds = ({navigation}) => {
 
     const accountNum = data[0].identifiers[0].accountNumber
     console.log(accountNum)
-    let accountList = {
-      label: data[0].identifiers[0].accountNumber,
-      value: data[0].identifiers[0].accountNumber
+    for(let i=0;i<3;i++){
+      let acclist=[{label: data[i].identifiers[0].accountNumber,
+        value: data[i].identifiers[0].accountNumber,}]
+      return acclist;
     }
-    setCard(prevArray => [accountList])
+
+    console.log(acclist)
+  //   const accountList =[{
+  //     label: data[0].identifiers[0].accountNumber,
+  //     value: data[0].identifiers[0].accountNumber, 
+  //   },
+  // {label: data[1].identifiers[0].accountNumber,
+  //   value: data[1].identifiers[0].accountNumber},
+  //  {label: data[2].identifiers[0].accountNumber,
+  //   value: data[2].identifiers[0].accountNumber},]
+    setCard(acclist)
   }
 
   //Screen components
@@ -96,12 +107,11 @@ const AddFunds = ({navigation}) => {
           >
             
           <Dropdown style={styles.dropdownStyle}
-          placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={cardData}
-          maxHeight={50}
+          maxHeight={100}
           labelField="label"
           valueField="value"
           placeholder={!isFocus ? 'Select a card' : '....'}
@@ -211,7 +221,7 @@ const styles = StyleSheet.create({
   }, selectedTextStyle: {
     color: "black",
     marginLeft: "15%",
-    marginTop: "1.5%"
+    marginTop: "1%"
   },
   selectBox:{
     backgroundColor:"pink",
