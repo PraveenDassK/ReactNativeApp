@@ -6,8 +6,6 @@ import {
   LineChart,
 
 } from "react-native-chart-kit";
-import { Rect, Text as TextSVG, Svg } from "react-native-svg";
-
 
 import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 
@@ -48,6 +46,8 @@ const Analytics = ({navigation}) => {
       const transData = transactionObj(recentTransactions).map((data) => {
         return data.amount
       })
+      console.log("why", data, dates)
+      console.log('herreeee')
       setPriceData(data)
       setDates(dates)
       setDataObj(transData)
@@ -79,27 +79,31 @@ const Analytics = ({navigation}) => {
     const det = acc.data.details.associates
    
   } 
+  console.log(transactionCategories)
 
 
 
-  const transactionKeys = (trans) => {
+  const transcationKeys = (trans) => {
     return transKeys = Object.keys(trans)
   }
 
   const transactionData = (transactions) => {
     return transactions.map((transaction) => {
+      console.log('deya',transaction.amount)
       return transaction.amount
     })
   }
 
   const transactionDate = (transactions) => {
     return transactions.map((transaction) => {
+      console.log('deya',transaction.transactionDate)
       return transaction.transactionDate.split("T")[0].split("-")[1]
     })
   }
 
   const transactionObj = (transactions) => {
     const arr =transactions.map((transaction) => {
+      console.log('deya',transaction.amount)
       
       return {amount: transaction.amount, date: transaction.transactionDate.split("T")[0].split("-")[1]}
     })
@@ -122,6 +126,9 @@ const Analytics = ({navigation}) => {
   }
 
 
+  console.log(transactionCategories)
+  console.log('here',recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0])
+
   return (
           <Screen style={{backgroundColor: "#f3f5f5"}}>
               <ScrollView >
@@ -139,41 +146,29 @@ const Analytics = ({navigation}) => {
                         <Text style={styles.priceSub}>£ {balance}</Text>
                       </View>
                     </View>
-                    <View style={styles.spendContainer}>
-                      <View style={styles.totalSpendContainer}>
-                        <Text>Total Spend</Text>
-                        <Text style={styles.money}>£ {totalSpend}</Text>
-                        <View style={styles.spendContainer}>
-                          <View style={styles.noOfPayments}>
-                            <Text style={{
-                                color: "#999",
-                                fontSize: 14
-                            }}>No. of Payments</Text>
-                          </View>
-                          <View style={styles.payments}>
-                            <Text
-                              style={{
-                                color: "#999",
-                                fontSize: 14
-                              }}
-                            > {totalTransactions}</Text>
-                          </View>
+
+                    <View style={{flex: 1, width: "100%", height: 75, marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
+                        <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
+                            <Text>Total Spend</Text>
+                            <Text style={styles.money}>£ {totalSpend}</Text>
+                            <View style={{flex: 1, flexDirection: "row"}}>
+                             <Text style={{color: "#999",fontSize: 14, alignItems: "flex-start"}}>No. of Payments</Text>
+                             <Text style={{color: "#999", fontSize: 14 , alignItems: "flex-end"}}> {totalTransactions}</Text>
+                             </View>
                         </View>
-
-                      </View>
-                      <View style={styles.avgSpendContainer}>
-                        <Text>Average Monthly Spending's</Text>
-                        <View style={styles.containerSpace}>
-
+                        <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
+                        <Text>Average Monthly Spendings</Text>
                           <Text style={styles.money}>£ {balance}</Text>
+
                         </View>
-                      </View>
                     </View>
+
+
                     <View style={styles.containerSpace}>
-                      <Text style={styles.subTitle}>Spending's</Text>
+                      <Text style={styles.subTitle}>Spendings</Text>
                     </View>
                     <View style={styles.progressContainer}>
-                    {transactionCategories && transactionKeys(transactionCategories).map((transaction, index) =>(
+                    {transactionCategories && transcationKeys(transactionCategories).map((transaction, index) =>(
                       <View style={styles.progressBar} key={index}>
                       <Progress.Bar 
                         progress={transactionCategories[transaction].toFixed(2)/totalSpend} 
@@ -219,9 +214,10 @@ const Analytics = ({navigation}) => {
                    
                       {recentTransactions.map((transaction, index) => (
                         
+                      
                       <View  key={index} style={styles.balanceContainer}>
                         <View style={styles.transactionId}>
-                          <Text style={styles.textSub}>{transaction.description.replace("Payment to ", "")}</Text>
+                          <Text style={styles.textSub}>{transaction.sourceId}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LL')}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LT')}</Text>
                         </View>
@@ -239,8 +235,6 @@ const Analytics = ({navigation}) => {
 
 
 const Bazier = ({ priceData, transDate, transObj }) => {
-  let [tooltipPos,setTooltipPos] = useState(
-    { x:0, y:0, visible:false, value:0 })
 
   console.log('finished', transObj)
   
@@ -250,12 +244,11 @@ const Bazier = ({ priceData, transDate, transObj }) => {
 
 
   <LineChart
-
     data={{
-      labels: ["Sep", "Oct", "Nov", "Dec" , "Jan"],
+      labels: ["Oct", "Nov", "Dec" ,"Jan", "Feb", "March", "April"],
       datasets: [
         {
-          data: [0, 0, 0, 0,...transObj]
+          data: [0, 0,0,...transObj, 0,0,0]
         }
       ]
     }}
@@ -264,71 +257,27 @@ const Bazier = ({ priceData, transDate, transObj }) => {
     yAxisLabel="£"
     yAxisSuffix=""
     yAxisInterval={1} // optional, defaults to 1
-    withHorizontalLines= {false}
-    withVerticalLines= {false}
-    withHorizontalLabels={false}
-
     chartConfig={{
-      backgroundGradientFrom: "#F6F5F8",
-      backgroundGradientTo: "#F6F5F8",
+      backgroundColor: "blue",
+      backgroundGradientFrom: "blue",
+      backgroundGradientTo: "#D8EBF9",
       decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
-      labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
-      fillShadowGradientFrom: "blue",
-      fillShadowGradientTo: "white",
-      strokeWidth: 5,
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       style: {
         borderRadius: 16
       },
       propsForDots: {
-        r: "3",
-        strokeWidth: "8",
-        stroke: `rgba(30, 81, 123, 0.3)`
-      },
-      
+        r: "5",
+        strokeWidth: "2",
+        stroke: "#ffa726"
+      }
     }}
     bezier
     style={{
       marginVertical: 8,
       borderRadius: 0
     }}
-    decorator={() => {
-      return tooltipPos.visible ? <View>
-          <Svg>
-              <Rect x={tooltipPos.x - 15} 
-                y={tooltipPos.y + 10} 
-                width="60" 
-                height="30"
-                fill="white" 
-                rx={.5} 
-                ry={.5}
-              />
-                  <TextSVG
-                      x={tooltipPos.x + 15}
-                      y={tooltipPos.y + 30}
-                      fill="blue"
-                      fontSize="10"
-                      fontWeight="bold"
-                      textAnchor="middle">
-                      {`£ ${tooltipPos.value}`}
-                  </TextSVG>
-          </Svg>
-      </View> : null
-      }}
-      onDataPointClick={(data) => {
-        let isSamePoint = (tooltipPos.x === data.x 
-                            && tooltipPos.y === data.y)
-        isSamePoint ? setTooltipPos((previousState) => {
-            return { 
-                      ...previousState,
-                      value: data.value,
-                      visible: !previousState.visible
-                  }
-        })
-            : 
-    setTooltipPos({ x: data.x, value: data.value, y: data.y, visible: true });
-
-}}
   />
 </View>
   )
@@ -462,7 +411,7 @@ const styles = StyleSheet.create({
   shopping: {
     flex:2
   },
-  spendContainer:{
+  spendConainer:{
     flex: 1,
     flexDirection: "row",
     marginTop: verticalScale(20),
