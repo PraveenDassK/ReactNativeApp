@@ -130,11 +130,11 @@ const Carbon = ({route,navigation }) => {
                         style={[styles.listImage, {
                             width: horizontalScale(300),
                             height: verticalScale(180),
-                            resizeMode: 'contain'
+                            resizeMode: 'stretch'
                         }]}
                         source={
                             
-                            item.image != "" ? {uri:item.image} : require("../assets/icon-bluecheck.png")
+                            item.image != "" ? {uri:item.image} : require("../assets/image-carbonplaceholder.png")
                         } />
                     
                         <View style={styles.subTitle}>{console.log(item.asset.type)}
