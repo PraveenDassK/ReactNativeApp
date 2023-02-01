@@ -33,10 +33,16 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [sortCode, setSortCode] = useState(null);
   const [accountname, setaccountname] = useState(null);
   const authContext = useContext(AuthContext);
+  const {settings} = useContext(AuthContext)
+  console.log(settings)
 
   const [transactionData, setTransactionData] = useState(null);
 
   const todaydate = moment().format("ll");
+
+  const TotalAmount = 1
+  const TokenAmount = 1
+  const carbonAmount = 500
 
   //Calls the API once during load
   useFocusEffect(() => {
@@ -73,19 +79,18 @@ const HomeScreenPersonal = ({ navigation }) => {
     for (let i = 0; i < 5; i++) {
       let dataHold = transactionData.content[i];
       transactionList.push(dataHold);
-
       pageShow.push(
         <Pressable
-          style={[styles.transactionBox, styles.rounded, styles.shadow]}
+          style={[styles.transactionBox, styles.rounded]}
           key={i}
-          onPress={() => console.log("!")}>
+          onPress={() => navigation.navigate("Transactions")}>
           <View style={{height: "100%", flexDirection: "row",}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{dataHold.account.customerName[0]}</Text>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>A W</Text>
           </View>
           <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-              <Text style={{fontSize :14, fontWeight: "701"}}>
-                {dataHold.account.customerName}
+              <Text style={{fontSize :14, fontWeight: "700"}}>
+                {dataHold.description.replace("Payment to ", "")}
               </Text>
               <Text style={{}}>
                 {moment(dataHold.transactionDate).format("MMM Do YY")}
@@ -170,7 +175,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               Total Wallet Balance
             </Text>
             <Text style={[styles.BalanceText, styles.blueTitle]}>
-              £{balance}
+              {settings.hideBalance ? "Balance Hidden" : "£"+balance}
             </Text>
             <Text style={styles.dateText}>{todaydate}</Text>
           </View>
@@ -246,9 +251,9 @@ const HomeScreenPersonal = ({ navigation }) => {
            * @notice the actual carbon holder
            */}
           <View style={styles.carbonItemDiv}>
-            <View style={[styles.estimatedCarbonDiv, styles.shadow]}>
+            <View style={[styles.estimatedCarbonDiv]}>
               <View style={{ flex: 3.5 }}>
-                <Text style={styles.blueTitle}>2400</Text>
+                <Text style={styles.blueTitle}>{carbonAmount}</Text>
               </View>
               <View style={{ flex: 2.5 }}>
                 <Text>Estimated</Text>
@@ -365,7 +370,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             </View>
             <View style={[styles.carbonAssetsDiv]}>
               <View style={styles.carbonAssetsDivLeft}>
-                <Text style={styles.largeNumber}>2</Text>
+                <Text style={styles.largeNumber}>{TokenAmount}</Text>
                 <View>
                   <Text>Carbonyte</Text>
                   <Text style={{ fontWeight: "700" }}>Tokens</Text>
@@ -386,7 +391,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               ></View>
 
               <View style={styles.carbonAssetsDivRight}>
-                <Text style={styles.largeNumber}>2</Text>
+                <Text style={styles.largeNumber}>{TotalAmount}</Text>
                 <View style={{ fontWeight: "700" }}>
                   <Text>Total</Text>
                   <Text style={{ fontWeight: "700" }}>Assets</Text>
@@ -421,13 +426,12 @@ const HomeScreenPersonal = ({ navigation }) => {
 
         <View style={styles.carbonSpendingTitleDiv}>
                   <Text style={styles.titleText}>Recent Transactions</Text>
-                  
                 </View>
         <View style={styles.transactionsContainer}>
           {transactionTable}
         </View>
 
-        <View style={[styles.carbonContainer, styles.rounded, styles.shadow]}>
+        <View style={[styles.carbonContainer, styles.rounded]}>
           <View style={styles.treeContainer}>
             <Image
               style={styles.treeImage}
@@ -459,20 +463,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "black",
     height: "10%",
-  },
-  text4: {
-    right: horizontalScale(29),
-    color: GlobalStyles.Color.turquoise,
-  },
-  textTypo: {
-    textAlign: "right",
-    fontSize: GlobalStyles.FontSize.size_base,
-    marginTop: verticalScale(-6),
-    //fontFamily: GlobalStyles.FontFamily.helvetica,
-    letterSpacing: 1,
-    fontWeight: "700",
-    top: "50%",
-    position: "absolute",
   },
   titleText: {
     top: 2,
@@ -738,7 +728,7 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
     borderRadius: 15,
     flexDirection: "column",
-    padding: "5%",
+    padding: "2.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {

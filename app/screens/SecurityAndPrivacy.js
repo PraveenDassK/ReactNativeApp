@@ -4,31 +4,32 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage"
 
-
 const SecurityAndPrivacy = ({navigation}) => {
+
+ const { setIsAuth, settings, setSettings} = useContext(AuthContext)
+
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
 
-  const { setIsAuth } = useContext(AuthContext)
+  
+  console.log(settings)
 
   useEffect(() =>{
     restoreSignIn()
   }, [])
 
   useEffect(() => {
-    if (isEnabled) {
+    if (isEnabled === true) {
       authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
       console.log("isEnabled", isEnabled)
-      setIsAuth(isEnabled)
-    }
-    if(!isEnabled){
+      // potential authenticate()
+      }
+    if(isEnabled === false){
       authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
-      setIsAuth(isEnabled)
       console.log("isNotEnabled", isEnabled)
     }
-    
   },[isEnabled])
 
 
@@ -37,40 +38,32 @@ const restoreSignIn = async () => {
   const token = await authStorage.getSignInSettings()
   if(!token) return
   console.log('restore token found in security',token.includes("true"))
-
   setIsEnabled(token.includes("true"))
- 
 }
 
-// const restoreSignIn = async () => {
-//   console.log('trying for restore sign in')
-//   const token = await authStorage.getSignInSettings()
-//   if(!token) return
-//   console.log('restore token sign in',token, token.includes('true'))
-//   setIsAuth(token.includes('true'))
-// }
+//Setts the settings when coming ot the page
+useEffect(() =>{
+  setToggles()
+}, [])
 
-  const toggleSwitch =  () => {
-    console.log('1', isEnabled)
-    setIsEnabled(previousState => (!previousState));
+const setToggles = () =>{
+  console.log(settings)
   
-    // console.log('2',isEnabled)
-  }
+  settings.hideBalance ? toggleSwitch1():null
+  settings.contactAccess ? toggleSwitch2():null
+  settings.transactionSharing ? toggleSwitch3():null
+}
 
-  // const setCurrentAuth = () => {
-  //    console.log('setAuth is Enabled value', isEnabled)
-  // }
+  const toggleSwitch =  () => setIsEnabled(previousState => !previousState)
   const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
   const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
   const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
-
- 
 
   return (
     <View style={styles.securityAndPrivacy}>
       <Text style={[styles.hello, styles.mr_546]}>Security</Text>
       <View style={[styles.helloParent, styles.mt1021, styles.mr40]}>
-        <Text style={styles.hello1}>Security and Privacy</Text>
+        <Text style={styles.hello1}>App settings</Text>
         <Text style={styles.changePasscode}>Change Passcode</Text>
         <View style={[styles.groupChild, styles.groupPosition]} />
         <View style={[styles.groupItem, styles.groupPosition]} />
@@ -78,15 +71,15 @@ const restoreSignIn = async () => {
         <View style={[styles.rectangleView, styles.groupPosition]} />
         <Text
           style={[styles.signInWithFaceId, styles.withTypo]}
-        >{`Sign in with face ID `}</Text>
+        >{`Sign in with Biometrics `}</Text>
         <Text style={[styles.hideBalances, styles.withTypo]}>
           Hide balances
         </Text>
         <Text
           style={[styles.shareWithFriends, styles.withTypo]}
-        >{`Share with friends `}</Text>
+        >{`Allow access to conatacts`}</Text>
         <Text style={[styles.messagingWithFriends, styles.withTypo]}>
-          Messaging with friends
+          Allow sharing of transactions
         </Text>
         <View style={[styles.rectangleParent, styles.groupLayout]}>
           <Switch  

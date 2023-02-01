@@ -15,7 +15,6 @@ const AccountDummy = ({navigation}) => {
 
   return (
     <View style={styles.account}>
-      
     </View>
   );
 };

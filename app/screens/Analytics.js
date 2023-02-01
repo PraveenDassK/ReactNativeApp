@@ -46,6 +46,8 @@ const Analytics = ({navigation}) => {
       const transData = transactionObj(recentTransactions).map((data) => {
         return data.amount
       })
+      console.log("why", data, dates)
+      console.log('herreeee')
       setPriceData(data)
       setDates(dates)
       setDataObj(transData)
@@ -77,6 +79,7 @@ const Analytics = ({navigation}) => {
     const det = acc.data.details.associates
    
   } 
+  console.log(transactionCategories)
 
 
 
@@ -86,18 +89,21 @@ const Analytics = ({navigation}) => {
 
   const transactionData = (transactions) => {
     return transactions.map((transaction) => {
+      console.log('deya',transaction.amount)
       return transaction.amount
     })
   }
 
   const transactionDate = (transactions) => {
     return transactions.map((transaction) => {
+      console.log('deya',transaction.transactionDate)
       return transaction.transactionDate.split("T")[0].split("-")[1]
     })
   }
 
   const transactionObj = (transactions) => {
     const arr =transactions.map((transaction) => {
+      console.log('deya',transaction.amount)
       
       return {amount: transaction.amount, date: transaction.transactionDate.split("T")[0].split("-")[1]}
     })
@@ -120,6 +126,9 @@ const Analytics = ({navigation}) => {
   }
 
 
+  console.log(transactionCategories)
+  console.log('here',recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0])
+
   return (
           <Screen style={{backgroundColor: "#f3f5f5"}}>
               <ScrollView >
@@ -137,36 +146,24 @@ const Analytics = ({navigation}) => {
                         <Text style={styles.priceSub}>£ {balance}</Text>
                       </View>
                     </View>
-                    <View style={styles.spendConainer}>
-                      <View style={styles.totalSpendContainer}>
-                        <Text>Total Spend</Text>
-                        <Text style={styles.money}>£ {totalSpend}</Text>
-                        <View style={styles.spendConainer}>
-                          <View style={styles.noOfPayments}>
-                            <Text style={{
-                                color: "#999",
-                                fontSize: 14
-                            }}>No. of Payments</Text>
-                          </View>
-                          <View style={styles.payments}>
-                            <Text
-                              style={{
-                                color: "#999",
-                                fontSize: 14
-                              }}
-                            > {totalTransactions}</Text>
-                          </View>
-                        </View>
 
-                      </View>
-                      <View style={styles.avgSpendContainer}>
+                    <View style={{flex: 1, width: "100%", height: 75, marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
+                        <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
+                            <Text>Total Spend</Text>
+                            <Text style={styles.money}>£ {totalSpend}</Text>
+                            <View style={{flex: 1, flexDirection: "row"}}>
+                             <Text style={{color: "#999",fontSize: 14, alignItems: "flex-start"}}>No. of Payments</Text>
+                             <Text style={{color: "#999", fontSize: 14 , alignItems: "flex-end"}}> {totalTransactions}</Text>
+                             </View>
+                        </View>
+                        <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
                         <Text>Average Monthly Spendings</Text>
-                        <View style={styles.containerSpace}>
-
                           <Text style={styles.money}>£ {balance}</Text>
+
                         </View>
-                      </View>
                     </View>
+
+
                     <View style={styles.containerSpace}>
                       <Text style={styles.subTitle}>Spendings</Text>
                     </View>
@@ -217,9 +214,10 @@ const Analytics = ({navigation}) => {
                    
                       {recentTransactions.map((transaction, index) => (
                         
+                      
                       <View  key={index} style={styles.balanceContainer}>
                         <View style={styles.transactionId}>
-                          <Text style={styles.textSub}>{transaction.description.replace("Payment to ", "")}</Text>
+                          <Text style={styles.textSub}>{transaction.sourceId}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LL')}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LT')}</Text>
                         </View>
@@ -237,6 +235,8 @@ const Analytics = ({navigation}) => {
 
 
 const Bazier = ({ priceData, transDate, transObj }) => {
+
+  console.log('finished', transObj)
   
   return(
     <View>
