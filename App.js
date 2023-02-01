@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {AppState} from 'react-native';
-// import 'expo-dev-menu';
+import 'expo-dev-menu';
 
 import { NavigationContainer } from "@react-navigation/native";
 import jwtDecode from 'jwt-decode'
@@ -15,13 +15,23 @@ import authStorage from "./app/auth/storage";
 
 export default function App() {
 
-
 const [user, setUser] = useState()
 const [currentUser, setCurrentUser] = useState()
 const [isAuth, setIsAuth] = useState(false)
 
+
+//External
 const [accountID, setAccountID] = useState("A12274AW")
+//CarbonyteID
 const [userID, setUserID] = useState("C1220XHD")
+
+const [settings, setSettings] = useState({
+  faceId: false,
+  hideBalance:true,
+  contactAccess:false,
+  transactionSharing:false
+})
+
 // const [isReady, setIsReady] = useState(false)
 
 const authenticate = async () => {
@@ -85,7 +95,6 @@ useEffect(() =>{
 
 
 
-
 const restoreToken = async () => {
   console.log('trying for restore token')
   const token = await authStorage.getToken()
@@ -110,7 +119,14 @@ if(!AppState.currentState) {
 
   return (
   
-    <AuthContext.Provider value={{user, setUser, currentUser, setCurrentUser, isAuth, setIsAuth,accountID, setAccountID,userID, setUserID}}>
+    <AuthContext.Provider value={{
+      user, setUser, 
+      currentUser, setCurrentUser, 
+      isAuth, setIsAuth,
+      accountID,setAccountID,
+      userID, setUserID,
+      settings, setSettings
+    }}>
       <NavigationContainer>
 
         {!currentUser ? (
