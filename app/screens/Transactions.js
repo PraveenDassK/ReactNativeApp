@@ -113,28 +113,29 @@ const Transactions = ({navigation,route}) => {
         transactionData.forEach((transaction,i) => {
             transactionList.push(
               <Pressable
-              style={[styles.transactionBox, styles.rounded, styles.shadow]}
-              key = {i}
-              onPress = {() => showTransaction(i)}>
-              <View style={{height: "100%", flexDirection: "row",}}>
-              <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-              <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>{initials}</Text>
-              </View>
-              <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-                  <Text style={{fontSize :14, fontWeight: "700"}}>
-                    {transaction.account.customerName}
-                  </Text>
-                  <Text style={{}}>
+                        style={[styles.transactionBox, styles.rounded]}
+                        key={i}
+                        onPress={() => navigation.navigate("Transactions")}>
+                        <View style={{height: "100%", flexDirection: "row",}}>
+                        <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+                        <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{initials}</Text>
+                        </View>
+                        <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+                            <Text style={{fontSize :14, fontWeight: "700"}}>
+                                                      {transaction.account.customerName}
+
+                            </Text>
+                            <Text style={{}}>
                     {moment(transaction.transactionDate).format("MMM Do YY")}
-                  </Text>
-              </View>
-              <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
-              <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
-                £{transaction.amount}
-              </Text>
-              </View>
-             </View>
-            </Pressable>
+                            </Text>
+                        </View>
+                        <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
+                        <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
+                                    £{transaction.amount}
+                        </Text>
+                        </View>
+                       </View>
+                      </Pressable>
                 
             )
         })
@@ -147,11 +148,11 @@ const Transactions = ({navigation,route}) => {
             </Text>
             
             
-            <ScrollView>
+            <ScrollView style={{height: "90%"}}
+            showsVerticalScrollIndicator={false}>
               
                 {transactionList}
                 {modalVisible ? modal() : null}
-                
             </ScrollView>
             
         </View>

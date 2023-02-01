@@ -141,15 +141,15 @@ const Analytics = ({navigation}) => {
         </View>
 
                     <View style={styles.balanceContainer}>
-                      <View style={styles.balance}>
+                      <View style={{flex: 4}}>
                         <Text style={styles.textSub}>Balance</Text>
                       </View>
-                      <View style={styles.balance}>
-                        <Text style={styles.priceSub}>£ {balance}</Text>
+                      <View style={{flex: 6, alignItems: "flex-end"}}>
+                        <Text style={styles.priceSub}>£{balance}</Text>
                       </View>
                     </View>
 
-                    <View style={{flex: 1, width: "100%", height: 75, marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
+                    <View style={{flex: 1, width: "100%", height: "auto", marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
                         <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
                             <Text>Total Spend</Text>
                             <Text style={styles.money}>£ {totalSpend}</Text>
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     
   },
   balance: {
-    flex: 1
+    flex: 5
   },
   balanceContainer: {
     alignItems: "center",
@@ -328,6 +328,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: verticalScale(20),
     width: "100%",
+    height: "auto",
     paddingHorizontal: horizontalScale(25),
     paddingVertical: verticalScale(25)
   },

@@ -53,7 +53,7 @@ return (
 
     <View style={styles.bottom}>
         <TouchableOpacity style={styles.button}>
-            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Account")}/>
+            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Carbon")}/>
         </TouchableOpacity>
     </View>
 

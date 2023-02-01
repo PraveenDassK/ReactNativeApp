@@ -105,6 +105,9 @@ const HomeScreenPersonal = ({ navigation }) => {
         </Pressable>
       );
     }
+
+
+
     setTransactionData({
       numTransaction: numberOfTransactions,
       transactions: transactionList,
@@ -125,7 +128,7 @@ const HomeScreenPersonal = ({ navigation }) => {
    *      Recent transactios
    */
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.screen}>
         <View style={styles.NavBarTop}>
           <Text style={[styles.navBarTopText, styles.blueOverwrite]}>
@@ -162,10 +165,10 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View> */}
           <View style={styles.totalWalletBalanceContainer11}>
             <Text style={styles.totalWalletBalanceText11}>
-              Account name:{accountname}
+              Account Name: {accountname}
             </Text>
             <Text style={[styles.BalanceText11, styles.blueTitle11]}>
-              SortCode:{sortCode}
+              Sort Code: {sortCode}
             </Text>
             <Text style={styles.dateText11}>Account Number: {accountnumber}</Text>
           </View>
