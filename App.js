@@ -15,31 +15,26 @@ import authStorage from "./app/auth/storage";
 
 export default function App() {
 
-
 const [user, setUser] = useState()
 const [currentUser, setCurrentUser] = useState()
 const [isAuth, setIsAuth] = useState(false)
 
+
+//External
 const [accountID, setAccountID] = useState("A12274AW")
+//CarbonyteID
 const [userID, setUserID] = useState("C1220XHD")
+
+const [settings, setSettings] = useState({
+  faceId: false,
+  hideBalance:true,
+  contactAccess:false,
+  transactionSharing:false
+})
+
 // const [isReady, setIsReady] = useState(false)
 
-const authenticate = async () => {
-  "starting authentication"
-  const result = await LocalAuthentication.authenticateAsync()
-  const device = await LocalAuthentication.supportedAuthenticationTypesAsync()
-  if(result.success) {
-    console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
-    return setIsAuth(false)
-  }
-  // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
-  if(!result.success) {
-    console.log('not authenticated', result.success)
-    alert('not authenticated')
-  }
-  // setIsAuth(result.success)
-  
-}
+
 
   // useEffect(() => {
   //   if(isAuth) {
@@ -61,12 +56,6 @@ useEffect(() =>{
   restoreSignIn()
 }, [])
 
-
-
-
-
-
-
   useEffect(() => {
     AppState.addEventListener('change', handleAppStateChange);
 
@@ -75,14 +64,29 @@ useEffect(() =>{
     };
   }, []);
 
-  const handleAppStateChange = (nextAppState) => {
+  const authenticate = async () => {
+    "starting authentication"
+    const result = await LocalAuthentication.authenticateAsync()
+    const device = await LocalAuthentication.supportedAuthenticationTypesAsync()
+    if(result.success) {
+      // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
+      console.log('turn off authenticator', result.success)
+      setIsAuth(false)
+    }
+    // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
+    if(!result.success) {
+      console.log('not authenticated', result.success)
+      alert('not authenticated')
+    }
+  }
+
+const handleAppStateChange = (nextAppState) => {
   if (nextAppState === 'inactive') {
     console.log('the app is closed');
     console.log(currentUser)
     // setCurrentUser(null)
   }    
-  }
-
+}
 
 
 
@@ -102,24 +106,32 @@ const restoreSignIn = async () => {
   setIsAuth(token.includes('true'))
 }
 
-
-
 if(!AppState.currentState) {
  setIsAuth(null)
 }
 
   return (
   
-    <AuthContext.Provider value={{user, setUser, currentUser, setCurrentUser, isAuth, setIsAuth,accountID, setAccountID,userID, setUserID}}>
+    <AuthContext.Provider value={{
+      user, setUser, 
+      currentUser, setCurrentUser, 
+      isAuth, setIsAuth,
+      accountID,setAccountID,
+      userID, setUserID,
+      settings, setSettings
+    }}>
       <NavigationContainer>
-
-        {!currentUser ? (
-          <AppNavigator /> 
+        <AppNavigator />
+        {/* {!currentUser ? (
+          <AuthNavigator /> 
         ) :  currentUser ? (
           <AppNavigator /> 
         ) : (
-          <AppNavigator />
-        )}
+          <AuthNavigator />
+        )} */}
+
+        {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
+        or <AuthNavigator />*/}
       </NavigationContainer>
     </AuthContext.Provider>    
   )

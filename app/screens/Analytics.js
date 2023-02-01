@@ -6,6 +6,8 @@ import {
   LineChart,
 
 } from "react-native-chart-kit";
+import { Rect, Text as TextSVG, Svg } from "react-native-svg";
+
 
 import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 
@@ -80,7 +82,7 @@ const Analytics = ({navigation}) => {
 
 
 
-  const transcationKeys = (trans) => {
+  const transactionKeys = (trans) => {
     return transKeys = Object.keys(trans)
   }
 
@@ -137,11 +139,11 @@ const Analytics = ({navigation}) => {
                         <Text style={styles.priceSub}>£ {balance}</Text>
                       </View>
                     </View>
-                    <View style={styles.spendConainer}>
+                    <View style={styles.spendContainer}>
                       <View style={styles.totalSpendContainer}>
                         <Text>Total Spend</Text>
                         <Text style={styles.money}>£ {totalSpend}</Text>
-                        <View style={styles.spendConainer}>
+                        <View style={styles.spendContainer}>
                           <View style={styles.noOfPayments}>
                             <Text style={{
                                 color: "#999",
@@ -160,7 +162,7 @@ const Analytics = ({navigation}) => {
 
                       </View>
                       <View style={styles.avgSpendContainer}>
-                        <Text>Average Monthly Spendings</Text>
+                        <Text>Average Monthly Spending's</Text>
                         <View style={styles.containerSpace}>
 
                           <Text style={styles.money}>£ {balance}</Text>
@@ -168,10 +170,10 @@ const Analytics = ({navigation}) => {
                       </View>
                     </View>
                     <View style={styles.containerSpace}>
-                      <Text style={styles.subTitle}>Spendings</Text>
+                      <Text style={styles.subTitle}>Spending's</Text>
                     </View>
                     <View style={styles.progressContainer}>
-                    {transactionCategories && transcationKeys(transactionCategories).map((transaction, index) =>(
+                    {transactionCategories && transactionKeys(transactionCategories).map((transaction, index) =>(
                       <View style={styles.progressBar} key={index}>
                       <Progress.Bar 
                         progress={transactionCategories[transaction].toFixed(2)/totalSpend} 
@@ -237,6 +239,10 @@ const Analytics = ({navigation}) => {
 
 
 const Bazier = ({ priceData, transDate, transObj }) => {
+  let [tooltipPos,setTooltipPos] = useState(
+    { x:0, y:0, visible:false, value:0 })
+
+  console.log('finished', transObj)
   
   return(
     <View>
@@ -244,11 +250,12 @@ const Bazier = ({ priceData, transDate, transObj }) => {
 
 
   <LineChart
+
     data={{
-      labels: ["Oct", "Nov", "Dec" ,"Jan", "Feb", "March", "April"],
+      labels: ["Sep", "Oct", "Nov", "Dec" , "Jan"],
       datasets: [
         {
-          data: [0, 0,0,...transObj, 0,0,0]
+          data: [0, 0, 0, 0,...transObj]
         }
       ]
     }}
@@ -257,27 +264,71 @@ const Bazier = ({ priceData, transDate, transObj }) => {
     yAxisLabel="£"
     yAxisSuffix=""
     yAxisInterval={1} // optional, defaults to 1
+    withHorizontalLines= {false}
+    withVerticalLines= {false}
+    withHorizontalLabels={false}
+
     chartConfig={{
-      backgroundColor: "blue",
-      backgroundGradientFrom: "blue",
-      backgroundGradientTo: "#D8EBF9",
+      backgroundGradientFrom: "#F6F5F8",
+      backgroundGradientTo: "#F6F5F8",
       decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
+      labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
+      fillShadowGradientFrom: "blue",
+      fillShadowGradientTo: "white",
+      strokeWidth: 5,
       style: {
         borderRadius: 16
       },
       propsForDots: {
-        r: "5",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-      }
+        r: "3",
+        strokeWidth: "8",
+        stroke: `rgba(30, 81, 123, 0.3)`
+      },
+      
     }}
     bezier
     style={{
       marginVertical: 8,
       borderRadius: 0
     }}
+    decorator={() => {
+      return tooltipPos.visible ? <View>
+          <Svg>
+              <Rect x={tooltipPos.x - 15} 
+                y={tooltipPos.y + 10} 
+                width="60" 
+                height="30"
+                fill="white" 
+                rx={.5} 
+                ry={.5}
+              />
+                  <TextSVG
+                      x={tooltipPos.x + 15}
+                      y={tooltipPos.y + 30}
+                      fill="blue"
+                      fontSize="10"
+                      fontWeight="bold"
+                      textAnchor="middle">
+                      {`£ ${tooltipPos.value}`}
+                  </TextSVG>
+          </Svg>
+      </View> : null
+      }}
+      onDataPointClick={(data) => {
+        let isSamePoint = (tooltipPos.x === data.x 
+                            && tooltipPos.y === data.y)
+        isSamePoint ? setTooltipPos((previousState) => {
+            return { 
+                      ...previousState,
+                      value: data.value,
+                      visible: !previousState.visible
+                  }
+        })
+            : 
+    setTooltipPos({ x: data.x, value: data.value, y: data.y, visible: true });
+
+}}
   />
 </View>
   )
@@ -411,7 +462,7 @@ const styles = StyleSheet.create({
   shopping: {
     flex:2
   },
-  spendConainer:{
+  spendContainer:{
     flex: 1,
     flexDirection: "row",
     marginTop: verticalScale(20),

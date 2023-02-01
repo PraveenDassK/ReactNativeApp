@@ -207,17 +207,6 @@ const styles = StyleSheet.create({
 
         
     },
-    groupChildPosition: {
-        top: "50%",
-        position: "absolute",
-      },
-    historyTypo: {
-        textAlign: "center",
-        color: GlobalStyles.Color.black,
-        fontWeight: "700",
-        fontSize:30,
-        
-      },
     investNature: {
         alignItems: "flex-start",
         justifyContent: "center"
