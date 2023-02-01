@@ -64,19 +64,19 @@ const HomeScreenPersonal = ({ navigation }) => {
     for (let i = 0; i < 5; i++) {
       let dataHold = transactionData.content[i];
       transactionList.push(dataHold);
-      console.log(dataHold)
+
       pageShow.push(
         <Pressable
           style={[styles.transactionBox, styles.rounded, styles.shadow]}
           key={i}
-          onPress={() => navigation.navigate("Transactions")}>
+          onPress={() => console.log("!")}>
           <View style={{height: "100%", flexDirection: "row",}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>A W</Text>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{dataHold.account.customerName[0]}</Text>
           </View>
           <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-              <Text style={{fontSize :14, fontWeight: "700"}}>
-                {dataHold.description.replace("Payment to ", "")}
+              <Text style={{fontSize :14, fontWeight: "701"}}>
+                {dataHold.account.customerName}
               </Text>
               <Text style={{}}>
                 {moment(dataHold.transactionDate).format("MMM Do YY")}
@@ -403,6 +403,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
         <View style={styles.carbonSpendingTitleDiv}>
                   <Text style={styles.titleText}>Recent Transactions</Text>
+                  
                 </View>
         <View style={styles.transactionsContainer}>
           {transactionTable}
@@ -440,6 +441,20 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "black",
     height: "10%",
+  },
+  text4: {
+    right: horizontalScale(29),
+    color: GlobalStyles.Color.turquoise,
+  },
+  textTypo: {
+    textAlign: "right",
+    fontSize: GlobalStyles.FontSize.size_base,
+    marginTop: verticalScale(-6),
+    //fontFamily: GlobalStyles.FontFamily.helvetica,
+    letterSpacing: 1,
+    fontWeight: "700",
+    top: "50%",
+    position: "absolute",
   },
   titleText: {
     top: 2,
@@ -702,7 +717,7 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
     borderRadius: 15,
     flexDirection: "column",
-    padding: "2.5%",
+    padding: "5%",
     justifyContent: "center",
   },
 
