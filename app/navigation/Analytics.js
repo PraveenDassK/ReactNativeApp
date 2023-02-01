@@ -130,7 +130,8 @@ const Analytics = ({navigation}) => {
   console.log('here',recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0])
 
   return (
-          <Screen style={{backgroundColor: "#f3f5f5"}}>
+          <Screen style={{backgroundColor: "#f3f5f5"}}
+          showsVerticalScrollIndicator={false}>
               <ScrollView >
                 
                   <View style={styles.mainContainer}>
