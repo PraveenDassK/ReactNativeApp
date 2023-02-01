@@ -6,14 +6,14 @@ import authStorage from "../auth/storage"
 
 const SecurityAndPrivacy = ({navigation}) => {
 
-  const { setIsAuth } = useContext(AuthContext)
+ const { setIsAuth, settings, setSettings} = useContext(AuthContext)
 
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
 
-  const { setIsAuth, settings, setSettings} = useContext(AuthContext)
+  
   console.log(settings)
 
   useEffect(() =>{
