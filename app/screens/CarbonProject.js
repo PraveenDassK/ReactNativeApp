@@ -2,22 +2,23 @@ import React,{ useEffect, useState,useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-import carbonApi from "../api/carbonSingle"
+import api from "../api/carbonSingle"
 import AuthContext from "../auth/context";
 import Button from "../components/Button"
+import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 
 
 const CarbonProject = ({navigation,route}) => {
   const [data, setData] = useState(null)
-  const authContext = useContext(AuthContext)
-
+  console.log(route)
   useEffect(() => {
     loadData()
   },[])
   
   const loadData = async () => {
-    const response = await carbonApi.getListingsSingle(route.params.Id);
+    const response = await api.getListingsSingle(route.params.Id);
     setData(response.data.details)
+    console.log(response.data)
   }
   
   let projects = [];
@@ -36,13 +37,14 @@ const CarbonProject = ({navigation,route}) => {
                 data.image != "" ? {uri:data.image} : require("../assets/icon-bluecheck.png")
               }
             />
-            <View style={styles.textBox}>
+            <View style={{backgroundColor: "white"}}>
               <Text>
-                {data.description.replace(/<[^>]*>/g, "").trim()}... 
+                {data.description.replace(/<[^>]*>/g, "")}
               </Text>
             </View>
           </View>
         )
+        console.log(data)
     }
   }
 
@@ -50,7 +52,7 @@ const CarbonProject = ({navigation,route}) => {
 
 
   return (
-    <View>
+    <View style = {styles.mainPage}>
       <ScrollView>
         <View style = {styles.page}>
             {projects}
@@ -62,7 +64,13 @@ const CarbonProject = ({navigation,route}) => {
 
 const styles = StyleSheet.create({
   rectanglePressable: {
-    borderRadius: GlobalStyles.Border.br_lg,
+    marginTop: verticalScale(20),
+    borderRadius: moderateScale(15),
+    paddingVertical: verticalScale(20),
+    paddingHorizontal: horizontalScale(14) ,
+    backgroundColor: 'white',
+    width: '100%',
+    alignItems: 'center'
   },
   titleText:{
     fontWeight:"bold",
@@ -70,11 +78,12 @@ const styles = StyleSheet.create({
     fontSize:30,
   },
   page:{
-    borderStartColor:"white",
     width:"80%",
     left:"10%",
-    top:"5%",
-    backroundColor: "black"
+    color: "black",
+    borderWidth: 0,
+    borderColor: "black",
+    borderRadius: 25,
   },
   image:{
     flex:1,
@@ -82,6 +91,12 @@ const styles = StyleSheet.create({
     height:200,
   },
   textBox:{
+    backgroundColor: "red"
+
+  },
+  mainPage:{
+    backroundColor:"white",
+    width:"100%",
 
   },
 });

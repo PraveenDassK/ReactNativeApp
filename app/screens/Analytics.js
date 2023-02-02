@@ -6,8 +6,6 @@ import {
   LineChart,
 
 } from "react-native-chart-kit";
-import { Rect, Text as TextSVG, Svg } from "react-native-svg";
-
 
 import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
 
@@ -16,6 +14,8 @@ import AuthContext from "../auth/context";
 import moment from 'moment';
 import Screen from "../components/Screen";
 import { NONE } from "apisauce";
+import { Rect, Text as TextSVG, Svg } from "react-native-svg";
+
 
 
 const Analytics = ({navigation}) => {
@@ -48,6 +48,8 @@ const Analytics = ({navigation}) => {
       const transData = transactionObj(recentTransactions).map((data) => {
         return data.amount
       })
+      console.log("why", data, dates)
+      console.log('herreeee')
       setPriceData(data)
       setDates(dates)
       setDataObj(transData)
@@ -79,27 +81,31 @@ const Analytics = ({navigation}) => {
     const det = acc.data.details.associates
    
   } 
+  console.log(transactionCategories)
 
 
 
-  const transactionKeys = (trans) => {
+  const transcationKeys = (trans) => {
     return transKeys = Object.keys(trans)
   }
 
   const transactionData = (transactions) => {
     return transactions.map((transaction) => {
+      console.log('deya',transaction.amount)
       return transaction.amount
     })
   }
 
   const transactionDate = (transactions) => {
     return transactions.map((transaction) => {
+      console.log('deya',transaction.transactionDate)
       return transaction.transactionDate.split("T")[0].split("-")[1]
     })
   }
 
   const transactionObj = (transactions) => {
     const arr =transactions.map((transaction) => {
+      console.log('deya',transaction.amount)
       
       return {amount: transaction.amount, date: transaction.transactionDate.split("T")[0].split("-")[1]}
     })
@@ -122,6 +128,9 @@ const Analytics = ({navigation}) => {
   }
 
 
+  console.log(transactionCategories)
+  console.log('here',recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0])
+
   return (
           <Screen style={{backgroundColor: "#f3f5f5"}}>
               <ScrollView >
@@ -132,13 +141,22 @@ const Analytics = ({navigation}) => {
         </View>
 
                     <View style={styles.balanceContainer}>
-                      <View style={styles.balance}>
+                      <View style={{flex: 4}}>
                         <Text style={styles.textSub}>Balance</Text>
                       </View>
-                      <View style={styles.balance}>
-                        <Text style={styles.priceSub}>£ {balance}</Text>
+                      <View style={{flex: 6, alignItems: "flex-end"}}>
+                        <Text style={styles.priceSub}>£{balance}</Text>
                       </View>
                     </View>
+
+                    <View style={{flex: 1, width: "100%", height: "auto", marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
+                        <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
+                            <Text>Total Spend</Text>
+                            <Text style={styles.money}>£ {totalSpend}</Text>
+                            <View style={{flex: 1, flexDirection: "row"}}>
+                             <Text style={{color: "#999",fontSize: 14, alignItems: "flex-start"}}>No. of Payments</Text>
+                             <Text style={{color: "#999", fontSize: 14 , alignItems: "flex-end"}}> {totalTransactions}</Text>
+                             </View>
                     <View style={styles.spendContainer}>
                       <View style={styles.totalSpendContainer}>
                         <Text>Total Spend</Text>
@@ -159,21 +177,19 @@ const Analytics = ({navigation}) => {
                             > {totalTransactions}</Text>
                           </View>
                         </View>
-
-                      </View>
-                      <View style={styles.avgSpendContainer}>
-                        <Text>Average Monthly Spending's</Text>
-                        <View style={styles.containerSpace}>
-
+                        <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
+                        <Text>Average Monthly Spendings</Text>
                           <Text style={styles.money}>£ {balance}</Text>
+
                         </View>
-                      </View>
                     </View>
+
+
                     <View style={styles.containerSpace}>
-                      <Text style={styles.subTitle}>Spending's</Text>
+                      <Text style={styles.subTitle}>Spendings</Text>
                     </View>
                     <View style={styles.progressContainer}>
-                    {transactionCategories && transactionKeys(transactionCategories).map((transaction, index) =>(
+                    {transactionCategories && transcationKeys(transactionCategories).map((transaction, index) =>(
                       <View style={styles.progressBar} key={index}>
                       <Progress.Bar 
                         progress={transactionCategories[transaction].toFixed(2)/totalSpend} 
@@ -209,7 +225,7 @@ const Analytics = ({navigation}) => {
                     
                     
                   </View>
-                 {priceData.length !== 0 ? <Bazier priceData={priceData}  transDate={dates} transObj={dataObj}/> : null}
+                 {priceData.length !== 0 ? <Bazier priceData={priceData}  transDate={dates} transObj={dataObj} style={{backgroundColor: "red"}}/> : null}
                   <View style={styles.mainContainer}>
                   {priceData && console.log(transactionObj(recentTransactions))}
                     <View style={styles.containerSpace}>
@@ -219,9 +235,10 @@ const Analytics = ({navigation}) => {
                    
                       {recentTransactions.map((transaction, index) => (
                         
+                      
                       <View  key={index} style={styles.balanceContainer}>
                         <View style={styles.transactionId}>
-                          <Text style={styles.textSub}>{transaction.description.replace("Payment to ", "")}</Text>
+                          <Text style={styles.textSub}>{transaction.sourceId}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LL')}</Text>
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LT')}</Text>
                         </View>
@@ -243,23 +260,16 @@ const Bazier = ({ priceData, transDate, transObj }) => {
     { x:0, y:0, visible:false, value:0 })
 
   console.log('finished', transObj)
-  
+
   return(
-    <View>
+    <View style={{justifyContent: "center", width: "80%", marginLeft: "10%"}}
+    >
   {/* <Text>Bezier Line Chart</Text> */}
 
 
-  <LineChart
-
-    data={{
-      labels: ["Sep", "Oct", "Nov", "Dec" , "Jan"],
-      datasets: [
-        {
-          data: [0, 0, 0, 0,...transObj]
-        }
-      ]
-    }}
-    width={Dimensions.get("window").width} // from react-native
+  <LineChart data={{ labels: ["Sep", "Oct", "Nov", "Dec" , "Jan", "Feb"],
+      datasets: [{data: [0, 0, 0, 0,...transObj]}]}}
+    width={Dimensions.get("window").width * .8} // from react-native
     height={220}
     yAxisLabel="£"
     yAxisSuffix=""
@@ -277,21 +287,10 @@ const Bazier = ({ priceData, transDate, transObj }) => {
       fillShadowGradientFrom: "blue",
       fillShadowGradientTo: "white",
       strokeWidth: 5,
-      style: {
-        borderRadius: 16
-      },
-      propsForDots: {
-        r: "3",
-        strokeWidth: "8",
-        stroke: `rgba(30, 81, 123, 0.3)`
-      },
-      
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 0
-    }}
+      style: {borderRadius: 16},
+      propsForDots: {r: "3",strokeWidth: "8",stroke: `rgba(30, 81, 123, 0.3)`},
+      }}
+    bezier style={{marginVertical: 8,borderRadius: 0}}
     decorator={() => {
       return tooltipPos.visible ? <View>
           <Svg>
@@ -316,16 +315,16 @@ const Bazier = ({ priceData, transDate, transObj }) => {
       </View> : null
       }}
       onDataPointClick={(data) => {
-        let isSamePoint = (tooltipPos.x === data.x 
+        let isSamePoint = (tooltipPos.x === data.x
                             && tooltipPos.y === data.y)
         isSamePoint ? setTooltipPos((previousState) => {
-            return { 
+            return {
                       ...previousState,
                       value: data.value,
                       visible: !previousState.visible
                   }
         })
-            : 
+            :
     setTooltipPos({ x: data.x, value: data.value, y: data.y, visible: true });
 
 }}
@@ -347,7 +346,7 @@ const styles = StyleSheet.create({
     
   },
   balance: {
-    flex: 1
+    flex: 5
   },
   balanceContainer: {
     alignItems: "center",
@@ -360,6 +359,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: verticalScale(20),
     width: "100%",
+    height: "auto",
     paddingHorizontal: horizontalScale(25),
     paddingVertical: verticalScale(25)
   },

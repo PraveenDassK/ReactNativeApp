@@ -29,6 +29,9 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [transactionTable, setTransactionTable] = useState(null);
 
   const [status, setStatus] = useState(null);
+  const [accountnumber, setaccountnumber] = useState(null);
+  const [sortCode, setSortCode] = useState(null);
+  const [accountname, setaccountname] = useState(null);
   const authContext = useContext(AuthContext);
   const {settings} = useContext(AuthContext)
   console.log(settings)
@@ -37,9 +40,13 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   const todaydate = moment().format("ll");
 
-  const TotalAmount = 1
-  const TokenAmount = 1
-  const carbonAmount = 500
+  const [numTrees, setTrees] = useState(0);
+  const [numCarbon, setCarbon] = useState(0);
+  const [numCarbonType, setCarbonType] = useState(0);
+
+  const TotalAmount = numTrees
+  const TokenAmount = numTrees
+  const carbonAmount = numCarbon
 
   //Calls the API once during load
   useFocusEffect(() => {
@@ -52,11 +59,30 @@ const HomeScreenPersonal = ({ navigation }) => {
   const loadData = async () => {
     const response = await api.GetAccount(authContext.accountID);
     const data = response.data.details;
-
+    const response1 = await api.GetAccountByCustomer(authContext.userID);
+    const accountresponse = await api.GetAccount(authContext.accountID);
+    const data1 = response1.data
+    const accountdata = accountresponse.data.details
+    console.log("==================================="+accountresponse+"=======================================")
     setBalance(data.availableBalance);
-
+    setSortCode(accountdata.identifiers[0].sortCode)
+    setaccountnumber(accountdata.identifiers[0].accountNumber)
+    setaccountname(accountdata.name)
     //Verified calculation
     setStatus(data.status != "ACTIVE");
+
+    //Trees
+    let respose = await api.GetUserImpacts();
+    const assets = respose.data.details.assets
+    let trees = 0
+    let carbon = 0
+    assets.forEach(element => {
+      element.type == "TREE" ? trees += element.count : null
+      carbon += element.offset
+      console.log(element.type)
+    });
+    setTrees(trees)
+    setCarbon(Math.round(carbon))
 
     //Load the data for transactions
     const transactionCall = await api.GetTransactions(authContext.accountID);
@@ -76,8 +102,8 @@ const HomeScreenPersonal = ({ navigation }) => {
           key={i}
           onPress={() => navigation.navigate("Transactions")}>
           <View style={{height: "100%", flexDirection: "row",}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "green", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>A W</Text>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{dataHold.description.replace("Payment to ", "")[0]}</Text>
           </View>
           <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
               <Text style={{fontSize :14, fontWeight: "700"}}>
@@ -133,7 +159,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
 
         <View style={styles.divContainer}>
-          <View style={styles.congratulationsContainer}>
+          {/* <View style={styles.congratulationsContainer}>
             <View style={styles.progressDiv}>
               <Image
                 style={styles.progressIcon}
@@ -150,6 +176,15 @@ const HomeScreenPersonal = ({ navigation }) => {
               </Text>
               <Text style={styles.applyNowText}>Apply Now</Text>
             </View>
+          </View> */}
+          <View style={styles.totalWalletBalanceContainer11}>
+            <Text style={styles.totalWalletBalanceText11}>
+              Account name:{accountname}
+            </Text>
+            <Text style={[styles.BalanceText11, styles.blueTitle11]}>
+              SortCode:{sortCode}
+            </Text>
+            <Text style={styles.dateText11}>Account Number: {accountnumber}</Text>
           </View>
 
           <View style={styles.totalWalletBalanceContainer}>
@@ -423,11 +458,11 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View>
           <View width="100%" height="40%">
             <Text style={{textAlign: "center", fontWeight: "700", fontSize: 24}}>Congratulations!</Text>
-            <Text style={{textAlign: "center", marginTop: verticalScale(20)}}>
+            <Text style={{textAlign: "center", marginTop: verticalScale(2)}}>
               You have planted 5 trees with advance card purchase
             </Text>
             <Pressable onPress={() => navigation.navigate("VirtualEcoSystem")}>
-            <Text style={{marginTop: verticalScale(20), textAlign: "center",fontSize: 22, fontWeight: "700", color: "blue", marginBottom: "10%"}}>View more</Text>
+            <Text style={{marginTop: verticalScale(2), textAlign: "center",fontSize: 22, fontWeight: "700", color: "blue", marginBottom: "10%"}}>View more</Text>
             </Pressable>
           </View>
           <View style={{marginTop: "5%"}}></View>
@@ -468,6 +503,9 @@ const styles = StyleSheet.create({
     color: "blue",
     fontSize: 30,
     fontWeight: "bold",
+  },
+  blueTitle11: {
+    fontSize: 14,
   },
   referContainer: {
     width: "80%",
@@ -710,19 +748,43 @@ const styles = StyleSheet.create({
     padding: "2.5%",
     justifyContent: "center",
   },
+  totalWalletBalanceContainer11: {
+    marginTop: "1.5%",
+    width: "80%",
+    backgroundColor: "#FFFFFF",
+    height: verticalScale(75),
+    marginLeft: "10%",
+    borderRadius: 15,
+    flexDirection: "column",
+    padding: "5%",
+    justifyContent: "center",
+  },
 
   totalWalletBalanceText: {
     textAlign: "center",
     fontSize: 14,
   },
-
+  totalWalletBalanceText11: {
+    textAlign: "left",
+    fontSize: 14,
+  },
   BalanceText: {
     fontSize: 26,
     textAlign: "center",
+    lineHeight: 30,
+  },
+  BalanceText11: {
+    fontSize: 26,
+    textAlign: "left",
+    lineHeight: 30,
   },
 
   dateText: {
     textAlign: "center",
+    fontSize: 14,
+  },
+  dateText11: {
+    textAlign: "left",
     fontSize: 14,
   },
 

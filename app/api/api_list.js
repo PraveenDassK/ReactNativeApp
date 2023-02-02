@@ -45,25 +45,20 @@ const SetLimit = (enfuceid,amount) =>  client.post("https://api.carbonyte.io/tra
 
 const GetProjectByID = (project) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?companyId=" + project)
 
-const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
+const SendFunds = (sender,amount,reciverName,accountNumber,sortCode,address) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
   {
-    "sourceAccountId": "A12277V1",
+    "sourceAccountId": sender,
     "destination": {
       "type": "SCAN",
       "id": "A1226WEM",
-      "accountNumber": "02619527",
-      "sortCode": "000000",
-      "name": "Gorthalax",
-      "address": {
-        "addressLine1": "string",
-        "postTown": "London",
-        "postCode": "W2 1AS",
-        "country": "GB"
-      }
+      "accountNumber": accountNumber,
+      "sortCode": sortCode,
+      "name": reciverName,
+      "address": address
     },
     "currency": "GBP",
     "amount": amount,
-    "reference": "tithes"
+    "reference": "Transfer"
   }
 )
 
@@ -98,7 +93,6 @@ const testAPI = () => {'v'
 }
 
 const AddBeneficiary = (modulrCustomerId,phonenumber,accountName,accNum,sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?modulrCustomerId="+modulrCustomerId,
-
   {
    "externalReference": "",
    "name": accountName,
@@ -137,6 +131,9 @@ const AddBeneficiary = (modulrCustomerId,phonenumber,accountName,accNum,sortCode
   }
 )
 
+const GetUserImpacts = (Id) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/" + "CC11875")
+
+
 export default {
     GetCustomerDetails,
     SendLoginOTP,
@@ -155,5 +152,6 @@ export default {
     Checkout,
     DeleteBenificiary,
     testAPI,
-    AddBeneficiary
+    AddBeneficiary,
+    GetUserImpacts
   };

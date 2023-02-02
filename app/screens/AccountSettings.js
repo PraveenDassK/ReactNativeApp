@@ -9,6 +9,7 @@ const AccountSettings = ({navigation}) => {
   const [name, setName] = useState("")
   const [balance, setBalance] = useState(0)
   const authContext = useContext(AuthContext)
+  const {settings} = useContext(AuthContext)
 
 
   //Calls the API once during load
@@ -30,7 +31,9 @@ const AccountSettings = ({navigation}) => {
     <View style={styles.account}>
       <View style={styles.helloParent}>
         <Text style={styles.hello}>{name}</Text>
-        <Text style={[styles.hello1, styles.helloTypo]}>£{balance}</Text>
+        <Text style={[styles.hello1, styles.helloTypo]}>
+          {settings.hideBalance ? "Balance Hidden" : "£"+balance}
+        </Text>
         <Text style={styles.hello2}>Standard</Text>
         <Text style={[styles.hello3, styles.helloTypo]}>Manage</Text>
         <View style={[styles.rectangleParent, styles.groupChildPosition]}>

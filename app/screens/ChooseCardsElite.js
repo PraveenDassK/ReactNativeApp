@@ -192,11 +192,11 @@ paddingTop: "2.5%",
 paddingBottom: "2.5%",
 borderRadius: 15,
 marginBottom: "5%",
-shadowColor: '#000',
-    shadowOffset: { width: 1, height: 3 },
-    shadowOpacity: 0.8,
-    shadowRadius: 14,
-    elevation: 5
+// shadowColor: '#000',
+//     shadowOffset: { width: 1, height: 3 },
+//     // shadowOpacity: 0.8,
+//     shadowRadius: 14,
+//     elevation: 5
 
 }, featureListRow: {
 width: "100%",
