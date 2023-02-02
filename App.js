@@ -121,6 +121,7 @@ if(!AppState.currentState) {
       settings, setSettings
     }}>
       <NavigationContainer>
+
         <AppNavigator />
         {/* {!currentUser ? (
           <AuthNavigator /> 
@@ -132,6 +133,7 @@ if(!AppState.currentState) {
 
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}
+
       </NavigationContainer>
     </AuthContext.Provider>    
   )
