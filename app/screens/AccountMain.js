@@ -40,9 +40,13 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   const todaydate = moment().format("ll");
 
-  const TotalAmount = 1
-  const TokenAmount = 1
-  const carbonAmount = 500
+  const [numTrees, setTrees] = useState(0);
+  const [numCarbon, setCarbon] = useState(0);
+  const [numCarbonType, setCarbonType] = useState(0);
+
+  const TotalAmount = numTrees
+  const TokenAmount = numTrees
+  const carbonAmount = numCarbon
 
   //Calls the API once during load
   useFocusEffect(() => {
@@ -66,6 +70,19 @@ const HomeScreenPersonal = ({ navigation }) => {
     setaccountname(accountdata.name)
     //Verified calculation
     setStatus(data.status != "ACTIVE");
+
+    //Trees
+    let respose = await api.GetUserImpacts();
+    const assets = respose.data.details.assets
+    let trees = 0
+    let carbon = 0
+    assets.forEach(element => {
+      element.type == "TREE" ? trees += element.count : null
+      carbon += element.offset
+      console.log(element.type)
+    });
+    setTrees(trees)
+    setCarbon(Math.round(carbon))
 
     //Load the data for transactions
     const transactionCall = await api.GetTransactions(authContext.accountID);
@@ -105,9 +122,6 @@ const HomeScreenPersonal = ({ navigation }) => {
         </Pressable>
       );
     }
-
-
-
     setTransactionData({
       numTransaction: numberOfTransactions,
       transactions: transactionList,
@@ -128,7 +142,7 @@ const HomeScreenPersonal = ({ navigation }) => {
    *      Recent transactios
    */
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView>
       <View style={styles.screen}>
         <View style={styles.NavBarTop}>
           <Text style={[styles.navBarTopText, styles.blueOverwrite]}>
@@ -165,10 +179,10 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View> */}
           <View style={styles.totalWalletBalanceContainer11}>
             <Text style={styles.totalWalletBalanceText11}>
-              Account Name: {accountname}
+              Account name:{accountname}
             </Text>
             <Text style={[styles.BalanceText11, styles.blueTitle11]}>
-              Sort Code: {sortCode}
+              SortCode:{sortCode}
             </Text>
             <Text style={styles.dateText11}>Account Number: {accountnumber}</Text>
           </View>

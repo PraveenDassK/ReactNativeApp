@@ -26,6 +26,7 @@ const CarbonCart = ({route,navigation }) => {
       let project = await carbonApi.GetProjectByID(element.projectId)
 
       let name = project.data.details.displayName
+      console.log(project.data)
       let price = {
         "price" : project.data.details.asset.assetPrice,
         "item" : project.data.details.asset.name,
@@ -40,6 +41,7 @@ const CarbonCart = ({route,navigation }) => {
     let totalPrice = 0
 
     data.forEach(item => {
+      console.log(item)
       totalItems += item.price.amount
       totalPrice += item.price.price
       show.push(
@@ -61,6 +63,23 @@ const CarbonCart = ({route,navigation }) => {
     setAmount(totalItems)
     setPrice(totalPrice)
   }
+
+  const buy = () => {
+    setData("")
+    const purchase = carbonApi.Checkout({
+      "carbonyteUserId": "CC11875",
+      "projectLists": [
+        {
+          "projectId": "5f96f967a3a85800118be4d1",
+          "quantity": 1
+        }
+      ],
+      "sourceAccountId": "CC11875",
+      "totalAmount": 1
+    })
+    console.log(purchase)
+    alert("Purchase successful")
+  } 
   
   console.log(amount)
 
@@ -101,7 +120,7 @@ const CarbonCart = ({route,navigation }) => {
 
        <View style={styles.bottom}>
                <TouchableOpacity style={styles.button}>
-                   <Button title="Buy Projects" color="babyBlue"onPress={()=>setData("")}/>
+                   <Button title="Buy Projects" color="babyBlue"onPress={()=>buy()}/>
                </TouchableOpacity>
            </View>
 

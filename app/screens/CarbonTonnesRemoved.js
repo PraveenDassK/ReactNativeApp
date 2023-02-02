@@ -1,21 +1,50 @@
-import * as React from "react";
-import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
+import React,{ useEffect, useState,useContext } from "react";
+import { StyleSheet, View, Text, Image, ScrollView,Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 
-const CarbonTonnesRemoved = () => {
-    const numArray = [5,6,7,8,9,10]
-    const startMonth = "Jan"
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+
+const CarbonTonnesRemoved = ({navigation}) => {
+
+  const startMonth = "Jan"
+  const authContext = useContext(AuthContext)
+  const [numTrees, setTrees] = useState(0);
+  const [numCarbon, setCarbon] = useState(0);
+  const numArray = [0,numTrees,0,0,0,0]
+  const tonnesOfCarbon = 1.5
+
+  //Calls the API once during load
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus',  () => {
+        loadData()
+    })
+  },[])
+  
+  const loadData = async () => {
+    let respose = await api.GetUserImpacts();
+    const assets = respose.data.details.assets
+    let trees = 0
+    let carbon = 0
+    assets.forEach(element => {
+      element.type == "TREE" ? trees += element.count : null
+      carbon += element.offset
+    });
+    setTrees(trees)
+    setCarbon(carbon)
+  }
+
   return (
     <View style={styles.chooseCardsStandard4}>
       <View style={styles.groupParent}>
-        <View style={styles.groupContainer}>
+        <Pressable style={styles.groupContainer} onPress={() => navigation.navigate("Account")}>
           <View style={[styles.rectangleParent, styles.hello1Position]}>
             <View style={styles.groupChild} />
             <View style={[styles.maskGroup236, styles.hello1Position]} />
           </View>
           <Text style={styles.hello}>Purchase Projects</Text>
-        </View>
+        </Pressable>
         <Image
           style={[styles.groupItem, styles.groupPosition]}
           resizeMode="cover"
@@ -28,7 +57,7 @@ const CarbonTonnesRemoved = () => {
             <Text style={styles.co}> Removed</Text>
           </Text>
         </View>
-        <Text style={[styles.t, styles.tPosition]}> 1,39 T</Text>
+        <Text style={[styles.t, styles.tPosition]}> {numCarbon} Tonnes</Text>
         <Text style={[styles.total, styles.tPosition]}>Total</Text>
         <View style={[styles.lineParent, styles.groupPosition]}>
           <View style={styles.groupInner} />
@@ -37,7 +66,7 @@ const CarbonTonnesRemoved = () => {
               <Text style={styles.trees1}>Trees</Text>
             </Text>
             <Text style={styles.trees}>
-              <Text style={styles.text2}>+ 5</Text>
+              <Text style={styles.text2}> {numTrees}</Text>
               <Text>{` `}</Text>
             </Text>
           </Text>
@@ -46,8 +75,8 @@ const CarbonTonnesRemoved = () => {
               <Text style={styles.trees1}>Carbon</Text>
             </Text>
             <Text style={styles.trees}>
-              <Text>-1</Text>
-              <Text style={styles.trees1}>Ton</Text>
+              <Text>-{tonnesOfCarbon}</Text>
+              <Text style={styles.trees1}></Text>
             </Text>
           </Text>
           <Image
@@ -97,7 +126,7 @@ const CarbonTonnesRemoved = () => {
             <Text style={[styles.wed1, styles.wedPosition]}>April</Text>
             <Text style={[styles.wed2, styles.wedPosition]}>May</Text>
             <Text style={[styles.wed3, styles.wedPosition]}>June</Text>
-            <Text style={[styles.text6, styles.textTypo]}>{numArray[3]} Trees</Text>
+            <Text style={[styles.text6, styles.textTypo]}>{numArray[3]}</Text>
             <Text style={[styles.text7, styles.textTypo1]}>{numArray[4]}</Text>
             <Text style={[styles.text8, styles.textTypo]}>{numArray[5]}</Text>
 
@@ -150,14 +179,12 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_1200,
     top: "50%",
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   trees5Typo: {
     color: GlobalStyles.Color.gray_1700,
     textAlign: "left",
     top: "50%",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   lineViewBorder: {
@@ -166,13 +193,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderRadius: 0.001,
     borderColor: "#707070",
-    borderStyle: "dashed",
     bottom: 29,
     position: "absolute",
   },
   monPosition: {
     color: GlobalStyles.Color.gray_1500,
-    fontFamily: GlobalStyles.FontFamily.poppinsSemiBold,
     letterSpacing: 1,
     fontSize: GlobalStyles.FontSize.size_xs,
     marginTop: 59.5,
@@ -182,7 +207,6 @@ const styles = StyleSheet.create({
   wedPosition: {
     marginTop: 59,
     color: GlobalStyles.Color.gray_1500,
-    fontFamily: GlobalStyles.FontFamily.poppinsSemiBold,
     letterSpacing: 1,
     fontSize: GlobalStyles.FontSize.size_xs,
     top: "50%",
@@ -192,17 +216,15 @@ const styles = StyleSheet.create({
   textTypo1: {
     height: 29,
     color: GlobalStyles.Color.gray_1000,
-    fontFamily: GlobalStyles.FontFamily.segoeUI,
     fontSize: GlobalStyles.FontSize.size_4xl,
     textAlign: "left",
     top: 0,
     position: "absolute",
   },
   textTypo: {
-    width: 60,
+    width: 70,
     height: 29,
     color: GlobalStyles.Color.gray_1000,
-    fontFamily: GlobalStyles.FontFamily.segoeUI,
     fontSize: GlobalStyles.FontSize.size_4xl,
     textAlign: "left",
     top: 0,
@@ -262,7 +284,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
     textAlign: "center",
-    fontFamily: GlobalStyles.FontFamily.helvetica,
     position: "absolute",
   },
   groupContainer: {
@@ -332,12 +353,12 @@ const styles = StyleSheet.create({
     margin: GlobalStyles.Margin.margin_8xs,
   },
   text2: {
-    fontSize: GlobalStyles.FontSize.size_10xl,
+    fontSize: GlobalStyles.FontSize.size_6xl,
   },
   trees5: {
     marginTop: -27.5,
     marginLeft: -78.78,
-    width: 55,
+    width: 60,
     textAlign: "left",
     left: "50%",
   },
@@ -366,7 +387,6 @@ const styles = StyleSheet.create({
     left: 17,
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: 28,
-    fontFamily: GlobalStyles.FontFamily.typoGrotesk,
     color: GlobalStyles.Color.indigo_100,
     textAlign: "left",
     fontWeight: "700",
@@ -484,7 +504,6 @@ const styles = StyleSheet.create({
     marginTop: -132,
     marginLeft: -48.25,
     borderRadius: GlobalStyles.Border.br_4xl,
-    backgroundColor: GlobalStyles.Color.gray_200,
     width: 96,
     height: 167,
     left: "50%",
