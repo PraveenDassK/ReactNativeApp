@@ -14,6 +14,12 @@ const VirtualEcoSystem = ({navigation}) => {
     const [name, setName] = useState("Your forest")
     const authContext = useContext(AuthContext)
 
+    const [numTrees, setTrees] = useState("1");
+    const [numCarbon, setCarbon] = useState(0);
+
+    const treeImages = [
+        "../assets/Forest/2.png"
+    ]
 
     //Calls the API once during load
     useEffect(() => {
@@ -27,9 +33,21 @@ const VirtualEcoSystem = ({navigation}) => {
         const data = customer.data.details
         console.log(data.name.split(" "))
         setName(data.name.split(" ")[0] + "'s Forest")
+
+        let respose = await api.GetUserImpacts();
+        const assets = respose.data.details.assets
+        let trees = 0
+        let carbon = 0
+        assets.forEach(element => {
+          element.type == "TREE" ? trees += element.count : null
+          carbon += element.offset
+        });
+        const refrence = "../assets/Forest/" + 2 + ".png"
+        console.log(refrence)
+        //setTrees(refrence)
     }
 
-    const forestValue = 1
+    console.log(treeImages[0])
 return (
 <View style={styles.mainContainer}>
     <View style={styles.titleTextRow}>
@@ -41,7 +59,6 @@ return (
     </View>
 
     <View style={styles.imageBox}>
-        <Image style={styles.image} source={require("../assets/Forest/" + forestValue + ".png")}/>
     </View>
     <View style={styles.centerRow}>
         <Text style={styles.centerRowText}>Bring Your Virtual Forest To Life</Text>
@@ -53,7 +70,7 @@ return (
 
     <View style={styles.bottom}>
         <TouchableOpacity style={styles.button}>
-            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Carbon")}/>
+            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Account")}/>
         </TouchableOpacity>
     </View>
 
