@@ -121,6 +121,8 @@ if(!AppState.currentState) {
       settings, setSettings
     }}>
       <NavigationContainer>
+      {/* <AppNavigator /> */}
+       
         {!currentUser ? (
           <AuthNavigator /> 
         ) :  currentUser ? (
