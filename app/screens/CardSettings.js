@@ -138,16 +138,16 @@ const CardSettings = ({navigation}) => {
           </Pressable>
         </View>
 
-      <Pressable style={styles.groupChild} onPress={() => console.log('wtf')}>
-                <View
-                  style={{width: '80%', marginLeft: '10%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
-                  <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
-                    <Text style={{fontWeight: '700'}}>Upgrade Card</Text>
-                    <Text style={{fontWeight: '200', fontSize: 10}}>Upgrade your card plan</Text>
-                  </View>
-                </View>
-              </Pressable>
+        <Pressable style={styles.groupChild} onPress={() => console.log('wtf')}>
+          <View
+            style={{width: '80%', marginLeft: '10%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
+            <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
+              <Text style={{fontWeight: '700'}}>Upgrade Card</Text>
+              <Text style={{fontWeight: '200', fontSize: 10}}>Upgrade your card plan</Text>
+            </View>
+          </View>
+        </Pressable>
       </View>
     </ScrollView>
   );
