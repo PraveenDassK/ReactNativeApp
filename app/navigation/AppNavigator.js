@@ -105,14 +105,16 @@ const leftToRightAnimation = {
 const StackNavigator = () => {
   return(
     <Stack.Navigator
-    screenOptions={{fullScreenGestureEnable: true}} 
+    screenOptions={{
+     gestureEnabled: true,
+     gestureDirection: "horizontal",
+    }} 
     >
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
         options={{
-          title: "Account",
-       
+          title: "Carbonyte",
         }}
       />
       
@@ -122,7 +124,6 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "AddFunds",
-       
         }}
       />
 
@@ -174,9 +175,12 @@ const StackNavigator = () => {
     <Stack.Screen 
         name="MyCards" 
         component={gestureHandlerRootHOC(MyCards)}
-        options={{
-          title: "MyCards",
-       
+        // options={{
+        //   title: "MyCards",
+        //   presentation: 'modal' 
+        // }}
+        options={{ 
+          animation: "slide_from_bottom"
         }}
       />
 
@@ -377,6 +381,22 @@ const StackNavigator = () => {
 
 
     </Stack.Navigator>
+  )
+}
+
+const AccountNavigator = () => {
+  return (
+    <Tab.Navigator >
+      <Tab.Screen
+        name="Analysis" 
+        component={gestureHandlerRootHOC(AccountMain)}
+      />
+      <Tab.Screen
+        name="Analysis" 
+        component={gestureHandlerRootHOC(AccountMain)}
+      />
+    
+    </Tab.Navigator>
   )
 }
 

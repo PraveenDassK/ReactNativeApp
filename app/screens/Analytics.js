@@ -142,7 +142,7 @@ const Analytics = ({navigation}) => {
                     <View style={styles.spendContainer}>
                       <View style={styles.totalSpendContainer}>
                         <Text>Total Spend</Text>
-                        <Text style={styles.money}>£ {totalSpend}</Text>
+                        <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
                         <View style={styles.spendContainer}>
                           <View style={styles.noOfPayments}>
                             <Text style={{
@@ -226,7 +226,7 @@ const Analytics = ({navigation}) => {
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LT')}</Text>
                         </View>
                         <View style={styles.transactionAmount}>
-                          <Text style={styles.transactionPrice}>£ {transaction.amount}</Text>
+                          <Text style={styles.transactionPrice}>£ {transaction.amount.toFixed(2)}</Text>
                         </View>
                       </View>
                   
@@ -300,8 +300,8 @@ const Bazier = ({ priceData, transDate, transObj }) => {
                 width="60" 
                 height="30"
                 fill="white" 
-                rx={.5} 
-                ry={.5}
+                rx="10px"
+                ry="10px"
               />
                   <TextSVG
                       x={tooltipPos.x + 15}
@@ -310,7 +310,7 @@ const Bazier = ({ priceData, transDate, transObj }) => {
                       fontSize="10"
                       fontWeight="bold"
                       textAnchor="middle">
-                      {`£ ${tooltipPos.value}`}
+                      {`£ ${tooltipPos.value.toFixed(2)}`}
                   </TextSVG>
           </Svg>
       </View> : null
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
   },
   priceSub: {
     color: "blue",
-    fontSize: moderateScale(30),
+    fontSize: moderateScale(28),
     fontWeight: "bold"
     
   },

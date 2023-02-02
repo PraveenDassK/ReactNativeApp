@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {AppState} from 'react-native';
-import 'expo-dev-menu';
 
 import { NavigationContainer } from "@react-navigation/native";
 import jwtDecode from 'jwt-decode'
@@ -121,15 +120,13 @@ if(!AppState.currentState) {
       settings, setSettings
     }}>
       <NavigationContainer>
-        <AppNavigator />
-        {/* {!currentUser ? (
+        {!currentUser ? (
           <AuthNavigator /> 
         ) :  currentUser ? (
           <AppNavigator /> 
         ) : (
           <AuthNavigator />
-        )} */}
-
+        )}
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}
       </NavigationContainer>
