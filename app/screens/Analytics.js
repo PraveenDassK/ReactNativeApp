@@ -152,7 +152,7 @@ const Analytics = ({navigation}) => {
                     <View style={{flex: 1, width: "100%", height: "auto", marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
                         <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
                             <Text>Total Spend</Text>
-                            <Text style={styles.money}>£ {totalSpend}</Text>
+                            <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
                             <View style={{flex: 1, flexDirection: "row"}}>
                              <Text style={{color: "#999",fontSize: 14, alignItems: "flex-start"}}>No. of Payments</Text>
                              <Text style={{color: "#999", fontSize: 14 , alignItems: "flex-end"}}> {totalTransactions}</Text>
