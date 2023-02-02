@@ -137,7 +137,7 @@ const showData = () => {
           </View>
           <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
           <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
-            £{transaction.amount}
+            £{transaction.amount.toFixed(2)}
           </Text>
           </View>
          </View>

@@ -2,7 +2,7 @@
   "expo": {
     "name": "BankingApp",
     "slug": "BankingApp",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./app/assets/tree@3x.png",
     "userInterfaceStyle": "light",
@@ -19,18 +19,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "infoPlist": {
-        "NSFaceIDUsageDescription": "This app uses Face ID and Touch ID to verify the userls identity and protect sensitve data"
-      },
-      "bundleIdentifier": "com.carbonyte.banking"
+      "bundleIdentifier": "carbonyte.banking"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/tree@3x.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.carbonyte.bankin",
-      "versionCode": 1
+      "package": "carbonyte.bankin"
     },
     "description": "Carbonyte Banking App",
     "web": {
@@ -38,7 +34,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "7605c38a-8a2f-4a89-8782-f5d60ad85874"
+        "projectId": "c44c011f-e58a-467d-b5dd-4e9e27e21ed3"
       }
     }
   }

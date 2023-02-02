@@ -146,7 +146,7 @@ const Carbon = ({route,navigation }) => {
                             <View style={styles.subTitlePrice}>
                                 <Text
                                 style={styles.priceSub}
-                                >£{item.asset.displayAssetPrice}
+                                >£{item.asset.displayAssetPrice.toFixed(2)}
                                 </Text>
                                 <Text style={styles.tree}>
                                     /{(item.asset.type == "LAND" ? "tCO2e" : item.asset.type)}

@@ -157,6 +157,25 @@ const Analytics = ({navigation}) => {
                              <Text style={{color: "#999",fontSize: 14, alignItems: "flex-start"}}>No. of Payments</Text>
                              <Text style={{color: "#999", fontSize: 14 , alignItems: "flex-end"}}> {totalTransactions}</Text>
                              </View>
+                    <View style={styles.spendContainer}>
+                      <View style={styles.totalSpendContainer}>
+                        <Text>Total Spend</Text>
+                        <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
+                        <View style={styles.spendContainer}>
+                          <View style={styles.noOfPayments}>
+                            <Text style={{
+                                color: "#999",
+                                fontSize: 14
+                            }}>No. of Payments</Text>
+                          </View>
+                          <View style={styles.payments}>
+                            <Text
+                              style={{
+                                color: "#999",
+                                fontSize: 14
+                              }}
+                            > {totalTransactions}</Text>
+                          </View>
                         </View>
                         <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
                         <Text>Average Monthly Spendings</Text>
@@ -224,7 +243,7 @@ const Analytics = ({navigation}) => {
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LT')}</Text>
                         </View>
                         <View style={styles.transactionAmount}>
-                          <Text style={styles.transactionPrice}>£ {transaction.amount}</Text>
+                          <Text style={styles.transactionPrice}>£ {transaction.amount.toFixed(2)}</Text>
                         </View>
                       </View>
                   
@@ -273,14 +292,26 @@ const Bazier = ({ priceData, transDate, transObj }) => {
       }}
     bezier style={{marginVertical: 8,borderRadius: 0}}
     decorator={() => {
-
-      return tooltipPos.visible ? <View >
-        <Svg>
-            <Rect x={tooltipPos.x - 15} y={tooltipPos.y + 10} width="60" height="30" fill="white" rx={.5} ry={.5} />
-                <TextSVG  x={tooltipPos.x + 15} y={tooltipPos.y + 30} fill="blue" fontSize="10" fontWeight="bold" textAnchor="middle">
-                    {`£ ${tooltipPos.value}`}
-                </TextSVG>
-        </Svg>
+      return tooltipPos.visible ? <View>
+          <Svg>
+              <Rect x={tooltipPos.x - 15} 
+                y={tooltipPos.y + 10} 
+                width="60" 
+                height="30"
+                fill="white" 
+                rx="10px"
+                ry="10px"
+              />
+                  <TextSVG
+                      x={tooltipPos.x + 15}
+                      y={tooltipPos.y + 30}
+                      fill="blue"
+                      fontSize="10"
+                      fontWeight="bold"
+                      textAnchor="middle">
+                      {`£ ${tooltipPos.value.toFixed(2)}`}
+                  </TextSVG>
+          </Svg>
       </View> : null
       }}
       onDataPointClick={(data) => {
@@ -355,7 +386,7 @@ const styles = StyleSheet.create({
   },
   priceSub: {
     color: "blue",
-    fontSize: moderateScale(30),
+    fontSize: moderateScale(28),
     fontWeight: "bold"
     
   },
