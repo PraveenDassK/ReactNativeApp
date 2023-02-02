@@ -611,14 +611,15 @@ const styles = StyleSheet.create({
     marginTop: -170.5,
   },
   onlineTransactions: {
-    top: 0,
+    marginTop: -18,
+    top: 10,
     width: "90%",
   },
   internetBasedTransactionsAr: {
     lineHeight: 12,
     
     width: "90%",
-    top: 10,
+    top: 20,
   },
   globeIcon: {
     width: 18,
