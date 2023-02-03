@@ -22,8 +22,6 @@ import AuthContext from "../auth/context";
 
 import moment from "moment";
 
-import { BlurView, VibrancyView } from "@react-native-community/blur";
-
 const HomeScreenPersonal = ({ navigation }) => {
   //Saves all the data from the API call
   const [data, setData] = useState(null);
