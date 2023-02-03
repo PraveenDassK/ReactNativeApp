@@ -15,7 +15,6 @@ const VirtualEcoSystem = ({navigation}) => {
     const authContext = useContext(AuthContext)
 
     const [forestValue, setTrees] = useState("1");
-    const [numCarbon, setCarbon] = useState(0);
 
     const treeImages = [
         "../assets/Forest/2.png"
@@ -42,10 +41,50 @@ const VirtualEcoSystem = ({navigation}) => {
           element.type == "TREE" ? trees += element.count : null
           carbon += element.offset
         });
-        const refrence = "../assets/Forest/" + 2 + ".png"
-        console.log(refrence)
-        //setTrees(refrence)
+        setTrees(trees)
     }
+    const images = [
+        {
+          name: 'background1',
+          image: require('../assets/Forest/1.png'),
+        },
+        {
+          name: 'background2',
+          image: require('../assets/Forest/2.png'),
+        },
+        {
+          name: 'background3',
+          image: require('../assets/Forest/3.png'),
+        },
+        {
+          name: 'background4',
+          image: require('../assets/Forest/4.png'),
+        },
+        {
+          name: 'background5',
+          image: require('../assets/Forest/5.png'),
+        },
+        {
+          name: 'background6',
+          image: require('../assets/Forest/6.png'),
+        },
+        {
+          name: 'background7',
+          image: require('../assets/Forest/7.png'),
+        },
+        {
+          name: 'background8',
+          image: require('../assets/Forest/8.png'),
+        },
+        {
+          name: 'background9',
+          image: require('../assets/Forest/9.png'),
+        },
+        {
+          name: 'background10',
+          image: require('../assets/Forest/10.png'),
+        },
+      ];
 
 return (
 <View style={styles.mainContainer}>
@@ -58,7 +97,7 @@ return (
     </View>
 
     <View style={styles.imageBox}>
-        <Image style={styles.image} source={require("../assets/Forest/" + "1" + ".png")}/>
+        <Image style={styles.image} source={(images[forestValue].image)}/>
     </View>
     <View style={styles.centerRow}>
         <Text style={styles.centerRowText}>Bring Your Virtual Forest To Life</Text>
