@@ -20,7 +20,7 @@ const SpendingLimit = ({navigation,route}) => {
   if(route.params) {
     //loadData()
     return true
-}
+  }
 
   //Calls the API once during load
   useEffect(() => {
@@ -35,22 +35,33 @@ const SpendingLimit = ({navigation,route}) => {
     const response = await api.GetLimit(authContext.accountID);
     //Then isolate the useful data
     const data = response.data.details
-    console.log(data)
-
+    console.log(response.data)
     //If there is a limit
-    setPercent((50/data.monthlyAmount)*100 + "%")
+    //50 is the amount spent
+    if(data.monthlyAmount != 0){
+      setPercent((50/data.monthlyAmount)*100 + "%")
+    }else{
+      setPercent(0)
+    }
+    setMonLim(data.monthlyAmount)
+
+    const balanceresponse = await api.GetAccount(authContext.accountID);
+    const balData = balanceresponse.data.details;
+    setSpend(50);
   }
-  console.log(authContext.accountID)
+  console.log(spend)
+  console.log(monthLim)
+
   const sendRequest = async () => {
     const response = await api.SetToggles(authContext.accountID,
       isEnabled,
     );
   }
-  console.log(percent)
+
+
   let percentBar =           
   <View style={[styles.amountContainer]}>
     <View style={[styles.amountScale]} width = {percent}>
-
     </View>
   </View>
 
@@ -117,11 +128,7 @@ const SpendingLimit = ({navigation,route}) => {
             Amount spent this month
           </Text>
 
-          <View style={[styles.amountContainer]}>
-            <View style={[styles.amountScale]} width = {percent}>
-
-            </View>
-          </View>
+          {percentBar}
 
 
         </View>

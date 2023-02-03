@@ -43,6 +43,8 @@ const SetLimit = ({navigation}) => {
     if(validCheck){
       //If it is do this
       const response = await api.SetLimit(authContext.accountID,amount)
+      console.log(response)
+      console.log(authContext.accountID)
       navigation.navigate("SpendingLimit")
     }else{
       //If it isn't show an error message here
