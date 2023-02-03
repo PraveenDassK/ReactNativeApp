@@ -46,7 +46,7 @@ const Settings = ({navigation}) => {
     const accountresponse = await api.GetAccount(accountID);
     const data = response.data
     const accountdata = accountresponse.data.details
-    setPlan("Current Account")
+    setPlan("CurrentAccount")
     setName(accountdata.customerName)
     setBal(accountdata.balance)
     setSortCode(accountdata.identifiers[0].sortCode)

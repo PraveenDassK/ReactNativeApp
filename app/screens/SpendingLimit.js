@@ -49,9 +49,6 @@ const SpendingLimit = ({navigation,route}) => {
     const balData = balanceresponse.data.details;
     setSpend(50);
   }
-  console.log(spend)
-  console.log(monthLim)
-
   const sendRequest = async () => {
     const response = await api.SetToggles(authContext.accountID,
       isEnabled,
@@ -65,6 +62,8 @@ const SpendingLimit = ({navigation,route}) => {
     </View>
   </View>
 
+  console.log(spend)
+  console.log(monthLim)
   return (
     <Screen>
     <View style={styles.spendingLimit}>

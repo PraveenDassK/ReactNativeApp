@@ -2,7 +2,7 @@ import React,{ useEffect, useState,useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-import api from "../api/carbonSingle"
+import apiCall from "../api/api"
 import AuthContext from "../auth/context";
 import Button from "../components/Button"
 import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
@@ -17,8 +17,8 @@ const CarbonProject = ({navigation,route}) => {
   
   const loadData = async () => {
     const response = await api.getListingsSingle(route.params.Id);
-    setData(response.data.details)
-    console.log(response.data)
+    setData(response)
+    console.log(response)
   }
   
   let projects = [];

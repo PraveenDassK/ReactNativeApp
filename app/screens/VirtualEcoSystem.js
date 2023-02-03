@@ -46,7 +46,6 @@ const VirtualEcoSystem = ({navigation}) => {
         }catch{
             
         }
-        console.log(trees)
         setTrees(trees)
     }
     const images = [

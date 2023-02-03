@@ -2,10 +2,9 @@ import React, {useContext, useState, useEffect} from 'react';
 import { StyleSheet,  View, Text, Image, ScrollView, FlatList, TouchableOpacity} from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import GlobalStyles from "../../GlobalStyles";
-import carbonApi from "../api/api_list";
+import apiCall from "../api/api";
 import Button from "../components/Button";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
-
 
 const CarbonCart = ({route,navigation }) => {
   const [data, setData] = useState([])
@@ -19,17 +18,16 @@ const CarbonCart = ({route,navigation }) => {
 
   const loadData = async () => {
     const projectList = route.params
-
     let projects = []
     await projectList.forEach(async(element) => {
 
-      let project = await carbonApi.GetProjectByID(element.projectId)
+      let project = await apiCall.GetSingleProject("5f96f967a3a85800118be4d1")
 
-      let name = project.data.details.displayName
-      console.log(project.data)
+      let name = project.displayName
+      
       let price = {
-        "price" : project.data.details.asset.assetPrice,
-        "item" : project.data.details.asset.name,
+        "price" : project.asset.assetPrice,
+        "item" : project.asset.name,
         "amount" : element.amount
       }
       projects.push({price,name})
@@ -41,7 +39,6 @@ const CarbonCart = ({route,navigation }) => {
     let totalPrice = 0
 
     data.forEach(item => {
-      console.log(item)
       totalItems += item.price.amount
       totalPrice += item.price.price
       show.push(
@@ -58,31 +55,31 @@ const CarbonCart = ({route,navigation }) => {
         </View>
       )
     })
-    console.log(totalItems)
     setshow(show)
     setAmount(totalItems)
     setPrice(totalPrice)
   }
 
+  const showData = () => {
+
+  }
+
   const buy = () => {
     setData("")
-    const purchase = carbonApi.Checkout({
+    const purchase = apiCall.Checkout({
       "carbonyteUserId": "CC11875",
       "projectLists": [
         {
           "projectId": "5f96f967a3a85800118be4d1",
-          "quantity": 1
+          "quantity": 2
         }
       ],
-      "sourceAccountId": "CC11875",
-      "totalAmount": 1
+      "sourceAccountId": "A12274AW",
+      "totalAmount": 2
     })
-    console.log(purchase)
     alert("Purchase successful")
   } 
   
-  console.log(amount)
-
   return (
     <View style={styles.mainContainer}>
     <View style={styles.titleTextRow}>

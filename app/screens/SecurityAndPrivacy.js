@@ -13,7 +13,6 @@ const SecurityAndPrivacy = ({navigation}) => {
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
 
-  
   console.log(settings)
 
   useEffect(() =>{
@@ -49,15 +48,24 @@ useEffect(() =>{
 const setToggles = () =>{
   console.log(settings)
   
-  settings.hideBalance ? toggleSwitch1():null
-  settings.contactAccess ? toggleSwitch2():null
-  settings.transactionSharing ? toggleSwitch3():null
+  settings.hideBalance ? setIsEnabled1(true):null
+  settings.contactAccess ? setIsEnabled2(true):null
+  settings.transactionSharing ? setIsEnabled3(true):null
 }
 
   const toggleSwitch =  () => setIsEnabled(previousState => !previousState)
-  const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
-  const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
-  const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
+  const toggleSwitch1 = () => {
+    setIsEnabled1(previousState => !previousState);
+    setSettings(prev => ({...prev, hideBalance: !prev.hideBalance}))
+  }
+  const toggleSwitch2 = () => {
+    setIsEnabled2(previousState => !previousState);
+    setSettings(prev => ({...prev, contactAccess: !prev.contactAccess}))
+  }
+  const toggleSwitch3 = () => {
+    setIsEnabled3(previousState => !previousState);
+    setSettings(prev => ({...prev, transactionSharing: !prev.transactionSharing}))
+  }
 
   return (
     <View style={styles.securityAndPrivacy}>
