@@ -14,7 +14,7 @@ const VirtualEcoSystem = ({navigation}) => {
     const [name, setName] = useState("Your forest")
     const authContext = useContext(AuthContext)
 
-    const [numTrees, setTrees] = useState("1");
+    const [forestValue, setTrees] = useState("1");
     const [numCarbon, setCarbon] = useState(0);
 
     const treeImages = [
@@ -47,7 +47,6 @@ const VirtualEcoSystem = ({navigation}) => {
         //setTrees(refrence)
     }
 
-    console.log(treeImages[0])
 return (
 <View style={styles.mainContainer}>
     <View style={styles.titleTextRow}>
@@ -59,6 +58,7 @@ return (
     </View>
 
     <View style={styles.imageBox}>
+        <Image style={styles.image} source={require("../assets/Forest/" + "1" + ".png")}/>
     </View>
     <View style={styles.centerRow}>
         <Text style={styles.centerRowText}>Bring Your Virtual Forest To Life</Text>
@@ -70,7 +70,7 @@ return (
 
     <View style={styles.bottom}>
         <TouchableOpacity style={styles.button}>
-            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Account")}/>
+            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Carbon")}/>
         </TouchableOpacity>
     </View>
 
