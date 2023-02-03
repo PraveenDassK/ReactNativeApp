@@ -14,7 +14,7 @@ const VirtualEcoSystem = ({navigation}) => {
     const [name, setName] = useState("Your forest")
     const authContext = useContext(AuthContext)
 
-    const [forestValue, setTrees] = useState("1");
+    const [forestValue, setTrees] = useState("0");
 
     const treeImages = [
         "../assets/Forest/2.png"
@@ -33,14 +33,20 @@ const VirtualEcoSystem = ({navigation}) => {
         console.log(data.name.split(" "))
         setName(data.name.split(" ")[0] + "'s Forest")
 
-        let respose = await api.GetUserImpacts();
-        const assets = respose.data.details.assets
         let trees = 0
         let carbon = 0
-        assets.forEach(element => {
-          element.type == "TREE" ? trees += element.count : null
-          carbon += element.offset
-        });
+        try{
+            let respose = await api.GetUserImpacts();
+            const assets = respose.data.details.assets
+            
+            assets.forEach(element => {
+              element.type == "TREE" ? trees += element.count : null
+              carbon += element.offset
+            });
+        }catch{
+            
+        }
+        console.log(trees)
         setTrees(trees)
     }
     const images = [
