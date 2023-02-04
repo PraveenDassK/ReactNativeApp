@@ -3,7 +3,7 @@ import { StyleSheet,  View, Image, FlatList} from 'react-native'
 import GlobalStyles from "../../GlobalStyles";
 
 import { horizontalScale, moderateScale, verticalScale } from '../config/metrics'
-import carbonApi from "../api/carbon"
+import apiCall from "../api/api"
 import Button from '../components/Button'
 import Text from "../components/Text"
 import Screen from '../components/Screen'
@@ -20,21 +20,13 @@ const Carbon = ({route,navigation }) => {
   },[])
   
   const loadData = async () => {
-    const response = await carbonApi.getListings();
-   
-    setData(response.data.details.data)
+    const response = await apiCall.GetProjectList();
+    setData(response)
   }
 
-  const capitalized =(words)=>{
- 
-   return  words.split("").map((word, index) => {
-        if(index === 0){
-            return word
-        }
-        return word.toLowerCase()
-    })
-  }
-
+  /**
+   * @dev Cart settingsr
+   */
   const [cart,setCart] = useState([])
   let amount = 0
   //Buy functions
@@ -45,7 +37,6 @@ const Carbon = ({route,navigation }) => {
     }
     setCart(prevArray => [...prevArray, arrobj])
     amount++;
-    console.log(arrobj)
     checkout()
   }
 
@@ -56,10 +47,9 @@ const Carbon = ({route,navigation }) => {
       "sourceAccountId": "A121BXVM",
       "totalAmount": amount
     }
-    console.log(obj)
-
   }
   console.log(cart)
+
   return (
     <Screen style={{backgroundColor: "#F6F5F8"}}>
 
@@ -133,7 +123,6 @@ const Carbon = ({route,navigation }) => {
                             resizeMode: 'stretch'
                         }]}
                         source={
-                            
                             item.image != "" ? {uri:item.image} : require("../assets/image-carbonplaceholder.png")
                         } />
                     
@@ -146,7 +135,7 @@ const Carbon = ({route,navigation }) => {
                             <View style={styles.subTitlePrice}>
                                 <Text
                                 style={styles.priceSub}
-                                >£{item.asset.displayAssetPrice.toFixed(2)}
+                                >£{item.asset.displayAssetPrice}
                                 </Text>
                                 <Text style={styles.tree}>
                                     /{(item.asset.type == "LAND" ? "tCO2e" : item.asset.type)}

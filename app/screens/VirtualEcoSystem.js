@@ -14,8 +14,7 @@ const VirtualEcoSystem = ({navigation}) => {
     const [name, setName] = useState("Your forest")
     const authContext = useContext(AuthContext)
 
-    const [numTrees, setTrees] = useState("1");
-    const [numCarbon, setCarbon] = useState(0);
+    const [forestValue, setTrees] = useState("0");
 
     const treeImages = [
         "../assets/Forest/2.png"
@@ -34,20 +33,64 @@ const VirtualEcoSystem = ({navigation}) => {
         console.log(data.name.split(" "))
         setName(data.name.split(" ")[0] + "'s Forest")
 
-        let respose = await api.GetUserImpacts();
-        const assets = respose.data.details.assets
         let trees = 0
         let carbon = 0
-        assets.forEach(element => {
-          element.type == "TREE" ? trees += element.count : null
-          carbon += element.offset
-        });
-        const refrence = "../assets/Forest/" + 2 + ".png"
-        console.log(refrence)
-        //setTrees(refrence)
+        try{
+            let respose = await api.GetUserImpacts();
+            const assets = respose.data.details.assets
+            
+            assets.forEach(element => {
+              element.type == "TREE" ? trees += element.count : null
+              carbon += element.offset
+            });
+        }catch{
+            
+        }
+        setTrees(trees)
     }
+    const images = [
+        {
+          name: 'background1',
+          image: require('../assets/Forest/1.png'),
+        },
+        {
+          name: 'background2',
+          image: require('../assets/Forest/2.png'),
+        },
+        {
+          name: 'background3',
+          image: require('../assets/Forest/3.png'),
+        },
+        {
+          name: 'background4',
+          image: require('../assets/Forest/4.png'),
+        },
+        {
+          name: 'background5',
+          image: require('../assets/Forest/5.png'),
+        },
+        {
+          name: 'background6',
+          image: require('../assets/Forest/6.png'),
+        },
+        {
+          name: 'background7',
+          image: require('../assets/Forest/7.png'),
+        },
+        {
+          name: 'background8',
+          image: require('../assets/Forest/8.png'),
+        },
+        {
+          name: 'background9',
+          image: require('../assets/Forest/9.png'),
+        },
+        {
+          name: 'background10',
+          image: require('../assets/Forest/10.png'),
+        },
+      ];
 
-    console.log(treeImages[0])
 return (
 <View style={styles.mainContainer}>
     <View style={styles.titleTextRow}>
@@ -59,6 +102,7 @@ return (
     </View>
 
     <View style={styles.imageBox}>
+        <Image style={styles.image} source={(images[forestValue].image)}/>
     </View>
     <View style={styles.centerRow}>
         <Text style={styles.centerRowText}>Bring Your Virtual Forest To Life</Text>
@@ -70,7 +114,7 @@ return (
 
     <View style={styles.bottom}>
         <TouchableOpacity style={styles.button}>
-            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Account")}/>
+            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Carbon")}/>
         </TouchableOpacity>
     </View>
 

@@ -14,7 +14,6 @@ const SetLimit = ({navigation}) => {
   const [validCheck, setValidator] = useState(false)
   const authContext = useContext(AuthContext)
 
-
   /**
    * @notice Text checker
    */
@@ -44,6 +43,8 @@ const SetLimit = ({navigation}) => {
     if(validCheck){
       //If it is do this
       const response = await api.SetLimit(authContext.accountID,amount)
+      console.log(response)
+      console.log(authContext.accountID)
       navigation.navigate("SpendingLimit")
     }else{
       //If it isn't show an error message here
@@ -68,7 +69,7 @@ const SetLimit = ({navigation}) => {
         <TextInput style={[styles.hello1, styles.helloColor, styles.helloTypo]}
           placeholder = {"£"+amount}
           keyboardType="numeric"
-          onChangeText={newText => setAmount(newText)}
+          onChangeText={newText => checkText(newText)}
         />
         <Text style={[styles.hello3, styles.helloPosition, styles.helloColor1]}>
           {currency}

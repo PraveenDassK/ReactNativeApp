@@ -80,6 +80,7 @@ import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import CarbonSpending from "../screens/CarbonSpending"
 import Login from "../screens/Login"
 import SignUpPersonal from "../screens/SignUpPersonal";
+import TestEnviro from "../screens/TestEnviro";
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -102,18 +103,16 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-  return(
-    <Stack.Navigator
-    screenOptions={{
-     gestureEnabled: true,
-     gestureDirection: "horizontal",
-    }} 
-    >
+   return(
+     <Stack.Navigator
+      initialRouteName="CarbonTonnesRemoved">
+        
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
         options={{
-          title: "Carbonyte",
+          title: "Account",
+       
         }}
       />
       
@@ -123,6 +122,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "AddFunds",
+       
         }}
       />
 
@@ -174,12 +174,9 @@ const StackNavigator = () => {
     <Stack.Screen 
         name="MyCards" 
         component={gestureHandlerRootHOC(MyCards)}
-        // options={{
-        //   title: "MyCards",
-        //   presentation: 'modal' 
-        // }}
-        options={{ 
-          animation: "slide_from_bottom"
+        options={{
+          title: "MyCards",
+       
         }}
       />
 
@@ -377,25 +374,16 @@ const StackNavigator = () => {
        
         }}
       />
-
+      <Stack.Screen 
+        name="TestEnviro" 
+        component={TestEnviro}
+        options={{
+          title: "TestEnviro",
+       
+        }}
+      />
 
     </Stack.Navigator>
-  )
-}
-
-const AccountNavigator = () => {
-  return (
-    <Tab.Navigator >
-      <Tab.Screen
-        name="Analysis" 
-        component={gestureHandlerRootHOC(AccountMain)}
-      />
-      <Tab.Screen
-        name="Analysis" 
-        component={gestureHandlerRootHOC(AccountMain)}
-      />
-    
-    </Tab.Navigator>
   )
 }
 

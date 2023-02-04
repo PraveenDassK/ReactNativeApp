@@ -63,7 +63,6 @@ const HomeScreenPersonal = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const data1 = response1.data
     const accountdata = accountresponse.data.details
-    console.log("==================================="+accountresponse+"=======================================")
     setBalance(data.availableBalance);
     setSortCode(accountdata.identifiers[0].sortCode)
     setaccountnumber(accountdata.identifiers[0].accountNumber)
@@ -115,7 +114,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View>
           <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
           <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
-            £{dataHold.amount.toFixed(2)}
+            £{dataHold.amount}
           </Text>
           </View>
          </View>
@@ -191,9 +190,34 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={styles.totalWalletBalanceText}>
               Total Wallet Balance
             </Text>
-            <Text style={[styles.BalanceText, styles.blueTitle]}>
-              {settings.hideBalance ? "Balance Hidden" : "£"+balance}
+            {settings.hideBalance ?
+            <View style={{
+              width :"50%",
+              height : "50%",
+              left : "25%"}}
+              >
+              <View
+              style={{
+                width :"100%",
+                height : "10%",
+                shadowOpacity: 1,
+                shadowColor: 'blue',
+                shadowOffset: { width: 10, height: 10 },
+                shadowRadius: 5,
+                elevation: 5,
+                borderWidth: 0.5,
+                borderColor: "white",
+                backgroundColor: "rgba(255, 255, 255, 1)"
+              }}
+            />
+            </View>
+
+            
+            :
+            <Text style={[styles.BalanceText, styles.blueTitle]} >
+              £{balance}
             </Text>
+            }
             <Text style={styles.dateText}>{todaydate}</Text>
           </View>
 

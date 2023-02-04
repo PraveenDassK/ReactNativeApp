@@ -39,9 +39,7 @@ const GetTransactions = (enfuceid,amount) =>  {
 const RetriveBenificiaries = (carbonyteid) => client.get("https://api.carbonyte.io/walletmodule/RetrieveBeneficiaries/" + carbonyteid)
 
 const GetLimit = (enfuceid) => client.get("https://api.carbonyte.io/transactionmodule/GetBudget?accountId=" + enfuceid)
-const SetLimit = (enfuceid,amount) =>  client.post("https://api.carbonyte.io/transactionmodule/SetBudget?accountId=" + 
-                              enfuceid + 
-                              "&periodType=monthly&amount=" + amount)
+const SetLimit = (enfuceid,amount) =>  client.post("https://api.carbonyte.io/transactionmodule/SetBudget?accountId=A12274AW&periodType=monthly&amount=" + amount)
 
 const GetProjectByID = (project) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?companyId=" + project)
 

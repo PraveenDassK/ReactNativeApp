@@ -48,8 +48,6 @@ const Analytics = ({navigation}) => {
       const transData = transactionObj(recentTransactions).map((data) => {
         return data.amount
       })
-      console.log("why", data, dates)
-      console.log('herreeee')
       setPriceData(data)
       setDates(dates)
       setDataObj(transData)
@@ -81,7 +79,6 @@ const Analytics = ({navigation}) => {
     const det = acc.data.details.associates
    
   } 
-  console.log(transactionCategories)
 
 
 
@@ -91,21 +88,18 @@ const Analytics = ({navigation}) => {
 
   const transactionData = (transactions) => {
     return transactions.map((transaction) => {
-      console.log('deya',transaction.amount)
       return transaction.amount
     })
   }
 
   const transactionDate = (transactions) => {
     return transactions.map((transaction) => {
-      console.log('deya',transaction.transactionDate)
       return transaction.transactionDate.split("T")[0].split("-")[1]
     })
   }
 
   const transactionObj = (transactions) => {
     const arr =transactions.map((transaction) => {
-      console.log('deya',transaction.amount)
       
       return {amount: transaction.amount, date: transaction.transactionDate.split("T")[0].split("-")[1]}
     })
@@ -127,10 +121,6 @@ const Analytics = ({navigation}) => {
     return  result
   }
 
-
-  console.log(transactionCategories)
-  console.log('here',recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0])
-
   return (
           <Screen style={{backgroundColor: "#f3f5f5"}}>
               <ScrollView >
@@ -141,18 +131,18 @@ const Analytics = ({navigation}) => {
         </View>
 
                     <View style={styles.balanceContainer}>
-                      <View style={{flex: 4}}>
+                      <View style={styles.balance}>
                         <Text style={styles.textSub}>Balance</Text>
                       </View>
-                      <View style={{flex: 6, alignItems: "flex-end"}}>
-                        <Text style={styles.priceSub}>£{balance}</Text>
+                      <View style={styles.balance}>
+                        <Text style={styles.priceSub}>£ {balance}</Text>
                       </View>
                     </View>
 
-                    <View style={{flex: 1, width: "100%", height: "auto", marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
+                    <View style={{flex: 1, width: "100%", height: 75, marginTop:"5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between"}}>
                         <View style={{height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%"}}>
                             <Text>Total Spend</Text>
-                            <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
+                            <Text style={styles.money}>£ {totalSpend}</Text>
                             <View style={{flex: 1, flexDirection: "row"}}>
                              <Text style={{color: "#999",fontSize: 14, alignItems: "flex-start"}}>No. of Payments</Text>
                              <Text style={{color: "#999", fontSize: 14 , alignItems: "flex-end"}}> {totalTransactions}</Text>
@@ -224,7 +214,7 @@ const Analytics = ({navigation}) => {
                           <Text style={styles.textSub}>{moment(transaction.transactionDate).format('LT')}</Text>
                         </View>
                         <View style={styles.transactionAmount}>
-                          <Text style={styles.transactionPrice}>£ {transaction.amount.toFixed(2)}</Text>
+                          <Text style={styles.transactionPrice}>£ {transaction.amount}</Text>
                         </View>
                       </View>
                   
@@ -239,8 +229,6 @@ const Analytics = ({navigation}) => {
 const Bazier = ({ priceData, transDate, transObj }) => {
   let [tooltipPos,setTooltipPos] = useState(
     { x:0, y:0, visible:false, value:0 })
-
-  console.log('finished', transObj)
 
   return(
     <View style={{justifyContent: "center", width: "80%", marginLeft: "10%"}}
@@ -273,26 +261,14 @@ const Bazier = ({ priceData, transDate, transObj }) => {
       }}
     bezier style={{marginVertical: 8,borderRadius: 0}}
     decorator={() => {
-      return tooltipPos.visible ? <View>
-          <Svg>
-              <Rect x={tooltipPos.x - 15} 
-                y={tooltipPos.y + 10} 
-                width="60" 
-                height="30"
-                fill="white" 
-                rx={.5} 
-                ry={.5}
-              />
-                  <TextSVG
-                      x={tooltipPos.x + 15}
-                      y={tooltipPos.y + 30}
-                      fill="blue"
-                      fontSize="10"
-                      fontWeight="bold"
-                      textAnchor="middle">
-                      {`£ ${tooltipPos.value}`}
-                  </TextSVG>
-          </Svg>
+
+      return tooltipPos.visible ? <View >
+        <Svg>
+            <Rect x={tooltipPos.x - 15} y={tooltipPos.y + 10} width="60" height="30" fill="white" rx={.5} ry={.5} />
+                <TextSVG  x={tooltipPos.x + 15} y={tooltipPos.y + 30} fill="blue" fontSize="10" fontWeight="bold" textAnchor="middle">
+                    {`£ ${tooltipPos.value}`}
+                </TextSVG>
+        </Svg>
       </View> : null
       }}
       onDataPointClick={(data) => {
@@ -327,7 +303,7 @@ const styles = StyleSheet.create({
     
   },
   balance: {
-    flex: 5
+    flex: 1
   },
   balanceContainer: {
     alignItems: "center",
@@ -340,7 +316,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: verticalScale(20),
     width: "100%",
-    height: "auto",
     paddingHorizontal: horizontalScale(25),
     paddingVertical: verticalScale(25)
   },
@@ -367,7 +342,7 @@ const styles = StyleSheet.create({
   },
   priceSub: {
     color: "blue",
-    fontSize: moderateScale(28),
+    fontSize: moderateScale(30),
     fontWeight: "bold"
     
   },

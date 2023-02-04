@@ -32,7 +32,7 @@ const CarbonTonnesRemoved = ({navigation}) => {
       carbon += element.offset
     });
     setTrees(trees)
-    setCarbon(carbon)
+    setCarbon(Number(carbon).toFixed(1))
   }
 
   return (
@@ -52,12 +52,12 @@ const CarbonTonnesRemoved = ({navigation}) => {
         />
         <View style={[styles.co2RemovedWrapper, styles.groupPosition]}>
           <Text style={[styles.co2Removed, styles.tPosition]}>
-            <Text style={styles.co}>CO</Text>
+            <Text style={styles.co}>Tonnes CO</Text>
             <Text style={styles.text}>2</Text>
             <Text style={styles.co}> Removed</Text>
           </Text>
         </View>
-        <Text style={[styles.t, styles.tPosition]}> {numCarbon} Tonnes</Text>
+        <Text style={[styles.t, styles.tPosition]}> {numCarbon} </Text>
         <Text style={[styles.total, styles.tPosition]}>Total</Text>
         <View style={[styles.lineParent, styles.groupPosition]}>
           <View style={styles.groupInner} />
