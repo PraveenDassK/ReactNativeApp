@@ -100,11 +100,15 @@ const HomeScreenPersonal = ({ navigation }) => {
           style={[styles.transactionBox, styles.rounded]}
           key={i}
           onPress={() => navigation.navigate("Transactions")}>
-          <View style={{height: "100%", flexDirection: "row",}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{dataHold.description.replace("Payment to ", "")[0]}</Text>
+          <View style={{flex:1, flexDirection: "row",}}>
+          <View style={{flex:1, justifyContent:"center", alignItems:"center", marginLeft: "2.5%"}}>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", }}>
+            <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+            <Text style={{fontWeight: "700"}}>{dataHold.description.replace("Payment to ", "")[0]}</Text>
+            </View>
           </View>
-          <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+          </View>
+          <View style={{flex: 2, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
               <Text style={{fontSize :14, fontWeight: "700"}}>
                 {dataHold.description.replace("Payment to ", "")}
               </Text>
@@ -112,7 +116,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 {moment(dataHold.transactionDate).format("MMM Do YY")}
               </Text>
           </View>
-          <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
+          <View style={{flex: 2, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
           <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
             £{dataHold.amount}
           </Text>
@@ -131,8 +135,24 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   let currency = transactionData ? transactionData.transactions[0].amount : "£";
 
-  const catNames = ["Health", "Food", "House", "Sping", "Transport"];
-  const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
+
+  const carbonSpendings = [
+    {
+      id: 1, catName: "Health", dataPercentage: "70%", color: "#E4732D"
+    },
+    {
+      id: 2, catName: "Food", dataPercentage: "50%", color: "#F3B53F"
+    },
+    {
+      id: 3, catName: "House", dataPercentage: "40%", color: "#DC85F5"
+    },
+    {
+      id: 4, catName: "Sping", dataPercentage: "30%", color: "#5888F5"
+    },
+    {
+      id: 5, catName: "Transport", dataPercentage: "20%", color: "#5AC661"
+    },
+  ]
 
   /**
    * @dev Data needed for this page
@@ -178,10 +198,10 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View> */}
           <View style={styles.totalWalletBalanceContainer11}>
             <Text style={styles.totalWalletBalanceText11}>
-              Account name:{accountname}
+              Account name: {accountname}
             </Text>
             <Text style={[styles.BalanceText11, styles.blueTitle11]}>
-              SortCode:{sortCode}
+              SortCode: {sortCode}
             </Text>
             <Text style={styles.dateText11}>Account Number: {accountnumber}</Text>
           </View>
@@ -310,100 +330,11 @@ const HomeScreenPersonal = ({ navigation }) => {
               </View>
             </View>
             <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-              <Text style={styles.subtitleText}>{catNames[0]}</Text>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[0]}
-                  backgroundColor="#E4732D"
-                >
-                  <Text style={styles.barText}>{dataPercentages[0]}</Text>
-                </View>
+            { carbonSpendings.map((spending) => (
+              <View key={spending.id}>
+                <PercentagLabel catName={spending.catName} color={spending.color} dataPercentage={spending.dataPercentage}/>
               </View>
-
-              <Text style={styles.subtitleText}>{catNames[1]}</Text>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[1]}
-                  backgroundColor="#F3B53F"
-                >
-                  <Text style={styles.barText}>{dataPercentages[1]}</Text>
-                </View>
-              </View>
-
-              <Text style={styles.subtitleText}>{catNames[2]}</Text>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[2]}
-                  backgroundColor="#DC85F5"
-                >
-                  <Text style={styles.barText}>{dataPercentages[2]}</Text>
-                </View>
-              </View>
-
-              <Text style={styles.subtitleText}>{catNames[3]}</Text>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[3]}
-                  backgroundColor="#5888F5"
-                >
-                  <Text style={styles.barText}>{dataPercentages[3]}</Text>
-                </View>
-              </View>
-
-              <Text style={styles.subtitleText}>{catNames[4]}</Text>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[4]}
-                  backgroundColor="#5AC661"
-                >
-                  <Text style={styles.barText}>{dataPercentages[4]}</Text>
-                </View>
-              </View>
+            ))}
             </View>
 
             <View style={{marginTop: verticalScale(25)}}>
@@ -429,7 +360,8 @@ const HomeScreenPersonal = ({ navigation }) => {
                   alignContent: "center",
                   flex: 0.1,
                 }}
-              ></View>
+              >
+              </View>
 
               <View style={styles.carbonAssetsDivRight}>
                 <Text style={styles.largeNumber}>{TotalAmount}</Text>
@@ -448,14 +380,14 @@ const HomeScreenPersonal = ({ navigation }) => {
             </View>
 
             <View style={styles.subTextRow}>
-                          <Text  style={{fontSize: 12, flex: 8}}>Drylands Protection, Kasigau Wildlife Corridor £19 / Tonne</Text>
-                          <Text style={styles.subTextToken}>1</Text>
-                        </View>
+              <Text  style={{fontSize: 12, flex: 8}}>Drylands Protection, Kasigau Wildlife Corridor £19 / Tonne</Text>
+              <Text style={styles.subTextToken}>1</Text>
+            </View>
 
             <View style={styles.subTextRow}>
-                                      <Text  style={{fontSize: 12, flex: 8}}>Tropical Forest Protection, Keo Seima £14 / Tree</Text>
-                                      <Text style={styles.subTextToken}>1</Text>
-                                    </View>
+              <Text  style={{fontSize: 12, flex: 8}}>Tropical Forest Protection, Keo Seima £14 / Tree</Text>
+              <Text style={styles.subTextToken}>1</Text>
+            </View>
 
 
           </View>
@@ -466,8 +398,8 @@ const HomeScreenPersonal = ({ navigation }) => {
          */}
 
         <View style={styles.carbonSpendingTitleDiv}>
-                  <Text style={styles.titleText}>Recent Transactions</Text>
-                </View>
+          <Text style={styles.titleText}>Recent Transactions</Text>
+       </View>
         <View style={styles.transactionsContainer}>
           {transactionTable}
         </View>
@@ -498,6 +430,30 @@ const HomeScreenPersonal = ({ navigation }) => {
   );
 };
 
+
+const PercentagLabel = ({catName, color, dataPercentage, }) => (
+              
+  <View >
+  <Text style={styles.subtitleText}>{catName}</Text>
+    <View
+      style={[
+        styles.carbonSpendingAnalysysBarBackground,
+        styles.rounded,
+      ]}
+    >
+      <View
+        style={[
+          styles.carbonSpendingAnalysysBarProgress,
+          styles.rounded,
+        ]}
+        width={dataPercentage}
+        backgroundColor={color}
+      >
+        <Text style={styles.barText}>{dataPercentage}</Text>
+      </View>
+    </View>
+</View>
+)
 const styles = StyleSheet.create({
   congratulationsText: {
     textAlign: "center",
