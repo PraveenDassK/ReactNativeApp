@@ -14,19 +14,17 @@ const SpendingLimit = ({navigation,route}) => {
 
   const [monthLim, setMonLim] = useState(0);
   const [spend, setSpend] = useState(0);
-  const [percent, setPercent] = useState("0%");
+  const [percent, setPercent] = useState("50%");
 
   console.log(route)
   if(route.params) {
-    //loadData()
+    loadData()
     return true
   }
 
   //Calls the API once during load
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus',  () => {
-      loadData()
-    })
+    loadData()
   },[])
   
   //Gets the data for the user
@@ -35,35 +33,28 @@ const SpendingLimit = ({navigation,route}) => {
     const response = await api.GetLimit(authContext.accountID);
     //Then isolate the useful data
     const data = response.data.details
-    console.log(response.data)
+    console.log(data)
+
+    const spend = 50
+
     //If there is a limit
     //50 is the amount spent
-    if(data.monthlyAmount != 0){
-      setPercent((50/data.monthlyAmount)*100 + "%")
+    if(data.monthlyAmount > 0){
+      const percentamount = Math.floor((spend/data.monthlyAmount)*100) + "%"
+      setPercent(percentamount)
+      console.log(percentamount)
     }else{
-      setPercent(0)
+      setPercent("0%")
     }
+
     setMonLim(data.monthlyAmount)
 
     const balanceresponse = await api.GetAccount(authContext.accountID);
     const balData = balanceresponse.data.details;
-    setSpend(50);
+    setSpend(spend);
   }
-  const sendRequest = async () => {
-    const response = await api.SetToggles(authContext.accountID,
-      isEnabled,
-    );
-  }
+  console.log(percent)
 
-
-  let percentBar =           
-  <View style={[styles.amountContainer]}>
-    <View style={[styles.amountScale]} width = {percent}>
-    </View>
-  </View>
-
-  console.log(spend)
-  console.log(monthLim)
   return (
     <Screen>
     <View style={styles.spendingLimit}>
@@ -127,8 +118,10 @@ const SpendingLimit = ({navigation,route}) => {
             Amount spent this month
           </Text>
 
-          {percentBar}
-
+          <View style={[styles.amountContainer]}>
+            <View style={[styles.amountScale]} width = {percent}>
+            </View>
+          </View>
 
         </View>
         
