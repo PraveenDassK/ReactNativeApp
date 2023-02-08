@@ -137,7 +137,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
       <View style={styles.subTextRow}>
         <Text style={styles.subText}>
-          {`Please enter the code sent to `}+{user.phoneNumber}
+          {`Please enter the code sent to `}{user.email}
         </Text>
       </View>
 
@@ -157,7 +157,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 onBlur={() => setFieldTouched("pVer1")}
                 onChangeText={handleChange("pVer1")}
 
-=                style={styles.inputBox}
+               style={styles.inputBox}
               />
               <ErrorMessage error={errors.pVer1} visible={touched.pVer1} />
               <TextInput
@@ -202,8 +202,8 @@ const OTPVerificationPersonal = ({ navigation }) => {
                           </Text>
                           <View style={styles.subTextRow}>
                             <Text style={styles.subText}>
-                              {`Please enter the code sent to `}
-                              {user.email}
+                              {`Please enter the code sent to `}+{user.phoneNumber}
+
                             </Text>
                           </View>
             <View style={styles.entryBoxContainer}>
@@ -270,7 +270,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
 
 
-      <Text style={styles.swipeUp}>Swipe Up if already have an account</Text>
     </View>
   );
 };
