@@ -1,17 +1,16 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable } from "react-native";
+import { StyleSheet, View, Text, TextInput, Image} from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import AuthContext from "../auth/context";
 import Button from "../components/Button"
 import ErrorMessage from "../components/forms/ErrorMessage";
-import FadeInView from "../components/fadeInview";
+
 import GlobalStyles from "../../GlobalStyles";
 import loginApi from "../api/login";
 import Screen from "../components/Screen";
-import SwipeUp from "../components/SwipeUp"
+
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
@@ -41,7 +40,7 @@ const Login = ({ navigation }) => {
 
   return (
     <Screen>
-      <SwipeUp>
+     
     <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
       <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
         <View style={[styles.hello1, styles.enterColor]}>
@@ -127,7 +126,7 @@ const Login = ({ navigation }) => {
   
 
     </View>
-    </SwipeUp>
+    
     </Screen>
   );
 };

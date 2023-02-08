@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-} from "react";
+import React, { useContext, useEffect, useState, useCallback, useRef} from "react";
 import {
   Text,
   StyleSheet,
@@ -14,17 +8,18 @@ import {
   Pressable,
 } from "react-native";
 import { Formik } from "formik";
-import * as Yup from "yup";
+import * as Yup from 'yup';
 import { useFocusEffect } from "@react-navigation/native";
-import jwtDecode from "jwt-decode";
+import  jwtDecode from'jwt-decode'
 
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Button from "../components/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
-import Form from "../components/forms/Form";
-import loginAPI from "../api/login";
+import Form from "../components/forms/Form"
+import loginAPI from '../api/login'
 import authStorage from "../auth/storage";
+
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -35,100 +30,94 @@ const validationSchema = Yup.object().shape({
   // eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
   // eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
   // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
-}); // add required if necessary
+
+}) // add required if necessary
 
 const OTPVerificationPersonal = ({ navigation }) => {
-  const { user, currentUser, setCurrentUser } = useContext(AuthContext);
-  const [count, setCount] = useState(45);
-  const [resendOTP, setResendOTP] = useState(null);
 
-  const initialValues = {
-    pVer1: "",
-    pVer2: "",
-    pVer3: "",
-    pVer4: "",
-    eVer1: "",
-    eVer2: "",
-    eVer3: "",
-    eVer4: "",
-  };
+  const { user, currentUser, setCurrentUser} = useContext(AuthContext)
+  const [count, setCount] = useState(45)
+  const [resendOTP, setResendOTP] = useState(null)
 
-  const pVer1Ref = useRef();
-  const pVer2Ref = useRef();
-  const pVer3Ref = useRef();
-  const pVer4Ref = useRef();
-  const eVer1Ref = useRef();
-  const eVer2Ref = useRef();
-  const eVer3Ref = useRef();
-  const eVer4Ref = useRef();
+
+  const initialValues= {
+    pVer1:'',
+    pVer2:'',
+    pVer3:'',
+    pVer4:'',
+    eVer1:'',
+    eVer2:'',
+    eVer3:'',
+    eVer4:''
+  }
+
+  const pVer1Ref = useRef()
+  const pVer2Ref = useRef()
+  const pVer3Ref = useRef()
+  const pVer4Ref = useRef()
+  const eVer1Ref = useRef()
+  const eVer2Ref = useRef()
+  const eVer3Ref = useRef()
+  const eVer4Ref = useRef()
+
+
 
   const countdown = () => {
-    setCount((prev) => prev - 1);
-  };
+    setCount(prev => prev - 1)
+  }
 
-  const handleSubmit = async ({
-    pVer1,
-    pVer2,
-    pVer3,
-    pVer4,
-    eVer1,
-    eVer2,
-    eVer3,
-    eVer4,
-  }) => {
-    const email = user.email;
-    const phoneNumber = user.phoneNumber;
-    const emailOTP = pVer1 + pVer2 + pVer3 + pVer4;
-    const phoneOTP = eVer1 + eVer2 + eVer3 + eVer4;
+  const handleSubmit = async({pVer1, pVer2, pVer3, pVer4, eVer1, eVer2, eVer3, eVer4, })=> {
 
-    setResendOTP({ email, phoneNumber, emailOTP, phoneOTP });
+    const email = user.email
+    const phoneNumber = user.phoneNumber
+    const emailOTP = pVer1  + pVer2 + pVer3 + pVer4
+    const phoneOTP =  eVer1 + eVer2 + eVer3 + eVer4
 
-    const result = await loginAPI.verifyLoginOTP({
-      email,
-      phoneNumber,
-      emailOTP,
-      phoneOTP,
-    });
+    setResendOTP({email, phoneNumber, emailOTP, phoneOTP})
 
-    console.log("what is login", result.ok, result.data);
+    const result = await loginAPI.verifyLoginOTP({email, phoneNumber, emailOTP, phoneOTP})
 
-    console.log({ email, phoneNumber, emailOTP, phoneOTP });
+    console.log('what is login',  result.ok, result.data)
 
-    if (!result.ok) return alert("Could not verify otp");
+    console.log({email, phoneNumber, emailOTP, phoneOTP})
 
-    if (!result.data.result) return alert("Could not verify otp");
-    const currentUser = jwtDecode(result?.data?.details);
-    setCurrentUser(currentUser);
-    authStorage.storeToken(result?.data?.details);
+    if (!result.ok) return alert('Could not verify otp')
 
-    console.log("authToken", currentUser);
+    if (!result.data.result) return alert('Could not verify otp')
+    const currentUser = jwtDecode(result?.data?.details)
+    setCurrentUser(currentUser)
+    authStorage.storeToken(result?.data?.details)
+
+    console.log('authToken', currentUser)
 
     // with navigate router
-  };
+
+
+  }
 
   const resendCred = async () => {
-    const email = user.email;
-    const phoneNumber = user.phoneNumber;
+    const email = user.email
+    const phoneNumber = user.phoneNumber
 
     // const result = await loginAPI.SendLoginOTP({ email, phoneNumber})
-    console.log(email, phoneNumber);
-  };
+    console.log( email, phoneNumber)
+  }
 
-  useEffect(() => {
+  useEffect(()=> {
     if (count === 0) {
-      setCount(45);
-      resendCred();
+      setCount(45)
+      resendCred()
     }
-  }, [count]);
+  },[count])
 
   useFocusEffect(
     useCallback(() => {
-      const countdownId = setInterval(countdown, 1000);
-      return () => {
-        clearInterval(countdownId);
-      };
-    }, [])
-  );
+    const countdownId = setInterval(countdown, 1000)
+    return () => {
+      clearInterval(countdownId);
+    };
+
+  },[]))
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
@@ -139,7 +128,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
         <Text style={styles.subText}>{`Please enter the code sent to `}+{ user.phoneNumber }</Text>
       </View>
 
-      <View style={styles.entryBoxContainer}>
+
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -153,6 +142,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
             touched,
           }) => (
             <>
+            <View style={styles.entryBoxContainer}>
               <TextInput
                 autoFocus={true}
                 maxLength={1}
@@ -163,7 +153,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 ref={pVer1Ref}
                 style={styles.inputBox}
               />
-              <ErrorMessage error={errors.eVer1} visible={touched.eVer1} />
+              <ErrorMessage error={errors.pVer1} visible={touched.pVer1} />
               <TextInput
                 maxLength={1}
                 placeholder="2"
@@ -174,7 +164,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 returnKeyType="next"
                 style={styles.inputBox}
               />
-              <ErrorMessage error={errors.eVer2} visible={touched.eVer2} />
+              <ErrorMessage error={errors.pVer2} visible={touched.pVer2} />
 
               <TextInput
                 maxLength={1}
@@ -186,7 +176,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 returnKeyType="next"
                 style={styles.inputBox}
               />
-              <ErrorMessage error={errors.eVer3} visible={touched.eVer3} />
+              <ErrorMessage error={errors.pVer3} visible={touched.pVer3} />
 
 
               <TextInput
@@ -199,7 +189,61 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 returnKeyType="next"
                 style={styles.inputBox}
               />
-              <ErrorMessage error={errors.eVer4} visible={touched.eVer4} />
+              <ErrorMessage error={errors.pVer4} visible={touched.pVer4} />
+              <Text style={styles.countdown}>Resend Code in 00:{count < 10 ? `0${count}` : count}</Text>
+              <View style={styles.subTextRow}>
+                            <Text style={styles.subText}>{`Please enter the code sent to `}{ user.email }</Text>
+                          </View>
+                    </View>
+      <View style={styles.entryBoxContainer}>
+      <TextInput
+                            autoFocus={true}
+                            maxLength={1}
+                            placeholder="1"
+                            keyboardType="numeric"
+                            onBlur={() => setFieldTouched("eVer1")}
+                            onChangeText={handleChange("eVer1")}
+                            ref={eVer1Ref}
+                            style={styles.inputBox}
+                          />
+                          <ErrorMessage error={errors.eVer1} visible={touched.eVer1} />
+                          <TextInput
+                            maxLength={1}
+                            placeholder="2"
+                            keyboardType="numeric"
+                            onBlur={() => setFieldTouched("eVer2")}
+                            onChangeText={handleChange("eVer2")}
+                            ref={eVer2Ref}
+                            returnKeyType="next"
+                            style={styles.inputBox}
+                          />
+                          <ErrorMessage error={errors.eVer2} visible={touched.eVer2} />
+
+                          <TextInput
+                            maxLength={1}
+                            placeholder="3"
+                            keyboardType="numeric"
+                            onBlur={() => setFieldTouched("eVer3")}
+                            onChangeText={handleChange("eVer3")}
+                            ref={eVer3Ref}
+                            returnKeyType="next"
+                            style={styles.inputBox}
+                          />
+                          <ErrorMessage error={errors.eVer3} visible={touched.eVer3} />
+
+
+                          <TextInput
+                            maxLength={1}
+                            placeholder="4"
+                            keyboardType="numeric"
+                            onBlur={() => setFieldTouched("eVer4")}
+                            onChangeText={handleChange("eVer4")}
+                            ref={eVer4Ref}
+                            returnKeyType="next"
+                            style={styles.inputBox}
+                          />
+                          <ErrorMessage error={errors.eVer4} visible={touched.eVer4} />
+                    </View>
 
 
 
@@ -207,82 +251,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
           )}
         </Formik>
 
-      </View>
-      <Text style={styles.countdown}>Resend Code in 00:{count < 10 ? `0${count}` : count}</Text>
-
-      <View style={styles.subTextRow}>
-              <Text style={styles.subText}>{`Please enter the code sent to `}{ user.email }</Text>
-            </View>
-
-      <View style={styles.entryBoxContainer}>
-              <Formik
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-                validationSchema={validationSchema}
-              >
-                {({
-                  handleChange,
-                  handleSubmit,
-                  errors,
-                  setFieldTouched,
-                  touched,
-                }) => (
-                  <>
-                    <TextInput
-                      autoFocus={true}
-                      maxLength={1}
-                      placeholder="1"
-                      keyboardType="numeric"
-                      onBlur={() => setFieldTouched("eVer1")}
-                      onChangeText={handleChange("eVer1")}
-                      ref={eVer1Ref}
-                      style={styles.inputBox}
-                    />
-                    <ErrorMessage error={errors.eVer1} visible={touched.eVer1} />
-                    <TextInput
-                      maxLength={1}
-                      placeholder="2"
-                      keyboardType="numeric"
-                      onBlur={() => setFieldTouched("eVer2")}
-                      onChangeText={handleChange("eVer2")}
-                      ref={eVer2Ref}
-                      returnKeyType="next"
-                      style={styles.inputBox}
-                    />
-                    <ErrorMessage error={errors.eVer2} visible={touched.eVer2} />
-
-                    <TextInput
-                      maxLength={1}
-                      placeholder="3"
-                      keyboardType="numeric"
-                      onBlur={() => setFieldTouched("eVer3")}
-                      onChangeText={handleChange("eVer3")}
-                      ref={eVer3Ref}
-                      returnKeyType="next"
-                      style={styles.inputBox}
-                    />
-                    <ErrorMessage error={errors.eVer3} visible={touched.eVer3} />
-
-
-                    <TextInput
-                      maxLength={1}
-                      placeholder="4"
-                      keyboardType="numeric"
-                      onBlur={() => setFieldTouched("eVer4")}
-                      onChangeText={handleChange("eVer4")}
-                      ref={eVer4Ref}
-                      returnKeyType="next"
-                      style={styles.inputBox}
-                    />
-                    <ErrorMessage error={errors.eVer4} visible={touched.eVer4} />
-
-
-
-                  </>
-                )}
-              </Formik>
-
-            </View>
 
                   <Text style={styles.countdown}>Resend Code in 00:{count < 10 ? `0${count}` : count}</Text>
 
@@ -303,7 +271,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
-    height: 812,
+    minHeight: "100%",
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
   },
