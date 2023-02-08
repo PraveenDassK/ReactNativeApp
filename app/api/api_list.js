@@ -39,24 +39,31 @@ const GetTransactions = (enfuceid,amount) =>  {
 const RetriveBenificiaries = (carbonyteid) => client.get("https://api.carbonyte.io/walletmodule/RetrieveBeneficiaries/" + carbonyteid)
 
 const GetLimit = (enfuceid) => client.get("https://api.carbonyte.io/transactionmodule/GetBudget?accountId=" + enfuceid)
-const SetLimit = (enfuceid,amount) =>  client.post("https://api.carbonyte.io/transactionmodule/SetBudget?accountId=A12274AW&periodType=monthly&amount=" + amount)
+const SetLimit = (enfuceid,amount) =>  client.post("https://api.carbonyte.io/transactionmodule/SetBudget?accountId=" + 
+                              enfuceid + 
+                              "&periodType=monthly&amount=" + amount)
 
 const GetProjectByID = (project) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?companyId=" + project)
 
-const SendFunds = (sender,amount,reciverName,accountNumber,sortCode,address) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
+const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
   {
-    "sourceAccountId": sender,
+    "sourceAccountId": "A12277V1",
     "destination": {
       "type": "SCAN",
       "id": "A1226WEM",
-      "accountNumber": accountNumber,
-      "sortCode": sortCode,
-      "name": reciverName,
-      "address": address
+      "accountNumber": "02619527",
+      "sortCode": "000000",
+      "name": "Gorthalax",
+      "address": {
+        "addressLine1": "string",
+        "postTown": "London",
+        "postCode": "W2 1AS",
+        "country": "GB"
+      }
     },
     "currency": "GBP",
     "amount": amount,
-    "reference": "Transfer"
+    "reference": "tithes"
   }
 )
 
@@ -91,6 +98,7 @@ const testAPI = () => {'v'
 }
 
 const AddBeneficiary = (modulrCustomerId,phonenumber,accountName,accNum,sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?modulrCustomerId="+modulrCustomerId,
+
   {
    "externalReference": "",
    "name": accountName,
@@ -129,8 +137,7 @@ const AddBeneficiary = (modulrCustomerId,phonenumber,accountName,accNum,sortCode
   }
 )
 
-const GetUserImpacts = (Id) => client.get("https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/" + "CC11875")
-
+const GetUserImpacts = async(Id) => await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/CC11875");
 
 export default {
     GetCustomerDetails,

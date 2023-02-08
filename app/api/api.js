@@ -25,7 +25,7 @@ const GetCustomerDetails = async (Id) => {
 const GetUserImpacts = async(Id) => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/CC11875");
     const requestData = request.data.details
-    console.log(requestData)
+    return requestData
 }
 
 const GetAccountByCustomer = async (Id) => {
@@ -43,19 +43,26 @@ const GetAccount = async (Id) => {
 const GetProjectList = async() => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectList")
     const requestData = request.data.details.data
-    console.log(requestData)
     return requestData
 }
 
 const GetSingleProject = async(Id) => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?projectId=" + Id)
+    return requestData
+}
+
+const Checkout = async(obj) => {
+    const request = await client.post("https://api.carbonyte.io/ecomodule/Earthly/Checkout",obj)
     const requestData = request.data.details
     console.log(requestData)
     return requestData
 }
 
-const Checkout = (obj) => client.post("https://api.carbonyte.io/ecomodule/Earthly/Checkout",obj)
-
+const getUsersNFTs = async (address) => {
+    const request = await client.post("https://9c42-138-248-219-178.eu.ngrok.io")
+    const requestData = request.data.details
+    return requestData
+}
 
 export default {
     GetCustomerDetails,
@@ -64,5 +71,6 @@ export default {
     GetAccountByCustomer,
     GetProjectList,
     GetSingleProject,
-    Checkout
+    Checkout,
+    getUsersNFTs
   };
