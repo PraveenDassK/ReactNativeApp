@@ -4,6 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen";
 import api from "../api/api_list"
+import apiCall from "../api/api"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
@@ -33,16 +34,21 @@ const SpendingLimit = ({navigation,route}) => {
     const response = await api.GetLimit(authContext.accountID);
     //Then isolate the useful data
     const data = response.data.details
-    console.log(data)
 
-    const spend = 50
+
+    //Gets the monthly spend
+    const transactions = await apiCall.GetTransactions(authContext.GetTransactions);
+    let spend = 0
+    transactions.content.forEach(element => {
+      console.log(element)
+      spend += element.amount
+    });
 
     //If there is a limit
     //50 is the amount spent
     if(data.monthlyAmount > 0){
       const percentamount = Math.floor((spend/data.monthlyAmount)*100) + "%"
       setPercent(percentamount)
-      console.log(percentamount)
     }else{
       setPercent("0%")
     }
@@ -52,8 +58,22 @@ const SpendingLimit = ({navigation,route}) => {
     const balanceresponse = await api.GetAccount(authContext.accountID);
     const balData = balanceresponse.data.details;
     setSpend(spend);
+    setIsEnabled(data.monthlyAmount != 0)
   }
-  console.log(percent)
+
+  /**
+   * @todo set spending limit to 0 on trigger
+   */
+  const spendingToggle = () => {
+    if(isEnabled){
+      setIsEnabled(false)
+      setPercent("0%")
+      setMonLim(0)
+    }else{
+      setIsEnabled(true)
+      navigation.navigate("SetLimit")
+    }
+  }
 
   return (
     <Screen>
@@ -110,7 +130,7 @@ const SpendingLimit = ({navigation,route}) => {
             />
           <Pressable
             style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
-            onPress={() => navigation.navigate("SetLimit")}
+            onPress={() => spendingToggle()}
             title="Set Limit"
           />
 
@@ -147,7 +167,6 @@ const styles = StyleSheet.create({
     width:"100%",
     textAlign:"center",
     top:"30%",
-    fontSize:"20%",
   },
   amountContainer:{
     width:"90%",
@@ -287,7 +306,6 @@ const styles = StyleSheet.create({
   hello2: {
     marginTop: 59,
     marginLeft: -30,
-    fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
     fontWeight: "700",
   },
@@ -301,7 +319,6 @@ const styles = StyleSheet.create({
     left: 3,
     lineHeight: 16,
     width: 316,
-    fontSize: GlobalStyles.FontSize.size_base,
   },
   cardIcon: {
     marginLeft: -6,
