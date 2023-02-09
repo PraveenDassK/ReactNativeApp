@@ -130,7 +130,7 @@ if(!AppState.currentState) {
     }}>
       <SafeAreaProvider>
       <NavigationContainer>
-      {/* <AppNavigator /> */}
+      <AppNavigator />
 
       
        
