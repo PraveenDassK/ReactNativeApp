@@ -10,15 +10,14 @@ import { horizontalScale, moderateScale, verticalScale } from '../config/metrics
 
 const CarbonProject = ({navigation,route}) => {
   const [data, setData] = useState(null)
-  console.log(route)
   useEffect(() => {
     loadData()
   },[])
   
   const loadData = async () => {
-    const response = await api.getListingsSingle(route.params.Id);
+    const response = await apiCall.GetSingleProject(route.params.Id);
     setData(response)
-    console.log(response)
+    console.log(route.params.Id)
   }
   
   let projects = [];
@@ -44,7 +43,6 @@ const CarbonProject = ({navigation,route}) => {
             </View>
           </View>
         )
-        console.log(data)
     }
   }
 
