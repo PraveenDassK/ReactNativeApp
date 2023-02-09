@@ -10,6 +10,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 
 import Screen from "../components/Screen";
+import initals from "../components/Initals";
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
@@ -18,6 +19,7 @@ import {
 } from "../config/scaling";
 
 import api from "../api/api_list";
+import apiCall from "../api/api";
 import AuthContext from "../auth/context";
 
 import moment from "moment";
@@ -34,7 +36,6 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [accountname, setaccountname] = useState(null);
   const authContext = useContext(AuthContext);
   const { settings } = useContext(AuthContext);
-  console.log(settings);
 
   const [transactionData, setTransactionData] = useState(null);
 
@@ -43,7 +44,9 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
   const [numCarbonType, setCarbonType] = useState(0);
-
+  const [animalsSaved, setAnimalsSaved] = useState(0);
+  const [projects, setProjects] = useState([]);
+  
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
   const carbonAmount = numCarbon;
@@ -63,11 +66,7 @@ const HomeScreenPersonal = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const data1 = response1.data;
     const accountdata = accountresponse.data.details;
-    console.log(
-      "===================================" +
-        accountresponse +
-        "======================================="
-    );
+
     setBalance(data.availableBalance);
     setSortCode(accountdata.identifiers[0].sortCode);
     setaccountnumber(accountdata.identifiers[0].accountNumber);
@@ -76,15 +75,20 @@ const HomeScreenPersonal = ({ navigation }) => {
     setStatus(data.status != "ACTIVE");
 
     //Trees
-    let respose = await api.GetUserImpacts();
-    const assets = respose.data.details.assets;
+    let respose = await apiCall.GetUserImpacts();
+    const assets = respose.assets;
     let trees = 0;
     let carbon = 0;
     assets.forEach((element) => {
       element.type == "TREE" ? (trees += element.count) : null;
       carbon += element.offset;
-      console.log(element.type);
     });
+    let projects = [];
+    for (let i = 0; i < 4; i++) {
+      projects.push(assets[i]);
+      console.log(assets[i]);
+    }
+    setProjects(projects);
     setTrees(trees);
     setCarbon(Math.round(carbon));
 
@@ -456,8 +460,8 @@ const HomeScreenPersonal = ({ navigation }) => {
             <View style={styles.carbonAssetsDivLeft}>
               <Text style={styles.largeNumber}>{TokenAmount}</Text>
               <View>
-                <Text>Carbonyte</Text>
-                <Text style={{ fontWeight: "700" }}>Tokens</Text>
+                <Text>Trees</Text>
+                <Text style={{ fontWeight: "700" }}>Planted</Text>
               </View>
             </View>
 
@@ -475,10 +479,10 @@ const HomeScreenPersonal = ({ navigation }) => {
             ></View>
 
             <View style={styles.carbonAssetsDivRight}>
-              <Text style={styles.largeNumber}>{TotalAmount}</Text>
+              <Text style={styles.largeNumber}>{animalsSaved}</Text>
               <View style={{ fontWeight: "700" }}>
-                <Text>Total</Text>
-                <Text style={{ fontWeight: "700" }}>Assets</Text>
+                <Text>Animals </Text>
+                <Text style={{ fontWeight: "700" }}>Saved</Text>
               </View>
             </View>
           </View>
@@ -523,7 +527,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                     fontWeight: "700",
                   }}
                 >
-                  D P
+                  {projects[0]?.name?.charAt(0)}
                 </Text>
               </View>
               <View
@@ -535,9 +539,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                 }}
               >
                 <Text style={{ fontSize: 14, fontWeight: "700" }}>
-                  Drylands Protection, Kasigau Wildlife Corridor £19 / Tonne
+                  {projects[0]?.name} £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
                 </Text>
-                <Text style={{}}>{todaydate}</Text>
+                <Text style={{}}>{moment(projects[0]?.lastUpdated).format("MMM Do YY")}</Text>
               </View>
               <View
                 style={{
@@ -587,7 +591,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                     fontWeight: "700",
                   }}
                 >
-                  D P
+                  {projects[1]?.name?.charAt(0)}
                 </Text>
               </View>
               <View
@@ -599,9 +603,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                 }}
               >
                 <Text style={{ fontSize: 14, fontWeight: "700" }}>
-                  Drylands Protection, Kasigau Wildlife Corridor £19 / Tonne
+                  {projects[1]?.name} £{projects[1]?.displayAssetPrice} / {projects[1]?.type}
                 </Text>
-                <Text style={{}}>{todaydate}</Text>
+                <Text style={{}}>{moment(projects[1]?.lastUpdated).format("MMM Do YY")}</Text>
               </View>
               <View
                 style={{
