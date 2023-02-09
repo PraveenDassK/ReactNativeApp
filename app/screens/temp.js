@@ -1,342 +1,509 @@
-import React, { useContext, useEffect, useState, useCallback, useRef} from "react";
-import {
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TextInput,
-  Pressable,
-} from "react-native";
-import { Formik } from "formik";
-import * as Yup from 'yup';
-import { useFocusEffect } from "@react-navigation/native";
-import  jwtDecode from'jwt-decode'
-
+import React,{ useEffect, useState,useContext } from "react";
+import { StyleSheet, View, Text, Pressable, Image, ScrollView } from "react-native";
+import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
+import apiCall from "../api/api"
 import AuthContext from "../auth/context";
-import Button from "../components/Button";
-import ErrorMessage from "../components/forms/ErrorMessage";
-import Form from "../components/forms/Form"
-import loginAPI from '../api/login'
-import authStorage from "../auth/storage";
+import moment from "moment";
 
+const ChooseCardsStandard5 = ({navigation}) => {
+  const authContext = useContext(AuthContext)
+  const [data, setData] = useState({})
+  const [numTrees, setTrees] = useState(0);
+  const [numCarbon, setCarbon] = useState(0);
+  const [projects, setProjects] = useState([]);
 
-const validationSchema = Yup.object().shape({
-  // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
-  // pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
-  // pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
-  // pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
-  // eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
-  // eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
-  // eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
-  // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
+    //Calls the API once during load
+    useEffect(() => {
+      loadData()
+    },[])
 
-}) // add required if necessary
-
-const OTPVerificationPersonal = ({ navigation }) => {
-
-  const { user, currentUser, setCurrentUser} = useContext(AuthContext)
-  const [count, setCount] = useState(45)
-  const [resendOTP, setResendOTP] = useState(null)
-
-
-  const initialValues= {
-    pVer1:'',
-    pVer2:'',
-    pVer3:'',
-    pVer4:'',
-    eVer1:'',
-    eVer2:'',
-    eVer3:'',
-    eVer4:''
-  }
-
-  const pVer1Ref = useRef()
-  const pVer2Ref = useRef()
-  const pVer3Ref = useRef()
-  const pVer4Ref = useRef()
-  const eVer1Ref = useRef()
-  const eVer2Ref = useRef()
-  const eVer3Ref = useRef()
-  const eVer4Ref = useRef()
-
-
-
-  const countdown = () => {
-    setCount(prev => prev - 1)
-  }
-
-  const handleSubmit = async({pVer1, pVer2, pVer3, pVer4, eVer1, eVer2, eVer3, eVer4, })=> {
-
-    const email = user.email
-    const phoneNumber = user.phoneNumber
-    const emailOTP = pVer1  + pVer2 + pVer3 + pVer4
-    const phoneOTP =  eVer1 + eVer2 + eVer3 + eVer4
-
-    setResendOTP({email, phoneNumber, emailOTP, phoneOTP})
-
-    const result = await loginAPI.verifyLoginOTP({email, phoneNumber, emailOTP, phoneOTP})
-
-    console.log('what is login',  result.ok, result.data)
-
-    console.log({email, phoneNumber, emailOTP, phoneOTP})
-
-    if (!result.ok) return alert('Could not verify otp')
-
-    if (!result.data.result) return alert('Could not verify otp')
-    const currentUser = jwtDecode(result?.data?.details)
-    setCurrentUser(currentUser)
-    authStorage.storeToken(result?.data?.details)
-
-    console.log('authToken', currentUser)
-
-    // with navigate router
-
-
-  }
-
-  const resendCred = async () => {
-    const email = user.email
-    const phoneNumber = user.phoneNumber
-
-    // const result = await loginAPI.SendLoginOTP({ email, phoneNumber})
-    console.log( email, phoneNumber)
-  }
-
-  useEffect(()=> {
-    if (count === 0) {
-      setCount(45)
-      resendCred()
+    //Gets the data for the user
+    const loadData = async () => {
+      let response = await apiCall.GetUserImpacts();
+      const assets = response.assets
+      let trees = 0
+      let carbon = 0
+      assets.forEach(element => {
+        element.type == "TREE" ? trees += element.count : null
+        carbon += element.offset
+      });
+      let projects = []
+      for(let i=0; i < 4; i++){
+        projects.push(assets[i])
+        console.log(assets[i])
+      }
+      setProjects(projects)
+      setTrees(trees)
+      setCarbon(Math.round(carbon))
     }
-  },[count])
-
-  useFocusEffect(
-    useCallback(() => {
-    const countdownId = setInterval(countdown, 1000)
-    return () => {
-      clearInterval(countdownId);
-    };
-
-  },[]))
-  return (
-    <View style={styles.mainContainer}>
-      <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>OTP Verification</Text>
-      </View>
-
-      <View style={styles.subTextRow}>
-        <Text style={styles.subText}>{`Please enter the code sent to `}+{ user.phoneNumber }</Text>
-      </View>
-
-
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+    return (
+    <ScrollView>
+    <Screen>
+    <View style={styles.chooseCardsStandard5}>
+      <View style={styles.groupParent}>
+        <Pressable
+          style={[styles.groupContainer, styles.groupContainerPosition]}
+          onPress={() => navigation.navigate("Account")}
         >
-          {({
-            handleChange,
-            handleSubmit,
-            errors,
-            setFieldTouched,
-            touched,
-          }) => (
-            <>
-            <View style={styles.entryBoxContainer}>
-              <TextInput
-                autoFocus={true}
-                maxLength={1}
-                placeholder="1"
-                keyboardType="numeric"
-                onBlur={() => setFieldTouched("pVer1")}
-                onChangeText={handleChange("pVer1")}
-                ref={pVer1Ref}
-                style={styles.inputBox}
-              />
-              <ErrorMessage error={errors.pVer1} visible={touched.pVer1} />
-              <TextInput
-                maxLength={1}
-                placeholder="2"
-                keyboardType="numeric"
-                onBlur={() => setFieldTouched("pVer2")}
-                onChangeText={handleChange("pVer2")}
-                ref={pVer2Ref}
-                returnKeyType="next"
-                style={styles.inputBox}
-              />
-              <ErrorMessage error={errors.pVer2} visible={touched.pVer2} />
-
-              <TextInput
-                maxLength={1}
-                placeholder="3"
-                keyboardType="numeric"
-                onBlur={() => setFieldTouched("pVer3")}
-                onChangeText={handleChange("pVer3")}
-                ref={pVer3Ref}
-                returnKeyType="next"
-                style={styles.inputBox}
-              />
-              <ErrorMessage error={errors.pVer3} visible={touched.pVer3} />
-
-
-              <TextInput
-                maxLength={1}
-                placeholder="4"
-                keyboardType="numeric"
-                onBlur={() => setFieldTouched("pVer4")}
-                onChangeText={handleChange("pVer4")}
-                ref={pVer4Ref}
-                returnKeyType="next"
-                style={styles.inputBox}
-              />
-              <ErrorMessage error={errors.pVer4} visible={touched.pVer4} />
-              <Text style={styles.countdown}>Resend Code in 00:{count < 10 ? `0${count}` : count}</Text>
-              <View style={styles.subTextRow}>
-                            <Text style={styles.subText}>{`Please enter the code sent to `}{ user.email }</Text>
-                          </View>
-                    </View>
-      <View style={styles.entryBoxContainer}>
-      <TextInput
-                            autoFocus={true}
-                            maxLength={1}
-                            placeholder="1"
-                            keyboardType="numeric"
-                            onBlur={() => setFieldTouched("eVer1")}
-                            onChangeText={handleChange("eVer1")}
-                            ref={eVer1Ref}
-                            style={styles.inputBox}
-                          />
-                          <ErrorMessage error={errors.eVer1} visible={touched.eVer1} />
-                          <TextInput
-                            maxLength={1}
-                            placeholder="2"
-                            keyboardType="numeric"
-                            onBlur={() => setFieldTouched("eVer2")}
-                            onChangeText={handleChange("eVer2")}
-                            ref={eVer2Ref}
-                            returnKeyType="next"
-                            style={styles.inputBox}
-                          />
-                          <ErrorMessage error={errors.eVer2} visible={touched.eVer2} />
-
-                          <TextInput
-                            maxLength={1}
-                            placeholder="3"
-                            keyboardType="numeric"
-                            onBlur={() => setFieldTouched("eVer3")}
-                            onChangeText={handleChange("eVer3")}
-                            ref={eVer3Ref}
-                            returnKeyType="next"
-                            style={styles.inputBox}
-                          />
-                          <ErrorMessage error={errors.eVer3} visible={touched.eVer3} />
-
-
-                          <TextInput
-                            maxLength={1}
-                            placeholder="4"
-                            keyboardType="numeric"
-                            onBlur={() => setFieldTouched("eVer4")}
-                            onChangeText={handleChange("eVer4")}
-                            ref={eVer4Ref}
-                            returnKeyType="next"
-                            style={styles.inputBox}
-                          />
-                          <ErrorMessage error={errors.eVer4} visible={touched.eVer4} />
-                    </View>
-
-
-
-            </>
-          )}
-        </Formik>
-
-
-                  <Text style={styles.countdown}>Resend Code in 00:{count < 10 ? `0${count}` : count}</Text>
-
-
-            <View style={styles.button}>
-                              <Button title="Verify" color="babyBlue" onPress={handleSubmit}/>
-                          </View>
-
-            <Text style={styles.swipeUp}>
-                      Swipe Up if already have an account
-                    </Text>
-
-
+          <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
+            <View style={styles.groupChild} />
+            <View style={styles.maskGroup236} />
+          </View>
+          <Text style={styles.hello}>
+            <Text style={styles.purchaseProject}>PURCHASE PROJECT</Text>
+          </Text>
+        </Pressable>
+        <View style={[styles.groupItem, styles.groupPosition]} />
+        <View style={[styles.groupInner, styles.groupPosition]} />
+        <View style={[styles.rectangleView, styles.groupChildPosition]} />
+        <View style={[styles.groupChild1, styles.groupChildPosition]} />
+        <View style={[styles.groupChild2, styles.groupChildPosition]} />
+        <View style={[styles.groupChild3, styles.groupChildPosition]} />
+        <Text style={[styles.hello1, styles.helloFlexBox]}>
+          <Text style={styles.purchaseProject}>Shrink your footprint,{"\n"}</Text>
+          <Text style={styles.purchaseProject}>but also grow{"\n"}</Text>
+          <Text style={styles.purchaseProject}>your hand print!</Text>
+        </Text>
+        <View style={[styles.helloWrapper21, styles.helloPosition12]}>
+          <Text style={[styles.hello2, styles.helloFlexBox12]}>{numTrees}</Text>
+        </View>
+        <Text style={[styles.totalAssets, styles.tonsPosition12]}>
+          <Text style={styles.purchaseProject}>
+            <Text style={styles.total1}>{`Total `}</Text>
+          </Text>
+          <Text style={styles.purchaseProject}>
+            <Text style={styles.assets1}>{"\n"}Assets</Text>
+          </Text>
+        </Text>
+        <View style={styles.co2RemovedWrapper}>
+          <Text style={[styles.co2Removed, styles.helloFlexBox]}>
+            <Text style={styles.co}>CO</Text>
+            <Text style={styles.text}>2</Text>
+            <Text style={styles.co}> Removed</Text>
+          </Text>
+        </View>
+        <Text style={[styles.tons, styles.tonsPosition]}> Tons</Text>
+        <View style={[styles.helloContainer, styles.helloPosition]}>
+          <Text style={[styles.hello21, styles.helloFlexBox]}> {numCarbon}</Text>
+        </View>
+        <Image
+          style={[styles.treeIcon, styles.treeIconLayout]}
+          resizeMode="cover"
+          source={require("../assets/tree.png")}
+        />
+        <Image
+          style={[styles.treeIcon1, styles.treeIconLayout]}
+          resizeMode="cover"
+          source={require("../assets/tree.png")}
+        />
+        <Image
+          style={[styles.treeIcon2, styles.treeIconLayout]}
+          resizeMode="cover"
+          source={require("../assets/tree.png")}
+        />
+        <Image
+          style={[styles.treeIcon3, styles.treeIconLayout]}
+          resizeMode="cover"
+          source={require("../assets/tree.png")}
+        />
+        <Text style={[styles.hello4, styles.helloTypo1]}>Assets</Text>
+        <Text style={[styles.hello5, styles.helloTypo1]}>Token</Text>
+        <Text style={[styles.hello6, styles.helloFlexBox]}>
+          (1 Tonne = 1 CO2 Token)
+        </Text>
+        <Text
+          style={[styles.drylandsProtectionKasigauW, styles.drylandsPosition]}
+        >
+          <Text
+            style={styles.total1}
+          >{projects[0]?.name}</Text>
+          <Text style={styles.assets1}>£{projects[0]?.displayTonnePrice} / Tonne</Text>
+        </Text>
+        <Text
+          style={[styles.drylandsProtectionKasigauW1, styles.drylandsPosition]}
+        >
+          <Text
+            style={styles.total1}
+          >{projects[1]?.name}</Text>
+          <Text style={styles.assets1}>£{projects[1]?.displayTonnePrice} / Tonne</Text>
+        </Text>
+        <Text
+          style={[styles.drylandsProtectionKasigauW2, styles.drylandsPosition]}
+        >
+          <Text
+            style={styles.total1}
+          >{projects[2]?.name}</Text>
+          <Text style={styles.assets1}>£{projects[2]?.displayTonnePrice} / Tonne</Text>
+        </Text>
+        <Text
+          style={[styles.drylandsProtectionKasigauW3, styles.drylandsPosition]}
+        >
+          <Text
+            style={styles.total1}
+          >{projects[3]?.name}</Text>
+          <Text style={styles.assets1}>£{projects[3]?.displayTonnePrice} / Tonne</Text>
+        </Text>
+        <Text style={[styles.nov2022At1820, styles.nov2022Position]}>
+        {moment(projects[0]?.lastUpdated).format("MMM Do YY")}
+        </Text>
+        <Text style={[styles.nov2022At18201, styles.nov2022Position]}>
+        {moment(projects[1]?.lastUpdated).format("MMM Do YY")}
+        </Text>
+        <Text style={[styles.nov2022At18202, styles.nov2022Position]}>
+        {moment(projects[2]?.lastUpdated).format("MMM Do YY")}
+        </Text>
+        <Text style={[styles.nov2022At18203, styles.nov2022Position]}>
+        {moment(projects[3]?.lastUpdated).format("MMM Do YY")}
+        </Text>
+        <Text style={[styles.hello7, styles.helloTypo]}>{projects[0]?.count}</Text>
+        <Text style={[styles.hello8, styles.helloTypo]}>{projects[1]?.count}</Text>
+        <Text style={[styles.hello9, styles.helloTypo]}>{projects[2]?.count}</Text>
+        <Text style={[styles.hello10, styles.helloTypo]}>{projects[3]?.count}</Text>
+      </View>
     </View>
+    </Screen>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
-    minHeight: "100%",
+  groupContainerPosition: {
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: "absolute",
+  },
+  groupPosition: {
+    height: 87,
+    marginTop: -233.5,
+    top: "50%",
+    borderRadius: GlobalStyles.Border.br_lg,
+    position: "absolute",
+  },
+  groupChildPosition: {
+    height: 76,
+    borderRadius: GlobalStyles.Border.br_lg,
+    left: 0,
+    right: 0,
+    position: "absolute",
+    backgroundColor: GlobalStyles.Color.white,
+  },
+  helloFlexBox: {
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    position: "absolute",
+  },
+  helloFlexBox12: {
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    position: "absolute",
+  },
+  helloPosition: {
+    height: 40,
+    bottom: 506,
+    left: "50%",
+    position: "absolute",
+  },
+  helloPosition12: {
+    height: 40,
+    bottom: 506,
+    left: "10%",
+    position: "absolute",
+  },
+  tonsPosition12: {
+    left: "42%",
+    fontSize: GlobalStyles.FontSize.size_base,
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    position: "absolute",
+  },
+  tonsPosition: {
+    left: "50%",
+    fontSize: GlobalStyles.FontSize.size_base,
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    position: "absolute",
+  },
+  treeIconLayout: {
+    height: 53,
+    width: 37,
+    left: 10,
+    position: "absolute",
+  },
+  helloTypo1: {
+    fontSize: GlobalStyles.FontSize.size_xs,
+    top: "32.7%",
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    fontWeight: "700",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    position: "absolute",
+  },
+  drylandsPosition: {
+    opacity: 0.77,
+    width: 198,
+    left: 54,
+    fontSize: GlobalStyles.FontSize.size_base,
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    top: "50%",
+    position: "absolute",
+  },
+  nov2022Position: {
+    width: 167,
+    color: GlobalStyles.Color.gray_800,
+    opacity: 0.77,
+    left: 54,
+    fontSize: GlobalStyles.FontSize.size_xs,
+    textAlign: "left",
+    top: "50%",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    position: "absolute",
+  },
+  helloTypo: {
+    lineHeight: 20,
+    fontSize: GlobalStyles.FontSize.size_2xl,
+    left: "91.41%",
+    textAlign: "left",
+    color: GlobalStyles.Color.indigo_100,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    position: "absolute",
+  },
+  groupChild: {
+    height: "100%",
+    right: "0%",
+    bottom: "0%",
+    backgroundColor: GlobalStyles.Color.blue_100,
+    borderRadius: GlobalStyles.Border.br_lg,
+    left: "0%",
+    top: "0%",
+    position: "absolute",
     width: "100%",
-    flex: GlobalStyles.DivContainer.flex,
   },
-
-  titleTextRow: {
-    marginTop: GlobalStyles.Title.marginTop,
-    marginLeft: GlobalStyles.Title.marginLeft,
-    width: GlobalStyles.Title.width,
+  maskGroup236: {
+    bottom: 13,
+    top: 0,
+    left: 0,
+    right: 0,
+    position: "absolute",
   },
-
-  titleText: {
-    fontSize: GlobalStyles.Title.fontSize,
-    fontWeight: GlobalStyles.Title.fontWeight,
+  rectangleParent: {
+    top: 0,
+    left: 0,
   },
-
-  subText: {
-    fontSize: GlobalStyles.RowText.fontSize,
-    fontWeight: GlobalStyles.RowText.fontWeight,
+  purchaseProject: {
+    margin: GlobalStyles.Margin.margin_8xs,
   },
-
-  subTextRow: {
-    marginTop: GlobalStyles.RowText.marginTop,
-    marginLeft: GlobalStyles.RowText.marginLeft,
-    width: "80%",
-    fontColor: GlobalStyles.RowText.fontColor,
+  hello: {
+    top: "40%",
+    left: "50%",
+    marginLeft: -70,
+    fontSize: GlobalStyles.FontSize.size_lg,
+    lineHeight: 17,
+    textTransform: "uppercase",
+    color: GlobalStyles.Color.white,
+    textAlign: "center",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    position: "absolute",
   },
-
-  entryBoxContainer: {
-    width: "80%",
-    marginLeft: "10%",
-    flexDirection: "row",
-    justifyContent: "space-between",
+  groupContainer: {
+    height: 60,
+    left: 0,
   },
-
-  inputBox: {
-  height: 40,
-  width: 40,
-  backgroundColor: "white",
-  marginTop: "5%",
-  borderRadius: 5,
-  justifyContent: "center",
-  alignItems: "center",
-  textAlign: "center"
+  groupItem: {
+    left: 3,
+    backgroundColor: "rgba(65, 160, 57, 0.17)",
+    width: "35%",
   },
-
-  countdown: {
-  width: "80%",
-  marginTop: "2.5%",
-  marginLeft: "10%"
+  groupInner: {
+    backgroundColor: "rgba(136, 136, 136, 0.13)",
+    width: "60%",
+    right: 0,
   },
-
-  button: {
-  flex: 1,
-  flexDirection: "column",
-  width: "80%",
-  marginLeft: "10%",
-  justifyContent: "flex-end",
-  alignItems: "flex-end",
+  rectangleView: {
+    marginTop: -92.5,
+    top: "50%",
   },
+  groupChild1: {
+    marginTop: -1.5,
+    top: "50%",
+  },
+  groupChild2: {
+    marginTop: 89.5,
+    top: "50%",
+  },
+  groupChild3: {
+    bottom: 83,
+  },
+  hello1: {
+    marginLeft: 100,
+  left:-65,
+    fontSize: GlobalStyles.FontSize.size_8xl,
+    lineHeight: 28,
+    fontWeight: "700",
+    top: 0,
+  },
+  hello2: {
+    fontSize: GlobalStyles.FontSize.size_12xl,
+    fontWeight: "700",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    left: "0%",
+    marginLeft: -40,
+    top: "0%",
+    color: GlobalStyles.Color.indigo_100,
+  },
+  hello21: {
+    marginLeft: -30,
+    width: 300,
+    fontSize: GlobalStyles.FontSize.size_12xl,
+    fontWeight: "700",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    left: "50%",
+    top: "-10%",
+    color: GlobalStyles.Color.indigo_100,
+  },
+  helloWrapper21: {
+    marginLeft: 10,
+    width: 22,
+  },
+  helloWrapper: {
+    marginLeft: -143.42,
+    width: 22,
+  },
+  total1: {
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+  },
+  assets1: {
+    fontWeight: "700",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+  },
+  totalAssets: {
+    marginLeft: -112.65,
+    bottom: 517,
+    width:"40%" ,
+    fontSize: GlobalStyles.FontSize.size_base,
+  },
+  co: {
+    fontSize: GlobalStyles.FontSize.size_base,
+  },
+  text: {
+    fontSize: GlobalStyles.FontSize.size_5xs,
+    textAlignVertical: "sub",
+  },
+  co2Removed: {
+    marginTop: "-17%",
+    width: 93,
+    top: "50%",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+    left: 0,
+  },
+  co2RemovedWrapper: {
+    marginTop: -159.94,
+    right: 30,
+    width: 92,
+    height: 14,
+    top: "48%",
+    position: "absolute",
+  },
+  tons: {
+    marginTop: -206,
+    marginLeft: 54.53,
+    width: "95%",
+    fontSize: GlobalStyles.FontSize.size_base,
+    fontWeight: "700",
+    top: "50%",
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+  },
+  helloContainer: {
 
-  swipeUp: {
-  justifyContent: "flex-end",
-  textAlign: "center",
-  textHorizontalAlign: "flex-end"
-  }
+    marginLeft: -50.89,
+    width: 89,
+  },
+  treeIcon: {
+    marginTop: -79.5,
+    top: "50%",
+  },
+  treeIcon1: {
+    marginTop: 11.5,
+    top: "50%",
+  },
+  treeIcon2: {
+    marginTop: 102.5,
+    top: "50%",
+  },
+  treeIcon3: {
+    bottom: 93,
+  },
+  hello4: {
+    left: "2.15%",
+  },
+  hello5: {
+    left: "86.2%",
+  },
+  hello6: {
+    top: "32.84%",
+    left: "15.64%",
+    fontSize: GlobalStyles.FontSize.size_3xs,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
+  },
+  drylandsProtectionKasigauW: {
+    marginTop: -79.5,
+  },
+  drylandsProtectionKasigauW1: {
+    marginTop: 11.5,
+  },
+  drylandsProtectionKasigauW2: {
+    marginTop: 102.5,
+  },
+  drylandsProtectionKasigauW3: {
+    marginTop: 193.5,
+  },
+  nov2022At1820: {
+    marginTop: -43.5,
+  },
+  nov2022At18201: {
+    marginTop: 47.5,
+  },
+  nov2022At18202: {
+    marginTop: 138.5,
+  },
+  nov2022At18203: {
+    marginTop: 229.5,
+  },
+  hello7: {
+    top: "38.73%",
+  },
+  hello8: {
+    top: "52.14%",
+  },
+  hello9: {
+    top: "65.54%",
+  },
+  hello10: {
+    top: "78.94%",
+  },
+  groupParent: {
+    width: "100%",
+    height: 679,
+  },
+  arrowPosition: {
+    top: "6%",
+    position: "absolute",
+  },
+  arrowCircle: {
+    marginTop: -10.11,
+    marginRight: 303.54,
+    width: 15,
+    height: 15,
+  },
+  chooseCardsStandard5: {
+    flex: 1,
+    paddingLeft: GlobalStyles.Padding.padding_7xs,
+    paddingRight: GlobalStyles.Padding.padding_8xs,
+    width: "100%",
+    backgroundColor: GlobalStyles.Color.gray_100,
+  },
 });
 
-export default OTPVerificationPersonal;
+export default ChooseCardsStandard5;

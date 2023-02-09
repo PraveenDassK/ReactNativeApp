@@ -7,12 +7,13 @@ import {
   Pressable,
   Switch,
   Button,
+  Linking,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 
-const SecurityAndPrivacy = ({ navigation }) => {
+const AboutUs = ({ navigation }) => {
   const { setIsAuth, settings, setSettings } = useContext(AuthContext);
 
   const [isEnabled, setIsEnabled] = useState(false);
@@ -63,6 +64,11 @@ const SecurityAndPrivacy = ({ navigation }) => {
     settings.transactionSharing ? setIsEnabled3(true) : null;
   };
 
+  const urlFacebook = "https://m.facebook.com/#!/Carbonyte-111640987687669/";
+  const urlTwitter = "https://twitter.com/carbonyte_io/";
+
+  const urlBlog = "https://carbonyte.io/";
+
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const toggleSwitch1 = () => {
     setIsEnabled1((previousState) => !previousState);
@@ -80,90 +86,101 @@ const SecurityAndPrivacy = ({ navigation }) => {
     }));
   };
 
+  const handlePressFacebook = () => {
+    Linking.canOpenURL(urlFacebook).then((supported) => {
+      return Linking.openURL(urlFacebook);
+    });
+  };
+
+  const handlePressBlog = () => {
+    Linking.canOpenURL(urlBlog).then((supported) => {
+      return Linking.openURL(urlBlog);
+    });
+  };
+
+  const handlePressTwitter = () => {
+    Linking.canOpenURL(urlTwitter).then((supported) => {
+      return Linking.openURL(urlTwitter);
+    });
+  };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>Security And Privacy</Text>
+        <Text style={styles.titleText}>About Us</Text>
       </View>
 
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/icon-faceid.png")}
-        />
+      <View
+        style={{
+          width: "90%",
+          backgroundColor: "white",
+          height: "auto",
+          borderRadius: 15,
+          marginTop: "5%",
+          marginLeft: "5%",
+        }}
+      >
+        <View style={styles.row}>
+          <Image
+            style={styles.icon}
+            resizeMode="cover"
+            source={require("../assets/blueStar.png")}
+          />
+          <Text style={styles.iconText}>Rate us on the App Store</Text>
+        </View>
 
-        <Text style={styles.divText}>Sign in with Face ID</Text>
-
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
+        <View style={styles.row}>
+          <Image
+            style={styles.icon}
+            resizeMode="cover"
+            source={require("../assets/blueImprove.png")}
+          />
+          <Text style={styles.iconText}>Tell us how to improve</Text>
+        </View>
       </View>
 
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/icon-view.png")}
-        />
+      <View
+        style={{
+          width: "90%",
+          backgroundColor: "white",
+          height: "auto",
+          borderRadius: 15,
+          marginTop: "5%",
+          marginLeft: "5%",
+        }}
+      >
+        <Pressable onPress={handlePressBlog}>
+          <View style={styles.row}>
+            <Image
+              style={styles.icon}
+              resizeMode="cover"
+              source={require("../assets/blueBlog.png")}
+            />
+            <Text style={styles.iconText}>Our blog</Text>
+          </View>
+        </Pressable>
 
-        <Text style={styles.divText}>Hide Balances</Text>
+        <Pressable onPress={handlePressTwitter}>
+          <View style={styles.row}>
+            <Image
+              style={styles.icon}
+              resizeMode="cover"
+              source={require("../assets/blueTwitter.png")}
+            />
+            <Text style={styles.iconText}>Follow us on Twitter</Text>
+          </View>
+        </Pressable>
 
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled1 ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch1}
-          value={isEnabled1}
-        />
-      </View>
-
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/blueFriends.png")}
-        />
-
-        <Text style={styles.divText}>Share with friends</Text>
-
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled2 ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch2}
-          value={isEnabled2}
-        />
-      </View>
-
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/blueMessage.png")}
-        />
-
-        <Text style={styles.divText}>Allow transaction sharing</Text>
-
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled3 ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch3}
-          value={isEnabled3}
-        />
+        <Pressable onPress={handlePressFacebook}>
+          <View style={styles.row}>
+            <Image
+              style={styles.icon}
+              resizeMode="cover"
+              source={require("../assets/blueFacebook.png")}
+            />
+            <Text style={styles.iconText}>Like us on Facebook</Text>
+          </View>
+        </Pressable>
       </View>
     </View>
   );
@@ -199,28 +216,24 @@ const styles = StyleSheet.create({
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     fontColor: GlobalStyles.RowText.fontColor,
   },
-  divRow: {
-    width: "90%",
-    marginLeft: "5%",
-    backgroundColor: "white",
+
+  row: {
     flexDirection: "row",
-    height: 50,
-    borderRadius: 15,
-    marginTop: "5%",
+    height: 40,
     justifyContent: "center",
     alignItems: "center",
   },
+
   icon: {
+    flex: 2,
     resizeMode: "contain",
     height: "70%",
-    flex: 1,
-    marginLeft: "2.5%",
+    width: "auto",
   },
 
-  divText: {
-    flex: 5,
-    marginLeft: "5%",
+  iconText: {
+    flex: 8,
   },
 });
 
-export default SecurityAndPrivacy;
+export default AboutUs;

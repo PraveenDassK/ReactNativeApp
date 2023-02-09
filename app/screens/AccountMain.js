@@ -1,12 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import Screen from "../components/Screen";
+
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 
 import api from "../api/api_list";
+import apiCall from "../api/api";
 import AuthContext from "../auth/context";
 
 import moment from "moment";
@@ -21,9 +34,11 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [accountnumber, setaccountnumber] = useState(null);
   const [sortCode, setSortCode] = useState(null);
   const [accountname, setaccountname] = useState(null);
+  const [cardnumber, setcardnumber] = useState(null);
+  const [firstname, setfirstname] = useState(null);
+  const [lastname, setlastname] = useState(null);
   const authContext = useContext(AuthContext);
   const { settings } = useContext(AuthContext);
-  console.log(settings);
 
   const [transactionData, setTransactionData] = useState(null);
 
@@ -32,7 +47,11 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
   const [numCarbonType, setCarbonType] = useState(0);
+  const [animalsSaved, setAnimalsSaved] = useState(0);
+  const [projects, setProjects] = useState([]);
 
+  const [bool, setbool] = useState();
+  
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
   const carbonAmount = numCarbon;
@@ -52,24 +71,52 @@ const HomeScreenPersonal = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const data1 = response1.data;
     const accountdata = accountresponse.data.details;
-    console.log("===================================" + accountresponse + "=======================================");
+    const response2 = await apiCall.GetCardByAccount(authContext.userID); 
+    const data2 = response2; 
+    
+    console.log(response2) 
+    console.log(response2[1].embossing.lastName)
+
+    
+    const bool = true;
+    if(bool === true){
+      setcardnumber("*******")
+      setfirstname("*******") 
+      setlastname("*******")
+      setBalance("*******");
+    setSortCode("*******");
+    setaccountnumber("*******");
+    setaccountname("*******");
+    }
+    else{
+      setcardnumber(response2[1].maskedCardNumber)
+    setfirstname(response2[1].embossing.firstName) 
+    setlastname(response2[1].embossing.lastName) 
     setBalance(data.availableBalance);
     setSortCode(accountdata.identifiers[0].sortCode);
     setaccountnumber(accountdata.identifiers[0].accountNumber);
     setaccountname(accountdata.name);
+    }
+
+
     //Verified calculation
     setStatus(data.status != "ACTIVE");
 
     //Trees
-    let respose = await api.GetUserImpacts();
-    const assets = respose.data.details.assets;
+    let respose = await apiCall.GetUserImpacts();
+    const assets = respose.assets;
     let trees = 0;
     let carbon = 0;
     assets.forEach((element) => {
       element.type == "TREE" ? (trees += element.count) : null;
       carbon += element.offset;
-      console.log(element.type);
     });
+    let projects = [];
+    for (let i = 0; i < 4; i++) {
+      projects.push(assets[i]);
+      console.log(assets[i]);
+    }
+    setProjects(projects);
     setTrees(trees);
     setCarbon(Math.round(carbon));
 
@@ -89,29 +136,61 @@ const HomeScreenPersonal = ({ navigation }) => {
         <Pressable
           style={[styles.transactionBox, styles.rounded]}
           key={i}
-          onPress={() => navigation.navigate("Transactions")}>
-          <View style={{flex:1, flexDirection: "row",}}>
-          <View style={{flex:1, justifyContent:"center", alignItems:"center", marginLeft: "2.5%"}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", }}>
-            <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-            <Text style={{fontWeight: "700"}}>{dataHold.description.replace("Payment to ", "")[0]}</Text>
+          onPress={() => navigation.navigate("Transactions")}
+        >
+          <View style={{ height: "100%", flexDirection: "row" }}>
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+                backgroundColor: "#F6F5F8",
+                borderColor: "black",
+                alignSelf: "center",
+                marginLeft: "2.5%",
+              }}
+            >
+              <Text
+                style={{
+                  alignSelf: "center",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlignVertical: "center",
+                  height: "100%",
+                  fontWeight: "700",
+                }}
+              >
+                {dataHold.description.replace("Payment to ", "")[0]}
+              </Text>
             </View>
-          </View>
-          </View>
-          <View style={{flex: 2, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-              <Text style={{fontSize :14, fontWeight: "700"}}>
+            <View
+              style={{
+                flex: 3.5,
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                marginLeft: "5%",
+              }}
+            >
+              <Text style={{ fontSize: 14, fontWeight: "700" }}>
                 {dataHold.description.replace("Payment to ", "")}
               </Text>
               <Text style={{}}>
                 {moment(dataHold.transactionDate).format("MMM Do YY")}
               </Text>
+            </View>
+            <View
+              style={{
+                flex: 5,
+                justifyContent: "space-evenly",
+                alignItems: "flex-end",
+                marginRight: "2.5%",
+              }}
+            >
+              <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                £{dataHold.amount.toFixed(2)}
+              </Text>
+            </View>
           </View>
-          <View style={{flex: 2, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
-          <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
-            £{dataHold.amount}
-          </Text>
-          </View>
-         </View>
         </Pressable>
       );
     }
@@ -125,24 +204,8 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   let currency = transactionData ? transactionData.transactions[0].amount : "£";
 
-
-  const carbonSpendings = [
-    {
-      id: 1, catName: "Health", dataPercentage: "70%", color: "#E4732D"
-    },
-    {
-      id: 2, catName: "Food", dataPercentage: "50%", color: "#F3B53F"
-    },
-    {
-      id: 3, catName: "House", dataPercentage: "40%", color: "#DC85F5"
-    },
-    {
-      id: 4, catName: "Sping", dataPercentage: "30%", color: "#5888F5"
-    },
-    {
-      id: 5, catName: "Transport", dataPercentage: "20%", color: "#5AC661"
-    },
-  ]
+  const catNames = ["Health", "Food", "House", "Sping", "Transport"];
+  const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
 
   /**
    * @dev Data needed for this page
@@ -182,40 +245,109 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={[styles.BalanceText11, styles.blueTitle11]}>
               SortCode: {sortCode}
             </Text>
-            <Text style={styles.dateText11}>Account Number: {accountnumber}</Text>
+            <Text style={styles.dateText11}>
+              Account Number: {accountnumber}
+            </Text>
+            <Text style={styles.dateText12}>
+              Card Number: {cardnumber}
+            </Text>
+            <Text style={styles.dateText13}>
+              First Name: {firstname}
+            </Text>
+            <Text style={styles.dateText14}>
+              Last Name: {lastname}
+            </Text>
           </View>
 
           <View style={styles.totalWalletBalanceContainer}>
-            <Text style={styles.totalWalletBalanceText}>Total Wallet Balance</Text>
-            <Text style={[styles.BalanceText, styles.blueTitle]}>{settings.hideBalance ? "Balance Hidden" : "£" + balance}</Text>
+            <Text style={styles.totalWalletBalanceText}>
+              Total Wallet Balance
+            </Text>
+            {settings.hideBalance ? (
+              <View
+                style={{
+                  width: GlobalStyles.DivContainer.width,
+                  marginLeft: GlobalStyles.DivContainer.marginLeft,
+                  height: "auto",
+                }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 15,
+                    shadowOpacity: 1,
+                    shadowColor: "blue",
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowRadius: 5,
+                    elevation: 5,
+                    borderWidth: 0.5,
+                    borderColor: "white",
+                    borderRadius: 15,
+                    backgroundColor: "rgba(255, 255, 255, 0.25)",
+                  }}
+                />
+              </View>
+            ) : (
+              <Text style={[styles.BalanceText, styles.blueTitle]}>
+                £{balance}
+              </Text>
+            )}
             <Text style={styles.dateText}>{todaydate}</Text>
           </View>
 
           <View style={styles.buttonContainer}>
-            <Pressable onPress={() => navigation.navigate("AddFunds")} style={styles.inputBox}>
+            <Pressable
+              onPress={() => navigation.navigate("AddFunds")}
+              style={styles.inputBox}
+            >
               <View style={styles.inputBoxDiv}>
-                <Image style={styles.inputIcon} resizeMode="contain" source={require("../assets/add.png")} />
+                <Image
+                  style={styles.inputIcon}
+                  resizeMode="contain"
+                  source={require("../assets/add.png")}
+                />
                 <Text style={styles.inputBoxText}>Add Funds</Text>
               </View>
             </Pressable>
 
-            <Pressable onPress={() => navigation.navigate("SendMoney")} style={styles.inputBox}>
+            <Pressable
+              onPress={() => navigation.navigate("SendMoney")}
+              style={styles.inputBox}
+            >
               <View style={styles.inputBoxDiv}>
-                <Image style={styles.inputIcon} resizeMode="contain" source={require("../assets/send-1.png")} />
+                <Image
+                  style={styles.inputIcon}
+                  resizeMode="contain"
+                  source={require("../assets/send-1.png")}
+                />
                 <Text style={styles.inputBoxText}>Send Money</Text>
               </View>
             </Pressable>
 
-            <Pressable onPress={() => navigation.navigate("MyCards")} style={styles.inputBox}>
+            <Pressable
+              onPress={() => navigation.navigate("MyCards")}
+              style={styles.inputBox}
+            >
               <View style={styles.inputBoxDiv}>
-                <Image style={styles.inputIcon} resizeMode="contain" source={require("../assets/icon-outlinecreditcard.png")} />
+                <Image
+                  style={styles.inputIcon}
+                  resizeMode="contain"
+                  source={require("../assets/icon-outlinecreditcard.png")}
+                />
                 <Text style={styles.inputBoxText}>My Cards</Text>
               </View>
             </Pressable>
 
-            <Pressable onPress={() => navigation.navigate("SwitchAccounts")} style={styles.inputBox}>
+            <Pressable
+              onPress={() => navigation.navigate("SwitchAccounts")}
+              style={styles.inputBox}
+            >
               <View style={styles.inputBoxDiv}>
-                <Image style={styles.inputIcon} resizeMode="contain" source={require("../assets/transfer-1.png")} />
+                <Image
+                  style={styles.inputIcon}
+                  resizeMode="contain"
+                  source={require("../assets/transfer-1.png")}
+                />
                 <Text style={styles.inputBoxText}>SwitchAccount</Text>
               </View>
             </Pressable>
@@ -240,86 +372,280 @@ const HomeScreenPersonal = ({ navigation }) => {
               </View>
               <View style={{ flex: 2.5 }}>
                 <Text>Estimated</Text>
-                <Text style={{ fontWeight: "700", paddingRight: "5%" }}>Kg of CO2</Text>
+                <Text style={{ fontWeight: "700", paddingRight: "5%" }}>
+                  Kg of CO2
+                </Text>
               </View>
               <View style={{ flex: 5, justifyContent: "flex-end" }}>
-                <Image style={styles.imageco2} source={require("../assets/greenc02.png")} />
+                <Image
+                  style={styles.imageco2}
+                  source={require("../assets/greenc02.png")}
+                />
               </View>
             </View>
             <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-            { carbonSpendings.map((spending) => (
-              <View key={spending.id}>
-                <PercentagLabel catName={spending.catName} color={spending.color} dataPercentage={spending.dataPercentage}/>
+              <Text style={styles.subtitleText}>{catNames[0]}</Text>
+              <View
+                style={[
+                  styles.carbonSpendingAnalysysBarBackground,
+                  styles.rounded,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.carbonSpendingAnalysysBarProgress,
+                    styles.rounded,
+                  ]}
+                  width={dataPercentages[0]}
+                  backgroundColor="#E4732D"
+                >
+                  <Text style={styles.barText}>{dataPercentages[0]}</Text>
+                </View>
               </View>
-            ))}
+
+              <Text style={styles.subtitleText}>{catNames[1]}</Text>
+              <View
+                style={[
+                  styles.carbonSpendingAnalysysBarBackground,
+                  styles.rounded,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.carbonSpendingAnalysysBarProgress,
+                    styles.rounded,
+                  ]}
+                  width={dataPercentages[1]}
+                  backgroundColor="#F3B53F"
+                >
+                  <Text style={styles.barText}>{dataPercentages[1]}</Text>
+                </View>
+              </View>
+
+              <Text style={styles.subtitleText}>{catNames[2]}</Text>
+              <View
+                style={[
+                  styles.carbonSpendingAnalysysBarBackground,
+                  styles.rounded,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.carbonSpendingAnalysysBarProgress,
+                    styles.rounded,
+                  ]}
+                  width={dataPercentages[2]}
+                  backgroundColor="#DC85F5"
+                >
+                  <Text style={styles.barText}>{dataPercentages[2]}</Text>
+                </View>
+              </View>
+
+              <Text style={styles.subtitleText}>{catNames[3]}</Text>
+              <View
+                style={[
+                  styles.carbonSpendingAnalysysBarBackground,
+                  styles.rounded,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.carbonSpendingAnalysysBarProgress,
+                    styles.rounded,
+                  ]}
+                  width={dataPercentages[3]}
+                  backgroundColor="#5888F5"
+                >
+                  <Text style={styles.barText}>{dataPercentages[3]}</Text>
+                </View>
+              </View>
+
+              <Text style={styles.subtitleText}>{catNames[4]}</Text>
+              <View
+                style={[
+                  styles.carbonSpendingAnalysysBarBackground,
+                  styles.rounded,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.carbonSpendingAnalysysBarProgress,
+                    styles.rounded,
+                  ]}
+                  width={dataPercentages[4]}
+                  backgroundColor="#5AC661"
+                >
+                  <Text style={styles.barText}>{dataPercentages[4]}</Text>
+                </View>
+              </View>
             </View>
+          </View>
 
           <View style={{ marginTop: verticalScale(25), marginLeft: "10%" }}>
             <Text style={styles.titleText}>Carbon Assets </Text>
           </View>
           <View style={[styles.carbonAssetsDiv]}>
-                        <View style={styles.carbonAssetsDivLeft}>
-                          <Text style={styles.largeNumber}>{TokenAmount}</Text>
-                          <View>
-                            <Text>Carbonyte</Text>
-                            <Text style={{ fontWeight: "700" }}>Tokens</Text>
-                          </View>
-                        </View>
+            <View style={styles.carbonAssetsDivLeft}>
+              <Text style={styles.largeNumber}>{TokenAmount}</Text>
+              <View>
+                <Text>Trees</Text>
+                <Text style={{ fontWeight: "700" }}>Planted</Text>
+              </View>
+            </View>
 
+            <View
+              style={{
+                height: "60%",
+                backgroundColor: "black",
+                alignSelf: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlignVertical: "center",
+                alignContent: "center",
+                flex: 0.1,
+              }}
+            ></View>
+
+            <View style={styles.carbonAssetsDivRight}>
+              <Text style={styles.largeNumber}>{animalsSaved}</Text>
+              <View style={{ fontWeight: "700" }}>
+                <Text>Animals </Text>
+                <Text style={{ fontWeight: "700" }}>Saved</Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.subTextRow}>
+            <Text style={styles.subTextAssets}>Assets</Text>
+            <Text style={styles.subTextDescriptor}>
+              (1 Tonne = 1 CO2 Token)
+            </Text>
+            <Text style={styles.subTextToken}>Token</Text>
+          </View>
+          <View style={{ marginTop: "2.5%" }} />
+          <Pressable
+            style={{
+              width: GlobalStyles.DivContainer.width,
+              marginLeft: GlobalStyles.DivContainer.marginLeft,
+              height: verticalScale(80),
+              marginTop: "2.5%",
+              backgroundColor: "white",
+              borderRadius: 15,
+            }}
+            onPress={() => navigation.navigate("VirtualEcoSystem")}
+          >
+            <View style={{ height: "100%", flexDirection: "row" }}>
               <View
                 style={{
-                  height: "60%",
-                  backgroundColor: "black",
+                  width: 50,
+                  height: 50,
+                  borderRadius: 25,
+                  backgroundColor: "#F6F5F8",
+                  borderColor: "black",
                   alignSelf: "center",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlignVertical: "center",
-                  alignContent: "center",
-                  flex: 0.1,
+                  marginLeft: "2.5%",
                 }}
               >
+                <Text
+                  style={{
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlignVertical: "center",
+                    height: "100%",
+                    fontWeight: "700",
+                  }}
+                >
+                  {projects[0]?.name?.charAt(0)}
+                </Text>
               </View>
-
-                        <View style={styles.carbonAssetsDivRight}>
-                          <Text style={styles.largeNumber}>{TotalAmount}</Text>
-                          <View style={{ fontWeight: "700" }}>
-                            <Text>Total</Text>
-                            <Text style={{ fontWeight: "700" }}>Assets</Text>
-                          </View>
-                        </View>
-                      </View>
-                      <View style={styles.subTextRow}>
-                        <Text style={styles.subTextAssets}>Assets</Text>
-                        <Text style={styles.subTextDescriptor}>(1 Tonne = 1 CO2 Token)</Text>
-                        <Text style={styles.subTextToken}>Token</Text>
-                      </View>
-          <View style={{marginTop: "2.5%"}}/>
-          <Pressable style={{ width: "80%", marginLeft: "10%", height: verticalScale(80), marginTop: "2.5%", backgroundColor: "white" , borderRadius: 15}} onPress={() => navigation.navigate("VirtualEcoSystem")}>
-            <View style={{ height: "100%", flexDirection: "row" }}>
-              <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%" }}>
-                <Text style={{ alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700" }}>D P</Text>
+              <View
+                style={{
+                  flex: 5.5,
+                  alignSelf: "center",
+                  justifyContent: "space-evenly",
+                  marginLeft: "5%",
+                }}
+              >
+                <Text style={{ fontSize: 14, fontWeight: "700" }}>
+                  {projects[0]?.name} £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
+                </Text>
+                <Text style={{}}>{moment(projects[0]?.lastUpdated).format("MMM Do YY")}</Text>
               </View>
-              <View style={{ flex: 5.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%" }}>
-                <Text style={{ fontSize: 14, fontWeight: "700" }}>Drylands Protection, Kasigau Wildlife Corridor £19 / Tonne</Text>
-                <Text style={{}}>{todaydate}</Text>
-              </View>
-              <View style={{ flex: 3, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%" }}>
-                <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>1</Text>
+              <View
+                style={{
+                  flex: 3,
+                  justifyContent: "space-evenly",
+                  alignItems: "flex-end",
+                  marginRight: "2.5%",
+                }}
+              >
+                <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                  1
+                </Text>
               </View>
             </View>
           </Pressable>
 
-          <Pressable style={{ width: "80%", marginLeft: "10%", height: verticalScale(80), marginTop: "2.5%", backgroundColor: "white", borderRadius: 15}} onPress={() => navigation.navigate("VirtualEcoSystem")}>
+          <Pressable
+            style={{
+              width: GlobalStyles.DivContainer.width,
+              marginLeft: GlobalStyles.DivContainer.marginLeft,
+              height: verticalScale(80),
+              marginTop: "2.5%",
+              backgroundColor: "white",
+              borderRadius: 15,
+            }}
+            onPress={() => navigation.navigate("VirtualEcoSystem")}
+          >
             <View style={{ height: "100%", flexDirection: "row" }}>
-              <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%" }}>
-                <Text style={{ alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700" }}>D P</Text>
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 25,
+                  backgroundColor: "#F6F5F8",
+                  borderColor: "black",
+                  alignSelf: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <Text
+                  style={{
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlignVertical: "center",
+                    height: "100%",
+                    fontWeight: "700",
+                  }}
+                >
+                  {projects[1]?.name?.charAt(0)}
+                </Text>
               </View>
-              <View style={{ flex: 5.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%" }}>
-                <Text style={{ fontSize: 14, fontWeight: "700" }}>Drylands Protection, Kasigau Wildlife Corridor £19 / Tonne</Text>
-                <Text style={{}}>{todaydate}</Text>
+              <View
+                style={{
+                  flex: 5.5,
+                  alignSelf: "center",
+                  justifyContent: "space-evenly",
+                  marginLeft: "5%",
+                }}
+              >
+                <Text style={{ fontSize: 14, fontWeight: "700" }}>
+                  {projects[1]?.name} £{projects[1]?.displayAssetPrice} / {projects[1]?.type}
+                </Text>
+                <Text style={{}}>{moment(projects[1]?.lastUpdated).format("MMM Do YY")}</Text>
               </View>
-              <View style={{ flex: 3, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%" }}>
-                <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>1</Text>
+              <View
+                style={{
+                  flex: 3,
+                  justifyContent: "space-evenly",
+                  alignItems: "flex-end",
+                  marginRight: "2.5%",
+                }}
+              >
+                <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                  1
+                </Text>
               </View>
             </View>
           </Pressable>
@@ -336,48 +662,44 @@ const HomeScreenPersonal = ({ navigation }) => {
 
         <View style={[styles.carbonContainer, styles.rounded]}>
           <View style={styles.treeContainer}>
-            <Image style={styles.treeImage} resizeMode="contain" source={require("../assets/image-tree.png")} />
+            <Image
+              style={styles.treeImage}
+              resizeMode="contain"
+              source={require("../assets/image-tree.png")}
+            />
           </View>
           <View width="100%" height="40%">
-            <Text style={{ textAlign: "center", fontWeight: "700", fontSize: 24 }}>Congratulations!</Text>
-            <Text style={{ textAlign: "center", marginTop: verticalScale(2) }}>You have planted 5 trees with advance card purchase</Text>
+            <Text
+              style={{ textAlign: "center", fontWeight: "700", fontSize: 24 }}
+            >
+              Congratulations!
+            </Text>
+            <Text style={{ textAlign: "center", marginTop: verticalScale(2) }}>
+              You have planted {TotalAmount} trees with advance card purchase
+            </Text>
             <Pressable onPress={() => navigation.navigate("VirtualEcoSystem")}>
-              <Text style={{ marginTop: verticalScale(2), textAlign: "center", fontSize: 22, fontWeight: "700", color: "blue", marginBottom: "10%" }}>View more</Text>
+              <Text
+                style={{
+                  marginTop: verticalScale(2),
+                  textAlign: "center",
+                  fontSize: 22,
+                  fontWeight: "700",
+                  color: "blue",
+                  marginBottom: "10%",
+                }}
+              >
+                View more
+              </Text>
             </Pressable>
           </View>
           <View style={{ marginTop: "5%" }}></View>
         </View>
         <View style={{ marginTop: "5%" }} />
       </View>
-      </View>
     </ScrollView>
   );
 };
 
-
-const PercentagLabel = ({catName, color, dataPercentage, }) => (
-              
-  <View >
-  <Text style={styles.subtitleText}>{catName}</Text>
-    <View
-      style={[
-        styles.carbonSpendingAnalysysBarBackground,
-        styles.rounded,
-      ]}
-    >
-      <View
-        style={[
-          styles.carbonSpendingAnalysysBarProgress,
-          styles.rounded,
-        ]}
-        width={dataPercentage}
-        backgroundColor={color}
-      >
-        <Text style={styles.barText}>{dataPercentage}</Text>
-      </View>
-    </View>
-</View>
-)
 const styles = StyleSheet.create({
   congratulationsText: {
     textAlign: "center",
@@ -412,9 +734,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   referContainer: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(200),
-    left: "10%",
     backgroundColor: "white",
     marginTop: "2.5%",
   },
@@ -426,19 +748,20 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   carbonContainer: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(300),
-    left: "10%",
     backgroundColor: "white",
     marginTop: "2.5%",
   },
   carbonAssetsDiv: {
     marginTop: "5%",
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(75),
     backgroundColor: "#D8EBF9",
     borderRadius: 15,
-    marginLeft: "10%",
+
     flexDirection: "row",
     justifyContent: "space-around",
   },
@@ -507,24 +830,24 @@ const styles = StyleSheet.create({
   },
   transactionPicture: {
     width: "20%",
-    height: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     borderRadius: 15,
     top: "10%",
-    marginLeft: "5%",
   },
   transactionsContainer: {
     height: "auto",
-    width: "80%",
-    marginLeft: "10%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     marginTop: "12.5%",
     borderRadius: 15,
   },
 
   carbonItemDiv: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: "auto",
     paddingBottom: "4.5%",
-    marginLeft: "10%",
     marginTop: "2.5%",
     borderRadius: 15,
     backgroundColor: "white",
@@ -595,10 +918,10 @@ const styles = StyleSheet.create({
 
   congratulationsContainer: {
     marginTop: "4.5%",
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#E4E4FF",
     height: verticalScale(125),
-    marginLeft: "10%",
     borderRadius: 15,
     flexDirection: "row",
     padding: "2.5%",
@@ -642,21 +965,21 @@ const styles = StyleSheet.create({
 
   totalWalletBalanceContainer: {
     marginTop: "2.5%",
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
     height: verticalScale(75),
-    marginLeft: "10%",
     borderRadius: 15,
     flexDirection: "column",
     padding: "2.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {
-    marginTop: "1.5%",
-    width: "80%",
+    marginTop: "2.5%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
-    height: verticalScale(75),
-    marginLeft: "10%",
+    height: "auto",
     borderRadius: 15,
     flexDirection: "column",
     padding: "5%",
@@ -690,11 +1013,25 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontSize: 14,
   },
-
+  dateText12: {
+    textAlign: "left",
+    fontSize: 14,
+    marginTop:5,
+  },
+  dateText13: {
+    textAlign: "left",
+    fontSize: 14,
+    marginTop:5,
+  },
+  dateText14: {
+    textAlign: "left",
+    fontSize: 14,
+    marginTop:5,
+  },
   buttonContainer: {
     marginTop: "2.5%",
     width: GlobalStyles.DivContainer.width,
-    marginLeft: GlobalStyles.RowText.marginLeft,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -734,11 +1071,11 @@ const styles = StyleSheet.create({
   },
 
   carbonSpendingTitleDiv: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: 30,
     display: "flex",
     flexDirection: "row",
-    marginLeft: "10%",
     marginTop: "5%",
   },
 

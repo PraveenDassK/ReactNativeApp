@@ -1,10 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView, Dimensions } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Pressable,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
 import { LineChart } from "react-native-chart-kit";
 
-import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../config/metrics";
 
 import api from "../api/api_list";
 import AuthContext from "../auth/context";
@@ -21,6 +33,8 @@ const Analytics = ({ navigation }) => {
   const [priceData, setPriceData] = useState([]);
   const [dates, setDates] = useState([]);
   const [dataObj, setDataObj] = useState([]);
+  const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
+  const dataPercentages = ["70%", "50%", "40%", "30%"];
 
   const [recentTransactions, setRecent] = useState([]);
   const [transactionCategories, setCat] = useState();
@@ -58,12 +72,18 @@ const Analytics = ({ navigation }) => {
 
     transData.content.forEach((transaction) => {
       total += transaction.amount;
-      transCat[transaction.type] = transCat[transaction.type] ? transCat[transaction.type] + transaction.amount : transaction.amount;
+      transCat[transaction.type] = transCat[transaction.type]
+        ? transCat[transaction.type] + transaction.amount
+        : transaction.amount;
     });
 
     setTotalTrans(transData.totalSize);
     setTotal(total);
-    setRecent([transData.content[1], transData.content[1], transData.content[2]]);
+    setRecent([
+      transData.content[1],
+      transData.content[1],
+      transData.content[2],
+    ]);
     setCat(transCat);
     setTrans(transData);
 
@@ -94,7 +114,10 @@ const Analytics = ({ navigation }) => {
     const arr = transactions.map((transaction) => {
       console.log("deya", transaction.amount);
 
-      return { amount: transaction.amount, date: transaction.transactionDate.split("T")[0].split("-")[1] };
+      return {
+        amount: transaction.amount,
+        date: transaction.transactionDate.split("T")[0].split("-")[1],
+      };
     });
 
     // const date = transactions.map((transaction) => {
@@ -114,118 +137,323 @@ const Analytics = ({ navigation }) => {
   };
 
   console.log(transactionCategories);
-  console.log("here", recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0]);
+  console.log(
+    "here",
+    recentTransactions,
+    recentTransactions[0]?.transactionDate?.split("T")[0]
+  );
 
   return (
-    <Screen style={{ backgroundColor: "#f3f5f5" }}>
-      <ScrollView>
-        <View style={styles.mainContainer}>
-          <View style={[styles.historyParent, styles.iconContentLayout]}></View>
+    <ScrollView>
+      <View style={styles.mainContainer}>
+        <View style={styles.titleTextRow}>
+          <Text style={styles.titleText}>Analysis</Text>
+        </View>
 
-          <View style={styles.balanceContainer}>
-            <View style={{ flex: 4 }}>
-              <Text style={styles.textSub}>Balance</Text>
+        <View style={styles.balanceContainer}>
+          <Text style={{ flex: 8, fontWeight: "700" }}>Balance</Text>
+          <Text
+            style={{
+              flex: 2,
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
+              textAlign: "left",
+              width: "100%",
+              fontWeight: "700",
+              color: "#0101FD",
+            }}
+          >
+            £{balance}
+          </Text>
+        </View>
+
+        <View
+          style={{
+            flex: 1,
+            width: "90%",
+            height: "auto",
+            marginTop: "5%",
+            borderRadius: 15,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginLeft: "5%",
+          }}
+        >
+          <View
+            style={{
+              height: "100%",
+              backgroundColor: "white",
+              width: "47.5%",
+              borderRadius: 15,
+              padding: "5%",
+              alignSelf: "center",
+            }}
+          >
+            <Text>Total Spend</Text>
+            <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <Text
+                style={{
+                  color: "#999",
+                  fontSize: 14,
+                  alignItems: "flex-start",
+                }}
+              >
+                No. of Payments
+              </Text>
+              <Text
+                style={{ color: "#999", fontSize: 14, alignItems: "flex-end" }}
+              >
+                {" "}
+                {totalTransactions}
+              </Text>
             </View>
-            <View style={{ flex: 6, alignItems: "flex-end" }}>
-              <Text style={styles.priceSub}>£{balance}</Text>
+          </View>
+          <View
+            style={{
+              height: "100%",
+              backgroundColor: "white",
+              width: "47.5%",
+              borderRadius: 15,
+              padding: "5%",
+            }}
+          >
+            <Text>Average Monthly Spendings</Text>
+            <Text style={styles.money}>£ {balance}</Text>
+          </View>
+        </View>
+
+        <View style={styles.titleTextRow}>
+          <Text style={styles.titleText}>Spending's</Text>
+        </View>
+        <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
+          <Text style={styles.subtitleText}>{catNames[0]}</Text>
+          <View
+            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
+          >
+            <View
+              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
+              width={dataPercentages[0]}
+              backgroundColor="#E4732D"
+            >
+              <Text style={styles.barText}>{dataPercentages[0]}</Text>
             </View>
           </View>
 
-          <View style={{ flex: 1, width: "100%", height: "auto", marginTop: "5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between" }}>
-            <View style={{ height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%" }}>
-              <Text>Total Spend</Text>
-              <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <Text style={{ color: "#999", fontSize: 14, alignItems: "flex-start" }}>No. of Payments</Text>
-                <Text style={{ color: "#999", fontSize: 14, alignItems: "flex-end" }}> {totalTransactions}</Text>
-              </View>
-            </View>
-            <View style={{ height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%" }}>
-              <Text>Average Monthly Spendings</Text>
-              <Text style={styles.money}>£ {balance}</Text>
+          <Text style={styles.subtitleText}>{catNames[1]}</Text>
+          <View
+            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
+          >
+            <View
+              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
+              width={dataPercentages[1]}
+              backgroundColor="#F3B53F"
+            >
+              <Text style={styles.barText}>{dataPercentages[1]}</Text>
             </View>
           </View>
 
-          <View style={styles.containerSpace}>
-            <Text style={styles.subTitle}>Spendings</Text>
+          <Text style={styles.subtitleText}>{catNames[2]}</Text>
+          <View
+            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
+          >
+            <View
+              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
+              width={dataPercentages[2]}
+              backgroundColor="#DC85F5"
+            >
+              <Text style={styles.barText}>{dataPercentages[2]}</Text>
+            </View>
           </View>
-          <View style={styles.progressContainer}>
-            {transactionCategories &&
-              transcationKeys(transactionCategories).map((transaction, index) => (
-                <View style={styles.progressBar} key={index}>
-                  <Progress.Bar progress={transactionCategories[transaction].toFixed(2) / totalSpend} width={null} height={40} borderRadius={13} borderColor={"transparent"} color={["#42b0f5", "#ad42f5", "#17eb65", "#eb17d5"][index % 4]} unfilledColor={"white"} />
-                  <View style={styles.progressItems}>
-                    <View style={styles.shopping}>
-                      <Text>{transaction}</Text>
-                    </View>
-                    <View style={styles.spendingAmount}>
-                      <Text>£{transactionCategories[transaction].toFixed(2)}</Text>
-                      <Text
-                        style={{
-                          fontSize: 8,
-                          color: "#999",
-                        }}
-                      >
-                        7.2 kg C02
-                      </Text>
-                    </View>
-                  </View>
+
+          <Text style={styles.subtitleText}>{catNames[3]}</Text>
+          <View
+            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
+          >
+            <View
+              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
+              width={dataPercentages[3]}
+              backgroundColor="#5888F5"
+            >
+              <Text style={styles.barText}>{dataPercentages[3]}</Text>
+            </View>
+          </View>
+
+          {priceData.length !== 0 ? (
+            <Bazier
+              priceData={priceData}
+              transDate={dates}
+              transObj={dataObj}
+              style={{ backgroundColor: "red" }}
+            />
+          ) : null}
+        </View>
+
+        <View style={styles.titleTextRow}>
+          <Text style={styles.titleText}>Recent transactions</Text>
+        </View>
+
+        {recentTransactions.map((transaction, index) => (
+          <View key={index}>
+            <Pressable
+              style={[styles.transactionBox, styles.rounded]}
+              onPress={() => navigation.navigate("Transactions")}
+            >
+              <View style={{ height: "100%", flexDirection: "row" }}>
+                <View
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 25,
+                    backgroundColor: "#F6F5F8",
+                    borderColor: "black",
+                    alignSelf: "center",
+                    marginLeft: "2.5%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlignVertical: "center",
+                      height: "100%",
+                      fontWeight: "700",
+                    }}
+                  >
+                    {transaction.sourceId[0]}
+                  </Text>
                 </View>
-              ))}
-            {/* {transactionCategories && console.log(transactionObj(transactions))} */}
+                <View
+                  style={{
+                    flex: 3.5,
+                    alignSelf: "center",
+                    justifyContent: "space-evenly",
+                    marginLeft: "5%",
+                  }}
+                >
+                  <Text style={{ fontSize: 14, fontWeight: "700" }}>
+                    {transaction.sourceId}
+                  </Text>
+                  <Text style={{}}>
+                    {moment(transaction.transactionDate).format("LL")}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 5,
+                    justifyContent: "space-evenly",
+                    alignItems: "flex-end",
+                    marginRight: "2.5%",
+                  }}
+                >
+                  <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                    £{transaction.amount.toFixed(2)}
+                  </Text>
+                </View>
+              </View>
+            </Pressable>
           </View>
-        </View>
-        {priceData.length !== 0 ? <Bazier priceData={priceData} transDate={dates} transObj={dataObj} style={{ backgroundColor: "red" }} /> : null}
-        <View style={styles.mainContainer}>
-          {priceData && console.log(transactionObj(recentTransactions))}
-          <View style={styles.containerSpace}>
-            <Text style={styles.subTitle}>Recent Transactions</Text>
-          </View>
+        ))}
 
-          {recentTransactions.map((transaction, index) => (
-            <View key={index}>
-              <Pressable
-                        style={[styles.transactionBox, styles.rounded]}
-                        onPress={() => navigation.navigate("Transactions")}>
-                        <View style={{height: "100%", flexDirection: "row",}}>
-                        <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-                        <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{transaction.sourceId[0]}</Text>
-                        </View>
-                        <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-                            <Text style={{fontSize :14, fontWeight: "700"}}>
-                              {transaction.sourceId}
-                            </Text>
-                            <Text style={{}}>
-                              {moment(transaction.transactionDate).format("LL")}
-                            </Text>
-                        </View>
-                        <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
-                        <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
-                          £{transaction.amount.toFixed(2)}
-                        </Text>
-                        </View>
-                       </View>
-                      </Pressable>
-            </View>
-          ))}
+        <View style={styles.titleTextRow}>
+          <Text style={styles.titleText}>Upcoming Spending's</Text>
         </View>
-      </ScrollView>
-    </Screen>
+
+        {recentTransactions.map((transaction, index) => (
+          <View key={index}>
+            <Pressable
+              style={[styles.transactionBox, styles.rounded]}
+              onPress={() => navigation.navigate("Transactions")}
+            >
+              <View style={{ height: "100%", flexDirection: "row" }}>
+                <View
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 25,
+                    backgroundColor: "#F6F5F8",
+                    borderColor: "black",
+                    alignSelf: "center",
+                    marginLeft: "2.5%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlignVertical: "center",
+                      height: "100%",
+                      fontWeight: "700",
+                    }}
+                  >
+                    {transaction.sourceId[0]}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 3.5,
+                    alignSelf: "center",
+                    justifyContent: "space-evenly",
+                    marginLeft: "5%",
+                  }}
+                >
+                  <Text style={{ fontSize: 14, fontWeight: "700" }}>
+                    {transaction.sourceId}
+                  </Text>
+                  <Text style={{}}>
+                    {moment(transaction.transactionDate).format("LL")}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 5,
+                    justifyContent: "space-evenly",
+                    alignItems: "flex-end",
+                    marginRight: "2.5%",
+                  }}
+                >
+                  <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                    £{transaction.amount.toFixed(2)}
+                  </Text>
+                </View>
+              </View>
+            </Pressable>
+          </View>
+        ))}
+              <View style={{height: 20, width: "100%"}}/>
+
+      </View>
+    </ScrollView>
   );
 };
 
 const Bazier = ({ priceData, transDate, transObj }) => {
-  let [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0, visible: false, value: 0 });
+  let [tooltipPos, setTooltipPos] = useState({
+    x: 0,
+    y: 0,
+    visible: false,
+    value: 0,
+  });
 
   console.log("finished", transObj);
 
   return (
-    <View style={{ justifyContent: "center", width: "80%", marginLeft: "10%" }}>
+    <View
+      style={{
+        width: "90%",
+        marginLeft: "5%",
+      }}
+    >
       {/* <Text>Bezier Line Chart</Text> */}
 
       <LineChart
-        data={{ labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"], datasets: [{ data: [0, 0, 0, 0, ...transObj] }] }}
-        width={Dimensions.get("window").width * 0.8} // from react-native
+        data={{
+          labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"],
+          datasets: [{ data: [0, 0, 0, 0, ...transObj] }],
+        }}
+        width={Dimensions.get("window").width * 0.8125} // from react-native
         height={220}
         yAxisLabel="£"
         yAxisSuffix=""
@@ -240,10 +468,14 @@ const Bazier = ({ priceData, transDate, transObj }) => {
           color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
           fillShadowGradientFrom: "blue",
-          fillShadowGradientTo: "white",
+          fillShadowGradientTo: "#F6F5F8",
           strokeWidth: 5,
           style: { borderRadius: 16 },
-          propsForDots: { r: "3", strokeWidth: "8", stroke: `rgba(30, 81, 123, 0.3)` },
+          propsForDots: {
+            r: "3",
+            strokeWidth: "8",
+            stroke: `rgba(30, 81, 123, 0.3)`,
+          },
         }}
         bezier
         style={{ marginVertical: 8, borderRadius: 0 }}
@@ -251,8 +483,23 @@ const Bazier = ({ priceData, transDate, transObj }) => {
           return tooltipPos.visible ? (
             <View>
               <Svg>
-                <Rect x={tooltipPos.x - 15} y={tooltipPos.y + 10} width="60" height="30" fill="white" rx={0.5} ry={0.5} />
-                <TextSVG x={tooltipPos.x + 15} y={tooltipPos.y + 30} fill="blue" fontSize="10" fontWeight="bold" textAnchor="middle">
+                <Rect
+                  x={tooltipPos.x - 15}
+                  y={tooltipPos.y + 10}
+                  width="60"
+                  height="30"
+                  fill="white"
+                  rx={0.5}
+                  ry={0.5}
+                />
+                <TextSVG
+                  x={tooltipPos.x + 15}
+                  y={tooltipPos.y + 30}
+                  fill="blue"
+                  fontSize="10"
+                  fontWeight="bold"
+                  textAnchor="middle"
+                >
                   {`£ ${tooltipPos.value}`}
                 </TextSVG>
               </Svg>
@@ -269,198 +516,108 @@ const Bazier = ({ priceData, transDate, transObj }) => {
                   visible: !previousState.visible,
                 };
               })
-            : setTooltipPos({ x: data.x, value: data.value, y: data.y, visible: true });
+            : setTooltipPos({
+                x: data.x,
+                value: data.value,
+                y: data.y,
+                visible: true,
+              });
         }}
+
+
       />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  avgSpendContainer: {
-    backgroundColor: "white",
-    borderRadius: moderateScale(15),
-    borderWidth: 1,
-    borderColor: "#e8e8e8",
-    borderStyle: "solid",
-
-    paddingHorizontal: horizontalScale(15),
-    paddingVertical: verticalScale(15),
-    width: 170,
-  },
-  balance: {
-    flex: 5,
-  },
-  balanceContainer: {
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: moderateScale(15),
-    borderWidth: 1,
-    borderColor: "#e8e8e8",
-    borderStyle: "solid",
-    flex: 1,
-    flexDirection: "row",
-    marginTop: verticalScale(20),
-    width: "100%",
-    height: "auto",
-    paddingHorizontal: horizontalScale(25),
-    paddingVertical: verticalScale(25),
-  },
-  containerSpace: {
-    marginTop: 10,
-  },
   mainContainer: {
-    paddingHorizontal: horizontalScale(25),
-    paddingVertical: verticalScale(25),
-  },
-  money: {
-    color: "blue",
-    fontWeight: "bold",
-  },
-  noOfPayments: {
-    flex: 1,
-    textAlign: "left",
-  },
-  payments: {
-    flex: 1,
-    textAlign: "right",
-  },
-  priceSub: {
-    color: "blue",
-    fontSize: moderateScale(28),
-    fontWeight: "bold",
-  },
-  iconContentLayout: {
-    height: 16,
-    position: "absolute",
-  },
-  historyParent: {
-    top: 0,
-    width: 300,
-    left: 0,
-  },
-  historyTypo: {
-    opacity: 0.3,
-    letterSpacing: 1,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    color: GlobalStyles.Color.gray_700,
-    textAlign: "left",
-    top: 0,
-    position: "absolute",
-  },
-  history1: {
-    marginLeft: -66,
-    left: "50%",
-  },
-  progressBar: {
-    marginTop: 10,
-    shadowColor: "grey",
-    shadowOpacity: "0.3",
-  },
-  progressContainer: {
-    flex: 1,
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    height: GlobalStyles.DivContainer.height,
     width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
   },
-  progressItems: {
-    flex: 1,
+
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+  },
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
+  },
+
+  subText: {
+    fontSize: GlobalStyles.RowText.fontSize,
+    fontWeight: GlobalStyles.RowText.fontWeight,
+  },
+
+  subTextRow: {
+    marginTop: GlobalStyles.RowText.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+    fontColor: GlobalStyles.RowText.fontColor,
+  },
+
+  balanceContainer: {
+    width: "90%",
+    marginLeft: "5%",
     flexDirection: "row",
-    paddingLeft: 30,
-    position: "absolute",
-    top: 12,
-  },
-  groupParentPosition: {
-    height: 60,
-    left: "5%",
-    right: "5%",
-    top: "50%",
-    position: "absolute",
-  },
-  groupParent: {
-    marginTop: -46,
-  },
-  groupParent: {
-    marginTop: -46,
-  },
-  history3: {
-    right: -1,
-    letterSpacing: 1,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    color: GlobalStyles.Color.gray_800,
-    textAlign: "left",
-    fontWeight: "700",
-    top: 0,
-    position: "absolute",
-  },
-  history2: {
-    marginLeft: 19,
-    left: "50%",
-  },
-  shopping: {
-    flex: 2,
-  },
-  spendContainer: {
-    flex: 1,
-    flexDirection: "row",
-    marginTop: verticalScale(20),
-    width: "100%",
-    justifyContent: "space-between",
-  },
-  spendingAmount: {
-    flex: 1,
-  },
-  subTitle: {
-    fontSize: moderateScale(20),
-    fontWeight: "bold",
-  },
-  totalSpendContainer: {
     backgroundColor: "white",
-    borderRadius: moderateScale(15),
-    borderWidth: 1,
-    borderColor: "#e8e8e8",
-    borderStyle: "solid",
-    paddingHorizontal: horizontalScale(15),
-    paddingVertical: verticalScale(15),
-    width: 170,
+    borderRadius: 15,
+    height: 45,
+    alignItems: "center",
+    padding: "2.5%",
+    marginTop: "5%",
   },
-  textSub: {
+
+  money: {
+    color: "#0101FD",
+    fontWeight: "700",
+  },
+  carbonSpendingAnalysysBarBackground: {
+    width: "100%",
+    height: verticalScale(35),
+    marginTop: "2.5%",
+    backgroundColor: "white",
+  },
+
+  carbonSpendingAnalysysBarProgress: {
+    height: "100%",
+    backgroundColor: "orange",
+    borderRadius: 15,
+  },
+  carbonSpendingAnalysysDiv: {
+    width: "90%",
+    marginLeft: "5%",
+    height: "auto",
+  },
+  barText: {
+    left: 20,
+    top: "25%",
+    fontSize: 15,
     fontWeight: "bold",
-    textAlign: "left",
-    color: "#1B2356",
-    fontSize: 16,
   },
-  title: {
-    fontSize: moderateScale(28),
-    fontWeight: "bold",
-    lineHeight: verticalScale(30),
-    width: "70%",
+  rounded: {
+    borderRadius: 15,
   },
-  transactionAmount: {
-    flex: 1,
+
+  subtitleText: {
+    marginLeft: "5%",
+    marginTop: "2.5%",
+    fontSize: 15,
+    fontWeight: "700",
   },
-  transactionId: {
-    flex: 2,
-  },
-  transactionPrice: {
-    color: "blue",
-    fontSize: moderateScale(20),
-    fontWeight: "bold",
-  },
+
   transactionBox: {
-      width: "100%",
-      height: verticalScale(80),
-      marginTop: "2.5%",
-      top: verticalScale(-30),
-      backgroundColor: "white",
-      borderRadius: 15
-    },
-    transactionsContainer: {
-          height: "auto",
-          width: "80%",
-          marginLeft: "10%",
-          marginTop: "12.5%",
-          borderRadius: 15,
-        },
+    width: "90%",
+    height: verticalScale(80),
+    marginTop: "5%",
+    marginLeft: "5%",
+    backgroundColor: "white",
+    borderRadius: 15,
+  },
 });
 
 export default Analytics;

@@ -134,13 +134,13 @@ if(!AppState.currentState) {
 
       
        
-        {!currentUser ? (
-          <AuthNavigator /> 
+        {/* {!currentUser ? (
+          <AuthNavigator />
         ) :  currentUser ? (
-          <AppNavigator /> 
+          <AppNavigator />
         ) : (
           <AuthNavigator />
-        )}
+        )}  */}
 
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}

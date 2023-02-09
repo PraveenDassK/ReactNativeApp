@@ -11,6 +11,8 @@ import {
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 import moment from 'moment';
+import apiCall from "../api/api";
+
 
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
@@ -25,6 +27,10 @@ const MyCards = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalId, setModalId] = useState(false);
   const [initials, setInitals] = useState(null)
+  const [cardnumber, setcardnumber] = useState(null);
+  const [firstname, setfirstname] = useState(null);
+  const [lastname, setlastname] = useState(null);
+  const [bool, setbool] = useState();
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -36,7 +42,7 @@ const MyCards = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
         const accountdata = accountresponse.data.details
     const data = responseBalance.data.details
-    setBalance(data.availableBalance)
+   
     console.log(authContext.accountID)
     //Load the data for transactions
     const response = await api.GetTransactions(authContext.accountID,5);
@@ -50,6 +56,29 @@ const MyCards = ({ navigation }) => {
      }
     console.log(initialsHold)
     setInitals(initialsHold)
+
+    const response2 = await apiCall.GetCardByAccount(authContext.userID); 
+    const data2 = response2; 
+     
+    console.log(response2) 
+    console.log(response2[1].embossing.lastName)
+
+    const bool = true;
+    if(bool === true){
+      setcardnumber("*******")
+      setfirstname("*******") 
+      setlastname("*******")
+      setBalance("*******");
+    setSortCode("*******");
+    setaccountnumber("*******");
+    setaccountname("*******");
+    }
+    else{
+      setcardnumber(response2[1].maskedCardNumber)
+    setfirstname(response2[1].embossing.firstName) 
+    setlastname(response2[1].embossing.lastName)
+    setBalance(data.availableBalance)
+    }
 
 }
 
@@ -217,7 +246,7 @@ showData()
             <Image
               style={[styles.settingsIcon, styles.iconLayout]}
               resizeMode="contain"
-              source={require("../assets/icon-settings.png")}
+              source={require("../assets/icon-settingsbutton.png")}
             />
           </Pressable>
               <View top = "55%" left ="10%">
@@ -603,13 +632,11 @@ const styles = StyleSheet.create({
   shadow: {
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
+      width: 1,
       height: 1,
     },
     shadowOpacity: 1,
     shadowRadius: 1,
-
-    elevation: 1,
   },
   
   groupChild4: {

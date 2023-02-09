@@ -36,8 +36,8 @@ const VirtualEcoSystem = ({navigation}) => {
         let trees = 0
         let carbon = 0
         try{
-            let respose = await api.GetUserImpacts();
-            const assets = respose.data.details.assets
+            let response = await api.GetUserImpacts();
+            const assets = response.data.details.assets
             
             assets.forEach(element => {
               element.type == "TREE" ? trees += element.count : null
@@ -46,7 +46,11 @@ const VirtualEcoSystem = ({navigation}) => {
         }catch{
             
         }
+        console.log(trees)
+        if(trees > 49) trees = 49;
+        console.log(trees)
         setTrees(trees)
+        const tree = trees
     }
     const images = [
         {
@@ -89,7 +93,167 @@ const VirtualEcoSystem = ({navigation}) => {
           name: 'background10',
           image: require('../assets/Forest/10.png'),
         },
-      ];
+        {
+            name: 'background11',
+            image: require('../assets/Forest/11.png'),
+          },
+          {
+            name: 'background12',
+            image: require('../assets/Forest/12.png'),
+          },
+                  {
+          name: 'background13',
+          image: require('../assets/Forest/13.png'),
+        },
+        {
+        name: 'background14',
+        image: require('../assets/Forest/14.png'),
+        },
+        {
+        name: 'background15',
+        image: require('../assets/Forest/15.png'),
+        },
+        {
+        name: 'background16',
+        image: require('../assets/Forest/16.png'),
+        },
+        {
+        name: 'background17',
+        image: require('../assets/Forest/17.png'),
+        },
+        {
+        name: 'background18',
+        image: require('../assets/Forest/18.png'),
+        },
+        {
+        name: 'background19',
+        image: require('../assets/Forest/19.png'),
+        },
+        {
+        name: 'background20',
+        image: require('../assets/Forest/20.png'),
+        },
+        {
+        name: 'background21',
+        image: require('../assets/Forest/21.png'),
+        },
+        {
+        name: 'background22',
+        image: require('../assets/Forest/22.png'),
+        },
+        {
+        name: 'background23',
+        image: require('../assets/Forest/23.png'),
+        },
+        {
+        name: 'background24',
+        image: require('../assets/Forest/24.png'),
+        },
+        {
+        name: 'background25',
+        image: require('../assets/Forest/25.png'),
+        },
+        {
+        name: 'background26',
+        image: require('../assets/Forest/26.png'),
+        },
+        {
+        name: 'background27',
+        image: require('../assets/Forest/27.png'),
+        },
+        {
+        name: 'background28',
+        image: require('../assets/Forest/28.png'),
+        },
+        {
+        name: 'background29',
+        image: require('../assets/Forest/29.png'),
+        },
+        {
+        name: 'background30',
+        image: require('../assets/Forest/30.png'),
+        },
+        {
+        name: 'background31',
+        image: require('../assets/Forest/31.png'),
+        },
+        {
+        name: 'background32',
+        image: require('../assets/Forest/32.png'),
+        },
+        {
+        name: 'background33',
+        image: require('../assets/Forest/33.png'),
+        },
+        {
+        name: 'background34',
+        image: require('../assets/Forest/34.png'),
+        },
+        {
+        name: 'background35',
+        image: require('../assets/Forest/35.png'),
+        },
+        {
+        name: 'background36',
+        image: require('../assets/Forest/36.png'),
+        },
+        {
+        name: 'background37',
+        image: require('../assets/Forest/37.png'),
+        },
+        {
+        name: 'background38',
+        image: require('../assets/Forest/38.png'),
+        },
+        {
+        name: 'background39',
+        image: require('../assets/Forest/39.png'),
+        },
+        {
+        name: 'background40',
+        image: require('../assets/Forest/40.png'),
+        },
+        {
+        name: 'background41',
+        image: require('../assets/Forest/41.png'),
+        },
+        {
+        name: 'background42',
+        image: require('../assets/Forest/42.png'),
+        },
+        {
+        name: 'background43',
+        image: require('../assets/Forest/43.png'),
+        },
+        {
+        name: 'background44',
+        image: require('../assets/Forest/44.png'),
+        },
+        {
+        name: 'background45',
+        image: require('../assets/Forest/45.png'),
+        },
+        {
+        name: 'background46',
+        image: require('../assets/Forest/46.png'),
+        },
+        {
+        name: 'background47',
+        image: require('../assets/Forest/47.png'),
+        },
+        {
+        name: 'background48',
+        image: require('../assets/Forest/48.png'),
+        },
+        {
+        name: 'background49',
+        image: require('../assets/Forest/49.png'),
+        },
+        {
+        name: 'background50',
+        image: require('../assets/Forest/50.png'),
+        }
+];
 
 return (
 <View style={styles.mainContainer}>
@@ -110,11 +274,13 @@ return (
 
     <View style={styles.centerRow}>
         <Text style={styles.centerRowSubText}>You can plant more trees by spending on project and make your forest green, Free from carbon.</Text>
+        <View style={{height: 10}}/>
+        <Text style={styles.centerRowSubText}>You have planted {forestValue} trees, thank you for helping and fixing the environment</Text>
     </View>
 
     <View style={styles.bottom}>
         <TouchableOpacity style={styles.button}>
-            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Carbon")}/>
+            <Button title="Buy Projects" color="babyBlue" onPress={() => navigation.navigate("Account")}/>
         </TouchableOpacity>
     </View>
 
@@ -132,8 +298,8 @@ const styles = StyleSheet.create({
 
     titleTextRow: {
         marginTop: GlobalStyles.Title.marginTop,
-        marginLeft: GlobalStyles.Title.marginLeft,
-        width: GlobalStyles.Title.width,
+        width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
     },
 
     titleText: {
@@ -148,8 +314,8 @@ const styles = StyleSheet.create({
 
     subTextRow: {
         marginTop: GlobalStyles.RowText.marginTop,
-        marginLeft: GlobalStyles.RowText.marginLeft,
-        width: "80%",
+        width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
         fontColor: GlobalStyles.RowText.fontColor,
     },
 
@@ -157,8 +323,9 @@ const styles = StyleSheet.create({
 
         height: GlobalStyles.DivContainer.height10,
         width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
         marginTop: GlobalStyles.RowText.marginTop,
-        marginLeft: GlobalStyles.RowText.marginLeft,
+
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -167,8 +334,8 @@ const styles = StyleSheet.create({
 
 
     imageBox: {
-        width: GlobalStyles.imageBox.width,
-        marginLeft: GlobalStyles.RowText.marginLeft,
+        width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
 
     },
 
@@ -195,7 +362,7 @@ const styles = StyleSheet.create({
     },
 
     centerRowSubText: {
-        width: GlobalStyles.CenterRowSubText.width,
+        width: "100%",
         fontSize: GlobalStyles.CenterRowSubText.fontSize,
         fontWeight: GlobalStyles.CenterRowSubText.fontWeight,
         fontColor: GlobalStyles.CenterRowSubText.fontColor,
@@ -204,8 +371,8 @@ const styles = StyleSheet.create({
 
 
     centerRow: {
-        width: GlobalStyles.CenterRow.width,
-        marginLeft: GlobalStyles.CenterRow.marginLeft,
+        width: "90%",
+        marginLeft: "5%",
         marginTop: "2.5%"
     },
 
@@ -217,8 +384,8 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        width: "80%",
-        left: "10%"
+        width: "90%",
+        left: "5%"
     }
 
 

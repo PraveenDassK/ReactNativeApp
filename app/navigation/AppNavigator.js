@@ -74,6 +74,9 @@ import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
 import AccountSettings from "../screens/AccountSettings"
 import Transactions from "../screens/Transactions"
 import AccountLetter from "../screens/AccountLetter"
+import AboutUs from "../screens/AboutUs"
+
+import Faq from "../screens/Faq"
 
 import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
@@ -126,6 +129,24 @@ const StackNavigator = () => {
         }}
       />
 
+      <Stack.Screen
+              name="AboutUs"
+              component={gestureHandlerRootHOC(AboutUs)}
+              options={{
+                title: "AboutUs",
+
+              }}
+            />
+
+
+        <Stack.Screen
+                      name="Faq"
+                      component={gestureHandlerRootHOC(Faq)}
+                      options={{
+                        title: "Faq",
+
+                      }}
+                    />
       <Stack.Screen 
         name="SendMoney" 
         component={gestureHandlerRootHOC(SendMoney)}

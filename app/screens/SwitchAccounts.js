@@ -3,7 +3,7 @@ import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "reac
 import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/Button";
 
-import api from "../api/api_list"
+import api from "../api/api"
 import AuthContext from "../auth/context";
 
 const SwitchAccounts = ({navigation,route}) => {
@@ -18,7 +18,7 @@ const SwitchAccounts = ({navigation,route}) => {
     },[])
 
     const loadData = async () => {
-        const response = await api.GetAccountByCustomer(authContext.userID);
+        const response = await api.GetCustomersAccounts(authContext.userID);
         const data = response.data.details.content
         console.log(data)
         setUserData(data)

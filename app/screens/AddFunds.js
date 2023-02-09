@@ -5,18 +5,17 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 
 
 import api from "../api/api_list"
+import apiCall from "../api/api"
 import AuthContext from "../auth/context";
 
-import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 
 const AddFunds = ({navigation}) => {
   //Card data
   const authContext = useContext(AuthContext)
   const [data, setData] = useState({})
-
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
-
   const [cardData, setCard] = useState([]);
 
   //let cardData = [{label: "01614842", value: "01614842"}]
@@ -27,28 +26,31 @@ const AddFunds = ({navigation}) => {
   
   //Gets the data for the user
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer(authContext.userID);
-    const data = response.data.details.content
+    const response = await apiCall.GetCardByAccount(authContext.userID);
+    const data = response
+    console.log(data)
     setData(data)
 
-    const accountNum = data[0].identifiers[0].accountNumber
-    console.log(accountNum)
-    for(let i=0;i<3;i++){
-      let acclist=[{label: data[i].identifiers[0].accountNumber,
-        value: data[i].identifiers[0].accountNumber,}]
-      return acclist;
-    }
-
-    console.log(acclist)
-  //   const accountList =[{
-  //     label: data[0].identifiers[0].accountNumber,
-  //     value: data[0].identifiers[0].accountNumber, 
-  //   },
-  // {label: data[1].identifiers[0].accountNumber,
-  //   value: data[1].identifiers[0].accountNumber},
-  //  {label: data[2].identifiers[0].accountNumber,
-  //   value: data[2].identifiers[0].accountNumber},]
-    setCard(acclist)
+    let accountList = []
+    data.forEach(element => {
+      console.log(element)
+      accountList.push({
+        label: "**** " +element.maskedCardNumber.substr(element.maskedCardNumber.length - 4),
+        value: element.customerId
+      })
+    });
+    // const accountNum = data[0].identifiers[0].accountNumber
+    // console.log(accountNum)
+    // let accountList = [{
+    //   label: data[0].identifiers[0].accountNumber,
+    //   value: data[0].identifiers[0].accountNumber
+    // },
+    // {
+    //   label: data[1].identifiers[0].accountNumber,
+    //   value: data[1].identifiers[0].accountNumber
+    // }
+    // ]
+    setCard(accountList)
   }
 
   //Screen components
@@ -57,7 +59,7 @@ const AddFunds = ({navigation}) => {
   console.log(data)
   const reciver = "Current Balance : "
   const sortCode =  "Current Balance : "
-  const accountCode = "Card ID : "
+  const accountCode = "Card ID : " + value
   let fromName = ""
 
   let payment = (amount ? amount : 1).toString()
@@ -89,7 +91,7 @@ const AddFunds = ({navigation}) => {
       finishScreen: "AccountMain"
     })
   }
- 
+  console.log(value)
   return (
     <View style={styles.requestContact}>
       <Pressable 

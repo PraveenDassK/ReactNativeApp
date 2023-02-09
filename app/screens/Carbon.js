@@ -4,6 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
 import carbonApi from "../api/carbon";
+import apiCall from "../api/api";
 import Button from "../components/Button";
 import Text from "../components/Text";
 import Screen from "../components/Screen";
@@ -19,9 +20,8 @@ const Carbon = ({ route, navigation }) => {
   }, []);
 
   const loadData = async () => {
-    const response = await carbonApi.getListings();
-
-    setData(response.data.details.data);
+    const response = await apiCall.GetProjectList();
+    setData(response);
   };
 
   const capitalized = (words) => {
@@ -43,7 +43,6 @@ const Carbon = ({ route, navigation }) => {
     };
     setCart((prevArray) => [...prevArray, arrobj]);
     amount++;
-    console.log(arrobj);
     checkout();
   };
 
@@ -54,9 +53,7 @@ const Carbon = ({ route, navigation }) => {
       sourceAccountId: "A121BXVM",
       totalAmount: amount,
     };
-    console.log(obj);
   };
-  console.log(cart);
   return (
     <Screen style={{ backgroundColor: "#F6F5F8" }}>
       {cart && cart.length ? (
@@ -78,7 +75,7 @@ const Carbon = ({ route, navigation }) => {
                 At Carbonyte we help you to track, reduce and calvulate your C0<Text style={{fontSize: 15, lineHeight: 37}}>2</Text>emission from your daily transcation
             </Text> */}
 
-              <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" onPress={() => console.log("Calulate carbon footprint")} />
+              <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" onPress={() => navigation.navigate("CarbonTonnesRemoved")} />
               <View style={styles.subContainer}>
                 <Text numberOflines={3} style={styles.text}>
                   At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transaction
@@ -127,12 +124,11 @@ const Carbon = ({ route, navigation }) => {
               />
 
               <View style={styles.subTitle}>
-                {console.log(item.asset.type)}
                 <View style={styles.subTitleText}>
                   <Text style={styles.textSub}>{item.displayName}</Text>
                 </View>
                 <View style={styles.subTitlePrice}>
-                  <Text style={styles.priceSub}>£{item.asset.displayAssetPrice.toFixed(2)}</Text>
+                  <Text style={styles.priceSub}>£{item.asset.displayAssetPriceWithMarkup.toFixed(2)}</Text>
                   <Text style={styles.tree}>/{item.asset.type == "LAND" ? "tCO2e" : item.asset.type}</Text>
                 </View>
               </View>

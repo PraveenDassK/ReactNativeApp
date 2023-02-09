@@ -4,8 +4,9 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen";
 import api from "../api/api_list"
+import apiCall from "../api/api"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-
+import { useFocusEffect } from "@react-navigation/native";
 
 const SpendingLimit = ({navigation,route}) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -14,20 +15,20 @@ const SpendingLimit = ({navigation,route}) => {
 
   const [monthLim, setMonLim] = useState(0);
   const [spend, setSpend] = useState(0);
-  const [percent, setPercent] = useState("0%");
+  const [percent, setPercent] = useState("50%");
 
   console.log(route)
   if(route.params) {
-    //loadData()
+    loadData()
     return true
   }
 
   //Calls the API once during load
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus',  () => {
-      loadData()
-    })
-  },[])
+  useFocusEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      loadData();
+    });
+  });
   
   //Gets the data for the user
   const loadData = async () => {
@@ -35,35 +36,46 @@ const SpendingLimit = ({navigation,route}) => {
     const response = await api.GetLimit(authContext.accountID);
     //Then isolate the useful data
     const data = response.data.details
-    console.log(response.data)
+
+
+    //Gets the monthly spend
+    const transactions = await apiCall.GetTransactions(authContext.GetTransactions);
+    let spend = 0
+    transactions.content.forEach(element => {
+      console.log(element)
+      spend += element.amount
+    });
+
     //If there is a limit
     //50 is the amount spent
-    if(data.monthlyAmount != 0){
-      setPercent((50/data.monthlyAmount)*100 + "%")
+    if(data.monthlyAmount > 0){
+      const percentamount = Math.floor((spend/data.monthlyAmount)*100) + "%"
+      setPercent(percentamount)
     }else{
-      setPercent(0)
+      setPercent("0%")
     }
+
     setMonLim(data.monthlyAmount)
 
     const balanceresponse = await api.GetAccount(authContext.accountID);
     const balData = balanceresponse.data.details;
     setSpend(70);
   }
-  const sendRequest = async () => {
-    const response = await api.SetToggles(authContext.accountID,
-      isEnabled,
-    );
+
+  /**
+   * @todo set spending limit to 0 on trigger
+   */
+  const spendingToggle = () => {
+    if(isEnabled){
+      setIsEnabled(false)
+      setPercent("0%")
+      setMonLim(0)
+    }else{
+      setIsEnabled(true)
+      navigation.navigate("SetLimit")
+    }
   }
 
-
-  let percentBar =           
-  <View style={[styles.amountContainer]}>
-    <View style={[styles.amountScale]} width = {percent}>
-    </View>
-  </View>
-
-  console.log(spend)
-  console.log(monthLim)
   return (
     <Screen>
     <View style={styles.spendingLimit}>
@@ -119,7 +131,7 @@ const SpendingLimit = ({navigation,route}) => {
             />
           <Pressable
             style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
-            onPress={() => navigation.navigate("SetLimit")}
+            onPress={() => spendingToggle()}
             title="Set Limit"
           />
 
@@ -127,8 +139,10 @@ const SpendingLimit = ({navigation,route}) => {
             Amount spent this month
           </Text>
 
-          {percentBar}
-
+          <View style={[styles.amountContainer]}>
+            <View style={[styles.amountScale]} width = {percent}>
+            </View>
+          </View>
 
         </View>
         
@@ -155,7 +169,6 @@ const styles = StyleSheet.create({
     width:"100%",
     textAlign:"center",
     top:"30%",
-    fontSize:"20%",
   },
   amountContainer:{
     width:"90%",
@@ -295,7 +308,6 @@ const styles = StyleSheet.create({
   hello2: {
     marginTop: 59,
     marginLeft: -30,
-    fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
     fontWeight: "700",
   },
@@ -309,7 +321,6 @@ const styles = StyleSheet.create({
     left: 3,
     lineHeight: 16,
     width: 316,
-    fontSize: GlobalStyles.FontSize.size_base,
   },
   cardIcon: {
     marginLeft: -6,
