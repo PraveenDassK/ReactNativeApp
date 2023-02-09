@@ -30,6 +30,7 @@ const MyCards = ({ navigation }) => {
   const [cardnumber, setcardnumber] = useState(null);
   const [firstname, setfirstname] = useState(null);
   const [lastname, setlastname] = useState(null);
+  const [bool, setbool] = useState();
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const MyCards = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
         const accountdata = accountresponse.data.details
     const data = responseBalance.data.details
-    setBalance(data.availableBalance)
+   
     console.log(authContext.accountID)
     //Load the data for transactions
     const response = await api.GetTransactions(authContext.accountID,5);
@@ -58,11 +59,26 @@ const MyCards = ({ navigation }) => {
 
     const response2 = await apiCall.GetCardByAccount(authContext.userID); 
     const data2 = response2; 
-    setcardnumber(response2[1].maskedCardNumber)
-    setfirstname(response2[1].embossing.firstName) 
-    setlastname(response2[1].embossing.lastName) 
+     
     console.log(response2) 
     console.log(response2[1].embossing.lastName)
+
+    const bool = true;
+    if(bool === true){
+      setcardnumber("*******")
+      setfirstname("*******") 
+      setlastname("*******")
+      setBalance("*******");
+    setSortCode("*******");
+    setaccountnumber("*******");
+    setaccountname("*******");
+    }
+    else{
+      setcardnumber(response2[1].maskedCardNumber)
+    setfirstname(response2[1].embossing.firstName) 
+    setlastname(response2[1].embossing.lastName)
+    setBalance(data.availableBalance)
+    }
 
 }
 

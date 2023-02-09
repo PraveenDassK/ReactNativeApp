@@ -49,6 +49,8 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [numCarbonType, setCarbonType] = useState(0);
   const [animalsSaved, setAnimalsSaved] = useState(0);
   const [projects, setProjects] = useState([]);
+
+  const [bool, setbool] = useState();
   
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
@@ -71,16 +73,32 @@ const HomeScreenPersonal = ({ navigation }) => {
     const accountdata = accountresponse.data.details;
     const response2 = await apiCall.GetCardByAccount(authContext.userID); 
     const data2 = response2; 
-    setcardnumber(response2[1].maskedCardNumber)
-    setfirstname(response2[1].embossing.firstName) 
-    setlastname(response2[1].embossing.lastName) 
+    
     console.log(response2) 
     console.log(response2[1].embossing.lastName)
 
+    
+    const bool = true;
+    if(bool === true){
+      setcardnumber("*******")
+      setfirstname("*******") 
+      setlastname("*******")
+      setBalance("*******");
+    setSortCode("*******");
+    setaccountnumber("*******");
+    setaccountname("*******");
+    }
+    else{
+      setcardnumber(response2[1].maskedCardNumber)
+    setfirstname(response2[1].embossing.firstName) 
+    setlastname(response2[1].embossing.lastName) 
     setBalance(data.availableBalance);
     setSortCode(accountdata.identifiers[0].sortCode);
     setaccountnumber(accountdata.identifiers[0].accountNumber);
     setaccountname(accountdata.name);
+    }
+
+
     //Verified calculation
     setStatus(data.status != "ACTIVE");
 
