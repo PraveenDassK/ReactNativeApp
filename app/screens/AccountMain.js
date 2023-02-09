@@ -153,15 +153,8 @@ const HomeScreenPersonal = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.screen}>
-        <View style={styles.NavBarTop}>
-          <Text style={[styles.navBarTopText, styles.blueOverwrite]}>Personal</Text>
-          <Text style={styles.navBarTopText}>Business</Text>
-        </View>
-
-        <View style={styles.lineSeparatorDiv}>
-          <View style={styles.blueLine} />
-          <View style={styles.blackLine} />
-        </View>
+       
+      
 
         <View style={styles.divContainer}>
           {/* <View style={styles.congratulationsContainer}>

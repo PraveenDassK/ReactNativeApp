@@ -13,6 +13,7 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useFocusEffect } from "@react-navigation/native";
@@ -23,8 +24,9 @@ import AuthContext from "../auth/context";
 import Button from "../components/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import Form from "../components/forms/Form";
-import loginAPI from "../api/login";
-import authStorage from "../auth/storage";
+import otpVerificationAPI from '../api/otpVerification'
+import otpAPI from '../api/otp'
+
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -37,7 +39,7 @@ const validationSchema = Yup.object().shape({
   // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
 }); // add required if necessary
 
-const OTPVerificationPersonal = ({ navigation }) => {
+const OTPVerificationPersonal2 = ({ navigation }) => {
   const { user, currentUser, setCurrentUser } = useContext(AuthContext);
   const [count, setCount] = useState(45);
   const [resendOTP, setResendOTP] = useState(null);
@@ -83,7 +85,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
     setResendOTP({ email, phoneNumber, emailOTP, phoneOTP });
 
-    const result = await loginAPI.verifyLoginOTP({
+    const result = await otpVerificationAPI.otpVerification({
       email,
       phoneNumber,
       emailOTP,
@@ -110,7 +112,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     const email = user.email;
     const phoneNumber = user.phoneNumber;
 
-    // const result = await loginAPI.SendLoginOTP({ email, phoneNumber})
+    // const result = await otpAPI.otp({ email, phoneNumber})
     console.log(email, phoneNumber);
   };
 
@@ -371,4 +373,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default OTPVerificationPersonal;
+export default OTPVerificationPersonal2;

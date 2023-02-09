@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useLayoutEffect } from "react";
 import { StyleSheet, View, Text, TextInput, Image} from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
@@ -14,8 +14,6 @@ import Screen from "../components/Screen";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 
-
-
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
@@ -23,13 +21,14 @@ const validationSchema = Yup.object().shape({
 
 const Login = ({ navigation }) => {
   const prefix = "44"
-
+  
   const { setUser } = useContext(AuthContext)
-
+  
   const handleSubmit = async ({ email, phoneNumber }) => {
     phoneNumber = prefix + phoneNumber
     const result = await loginApi.SendLoginOTP({ email, phoneNumber })
     setUser({ email, phoneNumber })
+    
 
     console.log('please work', result.data)
     if (!result.ok) return  alert('Could not send otp')
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
     color:"#0101FD",
   },
   button:{
-    marginTop: verticalScale(150),
+    marginTop: verticalScale(10),
     //color:"#0101FD",
     backgroundColor:"#D8EBF9",
     color: "#1A1A1A",

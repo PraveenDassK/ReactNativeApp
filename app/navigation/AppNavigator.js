@@ -6,6 +6,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 
+
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 // import AccountNavigator from "./AccountNavigator";
@@ -78,9 +79,7 @@ import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import CarbonSpending from "../screens/CarbonSpending"
-import Login from "../screens/Login"
-import SignUpPersonal from "../screens/SignUpPersonal";
-import TestEnviro from "../screens/TestEnviro";
+
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -103,16 +102,18 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-   return(
-     <Stack.Navigator
-      initialRouteName="CarbonTonnesRemoved">
-        
+  return(
+    <Stack.Navigator
+    screenOptions={{
+     gestureEnabled: true,
+     gestureDirection: "horizontal",
+    }} 
+    >
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
         options={{
-          title: "Account",
-       
+          title: "Carbonyte",
         }}
       />
       
@@ -122,7 +123,6 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "AddFunds",
-       
         }}
       />
 
@@ -174,9 +174,12 @@ const StackNavigator = () => {
     <Stack.Screen 
         name="MyCards" 
         component={gestureHandlerRootHOC(MyCards)}
-        options={{
-          title: "MyCards",
-       
+        // options={{
+        //   title: "MyCards",
+        //   presentation: 'modal' 
+        // }}
+        options={{ 
+          animation: "slide_from_bottom"
         }}
       />
 
@@ -349,14 +352,7 @@ const StackNavigator = () => {
         }}
       />
 
-    <Stack.Screen 
-        name="Login" 
-        component={Login}
-        options={{
-          title: "Login",
-       
-        }}
-      />
+
           
       <Stack.Screen 
         name="CarbonTonnesRemoved" 
@@ -374,16 +370,25 @@ const StackNavigator = () => {
        
         }}
       />
-      <Stack.Screen 
-        name="TestEnviro" 
-        component={TestEnviro}
-        options={{
-          title: "TestEnviro",
-       
-        }}
-      />
+
 
     </Stack.Navigator>
+  )
+}
+
+const AccountNavigator = () => {
+  return (
+    <Tab.Navigator >
+      <Tab.Screen
+        name="Analysis" 
+        component={gestureHandlerRootHOC(AccountMain)}
+      />
+      <Tab.Screen
+        name="Analysis" 
+        component={gestureHandlerRootHOC(AccountMain)}
+      />
+    
+    </Tab.Navigator>
   )
 }
 
@@ -392,7 +397,15 @@ const AppNavigator = () => {
 
   return (
     <Tab.Navigator
-    tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}>
+    // tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}
+     screenOptions={{
+        "tabBarShowLabel": true,
+        "tabBarStyle": {
+          "height": 40,
+          "width": "125%"
+        }}
+      }
+    >
     
     <Tab.Screen 
       name="AccountTab" 
