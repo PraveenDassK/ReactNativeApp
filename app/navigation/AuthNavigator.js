@@ -26,7 +26,7 @@ import SplashAnimation from "../screens/SplashAnimation"
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator initialRouteName=""
+  <Stack.Navigator initialRouteName="Account"
   screenOptions={{ headerShown: false }}
   >
     {/* <Stack.Screen
@@ -55,12 +55,28 @@ const AuthNavigator = () => (
       component={gestureHandlerRootHOC(Login)}
       // options={{ presentation: 'modal' }}
       options={{ 
-        animation: "slide_from_bottom"
+        title: "Login",
+        animation: "slide_from_bottom",
+        headerShown: true,
       }}
       />
 
-    <Stack.Screen  name="OTPVerificationPersonal" component={gestureHandlerRootHOC(OTPVerificationPersonal)}/>
-    <Stack.Screen  name="OTPVerificationPersonal2" component={gestureHandlerRootHOC(OTPVerificationPersonal2)}/>
+    <Stack.Screen  
+      name="OTPVerificationPersonal" 
+      component={gestureHandlerRootHOC(OTPVerificationPersonal)}
+      options={{ 
+        title: "OTPVerificationPersonal",
+        headerShown: true,
+      }}
+    />
+    <Stack.Screen  
+      name="OTPVerificationPersonal2" 
+      component={gestureHandlerRootHOC(OTPVerificationPersonal2)}
+      options={{ 
+        title: "OTPVerificationPersonal2",
+        headerShown: true,
+      }}
+    />
 
     <Stack.Screen  name="PersonalOrBusiness" component={gestureHandlerRootHOC(PersonalOrBusiness)}/>
     <Stack.Screen  name="Name" component={gestureHandlerRootHOC(Name)}/>

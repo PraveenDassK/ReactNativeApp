@@ -98,12 +98,11 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
     if (!result.data.result) return alert("Could not verify otp");
     const currentUser = jwtDecode(result?.data?.details);
-    setCurrentUser(currentUser);
+    
     authStorage.storeToken(result?.data?.details);
+    setCurrentUser(currentUser);
 
-    console.log("authToken", currentUser);
-
-    // with navigate router
+    console.log("authToken OTP", currentUser );
   };
 
   const resendCred = async () => {
@@ -258,8 +257,8 @@ const OTPVerificationPersonal = ({ navigation }) => {
                     Resend Code in 00:{count < 10 ? `0${count}` : count}
                   </Text>
             <View style={styles.button}>
-                            <Button title="Verify" color="babyBlue" onPress={handleSubmit} />
-                          </View>
+                <Button title="Verify" color="babyBlue" onPress={handleSubmit} />
+            </View>
           </>
         )}
 
@@ -334,7 +333,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "80%",
     marginLeft: "10%",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     alignItems: "flex-end",
   },
 

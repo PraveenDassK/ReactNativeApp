@@ -1,6 +1,8 @@
 import React,{ useEffect, useState,useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import { Swipeable, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { MaterialCommunityIcons} from '@expo/vector-icons'
 
 import moment from "moment";
 import api from "../api/api_list"
@@ -15,13 +17,45 @@ const Transactions = ({navigation,route}) => {
 
     const authContext = useContext(AuthContext)
 
-
     //Calls the API once during load
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus',  () => {
             loadData()
         })
     },[])
+
+    const handleDelete = () => {
+
+    }
+
+    const renderRightActions = (onPress) => {
+      return(
+        <View style={{ backgroundColor: "#ff5252", width:70,  marginTop:15, justifyContent:"center", alignItems:"center"}}>
+          <TouchableWithoutFeedback onPress={() => console.log(onPress)}>
+          <MaterialCommunityIcons 
+          name="eye-off"
+          size={35}
+          color="white"
+          />
+          </TouchableWithoutFeedback>
+        </View>
+      )
+    }
+
+    const renderLeftActions = (onPress) => {
+      return(
+        <View style={{ backgroundColor: "grey", width:70,  marginTop:15, justifyContent:"center", alignItems:"center"}}>
+            <TouchableWithoutFeedback onPress={() => console.log(onPress)}>
+            <MaterialCommunityIcons 
+            name="progress-alert"
+            size={35}
+            color="white"
+            />
+            </TouchableWithoutFeedback>
+       
+          </View>
+      )
+    }
 
     const loadData = async () => {
         const responseBalance = await api.GetAccount(authContext.accountID);
@@ -112,18 +146,20 @@ const Transactions = ({navigation,route}) => {
     const showData = () => {
         transactionData.forEach((transaction,i) => {
             transactionList.push(
+              <Swipeable 
+              renderLeftActions={()=> renderLeftActions(transaction)}
+              renderRightActions={renderRightActions}>
               <Pressable
                         style={[styles.transactionBox, styles.rounded]}
                         key={i}
-                        onPress={() => navigation.navigate("Transactions")}>
+                        onPress={() => showTransaction(i)}>
                         <View style={{height: "100%", flexDirection: "row",}}>
-                        <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-                        <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%", fontWeight: "700"}}>{initials}</Text>
+                        <View style={{justifyContent: "center", alignItems: "center",width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+                        <Text style={{ fontWeight: "700"}}>{initials}</Text>
                         </View>
                         <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
                             <Text style={{fontSize :14, fontWeight: "700"}}>
-                                                      {transaction.account.customerName}
-
+                              {transaction.account.customerName}
                             </Text>
                             <Text style={{}}>
                     {moment(transaction.transactionDate).format("MMM Do YY")}
@@ -136,6 +172,7 @@ const Transactions = ({navigation,route}) => {
                         </View>
                        </View>
                       </Pressable>
+                      </Swipeable>
                 
             )
         })

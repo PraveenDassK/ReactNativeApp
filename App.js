@@ -13,11 +13,17 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+
 export default function App() {
 
 const [user, setUser] = useState()
 const [currentUser, setCurrentUser] = useState()
 const [isAuth, setIsAuth] = useState(false)
+const [login, setLogin] = useState(false)
 
 
 //External
@@ -36,25 +42,29 @@ const [settings, setSettings] = useState({
 
 
 
-  // useEffect(() => {
-  //   if(isAuth) {
-  //     authenticate()
-  //   }
-  //   console.log('currentUser & isAuth on load', currentUser, isAuth)
-  // }, [currentUser, isAuth ])
 
-useEffect(() => {
-  // console.log('auth storage', currentUser === true, signedAuth.signedIn)
-  if(isAuth) {
-    authenticate()
-  }
-  console.log('currentUser & isAuth on load', currentUser, isAuth)
-}, [currentUser, isAuth ])
+  useEffect(() => {
+    // console.log('auth storage', currentUser === true, signedAuth.signedIn)
+    if(isAuth) {
+      authenticate()
+    }
+  
+    console.log('currentUser & isAuth on load', currentUser , !currentUser, isAuth)
+  }, [currentUser, isAuth ])
 
-useEffect(() =>{
-  restoreToken()
-  restoreSignIn()
-}, [])
+
+
+  
+
+
+  useEffect(() => {
+   setLogin(true)
+   }, [currentUser ])
+
+  useEffect(() =>{
+    restoreToken()
+    restoreSignIn()
+  }, [])
 
   useEffect(() => {
     AppState.addEventListener('change', handleAppStateChange);
@@ -118,8 +128,11 @@ if(!AppState.currentState) {
       userID, setUserID,
       settings, setSettings
     }}>
+      <SafeAreaProvider>
       <NavigationContainer>
-      <AppNavigator />
+      {/* <AppNavigator /> */}
+
+      
        
         {/* {!currentUser ? (
           <AuthNavigator />
@@ -132,7 +145,7 @@ if(!AppState.currentState) {
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}
 
-      </NavigationContainer>
+      </NavigationContainer></SafeAreaProvider>
     </AuthContext.Provider>    
   )
 }

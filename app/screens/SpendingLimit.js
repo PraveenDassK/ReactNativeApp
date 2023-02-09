@@ -59,8 +59,7 @@ const SpendingLimit = ({navigation,route}) => {
 
     const balanceresponse = await api.GetAccount(authContext.accountID);
     const balData = balanceresponse.data.details;
-    setSpend(spend);
-    setIsEnabled(data.monthlyAmount != 0)
+    setSpend(70);
   }
 
   /**
@@ -154,6 +153,7 @@ const SpendingLimit = ({navigation,route}) => {
             styles.limitFlexBox,
           ]}
         >
+          {spend}
           The limit determines the amount that can be spent or withdrawn using
           this card per month
         </Text>

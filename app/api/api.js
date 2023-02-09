@@ -43,6 +43,8 @@ const GetProjectList = async() => {
 
 const GetSingleProject = async(Id) => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?projectId=" + Id)
+    const requestData = request.data.details
+    console.log(requestData)
     return requestData
 }
 
@@ -110,7 +112,7 @@ const SetPin = async (pin) => {
 }
 
 const GetCustomersAccounts = async (Id) => {
-    const request = await client.post("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/C1220XHD")
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/C1220XHD")
     const requestData = request.data.details
     return requestData
 }
