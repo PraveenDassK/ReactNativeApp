@@ -130,28 +130,22 @@ if(!AppState.currentState) {
     }}>
       <SafeAreaProvider>
       <NavigationContainer>
-      <AppNavigator />
+      {/* <AppNavigator /> */}
 
-        {/* {login ? (
-        <AppNavigator /> 
-        ) : currentUser ? (
-          <AppNavigator /> 
-        ) : <AuthNavigator />
-        } */}
+      
        
-        {/* {!currentUser ? (
+        {!currentUser ? (
           <AuthNavigator /> 
-        ) :  login ? (
+        ) :  currentUser ? (
           <AppNavigator /> 
         ) : (
           <AuthNavigator />
-        )} */}
+        )}
 
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}
 
-      </NavigationContainer>
-      </SafeAreaProvider>
+      </NavigationContainer></SafeAreaProvider>
     </AuthContext.Provider>    
   )
 }
