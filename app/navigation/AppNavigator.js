@@ -75,6 +75,7 @@ import Transactions from "../screens/Transactions"
 import AccountLetter from "../screens/AccountLetter"
 import AboutUs from "../screens/AboutUs"
 
+import Faq from "../screens/Faq"
 
 import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
@@ -107,7 +108,7 @@ const leftToRightAnimation = {
 const StackNavigator = () => {
    return(
      <Stack.Navigator
-      initialRouteName="MyCards">
+      initialRouteName="">
         
       <Stack.Screen 
         name="Account" 
@@ -137,6 +138,15 @@ const StackNavigator = () => {
               }}
             />
 
+
+        <Stack.Screen
+                      name="Faq"
+                      component={gestureHandlerRootHOC(Faq)}
+                      options={{
+                        title: "Faq",
+
+                      }}
+                    />
       <Stack.Screen 
         name="SendMoney" 
         component={gestureHandlerRootHOC(SendMoney)}

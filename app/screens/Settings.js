@@ -270,6 +270,14 @@ const Settings = ({ navigation }) => {
           />
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.button}>
+                  <Button
+                    title="Faq"
+                    color="babyBlue"
+                    onPress={() => navigation.navigate("Faq")}
+                  />
+                </TouchableOpacity>
+
         <Pressable style={{height: 50, flexDirection: "row", justifyContent: "center", alignItems: "center", width: "90%", marginLeft: "5%"}} onPress={handleLogout}>
 
           <Image
