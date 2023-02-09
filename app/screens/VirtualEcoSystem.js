@@ -275,7 +275,7 @@ return (
     <View style={styles.centerRow}>
         <Text style={styles.centerRowSubText}>You can plant more trees by spending on project and make your forest green, Free from carbon.</Text>
         <View style={{height: 10}}/>
-        <Text style={styles.centerRowSubText}>You have planted {forestValue} trees, thank you for helping fix the environment</Text>
+        <Text style={styles.centerRowSubText}>You have planted {forestValue} trees, thank you for helping and fixing the environment</Text>
     </View>
 
     <View style={styles.bottom}>
