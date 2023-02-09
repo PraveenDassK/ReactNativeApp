@@ -217,7 +217,7 @@ showData()
             <Image
               style={[styles.settingsIcon, styles.iconLayout]}
               resizeMode="contain"
-              source={require("../assets/icon-settings.png")}
+              source={require("../assets/icon-settingsbutton.png")}
             />
           </Pressable>
               <View top = "55%" left ="10%">
@@ -603,13 +603,11 @@ const styles = StyleSheet.create({
   shadow: {
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
+      width: 1,
       height: 1,
     },
     shadowOpacity: 1,
     shadowRadius: 1,
-
-    elevation: 1,
   },
   
   groupChild4: {
