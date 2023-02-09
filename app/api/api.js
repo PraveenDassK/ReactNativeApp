@@ -2,6 +2,7 @@ import client from "./client";
 import AuthContext from "../auth/context";
 import React,{ useEffect, useState,useContext } from "react";
 
+/**Getters */
 const GetCustomerDetails = async (Id) => {
     const request = await client.get('https://api.carbonyte.io/walletmodule/GetCustomer/'+ id);
     const requestData = request.data.details
@@ -65,7 +66,19 @@ const GetTransactions = async (Id,amount) => {
     return requestData
 }
 
+const GetCardByAccount = async() => {
+    const request = await client.get("https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=686283112&auditUser=A12277V1")
+    const requestData = request.data.details
+    return requestData
+}
 
+const AcceptTermsAndConditions = async(Id) => {
+    const sendPost = (amount) => client.post("", {"id": Id})
+    const requestData = sendPost.data.details
+    return requestData
+}
+
+/**Posters */
 const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
   {
     "sourceAccountId": "A12277V1",
@@ -88,8 +101,16 @@ const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule
   }
 )
 
-const GetCardByAccount = async() => {
-    const request = await client.get("https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=686283112&auditUser=A12277V1")
+const GetCustomerByID = async () => {
+    const request = await client.get("https://api.carbonyte.io/walletmodule/Enfuce/GetCustomerbyId/212850012")
+}
+
+const SetPin = async (pin) => {
+    const request = await client.post("https://api.carbonyte.io/walletmodule/Enfuce/GetCustomerbyId/212850012")
+}
+
+const GetCustomersAccounts = async (Id) => {
+    const request = await client.post("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/C1220XHD")
     const requestData = request.data.details
     return requestData
 }
@@ -104,5 +125,9 @@ export default {
     Checkout,
     getUsersNFTs,
     GetTransactions,
-    GetCardByAccount
+    SendFunds,
+    GetCardByAccount,
+    AcceptTermsAndConditions,
+    SetPin,
+    GetCustomersAccounts
   };
