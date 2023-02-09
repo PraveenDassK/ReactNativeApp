@@ -203,9 +203,9 @@ const GlobalStyles = {
   DivContainer: {
     backgroundColor: "#F6F5F8",
     height: "50%",
-    width: "80%",
+    width: "90%",
     height10: "10%",
-    marginLeft: "10%",
+    marginLeft: "5%",
     marginTop: "2.5%",
     flex: 1,
     borderRadius: 15
