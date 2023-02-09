@@ -643,7 +643,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               Congratulations!
             </Text>
             <Text style={{ textAlign: "center", marginTop: verticalScale(2) }}>
-              You have planted 5 trees with advance card purchase
+              You have planted {TotalAmount} trees with advance card purchase
             </Text>
             <Pressable onPress={() => navigation.navigate("VirtualEcoSystem")}>
               <Text
