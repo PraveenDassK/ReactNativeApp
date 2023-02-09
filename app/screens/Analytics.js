@@ -151,12 +151,14 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View style={styles.balanceContainer}>
-          <Text style={{ flex: 2, fontWeight: "700" }}>Balance</Text>
+          <Text style={{ flex: 8, fontWeight: "700" }}>Balance</Text>
           <Text
             style={{
-              flex: 8,
+              flex: 2,
               alignItems: "flex-end",
               justifyContent: "flex-end",
+              textAlign: "left",
+              width: "100%",
               fontWeight: "700",
               color: "#0101FD",
             }}
