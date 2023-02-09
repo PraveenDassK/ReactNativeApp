@@ -65,6 +65,35 @@ const GetTransactions = async (Id,amount) => {
     return requestData
 }
 
+
+const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
+  {
+    "sourceAccountId": "A12277V1",
+    "destination": {
+      "type": "SCAN",
+      "id": "A1226WEM",
+      "accountNumber": "02619527",
+      "sortCode": "000000",
+      "name": "Gorthalax",
+      "address": {
+        "addressLine1": "string",
+        "postTown": "London",
+        "postCode": "W2 1AS",
+        "country": "GB"
+      }
+    },
+    "currency": "GBP",
+    "amount": amount,
+    "reference": "tithes"
+  }
+)
+
+const GetCardByAccount = async() => {
+    const request = await client.get("https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=686283112&auditUser=A12277V1")
+    const requestData = request.data.details
+    return requestData
+}
+
 export default {
     GetCustomerDetails,
     GetUserImpacts,
@@ -74,5 +103,6 @@ export default {
     GetSingleProject,
     Checkout,
     getUsersNFTs,
-    GetTransactions
+    GetTransactions,
+    GetCardByAccount
   };
