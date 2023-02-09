@@ -1,9 +1,23 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
+import api from "../api/api_list"
+import apiCall from "../api/api"
+import AuthContext from "../auth/context";
+
 
 const AccountLetter = ({navigation}) => {
+    const [email, setemail] = useState(null);
+    const authContext = useContext(AuthContext);
+    useEffect(() => {
+        loadData()
+      },[])
+      const loadData = async () => {
+        const customer = await api.GetCustomer(authContext.userID)
+        const data = customer.data.details
+        setemail(data.associates[0].email)
+      }    
   return (
     <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
@@ -21,7 +35,7 @@ const AccountLetter = ({navigation}) => {
         <View style={{justifyContent: "space-between", alignItems: "center", height: "50%", marginTop: "5%"}}>
         <Text>Yay! your details has been verified</Text>
         <Text>We sent a confirmation email to</Text>
-        <Text style={{fontWeight: "700"}}>email@gmail.com</Text>
+        <Text style={{fontWeight: "700"}}>{email}</Text>
         <Text style={{textAlign: "center", padding: "2.5%"}}>Please check your email and click on confirmation link to continue.</Text>
         <Text style={{bottom: 0}}>Resend Emails</Text>
         </View>
