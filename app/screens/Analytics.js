@@ -132,7 +132,7 @@ const Analytics = ({ navigation }) => {
           </View>
 
           <View style={{ flex: 1, width: "100%", height: "auto", marginTop: "5%", borderRadius: 15, flexDirection: "row", justifyContent: "space-between" }}>
-            <View style={{ height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%" }}>
+            <View style={{ height: "100%", backgroundColor: "white", width: "49.5%", borderRadius: 15, padding: "5%", alignSelf: "center" }}>
               <Text>Total Spend</Text>
               <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
               <View style={{ flex: 1, flexDirection: "row" }}>
@@ -220,7 +220,8 @@ const Bazier = ({ priceData, transDate, transObj }) => {
   console.log("finished", transObj);
 
   return (
-    <View style={{ justifyContent: "center", width: "80%", marginLeft: "10%" }}>
+    <View style={{ justifyContent: "center", width: GlobalStyles.DivContainer.width,
+                                                 marginLeft: GlobalStyles.DivContainer.marginLeft, }}>
       {/* <Text>Bezier Line Chart</Text> */}
 
       <LineChart
@@ -456,8 +457,8 @@ const styles = StyleSheet.create({
     },
     transactionsContainer: {
           height: "auto",
-          width: "80%",
-          marginLeft: "10%",
+          width: GlobalStyles.DivContainer.width,
+              marginLeft: GlobalStyles.DivContainer.marginLeft,
           marginTop: "12.5%",
           borderRadius: 15,
         },

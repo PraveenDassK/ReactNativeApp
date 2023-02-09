@@ -122,9 +122,9 @@ if(!AppState.currentState) {
       {/* <AppNavigator /> */}
        
         {!currentUser ? (
-          <AuthNavigator /> 
+          <AuthNavigator />
         ) :  currentUser ? (
-          <AppNavigator /> 
+          <AppNavigator />
         ) : (
           <AuthNavigator />
         )}

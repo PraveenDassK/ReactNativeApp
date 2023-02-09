@@ -266,7 +266,7 @@ const Settings = ({ navigation }) => {
           <Button
             title="About Us"
             color="babyBlue"
-            onPress={() => navigation.navigate("Account")}
+            onPress={() => navigation.navigate("AboutUs")}
           />
         </TouchableOpacity>
 
