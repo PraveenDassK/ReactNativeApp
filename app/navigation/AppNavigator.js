@@ -111,7 +111,7 @@ const StackNavigator = () => {
         name="Account" 
         component={AppNavigator}
         options={{
-          title: "Pin",
+          title: "Account",
        
         }}
       />
