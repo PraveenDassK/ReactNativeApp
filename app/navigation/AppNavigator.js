@@ -105,13 +105,13 @@ const leftToRightAnimation = {
 const StackNavigator = () => {
    return(
      <Stack.Navigator
-      initialRouteName="CarbonTonnesRemoved">
+      initialRouteName="AccountMain">
         
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
         options={{
-          title: "Account",
+          title: "Pin",
        
         }}
       />

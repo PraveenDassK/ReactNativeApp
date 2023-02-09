@@ -45,7 +45,7 @@ const Pin = ({route,navigation}) => {
     console.log(response.data.result)
     if (!response.data.result){
       alert("Transaction unsuccessful")
-      navigation.navigate("Account")
+      pinView.current.clearAll()
       return;
     } 
     navigation.navigate(route.params.successScreen,{"params" : route.params})
