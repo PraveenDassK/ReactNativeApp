@@ -121,10 +121,10 @@ if(!AppState.currentState) {
       <NavigationContainer>
       <AppNavigator />
        
-        {/* {!currentUser ? (
-          <AuthNavigator /> 
+        {!currentUser ? (
+          <AuthNavigator />
         ) :  currentUser ? (
-          <AppNavigator /> 
+          <AppNavigator />
         ) : (
           <AuthNavigator />
         )} */}
