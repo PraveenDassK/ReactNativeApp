@@ -1,9 +1,18 @@
 import React, { useContext, useEffect, useState} from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import moment from "moment";
+
 
 const TermsAndConditions = ({route,navigation}) => {
     const [isSelected, setSelection] = useState(false);
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+ 
+console.log(dateTime)
+
     return(
     <ScrollView>
         
