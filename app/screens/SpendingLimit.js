@@ -6,7 +6,7 @@ import Screen from "../components/Screen";
 import api from "../api/api_list"
 import apiCall from "../api/api"
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-
+import { useFocusEffect } from "@react-navigation/native";
 
 const SpendingLimit = ({navigation,route}) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -24,9 +24,11 @@ const SpendingLimit = ({navigation,route}) => {
   }
 
   //Calls the API once during load
-  useEffect(() => {
-    loadData()
-  },[])
+  useFocusEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      loadData();
+    });
+  });
   
   //Gets the data for the user
   const loadData = async () => {
