@@ -1,12 +1,6 @@
 import client from "./client";
 import AuthContext from "../auth/context";
 import React,{ useEffect, useState,useContext } from "react";
-/**
- * @dev customer details endpoint
- * @todo Get these on login
- */
-const enfuceID = "A12277V1"
-const carbonyteID = "C1220XHD"
 
 const GetCustomerDetails = async (Id) => {
     const request = await client.get('https://api.carbonyte.io/walletmodule/GetCustomer/'+ id);
@@ -64,6 +58,13 @@ const getUsersNFTs = async (address) => {
     return requestData
 }
 
+const GetTransactions = async (Id,amount) => {
+    let toGet = amount ? amount : 10
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=" + toGet)
+    const requestData = request.data.details
+    return requestData
+}
+
 export default {
     GetCustomerDetails,
     GetUserImpacts,
@@ -72,5 +73,6 @@ export default {
     GetProjectList,
     GetSingleProject,
     Checkout,
-    getUsersNFTs
+    getUsersNFTs,
+    GetTransactions
   };
