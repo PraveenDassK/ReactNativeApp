@@ -232,7 +232,13 @@ const HomeScreenPersonal = ({ navigation }) => {
               Total Wallet Balance
             </Text>
             {settings.hideBalance ? (
-              <View style={{ width: "80%", height: "auto", left: "10%" }}>
+              <View
+                style={{
+                  width: GlobalStyles.DivContainer.width,
+                  marginLeft: GlobalStyles.DivContainer.marginLeft,
+                  height: "auto",
+                }}
+              >
                 <View
                   style={{
                     width: "100%",
@@ -486,8 +492,8 @@ const HomeScreenPersonal = ({ navigation }) => {
           <View style={{ marginTop: "2.5%" }} />
           <Pressable
             style={{
-              width: "80%",
-              marginLeft: "10%",
+              width: GlobalStyles.DivContainer.width,
+              marginLeft: GlobalStyles.DivContainer.marginLeft,
               height: verticalScale(80),
               marginTop: "2.5%",
               backgroundColor: "white",
@@ -550,8 +556,8 @@ const HomeScreenPersonal = ({ navigation }) => {
 
           <Pressable
             style={{
-              width: "80%",
-              marginLeft: "10%",
+              width: GlobalStyles.DivContainer.width,
+              marginLeft: GlobalStyles.DivContainer.marginLeft,
               height: verticalScale(80),
               marginTop: "2.5%",
               backgroundColor: "white",
@@ -696,9 +702,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   referContainer: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(200),
-    left: "10%",
     backgroundColor: "white",
     marginTop: "2.5%",
   },
@@ -710,19 +716,20 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   carbonContainer: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(300),
-    left: "10%",
     backgroundColor: "white",
     marginTop: "2.5%",
   },
   carbonAssetsDiv: {
     marginTop: "5%",
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(75),
     backgroundColor: "#D8EBF9",
     borderRadius: 15,
-    marginLeft: "10%",
+
     flexDirection: "row",
     justifyContent: "space-around",
   },
@@ -791,24 +798,24 @@ const styles = StyleSheet.create({
   },
   transactionPicture: {
     width: "20%",
-    height: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     borderRadius: 15,
     top: "10%",
-    marginLeft: "5%",
   },
   transactionsContainer: {
     height: "auto",
-    width: "80%",
-    marginLeft: "10%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     marginTop: "12.5%",
     borderRadius: 15,
   },
 
   carbonItemDiv: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: "auto",
     paddingBottom: "4.5%",
-    marginLeft: "10%",
     marginTop: "2.5%",
     borderRadius: 15,
     backgroundColor: "white",
@@ -879,10 +886,10 @@ const styles = StyleSheet.create({
 
   congratulationsContainer: {
     marginTop: "4.5%",
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#E4E4FF",
     height: verticalScale(125),
-    marginLeft: "10%",
     borderRadius: 15,
     flexDirection: "row",
     padding: "2.5%",
@@ -926,21 +933,21 @@ const styles = StyleSheet.create({
 
   totalWalletBalanceContainer: {
     marginTop: "2.5%",
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
     height: verticalScale(75),
-    marginLeft: "10%",
     borderRadius: 15,
     flexDirection: "column",
     padding: "2.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {
-    marginTop: "1.5%",
-    width: "80%",
+    marginTop: "2.5%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
-    height: verticalScale(75),
-    marginLeft: "10%",
+    height: "auto",
     borderRadius: 15,
     flexDirection: "column",
     padding: "5%",
@@ -978,7 +985,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: "2.5%",
     width: GlobalStyles.DivContainer.width,
-    marginLeft: GlobalStyles.RowText.marginLeft,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -1018,11 +1025,11 @@ const styles = StyleSheet.create({
   },
 
   carbonSpendingTitleDiv: {
-    width: "80%",
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: 30,
     display: "flex",
     flexDirection: "row",
-    marginLeft: "10%",
     marginTop: "5%",
   },
 
