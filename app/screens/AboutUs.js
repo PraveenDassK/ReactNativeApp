@@ -124,7 +124,7 @@ const AboutUs = ({ navigation }) => {
           <Image
             style={styles.icon}
             resizeMode="cover"
-            source={require("../assets/blueStar.png")}
+            // source={require("../assets/blueStar.png")}
           />
           <Text style={styles.iconText}>Rate us on the App Store</Text>
         </View>
@@ -133,7 +133,7 @@ const AboutUs = ({ navigation }) => {
           <Image
             style={styles.icon}
             resizeMode="cover"
-            source={require("../assets/blueImprove.png")}
+            // source={require("../assets/blueImprove.png")}
           />
           <Text style={styles.iconText}>Tell us how to improve</Text>
         </View>
@@ -154,7 +154,7 @@ const AboutUs = ({ navigation }) => {
             <Image
               style={styles.icon}
               resizeMode="cover"
-              source={require("../assets/blueBlog.png")}
+              // source={require("../assets/blueBlog.png")}
             />
             <Text style={styles.iconText}>Our blog</Text>
           </View>
@@ -165,7 +165,7 @@ const AboutUs = ({ navigation }) => {
             <Image
               style={styles.icon}
               resizeMode="cover"
-              source={require("../assets/blueTwitter.png")}
+              // source={require("../assets/blueTwitter.png")}
             />
             <Text style={styles.iconText}>Follow us on Twitter</Text>
           </View>
@@ -176,7 +176,7 @@ const AboutUs = ({ navigation }) => {
             <Image
               style={styles.icon}
               resizeMode="cover"
-              source={require("../assets/blueFacebook.png")}
+              // source={require("../assets/blueFacebook.png")}
             />
             <Text style={styles.iconText}>Like us on Facebook</Text>
           </View>
