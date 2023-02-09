@@ -10,7 +10,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 
 import Screen from "../components/Screen";
-import initals from "../components/Initals";
+
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
