@@ -47,7 +47,7 @@ const GetProjectByID = (project) => client.get("https://api.carbonyte.io/ecomodu
 
 const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
   {
-    "sourceAccountId": "A12277V1",
+    "sourceAccountId": "A12274AW",
     "destination": {
       "type": "SCAN",
       "id": "A1226WEM",

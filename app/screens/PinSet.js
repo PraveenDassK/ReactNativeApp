@@ -9,12 +9,13 @@ import api from "../api/api_list"
 import apiCall from "../api/api"
 
 const Pin = ({route,navigation}) => {
-  let title = route.params.title ? route.params.title : "Enter Pin"
   
   const pinView = useRef(null)
   const [showRemoveButton, setShowRemoveButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
   const [showCompletedButton, setShowCompletedButton] = useState(false)
+  const [firstPin, setFirstPin] = useState("")
+  const [title, setTitle] = useState(route.params?.title ? route.params.title : "Enter New Pin")
 
   /**
    * Pin display controlers
@@ -38,26 +39,20 @@ const Pin = ({route,navigation}) => {
    * @returns If pin is incorrect
    */
   const checkPin = async () => {
-    if (enteredPin != "0000"){
-      alert("Pin is incorrect")
-      return;
-    } 
-    const response = await api.SendFunds(
-      20,
-      "A12274AW", 
-      route.params.amount,
-      route.params.beneficiaryData.accountName,
-      route.params.beneficiaryData.accountNumber,
-      route.params.beneficiaryData.sortCode,
-      route.params.beneficiaryData.address
-    );
-    console.log(response)
-    if (!response.data.result){
-      alert("Transaction unsuccessful")
+    if(firstPin == ""){
+      setFirstPin(enteredPin)
       pinView.current.clearAll()
-      return;
-    } 
-    navigation.navigate(route.params.successScreen,{"params" : route.params})
+      setTitle("Confirm Pin")
+    }else if (firstPin == enteredPin){
+      alert("Pin set")
+      apiCall.SetPin(firstPin)
+      navigation.navigate("Account")
+    }else{
+      alert("Pin does not match")
+      pinView.current.clearAll()
+      setTitle("Enter New Pin")
+      setFirstPin("")
+    }
   }
 
   return (
