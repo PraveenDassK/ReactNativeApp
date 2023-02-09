@@ -69,11 +69,13 @@ const HomeScreenPersonal = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const data1 = response1.data;
     const accountdata = accountresponse.data.details;
-    const response2 = await apiCall.GetCardByAccount(authContext);
-    const data2 = response2;
-    setfirstname(response2.firstName)
-    setlastname(response2.lastName)
-    console.log("==================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+response2[1])
+    const response2 = await apiCall.GetCardByAccount(authContext.userID); 
+    const data2 = response2; 
+    setcardnumber(response2[1].maskedCardNumber)
+    setfirstname(response2[1].embossing.firstName) 
+    setlastname(response2[1].embossing.lastName) 
+    console.log(response2) 
+    console.log(response2[1].embossing.lastName)
 
     setBalance(data.availableBalance);
     setSortCode(accountdata.identifiers[0].sortCode);
