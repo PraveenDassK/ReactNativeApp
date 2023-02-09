@@ -269,9 +269,9 @@ const styles = StyleSheet.create({
   NavBarBottom: {
     marginTop: "3%",
     flexDirection: "row",
-    width: "85%",
+    width: "90%",
     justifyContent: "space-around",
-    marginLeft: "7.5%",
+    marginLeft: "5%",
   },
 
   NavBarBottomText: {
