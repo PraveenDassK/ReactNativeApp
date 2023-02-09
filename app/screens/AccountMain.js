@@ -34,6 +34,9 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [accountnumber, setaccountnumber] = useState(null);
   const [sortCode, setSortCode] = useState(null);
   const [accountname, setaccountname] = useState(null);
+  const [cardnumber, setcardnumber] = useState(null);
+  const [firstname, setfirstname] = useState(null);
+  const [lastname, setlastname] = useState(null);
   const authContext = useContext(AuthContext);
   const { settings } = useContext(AuthContext);
 
@@ -66,6 +69,11 @@ const HomeScreenPersonal = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const data1 = response1.data;
     const accountdata = accountresponse.data.details;
+    const response2 = await apiCall.GetCardByAccount(authContext);
+    const data2 = response2;
+    setfirstname(response2.firstName)
+    setlastname(response2.lastName)
+    console.log("==================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+response2[1])
 
     setBalance(data.availableBalance);
     setSortCode(accountdata.identifiers[0].sortCode);
@@ -228,6 +236,15 @@ const HomeScreenPersonal = ({ navigation }) => {
             </Text>
             <Text style={styles.dateText11}>
               Account Number: {accountnumber}
+            </Text>
+            <Text style={styles.dateText12}>
+              Card Number: {cardnumber}
+            </Text>
+            <Text style={styles.dateText13}>
+              First Name: {firstname}
+            </Text>
+            <Text style={styles.dateText14}>
+              Last Name: {lastname}
             </Text>
           </View>
 
@@ -985,7 +1002,21 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontSize: 14,
   },
-
+  dateText12: {
+    textAlign: "left",
+    fontSize: 14,
+    marginTop:5,
+  },
+  dateText13: {
+    textAlign: "left",
+    fontSize: 14,
+    marginTop:5,
+  },
+  dateText14: {
+    textAlign: "left",
+    fontSize: 14,
+    marginTop:5,
+  },
   buttonContainer: {
     marginTop: "2.5%",
     width: GlobalStyles.DivContainer.width,
