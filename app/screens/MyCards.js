@@ -11,6 +11,8 @@ import {
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 import moment from 'moment';
+import apiCall from "../api/api";
+
 
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
@@ -25,6 +27,9 @@ const MyCards = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalId, setModalId] = useState(false);
   const [initials, setInitals] = useState(null)
+  const [cardnumber, setcardnumber] = useState(null);
+  const [firstname, setfirstname] = useState(null);
+  const [lastname, setlastname] = useState(null);
   const authContext = useContext(AuthContext)
 
   useEffect(() => {
@@ -50,6 +55,14 @@ const MyCards = ({ navigation }) => {
      }
     console.log(initialsHold)
     setInitals(initialsHold)
+
+    const response2 = await apiCall.GetCardByAccount(authContext.userID); 
+    const data2 = response2; 
+    setcardnumber(response2[1].maskedCardNumber)
+    setfirstname(response2[1].embossing.firstName) 
+    setlastname(response2[1].embossing.lastName) 
+    console.log(response2) 
+    console.log(response2[1].embossing.lastName)
 
 }
 
