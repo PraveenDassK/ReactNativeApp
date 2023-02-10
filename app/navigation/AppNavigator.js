@@ -56,6 +56,8 @@ import IWasAVictimOfFraudOrThe from "../screens/IWasAVictimOfFraudOrThe"
 import Terminate from "../screens/Terminate"
 import TerminatedCard from "../screens/TerminatedCard"
 
+
+
 //No pages for analysis
 
 /**
@@ -327,9 +329,9 @@ const StackNavigator = () => {
 
 <Stack.Screen 
         name="ChooseCardsElite" 
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
+        component={gestureHandlerRootHOC(ChooseCardsEliteNavigator)}
         options={{
-          title: "ChooseCardsElite",
+          title: "Choose Cards",
        
         }}
       />
@@ -407,16 +409,20 @@ const StackNavigator = () => {
   )
 }
 
-const AccountNavigator = () => {
+const ChooseCardsEliteNavigator = () => {
   return (
     <Tab.Navigator >
       <Tab.Screen
-        name="Analysis" 
-        component={gestureHandlerRootHOC(AccountMain)}
+        name="Standard" 
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
       />
       <Tab.Screen
-        name="Analysis" 
-        component={gestureHandlerRootHOC(AccountMain)}
+        name="Premium" 
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
+      />
+      <Tab.Screen
+        name="Elite" 
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
       />
     
     </Tab.Navigator>

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal,  Dimensions,   } from "react-native";
 import Carousel from 'react-native-reanimated-carousel';
 
+import CardSwipe from "../components/CardSwipe"
+
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
