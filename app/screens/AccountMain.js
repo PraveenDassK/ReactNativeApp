@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
+
 import Screen from "../components/Screen";
 
 import GlobalStyles from "../../GlobalStyles";

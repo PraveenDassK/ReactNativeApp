@@ -7,15 +7,11 @@ const ChooseCardsElite = () => {
   return (
     <ScrollView>
     <View style={styles.chooseCardsContainer}>
-    <Text style={styles.ChooseCards}>Choose Cards</Text>
+    
 
-    <View style={styles.navBar}>
-        <Text style={styles.Standard}>Standard</Text>
-        <Text style={styles.Premium}>Premium</Text>
-        <Text style={styles.Elite}>Elite</Text>
-    </View>
+   
 
-    <View style={styles.whiteLine}></View>
+ 
 
     <View style={styles.imageBox}>
         <Image style = {styles.image} source={require("../assets/image-cardyellow.png")}/>

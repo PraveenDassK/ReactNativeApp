@@ -55,6 +55,8 @@ import IWasAVictimOfFraudOrThe from "../screens/IWasAVictimOfFraudOrThe"
 import Terminate from "../screens/Terminate"
 import TerminatedCard from "../screens/TerminatedCard"
 
+
+
 //No pages for analysis
 
 /**
@@ -215,8 +217,11 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(MyCards)}
         options={{
           title: "MyCards",
-       
+          presentation: 'modal' 
         }}
+        // options={{ 
+        //   animation: "slide_from_bottom"
+        // }}
       />
 
     <Stack.Screen 
@@ -332,9 +337,9 @@ const StackNavigator = () => {
 
 <Stack.Screen 
         name="ChooseCardsElite" 
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
+        component={gestureHandlerRootHOC(ChooseCardsEliteNavigator)}
         options={{
-          title: "ChooseCardsElite",
+          title: "Choose Cards",
        
         }}
       />
@@ -426,12 +431,42 @@ const StackNavigator = () => {
   )
 }
 
+const ChooseCardsEliteNavigator = () => {
+  return (
+    <Tab.Navigator >
+      <Tab.Screen
+        name="Standard" 
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
+      />
+      <Tab.Screen
+        name="Premium" 
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
+      />
+      <Tab.Screen
+        name="Elite" 
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
+      />
+    
+    </Tab.Navigator>
+  )
+}
+
 const AppNavigator = () => {
 
 
   return (
     <Tab.Navigator
-    tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}>
+    // tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}
+    
+     screenOptions={{
+        
+        "tabBarShowLabel": true,
+        "tabBarStyle": {
+          "height": 40,
+          "width": "125%"
+        }}
+      }
+    >
     
     <Tab.Screen 
       name="AccountTab" 

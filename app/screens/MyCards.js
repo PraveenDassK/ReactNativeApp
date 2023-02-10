@@ -13,9 +13,9 @@ import AuthContext from "../auth/context";
 import moment from 'moment';
 import apiCall from "../api/api";
 
-
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
+import { MaterialCommunityIcons} from '@expo/vector-icons'
 
 const MyCards = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -40,7 +40,7 @@ const MyCards = ({ navigation }) => {
   const loadData = async () => {
     const responseBalance = await api.GetAccount(authContext.accountID);
     const accountresponse = await api.GetAccount(authContext.accountID);
-        const accountdata = accountresponse.data.details
+    const accountdata = accountresponse.data.details
     const data = responseBalance.data.details
 
     console.log(authContext.accountID)
@@ -63,7 +63,7 @@ const MyCards = ({ navigation }) => {
     console.log(response2)
     console.log(response2[1].embossing.lastName)
 
-    const bool = true;
+    const bool = false;
     if(bool === true){
       setcardnumber("*******")
       setfirstname("*******")
@@ -74,7 +74,7 @@ const MyCards = ({ navigation }) => {
     setaccountname("*******");
     }
     else{
-      setcardnumber(response2[1].maskedCardNumber)
+      setcardnumber("**** ****  ****" +response2[1].maskedCardNumber.substr(response2[1].maskedCardNumber.length - 4),)
     setfirstname(response2[1].embossing.firstName)
     setlastname(response2[1].embossing.lastName)
     setBalance(data.availableBalance)
@@ -200,9 +200,16 @@ showData()
                     /> :
                     null}
         </View>
+        <Text>
+          {cardnumber}
+        </Text>
+
+        <Text>
+          {firstname} {lastname}
+        </Text>
         <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
-        <Pressable
+                  <Pressable
                     style={styles.wrapper}
                     onPress={() => toggleCard()}
                   >
@@ -212,7 +219,18 @@ showData()
                     />
                   </Pressable>
 
-        <Pressable
+                  <Pressable
+                    style={styles.wrapper}
+                    onPress={() => navigation.navigate("PinSetApp")}
+                  >
+                                <MaterialCommunityIcons 
+            name="lock"
+            size={25}
+            color="blue"
+            />
+                  </Pressable>
+
+                  <Pressable
                     style={styles.rectangleGroup}
                     onPress={() => navigation.navigate("CardSettings")}
                   >
