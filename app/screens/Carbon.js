@@ -39,7 +39,7 @@ const Carbon = ({ route, navigation }) => {
   const addToCart = (ID) => {
     let arrobj = {
       projectId: ID,
-      amount: 1,
+      quantity: 1,
     };
     setCart((prevArray) => [...prevArray, arrobj]);
     amount++;
