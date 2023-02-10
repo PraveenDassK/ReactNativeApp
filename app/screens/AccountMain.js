@@ -104,8 +104,9 @@ const HomeScreenPersonal = ({ navigation }) => {
     setStatus(data.status != "ACTIVE");
 
     //Trees
-    let respose = await apiCall.GetUserImpacts();
-    const assets = respose.assets;
+    let resposeImpact = await apiCall.GetUserImpacts();
+    console.log(resposeImpact.details)
+    const assets = resposeImpact.details.assets;
     let trees = 0;
     let carbon = 0;
     assets.forEach((element) => {

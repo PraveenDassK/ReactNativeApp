@@ -12,7 +12,7 @@ const GetCustomerDetails = async (Id) => {
         "name": requestData.name,
         "id": requestData.id,
         "accountType": requestData.type,
-        "status": requestData.status,
+        "status": GetAccountrequestData.status,
         "verified": requestData.verificationStatus
     }
     return data
@@ -20,7 +20,7 @@ const GetCustomerDetails = async (Id) => {
 
 const GetUserImpacts = async(Id) => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/CC11875");
-    const requestData = request.data.details
+    const requestData = request.data
     return requestData
 }
 
@@ -28,12 +28,14 @@ const GetAccountByCustomer = async (Id) => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/" + Id);
     const requestData = request.data.details
     console.log(requestData)
+    return requestData
 }
 
 const GetAccount = async (Id) => {
-    const request = await client.get("https://api.carbonyte.io/walletmodule/GetAccount/A12277V1");
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetAccount/" + Id);
     const requestData = request.data.details
     console.log(requestData)
+    return requestData
 }
 
 const GetProjectList = async() => {
@@ -143,27 +145,24 @@ const AcceptTermsAndConditions = async(Id) => {
 }
 
 /**Posters */
-const SendFunds = (amount) => client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
-  {
-    "sourceAccountId": "A12277V1",
-    "destination": {
-      "type": "SCAN",
-      "id": "A1226WEM",
-      "accountNumber": "02619527",
-      "sortCode": "000000",
-      "name": "Gorthalax",
-      "address": {
-        "addressLine1": "string",
-        "postTown": "London",
-        "postCode": "W2 1AS",
-        "country": "GB"
-      }
-    },
-    "currency": "GBP",
-    "amount": amount,
-    "reference": "tithes"
-  }
-)
+const SendFunds = (amount,from,name,accountNumber,sortCode,address) => {
+    const request = client.post("https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
+    {
+        "sourceAccountId": from,
+        "destination": {
+        "type": "SCAN",
+        "id": "A1226WEM",
+        "accountNumber": accountNumber,
+        "sortCode": sortCode,
+        "name": name,
+        "address": address
+        },
+        "currency": "GBP",
+        "amount": amount,
+        "reference": "Transfer"
+    })
+    return request
+}
 
 const GetCustomerByID = async () => {
     const request = await client.get("https://api.carbonyte.io/walletmodule/Enfuce/GetCustomerbyId/212850012")
@@ -177,6 +176,12 @@ const GetCustomersAccounts = async (Id) => {
     const request = await client.get("https://api.carbonyte.io/walletmodule/GetAccountByCustomer/C1220XHD")
     const requestData = request.data.details
     return requestData
+}
+
+const ReportTransaction = async(Id) =>{
+    const request = await client.get("")
+    console.log("repoted")
+    return request
 }
 
 export default {
@@ -196,5 +201,6 @@ export default {
     GetCustomersAccounts,
     GetTransactionsWeek,
     GetTransactionsMonth,
-    GetTransactionsYear
+    GetTransactionsYear,
+    ReportTransaction
   };

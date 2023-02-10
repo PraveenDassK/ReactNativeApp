@@ -6,7 +6,6 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 
-
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 // import AccountNavigator from "./AccountNavigator";
@@ -76,15 +75,18 @@ import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
 import AccountSettings from "../screens/AccountSettings"
 import Transactions from "../screens/Transactions"
 import AccountLetter from "../screens/AccountLetter"
-import AboutUs from "../screens/AboutUs"
-
-import Faq from "../screens/Faq"
 
 import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import CarbonSpending from "../screens/CarbonSpending"
-import FUP from "../screens/FUP";
+import Login from "../screens/Login"
+import SignUpPersonal from "../screens/SignUpPersonal";
+import TestEnviro from "../screens/TestEnviro";
+import PinSet from "../screens/PinSet";
+import PinSetApp from "../screens/PinSetApp";
+import PinCart from "../screens/PinCart";
+
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -108,49 +110,54 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-  return(
-    <Stack.Navigator
-    screenOptions={{
-     gestureEnabled: true,
-     gestureDirection: "horizontal",
-     initialRouteName:"FUP",
-    }} 
-    >
+   return(
+     <Stack.Navigator
+      initialRouteName="">
+        
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
         options={{
-          title: "Carbonyte",
+          title: "Account",
+       
+        }}
+      />
+
+      <Stack.Screen 
+        name="PinSet" 
+        component={PinSet}
+        options={{
+          title: "PinSet",
+       
+        }}
+      />
+            <Stack.Screen 
+        name="PinCart" 
+        component={PinCart}
+        options={{
+          title: "PinCart",
+       
         }}
       />
       
+      <Stack.Screen 
+        name="PinSetApp" 
+        component={PinSetApp}
+        options={{
+          title: "PinSetApp",
+       
+        }}
+      />
 
       <Stack.Screen 
         name="AddFunds" 
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "AddFunds",
+       
         }}
       />
 
-      <Stack.Screen
-              name="AboutUs"
-              component={gestureHandlerRootHOC(AboutUs)}
-              options={{
-                title: "AboutUs",
-
-              }}
-            />
-
-
-        <Stack.Screen
-                      name="Faq"
-                      component={gestureHandlerRootHOC(Faq)}
-                      options={{
-                        title: "Faq",
-
-                      }}
-                    />
       <Stack.Screen 
         name="SendMoney" 
         component={gestureHandlerRootHOC(SendMoney)}
@@ -165,14 +172,6 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Pin)}
         options={{
           title: "Pin",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="FUP" 
-        component={gestureHandlerRootHOC(FUP)}
-        options={{
-          title: "FUP",
        
         }}
       />
@@ -385,7 +384,14 @@ const StackNavigator = () => {
         }}
       />
 
-
+    <Stack.Screen 
+        name="Login" 
+        component={Login}
+        options={{
+          title: "Login",
+       
+        }}
+      />
           
       <Stack.Screen 
         name="CarbonTonnesRemoved" 
@@ -403,7 +409,14 @@ const StackNavigator = () => {
        
         }}
       />
-
+      <Stack.Screen 
+        name="TestEnviro" 
+        component={TestEnviro}
+        options={{
+          title: "TestEnviro",
+       
+        }}
+      />
 
     </Stack.Navigator>
   )
