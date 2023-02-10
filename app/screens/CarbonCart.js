@@ -19,14 +19,17 @@ const CarbonCart = ({route,navigation }) => {
   const loadData = async () => {
     const projectList = route.params
     let projects = []
+
+    let totalPrice = 0
     await projectList.forEach(async(element) => {
 
       let project = await apiCall.GetSingleProject("5f96f967a3a85800118be4d1")
 
       let name = project.displayName
-      
+      totalPrice = totalPrice + project.asset.displayAssetPriceWithMarkup
+
       let price = {
-        "price" : project.asset.assetPrice,
+        "price" : project.asset.displayAssetPriceWithMarkup.toFixed(2),
         "item" : project.asset.name,
         "amount" : element.amount
       }
@@ -36,11 +39,9 @@ const CarbonCart = ({route,navigation }) => {
 
     let show = []
     let totalItems = 0
-    let totalPrice = 0
 
     data.forEach(item => {
-      totalItems += item.price.amount
-      totalPrice += item.price.price
+      totalItems ++
       show.push(
         <View>
           <Text>
@@ -60,24 +61,21 @@ const CarbonCart = ({route,navigation }) => {
     setPrice(totalPrice)
   }
 
-  const showData = () => {
-
-  }
-
-  const buy = () => {
-    setData("")
-    const purchase = apiCall.Checkout({
+  const buy = async() => {
+    //setData("")
+    const projectToBuy = route.params
+    const purchaseObj = {
       "carbonyteUserId": "CC11875",
-      "projectLists": [
-        {
-          "projectId": "5f96f967a3a85800118be4d1",
-          "quantity": 2
-        }
-      ],
+      "projectLists": route.params,
       "sourceAccountId": "A12274AW",
-      "totalAmount": 2
-    })
-    alert("Purchase successful")
+      "totalAmount": route.params.length
+    }
+    const purchase = await apiCall.Checkout(purchaseObj)
+    if(purchase == "Successful"){
+      alert("Purchase successful")
+    }else{
+      alert("Purchase unsuccessful")
+    }
   } 
   
   return (
@@ -85,7 +83,6 @@ const CarbonCart = ({route,navigation }) => {
     <View style={styles.titleTextRow}>
             <Text style={styles.titleText}>Your Cart</Text>
         </View>
-
     <View style={styles.divContainer}>
 
         <View style={styles.cartTitle}>
@@ -93,14 +90,13 @@ const CarbonCart = ({route,navigation }) => {
             <Text style={styles.heading2}>Unit</Text>
             <Text style={styles.heading3}>Price</Text>
         </View>
-
         <View style={{width: "100%", backgroundColor: "#F6F5F8", height: 2 }}></View>
         <ScrollView>
         <FlatList data={data} renderItem={({item}) => (
             <View style={styles.list}>
                 <Text style={styles.col1}>{item?.name}</Text>
-                <Text style={styles.col2}>{item?.price.amount}</Text>
-                <Text style={styles.col3}>{item?.price.price}</Text>
+                <Text style={styles.col2}>{1}</Text>
+                <Text style={styles.col3}>£{item?.price.price}</Text>
             </View>
         )}
         />
