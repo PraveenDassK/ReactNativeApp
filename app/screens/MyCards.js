@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal,  Dimensions,   } from "react-native";
-import Carousel from 'react-native-reanimated-carousel';
-
-import CardSwipe from "../components/CardSwipe"
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -16,16 +13,11 @@ import AuthContext from "../auth/context";
 import moment from 'moment';
 import apiCall from "../api/api";
 
-
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
-
-
+import { MaterialCommunityIcons} from '@expo/vector-icons'
 
 const MyCards = ({ navigation }) => {
-  
-  const width = Dimensions.get('window').width;
-
   const [checked, setChecked] = useState(false);
   const toggleChecked = () => setChecked((value) => !value);
 
@@ -48,7 +40,7 @@ const MyCards = ({ navigation }) => {
   const loadData = async () => {
     const responseBalance = await api.GetAccount(authContext.accountID);
     const accountresponse = await api.GetAccount(authContext.accountID);
-        const accountdata = accountresponse.data.details
+    const accountdata = accountresponse.data.details
     const data = responseBalance.data.details
 
     console.log(authContext.accountID)
@@ -71,7 +63,7 @@ const MyCards = ({ navigation }) => {
     console.log(response2)
     console.log(response2[1].embossing.lastName)
 
-    const bool = true;
+    const bool = false;
     if(bool === true){
       setcardnumber("*******")
       setfirstname("*******")
@@ -82,7 +74,7 @@ const MyCards = ({ navigation }) => {
     setaccountname("*******");
     }
     else{
-      setcardnumber(response2[1].maskedCardNumber)
+      setcardnumber("**** ****  ****" +response2[1].maskedCardNumber.substr(response2[1].maskedCardNumber.length - 4),)
     setfirstname(response2[1].embossing.firstName)
     setlastname(response2[1].embossing.lastName)
     setBalance(data.availableBalance)
@@ -200,7 +192,7 @@ showData()
 
         <View style={{marginTop: 175, height: 1, width: "100%"}}/>
         <View style={{justifyContent: "center", alignItems: "center"}}>
-        <Image style={styles.image} resizeMode="contain" source={require("../assets/cardLion.png")}/>
+        <Image style={styles.image} resizeMode="contain" source={require("../assets/yellowCard.png")}/>
         {cardFrozen ?
                     <Image
                       style={[styles.image]}
@@ -208,7 +200,6 @@ showData()
                     /> :
                     null}
         </View>
-
         <Text>
           {cardnumber}
         </Text>
@@ -216,10 +207,9 @@ showData()
         <Text>
           {firstname} {lastname}
         </Text>
-
         <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
-        <Pressable
+                  <Pressable
                     style={styles.wrapper}
                     onPress={() => toggleCard()}
                   >
@@ -228,17 +218,6 @@ showData()
                       source={cardFrozen ? require("../assets/icon-unfreeze.png") : require("../assets/icon-freeze.png")}
                     />
                   </Pressable>
-
-        <Pressable
-                    style={styles.rectangleGroup}
-                    onPress={() => navigation.navigate("CardSettings")}
-                  >
-                    <Image
-                      style={styles.icon}
-                      source={require("../assets/icon-settingsbutton.png")}
-                    />
-                  </Pressable>
-
 
                   <Pressable
                     style={styles.wrapper}
@@ -249,6 +228,16 @@ showData()
             size={25}
             color="blue"
             />
+                  </Pressable>
+
+                  <Pressable
+                    style={styles.rectangleGroup}
+                    onPress={() => navigation.navigate("CardSettings")}
+                  >
+                    <Image
+                      style={styles.icon}
+                      source={require("../assets/icon-settingsbutton.png")}
+                    />
                   </Pressable>
 
 
