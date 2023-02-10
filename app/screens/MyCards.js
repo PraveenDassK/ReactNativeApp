@@ -266,7 +266,7 @@ mainContainer: {
     image: {
     marginTop: 150,
     resizeMode: "contain",
-    width: "100%",
+    width: "50%",
 
     height: 250,
     justifyContent: "center",
