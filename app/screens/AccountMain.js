@@ -78,7 +78,7 @@ const HomeScreenPersonal = ({ navigation }) => {
     console.log(response2[1].embossing.lastName)
 
     
-    const bool = true;
+    const bool = false;
     if(bool === true){
       setcardnumber("*******")
       setfirstname("*******") 
