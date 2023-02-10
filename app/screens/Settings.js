@@ -276,7 +276,15 @@ const Settings = ({ navigation }) => {
                     color="babyBlue"
                     onPress={() => navigation.navigate("Faq")}
                   />
-                </TouchableOpacity>
+            </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button}>
+          <Button
+            title="Reset app pin"
+            color="babyBlue"
+            onPress={() => navigation.navigate("PinSetApp")}
+          />
+        </TouchableOpacity>
 
         <Pressable style={{height: 50, flexDirection: "row", justifyContent: "center", alignItems: "center", width: "90%", marginLeft: "5%"}} onPress={handleLogout}>
 
