@@ -96,11 +96,12 @@ const Transactions = ({navigation,route}) => {
     const hideTransaction = (Id) =>{
       console.log("Hided")
       console.log(Id)
-
+      
       let newData = transactionData
       newData.splice(Id,1)
       console.log(newData)
       setTransactionData(newData)
+      loadData()
   }
 
     const modal = (Id) => {
