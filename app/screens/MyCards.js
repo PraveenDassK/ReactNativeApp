@@ -200,6 +200,15 @@ showData()
                     /> :
                     null}
         </View>
+
+        <Text>
+          {cardnumber}
+        </Text>
+
+        <Text>
+          {firstname} {lastname}
+        </Text>
+
         <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
         <Pressable
