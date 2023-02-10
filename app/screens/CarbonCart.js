@@ -70,12 +70,8 @@ const CarbonCart = ({route,navigation }) => {
       "sourceAccountId": "A12274AW",
       "totalAmount": route.params.length
     }
-    const purchase = await apiCall.Checkout(purchaseObj)
-    if(purchase == "Successful"){
-      alert("Purchase successful")
-    }else{
-      alert("Purchase unsuccessful")
-    }
+    navigation.navigate("PinCart",purchaseObj)
+
   } 
   
   return (
