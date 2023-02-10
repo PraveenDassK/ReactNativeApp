@@ -223,6 +223,18 @@ showData()
                   </Pressable>
 
 
+                  <Pressable
+                    style={styles.wrapper}
+                    onPress={() => navigation.navigate("PinSetApp")}
+                  >
+                                <MaterialCommunityIcons 
+            name="lock"
+            size={25}
+            color="blue"
+            />
+                  </Pressable>
+
+
         </View>
 
         {transactionList}
