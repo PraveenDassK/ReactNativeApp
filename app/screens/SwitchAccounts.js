@@ -1,9 +1,9 @@
-import React,{ useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/Button";
 
-import api from "../api/api"
+import apiCall from "../api/api"
 import AuthContext from "../auth/context";
 
 const SwitchAccounts = ({navigation,route}) => {
@@ -18,19 +18,23 @@ const SwitchAccounts = ({navigation,route}) => {
     },[])
 
     const loadData = async () => {
-        const response = await api.GetCustomersAccounts(authContext.userID);
-        const data = response.data.details.content
+        const response = await apiCall.GetCustomersAccounts(authContext.userID);
+        const data = response.content
         console.log(data)
         setUserData(data)
     }
 
     const showUserAccounts = () => {
-        console.log(authContext)
+        console.log(userData)
 
         let accounts = []
         userData.forEach((element,i) => {
             accounts.push(
-                <Pressable key={i} style={styles.accountContainter} onPress={() => switchAccount(element.id)}>
+                <Pressable 
+                    key={i} 
+                    style={styles.accountContainter} 
+                    onPress={() => switchAccount(element.id)}
+                >
                     <Text>
                         {element.id}
                     </Text>
@@ -48,7 +52,6 @@ const SwitchAccounts = ({navigation,route}) => {
         console.log("Switch to " +Id)
         authContext.setAccountID(Id)
     }
-    console.log(authContext.accountID)
 
     return (
         <View style={styles.page}>
@@ -56,7 +59,7 @@ const SwitchAccounts = ({navigation,route}) => {
             <Text>{authContext.accountID}</Text>
             <Text>Switch Accounts</Text>
             {showUserAccounts()}
-            <Button title="continue" onPress={() => navigation.navigate("AccountMain")} />
+            <Button title="continue" onPress={() => navigation.navigate("Account")} />
         </View>
     )
 };

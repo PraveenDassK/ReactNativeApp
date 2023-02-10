@@ -86,6 +86,7 @@ import TestEnviro from "../screens/TestEnviro";
 import PinSet from "../screens/PinSet";
 import PinSetApp from "../screens/PinSetApp";
 import PinCart from "../screens/PinCart";
+import FUP from "../screens/FUP";
 
 
 //Tabs and navs
@@ -112,8 +113,9 @@ const leftToRightAnimation = {
 const StackNavigator = () => {
    return(
      <Stack.Navigator
-      initialRouteName="">
+      initialRouteName="AccountMain">
         
+     
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
@@ -122,7 +124,14 @@ const StackNavigator = () => {
        
         }}
       />
-
+       <Stack.Screen 
+        name="FUP" 
+        component={gestureHandlerRootHOC(FUP)}
+        options={{
+          title: "FUP",
+       
+        }}
+      />
       <Stack.Screen 
         name="PinSet" 
         component={PinSet}

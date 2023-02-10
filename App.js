@@ -123,7 +123,7 @@ const [userID, setUserID] = useState("C1220XHD")
 
 const [settings, setSettings] = useState({
   faceId: false,
-  hideBalance:true,
+  hideBalance:false,
   contactAccess:false,
   transactionSharing:false
 })
@@ -132,29 +132,25 @@ const [settings, setSettings] = useState({
 
 
 
+  // useEffect(() => {
+  //   if(isAuth) {
+  //     authenticate()
+  //   }
+  //   console.log('currentUser & isAuth on load', currentUser, isAuth)
+  // }, [currentUser, isAuth ])
 
-  useEffect(() => {
-    // console.log('auth storage', currentUser === true, signedAuth.signedIn)
-    if(isAuth) {
-      authenticate()
-    }
-  
-    console.log('currentUser & isAuth on load', currentUser , !currentUser, isAuth)
-  }, [currentUser, isAuth ])
+useEffect(() => {
+  // console.log('auth storage', currentUser === true, signedAuth.signedIn)
+  if(isAuth) {
+    authenticate()
+  }
+  console.log('currentUser & isAuth on load', currentUser, isAuth)
+}, [currentUser, isAuth ])
 
-
-
-  
-
-
-  useEffect(() => {
-   setLogin(true)
-   }, [currentUser ])
-
-  useEffect(() =>{
-    restoreToken()
-    restoreSignIn()
-  }, [])
+useEffect(() =>{
+  restoreToken()
+  restoreSignIn()
+}, [])
 
   useEffect(() => {
     AppState.addEventListener('change', handleAppStateChange);
@@ -188,6 +184,8 @@ const handleAppStateChange = (nextAppState) => {
   }    
 }
 
+
+
 const restoreToken = async () => {
   console.log('trying for restore token')
   const token = await authStorage.getToken()
@@ -218,24 +216,21 @@ if(!AppState.currentState) {
       userID, setUserID,
       settings, setSettings
     }}>
-      <SafeAreaProvider>
       <NavigationContainer>
-      <AppNavigator />
 
-      
-       
+        <AppNavigator />
         {/* {!currentUser ? (
-          <AuthNavigator />
+          <AuthNavigator /> 
         ) :  currentUser ? (
-          <AppNavigator />
+          <AppNavigator /> 
         ) : (
           <AuthNavigator />
-        )}  */}
+        )} */}
 
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}
 
-      </NavigationContainer></SafeAreaProvider>
+      </NavigationContainer>
     </AuthContext.Provider>    
   )
 }
