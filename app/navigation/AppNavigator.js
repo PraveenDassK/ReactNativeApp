@@ -82,6 +82,7 @@ import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import CarbonSpending from "../screens/CarbonSpending"
+import FUP from "../screens/FUP";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -110,6 +111,7 @@ const StackNavigator = () => {
     screenOptions={{
      gestureEnabled: true,
      gestureDirection: "horizontal",
+     initialRouteName:"FUP",
     }} 
     >
       <Stack.Screen 
@@ -161,6 +163,14 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Pin)}
         options={{
           title: "Pin",
+       
+        }}
+      />
+      <Stack.Screen 
+        name="FUP" 
+        component={gestureHandlerRootHOC(FUP)}
+        options={{
+          title: "FUP",
        
         }}
       />

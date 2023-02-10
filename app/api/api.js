@@ -1,6 +1,7 @@
 import client from "./client";
 import AuthContext from "../auth/context";
 import React,{ useEffect, useState,useContext } from "react";
+import moment from "moment";
 
 /**Getters */
 const GetCustomerDetails = async (Id) => {
@@ -44,14 +45,13 @@ const GetProjectList = async() => {
 const GetSingleProject = async(Id) => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?projectId=" + Id)
     const requestData = request.data.details
-    console.log(requestData)
+
     return requestData
 }
 
 const Checkout = async(obj) => {
     const request = await client.post("https://api.carbonyte.io/ecomodule/Earthly/Checkout",obj)
     const requestData = request.data.details
-    console.log(requestData)
     return requestData
 }
 
@@ -61,12 +61,74 @@ const getUsersNFTs = async (address) => {
     return requestData
 }
 
-const GetTransactions = async (Id,amount) => {
+const GetTransactions = async (Id,amount, fromDate, toDate) => {
     let toGet = amount ? amount : 10
-    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=" + toGet)
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/"+ Id +"?size=" + toGet)
     const requestData = request.data.details
     return requestData
 }
+
+const GetTransactionsWeek = async (Id) => {
+    const then = (moment().subtract(1,'W').format("YYYY-MM-DDTHH:MM:SS")).replace(/\:/g,"%3A") + "%2B0000"
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?fromTransactionDate=" + then)
+    const requestData = request.data.details
+    console.log(requestData)
+
+    let total = 0
+    let data = new Array(10).fill(0);
+    requestData.content.forEach(element => {
+        total += element.amount
+        let category = moment().diff(element.postedDate, 'Years')
+        data[category] += element.amount
+    });
+    const labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
+    return {
+        "total": total,
+        "yAxis": data,
+        "xAxis": labels
+    }
+}
+
+const GetTransactionsMonth = async (Id) => {
+    const then = (moment().subtract(1,'W').format("YYYY-MM-DDTHH:MM:SS")).replace(/\:/g,"%3A") + "%2B0000"
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?fromTransactionDate=" + then)
+    const requestData = request.data.details
+
+    let total = 0
+    let data = new Array(10).fill(0);
+    requestData.content.forEach(element => {
+        total += element.amount
+        let category = moment().diff(element.postedDate, 'Years')
+        data[category] += element.amount
+    });
+    const labels = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
+    return {
+        "total": total,
+        "yAxis": data,
+        "xAxis": labels
+    }
+}
+
+const GetTransactionsYear = async (Id) => {
+    const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM:SS")).replace(/\:/g,"%3A") + "%2B0000"
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?fromTransactionDate=" + then)
+    const requestData = request.data.details
+
+    let total = 0
+    let data = new Array(10).fill(0);
+    requestData.content.forEach(element => {
+        total += element.amount
+        let category = moment().diff(element.postedDate, 'Years')
+        data[category] += element.amount
+    });
+    const labels = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
+    return {
+        "total": total,
+        "yAxis": data,
+        "xAxis": labels
+    }
+}
+
 
 const GetCardByAccount = async() => {
     const request = await client.get("https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=686283112&auditUser=A12277V1")
@@ -131,5 +193,8 @@ export default {
     GetCardByAccount,
     AcceptTermsAndConditions,
     SetPin,
-    GetCustomersAccounts
+    GetCustomersAccounts,
+    GetTransactionsWeek,
+    GetTransactionsMonth,
+    GetTransactionsYear
   };

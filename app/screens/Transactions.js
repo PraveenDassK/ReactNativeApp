@@ -6,7 +6,9 @@ import { MaterialCommunityIcons} from '@expo/vector-icons'
 
 import moment from "moment";
 import api from "../api/api_list"
+import apiCall from "../api/api"
 import AuthContext from "../auth/context";
+import { hide } from "expo-splash-screen";
 
 const Transactions = ({navigation,route}) => {
     const [balanceData, setBalance] = useState(0)
@@ -24,14 +26,10 @@ const Transactions = ({navigation,route}) => {
         })
     },[])
 
-    const handleDelete = () => {
-
-    }
-
-    const renderRightActions = (onPress) => {
+    const renderRightActions = (i) => {
       return(
         <View style={{ backgroundColor: "#ff5252", width:70,  marginTop:15, justifyContent:"center", alignItems:"center"}}>
-          <TouchableWithoutFeedback onPress={() => console.log(onPress)}>
+          <TouchableWithoutFeedback onPress={() => hideTransaction(i)}>
           <MaterialCommunityIcons 
           name="eye-off"
           size={35}
@@ -42,10 +40,10 @@ const Transactions = ({navigation,route}) => {
       )
     }
 
-    const renderLeftActions = (onPress) => {
+    const renderLeftActions = (i) => {
       return(
         <View style={{ backgroundColor: "grey", width:70,  marginTop:15, justifyContent:"center", alignItems:"center"}}>
-            <TouchableWithoutFeedback onPress={() => console.log(onPress)}>
+            <TouchableWithoutFeedback onPress={() => reportTransaction(i)}>
             <MaterialCommunityIcons 
             name="progress-alert"
             size={35}
@@ -86,12 +84,24 @@ const Transactions = ({navigation,route}) => {
         setModalId(Id)
     }
 
-    const reportTransaction = () =>{
+    const reportTransaction = (Id) =>{
         console.log("Reported")
+        console.log(Id)
+        apiCall.ReportTransaction(Id)
     }
-    const shareTransaction = () =>{
+    const shareTransaction = (Id) =>{
         console.log("Shared")
+        console.log(Id)
     }
+    const hideTransaction = (Id) =>{
+      console.log("Hided")
+      console.log(Id)
+
+      let newData = transactionData
+      newData.splice(Id,1)
+      console.log(newData)
+      setTransactionData(newData)
+  }
 
     const modal = (Id) => {
         let transaction = transactionData[modalId]
@@ -144,11 +154,12 @@ const Transactions = ({navigation,route}) => {
 
 
     const showData = () => {
+      let list = []
         transactionData.forEach((transaction,i) => {
-            transactionList.push(
+          list.push(
               <Swipeable 
-              renderLeftActions={()=> renderLeftActions(transaction)}
-              renderRightActions={renderRightActions}>
+              renderLeftActions={()=> renderLeftActions(i)}
+              renderRightActions={() =>renderRightActions(i)}>
               <Pressable
                         style={[styles.transactionBox, styles.rounded]}
                         key={i}
@@ -176,6 +187,8 @@ const Transactions = ({navigation,route}) => {
                 
             )
         })
+        transactionList = list
+        return list
     }
     showData()
     return (

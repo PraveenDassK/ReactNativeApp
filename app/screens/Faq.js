@@ -361,6 +361,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: GlobalStyles.DivContainer.height,
+    minHeight: 900,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
   },
