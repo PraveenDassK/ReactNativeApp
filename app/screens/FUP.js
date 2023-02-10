@@ -22,58 +22,70 @@ const FUP = ({navigation}) => {
 
   }
   return(
-    <ScrollView>
     <View style={styles.Container}>
+    <ScrollView horizontal={true} >
+    <View style={styles.Container11}>
     <Image
     style={styles.inputIcon}
     resizeMode="contain"
     source={{uri:nftimg}}
     />
     <Text style={styles.NameText}>
-      <Text style={{fontWeight:'bold'}}>NFT Name:</Text> {name}
-    </Text>
-    <Text style={[styles.DescriptionText]}>
-    <Text style={{fontWeight:'bold'}}>Description:</Text> {description}
+      <Text style={{fontWeight:'bold'}}>{name}</Text> 
     </Text>
     <Text style={styles.PriceText}>
-    <Text style={{fontWeight:'bold'}}> Price:</Text> {price}
+    <Text style={{fontWeight:'bold'}}>{price}</Text> 
     </Text>
     
   </View>
   </ScrollView>
+  </View>
+
   )
 
 
 };
 const styles = StyleSheet.create({
     Container: {
-        marginTop: "2.5%",
-        width: GlobalStyles.DivContainer.width,
-        marginLeft: GlobalStyles.DivContainer.marginLeft,
+        marginTop: 10,
+        width: 340,
+        marginLeft: 10,
+        marginRight: 10,
         backgroundColor: "#FFFFFF",
         height: "auto",
         borderRadius: 15,
         flexDirection: "column",
-        padding: "5%",
+        padding: 20,
+        justifyContent: "center",
+      },
+      Container11: {
+        width: 200,
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: "grey",
+        height: "auto",
+        borderRadius: 15,
+        flexDirection: "column",
+        padding: 10,
         justifyContent: "center",
       },
       NameText: {
-        textAlign: "left",
+        textAlign: "center",
         fontSize: 14,
       },
       DescriptionText: {
         fontSize: 14,
-        textAlign: "left",
+        textAlign: "center",
         lineHeight: 30,
       },
       PriceText: {
-        textAlign: "left",
+        textAlign: "center",
         fontSize: 14,
       },
       inputIcon: {
         resizeMode: "contain",
         height: 200,
-        marginTop: "5%",
+        marginTop: 10,
       },
 })
 
