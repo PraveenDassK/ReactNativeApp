@@ -208,6 +208,15 @@ showData()
                     /> :
                     null}
         </View>
+
+        <Text>
+          {cardnumber}
+        </Text>
+
+        <Text>
+          {firstname} {lastname}
+        </Text>
+
         <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
         <Pressable
@@ -228,6 +237,18 @@ showData()
                       style={styles.icon}
                       source={require("../assets/icon-settingsbutton.png")}
                     />
+                  </Pressable>
+
+
+                  <Pressable
+                    style={styles.wrapper}
+                    onPress={() => navigation.navigate("PinSetApp")}
+                  >
+                                <MaterialCommunityIcons 
+            name="lock"
+            size={25}
+            color="blue"
+            />
                   </Pressable>
 
 
