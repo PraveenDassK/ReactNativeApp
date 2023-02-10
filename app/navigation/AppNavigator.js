@@ -115,6 +115,14 @@ const StackNavigator = () => {
     }} 
     >
       <Stack.Screen 
+        name="FUP" 
+        component={gestureHandlerRootHOC(FUP)}
+        options={{
+          title: "FUP",
+       
+        }}
+      />
+      <Stack.Screen 
         name="Account" 
         component={AppNavigator}
         options={{
@@ -166,14 +174,7 @@ const StackNavigator = () => {
        
         }}
       />
-      <Stack.Screen 
-        name="FUP" 
-        component={gestureHandlerRootHOC(FUP)}
-        options={{
-          title: "FUP",
-       
-        }}
-      />
+      
 
     <Stack.Screen 
         name="Success" 
