@@ -40,6 +40,7 @@ const Pin = ({route,navigation}) => {
   const checkPin = async () => {
     if (enteredPin != "0000"){
       alert("Pin is incorrect")
+      pinView.current.clearAll()
       return;
     } 
     const response = await api.SendFunds(
