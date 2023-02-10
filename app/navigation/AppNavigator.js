@@ -111,16 +111,9 @@ const leftToRightAnimation = {
 const StackNavigator = () => {
    return(
      <Stack.Navigator
-      initialRouteName="">
+      initialRouteName="AccountMain">
         
-      <Stack.Screen 
-        name="FUP" 
-        component={gestureHandlerRootHOC(FUP)}
-        options={{
-          title: "FUP",
-       
-        }}
-      />
+     
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
@@ -129,7 +122,14 @@ const StackNavigator = () => {
        
         }}
       />
-
+       <Stack.Screen 
+        name="FUP" 
+        component={gestureHandlerRootHOC(FUP)}
+        options={{
+          title: "FUP",
+       
+        }}
+      />
       <Stack.Screen 
         name="PinSet" 
         component={PinSet}
