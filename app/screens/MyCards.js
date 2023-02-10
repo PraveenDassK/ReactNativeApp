@@ -190,7 +190,7 @@ showData()
             <Text style={styles.titleText}>My Cards</Text>
         </View>
 
-        <View style={{marginTop: 275, height: 1, width: "100%"}}/>
+        <View style={{marginTop: 175, height: 1, width: "100%"}}/>
         <View style={{justifyContent: "center", alignItems: "center"}}>
         <Image style={styles.image} resizeMode="contain" source={require("../assets/yellowCard.png")}/>
         {cardFrozen ?
