@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal,  Dimensions,   } from "react-native";
+import Carousel from 'react-native-reanimated-carousel';
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -17,7 +18,12 @@ import apiCall from "../api/api";
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
 
+
+
 const MyCards = ({ navigation }) => {
+  
+  const width = Dimensions.get('window').width;
+
   const [checked, setChecked] = useState(false);
   const toggleChecked = () => setChecked((value) => !value);
 
@@ -187,20 +193,34 @@ showData()
     <ScrollView>
       <View style={styles.myCards}>
         <View style={styles.groupParent}>
-          <Pressable
-            style={[styles.groupContainer, styles.groupShadowBox]}
-          >
-            <View style={styles.rectangleParent}>
-              <View style={styles.groupChild} />
-              <Image
-                style={styles.iconIonicIosArrowForward}
-                resizeMode="cover"
-                source={require("../assets/icon-carbonytedownarrowlarge.png")}
-              />
-            </View>
-            <Text style={[styles.myCards1, styles.historyTypo]}>My Cards</Text>
-          </Pressable>
+
+        <View style={{ flex: 1 }}>
+            <Carousel
+                loop
+                width={width}
+                height={width / 2}
+                autoPlay={true}
+                data={[...new Array(6).keys()]}
+                scrollAnimationDuration={1000}
+                onSnapToItem={(index) => console.log('current index:', index)}
+                renderItem={({ index }) => (
+                    <View
+                        style={{
+                            flex: 1,
+                            borderWidth: 1,
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Text style={{ textAlign: 'center', fontSize: 30 }}>
+                            {index}
+                        </Text>
+                    </View>
+                )}
+            />
+        </View>
+        
           <View style={styles.historyParent}>
+
             <Image
               style={{
                 width: horizontalScale(200),
@@ -212,6 +232,7 @@ showData()
               }}
               source={require("../assets/image-cardyellow.png")}
             />
+
             {cardFrozen ?             
             <Image
               style={{
@@ -657,11 +678,12 @@ const styles = StyleSheet.create({
   groupParent: {
     width: "100%",
     height: verticalScale(987),
+    backgroundColor: "white"
   },
   myCards: {
     backgroundColor: GlobalStyles.Color.gray_1100,
     flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_md,
+
     width: "100%",
   },
 

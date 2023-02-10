@@ -195,13 +195,13 @@ const StackNavigator = () => {
     <Stack.Screen 
         name="MyCards" 
         component={gestureHandlerRootHOC(MyCards)}
-        // options={{
-        //   title: "MyCards",
-        //   presentation: 'modal' 
-        // }}
-        options={{ 
-          animation: "slide_from_bottom"
+        options={{
+          title: "MyCards",
+          presentation: 'modal' 
         }}
+        // options={{ 
+        //   animation: "slide_from_bottom"
+        // }}
       />
 
     <Stack.Screen 
@@ -419,7 +419,9 @@ const AppNavigator = () => {
   return (
     <Tab.Navigator
     // tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}
+    
      screenOptions={{
+        
         "tabBarShowLabel": true,
         "tabBarStyle": {
           "height": 40,
