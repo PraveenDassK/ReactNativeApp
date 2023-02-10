@@ -191,6 +191,7 @@ showData()
         </View>
 
         <View style={{marginTop: 275, height: 1, width: "100%"}}/>
+        <View style={{justifyContent: "center", alignItems: "center"}}>
         <Image style={styles.image} resizeMode="contain" source={require("../assets/yellowCard.png")}/>
         {cardFrozen ?
                     <Image
@@ -198,8 +199,8 @@ showData()
                       source={require("../assets/cardFrozen.png")}
                     /> :
                     null}
-
-        <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 65}}>
+        </View>
+        <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
         <Pressable
                     style={styles.wrapper}
@@ -267,7 +268,9 @@ mainContainer: {
     marginTop: 150,
     resizeMode: "contain",
     width: "50%",
-
+    justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: "25%",
     height: 250,
     justifyContent: "center",
     position: "absolute"
