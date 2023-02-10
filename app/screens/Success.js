@@ -13,90 +13,73 @@ const Success = ({route,navigation}) => {
       style={styles.requested}
       onPress={() => navigation.navigate(path)}
     >
-      <View style={styles.groupParent}>
-        <View style={styles.groupPosition}>
-          <View style={[styles.groupChild, styles.groupPosition]} />
-        </View>
-        <Text style={[styles.hello, styles.helloTypo]}>
-          <Text style={styles.youHaveRequested}>{text}{'\n'}</Text>
-        </Text>
+     <View style={styles.mainContainer}>
+         <View style={styles.titleTextRow}>
+             <Text style={styles.titleText}>Success</Text>
+         </View>
+
+         <View style={styles.subTextRow}>
+             <Text style={styles.subText}>Transaction has completed successfully</Text>
+         </View>
+
         <Image
-          style={[styles.iconAwesomeCheckCircle, styles.hello1Position]}
-          resizeMode="cover"
-          source={require("../assets/icon-awesomecheckcircle.png")}
-        />
-        <Text style={[styles.hello1, styles.hello1Position, styles.helloTypo]}>
-          Tap anywhere to continue
-        </Text>
-      </View>
+                  style={styles.image}
+                  source={require("../assets/babyblueCircle.png")}
+                />
+
+                  <Text style={{fontSize: 20, width: "100%",fontWeight: "700", textAlign: "center", marginTop: "15%"}}>{text}{'\n'}</Text>
+
+                 <Text style={{bottom: 0, textAlign: "center", position: "absolute", width: "100%", marginBottom: "5%"}}>Tap anywhere to continue</Text>
+    </View>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  groupPosition: {
-    left: 0,
-    bottom: 0,
-    right: 0,
-    top: 0,
-    position: "absolute",
-  },
-  helloTypo: {
-    textAlign: "center",
-  },
-  hello1Position: {
-    top: "50%",
-    position: "absolute",
-  },
-  groupChild: {
-    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
-    borderTopRightRadius: GlobalStyles.Border.br_4xl,
-    shadowColor: "rgba(1, 1, 253, 0.1)",
-    shadowOffset: {
-      width: 0,
-      height: -3,
+mainContainer: {
+        backgroundColor:  GlobalStyles.DivContainer.backgroundColor,
+        height: GlobalStyles.DivContainer.height,
+        width: "100%",
+        flex: GlobalStyles.DivContainer.flex,
     },
-    shadowRadius: 20,
-    elevation: 20,
-    shadowOpacity: 1,
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  youHaveRequested: {
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
-  hello: {
-    top: 458,
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    lineHeight: 24,
-    fontWeight: "700",
-    color: GlobalStyles.Color.indigo_100,
-    position: "absolute",
-    textAlign: "center",
-    width:"100%"
-  },
-  iconAwesomeCheckCircle: {
-    marginTop: -100,
-    marginLeft: -93.56,
-    left: "50%",
-    width: 187,
-    height: 187,
-  },
-  hello1: {
-    marginTop: 290.5,
-    left: "50%",
-    marginLeft: -80,
-    fontSize: GlobalStyles.FontSize.size_xs,
-    color: GlobalStyles.Color.gray_700,
-  },
-  groupParent: {
+
+    titleTextRow: {
+        marginTop: GlobalStyles.Title.marginTop,
+        width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
+    },
+
+    titleText: {
+        fontSize: GlobalStyles.Title.fontSize,
+        fontWeight: GlobalStyles.Title.fontWeight,
+    },
+
+    subText: {
+        fontSize: GlobalStyles.RowText.fontSize,
+        fontWeight: GlobalStyles.RowText.fontWeight,
+    },
+
+    subTextRow: {
+        marginTop: GlobalStyles.RowText.marginTop,
+        width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
+        fontColor: GlobalStyles.RowText.fontColor,
+    },
+    requested: {
     width: "100%",
-    height: "100%",
-  },
-  requested: {
-    flex: 1,
-    width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
-  },
+    height: "100%"
+    },
+
+    image: {
+    width: "90%",
+    resizeMode: "contain",
+    marginLeft: "5%",
+    height: "25%",
+    marginTop: "50%"
+
+
+    }
+
 });
 
 export default Success;
