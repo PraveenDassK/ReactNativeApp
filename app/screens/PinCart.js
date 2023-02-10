@@ -40,25 +40,18 @@ const Pin = ({route,navigation}) => {
   const checkPin = async () => {
     if (enteredPin != "0000"){
       alert("Pin is incorrect")
-      pinView.current.clearAll()
       return;
     } 
-    const response = await api.SendFunds(
-      20,
-      "A12274AW", 
-      route.params.amount,
-      route.params.beneficiaryData.accountName,
-      route.params.beneficiaryData.accountNumber,
-      route.params.beneficiaryData.sortCode,
-      route.params.beneficiaryData.address
-    );
-    console.log(response)
-    if (!response.data.result){
+
+    const response = await apiCall.Checkout(route.params)
+
+    if (!response){
       alert("Transaction unsuccessful")
       pinView.current.clearAll()
       return;
     } 
-    navigation.navigate(route.params.successScreen,{"params" : route.params})
+    alert("Your projects were purchased")
+    navigation.navigate("Account")
   }
 
   return (

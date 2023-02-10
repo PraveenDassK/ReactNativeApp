@@ -39,7 +39,7 @@ const Carbon = ({ route, navigation }) => {
   const addToCart = (ID) => {
     let arrobj = {
       projectId: ID,
-      amount: 1,
+      quantity: 1,
     };
     setCart((prevArray) => [...prevArray, arrobj]);
     amount++;
@@ -120,7 +120,7 @@ const Carbon = ({ route, navigation }) => {
                     resizeMode: "stretch",
                   },
                 ]}
-                source={item.image != "" ? { uri: item.image } : require("../assets/image-carbonplaceholder.png")}
+                source={item.image != "" ? { uri: item.image } : require("../assets/image-placeholder.jpg")}
               />
 
               <View style={styles.subTitle}>

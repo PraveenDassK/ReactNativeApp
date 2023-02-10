@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState,useContext } from "react"
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import ReactNativePinView from 'react-native-pin-view';
@@ -9,12 +9,15 @@ import api from "../api/api_list"
 import apiCall from "../api/api"
 
 const Pin = ({route,navigation}) => {
-  let title = route.params.title ? route.params.title : "Enter Pin"
   
   const pinView = useRef(null)
   const [showRemoveButton, setShowRemoveButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
   const [showCompletedButton, setShowCompletedButton] = useState(false)
+  const [firstPin, setFirstPin] = useState("")
+  const [title, setTitle] = useState(route.params?.title ? route.params.title : "Enter Old pin")
+  const [pinCheck, setPinCheck] = useState(false)
+  const authContext = useContext(AuthContext)
 
   /**
    * Pin display controlers
@@ -38,28 +41,35 @@ const Pin = ({route,navigation}) => {
    * @returns If pin is incorrect
    */
   const checkPin = async () => {
-    if (enteredPin != "0000"){
-      alert("Pin is incorrect")
-      pinView.current.clearAll()
+    if(pinCheck == false){
+      if(enteredPin == authContext.pin){
+        setPinCheck(true)
+        setTitle("Enter new Pin")
+        pinView.current.clearAll()
+
+      }else{
+        alert("Pin is incorrect")
+        pinView.current.clearAll()
+      }
       return;
-    } 
-    const response = await api.SendFunds(
-      20,
-      "A12274AW", 
-      route.params.amount,
-      route.params.beneficiaryData.accountName,
-      route.params.beneficiaryData.accountNumber,
-      route.params.beneficiaryData.sortCode,
-      route.params.beneficiaryData.address
-    );
-    console.log(response)
-    if (!response.data.result){
-      alert("Transaction unsuccessful")
-      pinView.current.clearAll()
-      return;
-    } 
-    navigation.navigate(route.params.successScreen,{"params" : route.params})
+    }else{
+      if(firstPin == ""){
+        setFirstPin(enteredPin)
+        pinView.current.clearAll()
+        setTitle("Confirm Pin")
+      }else if (firstPin == enteredPin){
+        alert("Pin set")
+        authContext.setPin(firstPin)
+        navigation.navigate("Account")
+      }else{
+        alert("Pin does not match")
+        pinView.current.clearAll()
+        setTitle("Enter New Pin")
+        setFirstPin("")
+      }
+    }
   }
+  console.log(pinCheck)
 
   return (
       <View style={[styles.sendEnterPin1,styles.sendEnterPin1Child]} >
