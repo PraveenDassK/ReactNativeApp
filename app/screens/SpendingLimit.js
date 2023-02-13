@@ -15,51 +15,45 @@ const SpendingLimit = ({navigation,route}) => {
 
   const [monthLim, setMonLim] = useState(0);
   const [spend, setSpend] = useState(0);
-  const [percent, setPercent] = useState("50%");
+  const [percent, setPercent] = useState("0%");
 
-  console.log(route)
-  if(route.params) {
+  //Calls the API once during load
+  useEffect(() => {
     loadData()
-    return true
-  }
-
+  },[])
+  
   //Calls the API once during load
   useFocusEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       loadData();
     });
   });
-  
+
   //Gets the data for the user
   const loadData = async () => {
     //Gets the data from the api
     const response = await api.GetLimit(authContext.accountID);
     //Then isolate the useful data
     const data = response.data.details
-
+    console.log(data)
 
     //Gets the monthly spend
-    const transactions = await apiCall.GetTransactions(authContext.GetTransactions);
-    let spend = 0
-    transactions.content.forEach(element => {
-      console.log(element)
-      spend += element.amount
-    });
+    const transactionRequest = await apiCall.GetAllTransactionsThisMonth()
+    let spendTotal = transactionRequest.total
 
     //If there is a limit
     //50 is the amount spent
     if(data.monthlyAmount > 0){
-      const percentamount = Math.floor((spend/data.monthlyAmount)*100) + "%"
+      const percentamount = Math.floor((spendTotal/data.monthlyAmount)*100) + "%"
       setPercent(percentamount)
+      setIsEnabled(true)
     }else{
       setPercent("0%")
     }
 
     setMonLim(data.monthlyAmount)
-
-    const balanceresponse = await api.GetAccount(authContext.accountID);
-    const balData = balanceresponse.data.details;
-    setSpend(70);
+    setSpend(spendTotal);
+    console.log(data.monthlyAmount)
   }
 
   /**
@@ -136,11 +130,16 @@ const SpendingLimit = ({navigation,route}) => {
           />
 
           <Text style={[styles.amountText]}>
-            Amount spent this month
+            Amount spent this month : £{spend}
+          </Text>
+          <Text style={[styles.amountText]}>
+            Limit this Month : £{monthLim}
           </Text>
 
           <View style={[styles.amountContainer]}>
+
             <View style={[styles.amountScale]} width = {percent}>
+
             </View>
           </View>
 
