@@ -74,7 +74,7 @@ const MyCards = ({ navigation }) => {
     setaccountname("*******");
     }
     else{
-      setcardnumber("**** ****  ****" +response2[1].maskedCardNumber.substr(response2[1].maskedCardNumber.length - 4),)
+      setcardnumber("**** ****  **** " +response2[1].maskedCardNumber.substr(response2[1].maskedCardNumber.length - 4),)
     setfirstname(response2[1].embossing.firstName)
     setlastname(response2[1].embossing.lastName)
     setBalance(data.availableBalance)
@@ -192,7 +192,7 @@ showData()
 
         <View style={{marginTop: 175, height: 1, width: "100%"}}/>
         <View style={{justifyContent: "center", alignItems: "center"}}>
-        <Image style={styles.image} resizeMode="contain" source={require("../assets/yellowCard.png")}/>
+        <Image style={styles.image} resizeMode="contain" source={require("../assets/image-yellow.png")}/>
         {cardFrozen ?
                     <Image
                       style={[styles.image]}
@@ -200,13 +200,17 @@ showData()
                     /> :
                     null}
         </View>
-        <Text>
-          {cardnumber}
-        </Text>
 
-        <Text>
-          {firstname} {lastname}
-        </Text>
+        <View left = "35%">
+          <Text>
+            {cardnumber}
+          </Text>
+
+          <Text>
+            {firstname} {lastname}
+          </Text>
+        </View>
+
         <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
                   <Pressable
@@ -223,10 +227,10 @@ showData()
                     style={styles.wrapper}
                     onPress={() => navigation.navigate("PinSetApp")}
                   >
-                                <MaterialCommunityIcons 
-            name="lock"
-            size={25}
-            color="blue"
+            <MaterialCommunityIcons 
+              name="lock"
+              size={25}
+              color="blue"
             />
                   </Pressable>
 
