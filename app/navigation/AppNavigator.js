@@ -1,9 +1,16 @@
 import React from "react";
 
-import { Animated }from "react-native-reanimated";
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
+
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+
 
 
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -22,6 +29,7 @@ import Settings from "../screens/Settings";
 import FaceScan from "../screens/FaceScan";
 //Main screen
 import AccountDummy from "../screens/AccountDummy";
+import AccountDummy2 from "../screens/AccountDummy2";
 //import SwitchAccount from "../screens/SwitchAccount"
 
 /**
@@ -75,23 +83,98 @@ import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
 import AccountSettings from "../screens/AccountSettings"
 import Transactions from "../screens/Transactions"
 import AccountLetter from "../screens/AccountLetter"
+import AboutUs from "../screens/AboutUs"
+
+import Faq from "../screens/Faq"
 
 import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import CarbonSpending from "../screens/CarbonSpending"
-import Login from "../screens/Login"
-import SignUpPersonal from "../screens/SignUpPersonal";
-import TestEnviro from "../screens/TestEnviro";
-import PinSet from "../screens/PinSet";
-import PinSetApp from "../screens/PinSetApp";
-import PinCart from "../screens/PinCart";
 import FUP from "../screens/FUP";
-
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
+
+import { Animated, View, TouchableOpacity } from 'react-native';
+
+function MyTabBar({ state, descriptors, navigation, position }) {
+
+  const insets = useSafeAreaInsets();
+  return (
+    <View style={{ 
+      flexDirection: 'row',
+        
+      paddingTop: insets.top,
+      paddingBottom: insets.bottom,
+      paddingLeft: insets.left,
+      paddingRight: insets.right,
+      }}>
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            // The `merge: true` option makes sure that the params inside the tab screen are preserved
+            navigation.navigate({ name: route.name, merge: true });
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+
+        const inputRange = state.routes.map((_, i) => i);
+        const opacity = position.interpolate({
+          inputRange,
+          outputRange: inputRange.map(i => (i === index ? 1 : 0.5)),
+        });
+
+        return (
+          <>
+          {index == 5  ? null : 
+          index == 0 ? null :
+         
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            style={{ flex: 1 }}
+          >
+            <Animated.Text style={{ opacity, textAlign:"center" }}>
+              {label}
+            </Animated.Text>
+          </TouchableOpacity>}
+          </>
+        );
+      })}
+    </View>
+  );
+}
+
+
 
 const leftToRightAnimation = {
   cardStyleInterpolator: ({ current, layouts }) => {
@@ -111,62 +194,51 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-   return(
-     <Stack.Navigator
-      initialRouteName="AccountMain">
-        
-     
+  return(
+    <Stack.Navigator
+    screenOptions={{
+     gestureEnabled: true,
+     gestureResponseDistance: 300,
+     gestureDirection: "horizontal",
+     initialRouteName:"FUP",
+    }} 
+    >
       <Stack.Screen 
         name="Account" 
         component={AppNavigator}
         options={{
-          title: "Account",
-       
-        }}
-      />
-       <Stack.Screen 
-        name="FUP" 
-        component={gestureHandlerRootHOC(FUP)}
-        options={{
-          title: "FUP",
-       
-        }}
-      />
-      <Stack.Screen 
-        name="PinSet" 
-        component={PinSet}
-        options={{
-          title: "PinSet",
-       
-        }}
-      />
-            <Stack.Screen 
-        name="PinCart" 
-        component={PinCart}
-        options={{
-          title: "PinCart",
-       
+          title: "Carbonyte",
+          headerShown: false
         }}
       />
       
-      <Stack.Screen 
-        name="PinSetApp" 
-        component={PinSetApp}
-        options={{
-          title: "PinSetApp",
-       
-        }}
-      />
 
       <Stack.Screen 
         name="AddFunds" 
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "AddFunds",
-       
         }}
       />
 
+      <Stack.Screen
+              name="AboutUs"
+              component={gestureHandlerRootHOC(AboutUs)}
+              options={{
+                title: "AboutUs",
+
+              }}
+            />
+
+
+        <Stack.Screen
+                      name="Faq"
+                      component={gestureHandlerRootHOC(Faq)}
+                      options={{
+                        title: "Faq",
+
+                      }}
+                    />
       <Stack.Screen 
         name="SendMoney" 
         component={gestureHandlerRootHOC(SendMoney)}
@@ -181,6 +253,14 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Pin)}
         options={{
           title: "Pin",
+       
+        }}
+      />
+      <Stack.Screen 
+        name="FUP" 
+        component={gestureHandlerRootHOC(FUP)}
+        options={{
+          title: "FUP",
        
         }}
       />
@@ -337,9 +417,9 @@ const StackNavigator = () => {
 
 <Stack.Screen 
         name="ChooseCardsElite" 
-        component={gestureHandlerRootHOC(ChooseCardsEliteNavigator)}
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
         options={{
-          title: "Choose Cards",
+          title: "ChooseCardsElite",
        
         }}
       />
@@ -393,14 +473,7 @@ const StackNavigator = () => {
         }}
       />
 
-    <Stack.Screen 
-        name="Login" 
-        component={Login}
-        options={{
-          title: "Login",
-       
-        }}
-      />
+
           
       <Stack.Screen 
         name="CarbonTonnesRemoved" 
@@ -418,14 +491,7 @@ const StackNavigator = () => {
        
         }}
       />
-      <Stack.Screen 
-        name="TestEnviro" 
-        component={TestEnviro}
-        options={{
-          title: "TestEnviro",
-       
-        }}
-      />
+
 
     </Stack.Navigator>
   )
@@ -436,7 +502,7 @@ const ChooseCardsEliteNavigator = () => {
     <Tab.Navigator >
       <Tab.Screen
         name="Standard" 
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
+        component={gestureHandlerRootHOC(ChooseCardsStandard5)}
       />
       <Tab.Screen
         name="Premium" 
@@ -456,17 +522,40 @@ const AppNavigator = () => {
 
   return (
     <Tab.Navigator
+    tabBar={props => <MyTabBar {...props} />}
+    initialRouteName="AccountTab"
     // tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}
     
-     screenOptions={{
+    //  screenOptions={{
         
-        "tabBarShowLabel": true,
-        "tabBarStyle": {
-          "height": 40,
-          "width": "125%"
-        }}
-      }
+    //     "tabBarShowLabel": true,
+    //     "tabBarStyle": {
+    //       "height": 48,
+    //       "width": "125%",
+    //       "marginRight": 100
+         
+    //     }
+    //   }
+     // }
     >
+     <Tab.Screen 
+      name="Loop1" 
+      component={gestureHandlerRootHOC(AccountDummy2)}
+      options={{
+        tabBarShowLabel: false,
+        headerShown: false,
+        presentation: 'modal',
+        animationTypeForReplace: 'push',
+        animation:'slide_from_left',
+
+        tabBarItemStyle: {
+         "width": 7
+        },
+        tabBarLabelStyle: {
+          "width": 0
+        }
+
+      }} />
     
     <Tab.Screen 
       name="AccountTab" 

@@ -20,7 +20,6 @@ import {
 } from "../config/scaling";
 
 import api from "../api/api_list";
-import apiweb3 from "../api/web3_api";
 import apiCall from "../api/api";
 import AuthContext from "../auth/context";
 
@@ -53,10 +52,6 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [projects, setProjects] = useState([]);
 
   const [bool, setbool] = useState();
-  const [name, setName] = useState(null)
-  const [description, setDescription] = useState(null)
-  const [price, setPrice] = useState(null)
-  const [nftimg, setNftimg] = useState(null)
   
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
@@ -83,12 +78,7 @@ const HomeScreenPersonal = ({ navigation }) => {
     console.log(response2) 
     console.log(response2[1].embossing.lastName)
 
-     ////FUP Data
-     const NFTresponse = await apiweb3.GetBalance()
-     setName(NFTresponse.data.data.nftData[0].data.name)
-     setDescription(NFTresponse.data.data.nftData[0].data.description)
-     setPrice(NFTresponse.data.data.nftData[0].data.price)
-     setNftimg(NFTresponse.data.data.nftData[0].data.url)
+    
     const bool = false;
     if(bool === true){
       setcardnumber("*******")
@@ -212,9 +202,6 @@ const HomeScreenPersonal = ({ navigation }) => {
     });
 
     setTransactionTable(pageShow);
-
-
-   
   };
 
   let currency = transactionData ? transactionData.transactions[0].amount : "£";
@@ -674,26 +661,6 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={styles.titleText}>Recent Transactions</Text>
         </View>
         <View style={styles.transactionsContainer}>{transactionTable}</View>
-
-        <View style={styles.NFTContainer}>
-          <Text style={styles.titleText}>NFT Assets</Text>
-        <ScrollView horizontal={true} >
-        <View style={styles.NFTContainer11}>
-        <Image
-        style={styles.NFTinputIcon}
-        resizeMode="contain"
-        source={{uri:nftimg}}
-        />
-        <Text style={styles.NFTNameText}>
-          <Text style={{fontWeight:'bold'}}>{name}</Text> 
-        </Text>
-        <Text style={styles.NFTPriceText}>
-        <Text style={{fontWeight:'bold'}}>{price}</Text> 
-        </Text>
-    
-  </View>
-  </ScrollView>
-  </View>
 
         <View style={[styles.carbonContainer, styles.rounded]}>
           <View style={styles.treeContainer}>
@@ -1178,46 +1145,6 @@ const styles = StyleSheet.create({
   imageco2: {
     height: "90%",
     resizeMode: "contain",
-  },
-  NFTContainer: {
-    width: "90%",
-    marginLeft: "5%",
-    marginRight: 10,
-    backgroundColor: "#FFFFFF",
-    height: "auto",
-    borderRadius: 15,
-    flexDirection: "column",
-    padding: 20,
-    justifyContent: "center",
-  },
-  NFTContainer11: {
-    width: 200,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: "white",
-    height: "auto",
-    borderRadius: 15,
-    flexDirection: "column",
-    padding: 10,
-    justifyContent: "center",
-  },
-  NFTNameText: {
-    textAlign: "center",
-    fontSize: 14,
-  },
-  NFTDescriptionText: {
-    fontSize: 14,
-    textAlign: "center",
-    lineHeight: 30,
-  },
-  NFTPriceText: {
-    textAlign: "center",
-    fontSize: 14,
-  },
-  NFTinputIcon: {
-    resizeMode: "contain",
-    height: 200,
-    marginTop: 10,
   },
 
   transactionDiv: {
