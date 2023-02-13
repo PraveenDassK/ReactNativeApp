@@ -208,7 +208,7 @@ const StackNavigator = () => {
         component={AppNavigator}
         options={{
           title: "Carbonyte",
-          headerShown: false
+          headerShown: false,
         }}
       />
       
