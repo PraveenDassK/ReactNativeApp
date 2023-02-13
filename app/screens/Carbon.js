@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, View, Image, FlatList } from "react-native";
+import React, { useContext, useState, useEffect, useCallback } from "react";
+import {   RefreshControl, StyleSheet, View, Image, FlatList } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
@@ -14,6 +14,8 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 const Carbon = ({ route, navigation }) => {
   const [data, setData] = useState(null);
   const { setUser } = useContext(AuthContext);
+  const [refreshing, setRefreshing] = useState(false);
+
 
   useEffect(() => {
     loadData();
@@ -54,6 +56,16 @@ const Carbon = ({ route, navigation }) => {
       totalAmount: amount,
     };
   };
+
+  const onRefresh = useCallback(() => {
+    console.log("1st refresh")
+    setRefreshing(true);
+    setTimeout(() => {
+      console.log("2nd refresh")
+      loadData()
+      setRefreshing(false);
+    }, 2000);
+  }, [refreshing]);
   return (
     <Screen style={{ backgroundColor: "#F6F5F8" }}>
       {cart && cart.length ? (
@@ -64,6 +76,9 @@ const Carbon = ({ route, navigation }) => {
 
       <View style={styles.mainContainer}>
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           ListHeaderComponent={
             <View style={styles.container}>
               <View style={styles.titleTextRow}>

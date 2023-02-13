@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import {
+  RefreshControl,
   Text,
   StyleSheet,
   Image,
@@ -26,6 +27,7 @@ import AuthContext from "../auth/context";
 import moment from "moment";
 
 const HomeScreenPersonal = ({ navigation }) => {
+ 
   //Saves all the data from the API call
   const [data, setData] = useState(null);
   const [balance, setBalance] = useState(null);
@@ -52,10 +54,15 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [projects, setProjects] = useState([]);
 
   const [bool, setbool] = useState();
+
+  const [refreshing, setRefreshing] = useState(false);
   
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
   const carbonAmount = numCarbon;
+
+
+
 
   //Calls the API once during load
   useFocusEffect(() => {
@@ -204,6 +211,9 @@ const HomeScreenPersonal = ({ navigation }) => {
     setTransactionTable(pageShow);
   };
 
+
+
+
   let currency = transactionData ? transactionData.transactions[0].amount : "£";
 
   const catNames = ["Health", "Food", "House", "Sping", "Transport"];
@@ -215,8 +225,21 @@ const HomeScreenPersonal = ({ navigation }) => {
    *      Wallet balance
    *      Recent transactios
    */
+  const onRefresh = useCallback(() => {
+    console.log("1st refresh")
+    setRefreshing(true);
+    setTimeout(() => {
+      console.log("2nd refresh")
+      loadData()
+      setRefreshing(false);
+    }, 2000);
+  }, [refreshing]);
   return (
-    <ScrollView>
+    <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+    
       <View style={styles.screen}>
        
       

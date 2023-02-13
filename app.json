@@ -23,19 +23,29 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/tree@3x.png",
+        "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "carbonyte.bankin"
     },
     "description": "Carbonyte Banking App",
     "web": {
-      "favicon": "./app/assets/tree@3x.png"
+      "favicon": "./app/assets/logo-carbonyte.png"
     },
     "extra": {
       "eas": {
         "projectId": "c44c011f-e58a-467d-b5dd-4e9e27e21ed3"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./app/assets/logo-carbonyte.png",
+          "color": "#ffffff"
+         
+        }
+      ]
+    ]
   }
 }

@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
+  RefreshControl,
   Text,
   StyleSheet,
   Image,
@@ -38,6 +39,8 @@ const Analytics = ({ navigation }) => {
 
   const [recentTransactions, setRecent] = useState([]);
   const [transactionCategories, setCat] = useState();
+
+    const [refreshing, setRefreshing] = useState(false);
 
   const authContext = useContext(AuthContext);
 
@@ -143,8 +146,23 @@ const Analytics = ({ navigation }) => {
     recentTransactions[0]?.transactionDate?.split("T")[0]
   );
 
+    const onRefresh = useCallback(() => {
+    console.log("1st refresh")
+    setRefreshing(true);
+    setTimeout(() => {
+      console.log("2nd refresh")
+      loadData()
+      setRefreshing(false);
+    }, 2000);
+  }, [refreshing]);
+
   return (
-    <ScrollView>
+    <ScrollView
+       refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+    >
+
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
           <Text style={styles.titleText}>Analysis</Text>

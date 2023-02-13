@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback} from "react";
 import {
+  RefreshControl,
   Image,
   StyleSheet,
   Text,
@@ -35,6 +36,8 @@ const Settings = ({ navigation }) => {
   const [initials, setInitals] = useState(null);
   const [iban, setIban] = useState(null);
   const [status, setStatus] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+
   const authContext = useContext(AuthContext);
   const { userID, accountID, setCurrentUser } = useContext(AuthContext);
 
@@ -144,8 +147,22 @@ const Settings = ({ navigation }) => {
     ],
   }));
 
+  const onRefresh = useCallback(() => {
+    console.log("1st refresh")
+    setRefreshing(true);
+    setTimeout(() => {
+      console.log("2nd refresh")
+      loadData()
+      setRefreshing(false);
+    }, 2000);
+  }, [refreshing]);
+
   return (
-    <ScrollView>
+    <ScrollView
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }
+    >
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
           <Text style={styles.titleText}>{fullname}</Text>
