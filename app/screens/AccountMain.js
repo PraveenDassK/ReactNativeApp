@@ -157,6 +157,8 @@ const HomeScreenPersonal = ({ navigation }) => {
                 borderColor: "black",
                 alignSelf: "center",
                 marginLeft: "2.5%",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Text
@@ -165,8 +167,8 @@ const HomeScreenPersonal = ({ navigation }) => {
                   justifyContent: "center",
                   alignItems: "center",
                   textAlignVertical: "center",
-                  height: "100%",
                   fontWeight: "700",
+                
                 }}
               >
                 {dataHold.description.replace("Payment to ", "")[0]}
@@ -570,18 +572,21 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginLeft: "2.5%",
                 }}
               >
+                <View style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
                 <Text
                   style={{
-                    alignSelf: "center",
                     justifyContent: "center",
                     alignItems: "center",
-                    textAlignVertical: "center",
-                    height: "100%",
                     fontWeight: "700",
                   }}
                 >
                   {projects[0]?.name?.charAt(0)}
                 </Text>
+              </View>
               </View>
               <View
                 style={{
@@ -632,6 +637,8 @@ const HomeScreenPersonal = ({ navigation }) => {
                   borderColor: "black",
                   alignSelf: "center",
                   marginLeft: "2.5%",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <Text
@@ -640,7 +647,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                     justifyContent: "center",
                     alignItems: "center",
                     textAlignVertical: "center",
-                    height: "100%",
+                  
                     fontWeight: "700",
                   }}
                 >
