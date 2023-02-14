@@ -52,7 +52,6 @@ const [userID, setUserID] = useState("C1220XHD")
 const [settings, setSettings] = useState({
   faceId: false,
   hideBalance:false,
-  contactAccess:false,
   transactionSharing:false
 })
 

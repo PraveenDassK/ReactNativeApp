@@ -2,29 +2,52 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Text, StyleSheet, View, Image, Pressable, Switch, ScrollView} from 'react-native';
 import GlobalStyles from '../../GlobalStyles';
 import AuthContext from '../auth/context';
+import { useFocusEffect } from "@react-navigation/native";
 
 import api from '../api/api_list';
+import apiCall from '../api/api';
 
 const CardSettings = ({navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const toggleSwitch1 = () => setIsEnabled1((previousState) => !previousState);
-  const toggleSwitch2 = () => setIsEnabled2((previousState) => !previousState);
-  const toggleSwitch3 = () => setIsEnabled3((previousState) => !previousState);
+  const toggleSwitch = () => {
+    setIsEnabled((previousState) => !previousState)
+    sendRequest()
+  };
+
+  const toggleSwitch1 = () => {
+    setIsEnabled1((previousState) => !previousState)
+    sendRequest()
+  };
+  const toggleSwitch2 = () => {
+    setIsEnabled2((previousState) => !previousState)
+    sendRequest()
+  };
+  const toggleSwitch3 = () => {
+    setIsEnabled3((previousState) => !previousState)
+    sendRequest()
+  }
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
     getSettings();
   }, []);
 
+    //Calls the API once during load
+    useFocusEffect(() => {
+      const unsubscribe = navigation.addListener("focus", () => {
+        getSettings();
+      });
+    });
+
   const getSettings = async () => {
     console.log(authContext.accountID);
     const response = await api.GetToggles(authContext.accountID);
-    const data = response.data.details;
-    console.log(data);
+    const cardSettings = await apiCall.cardSettings(authContext.accountID)
+    const data = cardSettings;
+    console.log(cardSettings);
     data.onlineTransactions ? setIsEnabled(true) : null;
     data.swipePayments ? setIsEnabled1(true) : null;
     data.atmWithdrawals ? setIsEnabled2(true) : null;
@@ -33,9 +56,7 @@ const CardSettings = ({navigation}) => {
 
   const sendRequest = async () => {
     const response = await api.SetToggles(authContext.accountID, isEnabled, isEnabled1, isEnabled2, isEnabled3);
-    console.log(response);
   };
-  sendRequest();
 
   return (
     <ScrollView>
