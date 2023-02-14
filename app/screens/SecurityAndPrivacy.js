@@ -72,13 +72,6 @@ const SecurityAndPrivacy = ({ navigation }) => {
     setIsEnabled2((previousState) => !previousState);
     setSettings((prev) => ({ ...prev, contactAccess: !prev.contactAccess }));
   };
-  const toggleSwitch3 = () => {
-    setIsEnabled3((previousState) => !previousState);
-    setSettings((prev) => ({
-      ...prev,
-      transactionSharing: !prev.transactionSharing,
-    }));
-  };
 
   return (
     <View style={styles.mainContainer}>
@@ -129,26 +122,6 @@ const SecurityAndPrivacy = ({ navigation }) => {
       <View style={styles.divRow}>
         <Image
           style={styles.icon}
-          source={require("../assets/blueFriends.png")}
-        />
-
-        <Text style={styles.divText}>Share with friends</Text>
-
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled2 ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch2}
-          value={isEnabled2}
-        />
-      </View>
-
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
           source={require("../assets/blueMessage.png")}
         />
 
@@ -161,8 +134,8 @@ const SecurityAndPrivacy = ({ navigation }) => {
             true: GlobalStyles.Color.blue_100,
           }}
           thumbColor={isEnabled3 ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch3}
-          value={isEnabled3}
+          onValueChange={toggleSwitch2}
+          value={isEnabled2}
         />
       </View>
     </View>
