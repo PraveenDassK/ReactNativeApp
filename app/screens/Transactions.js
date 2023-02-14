@@ -136,7 +136,7 @@ const Transactions = ({navigation,route}) => {
                   onPress={() => reportTransaction()}>
                   <Text style={styles.textStyle}>Report</Text>
                 </Pressable>
-              {!settings
+              {!settings.transactionSharing
                 ?
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
