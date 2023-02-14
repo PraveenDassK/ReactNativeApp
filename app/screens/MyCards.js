@@ -32,6 +32,7 @@ const MyCards = ({ navigation }) => {
   const [lastname, setlastname] = useState(null);
   const [bool, setbool] = useState();
   const authContext = useContext(AuthContext)
+  const { settings } = useContext(AuthContext);
 
   useEffect(() => {
     loadData()
@@ -42,6 +43,7 @@ const MyCards = ({ navigation }) => {
     const accountresponse = await api.GetAccount(authContext.accountID);
     const accountdata = accountresponse.data.details
     const data = responseBalance.data.details
+    
 
     console.log(authContext.accountID)
     //Load the data for transactions
@@ -122,12 +124,14 @@ const modal = (Id) => {
               onPress={() => reportTransaction()}>
               <Text style={styles.textStyle}>Report</Text>
             </Pressable>
-
+            {settings.transactionSharing
+                ?
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => shareTransaction()}>
               <Text style={styles.textStyle}>Share</Text>
-            </Pressable>
+            </Pressable>:null
+            }
 
             <Pressable
               style={[styles.button, styles.buttonClose]}
