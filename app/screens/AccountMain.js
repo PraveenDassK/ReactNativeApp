@@ -5,8 +5,9 @@ import {
   StyleSheet,
   Image,
   View,
-  Pressable,
+  TouchableOpacity,
   ScrollView,
+  
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -142,7 +143,7 @@ const HomeScreenPersonal = ({ navigation }) => {
       let dataHold = transactionData.content[i];
       transactionList.push(dataHold);
       pageShow.push(
-        <Pressable
+        <TouchableOpacity
           style={[styles.transactionBox, styles.rounded]}
           key={i}
           onPress={() => navigation.navigate("Transactions")}
@@ -202,7 +203,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               </Text>
             </View>
           </View>
-        </Pressable>
+        </TouchableOpacity>
       );
     }
     setTransactionData({
@@ -323,10 +324,11 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <Pressable
+            <TouchableOpacity
               onPress={() => navigation.navigate("AddFunds")}
               style={styles.inputBox}
             >
+              
               <View style={styles.inputBoxDiv}>
                 <Image
                   style={styles.inputIcon}
@@ -335,9 +337,10 @@ const HomeScreenPersonal = ({ navigation }) => {
                 />
                 <Text style={styles.inputBoxText}>Add Funds</Text>
               </View>
-            </Pressable>
+            </TouchableOpacity>
+           
 
-            <Pressable
+            <TouchableOpacity
               onPress={() => navigation.navigate("SendMoney")}
               style={styles.inputBox}
             >
@@ -349,9 +352,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                 />
                 <Text style={styles.inputBoxText}>Send Money</Text>
               </View>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable
+            <TouchableOpacity
               onPress={() => navigation.navigate("MyCards")}
               style={styles.inputBox}
             >
@@ -363,9 +366,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                 />
                 <Text style={styles.inputBoxText}>My Cards</Text>
               </View>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable
+            <TouchableOpacity
               onPress={() => navigation.navigate("SwitchAccounts")}
               style={styles.inputBox}
             >
@@ -377,7 +380,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 />
                 <Text style={styles.inputBoxText}>SwitchAccount</Text>
               </View>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -549,7 +552,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={styles.subTextToken}>Token</Text>
           </View>
           <View style={{ marginTop: "2.5%" }} />
-          <Pressable
+          <TouchableOpacity
             style={{
               width: GlobalStyles.DivContainer.width,
               marginLeft: GlobalStyles.DivContainer.marginLeft,
@@ -614,9 +617,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </Pressable>
+          </TouchableOpacity>
 
-          <Pressable
+          <TouchableOpacity
             style={{
               width: GlobalStyles.DivContainer.width,
               marginLeft: GlobalStyles.DivContainer.marginLeft,
@@ -680,7 +683,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         {/**
@@ -709,7 +712,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={{ textAlign: "center", marginTop: verticalScale(2) }}>
               You have planted {TotalAmount} trees with advance card purchase
             </Text>
-            <Pressable onPress={() => navigation.navigate("VirtualEcoSystem")}>
+            <TouchableOpacity onPress={() => navigation.navigate("VirtualEcoSystem")}>
               <Text
                 style={{
                   marginTop: verticalScale(2),
@@ -722,7 +725,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               >
                 View more
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={{ marginTop: "5%" }}></View>
         </View>
