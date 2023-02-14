@@ -18,6 +18,7 @@ const Transactions = ({navigation,route}) => {
     const [initials, setInitals] = useState(null)
 
     const authContext = useContext(AuthContext)
+    const { settings } = useContext(AuthContext);
 
     //Calls the API once during load
     useEffect(() => {
@@ -25,6 +26,10 @@ const Transactions = ({navigation,route}) => {
             loadData()
         })
     },[])
+
+    useEffect(() => {
+      loadData();
+    }, []);
 
     const renderRightActions = (i) => {
       return(
@@ -131,12 +136,14 @@ const Transactions = ({navigation,route}) => {
                   onPress={() => reportTransaction()}>
                   <Text style={styles.textStyle}>Report</Text>
                 </Pressable>
-
+              {!settings
+                ?
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => shareTransaction()}>
                   <Text style={styles.textStyle}>Share</Text>
                 </Pressable>
+                : null}
 
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
