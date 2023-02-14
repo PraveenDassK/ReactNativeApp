@@ -327,15 +327,16 @@ const Analytics = ({ navigation }) => {
                     borderColor: "black",
                     alignSelf: "center",
                     marginLeft: "2.5%",
+                    justifyContent: "center",
+                      alignItems: "center",
                   }}
                 >
                   <Text
                     style={{
                       alignSelf: "center",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      
                       textAlignVertical: "center",
-                      height: "100%",
+                     
                       fontWeight: "700",
                     }}
                   >
@@ -394,6 +395,8 @@ const Analytics = ({ navigation }) => {
                     borderColor: "black",
                     alignSelf: "center",
                     marginLeft: "2.5%",
+                    justifyContent: "center",
+                      alignItems: "center",
                   }}
                 >
                   <Text
@@ -402,7 +405,6 @@ const Analytics = ({ navigation }) => {
                       justifyContent: "center",
                       alignItems: "center",
                       textAlignVertical: "center",
-                      height: "100%",
                       fontWeight: "700",
                     }}
                   >
