@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
+import { TransitionPresets } from '@react-navigation/stack';
+
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -98,7 +100,7 @@ const Tab = createMaterialTopTabNavigator();
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
 
-import { Animated, View, TouchableOpacity } from 'react-native';
+import { Animated, View, TouchableOpacity, Platform } from 'react-native';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -298,7 +300,10 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(MyCards)}
         options={{
           title: "MyCards",
-          presentation: 'modal' 
+          presentation: 'modal' ,
+          headerShown: true,
+    gestureEnabled: true,
+    ...TransitionPresets.ModalTransition,
         }}
       
       />
