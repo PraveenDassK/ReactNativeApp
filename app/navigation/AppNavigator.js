@@ -300,9 +300,7 @@ const StackNavigator = () => {
           title: "MyCards",
           presentation: 'modal' 
         }}
-        // options={{ 
-        //   animation: "slide_from_bottom"
-        // }}
+      
       />
 
     <Stack.Screen 
@@ -525,19 +523,6 @@ const AppNavigator = () => {
     <Tab.Navigator
     tabBar={props => <MyTabBar {...props} />}
     initialRouteName="AccountTab"
-    // tabBarOptions={{ showLabel: true, style: { height: 40, width: '125%', }, visible: true, }}
-    
-    //  screenOptions={{
-        
-    //     "tabBarShowLabel": true,
-    //     "tabBarStyle": {
-    //       "height": 48,
-    //       "width": "125%",
-    //       "marginRight": 100
-         
-    //     }
-    //   }
-     // }
     >
      <Tab.Screen 
       name="Loop1" 

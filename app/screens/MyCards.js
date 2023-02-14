@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
+import { Text, StyleSheet, Image, View, TouchableOpacity, ScrollView,Modal } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -119,26 +119,26 @@ const modal = (Id) => {
             <Text style={styles.modalText}>Source ID: {transaction.sourceId}</Text>
             <Text style={styles.modalText}>Currency: {transaction.currency}</Text>
 
-            <Pressable
+            <TouchableOpacity
               style={[styles.button, styles.buttonReport]}
               onPress={() => reportTransaction()}>
               <Text style={styles.textStyle}>Report</Text>
-            </Pressable>
+            </TouchableOpacity>
             {settings.transactionSharing
                 ?
-            <Pressable
+            <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
               onPress={() => shareTransaction()}>
               <Text style={styles.textStyle}>Share</Text>
-            </Pressable>:null
+            </TouchableOpacity>:null
             }
 
-            <Pressable
+            <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
               backgroundColor = "red"
               onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>Dismiss</Text>
-            </Pressable>
+            </TouchableOpacity>
 
 
           </View>
@@ -152,13 +152,13 @@ const modal = (Id) => {
 const showData = () => {
     transactionData.forEach((transaction,i) => {
         transactionList.push(
-          <Pressable
+          <TouchableOpacity
           style={[styles.transactionBox, styles.rounded, styles.shadow]}
           key = {i}
           onPress = {() => showTransaction(i)}>
           <View style={{height: "100%", flexDirection: "row",}}>
-          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "lightgrey", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-          <Text style={{alignSelf: "center", justifyContent: "center", alignItems: "center", textAlignVertical: "center", height: "100%"}}>{initials}</Text>
+          <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: "lightgrey", borderColor: "black", justifyContent: "center", alignItems: "center", alignSelf: "center", marginLeft: "2.5%"}}>
+          <Text style={{alignSelf: "center", textAlignVertical: "center"}}>{initials}</Text>
           </View>
           <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
               <Text style={{fontSize :14, fontWeight: "700"}}>
@@ -174,7 +174,7 @@ const showData = () => {
           </Text>
           </View>
          </View>
-        </Pressable>
+        </TouchableOpacity>
 
         )
     })
@@ -217,7 +217,7 @@ showData()
 
         <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
-                  <Pressable
+                  <TouchableOpacity
                     style={styles.wrapper}
                     onPress={() => toggleCard()}
                   >
@@ -225,9 +225,9 @@ showData()
                       style={styles.icon}
                       source={cardFrozen ? require("../assets/icon-unfreeze.png") : require("../assets/icon-freeze.png")}
                     />
-                  </Pressable>
+                  </TouchableOpacity>
 
-                  <Pressable
+                  <TouchableOpacity
                     style={styles.wrapper}
                     onPress={() => navigation.navigate("PinSetApp")}
                   >
@@ -236,9 +236,9 @@ showData()
               size={25}
               color="blue"
             />
-                  </Pressable>
+                  </TouchableOpacity>
 
-                  <Pressable
+                  <TouchableOpacity
                     style={styles.rectangleGroup}
                     onPress={() => navigation.navigate("CardSettings")}
                   >
@@ -246,7 +246,7 @@ showData()
                       style={styles.icon}
                       source={require("../assets/icon-settingsbutton.png")}
                     />
-                  </Pressable>
+                  </TouchableOpacity>
 
 
         </View>

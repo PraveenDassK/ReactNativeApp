@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Image,
   View,
-  Pressable,
+  TouchableOpacity,
   ScrollView,
   Dimensions,
 } from "react-native";
@@ -313,7 +313,7 @@ const Analytics = ({ navigation }) => {
 
         {recentTransactions.map((transaction, index) => (
           <View key={index}>
-            <Pressable
+            <TouchableOpacity
               style={[styles.transactionBox, styles.rounded]}
               onPress={() => navigation.navigate("Transactions")}
             >
@@ -371,7 +371,7 @@ const Analytics = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         ))}
 
@@ -381,7 +381,7 @@ const Analytics = ({ navigation }) => {
 
         {recentTransactions.map((transaction, index) => (
           <View key={index}>
-            <Pressable
+            <TouchableOpacity
               style={[styles.transactionBox, styles.rounded]}
               onPress={() => navigation.navigate("Transactions")}
             >
@@ -439,7 +439,7 @@ const Analytics = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         ))}
               <View style={{height: 20, width: "100%"}}/>
