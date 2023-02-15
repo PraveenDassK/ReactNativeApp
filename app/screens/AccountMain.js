@@ -317,7 +317,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               </View>
             ) : (
               <Text style={[styles.BalanceText, styles.blueTitle]}>
-                £{balance}
+                <Text style={{color: "grey"}}>£</Text>{balance}
               </Text>
             )}
             <Text style={styles.dateText}>{todaydate}</Text>
@@ -1007,11 +1007,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     flexDirection: "column",
     paddingHorizontal: "2.5%",
-    paddingVertical:"8.5%",
+    paddingVertical:"5.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {
-    marginTop: "2.5%",
+    marginTop: "3.5%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
@@ -1025,7 +1025,8 @@ const styles = StyleSheet.create({
   totalWalletBalanceText: {
     textAlign: "center",
     fontSize: 14,
-    marginBottom:8
+    marginBottom:8,
+    fontWeight: "500"
   },
   totalWalletBalanceText11: {
     textAlign: "left",
@@ -1045,6 +1046,7 @@ const styles = StyleSheet.create({
   dateText: {
     textAlign: "center",
     fontSize: 14,
+    fontWeight: "500"
   },
   dateText11: {
     textAlign: "left",
@@ -1077,15 +1079,19 @@ const styles = StyleSheet.create({
   inputBox: {
     backgroundColor: "white",
     width: "23.5%",
-    height: 60,
+    
     flexDirection: "row",
     borderRadius: 10,
+    paddingBottom: verticalScale(18),
+    paddingTop: verticalScale(25)
+
   },
 
   inputBoxDiv: {
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    
   },
 
   inputIcon: {
@@ -1095,8 +1101,10 @@ const styles = StyleSheet.create({
   },
 
   inputBoxText: {
+    marginTop: "5.5%",
     fontSize: 10,
     textAlign: "center",
+    fontWeight: "500"
   },
 
   carbonSpendingDiv: {},
