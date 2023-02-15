@@ -198,11 +198,11 @@ showData()
         <View style={{justifyContent: "center", alignItems: "center"}}>
         <Image style={styles.image} resizeMode="contain" source={require("../assets/image-yellow.png")}/>
         {cardFrozen ?
-                    <Image
-                      style={[styles.image]}
-                      source={require("../assets/cardFrozen.png")}
-                    /> :
-                    null}
+          <Image
+            style={[styles.image]}
+            source={require("../assets/cardFrozen.png")}
+          /> :
+          null}
         </View>
 
         <View left = "35%">
@@ -215,40 +215,38 @@ showData()
           </Text>
         </View>
 
-        <View style={{flexDirection: "row", alignItems: "space-between", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "45%", marginLeft: "27.5%", marginTop: 125}}>
 
-                  <TouchableOpacity
-                    style={styles.wrapper}
-                    onPress={() => toggleCard()}
-                  >
-                    <Image
-                      style={styles.icon}
-                      source={cardFrozen ? require("../assets/icon-unfreeze.png") : require("../assets/icon-freeze.png")}
-                    />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.wrapper}
-                    onPress={() => navigation.navigate("PinSetApp")}
-                  >
-            <MaterialCommunityIcons 
-              name="lock"
-              size={25}
-              color="blue"
+          <TouchableOpacity
+            style={styles.wrapper}
+            onPress={() => toggleCard()}
+          >
+            <Image
+              style={styles.icon}
+              source={cardFrozen ? require("../assets/icon-unfreeze.png") : require("../assets/icon-freeze.png")}
             />
-                  </TouchableOpacity>
+          </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={styles.rectangleGroup}
-                    onPress={() => navigation.navigate("CardSettings")}
-                  >
-                    <Image
-                      style={styles.icon}
-                      source={require("../assets/icon-settingsbutton.png")}
-                    />
-                  </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.wrapper}
+              onPress={() => navigation.navigate("PinSetApp")}
+            >
+              <MaterialCommunityIcons 
+                name="lock"
+                size={25}
+                color="blue"
+              />
+            </TouchableOpacity>
 
-
+            <TouchableOpacity
+              style={styles.rectangleGroup}
+              onPress={() => navigation.navigate("CardSettings")}
+            >
+              <Image
+                style={styles.icon}
+                source={require("../assets/icon-settingsbutton.png")}
+              />
+            </TouchableOpacity>
         </View>
 
         {transactionList}
