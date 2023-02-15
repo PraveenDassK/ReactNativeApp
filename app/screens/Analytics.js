@@ -24,7 +24,7 @@ import AuthContext from "../auth/context";
 import moment from "moment";
 import Screen from "../components/Screen";
 import { NONE } from "apisauce";
-// import Time from '../assets/icon-featherpiechart@3x.png'
+
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 
 const Analytics = ({ navigation }) => {
