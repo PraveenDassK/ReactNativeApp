@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
     color: GlobalStyles.NavBarBottomText.fontColor,
-    lineHeight: "31%"
+   
   
   },
 

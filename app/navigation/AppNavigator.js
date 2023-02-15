@@ -201,7 +201,7 @@ const StackNavigator = () => {
     <Stack.Navigator
     screenOptions={{
      gestureEnabled: true,
-     gestureResponseDistance: 300,
+     gestureResponseDistance: 100,
      gestureDirection: "horizontal",
      initialRouteName:"Account",
     }} 
