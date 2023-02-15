@@ -169,19 +169,22 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View style={styles.balanceContainer}>
-          <Text style={{ flex: 8, fontWeight: "700" }}>Balance</Text>
+          <Text style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</Text>
           <Text
             style={{
               flex: 2,
-              alignItems: "flex-end",
+              alignItems: "center",
               justifyContent: "flex-end",
-              textAlign: "left",
+              textAlign: "right",
               width: "100%",
               fontWeight: "700",
               color: "#0101FD",
             }}
           >
-            £{balance}
+            <Text style={{
+              fontWeight: "800",
+              fontSize: 30
+            }}>£ {balance}</Text>
           </Text>
         </View>
 
@@ -207,24 +210,28 @@ const Analytics = ({ navigation }) => {
               alignSelf: "center",
             }}
           >
-            <Text>Total Spend</Text>
+            <Text style={{fontWeight: "500"}}>Total Spend</Text>
             <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
             <View style={{ flex: 1, flexDirection: "row" }}>
-              <Text
-                style={{
-                  color: "#999",
-                  fontSize: 14,
+              <View style={{
+                  flex:1,
+                  marginTop: verticalScale(10),
                   alignItems: "flex-start",
-                }}
+                  width: horizontalScale(75)
+                }} >
+              <Text
+              style={{color: "#999", fontSize: 14,}}
               >
                 No. of Payments
               </Text>
-              <Text
-                style={{ color: "#999", fontSize: 14, alignItems: "flex-end" }}
-              >
-                {" "}
+              </View>
+
+
+              <View style={{  flex:1, alignItems: "flex-end", justifyContent:"flex-end"}}>
+              <Text style={{color: "#999",fontSize: 22}}>
                 {totalTransactions}
               </Text>
+              </View>
             </View>
           </View>
           <View
@@ -236,8 +243,8 @@ const Analytics = ({ navigation }) => {
               padding: "5%",
             }}
           >
-            <Text>Average Monthly Spendings</Text>
-            <Text style={styles.money}>£ {balance}</Text>
+            <Text style={{fontWeight: "700"}}>Average Monthly Spendings</Text>
+            <Text style={[styles.money, {marginTop: verticalScale(10)}]}>£ {balance}</Text>
           </View>
         </View>
 
@@ -586,15 +593,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     borderRadius: 15,
-    height: 45,
+    
     alignItems: "center",
-    padding: "2.5%",
+    padding: "5%",
+   
     marginTop: "5%",
   },
 
   money: {
     color: "#0101FD",
     fontWeight: "700",
+    fontSize: 16
   },
   carbonSpendingAnalysysBarBackground: {
     width: "100%",
