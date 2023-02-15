@@ -215,7 +215,7 @@ const Analytics = ({ navigation }) => {
             <View style={{ flex: 1, flexDirection: "row" }}>
               <View style={{
                   flex:1,
-                  marginTop: verticalScale(10),
+                  marginTop: verticalScale(5),
                   alignItems: "flex-start",
                   width: horizontalScale(75)
                 }} >
@@ -244,7 +244,7 @@ const Analytics = ({ navigation }) => {
             }}
           >
             <Text style={{fontWeight: "700"}}>Average Monthly Spendings</Text>
-            <View style={{marginTop: verticalScale(10), flex: 1, justifyContent: "flex-end"}}>
+            <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
               <Text style={styles.money}>£ {balance}</Text>
             </View>
           </View>
