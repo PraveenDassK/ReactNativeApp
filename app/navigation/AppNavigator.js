@@ -168,7 +168,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
             onLongPress={onLongPress}
             style={{ flex: 1 }}
           >
-            <Animated.Text style={{ opacity, textAlign:"center" }}>
+            <Animated.Text  style={{ opacity, textAlign:"center" }}>
               {label}
             </Animated.Text>
           </TouchableOpacity>}

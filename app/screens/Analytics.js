@@ -397,7 +397,8 @@ const Analytics = ({ navigation }) => {
         <Image 
           resizeMode="contain"
           source={require("../assets/icon-featherpiechart.png")} 
-          style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+          style={{ width: horizontalScale(25), height: verticalScale(25)}}
+        />
           <Text style={[styles.titleText,{fontSize: 24}]}>Upcoming Spendings</Text>
         </View>
 
