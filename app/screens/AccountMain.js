@@ -22,7 +22,8 @@ import {
 } from "../config/scaling";
 
 import api from "../api/api_list";
-import apiCall from "../api/api";
+import apiGetter from "../api/api";
+import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 
 import moment from "moment";
@@ -62,9 +63,6 @@ const HomeScreenPersonal = ({ navigation }) => {
   const TokenAmount = numTrees;
   const carbonAmount = numCarbon;
 
-
-
-
   //Calls the API once during load
   useFocusEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -74,74 +72,28 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   //Gets the data for the user
   const loadData = async () => {
-    const response = await api.GetAccount(authContext.accountID);
-    const data = response.data.details;
-    const response1 = await api.GetAccountByCustomer(authContext.userID);
-    const accountresponse = await api.GetAccount(authContext.accountID);
-    const data1 = response1.data;
-    const accountdata = accountresponse.data.details;
-    const response2 = await apiCall.GetCardByAccount(authContext.userID); 
-    const data2 = response2; 
-    
-    console.log(response2) 
-    console.log(response2[1].embossing.lastName)
+    const userData = await apiCall.GetCustomerDetails(authContext.accountID);
+    const cardData = await apiCall.GetCardDetails("686283112");
+    const resposeData = await apiCall.GetUserImpact("CC11875");
 
-    
-    const bool = false;
-    if(bool === true){
-      setcardnumber("*******")
-      setfirstname("*******") 
-      setlastname("*******")
-      setBalance("*******");
-    setSortCode("*******");
-    setaccountnumber("*******");
-    setaccountname("*******");
-    }
-    else{
-      setcardnumber(response2[1].maskedCardNumber)
-    setfirstname(response2[1].embossing.firstName) 
-    setlastname(response2[1].embossing.lastName) 
-    setBalance(data.availableBalance);
-    setSortCode(accountdata.identifiers[0].sortCode);
-    setaccountnumber(accountdata.identifiers[0].accountNumber);
-    setaccountname(accountdata.name);
-    }
+    setcardnumber(cardData.cardNumberMasked)
+    setSortCode("00-00-00");
 
+    setBalance(userData.balance);
+    setaccountnumber(userData.accountId);
+    setaccountname(userData.name);
 
-    //Verified calculation
-    setStatus(data.status != "ACTIVE");
-
-    //Trees
-    let resposeImpact = await apiCall.GetUserImpacts();
-    console.log(resposeImpact.details)
-    const assets = resposeImpact.details.assets;
-    let trees = 0;
-    let carbon = 0;
-    assets.forEach((element) => {
-      element.type == "TREE" ? (trees += element.count) : null;
-      carbon += element.offset;
-    });
-    let projects = [];
-    for (let i = 0; i < 4; i++) {
-      projects.push(assets[i]);
-      console.log(assets[i]);
-    }
-    setProjects(projects);
-    setTrees(trees);
-    setCarbon(Math.round(carbon));
+    setProjects(resposeData.assets);
+    setTrees(resposeData.totalAssets);
+    setCarbon(resposeData.totalOffset);
 
     //Load the data for transactions
-    const transactionCall = await api.GetTransactions(authContext.accountID);
-    const transactionData = transactionCall.data.details;
-
-    //Format the data for transactions
-    const numberOfTransactions = transactionData.totalSize;
+    const transactionCall = await apiCall.GetTransactions(authContext.accountID);
 
     let transactionList = [];
     let pageShow = [];
     for (let i = 0; i < 5; i++) {
-      let dataHold = transactionData.content[i];
-      transactionList.push(dataHold);
+      let dataHold = transactionCall.transactions[i];
       pageShow.push(
         <TouchableOpacity
           style={[styles.transactionBox, styles.rounded]}
@@ -206,18 +158,16 @@ const HomeScreenPersonal = ({ navigation }) => {
         </TouchableOpacity>
       );
     }
+    
     setTransactionData({
-      numTransaction: numberOfTransactions,
-      transactions: transactionList,
+      numTransaction: transactionCall.number,
+      transactions: transactionCall.number,
     });
 
     setTransactionTable(pageShow);
   };
 
-
-
-
-  let currency = transactionData ? transactionData.transactions[0].amount : "£";
+  let currency = "£";
 
   const catNames = ["Health", "Food", "House", "Sping", "Transport"];
   const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
@@ -403,7 +353,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               <View style={{ flex: 2.5 }}>
                 <Text>Estimated</Text>
                 <Text style={{ fontWeight: "700", paddingRight: "5%" }}>
-                  Kg of CO2
+                  Tonnes of CO2
                 </Text>
               </View>
               <View style={{ flex: 5, justifyContent: "flex-end" }}>
@@ -1003,11 +953,10 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
-    // height: verticalScale(75),
+    height: verticalScale(75),
     borderRadius: 15,
     flexDirection: "column",
-    paddingHorizontal: "2.5%",
-    paddingVertical:"8.5%",
+    padding: "2.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {
@@ -1025,7 +974,6 @@ const styles = StyleSheet.create({
   totalWalletBalanceText: {
     textAlign: "center",
     fontSize: 14,
-    marginBottom:8
   },
   totalWalletBalanceText11: {
     textAlign: "left",
