@@ -252,7 +252,10 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View style={styles.titleTextRow}>
-          <Image source={require("../assets/icon-featherpiechart.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+          <Image 
+            source={require("../assets/icon-featherpiechart.png")} 
+            resizeMode="contain"
+            style={{ width: horizontalScale(25), height: verticalScale(25)}} />
           <Text style={[styles.titleText,{fontSize: 24}]}>Spendings</Text>
         </View>
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
@@ -319,7 +322,10 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View style={styles.titleTextRow}>
-        <Image source={require("../assets/icon-withdraw.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+        <Image 
+          resizeMode="contain"
+          source={require("../assets/icon-withdraw.png")} 
+          style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
           <Text style={[styles.titleText,{fontSize: 24}]}>Recent transactions</Text>
         </View>
 
@@ -388,7 +394,10 @@ const Analytics = ({ navigation }) => {
         ))}
 
         <View style={styles.titleTextRow}>
-        <Image source={require("../assets/icon-featherpiechart.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+        <Image 
+          resizeMode="contain"
+          source={require("../assets/icon-featherpiechart.png")} 
+          style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
           <Text style={[styles.titleText,{fontSize: 24}]}>Upcoming Spendings</Text>
         </View>
 
