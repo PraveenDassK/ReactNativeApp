@@ -253,7 +253,7 @@ const Analytics = ({ navigation }) => {
 
         <View style={styles.titleTextRow}>
           <Image source={require("../assets/icon-featherpiechart.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
-          <Text style={[styles.titleText,{fontSize: 24}]}>Spending's</Text>
+          <Text style={[styles.titleText,{fontSize: 24}]}>Spendings</Text>
         </View>
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
           <Text style={styles.subtitleText}>{catNames[0]}</Text>
@@ -389,7 +389,7 @@ const Analytics = ({ navigation }) => {
 
         <View style={styles.titleTextRow}>
         <Image source={require("../assets/icon-featherpiechart.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
-          <Text style={[styles.titleText,{fontSize: 24}]}>Upcoming Spending's</Text>
+          <Text style={[styles.titleText,{fontSize: 24}]}>Upcoming Spendings</Text>
         </View>
 
         {recentTransactions.map((transaction, index) => (
