@@ -69,7 +69,7 @@ const Carbon = ({ route, navigation }) => {
   return (
     <Screen style={{ backgroundColor: "#F6F5F8" }}>
       {cart && cart.length ? (
-        <Pressable style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }} onPress={() => navigation.navigate("CarbonCart")}>
+        <Pressable style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }} onPress={() => navigation.navigate("CarbonCart", cart)}>
           <Image resizeMode="contain" style={{ width: horizontalScale(120), height: verticalScale(120) }} source={require("../assets/ShoppingIcon.png")} />
         </Pressable>
       ) : null}
