@@ -110,11 +110,10 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   return (
     <View style={{ 
       flexDirection: 'row',
-        
-      paddingTop: insets.top,
-      paddingBottom: insets.bottom,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
+      height: 65,
+      alignItems: "flex-end",
+      backgroundColor: "#F6F5F8",
+      marginBottom: "1.5%"
       }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
