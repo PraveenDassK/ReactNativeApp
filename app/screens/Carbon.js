@@ -116,7 +116,10 @@ const Carbon = ({ route, navigation }) => {
                 <Text style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</Text>
                 <Text style={styles.description}>We only profile high-quality projects that meet our minimum standards in relation to carbon + biodiversity + social benefits</Text>
               </View>
-              <Button title="VISIT YOUR CART" color="babyBlue" onPress={() => navigation.navigate("CarbonCart", cart)} />
+
+              {cart && cart.length ? (
+                      <Button title="Visit Your Cart" color="babyBlue" onPress={() => navigation.navigate("CarbonCart", cart)} />
+                    ) : <Button title="Visit Your Cart" color="babyBlue" onPress={() => alert("Your cart is empty, please add some items to your basket")} />}
 
               <Text style={[styles.textSub, { marginTop: verticalScale(50) }]}>Select your project</Text>
             </View>
