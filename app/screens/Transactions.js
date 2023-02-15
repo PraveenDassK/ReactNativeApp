@@ -33,7 +33,7 @@ const Transactions = ({navigation,route}) => {
 
     const renderRightActions = (i) => {
       return(
-        <View style={{ backgroundColor: "#ff5252", width:70,  marginTop:15, justifyContent:"center", alignItems:"center"}}>
+        <View style={{ backgroundColor: "#ff5252", width:70,  marginTop:12.5, justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
           <TouchableWithoutFeedback onPress={() => hideTransaction(i)}>
           <MaterialCommunityIcons 
           name="eye-off"
@@ -47,7 +47,8 @@ const Transactions = ({navigation,route}) => {
 
     const renderLeftActions = (i) => {
       return(
-        <View style={{ backgroundColor: "grey", width:70,  marginTop:15, justifyContent:"center", alignItems:"center"}}>
+        <View style={{ backgroundColor: "grey", width:70,  marginTop:12.5, justifyContent:"center", alignItems:"center", marginRight: "2.5%", borderRadius: 15
+        }}>
             <TouchableWithoutFeedback onPress={() => reportTransaction(i)}>
             <MaterialCommunityIcons 
             name="progress-alert"
@@ -307,7 +308,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 80,
         marginTop: 10,
-        top: 5,
+
         backgroundColor: "white",
       },
       modalText: {
