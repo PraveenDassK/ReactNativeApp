@@ -244,7 +244,9 @@ const Analytics = ({ navigation }) => {
             }}
           >
             <Text style={{fontWeight: "700"}}>Average Monthly Spendings</Text>
-            <Text style={[styles.money, {marginTop: verticalScale(10)}]}>£ {balance}</Text>
+            <View style={{marginTop: verticalScale(10), flex: 1, justifyContent: "flex-end"}}>
+              <Text style={styles.money}>£ {balance}</Text>
+            </View>
           </View>
         </View>
 
