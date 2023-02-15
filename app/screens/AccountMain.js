@@ -636,13 +636,10 @@ const HomeScreenPersonal = ({ navigation }) => {
         
         <View style={styles.NFTContainer}>
           <Text style={styles.titleText}>NFT Assets</Text>
-          <ScrollView horizontal={true} >
-          <View style={styles.NFTContainer11}>
-          <Image
-          style={styles.NFTinputIcon}
-          resizeMode="contain"
-          source={{uri:nftimg}}
-          />
+          <ScrollView style={{width: "100%", marginTop: "5%"}}>
+
+          <Image style={styles.NFTinputIcon} source={{uri:nftimg}} />
+
           <Text style={styles.NFTNameText}>
             <Text style={{fontWeight:'bold'}}>{name}</Text> 
           </Text>
@@ -650,7 +647,6 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={{fontWeight:'bold'}}>{price}</Text> 
         </Text>
     
-        </View>
           </ScrollView>
         </View>
 
@@ -1170,14 +1166,6 @@ const styles = StyleSheet.create({
   },
   NFTContainer11: {
     width: 200,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: "white",
-    height: "auto",
-    borderRadius: 15,
-    flexDirection: "column",
-    padding: 10,
-    justifyContent: "center",
   },
   NFTNameText: {
     textAlign: "center",
@@ -1194,8 +1182,9 @@ const styles = StyleSheet.create({
   },
   NFTinputIcon: {
     resizeMode: "contain",
-    height: 200,
-    marginTop: 10,
+    width: "100%",
+    height: 250,
+    borderRadius: 15
   },
 });
 
