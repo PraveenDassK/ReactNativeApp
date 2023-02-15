@@ -1003,10 +1003,11 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
-    height: verticalScale(75),
+    // height: verticalScale(75),
     borderRadius: 15,
     flexDirection: "column",
-    padding: "2.5%",
+    paddingHorizontal: "2.5%",
+    paddingVertical:"8.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {
@@ -1024,6 +1025,7 @@ const styles = StyleSheet.create({
   totalWalletBalanceText: {
     textAlign: "center",
     fontSize: 14,
+    marginBottom:8
   },
   totalWalletBalanceText11: {
     textAlign: "left",
