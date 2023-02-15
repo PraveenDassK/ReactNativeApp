@@ -24,6 +24,7 @@ import AuthContext from "../auth/context";
 import moment from "moment";
 import Screen from "../components/Screen";
 import { NONE } from "apisauce";
+// import Time from '../assets/icon-featherpiechart@3x.png'
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 
 const Analytics = ({ navigation }) => {
@@ -165,7 +166,7 @@ const Analytics = ({ navigation }) => {
 
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>Analysis</Text>
+          <Text style={[styles.titleText, ]}>Analysis</Text>
         </View>
 
         <View style={styles.balanceContainer}>
@@ -251,7 +252,8 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>Spending's</Text>
+          <Image source={require("../assets/icon-featherpiechart.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+          <Text style={[styles.titleText,{fontSize: 24}]}>Spendings</Text>
         </View>
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
           <Text style={styles.subtitleText}>{catNames[0]}</Text>
@@ -317,7 +319,8 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>Recent transactions</Text>
+        <Image source={require("../assets/icon-withdraw.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+          <Text style={[styles.titleText,{fontSize: 24}]}>Recent transactions</Text>
         </View>
 
         {recentTransactions.map((transaction, index) => (
@@ -385,7 +388,8 @@ const Analytics = ({ navigation }) => {
         ))}
 
         <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>Upcoming Spending's</Text>
+        <Image source={require("../assets/icon-featherpiechart.png")} style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+          <Text style={[styles.titleText,{fontSize: 24}]}>Upcoming Spendings</Text>
         </View>
 
         {recentTransactions.map((transaction, index) => (
@@ -567,14 +571,19 @@ const styles = StyleSheet.create({
   },
 
   titleTextRow: {
+    flexDirection: "row",
     marginTop: GlobalStyles.Title.marginTop,
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
+    alignItems: "center",
+
   },
 
   titleText: {
+
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
+    marginLeft: horizontalScale(10)
   },
 
   subText: {
