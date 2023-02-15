@@ -76,6 +76,8 @@ import CarbonCart from "../screens/CarbonCart"
 import CarbonProject from "../screens/CarbonProject"
 import VirtualEcoSystem from "../screens/VirtualEcoSystem"
 import ChooseCardsStandard5 from "../screens/ChooseCardsStandard5"
+import PinCart from "../screens/PinCart"
+
 
 /**
  * @notice Screens on the settings page to navigate to
@@ -259,6 +261,15 @@ const StackNavigator = () => {
        
         }}
       />
+
+      <Stack.Screen
+              name="PinCart"
+              component={gestureHandlerRootHOC(PinCart)}
+              options={{
+                title: "PinCart",
+
+              }}
+            />
       <Stack.Screen 
         name="FUP" 
         component={gestureHandlerRootHOC(FUP)}
