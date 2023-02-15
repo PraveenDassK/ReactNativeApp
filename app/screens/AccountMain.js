@@ -9,10 +9,6 @@ import {
   ScrollView,
   
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-
-
-import Screen from "../components/Screen";
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -21,8 +17,7 @@ import {
   moderateScale,
 } from "../config/scaling";
 
-import api from "../api/api_list";
-import apiGetter from "../api/api";
+import apiweb3 from "../api/web3_api";
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 
@@ -40,35 +35,31 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [sortCode, setSortCode] = useState(null);
   const [accountname, setaccountname] = useState(null);
   const [cardnumber, setcardnumber] = useState(null);
-  const [firstname, setfirstname] = useState(null);
-  const [lastname, setlastname] = useState(null);
   const authContext = useContext(AuthContext);
   const { settings } = useContext(AuthContext);
-
-  const [transactionData, setTransactionData] = useState(null);
 
   const todaydate = moment().format("ll");
 
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
-  const [numCarbonType, setCarbonType] = useState(0);
   const [animalsSaved, setAnimalsSaved] = useState(0);
   const [projects, setProjects] = useState([]);
 
-  const [bool, setbool] = useState();
-
   const [refreshing, setRefreshing] = useState(false);
+
+  const [name, setName] = useState(null)
+  const [description, setDescription] = useState(null)
+  const [price, setPrice] = useState(null)
+  const [nftimg, setNftimg] = useState(null)
   
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
   const carbonAmount = numCarbon;
 
   //Calls the API once during load
-  useFocusEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      loadData();
-    });
-  });
+  useEffect(() => {
+    loadData();
+  }, []);
 
   //Gets the data for the user
   const loadData = async () => {
@@ -78,6 +69,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
     setcardnumber(cardData.cardNumberMasked)
     setSortCode("00-00-00");
+    setStatus(cardData.inPost)
 
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
@@ -86,6 +78,14 @@ const HomeScreenPersonal = ({ navigation }) => {
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
+
+    ////FUP Data
+    const NFTresponse = await apiweb3.GetBalance()
+    setName(NFTresponse.data.data.nftData[0].data.name)
+    setDescription(NFTresponse.data.data.nftData[0].data.description)
+    setPrice(NFTresponse.data.data.nftData[0].data.price)
+    setNftimg(NFTresponse.data.data.nftData[0].data.url)
+
 
     //Load the data for transactions
     const transactionCall = await apiCall.GetTransactions(authContext.accountID);
@@ -158,17 +158,11 @@ const HomeScreenPersonal = ({ navigation }) => {
         </TouchableOpacity>
       );
     }
-    
-    setTransactionData({
-      numTransaction: transactionCall.number,
-      transactions: transactionCall.number,
-    });
 
     setTransactionTable(pageShow);
   };
 
   let currency = "£";
-
   const catNames = ["Health", "Food", "House", "Sping", "Transport"];
   const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
 
@@ -179,10 +173,8 @@ const HomeScreenPersonal = ({ navigation }) => {
    *      Recent transactios
    */
   const onRefresh = useCallback(() => {
-    console.log("1st refresh")
     setRefreshing(true);
     setTimeout(() => {
-      console.log("2nd refresh")
       loadData()
       setRefreshing(false);
     }, 2000);
@@ -230,10 +222,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               Card Number: {cardnumber}
             </Text>
             <Text style={styles.dateText13}>
-              First Name: {firstname}
-            </Text>
-            <Text style={styles.dateText14}>
-              Last Name: {lastname}
+              Card in post: {status}
             </Text>
           </View>
 
@@ -267,7 +256,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               </View>
             ) : (
               <Text style={[styles.BalanceText, styles.blueTitle]}>
-                £{balance}
+                <Text style={{color: "grey"}}>£</Text>{balance}
               </Text>
             )}
             <Text style={styles.dateText}>{todaydate}</Text>
@@ -644,6 +633,26 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={styles.titleText}>Recent Transactions</Text>
         </View>
         <View style={styles.transactionsContainer}>{transactionTable}</View>
+        
+        <View style={styles.NFTContainer}>
+          <Text style={styles.titleText}>NFT Assets</Text>
+          <ScrollView horizontal={true} >
+          <View style={styles.NFTContainer11}>
+          <Image
+          style={styles.NFTinputIcon}
+          resizeMode="contain"
+          source={{uri:nftimg}}
+          />
+          <Text style={styles.NFTNameText}>
+            <Text style={{fontWeight:'bold'}}>{name}</Text> 
+          </Text>
+          <Text style={styles.NFTPriceText}>
+          <Text style={{fontWeight:'bold'}}>{price}</Text> 
+        </Text>
+    
+        </View>
+          </ScrollView>
+        </View>
 
         <View style={[styles.carbonContainer, styles.rounded]}>
           <View style={styles.treeContainer}>
@@ -953,14 +962,14 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
-    height: verticalScale(75),
     borderRadius: 15,
     flexDirection: "column",
-    padding: "2.5%",
+    paddingHorizontal: "2.5%",
+    paddingVertical:"5.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {
-    marginTop: "2.5%",
+    marginTop: "3.5%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
@@ -974,6 +983,8 @@ const styles = StyleSheet.create({
   totalWalletBalanceText: {
     textAlign: "center",
     fontSize: 14,
+    marginBottom:8,
+    fontWeight: "500"
   },
   totalWalletBalanceText11: {
     textAlign: "left",
@@ -993,6 +1004,7 @@ const styles = StyleSheet.create({
   dateText: {
     textAlign: "center",
     fontSize: 14,
+    fontWeight: "500"
   },
   dateText11: {
     textAlign: "left",
@@ -1025,15 +1037,19 @@ const styles = StyleSheet.create({
   inputBox: {
     backgroundColor: "white",
     width: "23.5%",
-    height: 60,
+    
     flexDirection: "row",
     borderRadius: 10,
+    paddingBottom: verticalScale(18),
+    paddingTop: verticalScale(25)
+
   },
 
   inputBoxDiv: {
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    
   },
 
   inputIcon: {
@@ -1043,8 +1059,10 @@ const styles = StyleSheet.create({
   },
 
   inputBoxText: {
+    marginTop: "5.5%",
     fontSize: 10,
     textAlign: "center",
+    fontWeight: "500"
   },
 
   carbonSpendingDiv: {},
@@ -1138,6 +1156,46 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlignVertical: "center",
     alignContent: "center",
+  },
+  NFTContainer: {
+    width: "90%",
+    marginLeft: "5%",
+    marginRight: 10,
+    backgroundColor: "#FFFFFF",
+    height: "auto",
+    borderRadius: 15,
+    flexDirection: "column",
+    padding: 20,
+    justifyContent: "center",
+  },
+  NFTContainer11: {
+    width: 200,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: "white",
+    height: "auto",
+    borderRadius: 15,
+    flexDirection: "column",
+    padding: 10,
+    justifyContent: "center",
+  },
+  NFTNameText: {
+    textAlign: "center",
+    fontSize: 14,
+  },
+  NFTDescriptionText: {
+    fontSize: 14,
+    textAlign: "center",
+    lineHeight: 30,
+  },
+  NFTPriceText: {
+    textAlign: "center",
+    fontSize: 14,
+  },
+  NFTinputIcon: {
+    resizeMode: "contain",
+    height: 200,
+    marginTop: 10,
   },
 });
 

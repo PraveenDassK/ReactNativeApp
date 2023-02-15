@@ -237,13 +237,13 @@ const StackNavigator = () => {
 
 
         <Stack.Screen
-                      name="Faq"
-                      component={gestureHandlerRootHOC(Faq)}
-                      options={{
-                        title: "Faq",
+          name="Faq"
+          component={gestureHandlerRootHOC(Faq)}
+          options={{
+            title: "Faq",
 
-                      }}
-                    />
+          }}
+        />
       <Stack.Screen 
         name="SendMoney" 
         component={gestureHandlerRootHOC(SendMoney)}
