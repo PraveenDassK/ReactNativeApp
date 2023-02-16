@@ -166,10 +166,9 @@ const GetStatments = async(Id) => {
 }
 
 const GetTransactionsYear = async (Id) => {
-    const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM:SS")).replace(/\:/g,"%3A") + "%2B0000"
+    const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
     const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?fromTransactionDate=" + then)
     const requestData = request.data.details
-
     let total = 0
     let data = new Array(10).fill(0);
     requestData.content.forEach(element => {
@@ -185,11 +184,38 @@ const GetTransactionsYear = async (Id) => {
     }
 }
 
+/**Subcriptions */
+const GetSubscriptions = async() =>{
+    const request = await client.get(`https://api.carbonyte.io/submodule/Subcription/ListSubcriptions`)
+    const requestData = request.data.details
+    let returnData = []
+    requestData.forEach(card => {
+        let description = card.subcriptionFeatureList[0].benefits
+        .split(
+            "Free 0/0 after that0/0@\n"
+        )
+
+        returnData.push({
+            title: card.name.substring(
+                0,
+                card.name.lastIndexOf("(") - 1
+            ),
+            price: card.name.substring(
+                card.name.indexOf("(") + 1, 
+                card.name.lastIndexOf(")")
+            ),
+            description: description
+        })
+    })
+    console.log(returnData)
+    return requestData
+}
+
 /**Beneficiaries */
 const GetGroupBeneficiarys = (Id) => {
     const request = client.get("https://api.carbonyte.io/walletmodule/Wallet/RetrieveBeneficiaries?customerId=C1220XHD")
-    const returnData = request.data.details
-    return returnData
+    const requestData = request.data.details
+    return requestData
 }
 
 /**Posters */
@@ -228,7 +254,6 @@ const ReportTransaction = (Id) => {
 }
 
 
-
 export default {
     GetBalance,
     GetCustomerDetails,
@@ -243,5 +268,7 @@ export default {
     GetGroupBeneficiarys,
     GetStatments,
     StatmentPost,
-    GetAnalysisData
+    GetAnalysisData,
+    GetTransactionsYear,
+    GetSubscriptions
 }

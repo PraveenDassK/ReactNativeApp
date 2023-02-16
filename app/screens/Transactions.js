@@ -181,39 +181,6 @@ const Transactions = ({navigation,route}) => {
     }, [refreshing]);
 
 
-    // const showData = () => (
-    
-    //     transactionData.map((transaction,i) => (
-    //       <Swipeable 
-    //       renderLeftActions={()=> renderLeftActions(i)}
-    //       renderRightActions={() =>renderRightActions(i)}>
-    //       <Pressable
-    //         style={[styles.transactionBox, styles.rounded]}
-    //         key={i}
-    //         onPress={() => showTransaction(i)}>
-    //         <View style={{height: "100%", flexDirection: "row",}}>
-    //         <View style={{justifyContent: "center", alignItems: "center",width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-    //         <Text style={{ fontWeight: "700"}}>{initials}</Text>
-    //         </View>
-    //         <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-    //             <Text style={{fontSize :14, fontWeight: "700"}}>
-    //               {transaction.account.customerName}
-    //             </Text>
-    //             <Text style={{}}>
-    //              {moment(transaction.transactionDate).format("MMM Do YY")}
-    //             </Text>
-    //         </View>
-    //         <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
-    //         <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
-    //                     £{transaction.amount}
-    //         </Text>
-    //         </View>
-    //         </View>
-    //       </Pressable>
-    //       </Swipeable>
-    //     ))
-    // )
-    console.log('datadata', transactionData)
   
     return (
       <View style={{flex:1, backgroundColor: GlobalStyles.DivContainer.backgroundColor}} >
@@ -226,9 +193,7 @@ const Transactions = ({navigation,route}) => {
             /> */}
         <View style={styles.page}>
           
-            {/* <Text style={styles.hello}>
-                Transactions 
-            </Text> */}
+
 
             
             
