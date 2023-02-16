@@ -167,20 +167,73 @@ const GetStatments = async(Id) => {
 
 const GetTransactionsYear = async (Id) => {
     const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
-    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?fromTransactionDate=" + then)
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=500&fromTransactionDate=" + then)
     const requestData = request.data.details
     let total = 0
     let data = new Array(10).fill(0);
     requestData.content.forEach(element => {
         total += element.amount
-        let category = moment().diff(element.postedDate, 'Years')
+        let category = moment().diff(element.transactionDate, 'Years')
+        console.log(category)
+        console.log(element.transactionDate)
         data[category] += element.amount
     });
-    const labels = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
+    let xAxis = []
+    for (let i = 0; i<10;i++){
+        xAxis.push(moment().subtract(i,'M').format('MMM'))
+    }
     return {
         "total": total,
-        "yAxis": data,
-        "xAxis": labels
+        "yAxis": data.reverse(),
+        "xAxis": xAxis.reverse()
+    }
+}
+
+const GetTransactionsMonth = async (Id) => {
+    const then = (moment().subtract(4,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=500&fromTransactionDate=" + then)
+    const requestData = request.data.details
+    let total = 0
+    let data = new Array(4).fill(0);
+    requestData.content.forEach(element => {
+        total += element.amount
+        let category = moment().diff(element.transactionDate, 'weeks')
+        console.log(category)
+        console.log(element.transactionDate)
+        data[category] += element.amount
+    });
+    let xAxis = []
+    for (let i = 0; i<4;i++){
+        xAxis.push(moment().subtract(i,'w').format('Do'))
+    }
+    return {
+        "total": total,
+        "yAxis": data.reverse(),
+        "xAxis": xAxis.reverse()
+    }
+}
+
+const GetTransactionsWeek = async (Id) => {
+    const then = (moment().subtract(1,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=500&fromTransactionDate=" + then)
+    const requestData = request.data.details
+    let total = 0
+    let data = new Array(7).fill(0);
+    requestData.content.forEach(element => {
+        total += element.amount
+        let category = moment().diff(element.transactionDate, 'days')
+        console.log(category)
+        console.log(element.transactionDate)
+        data[category] += element.amount
+    });
+    let xAxis = []
+    for (let i = 0; i<7;i++){
+        xAxis.push(moment().subtract(i,'d').format('ddd'))
+    }
+    return {
+        "total": total,
+        "yAxis": data.reverse(),
+        "xAxis": xAxis.reverse()
     }
 }
 
@@ -270,5 +323,7 @@ export default {
     StatmentPost,
     GetAnalysisData,
     GetTransactionsYear,
+    GetTransactionsMonth,
+    GetTransactionsWeek,
     GetSubscriptions
 }
