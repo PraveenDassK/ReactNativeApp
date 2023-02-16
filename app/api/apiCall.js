@@ -166,8 +166,10 @@ const GetStatments = async(Id) => {
 }
 
 const GetTransactionsYear = async (Id) => {
-    const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM:SS")).replace(/\:/g,"%3A") + "%2B0000"
+    const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
     const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?fromTransactionDate=" + then)
+    console.log('apiRequest',request.data)
+    
     const requestData = request.data.details
 
     let total = 0
@@ -177,7 +179,7 @@ const GetTransactionsYear = async (Id) => {
         let category = moment().diff(element.postedDate, 'Years')
         data[category] += element.amount
     });
-    const labels = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
+    const labels = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct", ]
     return {
         "total": total,
         "yAxis": data,
@@ -243,5 +245,6 @@ export default {
     GetGroupBeneficiarys,
     GetStatments,
     StatmentPost,
-    GetAnalysisData
+    GetAnalysisData,
+    GetTransactionsYear
 }

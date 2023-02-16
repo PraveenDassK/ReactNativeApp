@@ -29,9 +29,10 @@ const Analytics = ({ navigation }) => {
   const [transactions, setTrans] = useState([]);
   const [totalSpend, setTotal] = useState(0);
   const [totalTransactions, setTotalTrans] = useState(0);
-  const [priceData, setPriceData] = useState([]);
-  const [dates, setDates] = useState([]);
-  const [dataObj, setDataObj] = useState([]);
+  const [graphData, setGraphData] = useState(null)
+ 
+ 
+
   const [monthAverage, setMonthAverage] = useState(0);
   const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
   const dataPercentages = ["70%", "50%", "40%", "30%"];
@@ -61,6 +62,8 @@ const Analytics = ({ navigation }) => {
 
 
     const graphData = await apiCall.GetTransactionsYear(authContext.accountID);
+    setGraphData(graphData)
+    
 
   };
 
@@ -208,7 +211,7 @@ const Analytics = ({ navigation }) => {
           >
             <Text style={{fontWeight: "700"}}>Average Monthly Spendings</Text>
             <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
-              <Text style={styles.money}>£ {balance}</Text>
+              <Text style={styles.money}>£ {monthAverage.toFixed(2)}</Text>
             </View>
           </View>
         </View>
@@ -273,14 +276,13 @@ const Analytics = ({ navigation }) => {
             </View>
           </View>
 
-          {priceData.length !== 0 ? (
+         { graphData && (
             <Bazier
-              priceData={priceData}
-              transDate={dates}
-              transObj={dataObj}
+              graphData={graphData}
               style={{ backgroundColor: "red" }}
             />
-          ) : null}
+          )}
+         
         </View>
 
         <View style={styles.titleTextRow}>
@@ -433,7 +435,7 @@ const Analytics = ({ navigation }) => {
   );
 };
 
-const Bazier = ({ priceData, transDate, transObj }) => {
+const Bazier = ({ graphData }) => {
   let [tooltipPos, setTooltipPos] = useState({
     x: 0,
     y: 0,
@@ -441,7 +443,9 @@ const Bazier = ({ priceData, transDate, transObj }) => {
     value: 0,
   });
 
-  console.log("finished", transObj);
+  const { total, xAxis, yAxis } = graphData
+
+  console.log("finished", total, xAxis, yAxis );
 
   return (
     <View
@@ -454,8 +458,8 @@ const Bazier = ({ priceData, transDate, transObj }) => {
 
       <LineChart
         data={{
-          labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"],
-          datasets: [{ data: [0, 0, 0, 0, ...transObj] }],
+          labels: xAxis,
+          datasets: [{ data: yAxis }],
         }}
         width={Dimensions.get("window").width * 0.8125} // from react-native
         height={220}
@@ -504,7 +508,7 @@ const Bazier = ({ priceData, transDate, transObj }) => {
                   fontWeight="bold"
                   textAnchor="middle"
                 >
-                  {`£ ${tooltipPos.value}`}
+                  {`£ ${tooltipPos.value.toFixed(2)}`}
                 </TextSVG>
               </Svg>
             </View>
