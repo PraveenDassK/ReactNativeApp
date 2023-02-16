@@ -168,10 +168,7 @@ const GetStatments = async(Id) => {
 const GetTransactionsYear = async (Id) => {
     const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
     const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?fromTransactionDate=" + then)
-    console.log('apiRequest',request.data)
-    
     const requestData = request.data.details
-
     let total = 0
     let data = new Array(10).fill(0);
     requestData.content.forEach(element => {
@@ -179,12 +176,19 @@ const GetTransactionsYear = async (Id) => {
         let category = moment().diff(element.postedDate, 'Years')
         data[category] += element.amount
     });
-    const labels = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct", ]
+    const labels = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
     return {
         "total": total,
         "yAxis": data,
         "xAxis": labels
     }
+}
+
+/**Subcriptions */
+const GetSubscriptions = async() =>{
+    const request = await client.get(`https://api.carbonyte.io/submodule/Subcription/ListSubcriptions`)
+    const requestData = request.data.details
+    return returnData
 }
 
 /**Beneficiaries */
@@ -230,7 +234,6 @@ const ReportTransaction = (Id) => {
 }
 
 
-
 export default {
     GetBalance,
     GetCustomerDetails,
@@ -246,5 +249,6 @@ export default {
     GetStatments,
     StatmentPost,
     GetAnalysisData,
-    GetTransactionsYear
+    GetTransactionsYear,
+    GetSubscriptions
 }
