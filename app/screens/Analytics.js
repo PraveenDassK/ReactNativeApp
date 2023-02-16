@@ -19,12 +19,9 @@ import {
   verticalScale,
 } from "../config/metrics";
 
-import api from "../api/api_list";
+import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 import moment from "moment";
-import Screen from "../components/Screen";
-import { NONE } from "apisauce";
-
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 
 const Analytics = ({ navigation }) => {
@@ -35,66 +32,37 @@ const Analytics = ({ navigation }) => {
   const [priceData, setPriceData] = useState([]);
   const [dates, setDates] = useState([]);
   const [dataObj, setDataObj] = useState([]);
+  const [monthAverage, setMonthAverage] = useState(0);
   const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
   const dataPercentages = ["70%", "50%", "40%", "30%"];
 
   const [recentTransactions, setRecent] = useState([]);
-  const [transactionCategories, setCat] = useState();
 
-    const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
     loadData();
   }, []);
-
-  useEffect(() => {
-    if (recentTransactions.length !== 0) {
-      const data = transactionData(recentTransactions);
-      const dates = transactionDate(recentTransactions);
-      const transData = transactionObj(recentTransactions).map((data) => {
-        return data.amount;
-      });
-      console.log("why", data, dates);
-      console.log("herreeee");
-      setPriceData(data);
-      setDates(dates);
-      setDataObj(transData);
-    }
-  }, [recentTransactions]);
-
+ 
   const loadData = async () => {
-    const response = await api.GetAccount(authContext.accountID);
-    const data = response.data.details.balance;
-    setBal(data);
-
-    const transactionCall = await api.GetTransactions(authContext.accountID);
-    const transData = transactionCall.data.details;
-    let total = 0;
-    let transCat = {};
-
-    transData.content.forEach((transaction) => {
-      total += transaction.amount;
-      transCat[transaction.type] = transCat[transaction.type]
-        ? transCat[transaction.type] + transaction.amount
-        : transaction.amount;
-    });
-
-    setTotalTrans(transData.totalSize);
-    setTotal(total);
+    const dataCall = await apiCall.GetAnalysisData(authContext.accountID);
+    setTotalTrans(dataCall.totalTransactions);
+    setTotal(dataCall.totalSpend);
     setRecent([
-      transData.content[1],
-      transData.content[1],
-      transData.content[2],
+      dataCall.transactions[0],
+      dataCall.transactions[1],
+      dataCall.transactions[2],
     ]);
-    setCat(transCat);
-    setTrans(transData);
+    setTrans(dataCall.transactions);
+    setBal(dataCall.balance);
+    setMonthAverage(dataCall.average)
 
-    const acc = await api.GetAccount(authContext.accountID);
-    const det = acc.data.details.associates;
+
+    const graphData = await apiCall.GetTransactionsYear(authContext.accountID);
+
   };
-  console.log(transactionCategories);
 
   const transcationKeys = (trans) => {
     return (transKeys = Object.keys(trans));
@@ -140,12 +108,6 @@ const Analytics = ({ navigation }) => {
     return result;
   };
 
-  console.log(transactionCategories);
-  console.log(
-    "here",
-    recentTransactions,
-    recentTransactions[0]?.transactionDate?.split("T")[0]
-  );
 
     const onRefresh = useCallback(() => {
     console.log("1st refresh")
