@@ -164,7 +164,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   let currency = "£";
   const catNames = ["Health", "Food", "House", "Sping", "Transport"];
-  const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
+  const dataPercentages = ["700%", "50%", "40%", "30%", "20%"];
 
   /**
    * @dev Data needed for this page
@@ -784,6 +784,7 @@ const styles = StyleSheet.create({
 
   carbonSpendingAnalysysBarProgress: {
     height: "100%",
+    maxWidth: "100%",
     backgroundColor: "orange",
   },
 
