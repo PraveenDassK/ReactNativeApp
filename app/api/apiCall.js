@@ -188,14 +188,34 @@ const GetTransactionsYear = async (Id) => {
 const GetSubscriptions = async() =>{
     const request = await client.get(`https://api.carbonyte.io/submodule/Subcription/ListSubcriptions`)
     const requestData = request.data.details
-    return returnData
+    let returnData = []
+    requestData.forEach(card => {
+        let description = card.subcriptionFeatureList[0].benefits
+        .split(
+            "Free 0/0 after that0/0@\n"
+        )
+
+        returnData.push({
+            title: card.name.substring(
+                0,
+                card.name.lastIndexOf("(") - 1
+            ),
+            price: card.name.substring(
+                card.name.indexOf("(") + 1, 
+                card.name.lastIndexOf(")")
+            ),
+            description: description
+        })
+    })
+    console.log(returnData)
+    return requestData
 }
 
 /**Beneficiaries */
 const GetGroupBeneficiarys = (Id) => {
     const request = client.get("https://api.carbonyte.io/walletmodule/Wallet/RetrieveBeneficiaries?customerId=C1220XHD")
-    const returnData = request.data.details
-    return returnData
+    const requestData = request.data.details
+    return requestData
 }
 
 /**Posters */
