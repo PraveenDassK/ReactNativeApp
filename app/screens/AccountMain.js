@@ -324,6 +324,11 @@ const HomeScreenPersonal = ({ navigation }) => {
         </View>
 
         <View style={styles.carbonSpendingTitleDiv}>
+        <Image 
+          resizeMode="contain"
+          source={require("../assets/group-31984.png")} 
+          style={{ width: horizontalScale(25), height: verticalScale(25)}}
+        />
           <Text style={styles.titleText}>Carbon Spending</Text>
         </View>
 
@@ -450,7 +455,12 @@ const HomeScreenPersonal = ({ navigation }) => {
             </View>
           </View>
 
-          <View style={{ marginTop: verticalScale(25), marginLeft: "10%" }}>
+          <View style={[styles.carbonSpendingTitleDiv, {marginTop: verticalScale(25)}]}>
+          <Image 
+          resizeMode="contain"
+          source={require("../assets/group-31984.png")} 
+          style={{ width: horizontalScale(25), height: verticalScale(25)}}
+        />
             <Text style={styles.titleText}>Carbon Assets </Text>
           </View>
           <View style={[styles.carbonAssetsDiv]}>
@@ -630,6 +640,11 @@ const HomeScreenPersonal = ({ navigation }) => {
          */}
 
         <View style={styles.carbonSpendingTitleDiv}>
+        <Image 
+          resizeMode="contain"
+          source={require("../assets/icon-withdraw.png")} 
+          style={{ width: horizontalScale(25), height: verticalScale(25)}}
+        />
           <Text style={styles.titleText}>Recent Transactions</Text>
         </View>
         <View style={styles.transactionsContainer}>{transactionTable}</View>
