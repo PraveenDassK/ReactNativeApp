@@ -12,7 +12,6 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
 import { LineChart } from "react-native-chart-kit";
-
 import {
   horizontalScale,
   moderateScale,
@@ -36,7 +35,7 @@ const Analytics = ({ navigation }) => {
   const [dates, setDates] = useState([]);
   const [dataObj, setDataObj] = useState([]);
   const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
-  const dataPercentages = ["70%", "50%", "40%", "30%"];
+  const dataPercentages = ["75%", "50%", "40%", "30%"];
 
   const [recentTransactions, setRecent] = useState([]);
   const [transactionCategories, setCat] = useState();
@@ -637,6 +636,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "orange",
     borderRadius: 15,
+    maxWidth: "100%"
   },
   carbonSpendingAnalysysDiv: {
     width: "90%",
