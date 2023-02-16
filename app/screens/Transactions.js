@@ -1,21 +1,32 @@
-import React,{ useEffect, useState,useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
+import React,{ useEffect, useState,useContext, useCallback } from "react";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { Swipeable, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { FlatList, Swipeable, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { MaterialCommunityIcons} from '@expo/vector-icons'
+
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../config/metrics";
 
 import moment from "moment";
 import api from "../api/api_list"
 import apiCall from "../api/api"
 import AuthContext from "../auth/context";
 import { hide } from "expo-splash-screen";
+import Animated from "react-native-reanimated";
 
+const ITEM_SIZE = 50 + 15 * 3
 const Transactions = ({navigation,route}) => {
     const [balanceData, setBalance] = useState(0)
     const [transactionData, setTransactionData] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const [modalId, setModalId] = useState(false);
     const [initials, setInitals] = useState(null)
+    const [refreshing, setRefreshing] = useState(false);
+
+    const scrollY = React.useRef(new Animated.Value(0)).current;
 
     const authContext = useContext(AuthContext)
     const { settings } = useContext(AuthContext);
@@ -33,7 +44,7 @@ const Transactions = ({navigation,route}) => {
 
     const renderRightActions = (i) => {
       return(
-        <View style={{ backgroundColor: "#ff5252", width:70,  marginTop:12.5, justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
+        <View style={{ backgroundColor: "#ff5252", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
           <TouchableWithoutFeedback onPress={() => hideTransaction(i)}>
           <MaterialCommunityIcons 
           name="eye-off"
@@ -47,8 +58,7 @@ const Transactions = ({navigation,route}) => {
 
     const renderLeftActions = (i) => {
       return(
-        <View style={{ backgroundColor: "grey", width:70,  marginTop:12.5, justifyContent:"center", alignItems:"center", marginRight: "2.5%", borderRadius: 15
-        }}>
+        <View style={{ backgroundColor: "grey", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
             <TouchableWithoutFeedback onPress={() => reportTransaction(i)}>
             <MaterialCommunityIcons 
             name="progress-alert"
@@ -147,9 +157,10 @@ const Transactions = ({navigation,route}) => {
                 : null}
 
                 <Pressable
-                  style={[styles.button, styles.buttonClose]}
+                  style={[styles.button, styles.buttonClose, {marginTop: 10}]}
                   backgroundColor = "red"
                   onPress={() => setModalVisible(!modalVisible)}>
+
                   <Text style={styles.textStyle}>Dismiss</Text>
                 </Pressable>
                 
@@ -161,59 +172,135 @@ const Transactions = ({navigation,route}) => {
           )
     }
 
+    const onRefresh = useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        loadData()
+        setRefreshing(false);
+      }, 2000);
+    }, [refreshing]);
 
-    const showData = () => {
-      let list = []
-        transactionData.forEach((transaction,i) => {
-          list.push(
-              <Swipeable 
-              renderLeftActions={()=> renderLeftActions(i)}
-              renderRightActions={() =>renderRightActions(i)}>
-              <Pressable
-                        style={[styles.transactionBox, styles.rounded]}
-                        key={i}
-                        onPress={() => showTransaction(i)}>
-                        <View style={{height: "100%", flexDirection: "row",}}>
-                        <View style={{justifyContent: "center", alignItems: "center",width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
-                        <Text style={{ fontWeight: "700"}}>{initials}</Text>
-                        </View>
-                        <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
-                            <Text style={{fontSize :14, fontWeight: "700"}}>
-                              {transaction.account.customerName}
-                            </Text>
-                            <Text style={{}}>
-                    {moment(transaction.transactionDate).format("MMM Do YY")}
-                            </Text>
-                        </View>
-                        <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
-                        <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
-                                    £{transaction.amount}
-                        </Text>
-                        </View>
-                       </View>
-                      </Pressable>
-                      </Swipeable>
-                
-            )
-        })
-        transactionList = list
-        return list
-    }
-    showData()
+
+    // const showData = () => (
+    
+    //     transactionData.map((transaction,i) => (
+    //       <Swipeable 
+    //       renderLeftActions={()=> renderLeftActions(i)}
+    //       renderRightActions={() =>renderRightActions(i)}>
+    //       <Pressable
+    //         style={[styles.transactionBox, styles.rounded]}
+    //         key={i}
+    //         onPress={() => showTransaction(i)}>
+    //         <View style={{height: "100%", flexDirection: "row",}}>
+    //         <View style={{justifyContent: "center", alignItems: "center",width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+    //         <Text style={{ fontWeight: "700"}}>{initials}</Text>
+    //         </View>
+    //         <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+    //             <Text style={{fontSize :14, fontWeight: "700"}}>
+    //               {transaction.account.customerName}
+    //             </Text>
+    //             <Text style={{}}>
+    //              {moment(transaction.transactionDate).format("MMM Do YY")}
+    //             </Text>
+    //         </View>
+    //         <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
+    //         <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
+    //                     £{transaction.amount}
+    //         </Text>
+    //         </View>
+    //         </View>
+    //       </Pressable>
+    //       </Swipeable>
+    //     ))
+    // )
+    console.log('datadata', transactionData)
+  
     return (
+      <View style={{flex:1, backgroundColor: GlobalStyles.DivContainer.backgroundColor}} >
+    {/* <Image 
+            style={StyleSheet.absoluteFillObject}
+            source={require("../assets/group-2951.png")}
+            blurRadius={80}
+            resizeMode="stretch"
+            
+            /> */}
         <View style={styles.page}>
-            <Text style={styles.hello}>
+          
+            {/* <Text style={styles.hello}>
                 Transactions 
-            </Text>
+            </Text> */}
+
             
             
-            <ScrollView style={{height: "90%"}}
-            showsVerticalScrollIndicator={false}>
+            <Animated.FlatList 
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            data={transactionData}
+            onScroll={Animated.event(
+              [{ nativeEvent: {contentOffset: {y: scrollY}}}],
+              {useNativeDriver: true }
+            )}
+            keyExtractor={item => item.account.sourceId}
+            renderItem={({item, index}) => {
+              console.log("is",index)
+              const inputRange = [
+                -1,
+                0,
+                ITEM_SIZE * index,
+                ITEM_SIZE * ( index + 2)
+              ]
+
+              const scale = scrollY.interpolate({
+                inputRange,
+                outputRange: [1, 1, 1, 0]
+              })
+             return <Animated.View key={index}
+             style={{transform: [{scale}]}}>
+             <Swipeable 
+                renderLeftActions={()=> renderLeftActions(index)}
+                renderRightActions={() =>renderRightActions(index)}>
+                <Pressable
+                  style={[styles.transactionBox, styles.rounded]}
+                  
+                  onPress={() => showTransaction(index)}>
+                  <View style={{height: "100%", flexDirection: "row",}}>
+                  <View style={{justifyContent: "center", alignItems: "center",width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", alignSelf: "center", marginLeft: "2.5%"}}>
+                  <Text style={{ fontWeight: "700"}}>{initials}</Text>
+                  </View>
+                  <View style={{flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%"}}>
+                      <Text style={{fontSize :14, fontWeight: "700"}}>
+                        {item.account.customerName}
+                      </Text>
+                      <Text style={{}}>
+                      {moment(item.transactionDate).format("MMM Do YY")}
+                      </Text>
+                  </View>
+                  <View style={{flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%"}}>
+                  <Text style={{marginRight: "2.5%", fontWeight: "700"}}>
+                              £{item.amount.toFixed(2)}
+                  </Text>
+                  </View>
+                  </View>
+                </Pressable>
+          </Swipeable>
+          </Animated.View>
+            }}
+
+            />
+            {/* <ScrollView 
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
+                style={{height: "90%"}}
+                showsVerticalScrollIndicator={false}
+              >
               
-                {transactionList}
-                {modalVisible ? modal() : null}
-            </ScrollView>
-            
+                {showData()}
+                
+            </ScrollView> */}
+            {modalVisible ? modal() : null}
+        </View>
         </View>
         
     )
@@ -222,8 +309,8 @@ const Transactions = ({navigation,route}) => {
 
 const styles = StyleSheet.create({
     page:{
-        width:"80%",
-        left:"10%",
+       flex:1,
+        marginHorizontal: "5%",
         marginTop:"2.5%",
     },
     myCards1: {
@@ -271,9 +358,10 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       button: {
-        borderRadius: 20,
+        borderRadius: 15,
         padding: 10,
         elevation: 2,
+        width: horizontalScale(200)
       },
       buttonOpen: {
         backgroundColor: '#F194FF',
@@ -296,18 +384,16 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
-          height: 1,
+          height: 10,
         },
-        shadowOpacity: 1,
-        shadowRadius: 1,
-    
-        elevation: 1,
+        shadowOpacity: .3,
+        shadowRadius: 15,
       },
       
       transactionBox: {
         width: "100%",
         height: 80,
-        marginTop: 10,
+        marginVertical: 15,
 
         backgroundColor: "white",
       },
