@@ -186,32 +186,12 @@ const HomeScreenPersonal = ({ navigation }) => {
         }>
     
       <View style={styles.screen}>
-       
-      
 
         <View style={styles.divContainer}>
-          {/* <View style={styles.congratulationsContainer}>
-            <View style={styles.progressDiv}>
-              <Image
-                style={styles.progressIcon}
-                resizeMode="contain"
-                source={require("../assets/icon-bluecheck.png")}
-              />
-            </View>
-
-            <View style={styles.congratulationsDiv}>
-              <Text style={styles.congratulationsText}>Congratulations!</Text>
-              <Text style={styles.congratulationsSubText}>
-                You are almost ready with your account, Avail more benefits by
-                choosing our card plans.
-              </Text>
-              <Text style={styles.applyNowText}>Apply Now</Text>
-            </View>
-          </View> */}
-          <Text style={[styles.dateText13, {fontWeight: "700"}]}>
+          <Text style={{fontWeight: "700", textAlign: "center"}}>
               Business Account
             </Text>
-            <Text style={[styles.dateText13, styles.blueTitle11]}>
+            <Text style={{textAlign: "center"}}>
               {sortCode} | {accountnumber} 
             </Text>
           <View style={styles.totalWalletBalanceContainer11}>
@@ -251,7 +231,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             
           </View>
           
-          {status &&<Text style={[styles.dateText13, styles.blueTitle11]}>
+          {status &&<Text style={{textAlign: "center"}}>
               Card in post
             </Text>
           }
@@ -737,9 +717,6 @@ const HomeScreenPersonal = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   divContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
   },
   congratulationsText: {
     textAlign: "center",
