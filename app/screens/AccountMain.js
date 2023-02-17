@@ -215,13 +215,13 @@ const HomeScreenPersonal = ({ navigation }) => {
               {sortCode} | {accountnumber} 
             </Text>
           <View style={styles.totalWalletBalanceContainer11}>
-          <Text style={[styles.totalWalletBalanceText11, {position: "absolute", top: 10, right:15 , fontSize: 20}]}>
+          <Text style={[styles.totalWalletBalanceText11, {position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: 20}]}>
               Carbonyte
             </Text>
             
             <Image 
             resizeMode="contain"
-              style={{position: "absolute", left: 70,height: 30, width: 20,  top: 65, transform: [{
+              style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(65), transform: [{
                 rotate: "180deg"
               }]}}
               source={require("../assets/group-31767.png")}
@@ -229,23 +229,23 @@ const HomeScreenPersonal = ({ navigation }) => {
 
             <Image 
               resizeMode="contain"
-              style={{ position: "absolute", left: 30, height: 20, width: 30, top: 70, transform: [{
+              style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(70), transform: [{
                 rotate: "90deg"
               }]}}
               source={require("../assets/group-31764.png")}
             />
 
-            <Text style={[styles.totalWalletBalanceText11, {top:25, fontSize:18 ,fontWeight:'400'}]}>
+            <Text style={[styles.totalWalletBalanceText11, {top:verticalScale(25), fontSize:18 ,fontWeight:'400'}]}>
               {cardnumber}
             </Text>
               
             <Image 
             resizeMode="contain"
-            style={{position: "absolute", bottom:10, right: 20,height: 45, width: 45, }}
+            style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: 45, width: horizontalScale(45), }}
               source={require("../assets/group-31766.png")}
             />
             
-            <Text style={[styles.totalWalletBalanceText11, { position: "absolute",bottom: 10, left:20 , fontSize: 11, wordSpacing: 20}]}>
+            <Text style={[styles.totalWalletBalanceText11, { position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: 11, wordSpacing: 20}]}>
              {accountname}
             </Text>
             
