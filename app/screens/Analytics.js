@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Pressable,
+  TouchableWithoutFeedback
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
@@ -23,6 +24,7 @@ import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 import moment from "moment";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
+
 
 const Analytics = ({ navigation }) => {
   const [balance, setBal] = useState(0);
@@ -136,6 +138,12 @@ const Analytics = ({ navigation }) => {
         break;
     }
   }
+
+  const graphTabs = [
+    {id: 1, title: "Week"},
+    {id: 2, title: "Month"},
+    {id: 3, title: "Year"}
+  ]
   return (
     <ScrollView
        refreshControl={
@@ -290,35 +298,50 @@ const Analytics = ({ navigation }) => {
             </View>
           </View>
 
-        { graphData && (
-          <View>
-            <Pressable
-              onPress={() => changeGraphData("Week")}
-              style={{flexDirection:"row"}}
-            >
-              <Text>Week</Text>
-            </Pressable>
-
-            <Pressable
-              onPress={() => changeGraphData("Month")}
-              style={{flexDirection:"row"}}
-            >
-              <Text>Month</Text>
-            </Pressable>
+      
+          {graphData && <View style={
+            {
+              flexDirection: "row",
+              flex:1,
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              marginTop: verticalScale(30),
+              paddingBottom: verticalScale(5),
+              opacity: 0.3,
+              
             
-            <Pressable
-              onPress={() => changeGraphData("Year")}
-              style={{flexDirection:"row"}}
-            >
-              <Text>Year</Text>
-            </Pressable>
+              borderBottomWidth: 1.5
+              
 
-            <Bazier
+
+            }
+          }>
+          {graphData && (
+            
+            graphTabs.map((tab, index) => (
+              <TouchableWithoutFeedback
+                key={index}
+                onPress={() => changeGraphData(tab.title)}
+              >
+                <Text style={{
+                  fontSize: 15,
+                  fontWeight: "700"
+                }}>{tab.title}</Text>
+              </TouchableWithoutFeedback>
+
+              ))
+            )}
+          </View>}
+
+          
+         
+            {graphData && <Bazier
               graphData={graphData}
-              style={{ backgroundColor: "red" }}
-            />
-          </View>
-        )}
+            />}
+         
+          
+         
+        
          
         </View>
 
