@@ -194,6 +194,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={{textAlign: "center"}}>
               {sortCode} | {accountnumber} 
             </Text>
+          <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
           <View style={styles.totalWalletBalanceContainer11}>
           <Text style={[styles.totalWalletBalanceText11, {position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: 20}]}>
               Carbonyte
@@ -229,7 +230,7 @@ const HomeScreenPersonal = ({ navigation }) => {
              {accountname}
             </Text>
             
-          </View>
+          </View></View>
           
           {status &&<Text style={{textAlign: "center"}}>
               Card in post
@@ -995,7 +996,7 @@ const styles = StyleSheet.create({
   totalWalletBalanceContainer11: {
     marginTop: "3.5%",
     width: GlobalStyles.DivContainer.width,
-    marginLeft: GlobalStyles.DivContainer.marginLeft,
+    
     backgroundColor: "blue",
     height: 170,
     width: 290,
