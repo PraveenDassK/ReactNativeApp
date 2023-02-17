@@ -196,7 +196,7 @@ showData()
 
         <View style={{marginTop: 175, height: 1, width: "100%"}}/>
         <View style={{justifyContent: "center", alignItems: "center"}}>
-        <Image style={styles.image} resizeMode="contain" source={require("../assets/image-yellow.png")}/>
+        <Image style={styles.image} resizeMode="contain" source={require("../assets/cardLion.png")}/>
         {cardFrozen ?
           <Image
             style={[styles.image]}
@@ -205,7 +205,7 @@ showData()
           null}
         </View>
 
-        <View left = "35%">
+        <View>
           <Text>
             {cardnumber}
           </Text>
