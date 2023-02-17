@@ -198,6 +198,7 @@ const Transactions = ({navigation,route}) => {
             
             
             <Animated.FlatList 
+            showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

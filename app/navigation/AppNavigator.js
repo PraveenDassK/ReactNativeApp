@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -103,8 +103,10 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 import { Animated, View, TouchableOpacity, Platform } from 'react-native';
+import { set } from "react-native-reanimated";
 
 function MyTabBar({ state, descriptors, navigation, position }) {
+  const [selectedTabs, setSelectTabs] = useState("")
 
   const insets = useSafeAreaInsets();
   return (
@@ -125,8 +127,10 @@ function MyTabBar({ state, descriptors, navigation, position }) {
             : route.name;
 
         const isFocused = state.index === index;
+        
 
         const onPress = () => {
+          setSelectTabs(route)
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -166,10 +170,20 @@ function MyTabBar({ state, descriptors, navigation, position }) {
             onPress={onPress}
             onLongPress={onLongPress}
             style={{ flex: 1 }}
-          >
-            <Animated.Text  style={{ opacity, textAlign:"center" }}>
-              {label}
-            </Animated.Text>
+          ><Animated.View style={{
+          
+            paddingVertical: 6,
+          
+          }}>
+            <Animated.Text  
+              style={{ opacity, 
+              textAlign:"center",
+              fontWeight: isFocused ? "bold" : "500",
+              
+              
+            }}>
+                {label}
+            </Animated.Text></Animated.View>
           </TouchableOpacity>}
           </>
         );

@@ -208,7 +208,7 @@ const GetSubscriptions = async() =>{
         })
     })
     console.log(returnData)
-    return requestData
+    return returnData
 }
 
 /**Beneficiaries */

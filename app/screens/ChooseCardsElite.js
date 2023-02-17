@@ -1,11 +1,31 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable, ScrollView } from "react-native";
+import React, {useEffect, useState} from "react";
+import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-const ChooseCardsElite = () => {
+import apiCall from "../api/apiCall";
+
+  const ChooseCardsElite = () => {
+
+    const [data, setData] = useState([])
+    
+   useEffect(()=> {
+    loadData()
+   },[])
+
+    const loadData = async () => {
+      const response = await apiCall.GetSubscriptions()
+      setData(response[0])
+
+      console.log("cardsApi", response[0].description, response[0].title, response[0].price)
+    }
+  
+
+
+
+
   return (
-    <ScrollView>
+    // <ScrollView>
     <View style={styles.chooseCardsContainer}>
     
 
@@ -16,92 +36,53 @@ const ChooseCardsElite = () => {
     <View style={styles.imageBox}>
         <Image style = {styles.image} source={require("../assets/image-cardyellow.png")}/>
     </View>
-
+   
     <View style={styles.cardNameBox}>
-        <Text style={styles.cardTitle}>ESSENTIAL</Text>
-        <Text style={styles.cardPrice}>£2 Per Month</Text>
+        <Text style={styles.cardTitle}>{data.title}</Text>
+        <Text style={styles.cardPrice}>{data.price} Per Month</Text>
     </View>
 
     <View style={styles.featureListBox}>
 
+
+      <FlatList 
+      data={data.description}
+      keyExractor={item => item}
+      renderItem={({item, id}) => (
         <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListText}>All Advanced Features</Text>
+          <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
+          <Text style={styles.featureListText}>{item}</Text>
+        </View>
+      )}
+
+
+      />
+      
+    
+        {/* <View style={styles.featureListRow}>
+          <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
+          <Text style={styles.featureListText}>All Advanced Features</Text>
         </View>
 
         <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListTextPayments}>Payments (domestic):</Text>
-                            <Text style={styles.featureListSubText}>Transfer in/out: No Fee Upto 50 transactions</Text>
+            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
+            <Text style={styles.featureListTextPayments}>Payments (domestic):</Text>
+            <Text style={styles.featureListSubText}>Transfer in/out: No Fee Upto 50 transactions</Text>
         </View>
 
         <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListTextCards}>Cards:</Text>
-                            <Text style={styles.featureListSubText}>Added expense cards with spending limits: 2 Free Expense Card</Text>
+          <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
+          <Text style={styles.featureListTextCards}>Cards:</Text>
+          <Text style={styles.featureListSubText}>Added expense cards with spending limits: 2 Free Expense Card</Text>
         </View>
 
         <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListTextBusiness}>Business Tool Kit:</Text>
-                            <Text style={styles.featureListSubText}>Free Logo Design</Text>
-                            <Text style={styles.featureListSubText}>Trade Mark Registration</Text>
-                            <Text style={styles.featureListSubText}>Desktop Support</Text>
-        </View>
-
-        <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListText}>Genius Telecoms 10GB Sim Only</Text>
-        </View>
-
-        <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListTextCustomer}>Customer Services:</Text>
-                            <Text style={styles.featureListSubText}>Dedicated Account Manager</Text>
-
-        </View>
-
-        <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListText}>Plant: 10 trees a month</Text>
-        </View>
-
-
-        <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListText}>Sim Only DataPlan with 4GB Data</Text>
-        </View>
-
-
-        <View style={styles.featureListRow}>
-                             <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                             <Text style={styles.featureListText}>Open APU Access</Text>
-        </View>
-
-        <View style={styles.featureListRow}>
-                            <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                            <Text style={styles.featureListText}>Multiple User Control</Text>
-        </View>
-
-        <View style={styles.featureListRow}>
-                             <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                             <Text style={styles.featureListText}>Automatic Payroll</Text>
-
-        </View>
-
-        <View style={styles.featureListRow}>
-                             <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                             <Text style={styles.featureListText}>Card Payments Foreign EX Fee: 1.98%</Text>
-        </View>
-
-        <View style={styles.featureListRow}>
-                             <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                             <Text style={styles.featureListText}>Invoice Payments Foreign EX Fee: 2.4%</Text>
-        </View>
-
-
-
-
+          <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
+          <Text style={styles.featureListTextBusiness}>Business Tool Kit:</Text>
+          <Text style={styles.featureListSubText}>Free Logo Design</Text>
+          <Text style={styles.featureListSubText}>Trade Mark Registration</Text>
+          <Text style={styles.featureListSubText}>Desktop Support</Text>
+        </View> */}
 
 
 
@@ -112,7 +93,7 @@ const ChooseCardsElite = () => {
 
 
     </View>
-    </ScrollView>
+ 
 
   );
 };
