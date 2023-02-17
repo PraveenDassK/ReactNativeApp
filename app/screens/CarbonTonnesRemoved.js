@@ -12,16 +12,17 @@ import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Button from "../components/Button";
 
-import api from "../api/api_list";
+import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
+import moment from "moment";
+
 
 const CarbonTonnesRemoved = ({ navigation }) => {
-  const startMonth = "Jan";
   const authContext = useContext(AuthContext);
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
-  const numArray = [0, numTrees, 0, 0, 0, 0];
-  const tonnesOfCarbon = 1.5;
+  const numArray = [0, 0, numTrees, 0, 0, 0];
+  const [months, setMonths] = useState(["Jan","Feb","Mar"])
 
   //Calls the API once during load
   useEffect(() => {
@@ -31,16 +32,14 @@ const CarbonTonnesRemoved = ({ navigation }) => {
   }, []);
 
   const loadData = async () => {
-    let respose = await api.GetUserImpacts();
-    const assets = respose.data.details.assets;
-    let trees = 0;
-    let carbon = 0;
-    assets.forEach((element) => {
-      element.type == "TREE" ? (trees += element.count) : null;
-      carbon += element.offset;
-    });
-    setTrees(trees);
-    setCarbon(Number(carbon).toFixed(1));
+    const response = await apiCall.GetUserImpact("CC11875");
+    setTrees(response.totalAssets);
+    setCarbon(response.totalOffset);
+    setMonths([
+      moment().subtract(2,'months').format("MMMM"),
+      moment().subtract(1,'months').format("MMMM"),
+      moment().format("MMMM")
+    ])
   };
 
   return (
@@ -87,7 +86,7 @@ const CarbonTonnesRemoved = ({ navigation }) => {
             >
               <Text style={{ fontSize: 18, fontWeight: "700" }}>Total</Text>
               <Text style={{ fontSize: 24, fontWeight: "700" }}>
-                {tonnesOfCarbon}
+                {numCarbon}
               </Text>
               <Text style={{ fontSize: 24, fontWeight: "700" }}>Tons</Text>
               <Text style={{ fontSize: 16, fontWeight: "700" }}>
@@ -120,7 +119,7 @@ const CarbonTonnesRemoved = ({ navigation }) => {
                 borderRadius: 5,
               }}
             />
-            <Text>January</Text>
+            <Text>{months[0]}</Text>
           </View>
 
           <View style={{ alignItems: "center" }}>
@@ -137,7 +136,7 @@ const CarbonTonnesRemoved = ({ navigation }) => {
                 borderRadius: 5,
               }}
             />
-            <Text>February</Text>
+            <Text>{months[1]}</Text>
           </View>
 
           <View style={{ alignItems: "center" }}>
@@ -154,7 +153,7 @@ const CarbonTonnesRemoved = ({ navigation }) => {
                 borderRadius: 5,
               }}
             />
-            <Text>March</Text>
+            <Text>{months[2]}</Text>
           </View>
         </View>
 
@@ -210,7 +209,7 @@ const CarbonTonnesRemoved = ({ navigation }) => {
             <View>
               <Text style={{ fontSize: 18 }}>Carbon</Text>
               <Text style={{ fontWeight: "500", fontSize: 26, maxWidth: 70 }}>
-                -{tonnesOfCarbon} Tons
+                -{numCarbon} Tons
               </Text>
             </View>
           </View>
