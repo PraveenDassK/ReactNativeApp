@@ -7,7 +7,7 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Form from "../components/forms/Form";
 
-import api from "../api/api_list";
+import apiCall from "../api/apiCall";
 
 const VirtualEcoSystem = ({navigation}) => {
 
@@ -28,29 +28,17 @@ const VirtualEcoSystem = ({navigation}) => {
       },[])
 
     const loadData = async() =>{
-        const customer = await api.GetCustomer(authContext.userID)
-        const data = customer.data.details
-        console.log(data.name.split(" "))
-        setName(data.name.split(" ")[0] + "'s Forest")
+        const customer = await apiCall.GetCustomerDetails(authContext.accountID);
+        setName(customer.name.split(" ")[0] + "'s Forest")
 
         let trees = 0
-        let carbon = 0
         try{
-            let response = await api.GetUserImpacts();
-            const assets = response.data.details.assets
-            
-            assets.forEach(element => {
-              element.type == "TREE" ? trees += element.count : null
-              carbon += element.offset
-            });
+    const response = await apiCall.GetUserImpact("CC11875");
+            trees = response.totalAssets
         }catch{
             
         }
-        console.log(trees)
-        if(trees > 49) trees = 49;
-        console.log(trees)
         setTrees(trees)
-        const tree = trees
     }
     const images = [
         {
@@ -266,7 +254,7 @@ return (
     </View>
 
     <View style={styles.imageBox}>
-        <Image style={styles.image} source={(images[forestValue].image)}/>
+        <Image style={styles.image} source={(images[forestValue > 49 ? 49 : forestValue].image)}/>
     </View>
     <View style={styles.centerRow}>
         <Text style={styles.centerRowText}>Bring Your Virtual Forest To Life</Text>
