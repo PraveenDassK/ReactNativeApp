@@ -221,7 +221,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             
             <Image 
             resizeMode="contain"
-              style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(65), transform: [{
+              style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
                 rotate: "180deg"
               }]}}
               source={require("../assets/group-31767.png")}
@@ -229,13 +229,13 @@ const HomeScreenPersonal = ({ navigation }) => {
 
             <Image 
               resizeMode="contain"
-              style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(70), transform: [{
+              style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
                 rotate: "90deg"
               }]}}
               source={require("../assets/group-31764.png")}
             />
 
-            <Text style={[styles.totalWalletBalanceText11, {top:verticalScale(25), fontSize:18 ,fontWeight:'400'}]}>
+            <Text style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize:18 ,fontWeight:'400'}]}>
               {cardnumber}
             </Text>
               
