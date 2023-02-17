@@ -81,11 +81,15 @@ const HomeScreenPersonal = ({ navigation }) => {
     setCarbon(resposeData.totalOffset);
 
     ////FUP Data
-    const NFTresponse = await apiweb3.GetBalance()
-    setName(NFTresponse.data.data.nftData[0].data.name)
-    setDescription(NFTresponse.data.data.nftData[0].data.description)
-    setPrice(NFTresponse.data.data.nftData[0].data.price)
-    setNftimg(NFTresponse.data.data.nftData[0].data.url)
+    try{
+      const NFTresponse = await apiweb3.GetBalance()
+      setName(NFTresponse.data.data.nftData[0].data.name)
+      setDescription(NFTresponse.data.data.nftData[0].data.description)
+      setPrice(NFTresponse.data.data.nftData[0].data.price)
+      setNftimg(NFTresponse.data.data.nftData[0].data.url)
+    }catch{
+
+    }
 
 
     //Load the data for transactions
