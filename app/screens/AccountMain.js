@@ -28,6 +28,7 @@ const HomeScreenPersonal = ({ navigation }) => {
   //Saves all the data from the API call
   const [data, setData] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [hideBalance, setHideBalance] = useState(false)
   const [transactionTable, setTransactionTable] = useState(null);
 
   const [status, setStatus] = useState(null);
@@ -191,7 +192,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={{fontWeight: "700", textAlign: "center"}}>
               Business Account
             </Text>
-            <Text style={{textAlign: "center", fontSize: "11.8", fontWeight: '300'}}>
+            <Text style={{textAlign: "center", fontSize: 11.8, fontWeight: '300'}}>
               {sortCode} | {accountnumber} 
             </Text>
           <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
@@ -230,9 +231,26 @@ const HomeScreenPersonal = ({ navigation }) => {
              {accountname}
             </Text>
             
-          </View></View>
+          </View>
+          </View>
+
+          <View style={{flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-evenly"}}>
+              <TouchableOpacity
+              onPress={()=> setHideBalance(prev => !prev)}
+               style={{ alignItems: "center", justifyContent: "center", backgroundColor: "white", width: 40, height: 40, borderRadius: 15, padding:10}}>
+                <Image 
+                  resizeMode="contain" 
+                  source={require("../assets/icon-view.png")}
+                  style={{height: 25, width: 25}}
+                />
+              </TouchableOpacity>
+             
+        
+          </View>
+
+
           
-          {status &&<Text style={{textAlign: "center", fontSize: "11.8", fontWeight: '300'}}>
+          {status &&<Text style={{textAlign: "center", fontSize: 11.8, fontWeight: '300', marginTop: 15,marginBottom: 15, color:"red"}}>
               Card in post
             </Text>
           }
@@ -241,7 +259,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={styles.totalWalletBalanceText}>
               Total Wallet Balance
             </Text>
-            {settings.hideBalance ? (
+            {settings.hideBalnce || hideBalance ? (
               <View
                 style={{
                   width: GlobalStyles.DivContainer.width,
@@ -252,23 +270,21 @@ const HomeScreenPersonal = ({ navigation }) => {
                 <View
                   style={{
                     width: "100%",
-                    height: 15,
+                    height: 30,
                     shadowOpacity: 1,
                     shadowColor: "blue",
-                    shadowOffset: { width: 10, height: 10 },
+                    shadowOffset: { width: 0, height: 0 },
                     shadowRadius: 5,
                     elevation: 5,
-                    borderWidth: 0.5,
-                    borderColor: "white",
-                    borderRadius: 15,
-                    backgroundColor: "rgba(255, 255, 255, 0.25)",
+                    borderRadius: 10,
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    marginBottom: 10 
                   }}
                 />
               </View>
             ) : (
               <Text style={[styles.BalanceText, styles.blueTitle]}>
-                <Text style={{color: "grey"}}>£</Text>{balance}
-              </Text>
+                <Text style={{color: "grey"}}>£</Text>{balance}</Text>
             )}
             <Text style={styles.dateText}>{todaydate}</Text>
           </View>
