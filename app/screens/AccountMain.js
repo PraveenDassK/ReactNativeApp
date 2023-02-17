@@ -676,7 +676,7 @@ const HomeScreenPersonal = ({ navigation }) => {
         </View>
         <View style={styles.transactionsContainer}>{transactionTable}</View>
         
-        <View style={styles.NFTContainer}>
+        {nftimg && <View style={styles.NFTContainer}>
           <Text style={styles.titleText}>NFT Assets</Text>
           <ScrollView style={{width: "100%", marginTop: "5%"}}>
 
@@ -690,7 +690,7 @@ const HomeScreenPersonal = ({ navigation }) => {
         </Text>
     
           </ScrollView>
-        </View>
+        </View>}
 
         <View style={[styles.carbonContainer, styles.rounded]}>
           <View style={styles.treeContainer}>
