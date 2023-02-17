@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  Pressable,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
@@ -29,18 +30,15 @@ const Analytics = ({ navigation }) => {
   const [totalSpend, setTotal] = useState(0);
   const [totalTransactions, setTotalTrans] = useState(0);
   const [graphData, setGraphData] = useState(null)
- 
- 
+  const [graphSetting, setGraph] = useState("Year")
 
   const [monthAverage, setMonthAverage] = useState(0);
   const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
   const dataPercentages = ["75%", "50%", "40%", "30%"];
-
   const [recentTransactions, setRecent] = useState([]);
-
   const [refreshing, setRefreshing] = useState(false);
-
   const authContext = useContext(AuthContext);
+
 
   useEffect(() => {
     loadData();
@@ -60,7 +58,7 @@ const Analytics = ({ navigation }) => {
     setMonthAverage(dataCall.average)
 
 
-    const graphData = await apiCall.GetTransactionsYear(authContext.accountID);
+    const graphData = await apiCall.GetTransactionsWeek(authContext.accountID);
     setGraphData(graphData)
     
 
@@ -121,6 +119,23 @@ const Analytics = ({ navigation }) => {
     }, 2000);
   }, [refreshing]);
 
+  const changeGraphData = async(time) => {
+    console.log(time)
+    switch(time){
+      case "Year":
+          const graphDataYear = await apiCall.GetTransactionsYear(authContext.accountID);
+          setGraphData(graphDataYear)
+        break;
+      case "Month":
+          const graphDataMonth = await apiCall.GetTransactionsMonth(authContext.accountID);
+          setGraphData(graphDataMonth)
+        break;
+      case "Week":
+          const graphDataWeek = await apiCall.GetTransactionsWeek(authContext.accountID);
+          setGraphData(graphDataWeek)
+        break;
+    }
+  }
   return (
     <ScrollView
        refreshControl={
@@ -275,12 +290,35 @@ const Analytics = ({ navigation }) => {
             </View>
           </View>
 
-         { graphData && (
+        { graphData && (
+          <View>
+            <Pressable
+              onPress={() => changeGraphData("Week")}
+              style={{flexDirection:"row"}}
+            >
+              <Text>Week</Text>
+            </Pressable>
+
+            <Pressable
+              onPress={() => changeGraphData("Month")}
+              style={{flexDirection:"row"}}
+            >
+              <Text>Month</Text>
+            </Pressable>
+            
+            <Pressable
+              onPress={() => changeGraphData("Year")}
+              style={{flexDirection:"row"}}
+            >
+              <Text>Year</Text>
+            </Pressable>
+
             <Bazier
               graphData={graphData}
               style={{ backgroundColor: "red" }}
             />
-          )}
+          </View>
+        )}
          
         </View>
 
