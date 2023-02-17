@@ -208,23 +208,53 @@ const HomeScreenPersonal = ({ navigation }) => {
               <Text style={styles.applyNowText}>Apply Now</Text>
             </View>
           </View> */}
+          <Text style={[styles.dateText13, {fontWeight: "700"}]}>
+              Business Account
+            </Text>
+            <Text style={[styles.dateText13, styles.blueTitle11]}>
+              {sortCode} | {accountnumber} 
+            </Text>
           <View style={styles.totalWalletBalanceContainer11}>
-            <Text style={styles.totalWalletBalanceText11}>
-              Account name: {accountname}
+          <Text style={[styles.totalWalletBalanceText11, {position: "absolute", top: 10, right:15 , fontSize: 20}]}>
+              Carbonyte
             </Text>
-            <Text style={[styles.BalanceText11, styles.blueTitle11]}>
-              SortCode: {sortCode}
+            
+            <Image 
+            resizeMode="contain"
+              style={{position: "absolute", left: 70,height: 30, width: 20,  top: 65, transform: [{
+                rotate: "180deg"
+              }]}}
+              source={require("../assets/group-31767.png")}
+            />
+
+            <Image 
+              resizeMode="contain"
+              style={{ position: "absolute", left: 30, height: 20, width: 30, top: 70, transform: [{
+                rotate: "90deg"
+              }]}}
+              source={require("../assets/group-31764.png")}
+            />
+
+            <Text style={[styles.totalWalletBalanceText11, {top:25, fontSize:18 ,fontWeight:'400'}]}>
+              {cardnumber}
             </Text>
-            <Text style={styles.dateText11}>
-              Account Number: {accountnumber}
+              
+            <Image 
+            resizeMode="contain"
+            style={{position: "absolute", bottom:10, right: 20,height: 45, width: 45, }}
+              source={require("../assets/group-31766.png")}
+            />
+            
+            <Text style={[styles.totalWalletBalanceText11, { position: "absolute",bottom: 10, left:20 , fontSize: 11, wordSpacing: 20}]}>
+             {accountname}
             </Text>
-            <Text style={styles.dateText12}>
-              Card Number: {cardnumber}
-            </Text>
-            <Text style={styles.dateText13}>
-              Card in post: {status}
-            </Text>
+            
           </View>
+          
+          {status &&<Text style={[styles.dateText13, styles.blueTitle11]}>
+              Card in post
+            </Text>
+          }
 
           <View style={styles.totalWalletBalanceContainer}>
             <Text style={styles.totalWalletBalanceText}>
@@ -706,6 +736,11 @@ const HomeScreenPersonal = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  divContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   congratulationsText: {
     textAlign: "center",
     width: "100%",
@@ -736,7 +771,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   blueTitle11: {
-    fontSize: 14,
+    fontSize: 11.5,
   },
   referContainer: {
     width: GlobalStyles.DivContainer.width,
@@ -984,12 +1019,14 @@ const styles = StyleSheet.create({
     marginTop: "3.5%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
-    backgroundColor: "#FFFFFF",
-    height: "auto",
+    backgroundColor: "blue",
+    height: 170,
+    width: 290,
     borderRadius: 15,
-    flexDirection: "column",
-    padding: "5%",
     justifyContent: "center",
+    padding: "5%",
+   alignItems: "center",
+    marginVertical: 20
   },
 
   totalWalletBalanceText: {
@@ -1001,6 +1038,9 @@ const styles = StyleSheet.create({
   totalWalletBalanceText11: {
     textAlign: "left",
     fontSize: 14,
+    color: "white",
+    textTransform: "uppercase",
+    fontWeight: "700"
   },
   BalanceText: {
     fontSize: 26,
