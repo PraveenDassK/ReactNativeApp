@@ -191,7 +191,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={{fontWeight: "700", textAlign: "center"}}>
               Business Account
             </Text>
-            <Text style={{textAlign: "center", fontSize: "11.8", fontWeight: '300'}}>
+            <Text style={{textAlign: "center", fontSize: 11, fontWeight: '300'}}>
               {sortCode} | {accountnumber} 
             </Text>
           <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
@@ -232,7 +232,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             
           </View></View>
           
-          {status &&<Text style={{textAlign: "center", fontSize: "11.8", fontWeight: '300'}}>
+          {status &&<Text style={{textAlign: "center", fontSize: 11, fontWeight: '300'}}>
               Card in post
             </Text>
           }
