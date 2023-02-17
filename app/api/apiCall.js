@@ -218,7 +218,7 @@ const GetTransactionsWeek = async (Id) => {
     const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=500&fromTransactionDate=" + then)
     const requestData = request.data.details
     let total = 0
-    let data = new Array(9).fill(0);
+    let data = new Array(7).fill(0);
     requestData.content.forEach(element => {
         total += element.amount
         let category = moment().diff(element.transactionDate, 'days')
@@ -261,7 +261,7 @@ const GetSubscriptions = async() =>{
         })
     })
     console.log(returnData)
-    return returnData
+    return requestData
 }
 
 /**Beneficiaries */
