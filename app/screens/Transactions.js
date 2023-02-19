@@ -1,5 +1,5 @@
 import React,{ useEffect, useState,useContext, useCallback } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { FlatList, Swipeable, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { MaterialCommunityIcons} from '@expo/vector-icons'
@@ -42,34 +42,7 @@ const Transactions = ({navigation,route}) => {
       loadData();
     }, []);
 
-    const renderRightActions = (i) => {
-      return(
-        <View style={{ backgroundColor: "#ff5252", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
-          <TouchableWithoutFeedback onPress={() => hideTransaction(i)}>
-          <MaterialCommunityIcons 
-          name="eye-off"
-          size={35}
-          color="white"
-          />
-          </TouchableWithoutFeedback>
-        </View>
-      )
-    }
-
-    const renderLeftActions = (i) => {
-      return(
-        <View style={{ backgroundColor: "grey", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
-            <TouchableWithoutFeedback onPress={() => reportTransaction(i)}>
-            <MaterialCommunityIcons 
-            name="progress-alert"
-            size={35}
-            color="white"
-            />
-            </TouchableWithoutFeedback>
-       
-          </View>
-      )
-    }
+    
 
     const loadData = async () => {
         const responseBalance = await api.GetAccount(authContext.accountID);
@@ -95,14 +68,27 @@ const Transactions = ({navigation,route}) => {
     }
 
     let transactionList = []
+
     const showTransaction = (Id) => {
         setModalVisible(true)
         setModalId(Id)
     }
 
     const reportTransaction = (Id) =>{
+
         console.log("Reported")
         console.log(Id)
+        Alert.alert('Alert', 'Report This Transaction', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'Send', onPress: () => {
+            console.log('OK Pressed')
+            apiCall.ReportTransaction(Id)
+          }},
+        ]);
         apiCall.ReportTransaction(Id)
     }
     const shareTransaction = (Id) =>{
@@ -112,12 +98,41 @@ const Transactions = ({navigation,route}) => {
     const hideTransaction = (Id) =>{
       console.log("Hided")
       console.log(Id)
+
+
+      setTransactionData( oldTransactions => {
+        return oldTransactions.filter((_, i)=> i !== Id)
+      })
       
-      let newData = transactionData
-      newData.splice(Id,1)
-      console.log(newData)
-      setTransactionData(newData)
-      loadData()
+  }
+
+  const renderRightActions = (i) => {
+    return(
+      <View style={{ backgroundColor: "#ff5252", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
+        <TouchableOpacity onPress={() => hideTransaction(i)}>
+        <MaterialCommunityIcons 
+        name="eye-off"
+        size={35}
+        color="white"
+        />
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  const renderLeftActions = (i) => {
+    return(
+      <View style={{ backgroundColor: "grey", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
+          <TouchableOpacity onPress={() => reportTransaction(i)}>
+          <MaterialCommunityIcons 
+          name="progress-alert"
+          size={35}
+          color="white"
+          />
+          </TouchableOpacity>
+     
+        </View>
+    )
   }
 
     const modal = (Id) => {

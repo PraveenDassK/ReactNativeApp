@@ -26,15 +26,6 @@ const Carbon = ({ route, navigation }) => {
     setData(response);
   };
 
-  const capitalized = (words) => {
-    return words.split("").map((word, index) => {
-      if (index === 0) {
-        return word;
-      }
-      return word.toLowerCase();
-    });
-  };
-
   const [cart, setCart] = useState([]);
   let amount = 0;
   //Buy functions
@@ -66,6 +57,7 @@ const Carbon = ({ route, navigation }) => {
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
+  
   return (
     <Screen style={{ backgroundColor: "#F6F5F8" }}>
       {cart && cart.length ? (
