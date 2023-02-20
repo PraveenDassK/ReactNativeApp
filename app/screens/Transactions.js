@@ -12,7 +12,8 @@ import {
 } from "../config/metrics";
 
 import moment from "moment";
-import apiCall from "../api/apiCall"
+import api from "../api/api_list"
+import apiCall from "../api/api"
 import AuthContext from "../auth/context";
 import { hide } from "expo-splash-screen";
 import Animated from "react-native-reanimated";
@@ -45,10 +46,26 @@ const Transactions = ({navigation,route}) => {
     
 
     const loadData = async () => {
-        const trasactionCall = await apiCall.GetTransactions(authContext.accountID,10);
+        const responseBalance = await api.GetAccount(authContext.accountID);
+        const accountresponse = await api.GetAccount(authContext.accountID);
+        const accountdata = accountresponse.data.details
+        const data = responseBalance.data.details
+        setBalance(data.availableBalance)
+        console.log(authContext.accountID)
         //Load the data for transactions
-        const transactions = trasactionCall.transactions
+        const response = await api.GetTransactions(authContext.accountID,10);
+        const transactions = response.data.details.content
         setTransactionData(transactions)
+
+        let name = accountdata.customerName
+        let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
+    
+        if (names.length > 1) {
+          initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
+         }
+        console.log(initialsHold)
+        setInitals(initialsHold)
+  
     }
 
     let transactionList = []
