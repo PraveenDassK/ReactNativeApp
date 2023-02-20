@@ -28,6 +28,7 @@ const HomeScreenPersonal = ({ navigation }) => {
   //Saves all the data from the API call
   const [data, setData] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [hideBalance, setHideBalance] = useState(false)
   const [transactionTable, setTransactionTable] = useState(null);
 
   const [status, setStatus] = useState(null);
@@ -80,11 +81,15 @@ const HomeScreenPersonal = ({ navigation }) => {
     setCarbon(resposeData.totalOffset);
 
     ////FUP Data
-    const NFTresponse = await apiweb3.GetBalance()
-    setName(NFTresponse.data.data.nftData[0].data.name)
-    setDescription(NFTresponse.data.data.nftData[0].data.description)
-    setPrice(NFTresponse.data.data.nftData[0].data.price)
-    setNftimg(NFTresponse.data.data.nftData[0].data.url)
+    try{
+      const NFTresponse = await apiweb3.GetBalance()
+      setName(NFTresponse.data.data.nftData[0].data.name)
+      setDescription(NFTresponse.data.data.nftData[0].data.description)
+      setPrice(NFTresponse.data.data.nftData[0].data.price)
+      setNftimg(NFTresponse.data.data.nftData[0].data.url)
+    }catch{
+
+    }
 
 
     //Load the data for transactions
@@ -94,6 +99,7 @@ const HomeScreenPersonal = ({ navigation }) => {
     let pageShow = [];
     for (let i = 0; i < 5; i++) {
       let dataHold = transactionCall.transactions[i];
+      console.log("datahold",dataHold)
       pageShow.push(
         <TouchableOpacity
           style={[styles.transactionBox, styles.rounded]}
@@ -138,20 +144,20 @@ const HomeScreenPersonal = ({ navigation }) => {
               <Text style={{ fontSize: 14, fontWeight: "700" }}>
                 {dataHold.description.replace("Payment to ", "")}
               </Text>
-              <Text style={{}}>
-                {moment(dataHold.transactionDate).format("MMM Do YY")}
+              <Text style={{opacity: 0.4}}>
+                {moment(dataHold.transactionDate).format("MMMM Do, YYYY")}
               </Text>
             </View>
             <View
               style={{
-                flex: 5,
+                flex: 4,
                 justifyContent: "space-evenly",
                 alignItems: "flex-end",
                 marginRight: "2.5%",
               }}
             >
-              <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                £{dataHold.amount.toFixed(2)}
+              <Text style={{ marginRight: "2.5%",fontSize: 18, fontWeight: "700", color: !dataHold.credit ? "red": "green" }}>
+                {!dataHold.credit ? "-": "+"} £{dataHold.amount.toFixed(2)}
               </Text>
             </View>
           </View>
@@ -164,7 +170,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   let currency = "£";
   const catNames = ["Health", "Food", "House", "Sping", "Transport"];
-  const dataPercentages = ["700%", "50%", "40%", "30%", "20%"];
+  const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
 
   /**
    * @dev Data needed for this page
@@ -179,6 +185,33 @@ const HomeScreenPersonal = ({ navigation }) => {
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
+
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   return (
     <ScrollView
         refreshControl={
@@ -191,7 +224,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={{fontWeight: "700", textAlign: "center"}}>
               Business Account
             </Text>
-            <Text style={{textAlign: "center", fontSize: 11, fontWeight: '300'}}>
+            <Text style={{textAlign: "center", fontSize: 11.8, fontWeight: '300'}}>
               {sortCode} | {accountnumber} 
             </Text>
           <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
@@ -230,18 +263,35 @@ const HomeScreenPersonal = ({ navigation }) => {
              {accountname}
             </Text>
             
-          </View></View>
+          </View>
+          </View>
+
+          <View style={{flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-evenly"}}>
+              <TouchableOpacity
+              onPress={()=> setHideBalance(prev => !prev)}
+               style={[{ alignItems: "center", justifyContent: "center", backgroundColor: "white", width: 40, height: 40, borderRadius: 20, padding:10}, ]}>
+                <Image 
+                  resizeMode="contain" 
+                  source={require("../assets/icon-view.png")}
+                  style={{height: 25, width: 25}}
+                />
+              </TouchableOpacity>
+             
+        
+          </View>
+
+
           
-          {status &&<Text style={{textAlign: "center", fontSize: 11, fontWeight: '300'}}>
+          {status &&<Text style={{textAlign: "center", fontSize: 11.8, fontWeight: '300', marginTop: 15,marginBottom: 15, color:"red"}}>
               Card in post
             </Text>
           }
 
-          <View style={styles.totalWalletBalanceContainer}>
+          <View style={[styles.totalWalletBalanceContainer, styles.boxShadow]}>
             <Text style={styles.totalWalletBalanceText}>
               Total Wallet Balance
             </Text>
-            {settings.hideBalance ? (
+            {settings.hideBalnce || hideBalance ? (
               <View
                 style={{
                   width: GlobalStyles.DivContainer.width,
@@ -252,23 +302,21 @@ const HomeScreenPersonal = ({ navigation }) => {
                 <View
                   style={{
                     width: "100%",
-                    height: 15,
+                    height: 30,
                     shadowOpacity: 1,
                     shadowColor: "blue",
-                    shadowOffset: { width: 10, height: 10 },
+                    shadowOffset: { width: 0, height: 0 },
                     shadowRadius: 5,
                     elevation: 5,
-                    borderWidth: 0.5,
-                    borderColor: "white",
-                    borderRadius: 15,
-                    backgroundColor: "rgba(255, 255, 255, 0.25)",
+                    borderRadius: 10,
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    marginBottom: 10 
                   }}
                 />
               </View>
             ) : (
               <Text style={[styles.BalanceText, styles.blueTitle]}>
-                <Text style={{color: "grey"}}>£</Text>{balance}
-              </Text>
+                <Text style={{color: "grey"}}>£</Text>{balance}</Text>
             )}
             <Text style={styles.dateText}>{todaydate}</Text>
           </View>
@@ -276,7 +324,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("AddFunds")}
-              style={styles.inputBox}
+              style={[styles.inputBox, styles.boxShadow]}
             >
               
               <View style={styles.inputBoxDiv}>
@@ -292,7 +340,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate("SendMoney")}
-              style={styles.inputBox}
+              style={[styles.inputBox, styles.boxShadow]}
             >
               <View style={styles.inputBoxDiv}>
                 <Image
@@ -306,7 +354,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate("MyCards")}
-              style={styles.inputBox}
+              style={[styles.inputBox, styles.boxShadow]}
             >
               <View style={styles.inputBoxDiv}>
                 <Image
@@ -320,7 +368,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate("SwitchAccounts")}
-              style={styles.inputBox}
+              style={[styles.inputBox, styles.boxShadow]}
             >
               <View style={styles.inputBoxDiv}>
                 <Image
@@ -346,12 +394,12 @@ const HomeScreenPersonal = ({ navigation }) => {
         {/**
          * @dev Carbon spending section
          */}
-        <View style={styles.carbonSpendingDiv}>
+        <View style={[styles.carbonSpendingDiv, styles.boxShadow]}>
           {/**
            * @notice the actual carbon holder
            */}
           <View style={styles.carbonItemDiv}>
-            <View style={[styles.estimatedCarbonDiv]}>
+            <View style={[styles.estimatedCarbonDiv, styles.boxShadow]}>
               <View style={{ flex: 3.5 }}>
                 <Text style={styles.blueTitle}>{carbonAmount}</Text>
               </View>
@@ -559,10 +607,10 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginLeft: "5%",
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: "700" }}>
-                  {projects[0]?.name} £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
+                <Text style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
+                <Text style={{fontWeight: "400"}}>{projects[0]?.name}</Text> £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
                 </Text>
-                <Text style={{}}>{moment(projects[0]?.lastUpdated).format("MMM Do YY")}</Text>
+                <Text style={{opacity: 0.4}}>{moment(projects[0]?.lastUpdated).format("MMMM Do, YYYY")}</Text>
               </View>
               <View
                 style={{
@@ -572,7 +620,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginRight: "2.5%",
                 }}
               >
-                <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                <Text style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
                   1
                 </Text>
               </View>
@@ -625,10 +673,10 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginLeft: "5%",
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: "700" }}>
-                  {projects[1]?.name} £{projects[1]?.displayAssetPrice} / {projects[1]?.type}
+                <Text style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
+                  <Text style={{fontWeight: "400"}}>{projects[1]?.name} </Text>£{projects[1]?.displayAssetPrice} / {projects[1]?.type}
                 </Text>
-                <Text style={{}}>{moment(projects[1]?.lastUpdated).format("MMM Do YY")}</Text>
+                <Text style={{opacity: 0.4}}>{moment(projects[1]?.lastUpdated).format("MMMM Do, YYYY")}</Text>
               </View>
               <View
                 style={{
@@ -638,7 +686,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginRight: "2.5%",
                 }}
               >
-                <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                <Text style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
                   1
                 </Text>
               </View>
@@ -658,9 +706,9 @@ const HomeScreenPersonal = ({ navigation }) => {
         />
           <Text style={styles.titleText}>Recent Transactions</Text>
         </View>
-        <View style={styles.transactionsContainer}>{transactionTable}</View>
+        <View style={[styles.transactionsContainer, styles.boxShadow]}>{transactionTable}</View>
         
-        <View style={styles.NFTContainer}>
+        {nftimg && <View style={[styles.NFTContainer, styles.boxShadow]}>
           <Text style={styles.titleText}>NFT Assets</Text>
           <ScrollView style={{width: "100%", marginTop: "5%"}}>
 
@@ -674,9 +722,9 @@ const HomeScreenPersonal = ({ navigation }) => {
         </Text>
     
           </ScrollView>
-        </View>
+        </View>}
 
-        <View style={[styles.carbonContainer, styles.rounded]}>
+        <View style={[styles.carbonContainer, styles.rounded , styles.boxShadow]}>
           <View style={styles.treeContainer}>
             <Image
               style={styles.treeImage}
@@ -690,9 +738,10 @@ const HomeScreenPersonal = ({ navigation }) => {
             >
               Congratulations!
             </Text>
-            <Text style={{ textAlign: "center", marginTop: verticalScale(2) }}>
+            <View style={{flex:1, alignItems: "center"}}>
+            <Text style={{ textAlign: "center", marginTop: verticalScale(6), width: horizontalScale(250) }}>
               You have planted {TotalAmount} trees with advance card purchase
-            </Text>
+            </Text></View>
             <TouchableOpacity onPress={() => navigation.navigate("VirtualEcoSystem")}>
               <Text
                 style={{
@@ -717,6 +766,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow:{},
   divContainer: {
   },
   congratulationsText: {
@@ -735,7 +785,8 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     marginTop: "2.5%",
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: "500",
+    opacity: 0.5
   },
   barText: {
     left: 20,
@@ -1004,7 +1055,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: "5%",
    alignItems: "center",
-    marginVertical: 20
+    marginVertical: 20, 
+    
   },
 
   totalWalletBalanceText: {
@@ -1067,11 +1119,11 @@ const styles = StyleSheet.create({
   inputBox: {
     backgroundColor: "white",
     width: "23.5%",
-    
     flexDirection: "row",
     borderRadius: 10,
     paddingBottom: verticalScale(18),
-    paddingTop: verticalScale(25)
+    paddingTop: verticalScale(25),
+    
 
   },
 

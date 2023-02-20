@@ -157,12 +157,14 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         });
 
         return (
-          <>
+          <React.Fragment
+          key={route.name.toString()}
+          >
           {index == 5  ? null : 
           index == 0 ? null :
          
           <TouchableOpacity
-            key={index}
+            key={route.name.toString()}
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -185,7 +187,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                 {label}
             </Animated.Text></Animated.View>
           </TouchableOpacity>}
-          </>
+          </React.Fragment>
         );
       })}
     </View>
