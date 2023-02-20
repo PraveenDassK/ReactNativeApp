@@ -3,6 +3,7 @@ import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshCont
 import GlobalStyles from "../../GlobalStyles";
 import { FlatList, Swipeable, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { MaterialCommunityIcons} from '@expo/vector-icons'
+import FadeInView from "../components/fadeInview";
 
 import {
   horizontalScale,
@@ -206,8 +207,14 @@ const Transactions = ({navigation,route}) => {
             resizeMode="stretch"
             
             /> */}
+        
         <View style={styles.page}>
-          
+          <View style={styles.swipeDown}>
+        <FadeInView>
+          <Text>Pull down to refresh transactions</Text>
+        </FadeInView>
+        <MaterialCommunityIcons name="chevron-down" size={24} color="black" />
+      </View>
 
 
             
@@ -382,6 +389,11 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: 'center',
       },
+      swipeDown : {
+        alignItems: "center",
+        justifyContent: "center",
+         top: verticalScale(50),
+        }
     
 });
 
