@@ -3,12 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { VictoryPie, VictoryChart, VictoryTheme } from "victory-native";
 
 
-
-
-
  const DoughnutChart =() => {
-
-
 
   return <VictoryPie
   

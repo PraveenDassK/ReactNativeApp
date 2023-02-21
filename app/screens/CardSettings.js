@@ -65,7 +65,7 @@ const CardSettings = ({navigation}) => {
           <Text style={styles.titleText}>Settings</Text>
         </View>
 
-        <Pressable style={styles.groupChild} onPress={() => console.log('wtf')}>
+        <Pressable style={styles.groupChild} onPress={() => navigation.navigate('SpendingLimit')}>
           <View
             style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
