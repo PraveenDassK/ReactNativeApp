@@ -291,7 +291,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             <Text style={styles.totalWalletBalanceText}>
               Total Wallet Balance
             </Text>
-            {settings.hideBalnce || hideBalance ? (
+            {settings.hideBalance || hideBalance ? (
               <View
                 style={{
                   width: GlobalStyles.DivContainer.width,
