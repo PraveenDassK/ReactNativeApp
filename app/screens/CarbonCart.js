@@ -76,6 +76,7 @@ const CarbonCart = ({route,navigation }) => {
   
   return (
     <View style={styles.mainContainer}>
+
     <View style={styles.titleTextRow}>
             <Text style={styles.titleText}>Your Cart</Text>
         </View>
@@ -113,6 +114,8 @@ const CarbonCart = ({route,navigation }) => {
                </TouchableOpacity>
            </View>
 
+
+
     </View>
   );
 };
@@ -139,10 +142,10 @@ const styles = StyleSheet.create({
 
     divContainer: {
         marginTop: "5%",
-        width: "80%",
+        width: "90%",
         backgroundColor: "white",
         height: verticalScale(400),
-        marginLeft: "10%",
+        marginLeft: "5%",
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
     },
@@ -214,8 +217,8 @@ const styles = StyleSheet.create({
         },
 
         button: {
-            width: "80%",
-            left: "10%"
+            width: "90%",
+            left: "5%"
         }
 });
 
