@@ -4,7 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen";
 import api from "../api/api_list";
-import apiCall from "../api/api";
+import apiCall from "../api/apiCall";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -17,7 +17,7 @@ const SpendingLimit = ({ navigation, route }) => {
 
   const [monthLim, setMonLim] = useState(0);
   const [spend, setSpend] = useState(0);
-  const [percent, setPercent] = useState(0);
+  const [percent, setPercent] = useState();
 
   //Calls the API once during load
   useEffect(() => {
@@ -34,29 +34,13 @@ const SpendingLimit = ({ navigation, route }) => {
   //Gets the data for the user
   const loadData = async () => {
     //Gets the data from the api
-    const response = await api.GetLimit(authContext.accountID);
-    //Then isolate the useful dataa
-    const data = response.data.details;
-    console.log(data);
-
-    //Gets the monthly spend
-    const transactionRequest = await apiCall.GetAllTransactionsThisMonth();
-    let spendTotal = transactionRequest.total;
-
-    //If there is a limit
-    //50 is the amount spent
-    if (data.monthlyAmount > 0) {
-      // const percentamount = Math.floor((spendTotal / data.monthlyAmount) * 100) + "%";
-      const percentamount = Math.floor((spendTotal / data.monthlyAmount));
-      setPercent(percentamount);
-      setIsEnabled(true);
-    } else {
-      setPercent(0);
-    }
-
-    setMonLim(data.monthlyAmount);
+    const response = await apiCall.GetLimits(authContext.accountID);
+    const spendTotal = response.spend
+    const monthlyAmount = response.monthlyAmount
+ 
+    setMonLim(monthlyAmount);
     setSpend(spendTotal);
-    console.log(data.monthlyAmount);
+    setPercent((spendTotal / monthlyAmount))
   };
 
   /**
@@ -124,11 +108,11 @@ const SpendingLimit = ({ navigation, route }) => {
           </Pressable>
         </View>
         <View style={{ flex:1, marginTop: "2.5%", justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ fontSize: 25, fontWeight: "700" }}>£{spend.toFixed(2)}</Text>
+          <Text style={{ fontSize: 28, fontWeight: "700" }}>£{spend.toFixed(2)}</Text>
           <Text style={{ fontSize: 14, marginTop: "1%" }}>Spent this month</Text>
-          <Text style={{ fontSize: 25, marginTop: "5%", fontWeight: "700" }}>£{monthLim.toFixed(2)}</Text>
+          <Text style={{ fontSize: 28, marginTop: "5%", fontWeight: "700" }}>£{monthLim.toFixed(2)}</Text>
           <Text style={{ fontSize: 14, marginTop: "1%" }}>Current spend limit</Text>
-          {monthLim - spend >= 0 ? (<View style={{marginTop: "5%"}} >
+          {monthLim - spend && percent >= 0 ? (<View style={{marginTop: "5%"}} >
             {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="#F6F5F8">
               <Text style={styles.barText}>test</Text>
             </View> */}
@@ -142,16 +126,17 @@ const SpendingLimit = ({ navigation, route }) => {
             <SinglePie  percent={percent}/>
             </View>
           )}
+        
           
           <View style={{position: "absolute", flex: 1, justifyContent: "center", alignItems: "center", top: 300}}>
           {monthLim - spend >= 0 ? (
-            <Text style={{ fontSize: 25, color: "blue", fontWeight: "700" }}> £{(monthLim - spend).toFixed(2)}</Text>
+            <Text style={{ fontSize: 28, color: "blue", fontWeight: "700" }}> £{(monthLim - spend).toFixed(2)}</Text>
           )
             : 
           (
-            <Text style={{ fontSize: 25, marginTop: "2.5%", color: "red", fontWeight: "700" }}> £{(monthLim - spend).toFixed(2)}</Text>
+            <Text style={{ fontSize: 28, marginTop: "2.5%", color: "red", fontWeight: "700" }}> £{(monthLim - spend).toFixed(2)}</Text>
           )}
-          <Text style={{ fontSize: 14, marginTop: "1%" }}>Spendable funds left</Text>
+          <Text style={{ fontSize: 14, marginTop: "1%", fontWeight: "700", opacity:"0.3" }}>Spendable funds left</Text>
           </View>
         </View>
       <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", marginBottom: "5%" }}>
@@ -159,7 +144,7 @@ const SpendingLimit = ({ navigation, route }) => {
           {isEnabled ? <View style={{flexDirection: "row", }}>
             <Text style={{ fontSize: 10, fontWeight: "700", opacity: 0.3, marginRight: "1%"}}>Limit is £{monthLim.toFixed(2)}</Text>
             <Text onPress={() => navigation.navigate("SetLimit")} style={{fontSize: 10, fontWeight: "700",color: "blue", opacity: 1}}>Change limit</Text>
-          </View> : <Text style={{ fontSize: 10, marginTop: "2.5%", fontWeight: "700" }}>Limit is toggled off</Text>}
+          </View> : <Text style={{ fontSize: 10, marginTop: "2.5%", fontWeight: "700", opacity: 0.3 }}>Limit is toggled off</Text>}
        </View>
       </View>
       <View style={{width: "100%", height: 35}}/>

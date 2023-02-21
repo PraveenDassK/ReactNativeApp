@@ -15,12 +15,12 @@ import { VictoryPie, VictoryChart, VictoryTheme } from "victory-native";
   style={{ labels: { fill: "black" } }}
   colorScale={["tomato", "orange", "gold", "cyan", "green" ]}
           
-          innerRadius={100}
+          innerRadius={110}
           labelRadius={120}
           
-          padAngle={3}
+          padAngle={1}
           labels={({ datum }) => `# ${datum.y}`}
-          cornerRadius={10}
+          cornerRadius={80}
           data={[
             { x: 1, y: 5, label: "Health" },
             { x: 2, y: 4, label: "Food & Beverages"},

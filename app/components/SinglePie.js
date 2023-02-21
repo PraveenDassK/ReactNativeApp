@@ -8,18 +8,18 @@ const SinglePie = ({ percent}) => {
     return  <VictoryPie 
   
     style={{ labels: { fill: "black" } }}
-    colorScale={[ "grey", "red" ]}
+    colorScale={[ "#F8F8F8", "blue" ]}
             innerRadius={100}
             labelRadius={120}
             padding={7}
             padAngle={0 }
-            labels={({ datum }) => datum.y && (datum.x === 2) <= 0 ? null:`${ datum.y * 100}%`}
+            labels={({ datum }) => ``}
             cornerRadius={60}
             startAngle={140}
   endAngle={-140}
             data={[
-                { x: 1, y: 1 - percent, },
-                { x: 2, y: percent, },
+                { x: 1, y: percent > 1 ? 1 : 1 - percent, label: ""},
+                { x: 2, y: percent > 1 ? 0 : percent, label:"" },
              
             ]}
             width={380} height={300}

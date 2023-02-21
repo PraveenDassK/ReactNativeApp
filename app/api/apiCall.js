@@ -267,7 +267,7 @@ const GetTransactionsWeek = async (Id) => {
 }
 
 const GetLimits = async(Id) => {
-    const spend = await (await GetTransactionsMonth()).total
+    const spend = (await GetTransactionsMonth()).total
     const request = await client.get(`https://api.carbonyte.io/transactionmodule/GetBudget?accountId=${Id}`)
     const requestData = request.data.details
     console.log(request)
