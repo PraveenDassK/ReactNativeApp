@@ -8,6 +8,8 @@ import apiCall from "../api/api";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
 import { useFocusEffect } from "@react-navigation/native";
 
+import SinglePie from "../components/SinglePie";
+
 const SpendingLimit = ({ navigation, route }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const authContext = useContext(AuthContext);
@@ -15,7 +17,7 @@ const SpendingLimit = ({ navigation, route }) => {
 
   const [monthLim, setMonLim] = useState(0);
   const [spend, setSpend] = useState(0);
-  const [percent, setPercent] = useState("0%");
+  const [percent, setPercent] = useState(0);
 
   //Calls the API once during load
   useEffect(() => {
@@ -44,11 +46,12 @@ const SpendingLimit = ({ navigation, route }) => {
     //If there is a limit
     //50 is the amount spent
     if (data.monthlyAmount > 0) {
-      const percentamount = Math.floor((spendTotal / data.monthlyAmount) * 100) + "%";
+      // const percentamount = Math.floor((spendTotal / data.monthlyAmount) * 100) + "%";
+      const percentamount = Math.floor((spendTotal / data.monthlyAmount));
       setPercent(percentamount);
       setIsEnabled(true);
     } else {
-      setPercent("0%");
+      setPercent(0);
     }
 
     setMonLim(data.monthlyAmount);
@@ -62,7 +65,7 @@ const SpendingLimit = ({ navigation, route }) => {
   const spendingToggle = () => {
     if (isEnabled) {
       setIsEnabled(false);
-      setPercent("0%");
+      setPercent(0);
       setMonLim(0);
     } else {
       setIsEnabled(true);
@@ -88,8 +91,8 @@ const SpendingLimit = ({ navigation, route }) => {
           marginLeft: "5%",
           backgroundColor: "white",
           borderRadius: 15,
-          height: 500,
-          marginTop: "5%",
+          
+          marginTop: "15%",
         }}
       >
         <View
@@ -98,7 +101,7 @@ const SpendingLimit = ({ navigation, route }) => {
             width: "100%",
             justifyContent: "space-between",
             alignItems: "center",
-            height: 50,
+            height: 60,
             padding: "5%",
           }}
         >
@@ -120,29 +123,44 @@ const SpendingLimit = ({ navigation, route }) => {
             />
           </Pressable>
         </View>
-        <View style={{ width: "100%", marginTop: "20%", justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ fontSize: 25, fontWeight: "700" }}>£{spend}</Text>
+        <View style={{ flex:1, marginTop: "2.5%", justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ fontSize: 25, fontWeight: "700" }}>£{spend.toFixed(2)}</Text>
           <Text style={{ fontSize: 14, marginTop: "1%" }}>Spent this month</Text>
-          <Text style={{ fontSize: 25, marginTop: "2.5%", fontWeight: "700" }}>£{monthLim}</Text>
+          <Text style={{ fontSize: 25, marginTop: "5%", fontWeight: "700" }}>£{monthLim.toFixed(2)}</Text>
           <Text style={{ fontSize: 14, marginTop: "1%" }}>Current spend limit</Text>
-          {monthLim - spend >= 0 ? (
-            <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="#F6F5F8">
+          {monthLim - spend >= 0 ? (<View style={{marginTop: "5%"}} >
+            {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="#F6F5F8">
               <Text style={styles.barText}>test</Text>
+            </View> */}
+            
+            <SinglePie  percent={percent} />
             </View>
-          ) : (
-            <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="red">
-              <Text style={styles.barText}>£{monthLim - spend}</Text>
+          ) : (<View >
+            {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="red">
+              <Text style={styles.barText}>£{(monthLim - spend).toFixed(2)}</Text>
+            </View> */}
+            <SinglePie  percent={percent}/>
             </View>
           )}
-
-          {monthLim - spend >= 0 ? <Text style={{ fontSize: 25, color: "blue", fontWeight: "700" }}> £{monthLim - spend}</Text> : <Text style={{ fontSize: 25, marginTop: "2.5%", color: "red", fontWeight: "700" }}> £{monthLim - spend}</Text>}
+          
+          <View style={{position: "absolute", flex: 1, justifyContent: "center", alignItems: "center", top: 300}}>
+          {monthLim - spend >= 0 ? (
+            <Text style={{ fontSize: 25, color: "blue", fontWeight: "700" }}> £{(monthLim - spend).toFixed(2)}</Text>
+          )
+            : 
+          (
+            <Text style={{ fontSize: 25, marginTop: "2.5%", color: "red", fontWeight: "700" }}> £{(monthLim - spend).toFixed(2)}</Text>
+          )}
           <Text style={{ fontSize: 14, marginTop: "1%" }}>Spendable funds left</Text>
+          </View>
         </View>
-
-        <View style={{ width: "100%", flex: 1, justifyContent: "flex-end", alignItems: "center", marginBottom: "5%" }}>
+      <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", marginBottom: "5%" }}>
           <Image style={{ height: 35, width: 35 }} resizeMode="contain" source={require("../assets/card.png")} />
-          {isEnabled ? <Text style={{ fontSize: 10, marginTop: "2.5%", fontWeight: "700" }}>Limit is toggled on</Text> : <Text style={{ fontSize: 10, marginTop: "2.5%", fontWeight: "700" }}>Limit is toggled off</Text>}
-        </View>
+          {isEnabled ? <View style={{flexDirection: "row", }}>
+            <Text style={{ fontSize: 10, fontWeight: "700", opacity: 0.3, marginRight: "1%"}}>Limit is £{monthLim.toFixed(2)}</Text>
+            <Text onPress={() => navigation.navigate("SetLimit")} style={{fontSize: 10, fontWeight: "700",color: "blue", opacity: 1}}>Change limit</Text>
+          </View> : <Text style={{ fontSize: 10, marginTop: "2.5%", fontWeight: "700" }}>Limit is toggled off</Text>}
+       </View>
       </View>
       <View style={{width: "100%", height: 35}}/>
     </View>

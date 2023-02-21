@@ -14,6 +14,9 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
 import { LineChart } from "react-native-chart-kit";
+
+
+
 import {
   horizontalScale,
   moderateScale,
@@ -24,6 +27,8 @@ import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 import moment from "moment";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
+
+import DoughnutChart from "../components/DoughnutChart";
 
 
 const Analytics = ({ navigation }) => {
@@ -153,9 +158,21 @@ const Analytics = ({ navigation }) => {
 
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
-          <Text style={[styles.titleText, ]}>Analysis</Text>
+          {/* <Text style={[styles.titleText, ]}>Analysis</Text> */}
         </View>
 
+        <View style={{flex:1, justifyContent: "center", alignItems: "center", marginTop: 28,}}>
+          <Text style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>Your average monthly Carbon Footprint is</Text>
+        </View>
+
+       <View>
+       
+        <View style={{position: "absolute", flex:1, justifyContent: "center", alignItems: "center", marginTop: 28, bottom:"40%", left: "20%"}}>
+          <Text style={{fontSize:  50, fontWeight: "700",  width: 250, textAlign: "center"}}>2436</Text>
+          <Text style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>kg CO2</Text>
+        </View>
+
+        <DoughnutChart /></View>
         <View style={styles.balanceContainer}>
           <Text style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</Text>
           <Text
