@@ -1,7 +1,7 @@
 import React,{ useEffect, useState,useContext, useCallback } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert, FlatList, LayoutAnimation } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { FlatList, Swipeable, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import {  Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons} from '@expo/vector-icons'
 import FadeInView from "../components/fadeInview";
 
@@ -105,6 +105,8 @@ const Transactions = ({navigation,route}) => {
       setTransactionData( oldTransactions => {
         return oldTransactions.filter((_, i)=> i !== Id)
       })
+
+      LayoutAnimation.configureNext(layoutAnimConfig)
       
   }
 
@@ -197,6 +199,18 @@ const Transactions = ({navigation,route}) => {
       }, 2000);
     }, [refreshing]);
 
+    const layoutAnimConfig = {
+      duration: 300,
+      update: {
+        type: LayoutAnimation.Types.easeInEaseOut, 
+      },
+      delete: {
+        duration: 100,
+        type: LayoutAnimation.Types.easeInEaseOut,
+        property: LayoutAnimation.Properties.opacity,
+      },
+    };
+
 
   
     return (
@@ -238,9 +252,9 @@ const Transactions = ({navigation,route}) => {
               [{ nativeEvent: {contentOffset: {y: scrollY}}}],
               {useNativeDriver: true }
             )}
-            keyExtractor={item => item.account.sourceId}
+            keyExtractor={item => item.sourceId.toString()}
             renderItem={({item, index}) => {
-              console.log("is",index)
+              console.log("is",item.sourceId.toString())
               const inputRange = [
                 -1,
                 0,
