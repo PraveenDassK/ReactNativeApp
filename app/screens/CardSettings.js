@@ -67,7 +67,7 @@ const CardSettings = ({navigation}) => {
 
         <Pressable style={styles.groupChild} onPress={() => console.log('wtf')}>
           <View
-            style={{width: '80%', marginLeft: '10%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
             <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
               <Text style={{fontWeight: '700'}}>Spending Limit</Text>
@@ -78,7 +78,7 @@ const CardSettings = ({navigation}) => {
 
         <Text style={{marginLeft: '10%', marginTop: '5%', fontSize: 12, fontWeight: '700'}}>Security</Text>
 
-        <View style={{width: '80%', marginLeft: '10%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto'}}>
+        <View style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto'}}>
           <View style={{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/globe.png')} />
             <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
@@ -138,7 +138,7 @@ const CardSettings = ({navigation}) => {
           </View>
         </View>
 
-        <View style={{width: '80%', marginLeft: '10%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto'}}>
+        <View style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto'}}>
           <Pressable onPress={() => navigation.navigate('ReplaceCard')}>
             <View style={{width: '100%', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/reset.png')} />
@@ -161,7 +161,7 @@ const CardSettings = ({navigation}) => {
 
         <Pressable style={styles.groupChild} onPress={() => navigation.navigate("ChooseCardsElite")}>
           <View
-            style={{width: '80%', marginLeft: '10%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
             <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
               <Text style={{fontWeight: '700'}}>Upgrade Card</Text>
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
 
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,
-    marginLeft: GlobalStyles.Title.marginLeft,
-    width: GlobalStyles.Title.width,
+    marginLeft: "5%",
+    width: "90%",
   },
 
   titleText: {
