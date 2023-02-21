@@ -18,6 +18,7 @@ import PersonalAddress from "../screens/PersonalAddress";
 import DOB from "../screens/DOB";
 import Success from "../screens/Success";
 import SplashAnimation from "../screens/SplashAnimation"
+import Privacy from "../screens/Privacy"
 
 // import LoginScreen from "../screens/LoginScreen";
 // import RegisterScreen from "../screens/RegisterScreen";
@@ -46,6 +47,13 @@ const AuthNavigator = () => (
     <Stack.Screen  
     name="SignUpPersonalScreen" 
     component={gestureHandlerRootHOC(SignUpPersonalScreen)}
+    options={{ title: "Sign Up",
+    headerShown: true,
+   }}
+    />
+        <Stack.Screen  
+    name="Privacy" 
+    component={gestureHandlerRootHOC(Privacy)}
     options={{ title: "Sign Up",
     headerShown: true,
    }}
