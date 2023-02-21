@@ -7,7 +7,7 @@ const Onboarding3 = ({navigation}) => {
   return (
     <Pressable
       style={styles.container}
-      onPress={() => navigation.navigate("SignUpPersonalScreen")}
+      onPress={() => navigation.navigate("Privacy")}
     >
       <Text
         style={styles.text}

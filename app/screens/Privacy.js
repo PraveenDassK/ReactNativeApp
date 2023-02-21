@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState} from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import moment from "moment";
-
+import Button from "../components/Button"
 
 const TermsAndConditions = ({route,navigation}) => {
     const [isSelected, setSelection] = useState(false);
@@ -10,6 +10,10 @@ const TermsAndConditions = ({route,navigation}) => {
   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date+' '+time;
+
+  const accept = () => {
+    navigation.navigate("SignUpPersonalScreen")
+  }
  
 console.log(dateTime)
     return(
@@ -416,6 +420,7 @@ Any changes will be immediately posted on Our Site and you will be deemed to hav
 of the Privacy Policy on your first use of Our Site following the alterations. We recommend that you
 check this page regularly to keep to date. This Privacy Policy was last updated on (12/12/2022)
           </Text>
+          <Button title="Close" onPress={() => accept()} />
         </View> 
     </ScrollView>
     )
