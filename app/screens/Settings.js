@@ -178,7 +178,10 @@ const Settings = ({ navigation }) => {
 
         <View style={styles.accountDetailsDiv}>
           <View style={styles.accountDetailsRow}>
-            <Text style={styles.divStart}>Currency</Text>
+            <View style={{flex:1}}>
+              <Text style={styles.divStart}>Currency</Text>
+            </View>
+
             <View style={styles.splitDiv}>
               <Image
                 style={{
@@ -191,10 +194,17 @@ const Settings = ({ navigation }) => {
               />
               <Text style={styles.divEnd}>{currency}</Text>
             </View>
+            
+              
+         
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <Text style={styles.divStart}>Account</Text>
+            <View style={{flex:1}}>
+
+              <Text style={styles.divStart}>Account</Text>
+            </View>
+
             <View style={styles.splitDiv}>
               <Pressable style={styles.helloParent} onPress={copyAccount}>
                 <Image
@@ -207,13 +217,21 @@ const Settings = ({ navigation }) => {
                   source={require("../assets/icon-materialcontentcopy.png")}
                 />
               </Pressable>
+            </View>
+            
+            <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
 
               <Text style={styles.divEnd}>{account}</Text>
             </View>
+
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <Text style={styles.divStart}>Sort Code</Text>
+
+            <View style={{flex:1}}>
+              <Text style={styles.divStart}>Sort Code</Text>
+            </View>
+
             <View style={styles.splitDiv}>
               <Pressable style={styles.helloParent} onPress={copySort}>
                 <Image
@@ -226,13 +244,19 @@ const Settings = ({ navigation }) => {
                   source={require("../assets/icon-materialcontentcopy.png")}
                 />
               </Pressable>
+            </View>
 
+            <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
               <Text style={styles.divEnd}>{sortcode}</Text>
             </View>
+            
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <Text style={styles.divStart}>Iban</Text>
+            <View style={{flex:1}}>
+              <Text style={styles.divStart}>Iban</Text>
+            </View>
+
             <View style={styles.splitDiv}>
               <Pressable style={styles.helloParent} onPress={copyIban}>
                 <Image
@@ -246,14 +270,20 @@ const Settings = ({ navigation }) => {
                 />
               </Pressable>
 
+            </View>
+            <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
               <Text style={styles.divEnd}>{iban}</Text>
             </View>
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <Text style={styles.divStart}>Status</Text>
+            <View style={{flex:1}}>
+              <Text style={styles.divStart}>Status</Text>
+            </View>
             <View style={styles.splitDiv}>
-              <Text style={styles.divEnd}>{status}</Text>
+              <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
+                <Text style={styles.divEnd}>{status}</Text>
+              </View>
             </View>
           </View>
         </View>
@@ -361,9 +391,12 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     borderRadius: 15,
     marginTop: "5%",
+    paddingHorizontal: "5%",
+    paddingVertical :"2.5%"
   },
 
   accountDetailsRow: {
+    flex:1,
     flexDirection: "row",
     width: "100%",
     height: 35,
@@ -372,7 +405,7 @@ const styles = StyleSheet.create({
 
   splitDiv: {
     flexDirection: "row",
-    flex: 9,
+    flex: 2,
     justifyContent: "flex-end",
     height: "100%",
     alignItems: "center",
