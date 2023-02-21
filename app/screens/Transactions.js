@@ -17,6 +17,7 @@ import apiCall from "../api/api"
 import AuthContext from "../auth/context";
 import { hide } from "expo-splash-screen";
 import Animated from "react-native-reanimated";
+import { Button } from "react-native-elements";
 
 const ITEM_SIZE = 50 + 15 * 3
 const Transactions = ({navigation,route}) => {
@@ -209,18 +210,26 @@ const Transactions = ({navigation,route}) => {
             /> */}
         
         <View style={styles.page}>
-          <View style={styles.swipeDown}>
-        <FadeInView>
-          <Text>Pull down to refresh transactions</Text>
-        </FadeInView>
-        <MaterialCommunityIcons name="chevron-down" size={24} color="black" />
-      </View>
+      
 
 
             
             
             <Animated.FlatList 
             showsVerticalScrollIndicator={false}
+            ListFooterComponent={  
+            <View style={{marginBottom: verticalScale(50)}}> 
+            <FadeInView >
+              <Button 
+      
+                  onPress={() => loadData()}
+                  title="Unhide Transactions"
+                  color="#841584"
+                  style={{borderRadius:15}}
+              />
+            </FadeInView>
+            </View>
+         }
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
