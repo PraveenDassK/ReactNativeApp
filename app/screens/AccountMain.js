@@ -706,7 +706,7 @@ const HomeScreenPersonal = ({ navigation }) => {
         />
           <Text style={styles.titleText}>Recent Transactions</Text>
         </View>
-        <View style={[styles.transactionsContainer, styles.boxShadow]}>{transactionTable}</View>
+        <View style={styles.transactionsContainer}>{transactionTable}</View>
         
         {nftimg && <View style={[styles.NFTContainer, styles.boxShadow]}>
           <Text style={styles.titleText}>NFT Assets</Text>
@@ -738,7 +738,7 @@ const HomeScreenPersonal = ({ navigation }) => {
             >
               Congratulations!
             </Text>
-            <View style={{flex:1, alignItems: "center"}}>
+            <View style={{flex:1, alignItems: "center", height: "auto"}}>
             <Text style={{ textAlign: "center", marginTop: verticalScale(6), width: horizontalScale(250) }}>
               You have planted {TotalAmount} trees with advance card purchase
             </Text></View>
