@@ -297,23 +297,23 @@ const HomeScreenPersonal = ({navigation}) => {
       height:"10%"
     },
     titleText:{
-      top: 2,
-      left: 10,
-      fontSize: 18,
+      top: verticalScale(2),
+      left: horizontalScale(10),
+      fontSize: moderateScale(18),
       fontWeight: "700",
     },
     subtitleText:{
-      fontSize: 15,
+      fontSize: moderateScale(15),
     },
     barText:{
-      left:20,
+      left:horizontalScale(20),
       top:"25%",
-      fontSize: 15,
+      fontSize: moderateScale(15),
       fontWeight:"bold"
     },
     blueTitle:{
       color:"blue",
-      fontSize:30,
+      fontSize:moserateScale(30),
       fontWeight:"bold",
     },
     referContainer:{
@@ -357,13 +357,13 @@ const HomeScreenPersonal = ({navigation}) => {
     },
     
     rounded:{
-      borderRadius: 15,
+      borderRadius: moderateScale(15),
     },
     shadow:{
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
-        height: 1,
+        height: verticalScale(1),
       },
       shadowOpacity: 1,
       shadowRadius: 1,
@@ -397,7 +397,7 @@ const HomeScreenPersonal = ({navigation}) => {
     transactionPicture:{
       width:"20%",
       height:"80%",
-      borderRadius: 15,
+      borderRadius: moderateScale(15),
       top:"10%",
       marginLeft: "5%",
     },
@@ -406,17 +406,17 @@ const HomeScreenPersonal = ({navigation}) => {
       width: "80%",
       marginLeft: "10%",
       marginTop: "2.5%",
-      borderRadius: 15,
+      borderRadius: moderateScale(15),
     },
 
       carbonItemDiv:{
           width:"100%",
           height:"150%",
-          borderRadius: 15,
+          borderRadius: moderateScale(15),
       },
       screen: {
           flex: GlobalStyles.DivContainer.flex,
-          height:2100,
+          height: verticalScale(2100),
       },
   
       NavBarTop: {
@@ -441,14 +441,14 @@ const HomeScreenPersonal = ({navigation}) => {
       },
   
       blueLine: {
-          height: 2.5,
+          height: verticalScale(2.5),
           backgroundColor: "#0101FD",
           width: "50%",
-          borderRadius: 25,
+          borderRadius: moderateScale(25),
       },
   
       blackLine: {
-          height: 2.5,
+          height: verticalScale(2.5),
           backgroundColor: "#707070",
           width: "50%"
       },
@@ -484,9 +484,9 @@ const HomeScreenPersonal = ({navigation}) => {
           marginTop: "4.5%",
           width: "80%",
           backgroundColor: "#E4E4FF",
-          height: 150,
+          height: verticalScale(150),
           marginLeft: "10%",
-          borderRadius: 15,
+          borderRadius: moderateScale(15),
           flexDirection: 'row',
           padding: "2.5%",
       },
@@ -506,25 +506,25 @@ const HomeScreenPersonal = ({navigation}) => {
   
       progressIcon: {
           height: "100%",
-          width: 75,
+          width: horizontalScale(75),
           justifyContent: "center"
       },
   
       congratulationsText: {
-          fontSize: 14,
+          fontSize: moderateScale(14),
           fontWeight: "700"
       },
   
       congratulationsSubText: {
           marginTop: "2.5%",
-          fontSize: 12,
+          fontSize: moderateScale(12),
           fontWeight: "400"
   
       },
   
       applyNowText: {
           marginTop: "2.5%",
-          fontSize: 12,
+          fontSize: moderateScale(12),
           fontWeight: "400",
           color: "blue",
       },
@@ -535,7 +535,7 @@ const HomeScreenPersonal = ({navigation}) => {
           backgroundColor: "#FFFFFF",
           height: verticalScale(75),
           marginLeft: "10%",
-          borderRadius: 15,
+          borderRadius: moderateScale(15),
           flexDirection: 'column',
           padding: "2.5%",
           justifyContent: "center"
@@ -544,17 +544,17 @@ const HomeScreenPersonal = ({navigation}) => {
   
       totalWalletBalanceText: {
           textAlign: "center",
-          fontSize: 14,
+          fontSize: moderateScale(14),
       },
   
       BalanceText: {
-          fontSize: 26,
+          fontSize: moderateScale(26),
           textAlign: "center",
       },
   
       dateText: {
           textAlign: "center",
-          fontSize: 14,
+          fontSize: moderateScale(14),
       },
   
       buttonContainer: {
@@ -569,9 +569,9 @@ const HomeScreenPersonal = ({navigation}) => {
       inputBox: {
           backgroundColor: "white",
           width: "32%",
-          height: 60,
+          height: verticalScale(60),
           flexDirection: 'row',
-          borderRadius: 10,
+          borderRadius: moderateScale(10),
   
       },
   
@@ -587,7 +587,7 @@ const HomeScreenPersonal = ({navigation}) => {
       },
   
       inputBoxText: {
-          fontSize: 10,
+          fontSize: moderateScale(10),
           textAlign: "center",
       },
   
@@ -596,26 +596,26 @@ const HomeScreenPersonal = ({navigation}) => {
           height:verticalScale(500),
           marginLeft: "10%",
           marginTop: "2.5%",
-          borderRadius: 15,
+          borderRadius: moderateScale(15),
       },
   
       carbonIcon: {
-          height: 25,
-          width: 25,
+          height: verticalScale(25),
+          width: horizontalScale(25),
           resizeMode: "contain",
       },
   
       carbonSpendingTitleDiv: {
           width: "100%",
-          height: 30,
+          height: verticalScale(30),
           display: 'flex',
           flexDirection: 'row',
       },
   
       carbonSpendingText: {
-          top: 2,
-          left: 10,
-          fontSize: 18,
+          top: verticalScale(2),
+          left: horizontalScale(10),
+          fontSize: moderateScale(18),
           fontWeight: "700",
   
       }

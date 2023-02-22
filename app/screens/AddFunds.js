@@ -17,6 +17,8 @@ const AddFunds = ({navigation}) => {
   const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [cardData, setCard] = useState([]);
+  const [amount, setAmount] = useState("1")
+  const [userData, setCode] = useState("")
 
   //let cardData = [{label: "01614842", value: "01614842"}]
   //Calls the API once during load
@@ -35,7 +37,7 @@ const AddFunds = ({navigation}) => {
     data.forEach(element => {
       console.log(element)
       accountList.push({
-        label: "**** " +element.maskedCardNumber.substr(element.maskedCardNumber.length - 4),
+        label: "**** **** **** " +element.maskedCardNumber.substr(element.maskedCardNumber.length - 4),
         value: element.customerId
       })
     });
@@ -54,8 +56,7 @@ const AddFunds = ({navigation}) => {
   }
 
   //Screen components
-  const [amount, setAmount] = useState("")
-  const [userData, setCode] = useState("")
+
   console.log(data)
   const reciver = "Current Balance : "
   const sortCode =  "Current Balance : "
@@ -135,9 +136,10 @@ const AddFunds = ({navigation}) => {
         />
 
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
-          <View style={[styles.hello4, styles.groupViewPosition]}>
+          <View style={[styles.hello4, styles.groupViewPosition,]}>
           <Pressable
               onPress={() => {
+                
                 setAmount("20")
               }}
             >
@@ -147,9 +149,10 @@ const AddFunds = ({navigation}) => {
             </Pressable>
 
           </View>
-          <View style={[]}>
+          <View style={[{width: 110, left: 160}]}>
           <Pressable
               onPress={() => {
+                console.log("pressed2")
                 setAmount("50")
               }}
             >
@@ -168,6 +171,7 @@ const AddFunds = ({navigation}) => {
           >
             <Pressable
               onPress={() => {
+              
                 setAmount("100")
               }}
             >
@@ -182,8 +186,9 @@ const AddFunds = ({navigation}) => {
           <Text style={[styles.hello7]}>
             Pay{"\n"}
           </Text>
-          <TextInput style={[styles.hello8, styles.helloTypo1]} 
-            placeholder={"£"+payment} keyboardType="numeric"
+          <TextInput 
+          style={[styles.hello8, styles.helloTypo1]} 
+            placeholder={"£"+amount} keyboardType="numeric"
             onChangeText = {newText => setAmount(newText)}
           />
           <View
@@ -193,6 +198,7 @@ const AddFunds = ({navigation}) => {
               styles.lineViewBorder,
             ]}
           />
+         
         </View>
         <Pressable
           style={styles.groupPressable}

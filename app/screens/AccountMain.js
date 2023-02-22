@@ -109,9 +109,9 @@ const HomeScreenPersonal = ({ navigation }) => {
           <View style={{ height: "100%", flexDirection: "row" }}>
             <View
               style={{
-                width: 50,
-                height: 50,
-                borderRadius: 25,
+                width: horizontalScale(50),
+                height: verticalScale(50),
+                borderRadius: moderateScale(25),
                 backgroundColor: "#F6F5F8",
                 borderColor: "black",
                 alignSelf: "center",
@@ -141,7 +141,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 marginLeft: "5%",
               }}
             >
-              <Text style={{ fontSize: 14, fontWeight: "700" }}>
+              <Text style={{ fontSize: moderateScale(14), fontWeight: "700" }}>
                 {dataHold.description.replace("Payment to ", "")}
               </Text>
               <Text style={{opacity: 0.4}}>
@@ -156,7 +156,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 marginRight: "2.5%",
               }}
             >
-              <Text style={{ marginRight: "2.5%",fontSize: 18, fontWeight: "700", color: !dataHold.credit ? "red": "green" }}>
+              <Text style={{ marginRight: "2.5%",fontSize: moderateScale(18), fontWeight: "700", color: !dataHold.credit ? "red": "green" }}>
                 {!dataHold.credit ? "-": "+"} £{dataHold.amount.toFixed(2)}
               </Text>
             </View>
@@ -224,12 +224,12 @@ const HomeScreenPersonal = ({ navigation }) => {
           <Text style={{fontWeight: "700", textAlign: "center"}}>
               Business Account
             </Text>
-            <Text style={{textAlign: "center", fontSize: 11.8, fontWeight: '300'}}>
+            <Text style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300'}}>
               {sortCode} | {accountnumber} 
             </Text>
           <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
           <View style={styles.totalWalletBalanceContainer11}>
-          <Text style={[styles.totalWalletBalanceText11, {position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: 20}]}>
+          <Text style={[styles.totalWalletBalanceText11, {position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20)}]}>
               Carbonyte
             </Text>
             
@@ -249,17 +249,17 @@ const HomeScreenPersonal = ({ navigation }) => {
               source={require("../assets/group-31764.png")}
             />
 
-            <Text style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize:18 ,fontWeight:'400'}]}>
+            <Text style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
               {cardnumber}
             </Text>
               
             <Image 
             resizeMode="contain"
-            style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: 45, width: horizontalScale(45), }}
+            style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
               source={require("../assets/group-31766.png")}
             />
             
-            <Text style={[styles.totalWalletBalanceText11, { position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: 11, wordSpacing: 20}]}>
+            <Text style={[styles.totalWalletBalanceText11, { position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
              {accountname}
             </Text>
             
@@ -269,11 +269,11 @@ const HomeScreenPersonal = ({ navigation }) => {
           <View style={{flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-evenly"}}>
               <TouchableOpacity
               onPress={()=> setHideBalance(prev => !prev)}
-               style={[{ alignItems: "center", justifyContent: "center", backgroundColor: "white", width: 40, height: 40, borderRadius: 20, padding:10}, ]}>
+               style={[{ alignItems: "center", justifyContent: "center", backgroundColor: "white", width: horizontalScale(40), height: verticalScale(40), borderRadius: moderateScale(20), padding: 10}, ]}>
                 <Image 
                   resizeMode="contain" 
                   source={require("../assets/icon-view.png")}
-                  style={{height: 25, width: 25}}
+                  style={{height: verticalScale(25), width: horizontalScale(25)}}
                 />
               </TouchableOpacity>
              
@@ -282,7 +282,7 @@ const HomeScreenPersonal = ({ navigation }) => {
 
 
           
-          {status &&<Text style={{textAlign: "center", fontSize: 11.8, fontWeight: '300', marginTop: 15,marginBottom: 15, color:"red"}}>
+          {status &&<Text style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300', marginTop: verticalScale(15),marginBottom: verticalScale(15), color:"red"}}>
               Card in post
             </Text>
           }
@@ -302,15 +302,15 @@ const HomeScreenPersonal = ({ navigation }) => {
                 <View
                   style={{
                     width: "100%",
-                    height: 30,
+                    height: horizontalScale(30),
                     shadowOpacity: 1,
                     shadowColor: "blue",
                     shadowOffset: { width: 0, height: 0 },
-                    shadowRadius: 5,
+                    shadowRadius: moderateScale(5),
                     elevation: 5,
-                    borderRadius: 10,
+                    borderRadius: moderateScale(10),
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    marginBottom: 10 
+                    marginBottom: verticalScale(10) 
                   }}
                 />
               </View>
@@ -574,9 +574,9 @@ const HomeScreenPersonal = ({ navigation }) => {
             <View style={{ height: "100%", flexDirection: "row" }}>
               <View
                 style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 25,
+                  width: horizontalScale (50),
+                  height: verticalScale(50),
+                  borderRadius: moderateScale(25),
                   backgroundColor: "#F6F5F8",
                   borderColor: "black",
                   alignSelf: "center",
@@ -734,7 +734,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           </View>
           <View width="100%" height="40%">
             <Text
-              style={{ textAlign: "center", fontWeight: "700", fontSize: 24 }}
+              style={{ textAlign: "center", fontWeight: "700", fontSize: moderateScale(24) }}
             >
               Congratulations!
             </Text>
@@ -776,22 +776,22 @@ const styles = StyleSheet.create({
     height: "10%",
   },
   titleText: {
-    top: 2,
-    left: 10,
-    fontSize: 18,
+    top: verticalScale(2),
+    left: horizontalScale(10),
+    fontSize: moderateScale(18),
     fontWeight: "700",
   },
   subtitleText: {
     marginLeft: "5%",
     marginTop: "2.5%",
-    fontSize: 15,
+    fontSize: moderateScale(15),
     fontWeight: "500",
     opacity: 0.5
   },
   barText: {
-    left: 20,
+    left: horizontalScale(20),
     top: "25%",
-    fontSize: 15,
+    fontSize: moderateScale(15),
     fontWeight: "bold",
   },
   blueTitle: {
@@ -800,7 +800,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   blueTitle11: {
-    fontSize: 11.5,
+    fontSize: moderateScale(11.5),
   },
   referContainer: {
     width: GlobalStyles.DivContainer.width,
@@ -829,7 +829,7 @@ const styles = StyleSheet.create({
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(75),
     backgroundColor: "#D8EBF9",
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
 
     flexDirection: "row",
     justifyContent: "space-around",
@@ -853,7 +853,7 @@ const styles = StyleSheet.create({
   },
 
   rounded: {
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
   },
   shadow: {
     shadowColor: "#000",
@@ -874,7 +874,7 @@ const styles = StyleSheet.create({
   },
   estimatedCarbonDiv: {
     backgroundColor: "white",
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
     width: "100%",
     height: verticalScale(65),
     paddingLeft: "5%",
@@ -902,7 +902,7 @@ const styles = StyleSheet.create({
     width: "20%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
     top: "10%",
   },
   transactionsContainer: {
@@ -910,7 +910,7 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     marginTop: "12.5%",
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
   },
 
   carbonItemDiv: {
@@ -919,7 +919,7 @@ const styles = StyleSheet.create({
     height: "auto",
     paddingBottom: "4.5%",
     marginTop: "2.5%",
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
     backgroundColor: "white",
   },
   screen: {
@@ -949,14 +949,14 @@ const styles = StyleSheet.create({
   },
 
   blueLine: {
-    height: 2.5,
+    height: verticalScale(2.5),
     backgroundColor: "#0101FD",
     width: "50%",
-    borderRadius: 25,
+    borderRadius: moderateScale(25),
   },
 
   blackLine: {
-    height: 2.5,
+    height: verticalScale(2.5),
     backgroundColor: "#707070",
     width: "50%",
   },
@@ -992,7 +992,7 @@ const styles = StyleSheet.create({
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#E4E4FF",
     height: verticalScale(125),
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
     flexDirection: "row",
     padding: "2.5%",
   },
@@ -1011,24 +1011,24 @@ const styles = StyleSheet.create({
 
   progressIcon: {
     height: "100%",
-    width: 75,
+    width: horizontalScale(75),
     justifyContent: "center",
   },
 
   congratulationsText: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     fontWeight: "700",
   },
 
   congratulationsSubText: {
     marginTop: "2.5%",
-    fontSize: 12,
+    fontSize: moderateScale(12),
     fontWeight: "400",
   },
 
   applyNowText: {
     marginTop: "2.5%",
-    fontSize: 12,
+    fontSize: moderateScale(12),
     fontWeight: "400",
     color: "blue",
   },
@@ -1038,7 +1038,7 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     backgroundColor: "#FFFFFF",
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
     flexDirection: "column",
     paddingHorizontal: "2.5%",
     paddingVertical:"5.5%",
@@ -1049,63 +1049,63 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     
     backgroundColor: "blue",
-    height: 170,
-    width: 290,
-    borderRadius: 15,
+    height: verticalScale(170),
+    width: horizontalScale(290),
+    borderRadius: moderateScale(15),
     justifyContent: "center",
     padding: "5%",
    alignItems: "center",
-    marginVertical: 20, 
+    marginVertical: verticalScale(20), 
     
   },
 
   totalWalletBalanceText: {
     textAlign: "center",
-    fontSize: 14,
-    marginBottom:8,
+    fontSize: moderateScale(14),
+    marginBottom:verticalScale(8),
     fontWeight: "500"
   },
   totalWalletBalanceText11: {
     textAlign: "left",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: "white",
     textTransform: "uppercase",
     fontWeight: "700"
   },
   BalanceText: {
-    fontSize: 26,
+    fontSize: moderateScale(26),
     textAlign: "center",
     lineHeight: 30,
   },
   BalanceText11: {
-    fontSize: 26,
+    fontSize: moderateScale(26),
     textAlign: "left",
     lineHeight: 30,
   },
 
   dateText: {
     textAlign: "center",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     fontWeight: "500"
   },
   dateText11: {
     textAlign: "left",
-    fontSize: 14,
+    fontSize: moderateScale(14),
   },
   dateText12: {
     textAlign: "left",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     marginTop:5,
   },
   dateText13: {
     textAlign: "left",
-    fontSize: 14,
-    marginTop:5,
+    fontSize: moderateScale(14),
+    marginTop:verticalScale(5),
   },
   dateText14: {
     textAlign: "left",
-    fontSize: 14,
-    marginTop:5,
+    fontSize: moderateScale(14),
+    marginTop:verticalScale(5),
   },
   buttonContainer: {
     marginTop: "2.5%",
@@ -1120,7 +1120,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "23.5%",
     flexDirection: "row",
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
     paddingBottom: verticalScale(18),
     paddingTop: verticalScale(25),
     
@@ -1142,7 +1142,7 @@ const styles = StyleSheet.create({
 
   inputBoxText: {
     marginTop: "5.5%",
-    fontSize: 10,
+    fontSize: moderateScale(10),
     textAlign: "center",
     fontWeight: "500"
   },
@@ -1150,24 +1150,24 @@ const styles = StyleSheet.create({
   carbonSpendingDiv: {},
 
   carbonIcon: {
-    height: 25,
-    width: 25,
+    height: verticalScale(25),
+    width: horizontalScale(25),
     resizeMode: "contain",
   },
 
   carbonSpendingTitleDiv: {
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
-    height: 30,
+    height: verticalScale(30),
     display: "flex",
     flexDirection: "row",
     marginTop: "5%",
   },
 
   carbonSpendingText: {
-    top: 2,
-    left: 10,
-    fontSize: 18,
+    top: verticalScale(2),
+    left: horizontalScale(10),
+    fontSize: moderateScale(18),
     fontWeight: "700",
   },
 
@@ -1231,7 +1231,7 @@ const styles = StyleSheet.create({
   },
 
   transactionDiv: {
-    height: 100,
+    height: verticalScale(100),
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "space-evenly",
@@ -1242,20 +1242,20 @@ const styles = StyleSheet.create({
   NFTContainer: {
     width: "90%",
     marginLeft: "5%",
-    marginRight: 10,
+    marginRight: horizontalScale(10),
     backgroundColor: "#FFFFFF",
     height: "auto",
-    borderRadius: 15,
+    borderRadius: moderateScale(15),
     flexDirection: "column",
     padding: 20,
     justifyContent: "center",
   },
   NFTContainer11: {
-    width: 200,
+    width: horizontalScale(200),
   },
   NFTNameText: {
     textAlign: "center",
-    fontSize: 14,
+    fontSize: moderateScale(14),
   },
   NFTDescriptionText: {
     fontSize: 14,
@@ -1264,13 +1264,13 @@ const styles = StyleSheet.create({
   },
   NFTPriceText: {
     textAlign: "center",
-    fontSize: 14,
+    fontSize: moderateScale(14),
   },
   NFTinputIcon: {
     resizeMode: "contain",
     width: "100%",
-    height: 250,
-    borderRadius: 15
+    height: verticalScale(250),
+    borderRadius: moderateScale(15)
   },
 });
 

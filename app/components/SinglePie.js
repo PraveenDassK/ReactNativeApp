@@ -3,6 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { Svg } from 'react-native-svg';
 import { VictoryPie, VictoryLabel, VictoryTheme } from "victory-native";
 
+
+
 const SinglePie = ({ percent}) => {
     console.log('single',percent)
     return  <VictoryPie 
