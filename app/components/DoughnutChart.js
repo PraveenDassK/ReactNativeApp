@@ -17,11 +17,11 @@ import { VictoryPie, VictoryChart, VictoryTheme } from "victory-native";
           labels={({ datum }) => `# ${datum.y}`}
           cornerRadius={80}
           data={[
-            { x: 1, y: 5, label: "Health" },
-            { x: 2, y: 4, label: "Food & Beverages"},
-            { x: 3, y: 2, label: "Shopping" },
-            { x: 4, y: 3, label: "Transport" },
-            { x: 5, y: 1, label: "Other" }
+            { x: 1, y: 5, label: "H" },
+            { x: 2, y: 4, label: "F & B"},
+            { x: 3, y: 2, label: "S" },
+            { x: 4, y: 3, label: "T" },
+            { x: 5, y: 1, label: "O" }
           ]}
 />
     }

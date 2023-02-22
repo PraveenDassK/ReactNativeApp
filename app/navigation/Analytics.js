@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView, Dimensions } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView, Dimensions, Platform } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from 'react-native-progress';
 import {
@@ -125,6 +125,32 @@ const Analytics = ({navigation}) => {
     return  result
   }
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
 
   console.log(transactionCategories)
   console.log('here',recentTransactions, recentTransactions[0]?.transactionDate?.split("T")[0])
@@ -139,7 +165,7 @@ const Analytics = ({navigation}) => {
 
         </View>
 
-                    <View style={styles.balanceContainer}>
+                    <View style={[styles.balanceContainer, styles.boxShadow]}>
                       <View style={styles.balance}>
                         <Text style={styles.textSub}>Balance</Text>
                       </View>
@@ -296,6 +322,7 @@ const Bazier = ({ priceData, transDate, transObj }) => {
   )
 }
 const styles = StyleSheet.create({
+  boxShadow:{},
   avgSpendContainer: {
     backgroundColor: "white",
     borderRadius: moderateScale(15),

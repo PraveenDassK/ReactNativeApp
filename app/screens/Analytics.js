@@ -154,6 +154,32 @@ const Analytics = ({ navigation }) => {
     {id: 3, title: "Year"}
   ]
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   if(isLoading) {
     return (
          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -186,7 +212,7 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <DoughnutChart /></View>
-        <View style={styles.balanceContainer}>
+        <View style={[styles.balanceContainer, styles.boxShadow]}>
           <Text style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</Text>
           <Text
             style={{
@@ -219,14 +245,14 @@ const Analytics = ({ navigation }) => {
           }}
         >
           <View
-            style={{
+            style={[{
               height: "100%",
               backgroundColor: "white",
               width: "47.5%",
               borderRadius: 15,
               padding: "5%",
               alignSelf: "center",
-            }}
+            }, styles.boxShadow]}
           >
             <Text style={{fontWeight: "500"}}>Total Spend</Text>
             <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
@@ -253,13 +279,13 @@ const Analytics = ({ navigation }) => {
             </View>
           </View>
           <View
-            style={{
+            style={[{
               height: "100%",
               backgroundColor: "white",
               width: "47.5%",
               borderRadius: 15,
               padding: "5%",
-            }}
+            }, styles.boxShadow]}
           >
             <Text style={{fontWeight: "700"}}>Average Monthly Spendings</Text>
             <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
@@ -386,7 +412,7 @@ const Analytics = ({ navigation }) => {
         {recentTransactions.map((transaction, index) => (
           <View key={index}>
             <TouchableOpacity
-              style={[styles.transactionBox, styles.rounded]}
+              style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
               onPress={() => navigation.navigate("Transactions")}
             >
               <View style={{ height: "100%", flexDirection: "row" }}>
@@ -458,7 +484,7 @@ const Analytics = ({ navigation }) => {
         {recentTransactions.map((transaction, index) => (
           <View key={index}>
             <TouchableOpacity
-              style={[styles.transactionBox, styles.rounded]}
+              style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
               onPress={() => navigation.navigate("Transactions")}
             >
               <View style={{ height: "100%", flexDirection: "row" }}>
@@ -628,6 +654,7 @@ const Bazier = ({ graphData }) => {
   );
 };
 const styles = StyleSheet.create({
+  boxShadow:{},
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: GlobalStyles.DivContainer.height,

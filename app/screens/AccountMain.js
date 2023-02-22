@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator, Platform
   
 } from "react-native";
 
@@ -107,7 +107,7 @@ const HomeScreenPersonal = ({ navigation }) => {
       console.log("datahold",dataHold)
       pageShow.push(
         <TouchableOpacity
-          style={[styles.transactionBox, styles.rounded]}
+          style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
           key={i}
           onPress={() => navigation.navigate("Transactions")}
         >
@@ -711,7 +711,7 @@ const HomeScreenPersonal = ({ navigation }) => {
          * @dev Transactions section
          */}
 
-        <View style={styles.carbonSpendingTitleDiv}>
+        <View style={[styles.carbonSpendingTitleDiv, styles.boxShadow]}>
         <Image 
           resizeMode="contain"
           source={require("../assets/icon-withdraw.png")} 
@@ -745,20 +745,22 @@ const HomeScreenPersonal = ({ navigation }) => {
               source={require("../assets/image-tree.png")}
             />
           </View>
-          <View width="100%" height="40%">
+          <View style={{flex: 1}} >
             <Text
               style={{ textAlign: "center", fontWeight: "700", fontSize: moderateScale(24) }}
             >
               Congratulations!
             </Text>
-            <View style={{flex:1, alignItems: "center", height: "auto"}}>
-            <Text style={{ textAlign: "center", marginTop: verticalScale(6), width: horizontalScale(250) }}>
+        
+            <View style={{marginTop: verticalScale(6),  flex:1, alignItems: "center"}}>
+            <Text style={{ textAlign: "center", width: horizontalScale(250) }}>
               You have planted {TotalAmount} trees with advance card purchase
-            </Text></View>
+            </Text>
+            </View>
             <TouchableOpacity onPress={() => navigation.navigate("VirtualEcoSystem")}>
               <Text
                 style={{
-                  marginTop: verticalScale(2),
+                  marginTop: verticalScale(0),
                   textAlign: "center",
                   fontSize: 22,
                   fontWeight: "700",
@@ -832,7 +834,7 @@ const styles = StyleSheet.create({
   carbonContainer: {
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
-    height: verticalScale(300),
+    height: verticalScale(450),
     backgroundColor: "white",
     marginTop: "2.5%",
   },
@@ -937,7 +939,7 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: GlobalStyles.DivContainer.flex,
-    height: "auto",
+   
   },
 
   NavBarTop: {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList} from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList, ActivityIndicator} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
@@ -7,6 +7,7 @@ import apiCall from "../api/apiCall";
 
   const ChooseCardsElite = () => {
 
+    const [isLoading, setIsLoading] = useState(false)
     const [data, setData] = useState([])
     
    useEffect(()=> {
@@ -14,10 +15,20 @@ import apiCall from "../api/apiCall";
    },[])
 
     const loadData = async () => {
+      setIsLoading(true)
       const response = await apiCall.GetSubscriptions()
+      setIsLoading(false)
       setData(response[0])
 
       console.log("cardsApi", response[0].description, response[0].title, response[0].price)
+    }
+
+    if (isLoading) {
+      return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <ActivityIndicator size="large" color="blue" />
+        </View>
+      )
     }
   
 
