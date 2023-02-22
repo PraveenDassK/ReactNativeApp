@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator
   
 } from "react-native";
 
@@ -52,6 +53,8 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [description, setDescription] = useState(null)
   const [price, setPrice] = useState(null)
   const [nftimg, setNftimg] = useState(null)
+
+  const [isLoading, setIsLoading] = useState(false)
   
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
@@ -64,9 +67,11 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   //Gets the data for the user
   const loadData = async () => {
+    setIsLoading(true)
     const userData = await apiCall.GetCustomerDetails(authContext.accountID);
     const cardData = await apiCall.GetCardDetails("686283112");
     const resposeData = await apiCall.GetUserImpact("CC11875");
+    setIsLoading(false)
 
     setcardnumber(cardData.cardNumberMasked)
     setSortCode("00-00-00");
@@ -211,6 +216,14 @@ const HomeScreenPersonal = ({ navigation }) => {
   };
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size="large" />
+      </View>
+    )
+  }
 
   return (
     <ScrollView

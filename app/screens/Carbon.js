@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import {   RefreshControl, StyleSheet, View, Image, FlatList } from "react-native";
+import {   RefreshControl, StyleSheet, View, Image, FlatList, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
@@ -15,6 +15,7 @@ const Carbon = ({ route, navigation }) => {
   const [data, setData] = useState(null);
   const { setUser } = useContext(AuthContext);
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
 
   useEffect(() => {
@@ -22,7 +23,9 @@ const Carbon = ({ route, navigation }) => {
   }, []);
 
   const loadData = async () => {
+    setIsLoading(true)
     const response = await apiCall.GetProjectList();
+    setIsLoading(false)
     setData(response);
   };
 
@@ -57,6 +60,14 @@ const Carbon = ({ route, navigation }) => {
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
+
+  if(isLoading) {
+    return (
+         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+             <ActivityIndicator size="large" />
+         </View>
+    )
+   }
   
   return (
     <Screen style={{ backgroundColor: "#F6F5F8" }}>

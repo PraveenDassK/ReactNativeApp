@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState} from "react";
-import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
@@ -19,6 +19,7 @@ const AddFunds = ({navigation}) => {
   const [cardData, setCard] = useState([]);
   const [amount, setAmount] = useState("1")
   const [userData, setCode] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   //let cardData = [{label: "01614842", value: "01614842"}]
   //Calls the API once during load
@@ -93,6 +94,9 @@ const AddFunds = ({navigation}) => {
     })
   }
   console.log(value)
+
+  
+
   return (
     <View style={styles.requestContact}>
       <Pressable 

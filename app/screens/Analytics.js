@@ -9,7 +9,8 @@ import {
   ScrollView,
   Dimensions,
   Pressable,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback, 
+  ActivityIndicator
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
@@ -44,6 +45,7 @@ const Analytics = ({ navigation }) => {
   const dataPercentages = ["75%", "50%", "40%", "30%"];
   const [recentTransactions, setRecent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const authContext = useContext(AuthContext);
 
 
@@ -52,6 +54,7 @@ const Analytics = ({ navigation }) => {
   }, []);
  
   const loadData = async () => {
+    setIsLoading(true)
     const dataCall = await apiCall.GetAnalysisData(authContext.accountID);
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
@@ -66,6 +69,7 @@ const Analytics = ({ navigation }) => {
 
 
     const graphData = await apiCall.GetTransactionsWeek(authContext.accountID);
+    setIsLoading(false)
     setGraphData(graphData)
     
 
@@ -149,6 +153,15 @@ const Analytics = ({ navigation }) => {
     {id: 2, title: "Month"},
     {id: 3, title: "Year"}
   ]
+
+  if(isLoading) {
+    return (
+         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+             <ActivityIndicator size={'large'}/>
+         </View>
+    )
+   }
+
   return (
     <ScrollView
        refreshControl={

@@ -9,6 +9,7 @@ import {
   Clipboard,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -37,6 +38,7 @@ const Settings = ({ navigation }) => {
   const [iban, setIban] = useState(null);
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
 
   const authContext = useContext(AuthContext);
   const { userID, accountID, setCurrentUser } = useContext(AuthContext);
@@ -54,8 +56,10 @@ const Settings = ({ navigation }) => {
   };
 
   const loadData = async () => {
+    setIsLoading(true)
     const response = await api.GetAccountByCustomer(userID);
     const accountresponse = await api.GetAccount(accountID);
+    setIsLoading(false)
     const data = response.data;
     const accountdata = accountresponse.data.details;
     setPlan("Current Account");
@@ -156,6 +160,14 @@ const Settings = ({ navigation }) => {
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
+
+  if(isLoading) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size="large" />
+      </View>
+    )
+  }
 
   return (
     <ScrollView
