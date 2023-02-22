@@ -1,5 +1,5 @@
 import React,{ useEffect, useState,useContext, useCallback } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert, FlatList, LayoutAnimation } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert, FlatList, LayoutAnimation, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import {  Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons} from '@expo/vector-icons'
@@ -21,6 +21,7 @@ import { Button } from "react-native-elements";
 
 const ITEM_SIZE = 50 + 15 * 3
 const Transactions = ({navigation,route}) => {
+    const [isLoading, setIsLoading] = useState(false)
     const [balanceData, setBalance] = useState(0)
     const [transactionData, setTransactionData] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
@@ -47,8 +48,10 @@ const Transactions = ({navigation,route}) => {
     
 
     const loadData = async () => {
+        setIsLoading(true)
         const responseBalance = await api.GetAccount(authContext.accountID);
         const accountresponse = await api.GetAccount(authContext.accountID);
+        setIsLoading(false)
         const accountdata = accountresponse.data.details
         const data = responseBalance.data.details
         setBalance(data.availableBalance)
@@ -210,6 +213,14 @@ const Transactions = ({navigation,route}) => {
         property: LayoutAnimation.Properties.opacity,
       },
     };
+
+    if(isLoading) {
+      return (
+           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+               <ActivityIndicator color='blue' size="large" />
+           </View>
+      )
+     }
 
 
   
