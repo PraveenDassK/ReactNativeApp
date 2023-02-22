@@ -378,13 +378,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#F194FF',
       },
       buttonClose: {
-        backgroundColor: '#2196F3',
+        backgroundColor: GlobalStyles.Color.blue_100,
       },
       buttonReport: {
         backgroundColor: 'red',
       },
       textStyle: {
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
         textAlign: 'center',
       },
