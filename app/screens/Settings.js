@@ -182,7 +182,7 @@ const Settings = ({ navigation }) => {
               <Text style={styles.divStart}>Currency</Text>
             </View>
 
-            <View style={styles.splitDiv}>
+            <View style={[styles.splitDiv]}>
               <Image
                 style={{
                   resizeMode: "contain",
@@ -194,18 +194,15 @@ const Settings = ({ navigation }) => {
               />
               <Text style={styles.divEnd}>{currency}</Text>
             </View>
-            
-              
-         
           </View>
 
           <View style={styles.accountDetailsRow}>
             <View style={{flex:1}}>
 
-              <Text style={styles.divStart}>Account</Text>
+              <Text style={[styles.divStart]}>Account</Text>
             </View>
 
-            <View style={styles.splitDiv}>
+            <View style={[styles.splitDiv]}>
               <Pressable style={styles.helloParent} onPress={copyAccount}>
                 <Image
                   style={{
@@ -387,7 +384,7 @@ const styles = StyleSheet.create({
   accountDetailsDiv: {
     width: "90%",
     backgroundColor: "white",
-    height: "auto",
+  
     marginLeft: "5%",
     borderRadius: 15,
     marginTop: "5%",
@@ -417,7 +414,7 @@ const styles = StyleSheet.create({
     marginRight: "5%",
   },
   divStart: {
-    marginLeft: "5%",
+    marginLeft: "0%",
   },
 
   button: {
