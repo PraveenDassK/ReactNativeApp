@@ -28,6 +28,7 @@ import authStorage from "../auth/storage";
 import Button from "../components/Button";
 
 const Settings = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true)
   const [account, setAccNum] = useState(null);
   const [sortcode, setSortCode] = useState(null);
   const [fullname, setName] = useState(null);
@@ -38,7 +39,6 @@ const Settings = ({ navigation }) => {
   const [iban, setIban] = useState(null);
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(true)
 
   const authContext = useContext(AuthContext);
   const { userID, accountID, setCurrentUser } = useContext(AuthContext);
@@ -164,7 +164,7 @@ const Settings = ({ navigation }) => {
   if(isLoading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color="blue" />
       </View>
     )
   }

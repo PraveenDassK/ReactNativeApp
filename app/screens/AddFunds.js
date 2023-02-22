@@ -13,13 +13,13 @@ import { Dropdown } from 'react-native-element-dropdown';
 const AddFunds = ({navigation}) => {
   //Card data
   const authContext = useContext(AuthContext)
+  const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState({})
   const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [cardData, setCard] = useState([]);
   const [amount, setAmount] = useState("1")
   const [userData, setCode] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
 
   //let cardData = [{label: "01614842", value: "01614842"}]
   //Calls the API once during load

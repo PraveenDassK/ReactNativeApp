@@ -26,6 +26,7 @@ import moment from "moment";
 
 const HomeScreenPersonal = ({ navigation }) => {
  
+  const [isLoading, setIsLoading] = useState(false)
   //Saves all the data from the API call
   const [data, setData] = useState(null);
   const [balance, setBalance] = useState(null);
@@ -54,7 +55,6 @@ const HomeScreenPersonal = ({ navigation }) => {
   const [price, setPrice] = useState(null)
   const [nftimg, setNftimg] = useState(null)
 
-  const [isLoading, setIsLoading] = useState(false)
   
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
@@ -220,7 +220,7 @@ const HomeScreenPersonal = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color="blue" />
       </View>
     )
   }

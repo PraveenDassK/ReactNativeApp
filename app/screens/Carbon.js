@@ -12,10 +12,10 @@ import AuthContext from "../auth/context";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 const Carbon = ({ route, navigation }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null);
   const { setUser } = useContext(AuthContext);
   const [refreshing, setRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
 
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const Carbon = ({ route, navigation }) => {
   if(isLoading) {
     return (
          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-             <ActivityIndicator size="large" />
+             <ActivityIndicator size="large" color="blue"/>
          </View>
     )
    }

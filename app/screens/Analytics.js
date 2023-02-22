@@ -33,6 +33,7 @@ import DoughnutChart from "../components/DoughnutChart";
 
 
 const Analytics = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [balance, setBal] = useState(0);
   const [transactions, setTrans] = useState([]);
   const [totalSpend, setTotal] = useState(0);
@@ -45,7 +46,6 @@ const Analytics = ({ navigation }) => {
   const dataPercentages = ["75%", "50%", "40%", "30%"];
   const [recentTransactions, setRecent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
   const authContext = useContext(AuthContext);
 
 
@@ -157,7 +157,7 @@ const Analytics = ({ navigation }) => {
   if(isLoading) {
     return (
          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-             <ActivityIndicator size={'large'}/>
+             <ActivityIndicator size={'large'} color="blue" />
          </View>
     )
    }
