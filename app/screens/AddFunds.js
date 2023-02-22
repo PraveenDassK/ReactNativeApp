@@ -149,7 +149,7 @@ const AddFunds = ({navigation}) => {
             </Pressable>
 
           </View>
-          <View style={[{width: 110, left: 160}]}>
+          <View style={[{width: "30%", left: "36%", backgroundColor: "green"}]}>
           <Pressable
               onPress={() => {
                 console.log("pressed2")
