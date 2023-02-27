@@ -283,24 +283,51 @@ const GetSubscriptions = async() =>{
     const requestData = request.data.details
     let returnData = []
     requestData.forEach(card => {
-        let description = card.subcriptionFeatureList[0].benefits
-        .split(
-            "Free 0/0 after that0/0"
-        )
-
+        let benefits = []
+        card.subcriptionFeatureList.forEach(feature => {
+            benefits.push(feature)
+        })
         returnData.push({
-            title: card.name.substring(
-                0,
-                card.name.lastIndexOf("(") - 1
-            ),
-            price: card.name.substring(
-                card.name.indexOf("(") + 1, 
-                card.name.lastIndexOf(")")
-            ),
-            description: description
+            title: card.name,
+            price: card.price ? card.price : 0,
+            description: card.description,
+            id: card.id,
+            benefits: benefits
         })
     })
+    console.log(returnData)
     return returnData
+}
+
+const GetUsersSubscriptions = async(Id) =>{
+    const request = await client.get(`https://api.carbonyte.io/submodule/CustomerSub/GetSubAccount/${Id}`)
+    const requestData = request.data.details
+    return requestData ? requestData : false
+}
+
+const AssignUsersSubscription = async(user, Id) => {
+    const request =  await client.patch(`https://api.carbonyte.io/submodule/CustomerSub/AssignSub/${Id}/${user}`)
+    return request
+}
+
+/**
+ * @dev This function changes the user's subscription
+ * @notice If the user dosen't have a subscription then assign it
+ * @param {String} user The modular ID
+ * @param {Int} Id The ID of the subscription
+ * @returns The response data 
+ */
+const ChangeUsersSubscription = async(user, Id) => {
+    if(!GetUsersSubscriptions(Id)){
+        //If the user DOSEN'T have a subscription
+        const response = await AssignUsersSubscription(user,Id)
+        return response
+    }else{
+        //If the user has a subscription and wants to update
+        const request =  await client.patch(`https://api.carbonyte.io/submodule/CustomerSub/UpdateSubcription/${user}/${Id}/Upgrade`)
+        console.log(request)
+        return request
+    }
 }
 
 /**Beneficiaries */
@@ -440,6 +467,8 @@ export default {
     GetTransactionsMonth,
     GetTransactionsWeek,
     GetSubscriptions,
+    GetUsersSubscriptions,
+    ChangeUsersSubscription,
     RetriveGroupBeneficiariesByID,
     RetriveGroupBeneficiares,
     GetLimits
