@@ -61,6 +61,32 @@ const Carbon = ({ route, navigation }) => {
     }, 2000);
   }, [refreshing]);
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   if(isLoading) {
     return (
          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -79,21 +105,29 @@ const Carbon = ({ route, navigation }) => {
 
       <View style={styles.mainContainer}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           ListHeaderComponent={
             <View style={styles.container}>
               <View style={styles.titleTextRow}>
-                <Text style={styles.titleText}>Remove Carbon,</Text>
-                <Text style={styles.titleText}>Restore Nature</Text>
+                <Text style={[styles.titleText, {lineHeight: 30}]}>Remove Carbon,</Text>
+                <Text style={[styles.titleText, {lineHeight: 30}]}>Restore Nature</Text>
               </View>
-              <View style={styles.treeContainer}></View>
+              <View style={styles.treeContainer}>
+              <Image
+              style={styles.treeImage}
+              resizeMode="contain"
+              source={require("../assets/leafTree.png")}
+            />
+           
+              </View>
               {/* <Text>
                 At Carbonyte we help you to track, reduce and calvulate your C0<Text style={{fontSize: 15, lineHeight: 37}}>2</Text>emission from your daily transcation
             </Text> */}
 
-              <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" onPress={() => navigation.navigate("CarbonTonnesRemoved")} />
+              <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" style={styles.boxShadow} onPress={() => navigation.navigate("CarbonTonnesRemoved")} />
               <View style={styles.subContainer}>
                 <Text numberOflines={3} style={styles.text}>
                   At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transaction
@@ -121,16 +155,15 @@ const Carbon = ({ route, navigation }) => {
               </View>
 
               {cart && cart.length ? (
-                      <Button title="Visit Your Cart" color="babyBlue" onPress={() => navigation.navigate("CarbonCart", cart)} />
-                    ) : <Button title="Visit Your Cart" color="babyBlue" onPress={() => alert("Your cart is empty, please add some items to your basket")} />}
-
+                      <Button title="Visit Your Cart" color="babyBlue"  style={styles.boxShadow} onPress={() => navigation.navigate("CarbonCart", cart)} />
+                    ) : <Button title="Visit Your Cart" color="babyBlue"  style={styles.boxShadow} onPress={() => alert("Your cart is empty, please add some items to your basket")} />}
               <Text style={[styles.textSub, { marginTop: verticalScale(50) }]}>Select your project</Text>
             </View>
           }
           data={data}
           keyExtractor={(data) => data.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.listItems}>
+            <View style={[styles.listItems,  styles.boxShadow]}>
               <Image
                 resizeMode={item.image !== "" ? "contain" : "contain"}
                 style={[
@@ -189,6 +222,11 @@ const Carbon = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow:{},
+  treeImage: {
+    height: verticalScale(300),
+    width: horizontalScale(300)
+  },
   benifitsContainer: {
     width: "100%",
   },
@@ -260,7 +298,7 @@ const styles = StyleSheet.create({
   },
   treeContainer: {
     alignItems: "center",
-    marginTop: verticalScale(10),
+    marginVertical: verticalScale(20),
   },
   subTitle: {
     flexDirection: "row",

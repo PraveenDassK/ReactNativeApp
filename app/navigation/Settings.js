@@ -61,6 +61,32 @@ const Settings = ({navigation}) => {
     Clipboard.setString(sortcode);
   }
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   return (
     <View style={styles.settings}>
       <View style={styles.path33370Parent}>
@@ -149,7 +175,7 @@ const Settings = ({navigation}) => {
           onPress={() => navigation.navigate("ChooseCardsElite")}
         >
           <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
-            <View style={styles.groupInner} />
+            <View style={[styles.groupInner]} />
             <View style={styles.maskGroup236} />
           </View>
           <Text style={[styles.hello8, styles.helloTypo, styles.helloPosition]}>
@@ -160,7 +186,7 @@ const Settings = ({navigation}) => {
           style={[styles.groupContainer, styles.groupParentPosition]}
           onPress={() => navigation.navigate("AccountSettings")}
         >
-          <View style={[styles.rectangleParent, styles.path33370IconPosition]}>
+          <View style={[styles.rectangleParent, styles.path33370IconPosition, ]}>
             <View style={styles.groupInner} />
             <View style={styles.maskGroup236} />
           </View>
@@ -196,6 +222,7 @@ const Settings = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow: {},
   groupLayout: {
     maxHeight: "100%",
     position: "absolute",

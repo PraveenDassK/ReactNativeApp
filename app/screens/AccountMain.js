@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
+import React, { useEffect, useState, useContext, useCallback, useRef } from "react";
 import {
   RefreshControl,
   Text,
@@ -7,7 +7,9 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator, Platform
+  ActivityIndicator, 
+  Platform,
+  
   
 } from "react-native";
 
@@ -22,7 +24,10 @@ import apiweb3 from "../api/web3_api";
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 
+import FadeInView from "../components/fadeInview";
+
 import moment from "moment";
+import AppText from "../components/Text";
 
 const HomeScreenPersonal = ({ navigation }) => {
  
@@ -41,7 +46,7 @@ const HomeScreenPersonal = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const { settings } = useContext(AuthContext);
 
-  const todaydate = moment().format("ll");
+  const todaydate = moment().format("MMMM D, YYYY");
 
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
@@ -125,7 +130,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Text
+              <AppText
                 style={{
                   alignSelf: "center",
                   justifyContent: "center",
@@ -136,7 +141,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 }}
               >
                 {dataHold.description.replace("Payment to ", "")[0]}
-              </Text>
+              </AppText>
             </View>
             <View
               style={{
@@ -146,12 +151,12 @@ const HomeScreenPersonal = ({ navigation }) => {
                 marginLeft: "5%",
               }}
             >
-              <Text style={{ fontSize: moderateScale(14), fontWeight: "700" }}>
+              <AppText style={{ fontSize: moderateScale(14), fontWeight: "700" }}>
                 {dataHold.description.replace("Payment to ", "")}
-              </Text>
-              <Text style={{opacity: 0.4}}>
-                {moment(dataHold.transactionDate).format("MMMM Do, YYYY")}
-              </Text>
+              </AppText>
+              <AppText style={{opacity: 0.4}}>
+                {moment(dataHold.transactionDate).format("MMMM D, YYYY")}
+              </AppText>
             </View>
             <View
               style={{
@@ -161,9 +166,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                 marginRight: "2.5%",
               }}
             >
-              <Text style={{ marginRight: "2.5%",fontSize: moderateScale(18), fontWeight: "700", color: !dataHold.credit ? "red": "green" }}>
+              <AppText style={{ marginRight: "2.5%",fontSize: moderateScale(18), fontWeight: "700", color: !dataHold.credit ? "red": "green" }}>
                 {!dataHold.credit ? "-": "+"} £{dataHold.amount.toFixed(2)}
-              </Text>
+              </AppText>
             </View>
           </View>
         </TouchableOpacity>
@@ -174,7 +179,7 @@ const HomeScreenPersonal = ({ navigation }) => {
   };
 
   let currency = "£";
-  const catNames = ["Health", "Food", "House", "Sping", "Transport"];
+  const catNames = ["Health", "Food", "House", "Shopping", "Transport"];
   const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
 
   /**
@@ -227,56 +232,60 @@ const HomeScreenPersonal = ({ navigation }) => {
 
   return (
     <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
     
       <View style={styles.screen}>
 
         <View style={styles.divContainer}>
-          <Text style={{fontWeight: "700", textAlign: "center"}}>
+          <AppText style={{fontWeight: "700", textAlign: "center", }}>
               Business Account
-            </Text>
-            <Text style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300'}}>
+            </AppText>
+            <AppText style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300'}}>
               {sortCode} | {accountnumber} 
-            </Text>
+            </AppText>
           <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-          <View style={styles.totalWalletBalanceContainer11}>
-          <Text style={[styles.totalWalletBalanceText11, {position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20)}]}>
-              Carbonyte
-            </Text>
-            
-            <Image 
-            resizeMode="contain"
-              style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
-                rotate: "180deg"
-              }]}}
-              source={require("../assets/group-31767.png")}
-            />
-
-            <Image 
-              resizeMode="contain"
-              style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
-                rotate: "90deg"
-              }]}}
-              source={require("../assets/group-31764.png")}
-            />
-
-            <Text style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
-              {cardnumber}
-            </Text>
+          <FadeInView>
+            <View style={styles.totalWalletBalanceContainer11}>
+            <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
+                Carbonyte
+            </AppText>
               
-            <Image 
-            resizeMode="contain"
-            style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
-              source={require("../assets/group-31766.png")}
-            />
-            
-            <Text style={[styles.totalWalletBalanceText11, { position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
-             {accountname}
-            </Text>
-            
-          </View>
+              <Image 
+              resizeMode="contain"
+                style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
+                  rotate: "180deg"
+                }]}}
+                source={require("../assets/group-31767.png")}
+              />
+
+              <Image 
+                resizeMode="contain"
+                style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
+                  rotate: "90deg"
+                }]}}
+                source={require("../assets/group-31764.png")}
+              />
+
+              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
+                {cardnumber}
+              </AppText>
+                
+              <Image 
+              resizeMode="contain"
+              style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
+                source={require("../assets/group-31766.png")}
+              />
+              
+              <AppText style={[styles.totalWalletBalanceText11, {position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
+              {accountname}
+              </AppText>
+              
+            </View>
+          </FadeInView>
+
           </View>
 
           <View style={{flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-evenly"}}>
@@ -295,15 +304,15 @@ const HomeScreenPersonal = ({ navigation }) => {
 
 
           
-          {status &&<Text style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300', marginTop: verticalScale(15),marginBottom: verticalScale(15), color:"red"}}>
+          {status &&<AppText style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300', marginTop: verticalScale(5),marginBottom: verticalScale(5), color:"red"}}>
               Card in post
-            </Text>
+            </AppText>
           }
 
-          <View style={[styles.totalWalletBalanceContainer, styles.boxShadow]}>
-            <Text style={styles.totalWalletBalanceText}>
+          <View style={[styles.totalWalletBalanceContainer, styles.boxShadow, {fontFamily: "Helvetica"}]}>
+            <AppText style={[styles.totalWalletBalanceText, {fontFamily: "Helvetica"}]}>
               Total Wallet Balance
-            </Text>
+            </AppText>
             {settings.hideBalance || hideBalance ? (
               <View
                 style={{
@@ -328,10 +337,10 @@ const HomeScreenPersonal = ({ navigation }) => {
                 />
               </View>
             ) : (
-              <Text style={[styles.BalanceText, styles.blueTitle]}>
-                <Text style={{color: "grey"}}>£</Text>{balance}</Text>
+              <AppText style={[styles.BalanceText, styles.blueTitle]}>
+                <AppText style={{color: "grey"}}>£</AppText>{balance}</AppText>
             )}
-            <Text style={styles.dateText}>{todaydate}</Text>
+            <AppText style={styles.dateText}>{todaydate}</AppText>
           </View>
 
           <View style={styles.buttonContainer}>
@@ -346,7 +355,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   resizeMode="contain"
                   source={require("../assets/add.png")}
                 />
-                <Text style={styles.inputBoxText}>Add Funds</Text>
+                <AppText style={styles.inputBoxText}>Add Funds</AppText>
               </View>
             </TouchableOpacity>
            
@@ -361,7 +370,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   resizeMode="contain"
                   source={require("../assets/send-1.png")}
                 />
-                <Text style={styles.inputBoxText}>Send Money</Text>
+                <AppText style={styles.inputBoxText}>Send Money</AppText>
               </View>
             </TouchableOpacity>
 
@@ -375,7 +384,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   resizeMode="contain"
                   source={require("../assets/icon-outlinecreditcard.png")}
                 />
-                <Text style={styles.inputBoxText}>My Cards</Text>
+                <AppText style={styles.inputBoxText}>My Cards</AppText>
               </View>
             </TouchableOpacity>
 
@@ -389,7 +398,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   resizeMode="contain"
                   source={require("../assets/transfer-1.png")}
                 />
-                <Text style={styles.inputBoxText}>SwitchAccount</Text>
+                <AppText style={styles.inputBoxText}>SwitchAccount</AppText>
               </View>
             </TouchableOpacity>
           </View>
@@ -401,7 +410,7 @@ const HomeScreenPersonal = ({ navigation }) => {
           source={require("../assets/group-31984.png")} 
           style={{ width: horizontalScale(25), height: verticalScale(25)}}
         />
-          <Text style={styles.titleText}>Carbon Spending</Text>
+          <AppText style={[styles.titleText, { fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo"}] }>Carbon Spending</AppText>
         </View>
 
         {/**
@@ -414,13 +423,13 @@ const HomeScreenPersonal = ({ navigation }) => {
           <View style={styles.carbonItemDiv}>
             <View style={[styles.estimatedCarbonDiv, styles.boxShadow]}>
               <View style={{ flex: 3.5 }}>
-                <Text style={styles.blueTitle}>{carbonAmount}</Text>
+                <AppText style={styles.blueTitle}>{carbonAmount}</AppText>
               </View>
               <View style={{ flex: 2.5 }}>
-                <Text>Estimated</Text>
-                <Text style={{ fontWeight: "700", paddingRight: "5%" }}>
+                <AppText>Estimated</AppText>
+                <AppText style={{ fontWeight: "700", paddingRight: "5%" }}>
                   Tonnes of CO2
-                </Text>
+                </AppText>
               </View>
               <View style={{ flex: 5, justifyContent: "flex-end" }}>
                 <Image
@@ -430,7 +439,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               </View>
             </View>
             <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-              <Text style={styles.subtitleText}>{catNames[0]}</Text>
+              <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
               <View
                 style={[
                   styles.carbonSpendingAnalysysBarBackground,
@@ -445,11 +454,11 @@ const HomeScreenPersonal = ({ navigation }) => {
                   width={dataPercentages[0]}
                   backgroundColor="#E4732D"
                 >
-                  <Text style={styles.barText}>{dataPercentages[0]}</Text>
+                  <AppText style={styles.barText}>{dataPercentages[0]}</AppText>
                 </View>
               </View>
 
-              <Text style={styles.subtitleText}>{catNames[1]}</Text>
+              <AppText style={styles.subtitleText}>{catNames[1]}</AppText>
               <View
                 style={[
                   styles.carbonSpendingAnalysysBarBackground,
@@ -464,11 +473,11 @@ const HomeScreenPersonal = ({ navigation }) => {
                   width={dataPercentages[1]}
                   backgroundColor="#F3B53F"
                 >
-                  <Text style={styles.barText}>{dataPercentages[1]}</Text>
+                  <AppText style={styles.barText}>{dataPercentages[1]}</AppText>
                 </View>
               </View>
 
-              <Text style={styles.subtitleText}>{catNames[2]}</Text>
+              <AppText style={styles.subtitleText}>{catNames[2]}</AppText>
               <View
                 style={[
                   styles.carbonSpendingAnalysysBarBackground,
@@ -483,11 +492,11 @@ const HomeScreenPersonal = ({ navigation }) => {
                   width={dataPercentages[2]}
                   backgroundColor="#DC85F5"
                 >
-                  <Text style={styles.barText}>{dataPercentages[2]}</Text>
+                  <AppText style={styles.barText}>{dataPercentages[2]}</AppText>
                 </View>
               </View>
 
-              <Text style={styles.subtitleText}>{catNames[3]}</Text>
+              <AppText style={styles.subtitleText}>{catNames[3]}</AppText>
               <View
                 style={[
                   styles.carbonSpendingAnalysysBarBackground,
@@ -502,11 +511,11 @@ const HomeScreenPersonal = ({ navigation }) => {
                   width={dataPercentages[3]}
                   backgroundColor="#5888F5"
                 >
-                  <Text style={styles.barText}>{dataPercentages[3]}</Text>
+                  <AppText style={styles.barText}>{dataPercentages[3]}</AppText>
                 </View>
               </View>
 
-              <Text style={styles.subtitleText}>{catNames[4]}</Text>
+              <AppText style={styles.subtitleText}>{catNames[4]}</AppText>
               <View
                 style={[
                   styles.carbonSpendingAnalysysBarBackground,
@@ -521,7 +530,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   width={dataPercentages[4]}
                   backgroundColor="#5AC661"
                 >
-                  <Text style={styles.barText}>{dataPercentages[4]}</Text>
+                  <AppText style={styles.barText}>{dataPercentages[4]}</AppText>
                 </View>
               </View>
             </View>
@@ -533,14 +542,14 @@ const HomeScreenPersonal = ({ navigation }) => {
           source={require("../assets/group-31984.png")} 
           style={{ width: horizontalScale(25), height: verticalScale(25)}}
         />
-            <Text style={styles.titleText}>Carbon Assets </Text>
+            <AppText style={[styles.titleText, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo"}]}>Carbon Assets </AppText>
           </View>
           <View style={[styles.carbonAssetsDiv]}>
             <View style={styles.carbonAssetsDivLeft}>
-              <Text style={styles.largeNumber}>{TokenAmount}</Text>
+              <AppText style={styles.largeNumber}>{TokenAmount}</AppText>
               <View>
-                <Text>Trees</Text>
-                <Text style={{ fontWeight: "700" }}>Planted</Text>
+                <AppText>Trees</AppText>
+                <AppText style={{ fontWeight: "700" }}>Planted</AppText>
               </View>
             </View>
 
@@ -558,19 +567,19 @@ const HomeScreenPersonal = ({ navigation }) => {
             ></View>
 
             <View style={styles.carbonAssetsDivRight}>
-              <Text style={styles.largeNumber}>{animalsSaved}</Text>
+              <AppText style={styles.largeNumber}>{animalsSaved}</AppText>
               <View style={{ fontWeight: "700" }}>
-                <Text>Animals </Text>
-                <Text style={{ fontWeight: "700" }}>Saved</Text>
+                <AppText>Animals </AppText>
+                <AppText style={{ fontWeight: "700" }}>Saved</AppText>
               </View>
             </View>
           </View>
           <View style={styles.subTextRow}>
-            <Text style={styles.subTextAssets}>Assets</Text>
-            <Text style={styles.subTextDescriptor}>
+            <AppText style={styles.subTextAssets}>Assets</AppText>
+            <AppText style={styles.subTextDescriptor}>
               (1 Tonne = 1 CO2 Token)
-            </Text>
-            <Text style={styles.subTextToken}>Token</Text>
+            </AppText>
+            <AppText style={styles.subTextToken}>Token</AppText>
           </View>
           <View style={{ marginTop: "2.5%" }} />
           <TouchableOpacity
@@ -601,7 +610,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}>
-                <Text
+                <AppText
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
@@ -609,7 +618,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   }}
                 >
                   {projects[0]?.name?.charAt(0)}
-                </Text>
+                </AppText>
               </View>
               </View>
               <View
@@ -620,10 +629,10 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginLeft: "5%",
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
-                <Text style={{fontWeight: "400"}}>{projects[0]?.name}</Text> £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
-                </Text>
-                <Text style={{opacity: 0.4}}>{moment(projects[0]?.lastUpdated).format("MMMM Do, YYYY")}</Text>
+                <AppText style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
+                <AppText style={{fontWeight: "400"}}>{projects[0]?.name}</AppText> £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
+                </AppText>
+                <AppText style={{opacity: 0.4}}>{moment(projects[0]?.lastUpdated).format("MMMM D, YYYY")}</AppText>
               </View>
               <View
                 style={{
@@ -633,9 +642,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginRight: "2.5%",
                 }}
               >
-                <Text style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
+                <AppText style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
                   1
-                </Text>
+                </AppText>
               </View>
             </View>
           </TouchableOpacity>
@@ -665,7 +674,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
-                <Text
+                <AppText
                   style={{
                     alignSelf: "center",
                     justifyContent: "center",
@@ -676,7 +685,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                   }}
                 >
                   {projects[1]?.name?.charAt(0)}
-                </Text>
+                </AppText>
               </View>
               <View
                 style={{
@@ -686,10 +695,10 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginLeft: "5%",
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
-                  <Text style={{fontWeight: "400"}}>{projects[1]?.name} </Text>£{projects[1]?.displayAssetPrice} / {projects[1]?.type}
-                </Text>
-                <Text style={{opacity: 0.4}}>{moment(projects[1]?.lastUpdated).format("MMMM Do, YYYY")}</Text>
+                <AppText style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
+                  <AppText style={{fontWeight: "400"}}>{projects[1]?.name} </AppText>£{projects[1]?.displayAssetPrice} / {projects[1]?.type}
+                </AppText>
+                <AppText style={{opacity: 0.4}}>{moment(projects[1]?.lastUpdated).format("MMMM D, YYYY")}</AppText>
               </View>
               <View
                 style={{
@@ -699,9 +708,9 @@ const HomeScreenPersonal = ({ navigation }) => {
                   marginRight: "2.5%",
                 }}
               >
-                <Text style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
+                <AppText style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
                   1
-                </Text>
+                </AppText>
               </View>
             </View>
           </TouchableOpacity>
@@ -717,22 +726,22 @@ const HomeScreenPersonal = ({ navigation }) => {
           source={require("../assets/icon-withdraw.png")} 
           style={{ width: horizontalScale(25), height: verticalScale(25)}}
         />
-          <Text style={styles.titleText}>Recent Transactions</Text>
+          <AppText style={[styles.titleText, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo"}]}>Recent Transactions</AppText>
         </View>
         <View style={styles.transactionsContainer}>{transactionTable}</View>
         
         {nftimg && <View style={[styles.NFTContainer, styles.boxShadow]}>
-          <Text style={styles.titleText}>NFT Assets</Text>
+          <AppText style={[styles.titleText, {fontWeight: Platform.OS === "android" ? "normal" : "700", fontFamily: "Typo"}]}>NFT Assets</AppText>
           <ScrollView style={{width: "100%", marginTop: "5%"}}>
 
           <Image style={styles.NFTinputIcon} source={{uri:nftimg}} />
 
-          <Text style={styles.NFTNameText}>
-            <Text style={{fontWeight:'bold'}}>{name}</Text> 
-          </Text>
-          <Text style={styles.NFTPriceText}>
-          <Text style={{fontWeight:'bold'}}>{price}</Text> 
-        </Text>
+          <AppText style={styles.NFTNameText}>
+            <AppText style={{fontWeight:'bold'}}>{name}</AppText> 
+          </AppText>
+          <AppText style={styles.NFTPriceText}>
+          <AppText style={{fontWeight:'bold'}}>{price}</AppText> 
+        </AppText>
     
           </ScrollView>
         </View>}
@@ -744,21 +753,26 @@ const HomeScreenPersonal = ({ navigation }) => {
               resizeMode="contain"
               source={require("../assets/image-tree.png")}
             />
+            <View style={{position: "absolute",height: 350, width: 350, top:130, left:5}}>
+            <Image 
+              resizeMode="contain"
+              source={require("../assets/group-32017.png")}
+              style={{ height: 375, width: 380,}}
+            /></View>
           </View>
           <View style={{flex: 1}} >
-            <Text
+            <AppText
               style={{ textAlign: "center", fontWeight: "700", fontSize: moderateScale(24) }}
             >
               Congratulations!
-            </Text>
-        
+            </AppText>
             <View style={{marginTop: verticalScale(6),  flex:1, alignItems: "center"}}>
-            <Text style={{ textAlign: "center", width: horizontalScale(250) }}>
+            <AppText style={{ textAlign: "center", width: horizontalScale(250) }}>
               You have planted {TotalAmount} trees with advance card purchase
-            </Text>
+            </AppText>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate("VirtualEcoSystem")}>
-              <Text
+              <AppText
                 style={{
                   marginTop: verticalScale(0),
                   textAlign: "center",
@@ -769,7 +783,7 @@ const HomeScreenPersonal = ({ navigation }) => {
                 }}
               >
                 View more
-              </Text>
+              </AppText>
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: "5%" }}></View>

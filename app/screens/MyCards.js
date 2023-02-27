@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, Modal } from "react-native";
+import { Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, Modal, TouchableWithoutFeedback } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
@@ -96,7 +96,8 @@ const MyCards = ({ navigation }) => {
     console.log(transaction);
     return (
       <Modal
-        animationType="slide"
+      
+        animationType="none"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -104,6 +105,11 @@ const MyCards = ({ navigation }) => {
           setModalVisible(!modalVisible);
         }}
       >
+        <TouchableOpacity
+      style={{flex:1}}
+      onPress={() => {
+        setModalVisible(false)
+      }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>From: {transaction.account.customerName}</Text>
@@ -128,6 +134,7 @@ const MyCards = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+        </TouchableOpacity>
       </Modal>
     );
   };
@@ -163,9 +170,9 @@ const MyCards = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.mainContainer}>
-        <View style={styles.titleTextRow}>
+        {/* <View style={styles.titleTextRow}>
           <Text style={styles.titleText}>My Cards</Text>
-        </View>
+        </View> */}
 
         <View style={{ alignItems: "center", marginTop: "5%", height: "auto"}}>
           <Image style={{width: 200, resizeMode: "contain"}} source={require("../assets/cardLion.png")} />

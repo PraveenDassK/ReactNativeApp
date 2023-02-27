@@ -1,6 +1,6 @@
 import React,{ useEffect, useState, useContext } from "react";
 import * as ImagePicker from "expo-image-picker"
-import { StyleSheet, View, Image, TouchableHighlight, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, TouchableHighlight, TouchableOpacity, ActivityIndicator } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import GlobalStyles from "../../GlobalStyles";
@@ -18,22 +18,26 @@ const ProofOfResidency = ({ navigation }) => {
 
   const { user, setUser } = useContext(AuthContext)
 
+  const[isLoading, setIsLoading] = useState(false)
   const [imageUri, setImageUri] = useState();
   const [frontImage, setFrontImage] = useState(null)
   const [backImage, setBackImage] = useState(null)
   const [documentType, setDocumentType] = useState(null)
 
   const requestPermission = async () => {
+
     const { granted } = await ImagePicker.requestCameraPermissionsAsync()
     if (!granted) alert('You need to enable permission to access the library')
   }
 
   const selectImage = async (document) => {
     try {
+      setIsLoading(true)
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true
       })
+      setIsLoading(false)
 
       console.log(result.assets[0])
      
@@ -50,10 +54,12 @@ const ProofOfResidency = ({ navigation }) => {
 
   const selectImage2 = async () => {
     try {
+      setIsLoading(true)
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true
       })
+      setIsLoading(false)
 
       console.log(result.assets[0])
      
@@ -70,7 +76,9 @@ const ProofOfResidency = ({ navigation }) => {
   const handleSubmit = async ({ phoneNumber }) => {
     const clientReference = phoneNumber
 
+    setIsLoading(true)
     const result = await w2GlobalAPI.verifyDocument(clientReference, documentType, frontImage, backImage)
+    setIsLoading(false)
 
     console.log('what is this', result.ok, result.data[0].result)
    
@@ -85,6 +93,14 @@ const ProofOfResidency = ({ navigation }) => {
   useEffect(() => {
     requestPermission();
   }, [])
+
+    if (isLoading) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size="large" color="blue" />
+      </View>
+    )
+  }
 
 
   return (

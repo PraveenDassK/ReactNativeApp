@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import { TransitionPresets } from '@react-navigation/stack';
 
@@ -82,7 +83,9 @@ import PinCart from "../screens/PinCart"
 /**
  * @notice Screens on the settings page to navigate to
  */
+
 import ChooseCardsElite from "../screens/ChooseCardsElite"
+import ChooseCardsPremium from "../screens/ChooseCardsPremium"
 import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
 import AccountSettings from "../screens/AccountSettings"
 import Transactions from "../screens/Transactions"
@@ -109,10 +112,11 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("")
 
   const insets = useSafeAreaInsets();
+
   return (
     <View style={{ 
       flexDirection: 'row',
-      height: 65,
+      height: 80,
       alignItems: "flex-end",
       backgroundColor: "#F6F5F8",
       marginBottom: "1.5%"
@@ -174,13 +178,16 @@ function MyTabBar({ state, descriptors, navigation, position }) {
             style={{ flex: 1 }}
           ><Animated.View style={{
           
-            paddingVertical: 6,
+            paddingVertical: 0,
+            
           
           }}>
             <Animated.Text  
               style={{ opacity, 
               textAlign:"center",
-              fontWeight: isFocused ? "bold" : "500",
+              fontFamily:"Helvetica",
+              fontWeight: isFocused ? "bold" : "normal",
+              
               
               
             }}>
@@ -221,6 +228,14 @@ const StackNavigator = () => {
      gestureResponseDistance: 100,
      gestureDirection: "horizontal",
      initialRouteName:"Account",
+     headerTitleStyle: {
+      fontFamily: "Typo",
+      fontWeight: "normal",
+      fontSize: 28,
+      color: "#00035b"
+    },
+    headerBackTitleVisible: false,
+    headerStyle: {backgroundColor: "transparent"}
     }} 
     >
       <Stack.Screen 
@@ -237,7 +252,13 @@ const StackNavigator = () => {
         name="AddFunds" 
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
-          title: "AddFunds",
+          title: "Add Funds",
+          presentation: 'modal',
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false,
+          
         }}
       />
 
@@ -263,8 +284,12 @@ const StackNavigator = () => {
         name="SendMoney" 
         component={gestureHandlerRootHOC(SendMoney)}
         options={{
-          title: "SendMoney",
-       
+          title: "Send Money",
+          presentation: 'modal',
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false
         }}
       />
 
@@ -325,11 +350,14 @@ const StackNavigator = () => {
         name="MyCards" 
         component={gestureHandlerRootHOC(MyCards)}
         options={{
-          title: "MyCards",
+          title: "My Cards",
           presentation: 'modal' ,
           headerShown: true,
-    gestureEnabled: true,
-    ...TransitionPresets.ModalTransition,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false,
+          headerStyle: {backgroundColor: "transparent"}
         }}
       
       />
@@ -444,14 +472,24 @@ const StackNavigator = () => {
        
         }}
       />
-
 <Stack.Screen 
         name="ChooseCardsElite" 
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
+        component={gestureHandlerRootHOC(ChooseCardsEliteNavigator)}
         options={{
-          title: "ChooseCardsElite",
+          title: "Choose Cards",
+         
        
         }}
+      />
+<Stack.Screen 
+        name="ChooseCardsPremium" 
+        component={gestureHandlerRootHOC(ChooseCardsPremium)}
+        options={{
+          title: "ChooseCardsElite",
+          presentation: "transparentModal"
+       
+        }}
+        
       />
       <Stack.Screen 
         name="AccountSettings" 
@@ -498,9 +536,15 @@ const StackNavigator = () => {
         name="SwitchAccounts" 
         component={gestureHandlerRootHOC(SwitchAccounts)}
         options={{
-          title: "SwitchAccounts",
-        
+          title: "Switch Accounts",
+          presentation: 'modal',
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false,
+          headerStyle: {backgroundColor: "transparent"},
         }}
+        
       />
 
 
@@ -532,7 +576,7 @@ const ChooseCardsEliteNavigator = () => {
     <Tab.Navigator >
       <Tab.Screen
         name="Standard" 
-        component={gestureHandlerRootHOC(ChooseCardsStandard5)}
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
       />
       <Tab.Screen
         name="Premium" 

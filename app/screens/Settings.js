@@ -26,6 +26,7 @@ import api from "../api/api_list";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import Button from "../components/Button";
+import { verticalScale } from "../config/metrics";
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -161,6 +162,32 @@ const Settings = ({ navigation }) => {
     }, 2000);
   }, [refreshing]);
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   if(isLoading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -171,24 +198,25 @@ const Settings = ({ navigation }) => {
 
   return (
     <ScrollView
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
           <Text style={styles.titleText}>{fullname}</Text>
         </View>
 
-        <View style={styles.subTextRow}>
+        <View style={[styles.subTextRow, {marginTop: verticalScale(1)}]}>
           <Text style={styles.subText}>{plan}</Text>
         </View>
 
         <View style={styles.subTextRow}>
-          <Text style={styles.subText}>Account Details</Text>
+          <Text style={[styles.subText, {fontWeight: "normal"}]}>Account Details</Text>
         </View>
 
-        <View style={styles.accountDetailsDiv}>
+        <View style={[styles.accountDetailsDiv, styles.boxShadow]}>
           <View style={styles.accountDetailsRow}>
             <View style={{flex:1}}>
               <Text style={styles.divStart}>Currency</Text>
@@ -297,9 +325,10 @@ const Settings = ({ navigation }) => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={[styles.button]}>
           <Button
             title="My Plan"
+            style={styles.boxShadow}
             color="babyBlue"
             onPress={() => navigation.navigate("ChooseCardsElite")}
           />
@@ -307,6 +336,7 @@ const Settings = ({ navigation }) => {
         <TouchableOpacity style={styles.button}>
           <Button
             title="Account"
+            style={styles.boxShadow}
             color="babyBlue"
             onPress={() => navigation.navigate("AccountSettings")}
           />
@@ -314,6 +344,7 @@ const Settings = ({ navigation }) => {
         <TouchableOpacity style={styles.button}>
           <Button
             title="Security & Privacy"
+            style={styles.boxShadow}
             color="babyBlue"
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
           />
@@ -321,22 +352,25 @@ const Settings = ({ navigation }) => {
         <TouchableOpacity style={styles.button}>
           <Button
             title="About Us"
+            style={styles.boxShadow}
             color="babyBlue"
             onPress={() => navigation.navigate("AboutUs")}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-                  <Button
-                    title="Faq"
-                    color="babyBlue"
-                    onPress={() => navigation.navigate("Faq")}
-                  />
+          <Button
+            title="Faq"
+            style={styles.boxShadow}
+            color="babyBlue"
+            onPress={() => navigation.navigate("Faq")}
+          />
             </TouchableOpacity>
 
           <TouchableOpacity style={styles.button}>
           <Button
             title="Reset app pin"
+            style={styles.boxShadow}
             color="babyBlue"
             onPress={() => navigation.navigate("PinSetApp")}
           />
@@ -364,6 +398,7 @@ const Settings = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow: {},
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: GlobalStyles.DivContainer.height,
@@ -387,7 +422,7 @@ const styles = StyleSheet.create({
   },
 
   subTextRow: {
-    marginTop: GlobalStyles.RowText.marginTop,
+    marginTop: verticalScale(50),
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     fontColor: GlobalStyles.RowText.fontColor,
@@ -399,7 +434,8 @@ const styles = StyleSheet.create({
   
     marginLeft: "5%",
     borderRadius: 15,
-    marginTop: "5%",
+    marginTop: "1%",
+    marginBottom: "5%",
     paddingHorizontal: "5%",
     paddingVertical :"2.5%"
   },

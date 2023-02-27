@@ -56,9 +56,9 @@ const SwitchAccounts = ({navigation,route}) => {
 
     return (
         <View style={styles.page}>
-            <View style={styles.titleTextRow}>
+            {/* <View style={styles.titleTextRow}>
                 <Text style={styles.titleText}>Switch Account</Text>
-            </View>            
+            </View>             */}
             
             <View style={styles.subTextDiv}>
                 <Text style={styles.subText}>Current Account: {authContext.accountID}</Text>

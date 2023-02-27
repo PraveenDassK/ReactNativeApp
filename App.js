@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef  } from "react";
-import { Text, View, Button, Platform } from 'react-native';
+import { Text, View, Button, Platform ,  ActivityIndicator} from 'react-native';
 import {AppState} from 'react-native';
+import { useFonts } from 'expo-font';
 // import 'expo-dev-menu';
 import 'react-native-gesture-handler';
-
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-
-
-
-
 import { NavigationContainer } from "@react-navigation/native";
 import jwtDecode from 'jwt-decode'
 import AppLoading from 'expo-app-loading';
@@ -23,6 +19,8 @@ import authStorage from "./app/auth/storage";
 
 
 
+
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -32,6 +30,11 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+
+  const [loaded] = useFonts({
+    Helvetica: require('./app/assets/fonts/Helvetica.ttf'),
+    Typo: require("./app/assets/fonts/typo-grotesk.regular.otf")
+  });
 
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
@@ -54,6 +57,15 @@ const [settings, setSettings] = useState({
   hideBalance:false,
   transactionSharing:false
 })
+
+useEffect(() => {
+  const prepare = async () => {
+    await SplashScreen.preventAutoHideAsync()
+    
+  }
+  prepare()
+  
+},[])
 
 useEffect(() => {
   registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -139,6 +151,16 @@ const restoreSignIn = async () => {
 
 if(!AppState.currentState) {
  setIsAuth(null)
+}
+
+if (!loaded) {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <ActivityIndicator size="large" color="blue" />
+    </View>
+  )
+} else {
+  SplashScreen.hideAsync()
 }
 
   return (

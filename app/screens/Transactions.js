@@ -214,6 +214,32 @@ const Transactions = ({navigation,route}) => {
       },
     };
 
+    const generateBoxShadowStyle = (
+      xOffset,
+      yOffset,
+      shadowColorIos,
+      shadowOpacity,
+      shadowRadius,
+      elevation,
+      shadowColorAndroid,
+    ) => {
+      if (Platform.OS === 'ios') {
+        styles.boxShadow = {
+          shadowColor: shadowColorIos,
+          shadowOffset: {width: xOffset, height: yOffset},
+          shadowOpacity,
+          shadowRadius,
+        };
+      } else if (Platform.OS === 'android') {
+        styles.boxShadow = {
+          elevation,
+          shadowColor: shadowColorAndroid,
+        };
+      }
+    };
+  
+    generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
     if(isLoading) {
       return (
            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -283,7 +309,7 @@ const Transactions = ({navigation,route}) => {
                 renderLeftActions={()=> renderLeftActions(index)}
                 renderRightActions={() =>renderRightActions(index)}>
                 <Pressable
-                  style={[styles.transactionBox, styles.rounded]}
+                  style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
                   
                   onPress={() => showTransaction(index)}>
                   <View style={{height: "100%", flexDirection: "row",}}>
@@ -308,6 +334,7 @@ const Transactions = ({navigation,route}) => {
           </Swipeable>
           </Animated.View>
             }}
+           
 
             />
             {/* <ScrollView 
@@ -330,6 +357,7 @@ const Transactions = ({navigation,route}) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow:{},
     page:{
        flex:1,
         marginHorizontal: "5%",

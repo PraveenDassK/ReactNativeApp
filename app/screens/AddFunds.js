@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
-    color: GlobalStyles.Color.gray_700,
+    color: "blue",
   },
   lineView: {
   top: verticalScale(110),

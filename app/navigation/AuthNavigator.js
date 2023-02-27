@@ -45,15 +45,15 @@ const AuthNavigator = () => (
     <Stack.Screen  name="Onboarding3" component={gestureHandlerRootHOC(Onboarding3)}/>
 
     <Stack.Screen  
-    name="SignUpPersonalScreen" 
-    component={gestureHandlerRootHOC(SignUpPersonalScreen)}
-    options={{ title: "Sign Up",
+    name="Privacy" 
+    component={gestureHandlerRootHOC(Privacy)}
+    options={{ title: "Privacy",
     headerShown: true,
    }}
     />
-        <Stack.Screen  
-    name="Privacy" 
-    component={gestureHandlerRootHOC(Privacy)}
+    <Stack.Screen  
+    name="SignUpPersonalScreen" 
+    component={gestureHandlerRootHOC(SignUpPersonalScreen)}
     options={{ title: "Sign Up",
     headerShown: true,
    }}

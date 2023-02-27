@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions} from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard} from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -89,7 +89,9 @@ const SignUpPersonalScreen = ({ navigation }) => {
   }))
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <Animated.View style={[{flex:1},animatedContainerStyle]}>
+    
     <Screen>
       {/* <SwipeUp> */}
     <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
@@ -201,6 +203,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
       </PanGestureHandler> 
     </Screen>
     </Animated.View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -1,5 +1,5 @@
-import React,{ useEffect, useState,useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import React,{ useEffect, useState,useContext, useRef } from "react";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView, Animated} from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
@@ -10,6 +10,8 @@ import AuthContext from "../auth/context";
 import moment from 'moment';
 
 const HomeScreenPersonal = ({navigation}) => {
+
+    const fadeAnim = useRef(new Animated.Value(0)).current
     //Saves all the data from the API call
     const [data, setData] = useState(null)
     const [balance, setBalance] = useState(null)
@@ -28,6 +30,14 @@ const HomeScreenPersonal = ({navigation}) => {
         loadData()
       })
     },[])
+
+    useEffect(() => {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 10000,
+        useNativeDriver: true,
+      }).start();
+    }, [fadeAnim]);
   
     //Gets the data for the user
     const loadData = async () => {

@@ -12,6 +12,8 @@ import {
   View,
   TextInput,
   Pressable,
+  TouchableWithoutFeedback,
+   Keyboard
 } from "react-native";
 
 import { Formik } from "formik";
@@ -132,6 +134,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
     }, [])
   );
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
         <Text style={styles.titleText}>OTP Verification</Text>
@@ -293,12 +296,11 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
                               <Button title="Verify" color="babyBlue" onPress={handleSubmit}/>
                           </View>
 
-            <Text style={styles.swipeUp}>
-                      Swipe Up if already have an account
-                    </Text>
+           
 
 
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

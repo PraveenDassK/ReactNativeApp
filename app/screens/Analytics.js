@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   RefreshControl,
-  Text,
+Text,
   StyleSheet,
   Image,
   View,
@@ -30,6 +30,7 @@ import moment from "moment";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 
 import DoughnutChart from "../components/DoughnutChart";
+import AppText from "../components/Text";
 
 
 const Analytics = ({ navigation }) => {
@@ -190,31 +191,32 @@ const Analytics = ({ navigation }) => {
 
   return (
     <ScrollView
-       refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
 
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
-          {/* <Text style={[styles.titleText, ]}>Analysis</Text> */}
+          {/* <AppText style={[styles.titleText, ]}>Analysis</AppText> */}
         </View>
 
         <View style={{flex:1, justifyContent: "center", alignItems: "center", marginTop: 28,}}>
-          <Text style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>Your average monthly Carbon Footprint is</Text>
+          <AppText style={{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo", fontSize: 24,  width: 250, textAlign: "center"}}>Your average monthly Carbon Footprint is</AppText>
         </View>
 
        <View>
        
         <View style={{position: "absolute", flex:1, justifyContent: "center", alignItems: "center", marginTop: 28, bottom:"40%", left: "20%"}}>
-          <Text style={{fontSize:  50, fontWeight: "700",  width: 250, textAlign: "center"}}>2436</Text>
-          <Text style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>kg CO2</Text>
+          <AppText style={{fontSize:  50, fontWeight: "700",  width: 250, textAlign: "center"}}>2436</AppText>
+          <AppText style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>kg CO2</AppText>
         </View>
 
         <DoughnutChart /></View>
         <View style={[styles.balanceContainer, styles.boxShadow]}>
-          <Text style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</Text>
-          <Text
+          <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</AppText>
+          <AppText
             style={{
               flex: 2,
               alignItems: "center",
@@ -225,11 +227,12 @@ const Analytics = ({ navigation }) => {
               color: "#0101FD",
             }}
           >
-            <Text style={{
+            <AppText style={{
               fontWeight: "800",
-              fontSize: 30
-            }}>£ {balance}</Text>
-          </Text>
+              fontSize: 30, 
+              color: "blue"
+            }}>£ {balance}</AppText>
+          </AppText>
         </View>
 
         <View
@@ -254,8 +257,8 @@ const Analytics = ({ navigation }) => {
               alignSelf: "center",
             }, styles.boxShadow]}
           >
-            <Text style={{fontWeight: "500"}}>Total Spend</Text>
-            <Text style={styles.money}>£ {totalSpend.toFixed(2)}</Text>
+            <AppText style={{fontWeight: "500"}}>Total Spend</AppText>
+            <AppText style={styles.money}>£ {totalSpend.toFixed(2)}</AppText>
             <View style={{ flex: 1, flexDirection: "row" }}>
               <View style={{
                   flex:1,
@@ -263,18 +266,18 @@ const Analytics = ({ navigation }) => {
                   alignItems: "flex-start",
                   width: horizontalScale(75)
                 }} >
-              <Text
+              <AppText
               style={{color: "#999", fontSize: 14,}}
               >
                 No. of Payments
-              </Text>
+              </AppText>
               </View>
 
 
               <View style={{  flex:1, alignItems: "flex-end", justifyContent:"flex-end"}}>
-              <Text style={{color: "#999",fontSize: 22}}>
+              <AppText style={{color: "#999",fontSize: 22}}>
                 {totalTransactions}
-              </Text>
+              </AppText>
               </View>
             </View>
           </View>
@@ -287,9 +290,9 @@ const Analytics = ({ navigation }) => {
               padding: "5%",
             }, styles.boxShadow]}
           >
-            <Text style={{fontWeight: "700"}}>Average Monthly Spendings</Text>
+            <AppText style={{fontWeight: "700"}}>Average Monthly Spendings</AppText>
             <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
-              <Text style={styles.money}>£ {monthAverage.toFixed(2)}</Text>
+              <AppText style={styles.money}>£ {monthAverage.toFixed(2)}</AppText>
             </View>
           </View>
         </View>
@@ -299,10 +302,10 @@ const Analytics = ({ navigation }) => {
             source={require("../assets/icon-featherpiechart.png")} 
             resizeMode="contain"
             style={{ width: horizontalScale(25), height: verticalScale(25)}} />
-          <Text style={[styles.titleText,{fontSize: 24}]}>Spendings</Text>
+          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Spendings</AppText>
         </View>
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-          <Text style={styles.subtitleText}>{catNames[0]}</Text>
+          <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
           <View
             style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
           >
@@ -311,11 +314,11 @@ const Analytics = ({ navigation }) => {
               width={dataPercentages[0]}
               backgroundColor="#E4732D"
             >
-              <Text style={styles.barText}>{dataPercentages[0]}</Text>
+              <AppText style={styles.barText}>{dataPercentages[0]}</AppText>
             </View>
           </View>
 
-          <Text style={styles.subtitleText}>{catNames[1]}</Text>
+          <AppText style={styles.subtitleText}>{catNames[1]}</AppText>
           <View
             style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
           >
@@ -324,11 +327,11 @@ const Analytics = ({ navigation }) => {
               width={dataPercentages[1]}
               backgroundColor="#F3B53F"
             >
-              <Text style={styles.barText}>{dataPercentages[1]}</Text>
+              <AppText style={styles.barText}>{dataPercentages[1]}</AppText>
             </View>
           </View>
 
-          <Text style={styles.subtitleText}>{catNames[2]}</Text>
+          <AppText style={styles.subtitleText}>{catNames[2]}</AppText>
           <View
             style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
           >
@@ -337,11 +340,11 @@ const Analytics = ({ navigation }) => {
               width={dataPercentages[2]}
               backgroundColor="#DC85F5"
             >
-              <Text style={styles.barText}>{dataPercentages[2]}</Text>
+              <AppText style={styles.barText}>{dataPercentages[2]}</AppText>
             </View>
           </View>
 
-          <Text style={styles.subtitleText}>{catNames[3]}</Text>
+          <AppText style={styles.subtitleText}>{catNames[3]}</AppText>
           <View
             style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
           >
@@ -350,7 +353,7 @@ const Analytics = ({ navigation }) => {
               width={dataPercentages[3]}
               backgroundColor="#5888F5"
             >
-              <Text style={styles.barText}>{dataPercentages[3]}</Text>
+              <AppText style={styles.barText}>{dataPercentages[3]}</AppText>
             </View>
           </View>
 
@@ -379,10 +382,10 @@ const Analytics = ({ navigation }) => {
                 key={index}
                 onPress={() => changeGraphData(tab.title)}
               >
-                <Text style={{
+                <AppText style={{
                   fontSize: 15,
                   fontWeight: "700"
-                }}>{tab.title}</Text>
+                }}>{tab.title}</AppText>
               </TouchableWithoutFeedback>
 
               ))
@@ -406,7 +409,7 @@ const Analytics = ({ navigation }) => {
           resizeMode="contain"
           source={require("../assets/icon-withdraw.png")} 
           style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
-          <Text style={[styles.titleText,{fontSize: 24}]}>Recent transactions</Text>
+          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Recent transactions</AppText>
         </View>
 
         {recentTransactions.map((transaction, index) => (
@@ -429,7 +432,7 @@ const Analytics = ({ navigation }) => {
                       alignItems: "center",
                   }}
                 >
-                  <Text
+                  <AppText
                     style={{
                       alignSelf: "center",
                       
@@ -439,7 +442,7 @@ const Analytics = ({ navigation }) => {
                     }}
                   >
                     {transaction.sourceId[0]}
-                  </Text>
+                  </AppText>
                 </View>
                 <View
                   style={{
@@ -449,12 +452,12 @@ const Analytics = ({ navigation }) => {
                     marginLeft: "5%",
                   }}
                 >
-                  <Text style={{ fontSize: 14, fontWeight: "700" }}>
+                  <AppText style={{ fontSize: 14, fontWeight: "700" }}>
                     {transaction.sourceId}
-                  </Text>
-                  <Text style={{}}>
+                  </AppText>
+                  <AppText style={{}}>
                     {moment(transaction.transactionDate).format("LL")}
-                  </Text>
+                  </AppText>
                 </View>
                 <View
                   style={{
@@ -464,9 +467,9 @@ const Analytics = ({ navigation }) => {
                     marginRight: "2.5%",
                   }}
                 >
-                  <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                  <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
                     £{transaction.amount.toFixed(2)}
-                  </Text>
+                  </AppText>
                 </View>
               </View>
             </TouchableOpacity>
@@ -478,7 +481,7 @@ const Analytics = ({ navigation }) => {
           resizeMode="contain"
           source={require("../assets/icon-featherpiechart.png")} 
           style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
-          <Text style={[styles.titleText,{fontSize: 24}]}>Upcoming Spendings</Text>
+          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Upcoming Spendings</AppText>
         </View>
 
         {recentTransactions.map((transaction, index) => (
@@ -501,7 +504,7 @@ const Analytics = ({ navigation }) => {
                       alignItems: "center",
                   }}
                 >
-                  <Text
+                  <AppText
                     style={{
                       alignSelf: "center",
                       justifyContent: "center",
@@ -511,7 +514,7 @@ const Analytics = ({ navigation }) => {
                     }}
                   >
                     {transaction.sourceId[0]}
-                  </Text>
+                  </AppText>
                 </View>
                 <View
                   style={{
@@ -521,12 +524,12 @@ const Analytics = ({ navigation }) => {
                     marginLeft: "5%",
                   }}
                 >
-                  <Text style={{ fontSize: 14, fontWeight: "700" }}>
+                  <AppText style={{ fontSize: 14, fontWeight: "700" }}>
                     {transaction.sourceId}
-                  </Text>
-                  <Text style={{}}>
+                  </AppText>
+                  <AppText style={{}}>
                     {moment(transaction.transactionDate).format("LL")}
-                  </Text>
+                  </AppText>
                 </View>
                 <View
                   style={{
@@ -536,9 +539,9 @@ const Analytics = ({ navigation }) => {
                     marginRight: "2.5%",
                   }}
                 >
-                  <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                  <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
                     £{transaction.amount.toFixed(2)}
-                  </Text>
+                  </AppText>
                 </View>
               </View>
             </TouchableOpacity>
@@ -570,7 +573,7 @@ const Bazier = ({ graphData }) => {
         marginLeft: "5%",
       }}
     >
-      {/* <Text>Bezier Line Chart</Text> */}
+      {/* <AppText>Bezier Line Chart</AppText> */}
 
       <LineChart
         data={{

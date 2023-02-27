@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect } from "react";
-import { StyleSheet, View, Text, TextInput, Image} from "react-native";
+import { StyleSheet, View, Text, TextInput, Image, TouchableWithoutFeedback, Keyboard} from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 
@@ -38,95 +38,97 @@ const Login = ({ navigation }) => {
   }
 
   return (
-    <Screen>
-     
-    <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
-      <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
-        <View style={[styles.hello1, styles.enterColor]}>
-          <Text style={[styles.getStartedWith, styles.enterColor]}>Sign in to your account</Text>
-        
-        </View>
-        <Text style={[styles.enterYourMobileNumber, styles.enterColor]}>
-          Enter your mobile number
-        </Text>
-        <Text style={[styles.hello2, styles.text1Typo]}>
-          <Text>We will send an OTP to verify</Text>
-        </Text>
-        <Text style={[styles.hello2, styles.text1Typo, {top:"60%"}]}>
-          <Text >your number and email ID.</Text>
-        </Text>
-      </View>
-
-      <Formik
-          initialValues={{email:'', phoneNumber: ''}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-            <>
-            <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Screen>
       
-              <TextInput 
-                keyboardType="numeric" 
-                onBlur={() => setFieldTouched("phoneNumber")}
-                onChangeText={handleChange("phoneNumber")}
-                style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-              />
-     
+      <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
+        <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
+          <View style={[styles.hello1, styles.enterColor]}>
+            <Text style={[styles.getStartedWith, styles.enterColor]}>Sign in to your account</Text>
+          
           </View>
-      <View style={[styles.component1971, styles.mt_850, styles.ml24]}>
-      <View style={[styles.component1971Child, styles.childBorder]} />
-      <Text style={[styles.text1, styles.networkPosition, styles.text1Typo]}>
-        +44
+          <Text style={[styles.enterYourMobileNumber, styles.enterColor]}>
+            Enter your mobile number
+          </Text>
+          <Text style={[styles.hello2, styles.text1Typo]}>
+            <Text>We will send an OTP to verify</Text>
+          </Text>
+          <Text style={[styles.hello2, styles.text1Typo, {top:"60%"}]}>
+            <Text >your number and email ID.</Text>
+          </Text>
+        </View>
+
+        <Formik
+            initialValues={{email:'', phoneNumber: ''}}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+              <>
+              <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+        
+                <TextInput 
+                  keyboardType="numeric" 
+                  onBlur={() => setFieldTouched("phoneNumber")}
+                  onChangeText={handleChange("phoneNumber")}
+                  style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+                />
+      
+            </View>
+        <View style={[styles.component1971, styles.mt_850, styles.ml24]}>
+        <View style={[styles.component1971Child, styles.childBorder]} />
+        <Text style={[styles.text1, styles.networkPosition, styles.text1Typo]}>
+          +44
+        </Text>
+        <Image
+          style={[styles.maskGroup288, styles.keysPosition]}
+          resizeMode="cover"
+          source={require("../assets/image-ukflag.png")}
+        />
+      </View>
+      <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
+      <Text
+        style={[
+          styles.enterYourEmailId,
+          styles.mt27,
+          styles.ml25,
+          styles.enterColor,
+        ]}
+      >
+        
+        Enter your Email ID
       </Text>
-      <Image
-        style={[styles.maskGroup288, styles.keysPosition]}
-        resizeMode="cover"
-        source={require("../assets/image-ukflag.png")}
-      />
-    </View>
-    <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
-    <Text
+      <TextInput
+      autoCapitalize="none"
+      textContentType="emailAdress"
+      keyboardType="email-address"
+      onBlur={() => setFieldTouched('email')}
+      onChangeText={handleChange('email')}
       style={[
-        styles.enterYourEmailId,
-        styles.mt27,
-        styles.ml25,
-        styles.enterColor,
-      ]}
-    >
-      
-      Enter your Email ID
-    </Text>
-    <TextInput
-    autoCapitalize="none"
-    textContentType="emailAdress"
-    keyboardType="email-address"
-    onBlur={() => setFieldTouched('email')}
-    onChangeText={handleChange('email')}
-    style={[
-        styles.signUpPersonalItem,
-        styles.mt9,
-        styles.ml24,
-        styles.childBorder,
-        {padding:10}
-      ]}
-    />
-     <ErrorMessage error={errors.email} visible={touched.email}/>
-    <View style={styles.button}>
+          styles.signUpPersonalItem,
+          styles.mt9,
+          styles.ml24,
+          styles.childBorder,
+          {padding:10}
+        ]}
+      />
+      <ErrorMessage error={errors.email} visible={touched.email}/>
+      <View style={styles.button}>
 
-      <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
-    </View>
-            
-            </>
-          )}
-        </Formik>
-    
+        <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
+      </View>
+              
+              </>
+            )}
+          </Formik>
       
-  
-
-    </View>
+        
     
-    </Screen>
+
+      </View>
+      
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -136,11 +138,12 @@ const styles = StyleSheet.create({
     color:"#0101FD",
   },
   button:{
-    marginTop: verticalScale(10),
-    //color:"#0101FD",
-    backgroundColor:"#D8EBF9",
-    color: "#1A1A1A",
-    borderRadius: 15,
+    flex: 1,
+    flexDirection: "column",
+    width: "100%",
+    
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
   },
   mt2: {
     marginTop: GlobalStyles.Margin.margin_31xs,

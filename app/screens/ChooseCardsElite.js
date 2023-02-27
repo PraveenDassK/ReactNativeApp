@@ -1,14 +1,24 @@
 import React, {useEffect, useState} from "react";
-import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList, ActivityIndicator} from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, useWindowDimensions} from "react-native";
+
+
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 import apiCall from "../api/apiCall";
 
-  const ChooseCardsElite = () => {
+
+
+
+  const ChooseCardsElite = ({navigation}) => {
 
     const [isLoading, setIsLoading] = useState(false)
+  
     const [data, setData] = useState([])
+
+
+
+ 
     
    useEffect(()=> {
     loadData()
@@ -36,7 +46,8 @@ import apiCall from "../api/apiCall";
 
 
   return (
-    // <ScrollView>
+
+
     <View style={styles.chooseCardsContainer}>
     
 
@@ -55,7 +66,7 @@ import apiCall from "../api/apiCall";
 
     <View style={styles.featureListBox}>
 
-
+{/* 
       <FlatList 
       data={data.description}
       keyExractor={item => item}
@@ -67,10 +78,10 @@ import apiCall from "../api/apiCall";
       )}
 
 
-      />
+      /> */}
       
     
-        {/* <View style={styles.featureListRow}>
+        <View style={styles.featureListRow}>
           <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
           <Text style={styles.featureListText}>All Advanced Features</Text>
         </View>
@@ -93,7 +104,7 @@ import apiCall from "../api/apiCall";
           <Text style={styles.featureListSubText}>Free Logo Design</Text>
           <Text style={styles.featureListSubText}>Trade Mark Registration</Text>
           <Text style={styles.featureListSubText}>Desktop Support</Text>
-        </View> */}
+        </View>
 
 
 
@@ -227,7 +238,10 @@ featureListTextCustomer: {
  left: "10%",
  top: "18%",
  fontWeight: "700"
-}
+},
+
+
+  
 });
 
 
