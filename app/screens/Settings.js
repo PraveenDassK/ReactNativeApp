@@ -174,7 +174,7 @@ const Settings = ({ navigation }) => {
             <AppText style={[styles.subText, styles.customTitle,{marginTop: verticalScale(1), opacity: 0.4}]}>{plan}</AppText>
           </View>
           <View style={[{ flex: 1, justifyContent: "center",alignItems: "flex-end"}, styles.boxShadow]}>
-            <View style={{width:80, height: 80, borderRadius: 40, backgroundColor: "white", justifyContent: "center", alignItems:"center"}}><AppText style={{fontSize: 28}}>{initials}</AppText></View>
+            <View style={[{width:80, height: 80, borderRadius: 40, backgroundColor: "white", justifyContent: "center", alignItems:"center"}]}><AppText style={[{fontSize: 28}]}>{initials}</AppText></View>
           </View>
         </View>
         
