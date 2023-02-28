@@ -12,15 +12,7 @@ import {
   ActivityIndicator,
   Vibration
 } from "react-native";
-import { PanGestureHandler } from "react-native-gesture-handler";
-import Animated, {
-  Easing,
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+
 
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list";
@@ -45,10 +37,10 @@ const Settings = ({ navigation }) => {
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const authContext = useContext(AuthContext);
+ 
   const { userID, accountID, setCurrentUser } = useContext(AuthContext);
 
-  const x = useSharedValue(0);
+
 
   useEffect(() => {
     loadData();
@@ -122,42 +114,7 @@ const Settings = ({ navigation }) => {
     return swipeRight;
   }, [navigation]);
 
-  const fn = () => {
-    navigation.navigate("Account");
-  };
-
-  const swipeRightGestureHandler = useAnimatedGestureHandler({
-    onStart: () => {
-      console.log("On Start");
-    },
-    onActive: (event) => {
-      console.log("On Active");
-      x.value = event.translationX;
-    },
-    onEnd: (event) => {
-      // 'worklet';
-      console.log("On End", event.velocityX);
-      // if (y.value < -height / 2 || event.velocityY < -500) {
-      //   runOnJS(fn)()
-      //   y.value = withTiming(0, { easing: Easing.linear});
-
-      // } else {
-      //   // reset
-      //   y.value = withTiming(0, {easing: Easing.linear});
-      // }
-    },
-  });
-
-  const animatedContainerStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: withTiming(x.value, {
-          duration: 100,
-          easing: Easing.linear,
-        }),
-      },
-    ],
-  }));
+ 
 
   const onRefresh = useCallback(() => {
     console.log("1st refresh")
