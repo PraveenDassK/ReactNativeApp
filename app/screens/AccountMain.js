@@ -240,7 +240,7 @@ const HomeScreenPersonal = ({ navigation }) => {
       <View style={styles.screen}>
 
         <View style={styles.divContainer}>
-          <AppText style={{fontWeight: "700", textAlign: "center", }}>
+          <AppText style={{fontWeight: "700", textAlign: "center", marginTop: verticalScale(20)}}>
               Business Account
             </AppText>
             <AppText style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300'}}>

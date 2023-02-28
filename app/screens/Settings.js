@@ -186,27 +186,28 @@ const Settings = ({ navigation }) => {
               <AppText style={[styles.divStart, styles.customTitle]}>Currency</AppText>
             </View>
 
-            <View style={[styles.splitDiv]}>
+            <View style={[styles.splitDiv,]}>
               <Image
                 style={{
                   resizeMode: "contain",
                   height: "50%",
                   width: 30,
                   marginRight: "5%",
+                  
                 }}
                 source={require("../assets/image-ukflag.png")}
               />
-              <AppText style={[styles.divEnd, styles.customTitle]}>{currency}</AppText>
+              <AppText style={[styles.divEnd, styles.customTitle, ]}>{currency}</AppText>
             </View>
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <View style={{flex:1}}>
+            <View style={{flex:1,}}>
 
-              <AppText style={[styles.divStart, styles.customTitle]}>Account</AppText>
+              <AppText style={[styles.divStart, styles.customTitle, ]}>Account</AppText>
             </View>
 
-            <View style={[styles.splitDiv]}>
+            <View style={[styles.splitDiv,]}>
               <Pressable style={styles.helloParent} onPress={copyAccount}>
                 <Image
                   style={{
@@ -222,7 +223,7 @@ const Settings = ({ navigation }) => {
             
             <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
 
-              <AppText style={[styles.divEnd, styles.customTitle]}>{account}</AppText>
+              <AppText style={[styles.divEnd, styles.customTitle, ]}>{account}</AppText>
             </View>
 
           </View>
@@ -426,6 +427,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 2,
     justifyContent: "flex-end",
+    
     height: "100%",
     alignItems: "center",
   },
@@ -433,7 +435,6 @@ const styles = StyleSheet.create({
   divEnd: {
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    marginRight: "5%",
   },
   divStart: {
     marginLeft: "0%",
