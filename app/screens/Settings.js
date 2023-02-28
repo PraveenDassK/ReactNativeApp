@@ -9,7 +9,8 @@ import {
   Clipboard,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Vibration
 } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -28,6 +29,8 @@ import authStorage from "../auth/storage";
 import Button from "../components/Button";
 import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
+
+
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -91,18 +94,21 @@ const Settings = ({ navigation }) => {
 
   const copyAccount = () => {
     console.log("Copied");
+    Vibration.vibrate()
     alert("Account code copied");
     Clipboard.setString(account);
   };
 
   const copySort = () => {
     console.log("Copied");
+    Vibration.vibrate()
     alert("Sort code copied");
     Clipboard.setString(sortcode);
   };
 
   const copyIban = () => {
     console.log("Copied");
+    Vibration.vibrate()
     alert("Iban copied");
     Clipboard.setString(iban);
   };
