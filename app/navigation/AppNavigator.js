@@ -258,7 +258,7 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
           headerBackTitleVisible: false,
-          
+          headerStyle: {backgroundColor: "white"}
         }}
       />
 
@@ -267,7 +267,6 @@ const StackNavigator = () => {
               component={gestureHandlerRootHOC(AboutUs)}
               options={{
                 title: "AboutUs",
-
               }}
             />
 
@@ -289,7 +288,8 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
+          headerStyle: {backgroundColor: "white"}
         }}
       />
 
