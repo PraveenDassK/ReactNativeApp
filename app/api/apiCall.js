@@ -149,6 +149,15 @@ const GetAnalysisData = async (Id) =>{
     }
 }
 
+
+const FreezeCard = async(Id,freeze) => {
+    const request = await client.patch(`https://api.carbonyte.io/walletmodule/Enfuce/UpdateVirtualCard?cardId=${Id}`,
+    {
+        "status": freeze
+    })
+    console.log(request)
+}
+
 /**Carbon */
 const GetProjectList = async(Id) => {
     const request = await client.get("https://api.carbonyte.io/ecomodule/Earthly/GetProjectList")
@@ -490,5 +499,6 @@ export default {
     GetAllAccounts,
     GetUsersSubscriptions,
     ChangeUsersSubscription,
-    GetScheduledPayments
+    GetScheduledPayments,
+    FreezeCard
 }
