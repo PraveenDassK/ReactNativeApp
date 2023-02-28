@@ -27,6 +27,7 @@ import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import Button from "../components/Button";
 import { verticalScale } from "../config/metrics";
+import AppText from "../components/Text";
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -205,21 +206,21 @@ const Settings = ({ navigation }) => {
     >
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>{fullname}</Text>
+          <AppText style={[styles.titleText, styles.customTitle]}>{fullname}</AppText>
         </View>
 
         <View style={[styles.subTextRow, {marginTop: verticalScale(1)}]}>
-          <Text style={styles.subText}>{plan}</Text>
+          <AppText style={[styles.subText, styles.customTitle]}>{plan}</AppText>
         </View>
 
         <View style={styles.subTextRow}>
-          <Text style={[styles.subText, {fontWeight: "normal"}]}>Account Details</Text>
+          <AppText style={[styles.subText, styles.customTitle, {fontWeight: "normal"}]}>Account Details</AppText>
         </View>
 
         <View style={[styles.accountDetailsDiv, styles.boxShadow]}>
           <View style={styles.accountDetailsRow}>
             <View style={{flex:1}}>
-              <Text style={styles.divStart}>Currency</Text>
+              <AppText style={[styles.divStart, styles.customTitle]}>Currency</AppText>
             </View>
 
             <View style={[styles.splitDiv]}>
@@ -232,14 +233,14 @@ const Settings = ({ navigation }) => {
                 }}
                 source={require("../assets/image-ukflag.png")}
               />
-              <Text style={styles.divEnd}>{currency}</Text>
+              <AppText style={[styles.divEnd, styles.customTitle]}>{currency}</AppText>
             </View>
           </View>
 
           <View style={styles.accountDetailsRow}>
             <View style={{flex:1}}>
 
-              <Text style={[styles.divStart]}>Account</Text>
+              <AppText style={[styles.divStart, styles.customTitle]}>Account</AppText>
             </View>
 
             <View style={[styles.splitDiv]}>
@@ -258,7 +259,7 @@ const Settings = ({ navigation }) => {
             
             <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
 
-              <Text style={styles.divEnd}>{account}</Text>
+              <AppText style={[styles.divEnd, styles.customTitle]}>{account}</AppText>
             </View>
 
           </View>
@@ -266,7 +267,7 @@ const Settings = ({ navigation }) => {
           <View style={styles.accountDetailsRow}>
 
             <View style={{flex:1}}>
-              <Text style={styles.divStart}>Sort Code</Text>
+              <AppText style={[styles.divStart, styles.customTitle]}>Sort Code</AppText>
             </View>
 
             <View style={styles.splitDiv}>
@@ -284,14 +285,14 @@ const Settings = ({ navigation }) => {
             </View>
 
             <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
-              <Text style={styles.divEnd}>{sortcode}</Text>
+              <AppText style={[styles.divEnd, styles.customTitle]}>{sortcode}</AppText>
             </View>
             
           </View>
 
           <View style={styles.accountDetailsRow}>
             <View style={{flex:1}}>
-              <Text style={styles.divStart}>Iban</Text>
+              <AppText style={[styles.divStart, styles.customTitle]}>Iban</AppText>
             </View>
 
             <View style={styles.splitDiv}>
@@ -309,17 +310,17 @@ const Settings = ({ navigation }) => {
 
             </View>
             <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
-              <Text style={styles.divEnd}>{iban}</Text>
+              <AppText style={[styles.divEnd, styles.customTitle]}>{iban}</AppText>
             </View>
           </View>
 
           <View style={styles.accountDetailsRow}>
             <View style={{flex:1}}>
-              <Text style={styles.divStart}>Status</Text>
+              <AppText style={[styles.divStart, styles.customTitle]}>Status</AppText>
             </View>
             <View style={styles.splitDiv}>
               <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
-                <Text style={styles.divEnd}>{status}</Text>
+                <AppText style={[styles.divEnd, styles.customTitle]}>{status}</AppText>
               </View>
             </View>
           </View>
@@ -328,7 +329,7 @@ const Settings = ({ navigation }) => {
         <TouchableOpacity style={[styles.button]}>
           <Button
             title="My Plan"
-            style={styles.boxShadow}
+            style={[styles.boxShadow]}
             color="babyBlue"
             onPress={() => navigation.navigate("ChooseCardsElite")}
           />
@@ -383,14 +384,14 @@ const Settings = ({ navigation }) => {
             resizeMode="cover"
             source={require("../assets/icon-openaccountlogout.png")}
           />
-          <Text style={{marginLeft: "2.5%", color: "blue"}}>Log out</Text>
+          <AppText style={{marginLeft: "2.5%", color: "blue"}}>Log out</AppText>
         </Pressable>
 
         <Pressable
           style={{height: 50, flexDirection: "row", justifyContent: "center", alignItems: "center", width: "90%", marginLeft: "5%"}}
           onPress={() => navigation.navigate("TermsAndConditions")}
         >
-          <Text style={{color: "blue"}}>Terms & Conditions</Text>
+          <AppText style={{color: "blue"}}>Terms & Conditions</AppText>
         </Pressable>
       </View>
     </ScrollView>
@@ -404,6 +405,11 @@ const styles = StyleSheet.create({
     height: GlobalStyles.DivContainer.height,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
+  },
+  customTitle: {
+    fontWeight: Platform.OS === "android" ? "normal" : "700",
+    fontFamily: "Typo", 
+    color: "#1B2356"
   },
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,

@@ -41,10 +41,6 @@ const Tab = createMaterialTopTabNavigator();
         </View>
       )
     }
-  
-
-
-
 
   return (
     <View style={{flex: 1}}>
@@ -68,14 +64,14 @@ const Tab = createMaterialTopTabNavigator();
             </View>
 
             <View style={styles.featureListBox}>
-             {item.benefits.map((benifit, index) => {
+             {item.benefits.map((benefit, index) => {
               return  <React.Fragment
                 key={`${item}-${index}`}
                 ><View style={styles.featureListRow}>
                   <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-                  <Text style={styles.featureListText}>{benifit.name}</Text>
+                  <Text style={styles.featureListText}>{benefit.name}</Text>
                 </View> 
-                <Text style={{marginBottom: "2.5%"}}>{benifit.benefits.replaceAll('@','').replaceAll("0/","")}</Text>
+                <Text style={{marginBottom: "2.5%"}}>{benefit.benefits}</Text>
               </React.Fragment>
             
              })}
