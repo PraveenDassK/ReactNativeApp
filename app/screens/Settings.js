@@ -168,13 +168,17 @@ const Settings = ({ navigation }) => {
       }
     >
       <View style={styles.mainContainer}>
-        <View style={styles.titleTextRow}>
-          <AppText style={[styles.titleText, styles.customTitle]}>{fullname}</AppText>
+        <View style={[styles.titleTextRow,{flex:1, flexDirection: "row"}]}>
+          <View style={[ {justifyContent: "center"}]}>
+            <AppText style={[styles.titleText, styles.customTitle]}>{fullname}</AppText>
+            <AppText style={[styles.subText, styles.customTitle,{marginTop: verticalScale(1), opacity: 0.4}]}>{plan}</AppText>
+          </View>
+          <View style={[{ flex: 1, justifyContent: "center",alignItems: "flex-end"}, styles.boxShadow]}>
+            <View style={{width:80, height: 80, borderRadius: 40, backgroundColor: "white", justifyContent: "center", alignItems:"center"}}><AppText style={{fontSize: 28}}>{initials}</AppText></View>
+          </View>
         </View>
+        
 
-        <View style={[styles.subTextRow, {marginTop: verticalScale(1)}]}>
-          <AppText style={[styles.subText, styles.customTitle]}>{plan}</AppText>
-        </View>
 
         <View style={styles.subTextRow}>
           <AppText style={[styles.subText, styles.customTitle, {fontWeight: "normal"}]}>Account Details</AppText>
