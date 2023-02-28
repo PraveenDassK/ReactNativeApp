@@ -73,6 +73,7 @@ const Analytics = ({ navigation }) => {
     const graphData = await apiCall.GetTransactionsWeek(authContext.accountID);
     setIsLoading(false)
     setGraphData(graphData)
+    setActive("Week")
     
 
   };
@@ -369,7 +370,7 @@ const Analytics = ({ navigation }) => {
               alignItems: "center",
               marginTop: verticalScale(30),
               paddingBottom: verticalScale(5),
-              opacity: 0.7,
+              opacity: 0.5,
               
             
               borderBottomWidth: 1.5
