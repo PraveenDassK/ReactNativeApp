@@ -2,15 +2,15 @@ import React, { useState } from "react";
 
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-import { TransitionPresets } from '@react-navigation/stack';
+
 
 import {
-  SafeAreaProvider,
+  
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
@@ -474,7 +474,7 @@ const StackNavigator = () => {
       />
 <Stack.Screen 
         name="ChooseCardsElite" 
-        component={gestureHandlerRootHOC(ChooseCardsEliteNavigator)}
+        component={gestureHandlerRootHOC(ChooseCardsElite)}
         options={{
           title: "Choose Cards",
          
@@ -572,6 +572,9 @@ const StackNavigator = () => {
 }
 
 const ChooseCardsEliteNavigator = () => {
+
+  
+
   return (
     <Tab.Navigator >
       <Tab.Screen

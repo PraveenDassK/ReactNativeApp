@@ -11,6 +11,8 @@ import Screen from "../components/Screen";
 import AuthContext from "../auth/context";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
+import FadeInView from "../components/fadeInview";
+
 const Carbon = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null);
@@ -115,14 +117,16 @@ const Carbon = ({ route, navigation }) => {
                 <Text style={[styles.titleText, {lineHeight: 30}]}>Remove Carbon,</Text>
                 <Text style={[styles.titleText, {lineHeight: 30}]}>Restore Nature</Text>
               </View>
-              <View style={styles.treeContainer}>
-              <Image
-              style={styles.treeImage}
-              resizeMode="contain"
-              source={require("../assets/leafTree.png")}
-            />
-           
-              </View>
+              <FadeInView>
+                <View style={styles.treeContainer}>
+                <Image
+                style={styles.treeImage}
+                resizeMode="contain"
+                source={require("../assets/leafTree.png")}
+              />
+            
+                </View>
+              </FadeInView>
               {/* <Text>
                 At Carbonyte we help you to track, reduce and calvulate your C0<Text style={{fontSize: 15, lineHeight: 37}}>2</Text>emission from your daily transcation
             </Text> */}
@@ -133,7 +137,7 @@ const Carbon = ({ route, navigation }) => {
                   At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transaction
                 </Text>
               </View>
-              <View style={[styles.subTitle, { marginTop: verticalScale(100) }]}>
+              <View style={[styles.subTitle, { marginTop: verticalScale(40) }]}>
                 <View style={styles.investNature}>
                   <Text style={styles.titleText}>Invest in</Text>
                   <Text style={styles.titleText}>Nature</Text>
