@@ -331,6 +331,7 @@ const Settings = ({ navigation }) => {
             title="My Plan"
             style={[styles.boxShadow]}
             color="babyBlue"
+            transform={{textTransform: "none"}}
             onPress={() => navigation.navigate("ChooseCardsElite")}
           />
         </TouchableOpacity>
@@ -339,6 +340,7 @@ const Settings = ({ navigation }) => {
             title="Account"
             style={styles.boxShadow}
             color="babyBlue"
+            transform={{textTransform: "none"}}
             onPress={() => navigation.navigate("AccountSettings")}
           />
         </TouchableOpacity>
@@ -347,14 +349,16 @@ const Settings = ({ navigation }) => {
             title="Security & Privacy"
             style={styles.boxShadow}
             color="babyBlue"
+            transform={{textTransform: "none"}}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Button
-            title="About Us"
+            title="About us"
             style={styles.boxShadow}
             color="babyBlue"
+            transform={{textTransform: "none"}}
             onPress={() => navigation.navigate("AboutUs")}
           />
         </TouchableOpacity>
@@ -373,6 +377,7 @@ const Settings = ({ navigation }) => {
             title="Reset app pin"
             style={styles.boxShadow}
             color="babyBlue"
+            transform={{textTransform: "none"}}
             onPress={() => navigation.navigate("PinSetApp")}
           />
         </TouchableOpacity>
