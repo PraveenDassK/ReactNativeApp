@@ -35,6 +35,7 @@ import AppText from "../components/Text";
 
 const Analytics = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [active, setActive] = useState("")
   const [balance, setBal] = useState(0);
   const [transactions, setTrans] = useState([]);
   const [totalSpend, setTotal] = useState(0);
@@ -132,6 +133,8 @@ const Analytics = ({ navigation }) => {
   }, [refreshing]);
 
   const changeGraphData = async(time) => {
+    setActive(time)
+    
     console.log(time)
     switch(time){
       case "Year":
@@ -366,7 +369,7 @@ const Analytics = ({ navigation }) => {
               alignItems: "center",
               marginTop: verticalScale(30),
               paddingBottom: verticalScale(5),
-              opacity: 0.3,
+              opacity: 0.7,
               
             
               borderBottomWidth: 1.5
@@ -384,7 +387,8 @@ const Analytics = ({ navigation }) => {
               >
                 <AppText style={{
                   fontSize: 15,
-                  fontWeight: "700"
+                  fontWeight: "800",
+                  color: active === tab.title ? "blue" : "grey"
                 }}>{tab.title}</AppText>
               </TouchableWithoutFeedback>
 
