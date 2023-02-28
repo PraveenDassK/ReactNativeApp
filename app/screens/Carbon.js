@@ -12,6 +12,7 @@ import AuthContext from "../auth/context";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 import FadeInView from "../components/fadeInview";
+import AppText from "../components/Text";
 
 const Carbon = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -114,8 +115,8 @@ const Carbon = ({ route, navigation }) => {
           ListHeaderComponent={
             <View style={styles.container}>
               <View style={styles.titleTextRow}>
-                <Text style={[styles.titleText, {lineHeight: 30}]}>Remove Carbon,</Text>
-                <Text style={[styles.titleText, {lineHeight: 30}]}>Restore Nature</Text>
+                <AppText style={[styles.titleText, {lineHeight: 30}, styles.customTitle]}>Remove Carbon,</AppText>
+                <AppText style={[styles.titleText, {lineHeight: 30}, styles.customTitle]}>Restore Nature</AppText>
               </View>
               <FadeInView>
                 <View style={styles.treeContainer}>
@@ -127,20 +128,20 @@ const Carbon = ({ route, navigation }) => {
             
                 </View>
               </FadeInView>
-              {/* <Text>
-                At Carbonyte we help you to track, reduce and calvulate your C0<Text style={{fontSize: 15, lineHeight: 37}}>2</Text>emission from your daily transcation
-            </Text> */}
+              {/* <AppText>
+                At Carbonyte we help you to track, reduce and calvulate your C0<AppText style={{fontSize: 15, lineHeight: 37}}>2</AppText>emission from your daily transcation
+            </AppText> */}
 
               <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" style={styles.boxShadow} onPress={() => navigation.navigate("CarbonTonnesRemoved")} />
               <View style={styles.subContainer}>
-                <Text numberOflines={3} style={styles.text}>
+                <AppText numberOflines={3} style={styles.AppText}>
                   At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transaction
-                </Text>
+                </AppText>
               </View>
               <View style={[styles.subTitle, { marginTop: verticalScale(40) }]}>
                 <View style={styles.investNature}>
-                  <Text style={styles.titleText}>Invest in</Text>
-                  <Text style={styles.titleText}>Nature</Text>
+                  <AppText style={[styles.titleText, styles.customTitle]}>Invest in</AppText>
+                  <AppText style={[styles.titleText, styles.customTitle]}>Nature</AppText>
                 </View>
                 <View style={{ alignItems: "flex-start", justifyContent: "center" }}>
                   <Image resizeMode="contain" style={{ width: horizontalScale(120), height: verticalScale(120), marginLeft: horizontalScale(100) }} source={require("../assets/image-twotrees.png")} />
@@ -154,14 +155,14 @@ const Carbon = ({ route, navigation }) => {
               </View>
 
               <View style={{ marginBottom: "5%", textAlign: "center" }}>
-                <Text style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</Text>
-                <Text style={styles.description}>We only profile high-quality projects that meet our minimum standards in relation to carbon + biodiversity + social benefits</Text>
+                <AppText style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</AppText>
+                <AppText style={styles.description}>We only profile high-quality projects that meet our minimum standards in relation to carbon + biodiversity + social benefits</AppText>
               </View>
 
               {cart && cart.length ? (
                       <Button title="Visit Your Cart" color="babyBlue"  style={styles.boxShadow} onPress={() => navigation.navigate("CarbonCart", cart)} />
                     ) : <Button title="Visit Your Cart" color="babyBlue"  style={styles.boxShadow} onPress={() => alert("Your cart is empty, please add some items to your basket")} />}
-              <Text style={[styles.textSub, { marginTop: verticalScale(50) }]}>Select your project</Text>
+              <AppText style={[styles.textSub, { marginTop: verticalScale(50) }]}>Select your project</AppText>
             </View>
           }
           data={data}
@@ -183,21 +184,21 @@ const Carbon = ({ route, navigation }) => {
 
               <View style={styles.subTitle}>
                 <View style={styles.subTitleText}>
-                  <Text style={styles.textSub}>{item.displayName}</Text>
+                  <AppText style={styles.textSub}>{item.displayName}</AppText>
                 </View>
                 <View style={styles.subTitlePrice}>
-                  <Text style={styles.priceSub}>£{item.asset.displayAssetPriceWithMarkup.toFixed(2)}</Text>
-                  <Text style={styles.tree}>/{item.asset.type == "LAND" ? "tCO2e" : item.asset.type}</Text>
+                  <AppText style={[styles.priceSub, {color: "blue"}]}>£{item.asset.displayAssetPriceWithMarkup.toFixed(2)}</AppText>
+                  <AppText style={[styles.tree, {color: "blue", textTransform: item.asset.type == "LAND" ? "none" :"capitalize"}]}>/{item.asset.type == "LAND" ? "tCO2e" : item.asset.type}</AppText>
                 </View>
               </View>
               <View style={{ width: "100%", alignItems: "flex-start" }}>
-                <Text style={styles.description}>
+                <AppText style={styles.description}>
                   {item.description
                     .replace(/<[^>]*>/g, "")
                     .substring(0, 200)
                     .trim()}
                   ...
-                </Text>
+                </AppText>
               </View>
               <View style={styles.doubleButtonDiv}>
                 <Button style={{ width: "49%" }} title="ADD TO CART" color="babyBlue" onPress={() => addToCart(item.id)} />
@@ -206,13 +207,13 @@ const Carbon = ({ route, navigation }) => {
               <View style={styles.benifitsContainer}>
                 {item.tags.length ? (
                   <View>
-                    <Text style={[styles.tags, styles.tree]}>Co-benifits</Text>
+                    <AppText style={[styles.tags, styles.tree]}>Co-benifits</AppText>
                   </View>
                 ) : null}
                 <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
                   {item.tags.map((tag, index) => (
                     <View key={index} style={index !== 0 ? styles.tagsContainer : [styles.tagsContainer, { marginLeft: horizontalScale(0) }]}>
-                      <Text style={styles.tags}>{tag}</Text>
+                      <AppText style={styles.tags}>{tag}</AppText>
                     </View>
                   ))}
                 </View>
@@ -237,6 +238,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f3f5f5",
     flex: 1,
+  },
+  customTitle: {
+    fontWeight: Platform.OS === "android" ? "normal" : "700",
+    fontFamily: "Typo", 
+    color: "#1B2356"
   },
   description: {
     color: "grey",
@@ -281,7 +287,7 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(5),
     paddingHorizontal: horizontalScale(10),
   },
-  text: {
+  AppText: {
     fontWeight: "bold",
     textAlign: "center",
     color: "#1B2356",
