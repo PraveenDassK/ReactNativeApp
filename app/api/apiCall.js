@@ -75,7 +75,6 @@ const GetAllCardDetails = async(Id) => {
 const GetBalance = async (Id) => {
     const request = await client.get(`https://api.carbonyte.io/walletmodule/GetAccount/${Id}`);
     const requestData = request.data.details.availableBalance
-    console.log(request)
     return requestData
 }
 
@@ -94,12 +93,25 @@ const GetTransactions = async(Id,amount) =>  {
     })
 }
 
+const GetScheduledPayments = async(Id) => {
+    const request = await client.get(`https://api.carbonyte.io/walletmodule/Wallet/RetrieveSchedulePaymentByCarbonyteId?carbonyteId=${Id}`)
+    const returnData = request.data.details
+    console.log(returnData)
+    return returnData
+}
+
 const GetCustomersAccounts = async (Id) => {
     const request = await client.get(`https://api.carbonyte.io/walletmodule/GetAccountByCustomer/${Id}`)
     const requestData = request.data.details
     const returnData = {
 
     }
+    return requestData
+}
+
+const GetAllAccounts = async (Id) => {
+    const request = await client.get(`https://api.carbonyte.io/walletmodule/GetAccountByCustomer/${Id}`)
+    const requestData = request.data.details.content
     return requestData
 }
 
@@ -192,7 +204,6 @@ const GetUserImpact = async(Id) => {
 
 const GetStatments = async(Id) => {
     const transactions = await GetTransactions(Id,500)
-    console.log(transactions)
 
     //return transactions
 }
@@ -206,8 +217,7 @@ const GetTransactionsYear = async (Id) => {
     requestData.content.forEach(element => {
         total += element.amount
         let category = moment().diff(element.transactionDate, 'Years')
-        console.log(category)
-        console.log(element.transactionDate)
+
         data[category] += element.amount
     });
     let xAxis = []
@@ -267,14 +277,19 @@ const GetTransactionsWeek = async (Id) => {
 }
 
 const GetLimits = async(Id) => {
-    const spend = (await GetTransactionsMonth()).total
+    const spend = await (await GetTransactionsMonth()).total
     const request = await client.get(`https://api.carbonyte.io/transactionmodule/GetBudget?accountId=${Id}`)
     const requestData = request.data.details
-    console.log(request)
     return {
         spend:spend,
         monthlyAmount:requestData.monthlyAmount
     }
+}
+
+const GetSettings = async(Id) => {
+    const request = await client.get("https://api.carbonyte.io/cardmodule/GetToggles?modulrAccountId=A12274AW")
+    const requestData = request.data.details
+    return requestData
 }
 
 /**Subcriptions */
@@ -355,7 +370,6 @@ const RetriveGroupBeneficiariesByID = async (Id,amount) => {
             "benificiaries": beneficiaryData[0].beneficiariesDetails
         })
     }
-    console.log(returnData)
     return returnData
 }
 
@@ -423,7 +437,9 @@ const AddBeneficiary = async (modulrCustomerId,phonenumber,accountName,accNum,so
    },
    "qualifier": ""
   }
-)}
+)
+    return request;
+}
 
 const StatmentPost = (Id) => {
     try{
@@ -467,9 +483,12 @@ export default {
     GetTransactionsMonth,
     GetTransactionsWeek,
     GetSubscriptions,
-    GetUsersSubscriptions,
-    ChangeUsersSubscription,
     RetriveGroupBeneficiariesByID,
     RetriveGroupBeneficiares,
-    GetLimits
+    GetLimits,
+    GetSettings,
+    GetAllAccounts,
+    GetUsersSubscriptions,
+    ChangeUsersSubscription,
+    GetScheduledPayments
 }
