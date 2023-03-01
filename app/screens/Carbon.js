@@ -212,7 +212,7 @@ const Carbon = ({ route, navigation }) => {
               <View style={styles.benifitsContainer}>
                 {item.tags.length ? (
                   <View>
-                    <AppText style={[styles.tags, styles.tree]}>Co-benifits</AppText>
+                    <AppText style={[styles.tags, styles.tree]}>Co-benefits</AppText>
                   </View>
                 ) : null}
                 <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
