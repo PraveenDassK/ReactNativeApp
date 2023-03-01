@@ -33,11 +33,11 @@ const AddFunds = ({navigation}) => {
     setData(response)
 
     let accountList = []
-    response.forEach(account => {
+    response.forEach((account,i) => {
       console.log(account)
       accountList.push({
         label: account.name + " £" + account.balance,
-        value: account.id
+        value: i
       })
     });
     setCard(accountList)
@@ -45,12 +45,10 @@ const AddFunds = ({navigation}) => {
 
   //Screen components
 
-  console.log(data)
   const accountCode = "Card ID : " + value
   let fromName = ""
 
   const requestContact = (amount) => {
-    console.log(amount)
     if(!amount){alert("!")}
     const checkText = (text) => {
       setAmount(text)
@@ -68,24 +66,25 @@ const AddFunds = ({navigation}) => {
         setValidator(true)
       }
     }
-
+    const chosenAccount = data[value]
+    console.log(chosenAccount)
     const benData = {
       bankName: "Bank",
-      accountName: details.name,
-      accountNumber: details.destinationIdentifier.accountNumber,
-      iban:details.destinationIdentifier.iban,
-      sortCode:details.destinationIdentifier.sortCode
+      accountName: chosenAccount.name,
+      accountNumber: chosenAccount.identifiers[0].accountNumber,
+      iban:chosenAccount.identifiers[0].iban,
+      sortCode:chosenAccount.identifiers[0].sortCode
     }
 
+    console.log(benData)
     navigation.navigate("Pin",{
       amount: amount,
-      name: accountName,
+      name: benData.accountName,
       successScreen: "Success",
-      successText: "Transfer to " + accountName + " of £" + amount + " successful",
+      successText: "Transfer to " + benData.accountName + " of £" + amount + " successful",
       beneficiaryData: benData,
     })
   }
-  console.log(value)
 
   
 
@@ -115,7 +114,6 @@ const AddFunds = ({navigation}) => {
           placeholder={!isFocus ? 'Select a card' : '....'}
           value={cardData}
           onChange={item => {
-            setValue(item.value);
             setValue(item.value);
             setIsFocus(false);
           }}
