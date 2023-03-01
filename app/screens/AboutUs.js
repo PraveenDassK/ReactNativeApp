@@ -106,9 +106,9 @@ const AboutUs = ({ navigation }) => {
 
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.titleTextRow}>
+      {/* <View style={styles.titleTextRow}>
         <Text style={styles.titleText}>About Us</Text>
-      </View>
+      </View> */}
 
       <View
         style={{
@@ -123,7 +123,7 @@ const AboutUs = ({ navigation }) => {
         <View style={styles.row}>
           <Image
             style={styles.icon}
-            resizeMode="cover"
+            resizeMode="contain"
             source={require("../assets/blueStar.png")}
           />
           <Text style={styles.iconText}>Rate us on the App Store</Text>
@@ -132,7 +132,7 @@ const AboutUs = ({ navigation }) => {
         <View style={styles.row}>
           <Image
             style={styles.icon}
-            resizeMode="cover"
+            resizeMode="contain"
             source={require("../assets/blueImprove.png")}
           />
           <Text style={styles.iconText}>Tell us how to improve</Text>
@@ -153,7 +153,7 @@ const AboutUs = ({ navigation }) => {
           <View style={styles.row}>
             <Image
               style={styles.icon}
-              resizeMode="cover"
+              resizeMode="contain"
               source={require("../assets/blueBlog.png")}
             />
             <Text style={styles.iconText}>Our blog</Text>
@@ -164,7 +164,7 @@ const AboutUs = ({ navigation }) => {
           <View style={styles.row}>
             <Image
               style={styles.icon}
-              resizeMode="cover"
+              resizeMode="contain"
               source={require("../assets/blueTwitter.png")}
             />
             <Text style={styles.iconText}>Follow us on Twitter</Text>
@@ -175,7 +175,7 @@ const AboutUs = ({ navigation }) => {
           <View style={styles.row}>
             <Image
               style={styles.icon}
-              resizeMode="cover"
+              resizeMode="contain"
               source={require("../assets/blueFacebook.png")}
             />
             <Text style={styles.iconText}>Like us on Facebook</Text>
