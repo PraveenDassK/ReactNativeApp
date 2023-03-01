@@ -103,7 +103,8 @@ const AddFunds = ({navigation}) => {
           <View style={[styles.selectBox]}
           >
             
-          <Dropdown style={styles.dropdownStyle}
+          <Dropdown
+           style={styles.dropdownStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
@@ -220,11 +221,12 @@ const styles = StyleSheet.create({
  dropdownStyle: {
     width: "95%",
     marginLeft: "2.5%",
-    backgroundColor: "#F6F5F8",
-  }, selectedTextStyle: {
+    paddingTop: "2.5%"
+  }, 
+  selectedTextStyle: {
     color: "black",
     marginLeft: "15%",
-    marginTop: "1%"
+    marginTop: "1%",
   },
   selectBox:{
     backgroundColor:"pink",
@@ -240,7 +242,9 @@ const styles = StyleSheet.create({
     top: verticalScale(-5),
     left: "5.5%",
   }, inputSearchStyle: {
-    width: 100},
+    width: 100,
+    
+  },
   helloTypo1: {
     textAlign: "center",
     // fontFamily: GlobalStyles.FontFamily.helvetica,
