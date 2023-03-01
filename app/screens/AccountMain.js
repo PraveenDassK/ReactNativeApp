@@ -107,6 +107,8 @@ const HomeScreenPersonal = ({ navigation }) => {
     //Load the data for transactions
     const transactionCall = await apiCall.GetTransactions(authContext.accountID);
 
+    
+
     let transactionList = [];
     let pageShow = [];
     for (let i = 0; i < 5; i++) {

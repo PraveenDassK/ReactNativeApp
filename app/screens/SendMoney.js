@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch, TextInput} from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, Switch, TextInput, TouchableOpacity} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list"
@@ -69,14 +69,14 @@ const SendMoney = ({navigation}) => {
       </Pressable>
       )
     })
-    benText = <View style = {styles.listBoxContainer}>{beniter}</View> }else{ benText = <Text style = {styles.failToFind}>No Accounts Found</Text>}
+    benText = <View style = {styles.listBoxContainer}>{beniter}</View> }else{ benText =<View style = {styles.failToFind}><Text> No Accounts Found</Text></View> }
 
 return (
 <View style={styles.mainDiv}>
 
-    <View style={styles.titleTextRow}>
+    {/* <View style={styles.titleTextRow}>
         <Text style={styles.titleText}>Select Beneficiary</Text>
-    </View>
+    </View> */}
 
     <View style={styles.searchBoxDiv}>
         <Image style={styles.image} source={require("../assets/icon-awesomesearch.png")}/>
@@ -88,9 +88,9 @@ return (
     </View>
 
     <View style={styles.peopleIconDiv}>
-        <Pressable style={styles.plusImage} onPress={() => navigation.navigate("AddBeneficiary")}>
+        <TouchableOpacity style={styles.plusImage} onPress={() => navigation.navigate("AddBeneficiary")}>
             <Image style={styles.plusImage} source={require("../assets/greyAdd.png")}/>
-        </Pressable>
+        </TouchableOpacity>
         <View style={styles.iconImage}></View>
     </View>
 
@@ -132,6 +132,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     flexDirection: 'row',
     justifyContent: "space-around",
+    paddingLeft: "1%"
+  },
+  failToFind:{
+    flex:1,
+   
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   image: {

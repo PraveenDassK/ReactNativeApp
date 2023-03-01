@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -333,7 +333,13 @@ const StackNavigator = () => {
         name="AddBeneficiary" 
         component={gestureHandlerRootHOC(AddBeneficiary)}
         options={{
-          title: "AddBeneficiary",
+          title: "Bank Details",
+          presentation: 'modal' ,
+          headerShown: true,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false,
        
         }}
       />
@@ -604,6 +610,10 @@ const ChooseCardsEliteNavigator = () => {
 }
 
 const AppNavigator = () => {
+
+  useEffect(() => {
+    console.log("here")
+  })
 
 
   return (

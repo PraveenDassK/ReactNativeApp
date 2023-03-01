@@ -193,6 +193,7 @@ const AddFunds = ({navigation}) => {
           <TextInput 
           style={[styles.hello8, styles.helloTypo1]} 
             placeholder={"£"+amount} keyboardType="numeric"
+            placeholderTextColor={"blue"}
             onChangeText = {newText => setAmount(newText)}
           />
           <View

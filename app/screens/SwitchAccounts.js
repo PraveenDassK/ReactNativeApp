@@ -51,7 +51,7 @@ const SwitchAccounts = ({navigation,route}) => {
     const switchAccount = (Id) => {
         console.log("Switch to " +Id)
         authContext.setAccountID(Id)
-        navigation.navigate("Account")
+        // navigation.navigate("Account")
     }
 
     return (
