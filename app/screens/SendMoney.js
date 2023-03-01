@@ -206,9 +206,8 @@ const styles = StyleSheet.create({
   },
 
   accountImage:{
-    flex: 2,
     height: 50,
-    width: 20,
+    width: 50,
     borderRadius: 25,
     marginLeft: 10,
     marginRight: 10,
