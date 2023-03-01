@@ -10,11 +10,13 @@ Text,
   Dimensions,
   Pressable,
   TouchableWithoutFeedback, 
-  ActivityIndicator
+  ActivityIndicator, 
+  FlatList
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
 import { LineChart } from "react-native-chart-kit";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 
 
@@ -42,6 +44,9 @@ const Analytics = ({ navigation }) => {
   const [totalTransactions, setTotalTrans] = useState(0);
   const [graphData, setGraphData] = useState(null)
   const [graphSetting, setGraph] = useState("Year")
+  const [data, setData] = useState([])
+  const [fulldata, setFullData] = useState([])
+  const [loadMore, setLoadMore] = useState(false)
 
   const [monthAverage, setMonthAverage] = useState(0);
   const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
@@ -58,6 +63,8 @@ const Analytics = ({ navigation }) => {
   const loadData = async () => {
     setIsLoading(true)
     const dataCall = await apiCall.GetAnalysisData(authContext.accountID);
+    // todo
+    const response = await apiCall.GetScheduledPayments("CC11875")
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
     setRecent([
@@ -68,6 +75,12 @@ const Analytics = ({ navigation }) => {
     setTrans(dataCall.transactions);
     setBal(dataCall.balance);
     setMonthAverage(dataCall.average)
+    setData([
+      response[0],
+      response[1],
+      response[2]
+    ])
+    setFullData(response)
 
 
     const graphData = await apiCall.GetTransactionsWeek(authContext.accountID);
@@ -75,6 +88,7 @@ const Analytics = ({ navigation }) => {
     setGraphData(graphData)
     setActive("Week")
     
+    console.log("scheduled", response, response[1].scheduleID, response[1].amount, response[1].toBeneficiariesId[0] )
 
   };
 
@@ -489,11 +503,13 @@ const Analytics = ({ navigation }) => {
           <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Upcoming Spendings</AppText>
         </View>
 
-        {recentTransactions.map((transaction, index) => (
+        
+
+        {!loadMore && data.map((transaction, index) => (
           <View key={index}>
             <TouchableOpacity
               style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
-              onPress={() => navigation.navigate("Transactions")}
+             // onPress={() => navigation.navigate("Transactions")}
             >
               <View style={{ height: "100%", flexDirection: "row" }}>
                 <View
@@ -518,7 +534,7 @@ const Analytics = ({ navigation }) => {
                       fontWeight: "700",
                     }}
                   >
-                    {transaction.sourceId[0]}
+                     {transaction.scheduleID[0]}
                   </AppText>
                 </View>
                 <View
@@ -530,10 +546,10 @@ const Analytics = ({ navigation }) => {
                   }}
                 >
                   <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                    {transaction.sourceId}
+                    {transaction.scheduleID}
                   </AppText>
                   <AppText style={{}}>
-                    {moment(transaction.transactionDate).format("LL")}
+                    {moment(transaction.date).format("LL")}
                   </AppText>
                 </View>
                 <View
@@ -552,8 +568,80 @@ const Analytics = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         ))}
-              <View style={{height: 20, width: "100%"}}/>
+        {loadMore && fulldata.map((transaction, index) => (
+          <View key={index}>
+            <TouchableOpacity
+              style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
+              //onPress={() => navigation.navigate("Transactions")}
+            >
+              <View style={{ height: "100%", flexDirection: "row" }}>
+                <View
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 25,
+                    backgroundColor: "#F6F5F8",
+                    borderColor: "black",
+                    alignSelf: "center",
+                    marginLeft: "2.5%",
+                    justifyContent: "center",
+                      alignItems: "center",
+                  }}
+                >
+                  <AppText
+                    style={{
+                      alignSelf: "center",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlignVertical: "center",
+                      fontWeight: "700",
+                    }}
+                  >
+                     {transaction.scheduleID[0]}
+                  </AppText>
+                </View>
+                <View
+                  style={{
+                    flex: 3.5,
+                    alignSelf: "center",
+                    justifyContent: "space-evenly",
+                    marginLeft: "5%",
+                  }}
+                >
+                  <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                    {transaction.scheduleID}
+                  </AppText>
+                  <AppText style={{}}>
+                    {moment(transaction.date).format("LL")}
+                  </AppText>
+                </View>
+                <View
+                  style={{
+                    flex: 5,
+                    justifyContent: "space-evenly",
+                    alignItems: "flex-end",
+                    marginRight: "2.5%",
+                  }}
+                >
+                  <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                    £{transaction.amount.toFixed(2)}
+                  </AppText>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ))}
 
+        <TouchableOpacity onPress={()=>setLoadMore(prev => !prev)} >
+          <View style={{flex:1, height: 70, justifyContent: "center", alignItems: "center"}}>
+          {!loadMore ? (
+            <MaterialCommunityIcons name="chevron-down" size={40} color="grey" />
+            ) : (
+              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" />
+            )}
+          </View>
+        </TouchableOpacity>
+          <View style={{height: 20, width: "100%"}}/>
       </View>
     </ScrollView>
   );
