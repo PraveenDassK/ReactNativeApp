@@ -2,11 +2,9 @@ import client from "./client";
 import moment from "moment";
 
 /**Getetrs**/
-const GetCardByAccount = async() => {
-    const request = await client.get("https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=686283112&auditUser=A12277V1")
-    const requestData = request.data.details
-    return requestData
-}
+
+
+
 
 /**Details */
 const GetCustomerDetails = async (Id) => {
@@ -147,6 +145,77 @@ const GetAnalysisData = async (Id) =>{
         transactions: transactions.transactions,
         averageMonth: thisMonth.total
     }
+}
+
+/******************************Card APIs */
+/**
+ * @dev Function is used to freeze or unfreeze a card
+ * @notice Don't use this for termination
+ * @todo Add validation for termination here/check if the card is terminated
+ * @param {Str} Id Card ID "686283112"
+ * @param {Str} freeze The command to send with the card
+ *  CARD_OK         Used if the card is unfrozen
+ *  CARD_BLOCKED    Used if the card is frozen
+ * @returns Bool True if successful
+ */
+const FreezeCard = async(Id,freeze) => {
+    const request = await client.patch(`https://api.carbonyte.io/walletmodule/Enfuce/UpdateVirtualCard?cardId=${Id}`,
+    {
+        "status": freeze
+    })
+    console.log(request)
+    return request.data.result
+}
+
+/**
+ * @dev This is used to get all of the card details for a user
+ * @param {String} Id The Id of the account "686283112"
+ * @returns An array of object, each index represents a card
+ *          Example of each index:
+ * {
+    "customerId": "212195412",
+    "id": "688802412",
+    "template": "MC_VIRTUAL",
+    "accountId": "686283112",
+    "cardRole": "MAIN",
+    "status": "CARD_BLOCKED",
+    "maskedCardNumber": "999914______7990",
+    "statusDate": "2023-02-28T15:16:20",
+    "embossing": {
+        "companyName": null,
+        "firstName": "RENONE",
+        "lastName": "ONEONE"
+    },
+    "productCode": "MC_VIRTUAL"
+   }
+ */
+const GetCardByAccount = async(Id) => {
+    const request = await client.get(`https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=686283112`)
+    const requestData = request.data.details
+    console.log(requestData)
+    return requestData
+}
+
+/**
+ * @dev Function is used to terminate card
+ * @notice Do not use this for freezing a card
+ * @todo Add in checks
+ * @todo Test for a bug:
+ *  If the card can be terminated and reactivated if frozen then unfrozen
+ * @param {Str} Id Card ID "686283112"
+ * @param {Str} freeze The command to send with the card
+ *  CARD_LOST                   Used if the card is reported lost
+ *  CARD_STOLEN                 Used if the card is reported stolen
+ *  CARD_CLOSED_DUE_TO_FRAUD    Used if the card is reported as a fraud
+ * @returns Bool True if successful
+ */
+const TerminateCard = async(Id,terminate) => {
+    const request = await client.patch(`https://api.carbonyte.io/walletmodule/Enfuce/UpdateVirtualCard?cardId=${Id}`,
+    {
+        "status": terminate
+    })
+    console.log(request)
+    return request.data.result
 }
 
 /**Carbon */
@@ -490,5 +559,7 @@ export default {
     GetAllAccounts,
     GetUsersSubscriptions,
     ChangeUsersSubscription,
-    GetScheduledPayments
+    GetScheduledPayments,
+    FreezeCard,
+    TerminateCard
 }
