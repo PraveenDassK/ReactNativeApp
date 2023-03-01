@@ -78,6 +78,7 @@ import CarbonProject from "../screens/CarbonProject"
 import VirtualEcoSystem from "../screens/VirtualEcoSystem"
 import ChooseCardsStandard5 from "../screens/ChooseCardsStandard5"
 import PinCart from "../screens/PinCart"
+import PinSetApp from "../screens/PinSetApp"
 
 
 /**
@@ -512,6 +513,14 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Transactions)}
         options={{
           title: "Transactions",
+       
+        }}
+      />
+       <Stack.Screen 
+        name="PinSetApp" 
+        component={gestureHandlerRootHOC(PinSetApp)}
+        options={{
+          title: "Pin Set",
        
         }}
       />

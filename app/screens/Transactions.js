@@ -28,6 +28,7 @@ const Transactions = ({navigation,route}) => {
     const [modalId, setModalId] = useState(false);
     const [initials, setInitals] = useState(null)
     const [refreshing, setRefreshing] = useState(false);
+    const [hide, setHide] = useState(false)
 
     const scrollY = React.useRef(new Animated.Value(0)).current;
 
@@ -48,6 +49,7 @@ const Transactions = ({navigation,route}) => {
     
 
     const loadData = async () => {
+     
         setIsLoading(true)
         const responseBalance = await api.GetAccount(authContext.accountID);
         const accountresponse = await api.GetAccount(authContext.accountID);
@@ -69,6 +71,7 @@ const Transactions = ({navigation,route}) => {
          }
         console.log(initialsHold)
         setInitals(initialsHold)
+        setHide(false)
   
     }
 
@@ -106,6 +109,7 @@ const Transactions = ({navigation,route}) => {
 
 
       setTransactionData( oldTransactions => {
+        setHide(true)
         return oldTransactions.filter((_, i)=> i !== Id)
       })
 
@@ -266,29 +270,30 @@ const Transactions = ({navigation,route}) => {
 
             
             
-            <Animated.FlatList 
+            <FlatList 
             showsVerticalScrollIndicator={false}
             ListFooterComponent={  
             <View style={{marginBottom: verticalScale(50)}}> 
-            <FadeInView >
-              <Button 
+           
+              {hide && <Button 
       
                   onPress={() => loadData()}
                   title="Unhide Transactions"
                   color="#841584"
                   style={{borderRadius:15}}
-              />
-            </FadeInView>
+
+              />}
+          
             </View>
          }
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
             data={transactionData}
-            onScroll={Animated.event(
-              [{ nativeEvent: {contentOffset: {y: scrollY}}}],
-              {useNativeDriver: true }
-            )}
+            // onScroll={Animated.event(
+            //   [{ nativeEvent: {contentOffset: {y: scrollY}}}],
+            //   {useNativeDriver: true }
+            // )}
             keyExtractor={item => item.sourceId.toString()}
             renderItem={({item, index}) => {
               console.log("is",item.sourceId.toString())
