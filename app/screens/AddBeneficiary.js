@@ -1,304 +1,92 @@
-import React, { useContext, useEffect, useState} from "react";
-import { View,
-  KeyboardAvoidingView,
-  TextInput,
-  StyleSheet,
-  Text,
-  Platform,
-  TouchableWithoutFeedback,
-  Pressable,
-  Keyboard, } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Pressable, Keyboard, TouchableOpacity } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
-import api from "../api/api_list"
+import api from "../api/api_list";
+import Button from "../components/Button"
 
-const AddBeneficiary = ({navigation}) => {
-  const [bankName, setBankName] = useState("")
-  const [accountName, setAccountName] = useState("")
-  const [phoneNumber, setIban] = useState("")
-  const [sortCode, setPhoneNumber] = useState("")
-  const [accNum, setAccNum] = useState("")
-  const authContext = useContext(AuthContext)
+
+const AddBeneficiary = ({ navigation }) => {
+  const [bankName, setBankName] = useState("");
+  const [accountName, setAccountName] = useState("");
+  const [phoneNumber, setIban] = useState("");
+  const [sortCode, setPhoneNumber] = useState("");
+  const [accNum, setAccNum] = useState("");
+  const authContext = useContext(AuthContext);
 
   const addBene = async () => {
-  const response = await api.AddBeneficiary(authContext.userID,phoneNumber,accountName,accNum,sortCode);
-    navigation.navigate("BankTransferAmount",
-            {bankName: bankName,
-              accountName: accountName,
-            phoneNumber:phoneNumber,
-            sortCode:sortCode,
-          accNum: accNum})
-    console.log(response)
-  }
-  
+    const response = await api.AddBeneficiary(authContext.userID, phoneNumber, accountName, accNum, sortCode);
+    navigation.navigate("BankTransferAmount", { bankName: bankName, accountName: accountName, phoneNumber: phoneNumber, sortCode: sortCode, accNum: accNum });
+    console.log(response);
+  };
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.addBeneficiary}>
-      <View style={styles.groupParent}>
-        <View style={[styles.groupWrapper, styles.wrapperPosition]}>
-          <View style={[styles.helloWrapper, styles.wrapperPosition]}>
-            <Text style={styles.hello}>Add Beneficiary</Text>
+        <View style= {{justifyContent: "space-between"}}>
+          <View style={{ width: "100%", height: "auto", justifyContent: "center", alignItems: "center", height: 50}}>
+            <Text style={{ fontWeight: "700", fontSize: 20 }}>Bank Details</Text>
           </View>
-        </View>
-        <View style={[styles.groupWrapper, styles.wrapperPosition]}>
-          <View style={[styles.helloWrapper, styles.wrapperPosition]}>
-            <Text style={styles.hello}>Add Beneficiary</Text>
-          </View>
-        </View>
-        <View style={[styles.helloParent, styles.groupPosition]}>
-          <Text
-            style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
-          >
-            Name of the Bank
-          </Text>
-          <TextInput style={[styles.hello3, styles.helloTypo]} 
-          placeholder={"Bank Name"}
 
-          onChangeText={bankName => setBankName(bankName)}/>
-          <View style={[styles.groupChild, styles.lineViewPosition]} />
-        </View>
-        <View style={[styles.helloParent12, styles.groupPosition]}>
-          <Text
-            style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
-          >
-            Account Number
-          </Text>
-          <TextInput style={[styles.hello3, styles.helloTypo]} 
-          placeholder={"Account Number"}
+          <View style={{ height: 25 }} />
 
-          onChangeText={accNum => setAccNum(accNum)}/>
-          <View style={[styles.groupChild, styles.lineViewPosition]} />
-        </View>
-        <View style={[styles.helloGroup, styles.groupPosition]}>
-          <Text
-            style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
-          >
-            Account Name
-          </Text>
-          <TextInput style={[styles.hello3, styles.helloTypo]} 
-          placeholder={"Ortiz Tyrese"}
-          onChangeText = {accountName => setAccountName(accountName)}/>
-          <View style={[styles.groupChild, styles.lineViewPosition]} />
-        </View>
-        <View style={[styles.groupView, styles.groupPosition]}>
-          <Text
-            style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
-          >
-            Phone Number
-          </Text>
-          <TextInput style={[styles.hello3, styles.helloTypo]}
-          placeholder={"01234567890"}
-          keyboardType="numeric"
-          onChangeText={phoneNumber => setIban(phoneNumber)}/>
-          <View style={[styles.groupChild, styles.lineViewPosition]} />
-        </View>
-        <Pressable
-          style={[styles.groupFrame, styles.groupPosition]}
-          onPress={() => addBene()}
-        >
-          <View style={[styles.groupWrapper, styles.wrapperPosition]}>
-            <View style={[styles.groupWrapper, styles.wrapperPosition]}>
-              <View style={styles.rectangleView} />
-              <View style={styles.maskGroup236} />
-            </View>
-            <Text style={[styles.hello8, styles.helloTypo1]}>Confirm</Text>
+          <View style={{ width: "90%", marginLeft: "5%", marginBottom: "5%"}}>
+            <Text style={{ fontSize: 14 }}>Name of the bank</Text>
+            <TextInput style={{ fontWeight: "700", fontSize: 24, marginTop: "1%" }}>Master Splinter</TextInput>
+            <View style={{ height: 1, backgroundColor: "black", marginTop: "1%" }} />
           </View>
-        </Pressable>
-        <View style={styles.helloFrame}>
-          <Text
-            style={[styles.hello2, styles.helloTypo1, styles.helloPosition]}
-          >
-            Sort Code
-          </Text>
+
+          <View style={{ width: "90%", marginLeft: "5%", marginBottom: "5%" }}>
+            <Text style={{ fontSize: 14 }}>Phone Number</Text>
+            <TextInput style={{ fontWeight: "700", fontSize: 24, marginTop: "1%" }}>01489424242</TextInput>
+            <View style={{ height: 1, backgroundColor: "black", marginTop: "1%" }} />
+          </View>
+
+          <View style={{ width: "90%", marginLeft: "5%", marginBottom: "5%" }}>
+            <Text style={{ fontSize: 14 }}>Account Owner Name</Text>
+            <TextInput style={{ fontWeight: "700", fontSize: 24, marginTop: "1%" }}>Spaff Jezos</TextInput>
+            <View style={{ height: 1, backgroundColor: "black", marginTop: "1%" }} />
+          </View>
+
+          <View style={{ width: "90%", marginLeft: "5%", marginBottom: "5%" }}>
+            <Text style={{ fontSize: 14 }}>Account Number</Text>
+            <TextInput style={{ fontWeight: "700", fontSize: 24, marginTop: "1%" }}>4242-4242</TextInput>
+            <View style={{ height: 1, backgroundColor: "black", marginTop: "1%" }} />
+          </View>
+
+          <View style={{ width: "90%", marginLeft: "5%", marginBottom: "5%" }}>
+            <Text style={{ fontSize: 14 }}>Sort Code</Text>
+            <TextInput style={{ fontWeight: "700", fontSize: 24, marginTop: "1%" }}>00-00-00</TextInput>
+            <View style={{ height: 1, backgroundColor: "black", marginTop: "1%" }} />
+          </View>
+
+          <View style={{justifyContent: "flex-end"}}>
+                  <TouchableOpacity style={styles.button}>
+                      <Button title="Confirm" color="babyBlue" onPress={() => addBene()}/>
+                  </TouchableOpacity>
+              </View>
         </View>
-        <View style={styles.helloParent1}>
-          <TextInput
-            style={[styles.hello10, styles.helloTypo, styles.helloPosition]}
-            placeholder={"00 - 00 - 00"}
-            keyboardType="numeric"
-            onChangeText={sortCode => setPhoneNumber(sortCode)}
-          />
-          <View style={[styles.lineView, styles.lineViewPosition]} />
-        </View>
-      </View>
-    </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  wrapperPosition: {
-    bottom: 10,
-    left: 0,
-    right: 0,
-    top: -10,
-    position: "absolute",
-  },
-  groupPosition: {
-    height: 60,
-    left: 25,
-    top: "50%",
-    position: "absolute",
-  },
-  helloTypo1: {
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    position: "absolute",
-  },
-  helloPosition: {
-    top: 0,
-    left: 0,
-  },
-  helloTypo: {
-    fontSize: GlobalStyles.FontSize.size_6xl,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    position: "absolute",
-  },
-  lineViewPosition: {
-    height: 2,
-    borderTopWidth: 1,
-    borderColor: "#707070",
-    borderStyle: "solid",
-    bottom: -1,
-    right: 0,
-    position: "absolute",
-  },
-  hello: {
-    marginLeft: -75.5,
-    top: 39,
-    left: "50%",
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    fontWeight: "700",
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    position: "absolute",
-  },
-  helloWrapper: {
-    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
-    borderTopRightRadius: GlobalStyles.Border.br_4xl,
-    shadowColor: "rgba(1, 1, 253, 0.1)",
-    shadowOffset: {
-      width: 0,
-      height: -3,
-    },
-    shadowRadius: 20,
-    elevation: 20,
-    shadowOpacity: 1,
-    left: 0,
-    backgroundColor: GlobalStyles.Color.white,
-    bottom: 0,
-  },
-  groupWrapper: {
-    left: 0,
-  },
-  hello2: {
-    fontSize: GlobalStyles.FontSize.size_base,
-    color: GlobalStyles.Color.gray_700,
-    left: 0,
-  },
-  hello3: {
-    top: 28,
-    left: 1,
-  },
-  groupChild: {
-    left: 0,
-  },
-  helloParent: {
-    marginTop: -255.5,
-    right: 40,
-  },
-  helloParent12: {
-    marginTop: 135.5,
-    right: 40,
-  },
-  helloGroup: {
-    marginTop: -153.5,
-    right: 40,
-  },
-  groupView: {
-    marginTop: -50.5,
-    right: 40,
-  },
-  rectangleView: {
-    height: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "10%",
-    left: "0%",
-    borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.blue_100,
-    position: "absolute",
-    width: "100%",
-  },
-  maskGroup236: {
-    bottom: 13,
-    left: 0,
-    right: 0,
-    top: 0,
-    position: "absolute",
-  },
-  hello8: {
-    top: "20.33%",
-    left: "50%",
-    marginLeft:-50,
-    fontSize: GlobalStyles.FontSize.size_lg,
-    textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
-  },
-  groupFrame: {
-    marginTop: 234.5,
-    right: 24,
-  },
-  helloFrame: {
-    marginTop: 52.5,
-    width: 73,
-    height: 14,
-    left: 25,
-    top: "50%",
-    position: "absolute",
-  },
-  hello10: {
-    left: 0,
-  },
-  lineView: {
-    left: -1,
-  },
-  helloParent1: {
-    marginTop: 80.75,
-    left: 26,
-    height: 32,
-    right: 40,
-    top: "50%",
-    position: "absolute",
-  },
-  historyParent: {
-    top: 10,
-    width: 300,
-    left: 0,
-  },
-  iconContentLayout: {
-    height: 16,
-    position: "absolute",
-  },
-  groupParent: {
-    width: "100%",
-    height: "110%",
-  },
-  addBeneficiary: {
-    flex: 1,
-    width: "100%",
-    backgroundColor: GlobalStyles.Color.gray_100,
-    paddingTop: GlobalStyles.Padding.padding_xs,
-  },
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    minHeight: 830,
+    height: "auto",
+  },bottom: {
+            bottom: "5%",
+            flex: 1,
+            justifyContent: 'flex-end',
+
+        },
+
+        button: {
+            width: "90%",
+            left: "5%"
+        }
 });
 
 export default AddBeneficiary;
