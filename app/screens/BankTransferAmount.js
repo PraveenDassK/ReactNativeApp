@@ -6,13 +6,13 @@ import Button from "../components/Button"
 
 
 const BankTransferAmount = ({ route, navigation }) => {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
   const reciver = route.params.accountName;
   const sortCode = route.params.sortCode;
   const accountCode = route.params.accountNumber;
 
-  let payment = (amount ? amount : 1).toString();
+  // let amount = (amount ? amount : 1).toString();
 
   const requestContact = (amount) => {
     console.log("Transfer to " + accountName + " of £" + amount + " successful");
@@ -45,7 +45,8 @@ const BankTransferAmount = ({ route, navigation }) => {
             <Text style={{ textAlign: "center", fontSize: 16 }}>Pay</Text>
             <TextInput
               style={{ textAlign: "center", fontSize: 60, fontWeight: "700" }}
-              placeholder={"£" + payment}
+              placeholder={"£" + amount}
+              placeholderTextColor="blue"
               keyboardType="numeric"
               onChangeText={(newText) => setAmount(newText)}
             />
@@ -74,14 +75,14 @@ const BankTransferAmount = ({ route, navigation }) => {
                 <Text style={{fontSize: 25, color: "grey"}}>£20</Text>
               </Pressable>
 
-              <Pressable style={{ flex: 3, width: "30%" }}
+              <Pressable style={{ flex: 3, width: "30%"}}
                 onPress={() => {
                   setAmount("50");
                 }}
               >
                 <Text style={{textAlign: "center", fontSize: 25, color: "grey"}}>£50</Text>
               </Pressable>
-              <Pressable style={{ flex: 3, width: "30%"}}
+              <Pressable style={{ flex: 3, width: "30%" }}
                 onPress={() => {
                   setAmount("100");
                 }}
@@ -95,7 +96,7 @@ const BankTransferAmount = ({ route, navigation }) => {
       </Pressable>
       <View style={styles.bottom}>
                       <TouchableOpacity style={styles.button}>
-                          <Button title="Send" color="babyBlue" onPress={() => requestContact(payment)}/>
+                          <Button title="Send" color="babyBlue" onPress={() => requestContact(amount)}/>
                       </TouchableOpacity>
                   </View>
     </View>

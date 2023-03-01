@@ -6,6 +6,8 @@ import api from "../api/api_list"
 import AuthContext from "../auth/context";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
+import AppText from "../components/Text";
+
 const SendMoney = ({navigation}) => {
   const [data, setData] = useState({})
   const [benList, setBen] = useState([])
@@ -52,30 +54,30 @@ const SendMoney = ({navigation}) => {
         <View style = {styles.benBoxCon}>
 
           <View style={styles.accountImage}>
-            <Text style={styles.accountName}>{item.name[0]}</Text>
+            <AppText style={styles.accountName}>{item.name[0]}</AppText>
           </View>
 
           <View style={styles.accountTextDiv}>
-              <Text style={styles.accountName}>{item.name}</Text>
-              <Text style={styles.accountPhoneNum}>+{item.phoneNumber}</Text>
-              <Text style={styles.accountNum}>{item.destinationIdentifier.accountNumber}</Text>
+              <AppText style={styles.accountName}>{item.name}</AppText>
+              <AppText style={styles.accountPhoneNum}>+{item.phoneNumber}</AppText>
+              <AppText style={styles.accountPhoneNum}>{item.destinationIdentifier.accountNumber}</AppText>
           </View>
 
           <Pressable style = {styles.deleteButton} onPress = {(details) => deleteDetails(i)}>
-          <Text>Delete</Text>
+          <AppText style={{color: "tomato"}}>Delete</AppText>
           </Pressable>
         </View>
 
       </Pressable>
       )
     })
-    benText = <View style = {styles.listBoxContainer}>{beniter}</View> }else{ benText =<View style = {styles.failToFind}><Text> No Accounts Found</Text></View> }
+    benText = <View style = {styles.listBoxContainer}>{beniter}</View> }else{ benText =<View style = {styles.failToFind}><AppText style={{fontSize:18}}> No Accounts Found</AppText></View> }
 
 return (
 <View style={styles.mainDiv}>
 
     {/* <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>Select Beneficiary</Text>
+        <AppText style={styles.titleText}>Select Beneficiary</AppText>
     </View> */}
 
     <View style={styles.searchBoxDiv}>
@@ -84,7 +86,7 @@ return (
     </View>
 
     <View style={styles.subTextDiv}>
-        <Text style={styles.subText}>Recent</Text>
+        <AppText style={styles.subText}>Recent</AppText>
     </View>
 
     <View style={styles.peopleIconDiv}>
@@ -95,7 +97,7 @@ return (
     </View>
 
     <View style={styles.subTextDiv}>
-            <Text style={styles.subText}>Contacts</Text>
+            <AppText style={styles.subText}>Contacts</AppText>
     </View>
 
     {benText}
@@ -109,6 +111,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     backgroundColor: "#FFFFFF",
+  },
+
+  accountPhoneNum: {
+    opacity:0.3
   },
 
   titleTextRow: {
@@ -237,7 +243,7 @@ const styles = StyleSheet.create({
   },
 
   accountName: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700"
   }
 });
