@@ -5,7 +5,7 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 
 
 import api from "../api/api_list"
-import apiCall from "../api/api"
+import apiCall from "../api/apiCall"
 import AuthContext from "../auth/context";
 
 import { Dropdown } from 'react-native-element-dropdown';
@@ -19,7 +19,6 @@ const AddFunds = ({navigation}) => {
   const [isFocus, setIsFocus] = useState(false);
   const [cardData, setCard] = useState([]);
   const [amount, setAmount] = useState("1")
-  const [userData, setCode] = useState("")
 
   //let cardData = [{label: "01614842", value: "01614842"}]
   //Calls the API once during load
@@ -29,46 +28,28 @@ const AddFunds = ({navigation}) => {
   
   //Gets the data for the user
   const loadData = async () => {
-    const response = await apiCall.GetCardByAccount(authContext.userID);
-    const data = response
-    console.log(data)
-    setData(data)
+    const response = await apiCall.GetAllAccounts(authContext.userID)
+    console.log(response)
+    setData(response)
 
     let accountList = []
-    data.forEach(element => {
-      console.log(element)
+    response.forEach((account,i) => {
+      console.log(account)
       accountList.push({
-        label: "**** **** **** " +element.maskedCardNumber.substr(element.maskedCardNumber.length - 4),
-        value: element.customerId
+        label: account.name + " £" + account.balance,
+        value: i
       })
     });
-    // const accountNum = data[0].identifiers[0].accountNumber
-    // console.log(accountNum)
-    // let accountList = [{
-    //   label: data[0].identifiers[0].accountNumber,
-    //   value: data[0].identifiers[0].accountNumber
-    // },
-    // {
-    //   label: data[1].identifiers[0].accountNumber,
-    //   value: data[1].identifiers[0].accountNumber
-    // }
-    // ]
     setCard(accountList)
   }
 
   //Screen components
 
-  console.log(data)
-  const reciver = "Current Balance : "
-  const sortCode =  "Current Balance : "
   const accountCode = "Card ID : " + value
   let fromName = ""
 
-  let payment = (amount ? amount : 1).toString()
-
   const requestContact = (amount) => {
-    console.log(amount)
-    if(amount){alert("!")}
+    if(!amount){alert("!")}
     const checkText = (text) => {
       setAmount(text)
       //First check if there is a value
@@ -85,15 +66,25 @@ const AddFunds = ({navigation}) => {
         setValidator(true)
       }
     }
+    const chosenAccount = data[value]
+    console.log(chosenAccount)
+    const benData = {
+      bankName: "Bank",
+      accountName: chosenAccount.name,
+      accountNumber: chosenAccount.identifiers[0].accountNumber,
+      iban:chosenAccount.identifiers[0].iban,
+      sortCode:chosenAccount.identifiers[0].sortCode
+    }
+
+    console.log(benData)
     navigation.navigate("Pin",{
-      amount: amount, 
-      name: value,
+      amount: amount,
+      name: benData.accountName,
       successScreen: "Success",
-      successText: "Your funds have been sent",
-      finishScreen: "AccountMain"
+      successText: "Transfer to " + benData.accountName + " of £" + amount + " successful",
+      beneficiaryData: benData,
     })
   }
-  console.log(value)
 
   
 
@@ -107,7 +98,6 @@ const AddFunds = ({navigation}) => {
 
           <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
           <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
-          <Text style={[styles.hello5, styles.helloTypo]}>{sortCode}</Text>
           
           <Text style={[styles.Select_account, styles.helloTypo]}>Select Account</Text>
           <View style={[styles.selectBox]}
@@ -382,7 +372,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
-    color: "blue",
+    color: GlobalStyles.Color.gray_700,
   },
   lineView: {
   top: verticalScale(110),
