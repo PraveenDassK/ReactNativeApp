@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import { StyleSheet,  View, Text, Image, ScrollView, FlatList, TouchableOpacity} from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import GlobalStyles from "../../GlobalStyles";
-import apiCall from "../api/api";
+import apiCall from "../api/apiCall";
 import Button from "../components/Button";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
 
@@ -21,24 +21,24 @@ const CarbonCart = ({route,navigation }) => {
     let projects = []
 
     let totalPrice = 0
-    await projectList.forEach(async(element) => {
+    let totalItems = 0
 
-      let project = await apiCall.GetSingleProject("5f96f967a3a85800118be4d1")
+    for(let i = 0; i < projectList.length; i++){
+      let project = await apiCall.GetProject(projectList[i].projectId)
 
-      let name = project.displayName
-      totalPrice = totalPrice + project.asset.displayAssetPriceWithMarkup
+      let name = project.name
+      totalPrice += +project.price
 
       let price = {
-        "price" : project.asset.displayAssetPriceWithMarkup.toFixed(2),
-        "item" : project.asset.name,
-        "amount" : element.amount
+        "price" : project.price,
+        "item" : project.name,
+        "amount" : projectList.amount
       }
       projects.push({price,name})
       setData(projects)
-    });
+    }
 
     let show = []
-    let totalItems = 0
 
     data.forEach(item => {
       totalItems ++
@@ -57,7 +57,7 @@ const CarbonCart = ({route,navigation }) => {
       )
     })
     setshow(show)
-    setAmount(totalItems)
+    setAmount(projectList.length)
     setPrice(totalPrice)
   }
 
