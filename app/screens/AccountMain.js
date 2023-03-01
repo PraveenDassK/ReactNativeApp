@@ -76,6 +76,8 @@ const HomeScreenPersonal = ({ navigation }) => {
     const userData = await apiCall.GetCustomerDetails(authContext.accountID);
     const cardData = await apiCall.GetCardDetails("686283112");
     const resposeData = await apiCall.GetUserImpact("CC11875");
+    const cards = await apiCall.GetCardByAccount("686283112")
+
     setIsLoading(false)
 
     setcardnumber(cardData.cardNumberMasked)
