@@ -8,6 +8,7 @@ import api from "../api/api_list";
 import AuthContext from "../auth/context";
 import moment from "moment";
 import apiCall from "../api/api";
+import apiCall2 from "../api/apiCall";
 
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
@@ -19,14 +20,15 @@ const MyCards = ({ navigation }) => {
 
   //Transactions
   const [transactionData, setTransactionData] = useState([]);
-  const [balanceData, setBalance] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalId, setModalId] = useState(false);
   const [initials, setInitals] = useState(null);
   const [cardnumber, setcardnumber] = useState(null);
   const [firstname, setfirstname] = useState(null);
   const [lastname, setlastname] = useState(null);
-  const [bool, setbool] = useState();
+  const [cardId, setCardID] = useState(null);
+  const [cardIndex, setCardIndex] = useState(0);
+  const [cardData, setCardData] = useState(null);
   const authContext = useContext(AuthContext);
   const { settings } = useContext(AuthContext);
 
@@ -35,48 +37,26 @@ const MyCards = ({ navigation }) => {
   }, []);
 
   const loadData = async () => {
-    const responseBalance = await api.GetAccount(authContext.accountID);
-    const accountresponse = await api.GetAccount(authContext.accountID);
-    const accountdata = accountresponse.data.details;
-    const data = responseBalance.data.details;
-
-    console.log(authContext.accountID);
-    //Load the data for transactions
+    //Get the transaction data
     const response = await api.GetTransactions(authContext.accountID, 5);
     const transactions = response.data.details.content;
     setTransactionData(transactions);
-    let name = accountdata.customerName;
-    let names = name.split(" "),
-      initialsHold = names[0].substring(0, 1).toUpperCase();
 
-    if (names.length > 1) {
-      initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
-    }
-    console.log(initialsHold);
-    setInitals(initialsHold);
-
-    const response2 = await apiCall.GetCardByAccount(authContext.userID);
-    const data2 = response2;
-
-    console.log(response2);
-    console.log(response2[1].embossing.lastName);
-
-    const bool = false;
-    if (bool === true) {
-      setcardnumber("*******");
-      setfirstname("*******");
-      setlastname("*******");
-      setBalance("*******");
-      setSortCode("*******");
-      setaccountnumber("*******");
-      setaccountname("*******");
-    } else {
-      setcardnumber("**** ****  **** " + response2[1].maskedCardNumber.substr(response2[1].maskedCardNumber.length - 4));
-      setfirstname(response2[1].embossing.firstName);
-      setlastname(response2[1].embossing.lastName);
-      setBalance(data.availableBalance);
-    }
+    const cards = await apiCall.GetCardByAccount("686283112")
+    setCardData(cards)
+    const currentCard = cards[cardIndex]
+    currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
+    console.log(currentCard)
+    setfirstname(currentCard.embossing.firstName)
+    setlastname(currentCard.embossing.lastName)
+    setcardnumber(currentCard.maskedCardNumber)
   };
+
+  const cardDetails = () => {
+    console.log(cardData)
+    cardData[cardIndex].status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
+    console.log(cardData[cardIndex].status)
+  }
 
   let transactionList = [];
   const showTransaction = (Id) => {
@@ -163,8 +143,16 @@ const MyCards = ({ navigation }) => {
 
   //CardFreezing
   const [cardFrozen, setFrozen] = useState(false);
-  const toggleCard = () => {
+  const toggleCard = async () => {
     setFrozen(!cardFrozen);
+    console.log(cardData[cardIndex].status)
+    if(cardData[cardIndex].status == "CARD_OK"){
+      const request = await apiCall2.FreezeCard(cardData[cardIndex].id,"CARD_BLOCKED")
+    }else{
+      console.log("unfreeze")
+      const request = await apiCall2.FreezeCard(cardData[cardIndex].id,"CARD_OK")
+    }
+    loadData()
   };
 
   return (
