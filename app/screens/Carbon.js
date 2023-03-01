@@ -207,7 +207,7 @@ const Carbon = ({ route, navigation }) => {
               </View>
               <View style={styles.doubleButtonDiv}>
                 <Button style={{ width: "49%" }} title="ADD TO CART" color="babyBlue" onPress={() => addToCart(item.id)} />
-                <Button style={{ width: "49%" }} title="Learn More" color="babyBlue" onPress={() => goToBasket()} />
+                <Button style={{ width: "49%" }} title="Learn More" color="babyBlue" onPress={() => navigation.navigate("CarbonProject", { Id: item.id })} />
               </View>
               <View style={styles.benifitsContainer}>
                 {item.tags.length ? (
