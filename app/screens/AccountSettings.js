@@ -122,9 +122,9 @@ const AccountSettings = ({navigation}) => {
             <View 
             style={{
               width: "100%",
-              height: 1,
+              height: 0.3,
               backgroundColor: "black",
-              opacity: 0.3
+              opacity: 0.2
               
            
           }}/>
