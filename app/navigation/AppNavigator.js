@@ -502,7 +502,7 @@ const StackNavigator = () => {
         name="AccountSettings" 
         component={gestureHandlerRootHOC(AccountSettings)}
         options={{
-          title: "AccountSettings",
+          title: "Settings",
        
         }}
       />

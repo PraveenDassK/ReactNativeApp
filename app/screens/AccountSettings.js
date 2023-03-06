@@ -1,15 +1,42 @@
 import React, { useContext, useEffect, useState, Keyboard } from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
+
+import AppText from "../components/Text";
+
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 
 import GlobalStyles from "../../GlobalStyles";
+import { FlatList } from "react-native-gesture-handler";
+
+
+
+
+const ITEMS = [
+  {
+    id:1, title: "statements", route: "Transactions"
+  },
+  {
+    id:2, title: "limits", route: "SpendingLimit"
+  },
+  {
+    id:3, title: "account and verification letter", route: "AccountLetter"
+  },
+  
+
+
+]
 
 const AccountSettings = ({navigation}) => {
   const [name, setName] = useState("")
   const [balance, setBalance] = useState(0)
   const authContext = useContext(AuthContext)
   const {settings} = useContext(AuthContext)
+
+  const insets = useSafeAreaInsets();
 
 
   //Calls the API once during load
@@ -27,76 +54,192 @@ const AccountSettings = ({navigation}) => {
       console.log(data)
   }
 
+  
+
   return (
-    <View style={styles.account}>
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>{name}</Text>
-        <Text style={styles.hello2}>Standard</Text>
-        <Text style={[styles.hello3, styles.helloTypo]}>Manage</Text>
-        <View style={[styles.rectangleParent, styles.groupChildPosition]}>
-          <View style={[styles.groupChild, styles.groupChildPosition]} />
-          <View style={[styles.groupItem, styles.groupPosition]} />
-          <View style={[styles.groupInner, styles.groupPosition]} />
-          <Pressable
-            style={[styles.statementsParent, styles.parentPosition]}
-            onPress={() => navigation.navigate("Transactions")}
-          >
-            <Text
-              style={[
-                styles.limits1Typo,
-                styles.limits1SpaceBlock,
-                styles.limitsPosition,
-              ]}
-            >
-              Statements
-            </Text>
-            <Image
-              style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
-              resizeMode="cover"
-              source={("../assets/icon-carbonyteuparrow.png")}
-            />
-          </Pressable>
-          <View style={[styles.limitsParent, styles.parentPosition]}>
-            <Pressable
-              style={styles.limitsPosition}
-              onPress={() => navigation.navigate("SpendingLimit")}
-            >
-              <Text style={[styles.limits1Typo, styles.limits1SpaceBlock]}>
-                Limits
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
-              onPress={() => navigation.navigate("Transactions")}
-            >
-            </Pressable>
-          </View>
-          <Pressable
-            style={styles.accountVerificationLetterParent}
-            onPress={() => navigation.navigate("AccountLetter")}
-          >
-            <Text
-              style={[
-                styles.accountVerificationLetter,
-                styles.limits1Typo,
-                styles.limitsPosition,
-              ]}
-            >
-              Account verification letter
-            </Text>
-          </Pressable>
+    <View 
+    style={[
+      styles.accountContainer,
+      {
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+      }
+    ]}>
+      <View style={styles.nameBalanceContainer}>
+        <View style={[styles.nameBalanceItem, {flex: 2}]}>
+          <AppText style={{fontSize: 20}}>{name}</AppText>
         </View>
-        <Image
-          style={[styles.groupIcon, styles.iconPosition]}
-          resizeMode="cover"
-          source={("../assets/group-31123.png")}
-        />
+        <View style={[styles.nameBalanceItem, {alignItems: "flex-end"}]}>
+          <AppText style={{fontSize: 20, color: "blue"}}>£{balance}</AppText>
+        </View>
       </View>
+      <View style={styles.accountTypeContainer}>
+        <AppText style={{opacity: 0.3}}>Standard</AppText>
+      </View>
+
+      <View style={styles.managementContainer}>
+        <AppText style={{opacity: 0.5}}>Management</AppText>
+        <View style={styles.itemsContainer}>
+          <FlatList 
+            data={ITEMS}
+            keyExtractor={item => item.id}
+           renderItem={({item}) => {
+            return (
+              <TouchableOpacity onPress={() => navigation.navigate(item.route)}>
+                <View style={styles.item}>
+                  <View style={styles.itemTitle}>
+                    <AppText>{item.title}</AppText>
+                  </View>
+                  <View style={styles.itemChevron}>
+                  <MaterialCommunityIcons name="chevron-right" size={20} color="blue" />
+                  </View>
+                </View>
+              </TouchableOpacity>
+              )
+           }}
+           ItemSeparatorComponent={() => (
+            <View 
+            style={{
+              width: "100%",
+              height: 1,
+              backgroundColor: "black",
+              opacity: 0.3
+              
+           
+          }}/>
+           )}
+          />
+
+        </View>
+      </View>
+
     </View>
+    // <View style={styles.account}>
+    //   <View style={styles.helloParent}>
+    //     <AppText style={styles.hello}>{name}</AppText>
+    //     <AppText style={styles.hello2}>Standard</AppText>
+    //     <AppText style={[styles.hello3, styles.helloTypo]}>Manage</AppText>
+    //     <View style={[styles.rectangleParent, styles.groupChildPosition]}>
+    //       <View style={[styles.groupChild, styles.groupChildPosition]} />
+    //       <View style={[styles.groupItem, styles.groupPosition]} />
+    //       <View style={[styles.groupInner, styles.groupPosition]} />
+    //       <Pressable
+    //         style={[styles.statementsParent, styles.parentPosition]}
+    //         onPress={() => navigation.navigate("Transactions")}
+    //       >
+    //         <AppText
+    //           style={[
+    //             styles.limits1Typo,
+    //             styles.limits1SpaceBlock,
+    //             styles.limitsPosition,
+    //           ]}
+    //         >
+    //           Statements
+    //         </AppText>
+    //         <Image
+    //           style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
+    //           resizeMode="cover"
+    //           source={("../assets/icon-carbonyteuparrow.png")}
+    //         />
+    //       </Pressable>
+    //       <View style={[styles.limitsParent, styles.parentPosition]}>
+    //         <Pressable
+    //           style={styles.limitsPosition}
+    //           onPress={() => navigation.navigate("SpendingLimit")}
+    //         >
+    //           <AppText style={[styles.limits1Typo, styles.limits1SpaceBlock]}>
+    //             Limits
+    //           </AppText>
+    //         </Pressable>
+    //         <Pressable
+    //           style={[styles.iconIonicIosArrowForward, styles.iconPosition]}
+    //           onPress={() => navigation.navigate("Transactions")}
+    //         >
+    //         </Pressable>
+    //       </View>
+    //       <Pressable
+    //         style={styles.accountVerificationLetterParent}
+    //         onPress={() => navigation.navigate("AccountLetter")}
+    //       >
+    //         <AppText
+    //           style={[
+    //             styles.accountVerificationLetter,
+    //             styles.limits1Typo,
+    //             styles.limitsPosition,
+    //           ]}
+    //         >
+    //           Account verification letter
+    //         </AppText>
+    //       </Pressable>
+    //     </View>
+    //     <Image
+    //       style={[styles.groupIcon, styles.iconPosition]}
+    //       resizeMode="cover"
+    //       source={("../assets/group-31123.png")}
+    //     />
+    //   </View>
+    // </View>
   );
 };
 
 const styles = StyleSheet.create({
+  accountContainer: {
+    flex:1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  
+    backgroundColor: "#F6F5F8"
+  },
+  accountTypeContainer: {
+    width: "80%",
+   
+    alignItems: 'flex-start',
+   
+  },
+  item: {
+    backgroundColor:"transparent",
+    width: "100%",
+    height: 50,
+    flexDirection: "row"
+  },
+  itemsContainer: {
+    backgroundColor:"white",
+    width: "100%", 
+    borderRadius: 15,
+    
+    marginTop: 10
+  
+  },
+  itemTitle: {
+    flex:2,
+    justifyContent: "center",
+    paddingLeft: 15,
+  },
+  itemChevron: {
+    flex:1, 
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingRight: 15,
+
+  },
+  nameBalanceContainer: {
+  
+    flexDirection: "row",
+    width: "80%",
+    
+  },
+  nameBalanceItem: {
+    flex: 1,
+  },
+  managementContainer:  {
+    marginTop: 100,
+    justifyContent: "flex-start",
+    alignItems: "flex-start", 
+    width: "80%"
+
+  },
   helloTypo: {
     // fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
