@@ -194,8 +194,9 @@ const styles = StyleSheet.create({
   },
   accountTypeContainer: {
     width: "80%",
-   
+    
     alignItems: 'flex-start',
+    marginTop: 5
    
   },
   item: {
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
     width: "100%", 
     borderRadius: 15,
     
-    marginTop: 10
+    marginTop: 15
   
   },
   itemTitle: {
