@@ -3,6 +3,7 @@ import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, Touchabl
 import GlobalStyles from "../../GlobalStyles";
 import BankTransfer from "./BankTransfer";
 import Button from "../components/Button"
+import AppText from "../components/Text";
 
 
 const BankTransferAmount = ({ route, navigation }) => {
@@ -29,20 +30,17 @@ const BankTransferAmount = ({ route, navigation }) => {
   return (
     <View style={styles.mainContainer}>
       <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
-        <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>Send funds</Text>
-        </View>
 
         <View style={styles.centerDiv}>
-          <Text style={styles.centerText}>
+          <AppText style={styles.centerText}>
             {accountName}
             {"\n"}
-          </Text>
-          <Text style={styles.centerText}>{accountCode}</Text>
-          <Text style={styles.centerText}>{sortCode}</Text>
+          </AppText>
+          <AppText style={styles.centerText}>{accountCode}</AppText>
+          <AppText style={styles.centerText}>{sortCode}</AppText>
 
           <View style={styles.paymentDiv}>
-            <Text style={{ textAlign: "center", fontSize: 16 }}>Pay</Text>
+            <AppText style={{ textAlign: "center", fontSize: 16 }}>Pay</AppText>
             <TextInput
               style={{ textAlign: "center", fontSize: 60, fontWeight: "700" }}
               placeholder={"£" + amount}
@@ -62,7 +60,7 @@ const BankTransferAmount = ({ route, navigation }) => {
               style={{
                 width: "100%",
                 flexDirection: "row",
-                height: 50,
+                height: 100,
                 justifyContent: "center",
                 marginTop: "2.5%"
               }}
@@ -72,7 +70,7 @@ const BankTransferAmount = ({ route, navigation }) => {
                   setAmount("20");
                 }}
               >
-                <Text style={{fontSize: 25, color: "grey"}}>£20</Text>
+                <AppText style={{fontSize: 25, color: "grey"}}>£20</AppText>
               </Pressable>
 
               <Pressable style={{ flex: 3, width: "30%"}}
@@ -80,14 +78,14 @@ const BankTransferAmount = ({ route, navigation }) => {
                   setAmount("50");
                 }}
               >
-                <Text style={{textAlign: "center", fontSize: 25, color: "grey"}}>£50</Text>
+                <AppText style={{textAlign: "center", fontSize: 25, color: "grey"}}>£50</AppText>
               </Pressable>
               <Pressable style={{ flex: 3, width: "30%" }}
                 onPress={() => {
                   setAmount("100");
                 }}
               >
-                <Text style={{fontSize: 25, color: "grey"}}>£100</Text>
+                <AppText style={{fontSize: 25, color: "grey"}}>£100</AppText>
               </Pressable>
             </View>
           </View>

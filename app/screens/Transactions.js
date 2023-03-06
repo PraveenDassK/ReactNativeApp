@@ -71,7 +71,7 @@ const Transactions = ({navigation,route}) => {
          }
         console.log(initialsHold)
         setInitals(initialsHold)
-        setHide(false)
+         setHide(false)
   
     }
 
@@ -151,13 +151,18 @@ const Transactions = ({navigation,route}) => {
         console.log(transaction)
         return (            
         <Modal
-            animationType="slide"
+            animationType="none"
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
               Alert.alert('Modal has been closed.');
               setModalVisible(!modalVisible);
             }}>
+               <TouchableOpacity
+      style={{flex:1}}
+      onPress={() => {
+        setModalVisible(false)
+      }}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>From: {transaction.account.customerName}</Text>
@@ -193,6 +198,7 @@ const Transactions = ({navigation,route}) => {
                 
               </View>
             </View>
+            </TouchableOpacity>
             
           </Modal>
           )

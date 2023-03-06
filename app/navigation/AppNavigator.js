@@ -348,7 +348,7 @@ const StackNavigator = () => {
         name="BankTransferAmount" 
         component={gestureHandlerRootHOC(BankTransferAmount)}
         options={{
-          title: "BankTransferAmount",
+          title: "Send Funds",
        
         }}
       />
