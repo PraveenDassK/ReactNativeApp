@@ -1,5 +1,5 @@
 import React,{ useEffect, useState,useContext, useCallback } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert, FlatList, LayoutAnimation, ActivityIndicator } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert, FlatList, LayoutAnimation, ActivityIndicator, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import {  Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons} from '@expo/vector-icons'
@@ -158,7 +158,7 @@ const Transactions = ({navigation,route}) => {
               Alert.alert('Modal has been closed.');
               setModalVisible(!modalVisible);
             }}>
-               <TouchableOpacity
+               <TouchableWithoutFeedback
       style={{flex:1}}
       onPress={() => {
         setModalVisible(false)
@@ -198,7 +198,7 @@ const Transactions = ({navigation,route}) => {
                 
               </View>
             </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
             
           </Modal>
           )

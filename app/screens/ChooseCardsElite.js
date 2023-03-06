@@ -6,6 +6,8 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
+import Button from "../components/Button"
+
 import apiCall from "../api/apiCall";
 import ChooseCardsPremium from "./ChooseCardsPremium";
 const Tab = createMaterialTopTabNavigator();
@@ -16,8 +18,6 @@ const Tab = createMaterialTopTabNavigator();
     const [isLoading, setIsLoading] = useState(false)
   
     const [data, setData] = useState([])
-
-
 
  
     
@@ -72,10 +72,13 @@ const Tab = createMaterialTopTabNavigator();
                   <Text style={styles.featureListText}>{benefit.name}</Text>
                 </View> 
                 <Text style={{marginBottom: "2.5%"}}>{benefit.benefits}</Text>
+                
               </React.Fragment>
             
              })}
+             <Button title="Purchase" onPress={()=>console.log("Purchase card")}/>
             </View>
+            
 
           </View>
           </ScrollView>}
