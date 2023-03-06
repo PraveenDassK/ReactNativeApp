@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useState, Keyboard } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import AppText from "../components/Text";
+
+import apiCall from "../api/apiCall";
 
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
 
 import GlobalStyles from "../../GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
-
 
 
 
@@ -31,8 +32,11 @@ const ITEMS = [
 ]
 
 const AccountSettings = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [name, setName] = useState("")
   const [balance, setBalance] = useState(0)
+  const [subscriptions, setSubscriptions] = useState(null)
+
   const authContext = useContext(AuthContext)
   const {settings} = useContext(AuthContext)
 
@@ -47,12 +51,27 @@ const AccountSettings = ({navigation}) => {
     },[])
 
   const loadData = async() =>{
-      const customer = await api.GetAccount(authContext.accountID)
-      const data = customer.data.details
-      setName(data.name)
-      setBalance(data.availableBalance)
-      console.log(data)
+
+    setIsLoading(true)
+    const customer = await api.GetAccount(authContext.accountID)
+    const userData = await apiCall.GetUsersSubscriptions(authContext.accountID)
+    
+
+    const data = customer.data.details
+    setSubscriptions(userData.subName)
+    setName(data.name)
+    setBalance(data.availableBalance)
+    setIsLoading(false)
+   
   }
+
+  if(isLoading) {
+    return (
+         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+             <ActivityIndicator size={'large'} color="blue" />
+         </View>
+    )
+   }
 
   
 
@@ -76,7 +95,7 @@ const AccountSettings = ({navigation}) => {
         </View>
       </View>
       <View style={styles.accountTypeContainer}>
-        <AppText style={{opacity: 0.3}}>Standard</AppText>
+        <AppText style={{opacity: 0.3}}>{subscriptions}</AppText>
       </View>
 
       <View style={styles.managementContainer}>
