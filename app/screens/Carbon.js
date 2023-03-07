@@ -184,7 +184,7 @@ const Carbon = ({ route, navigation }) => {
                     resizeMode: "stretch",
                   },
                 ]}
-                source={item.image != "" ? { uri: item.image } : require("../assets/image-placeholder.jpg")}
+                source={item.image != "" ? { uri: item.image } : require("../assets/BearWithUs.png")}
               />
 
               <View style={styles.subTitle}>
