@@ -252,7 +252,48 @@ const HomeScreenPersonal = ({ navigation }) => {
               {sortCode} | {accountnumber} 
             </AppText>
           <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+
           <FadeInView>
+            <View style={styles.carbonyteCard}>
+              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "800",position: "absolute", top: verticalScale(15), left:horizontalScale(15) , fontSize: moderateScale(12), textTransform: "uppercase", width: horizontalScale(50)}]}>
+                  <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> money <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> planet <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> choice
+              </AppText>
+              <Image 
+                resizeMode="contain"
+                  style={{position: "absolute", right: horizontalScale(20),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(20), transform: [{
+                    rotate: "0deg"
+                  }]}}
+                  source={require("../assets/icon-contactless-reverse.png")}
+                />
+
+                <Image 
+                  resizeMode="contain"
+                  style={{ position: "absolute", right: horizontalScale(50), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(25), transform: [{
+                    rotate: "0deg"
+                  }]}}
+                  source={require("../assets/group-31764.png")}
+                />
+
+              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
+                  {cardnumber}
+              </AppText>
+              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(22.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
+                {accountname}
+              </AppText>
+
+              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", bottom: verticalScale(20), left:horizontalScale(15) , fontSize: moderateScale(16), textTransform: "lowercase"}]}>
+                  Carbonyte
+              </AppText>
+              <Image 
+                resizeMode="contain"
+                style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
+                  source={require("../assets/group-31766.png")}
+              />
+
+            </View>
+          </FadeInView>
+
+          {/* <FadeInView>
             <View style={styles.totalWalletBalanceContainer11}>
             <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
                 Carbonyte
@@ -289,7 +330,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               </AppText>
               
             </View>
-          </FadeInView>
+          </FadeInView> */}
 
           </View>
 
@@ -1092,6 +1133,20 @@ const styles = StyleSheet.create({
     marginVertical: verticalScale(20), 
     
   },
+  carbonyteCard: {
+    marginTop: "3.5%",
+   
+    backgroundColor: "black",
+    height: verticalScale(260),
+    width: horizontalScale(180),
+    borderRadius: moderateScale(15),
+    justifyContent: "center",
+    padding: "5%",
+    
+    marginVertical: verticalScale(20), 
+    
+  },
+
 
   totalWalletBalanceText: {
     textAlign: "center",
