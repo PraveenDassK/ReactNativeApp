@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, Modal, TouchableWithoutFeedback } from "react-native";
+import { Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, Modal, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
@@ -15,6 +15,7 @@ import cardYellowFrozen from "../assets/cardFrozen.png";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const MyCards = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [checked, setChecked] = useState(false);
   const toggleChecked = () => setChecked((value) => !value);
 
@@ -37,6 +38,7 @@ const MyCards = ({ navigation }) => {
   }, []);
 
   const loadData = async () => {
+    setIsLoading(true)
     //Get the transaction data
     const response = await api.GetTransactions(authContext.accountID, 5);
     const transactions = response.data.details.content;
@@ -50,6 +52,8 @@ const MyCards = ({ navigation }) => {
     setfirstname(currentCard.embossing.firstName)
     setlastname(currentCard.embossing.lastName)
     setcardnumber(currentCard.maskedCardNumber)
+    setInitals(currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0])
+    setIsLoading(false)
   };
 
   const cardDetails = () => {
@@ -74,6 +78,8 @@ const MyCards = ({ navigation }) => {
   const modal = (Id) => {
     let transaction = transactionData[modalId];
     console.log(transaction);
+
+   
     return (
       <Modal
       
@@ -124,8 +130,8 @@ const MyCards = ({ navigation }) => {
       transactionList.push(
         <TouchableOpacity style={[styles.transactionBox, styles.rounded, styles.shadow]} key={i} onPress={() => showTransaction(i)}>
           <View style={{ height: "100%", flexDirection: "row" }}>
-            <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: "lightgrey", borderColor: "black", justifyContent: "center", alignItems: "center", alignSelf: "center", marginLeft: "2.5%" }}>
-              <Text style={{ alignSelf: "center", textAlignVertical: "center" }}>{initials}</Text>
+            <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", justifyContent: "center", alignItems: "center", alignSelf: "center", marginLeft: "2.5%" }}>
+              <Text style={{ alignSelf: "center", textAlignVertical: "center" }}>{transaction.account.customerName[0]}</Text>
             </View>
             <View style={{ flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%" }}>
               <Text style={{ fontSize: 14, fontWeight: "700" }}>{transaction.account.customerName}</Text>
@@ -154,6 +160,14 @@ const MyCards = ({ navigation }) => {
     }
     loadData()
   };
+
+  if(isLoading) {
+    return (
+         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+             <ActivityIndicator size={'large'} color="blue" />
+         </View>
+    )
+   }
 
   return (
     <ScrollView>
