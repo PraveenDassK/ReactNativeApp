@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState} from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import api from "../api/api_list"
 import apiCall from "../api/apiCall"
 import AuthContext from "../auth/context";
+
+
 
 import { Dropdown } from 'react-native-element-dropdown';
 
@@ -97,9 +99,9 @@ const AddFunds = ({navigation}) => {
         <View style={styles.helloParent}>
 
           <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
-          <Text style={[styles.hello2, styles.helloTypo]}>{accountCode}</Text>
+          <Text style={[styles.hello2, styles.helloTypo, {color: "#999"}]}>{accountCode}</Text>
           
-          <Text style={[styles.Select_account, styles.helloTypo]}>Select Account</Text>
+          <Text style={[styles.Select_account, styles.helloTypo, {color:"#999"}]}>Select Account</Text>
           <View style={[styles.selectBox]}
           >
             
@@ -141,6 +143,10 @@ const AddFunds = ({navigation}) => {
             <Text style={[styles.hello4, styles.helloColor]}>
               £20 
             </Text>
+            <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
+              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
+              <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
+            </View>
             </Pressable>
 
           </View>
@@ -154,6 +160,10 @@ const AddFunds = ({navigation}) => {
             <Text style={[styles.hello4, styles.helloColor]}>
               £50
             </Text>
+            <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
+              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
+              <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
+            </View>
             </Pressable>
 
           </View>
@@ -173,12 +183,16 @@ const AddFunds = ({navigation}) => {
             <Text style={[styles.hello4, styles.helloColor]}>
               £100
             </Text>
+            <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
+              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
+              <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
+            </View>
             </Pressable>
 
           </View>
         </View>
         <View style={[styles.helloParent2, styles.helloParent2Position]}>
-          <Text style={[styles.hello7]}>
+          <Text style={[styles.hello7, {color: "#999"}]}>
             Pay{"\n"}
           </Text>
           <TextInput 
@@ -276,7 +290,7 @@ const styles = StyleSheet.create({
   groupPosition1: {},
   helloParent2Position: {
     width: "100%",
-    top: "50%",
+    top: "45%",
     position: "absolute",
   },
   groupViewPosition: {
@@ -341,7 +355,7 @@ const styles = StyleSheet.create({
   },
   hello4: {
     fontSize: GlobalStyles.FontSize.size_7xl,
-    lineHeight: verticalScale(65),
+    lineHeight: verticalScale(30),
     top: verticalScale(0),
     width: "100%",
   },
@@ -417,7 +431,7 @@ const styles = StyleSheet.create({
     top:"15%"
   },
   groupPressable: {
-  top: "80%",
+  top: "87.5%",
     height: verticalScale(60),
     width:"100%",
     position: "relative",

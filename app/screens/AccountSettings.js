@@ -109,7 +109,7 @@ const AccountSettings = ({navigation}) => {
               <TouchableOpacity onPress={() => navigation.navigate(item.route)}>
                 <View style={styles.item}>
                   <View style={styles.itemTitle}>
-                    <AppText>{item.title}</AppText>
+                    <AppText style={{textTransform: "capitalize"}}>{item.title}</AppText>
                   </View>
                   <View style={styles.itemChevron}>
                   <MaterialCommunityIcons name="chevron-right" size={20} color="blue" />

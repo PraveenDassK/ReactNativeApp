@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback , TouchableOpacity} from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
+
 import GlobalStyles from "../../GlobalStyles";
 import BankTransfer from "./BankTransfer";
 import Button from "../components/Button"
@@ -9,9 +13,9 @@ import AppText from "../components/Text";
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
-  const reciver = route.params.accountName;
-  const sortCode = route.params.sortCode;
-  const accountCode = route.params.accountNumber;
+  const { accountName, phoneNumber } = route.params;
+  // const sortCode = route.params.sortCode;
+  // const accountCode = route.params.accountNumber;
 
   // let amount = (amount ? amount : 1).toString();
 
@@ -25,140 +29,416 @@ const BankTransferAmount = ({ route, navigation }) => {
       beneficiaryData: route.params,
     });
   };
-  const { accountName } = route.params;
+
 
   return (
-    <View style={styles.mainContainer}>
-      <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
-
-        <View style={styles.centerDiv}>
-          <AppText style={styles.centerText}>
-            {accountName}
-            {"\n"}
-          </AppText>
-          <AppText style={styles.centerText}>{accountCode}</AppText>
-          <AppText style={styles.centerText}>{sortCode}</AppText>
-
-          <View style={styles.paymentDiv}>
-            <AppText style={{ textAlign: "center", fontSize: 16 }}>Pay</AppText>
-            <TextInput
-              style={{ textAlign: "center", fontSize: 60, fontWeight: "700" }}
-              placeholder={"£" + amount}
-              placeholderTextColor="blue"
-              keyboardType="numeric"
-              onChangeText={(newText) => setAmount(newText)}
-            />
-            <View
-              style={{
-                width: "90%",
-                marginLeft: "5%",
-                height: 1,
-                backgroundColor: "grey",
-              }}
-            />
-            <View
-              style={{
-                width: "100%",
-                flexDirection: "row",
-                height: 100,
-                justifyContent: "center",
-                marginTop: "2.5%"
-              }}
-            >
-              <Pressable style={{ flex: 3, width: "30%", alignItems: "flex-end"}}
-                onPress={() => {
-                  setAmount("20");
-                }}
-              >
-                <AppText style={{fontSize: 25, color: "grey"}}>£20</AppText>
-              </Pressable>
-
-              <Pressable style={{ flex: 3, width: "30%"}}
-                onPress={() => {
-                  setAmount("50");
-                }}
-              >
-                <AppText style={{textAlign: "center", fontSize: 25, color: "grey"}}>£50</AppText>
-              </Pressable>
-              <Pressable style={{ flex: 3, width: "30%" }}
-                onPress={() => {
-                  setAmount("100");
-                }}
-              >
-                <AppText style={{fontSize: 25, color: "grey"}}>£100</AppText>
-              </Pressable>
-            </View>
-          </View>
+    <View style={styles.requestContact}>
+    <Pressable 
+      style={styles.groupParent}
+      onPress={Keyboard.dismiss}
+    >
+      <View style={{alignItems: "center", justifyContent: "center", marginTop: "15%"}}>
+        <View style={{height: verticalScale(60), width: horizontalScale(60), borderRadius: moderateScale(30), backgroundColor: "grey", justifyContent: "center", alignItems: "center", marginBottom: "10%"}}>
+          <AppText style={{fontSize:28}} >{accountName[0]}</AppText>
         </View>
+        <AppText style={{marginBottom: "2.5%", textTransform: "capitalize", fontSize: 24, fontWeight: 'bold'}}>{accountName}</AppText>
+        <AppText style={{marginBottom: "2.5%", fontSize: 25, fontWeight: "400"}}>{`+44 ${phoneNumber}`}</AppText>
+      </View>
 
+      <View style={[styles.groupContainer, styles.helloParent2Position]}>
+        <View style={[styles.hello4, styles.groupViewPosition,]}>
+        <Pressable
+            onPress={() => {
+              
+              setAmount("20")
+            }}
+          >
+          <Text style={[styles.hello4, styles.helloColor]}>
+            £20 
+          </Text>
+          <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
+            <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
+            <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
+          </View>
+          </Pressable>
+
+        </View>
+        <View style={[{width: "30%", left: "36%"}]}>
+        <Pressable
+            onPress={() => {
+            
+              setAmount("50")
+            }}
+          >
+          <Text style={[styles.hello4, styles.helloColor]}>
+            £50
+          </Text>
+          <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
+            <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
+            <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
+          </View>
+          </Pressable>
+
+        </View>
+        <View
+          style={[
+            styles.helloParent1,
+            styles.parentPosition,
+            styles.parentPosition1,
+          ]}
+        >
+          <Pressable
+            onPress={() => {
+            
+              setAmount("100")
+            }}
+          >
+          <Text style={[styles.hello4, styles.helloColor]}>
+            £100
+          </Text>
+          <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
+            <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
+            <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
+          </View>
+          </Pressable>
+
+        </View>
+      </View>
+      <View style={[styles.helloParent2, styles.helloParent2Position]}>
+        <Text style={[styles.hello7, {color: "#999"}]}>
+          Pay{"\n"}
+        </Text>
+        <TextInput 
+        style={[styles.hello8, styles.helloTypo1]} 
+          placeholder={"£"+amount} keyboardType="numeric"
+          placeholderTextColor={"blue"}
+          onChangeText = {newText => setAmount(newText)}
+        />
+        <View
+          style={[
+            styles.lineView,
+            styles.parentPosition,
+            styles.lineViewBorder,
+          ]}
+        />
+       
+      </View>
+      <Pressable
+        style={styles.groupPressable}
+        onPress={() => requestContact(amount)}
+       
+      >
+        <View
+          style={[
+            styles.rectangleParent,
+            styles.parentPosition,
+            styles.parentPosition1,
+          ]}
+        >
+          <View style={styles.rectangleView} />
+          <View style={[styles.maskGroup236, styles.parentPosition]} />
+        </View>
+        <Text style={styles.hello9}>ADD FUNDS</Text>
       </Pressable>
-      <View style={styles.bottom}>
-                      <TouchableOpacity style={styles.button}>
-                          <Button title="Send" color="babyBlue" onPress={() => requestContact(amount)}/>
-                      </TouchableOpacity>
-                  </View>
-    </View>
+    </Pressable>
+  </View>
+    // <View style={styles.mainContainer}>
+    //   <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
+
+    //     <View style={styles.centerDiv}>
+    //       <AppText style={styles.centerText}>
+    //         {accountName}
+    //         {"\n"}
+    //       </AppText>
+    //       <AppText style={styles.centerText}>{accountCode}</AppText>
+    //       <AppText style={styles.centerText}>{sortCode}</AppText>
+
+    //       <View style={styles.paymentDiv}>
+    //         <AppText style={{ textAlign: "center", fontSize: 16 }}>Pay</AppText>
+    //         <TextInput
+    //           style={{ textAlign: "center", fontSize: 60, fontWeight: "700" }}
+    //           placeholder={"£" + amount}
+    //           placeholderTextColor="blue"
+    //           keyboardType="numeric"
+    //           onChangeText={(newText) => setAmount(newText)}
+    //         />
+    //         <View
+    //           style={{
+    //             width: "90%",
+    //             marginLeft: "5%",
+    //             height: 1,
+    //             backgroundColor: "grey",
+    //           }}
+    //         />
+    //         <View
+    //           style={{
+    //             width: "100%",
+    //             flexDirection: "row",
+    //             height: 100,
+    //             justifyContent: "center",
+    //             marginTop: "2.5%"
+    //           }}
+    //         >
+    //           <Pressable style={{ flex: 3, width: "30%", alignItems: "flex-end"}}
+    //             onPress={() => {
+    //               setAmount("20");
+    //             }}
+    //           >
+    //             <AppText style={{fontSize: 25, color: "grey"}}>£20</AppText>
+    //           </Pressable>
+
+    //           <Pressable style={{ flex: 3, width: "30%"}}
+    //             onPress={() => {
+    //               setAmount("50");
+    //             }}
+    //           >
+    //             <AppText style={{textAlign: "left", fontSize: 25, color: "grey"}}>£50</AppText>
+    //           </Pressable>
+    //           <Pressable style={{ flex: 3, width: "30%" }}
+    //             onPress={() => {
+    //               setAmount("100");
+    //             }}
+    //           >
+    //             <AppText style={{fontSize: 25, color: "grey"}}>£100</AppText>
+    //           </Pressable>
+    //         </View>
+    //       </View>
+    //     </View>
+
+    //   </Pressable>
+    //   <View style={styles.bottom}>
+    //                   <TouchableOpacity style={styles.button}>
+    //                       <Button title="Send" color="babyBlue" onPress={() => requestContact(amount)}/>
+    //                   </TouchableOpacity>
+    //               </View>
+    // </View>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
-    height: GlobalStyles.DivContainer.height,
-    width: "100%",
-    flex: GlobalStyles.DivContainer.flex,
-  },
-
-  titleTextRow: {
-    marginTop: GlobalStyles.Title.marginTop,
-    width: GlobalStyles.DivContainer.width,
-    marginLeft: GlobalStyles.DivContainer.marginLeft,
-  },
-
-  titleText: {
-    fontSize: GlobalStyles.Title.fontSize,
-    fontWeight: GlobalStyles.Title.fontWeight,
-  },
-
-  subText: {
-    fontSize: GlobalStyles.RowText.fontSize,
-    fontWeight: GlobalStyles.RowText.fontWeight,
-  },
-
-  subTextRow: {
-    marginTop: GlobalStyles.RowText.marginTop,
-    width: GlobalStyles.DivContainer.width,
-    marginLeft: GlobalStyles.DivContainer.marginLeft,
-    fontColor: GlobalStyles.RowText.fontColor,
-  },
-  centerDiv: {
-    width: "100%",
-    marginTop: "30%",
-  },
-
-  centerText: {
-    textAlign: "center",
-    marginTop: ".5%",
-    fontWeight: "700",
-    fontSize: 20,
-  },
-
-  paymentDiv: {
-    marginTop: "30%",
-    width: "100%",
-    textAlign: "center",
-  },
-  bottom: {
-          bottom: "5%",
-          flex: 1,
-          justifyContent: 'flex-end',
-
-      },
-
-      button: {
-          width: "90%",
-          left: "5%"
-      }
-});
+  dropdownStyle: {
+     width: "95%",
+     marginLeft: "2.5%",
+     paddingTop: "2.5%"
+   }, 
+   selectedTextStyle: {
+     color: "black",
+     marginLeft: "15%",
+     marginTop: "1%",
+   },
+   selectBox:{
+     backgroundColor:"pink",
+     width:"90%",
+     marginLeft: "5%",
+     marginRight: "5%",
+     marginTop: "5%",
+     height: "30%",
+     borderRadius: 15,
+     backgroundColor: "#F6F5F8",
+   },
+   Select_account: {
+     top: verticalScale(-5),
+     left: "5.5%",
+   }, inputSearchStyle: {
+     width: 100,
+     
+   },
+   helloTypo1: {
+     textAlign: "center",
+     // fontFamily: GlobalStyles.FontFamily.helvetica,
+     position: "absolute",
+   },
+   helloColor: {
+     color: GlobalStyles.Color.gray_700,
+     textAlign: "center",
+   },
+   helloTypo2: {
+     fontSize: GlobalStyles.FontSize.size_base,
+     color: GlobalStyles.Color.gray_700,
+     width:"100%",
+     textAlign:"center",
+   },
+   helloTypo: {
+     color: GlobalStyles.Color.indigo_100,
+     fontSize: GlobalStyles.FontSize.size_4xl,
+     textAlign: "center",
+     // fontFamily: GlobalStyles.FontFamily.helvetica,
+     position: "absolute",
+   },
+   lineViewBorder: {
+     height: verticalScale(2),
+     borderTopWidth: 1,
+     borderColor: "#707070",
+     borderStyle: "solid",
+   },
+   groupPosition1: {},
+   helloParent2Position: {
+     width: "100%",
+     top: "45%",
+     position: "absolute",
+   },
+   groupViewPosition: {
+     width: "25%",
+     bottom: verticalScale(0),
+     top: verticalScale(0),
+     position: "absolute",
+   },
+   groupPosition: {
+     height: "17%",
+     width: horizontalScale(18),
+     bottom: verticalScale(0),
+     left: "50%",
+     position: "absolute",
+   },
+   parentPosition: {
+     right: "10%",
+     position: "absolute",
+   },
+   parentPosition1: {
+     bottom: verticalScale(0),
+     right: horizontalScale(0),
+     top: verticalScale(0),
+   },
+   hello: {
+     top: verticalScale(148),
+   },
+   groupChild: {},
+   hello1: {
+     textAlign:"center",
+     fontWeight: "700",
+   },
+   hello2: {
+     top: verticalScale(120),
+     width:"100%",
+     textAlign:"center",
+   },
+   hello5: {
+     top: verticalScale(150),
+     width:"100%",
+     textAlign:"center",
+   },
+   helloParent: {
+     top: verticalScale(44),
+     height: verticalScale(172),
+     width:"100%",
+     position: "absolute",
+   },
+   groupItem: {},
+   hello3: {},
+   iconMaterialKeyboardVoice: {
+ 
+     top: "50%",
+     position: "absolute",
+   },
+   helloGroup: {
+     marginTop: verticalScale(44.5),
+     borderRadius: GlobalStyles.Border.br_5xl,
+     backgroundColor: GlobalStyles.Color.gray_200,
+     height: verticalScale(42),
+     right: horizontalScale(31),
+   },
+   hello4: {
+     fontSize: GlobalStyles.FontSize.size_7xl,
+     lineHeight: verticalScale(30),
+     top: verticalScale(0),
+     width: "100%",
+   },
+   groupInner: {
+     marginLeft: horizontalScale(-7.94),
+   },
+   helloContainer: {
+     width: "100%",
+     left: "10%",
+ 
+   },
+   groupIcon: {},
+   groupView: {
+     left: "50%",
+   },
+   groupChild1: {},
+   helloParent1: {
+     width: horizontalScale(76),
+   },
+   groupContainer: {
+     marginTop: verticalScale(150),
+     height: verticalScale(50),
+     width: "100%"
+   },
+   hello7: {
+     width:"100%",
+     textAlign:"center",
+     fontSize: GlobalStyles.FontSize.size_xl,
+   },
+   hello8: {
+     top: verticalScale(28),
+     textAlign: "center",
+     width:"100%",
+     fontSize: GlobalStyles.FontSize.size_13xl,
+     color: GlobalStyles.Color.gray_700,
+   },
+   lineView: {
+   top: verticalScale(110),
+   width: "90%",
+   left: "5%",
+     bottom: verticalScale(-1),
+ 
+   },
+   helloParent2: {
+ 
+   },
+   rectangleView: {
+     height: "100%",
+     top: "-20%",
+     left: "5%",
+ 
+     borderRadius: GlobalStyles.Border.br_lg,
+     backgroundColor: "#D8EBF9",
+     position: "absolute",
+     width: "90%",
+   },
+   maskGroup236: {
+ 
+     top: verticalScale(0),
+     left: horizontalScale(0),
+   },
+   rectangleParent: {
+     left: horizontalScale(0),
+   },
+   hello9: {
+     width:"100%",
+     textAlign:"center",
+     textAlignVertical: "center",
+     fontSize: GlobalStyles.FontSize.size_lg,
+     textTransform: "uppercase",
+     color: GlobalStyles.Color.black,
+     textAlign: "center",
+     top:"15%"
+   },
+   groupPressable: {
+   top: "57.5%",
+     height: verticalScale(60),
+     width:"100%",
+     position: "relative",
+   },
+   groupParent: {
+ 
+     shadowColor: "rgba(1, 1, 253, 0.1)",
+     shadowOffset: {
+       width: horizontalScale(0),
+       height: verticalScale(-3),
+     },
+     shadowRadius: 20,
+     elevation: 20,
+     shadowOpacity: 1,
+     width: "100%",
+     height: "100%",
+     backgroundColor: GlobalStyles.Color.white,
+   },
+   requestContact: {
+     flex: 1,
+     width: "100%",
+     backgroundColor: GlobalStyles.Color.gray_100,
+   },
+ });
 
 export default BankTransferAmount;

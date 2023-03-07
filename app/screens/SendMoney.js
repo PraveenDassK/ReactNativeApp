@@ -27,12 +27,15 @@ const SendMoney = ({navigation}) => {
   //Sending
   const sendDetails = (Id) => {
     const details = benList[Id]
+    console.log("details", details)
     navigation.navigate("BankTransferAmount",
     {bankName: "FakeName",
       accountName: details.name,
       accountNumber: details.destinationIdentifier.accountNumber,
       iban:details.destinationIdentifier.iban,
       sortCode:details.destinationIdentifier.sortCode,
+      phoneNumber: details.phoneNumber
+
     }) 
   }
   const deleteDetails = async(Id) => {

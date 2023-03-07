@@ -267,7 +267,7 @@ const StackNavigator = () => {
               name="AboutUs"
               component={gestureHandlerRootHOC(AboutUs)}
               options={{
-                title: "AboutUs",
+                title: "About Us",
               }}
             />
 
@@ -349,6 +349,13 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(BankTransferAmount)}
         options={{
           title: "Send Funds",
+          presentation: 'modal' ,
+          headerShown: false,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false,
+          headerStyle: {backgroundColor: "white"}
        
         }}
       />
@@ -373,7 +380,7 @@ const StackNavigator = () => {
         name="CardSettings" 
         component={gestureHandlerRootHOC(CardSettings)}
         options={{
-          title: "CardSettings",
+          title: "Card Settings",
        
         }}
       />
@@ -382,7 +389,7 @@ const StackNavigator = () => {
         name="SpendingLimit" 
         component={gestureHandlerRootHOC(SpendingLimit)}
         options={{
-          title: "SpendingLimit",
+          title: "Spending Limit",
        
         }}
       />
@@ -391,7 +398,7 @@ const StackNavigator = () => {
         name="SetLimit" 
         component={gestureHandlerRootHOC(SetLimit)}
         options={{
-          title: "SetLimit",
+          title: "Set Limit",
        
         }}
       />
@@ -400,7 +407,7 @@ const StackNavigator = () => {
         name="ReplaceCard" 
         component={gestureHandlerRootHOC(ReplaceCard)}
         options={{
-          title: "ReplaceCard",
+          title: "Replace Card",
        
         }}
       />
@@ -417,7 +424,7 @@ const StackNavigator = () => {
         name="ItWasLost" 
         component={gestureHandlerRootHOC(ItWasLost)}
         options={{
-          title: "ItWasLost",
+          title: "Lost",
        
         }}
       />
@@ -425,7 +432,7 @@ const StackNavigator = () => {
         name="IWasAVictimOfFraudOrThe" 
         component={gestureHandlerRootHOC(IWasAVictimOfFraudOrThe)}
         options={{
-          title: "IWasAVictimOfFraudOrThe",
+          title: "Report",
        
         }}
       />
@@ -441,7 +448,7 @@ const StackNavigator = () => {
         name="TerminatedCard" 
         component={gestureHandlerRootHOC(TerminatedCard)}
         options={{
-          title: "TerminatedCard",
+          title: "Terminated Card",
        
         }}
       />
@@ -450,7 +457,7 @@ const StackNavigator = () => {
         name="CarbonCart" 
         component={gestureHandlerRootHOC(CarbonCart)}
         options={{
-          title: "CarbonCart",
+          title: "Cart",
        
         }}
       />
@@ -458,7 +465,7 @@ const StackNavigator = () => {
         name="CarbonProject" 
         component={gestureHandlerRootHOC(CarbonProject)}
         options={{
-          title: "CarbonProject",
+          title: "Carbon Project",
        
         }}
       />
@@ -466,7 +473,7 @@ const StackNavigator = () => {
         name="VirtualEcoSystem" 
         component={gestureHandlerRootHOC(VirtualEcoSystem)}
         options={{
-          title: "VirtualEcoSystem",
+          title: "Virtual EcoSystem",
        
         }}
       />
@@ -510,7 +517,7 @@ const StackNavigator = () => {
         name="SecurityAndPrivacy" 
         component={gestureHandlerRootHOC(SecurityAndPrivacy)}
         options={{
-          title: "SecurityAndPrivacy",
+          title: "Security & Privacy",
        
         }}
       />
@@ -542,7 +549,7 @@ const StackNavigator = () => {
               name="TermsAndConditions" 
               component={gestureHandlerRootHOC(TermsAndConditions)}
               options={{
-                title: "TermsAndConditions",
+                title: "Terms & Conditions",
              
               }}
             />
@@ -568,7 +575,7 @@ const StackNavigator = () => {
         name="CarbonTonnesRemoved" 
         component={CarbonTonnesRemoved}
         options={{
-          title: "CarbonTonnesRemoved",
+          title: "Carbon",
        
         }}
       />
@@ -576,7 +583,7 @@ const StackNavigator = () => {
         name="CarbonSpending" 
         component={CarbonSpending}
         options={{
-          title: "CarbonSpending",
+          title: "Carbon Spending",
        
         }}
       />
