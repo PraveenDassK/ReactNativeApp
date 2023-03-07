@@ -343,7 +343,7 @@ const HomeScreenPersonal = ({ navigation }) => {
               </View>
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
-                <AppText style={{color: "grey"}}>£</AppText>{balance}</AppText>
+                <AppText style={{color: "grey", fontSize: moderateScale(26)}}>£</AppText>{balance}</AppText>
             )}
             <AppText style={styles.dateText}>{todaydate}</AppText>
           </View>
