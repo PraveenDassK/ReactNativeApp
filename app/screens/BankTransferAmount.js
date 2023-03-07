@@ -38,7 +38,7 @@ const BankTransferAmount = ({ route, navigation }) => {
       onPress={Keyboard.dismiss}
     >
       <View style={{alignItems: "center", justifyContent: "center", marginTop: "15%"}}>
-        <View style={{height: verticalScale(60), width: horizontalScale(60), borderRadius: moderateScale(30), backgroundColor: "grey", justifyContent: "center", alignItems: "center", marginBottom: "10%"}}>
+        <View style={{height: verticalScale(60), width: horizontalScale(60), borderRadius: moderateScale(30), backgroundColor: "#F6F5F8", justifyContent: "center", alignItems: "center", marginBottom: "10%"}}>
           <AppText style={{fontSize:28}} >{accountName[0]}</AppText>
         </View>
         <AppText style={{marginBottom: "2.5%", textTransform: "capitalize", fontSize: 24, fontWeight: 'bold'}}>{accountName}</AppText>

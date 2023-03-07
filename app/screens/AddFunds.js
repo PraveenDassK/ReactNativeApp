@@ -30,6 +30,7 @@ const AddFunds = ({navigation}) => {
   
   //Gets the data for the user
   const loadData = async () => {
+    setIsLoading(true)
     const response = await apiCall.GetAllAccounts(authContext.userID)
     console.log(response)
     setData(response)
@@ -43,6 +44,7 @@ const AddFunds = ({navigation}) => {
       })
     });
     setCard(accountList)
+    setIsLoading(false)
   }
 
   //Screen components

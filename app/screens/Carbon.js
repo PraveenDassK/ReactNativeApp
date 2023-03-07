@@ -28,8 +28,8 @@ const Carbon = ({ route, navigation }) => {
   const loadData = async () => {
     setIsLoading(true)
     const response = await apiCall.GetProjectList();
-    setIsLoading(false)
     setData(response);
+    setIsLoading(false)
   };
 
   const [cart, setCart] = useState([]);

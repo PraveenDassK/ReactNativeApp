@@ -84,11 +84,12 @@ const Analytics = ({ navigation }) => {
 
 
     const graphData = await apiCall.GetTransactionsWeek(authContext.accountID);
-    setIsLoading(false)
+    
     setGraphData(graphData)
     setActive("Week")
     
     console.log("scheduled", response, response[1].scheduleID, response[1].amount, response[1].toBeneficiariesId[0] )
+    setIsLoading(false)
 
   };
 

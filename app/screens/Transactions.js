@@ -53,7 +53,7 @@ const Transactions = ({navigation,route}) => {
         setIsLoading(true)
         const responseBalance = await api.GetAccount(authContext.accountID);
         const accountresponse = await api.GetAccount(authContext.accountID);
-        setIsLoading(false)
+        
         const accountdata = accountresponse.data.details
         const data = responseBalance.data.details
         setBalance(data.availableBalance)
@@ -72,6 +72,7 @@ const Transactions = ({navigation,route}) => {
         console.log(initialsHold)
         setInitals(initialsHold)
          setHide(false)
+         setIsLoading(false)
   
     }
 

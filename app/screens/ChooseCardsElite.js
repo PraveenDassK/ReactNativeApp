@@ -28,10 +28,10 @@ const Tab = createMaterialTopTabNavigator();
     const loadData = async () => {
       setIsLoading(true)
       const response = await apiCall.GetSubscriptions()
-      setIsLoading(false)
+      
       setData(response)
 
-      console.log("cardsApi", response[0])
+      setIsLoading(false)
     }
 
     if (isLoading) {

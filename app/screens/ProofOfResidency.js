@@ -31,14 +31,14 @@ const ProofOfResidency = ({ navigation }) => {
   }
 
   const selectImage = async (document) => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
+     
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true
       })
-      setIsLoading(false)
-
+      
       console.log(result.assets[0])
      
       if (!result.canceled) {
@@ -50,16 +50,19 @@ const ProofOfResidency = ({ navigation }) => {
     } catch (error) {
       console.log("Error reading an image", error)
     }
+    setIsLoading(false)
+
   }
 
   const selectImage2 = async () => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
+      
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true
       })
-      setIsLoading(false)
+      
 
       console.log(result.assets[0])
      
@@ -71,14 +74,16 @@ const ProofOfResidency = ({ navigation }) => {
     } catch (error) {
       console.log("Error reading an image", error)
     }
+    setIsLoading(false)
   }
 
   const handleSubmit = async ({ phoneNumber }) => {
+    setIsLoading(true)
     const clientReference = phoneNumber
 
-    setIsLoading(true)
+    
     const result = await w2GlobalAPI.verifyDocument(clientReference, documentType, frontImage, backImage)
-    setIsLoading(false)
+    
 
     console.log('what is this', result.ok, result.data[0].result)
    
@@ -87,7 +92,7 @@ const ProofOfResidency = ({ navigation }) => {
 
     setUser(prev => ({...prev, frontImage, backImage, documentType}))
     navigation.navigate("BusinessAddress2")
-
+    setIsLoading(false)
   }
 
   useEffect(() => {

@@ -56,7 +56,7 @@ const Settings = ({ navigation }) => {
     setIsLoading(true)
     const response = await api.GetAccountByCustomer(userID);
     const accountresponse = await api.GetAccount(accountID);
-    setIsLoading(false)
+    
     const data = response.data;
     const accountdata = accountresponse.data.details;
     setPlan("Current Account");
@@ -82,6 +82,7 @@ const Settings = ({ navigation }) => {
       initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
     }
     setInitals(initialsHold);
+    setIsLoading(false)
   };
 
   const copyAccount = () => {

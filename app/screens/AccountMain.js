@@ -78,7 +78,7 @@ const HomeScreenPersonal = ({ navigation }) => {
     const resposeData = await apiCall.GetUserImpact("CC11875");
     const cards = await apiCall.GetCardByAccount("686283112")
 
-    setIsLoading(false)
+  
 
     setcardnumber(cardData.cardNumberMasked)
     setSortCode("00-00-00");
@@ -180,6 +180,7 @@ const HomeScreenPersonal = ({ navigation }) => {
     }
 
     setTransactionTable(pageShow);
+    setIsLoading(false)
   };
 
   let currency = "£";

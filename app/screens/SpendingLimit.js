@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch, Button, ScrollView } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, Switch, Button, ScrollView, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen";
@@ -11,6 +11,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import SinglePie from "../components/SinglePie";
 
 const SpendingLimit = ({ navigation, route }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [isEnabled, setIsEnabled] = useState(false);
   const authContext = useContext(AuthContext);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
@@ -34,6 +35,7 @@ const SpendingLimit = ({ navigation, route }) => {
   //Gets the data for the user
   const loadData = async () => {
     //Gets the data from the api
+    setIsLoading(true)
     const response = await apiCall.GetLimits(authContext.accountID);
     const spendTotal = response.spend
     const monthlyAmount = response.monthlyAmount
@@ -41,6 +43,7 @@ const SpendingLimit = ({ navigation, route }) => {
     setMonLim(monthlyAmount);
     setSpend(spendTotal);
     setPercent((spendTotal / monthlyAmount))
+    setIsLoading(false)
   };
 
   /**
@@ -57,6 +60,14 @@ const SpendingLimit = ({ navigation, route }) => {
       console.log(setIsEnabled);
     }
   };
+
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size="large" color="blue" />
+      </View>
+    )
+  }
 
   return (
   <ScrollView>
