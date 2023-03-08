@@ -39,7 +39,7 @@ const Pin = ({route,navigation}) => {
    */
   const checkPin = async () => {
     console.log(route)
-    if (enteredPin != "0000"){
+    if (enteredPin != authContext.pin){
       alert("Pin is incorrect")
       pinView.current.clearAll()
       return;
