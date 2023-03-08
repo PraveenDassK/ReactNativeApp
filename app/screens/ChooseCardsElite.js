@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, useWindowDimensions} from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-
 import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
@@ -12,15 +11,13 @@ import apiCall from "../api/apiCall";
 import ChooseCardsPremium from "./ChooseCardsPremium";
 const Tab = createMaterialTopTabNavigator();
 
-
+  const account = "147147"
   const ChooseCardsElite = ({navigation}) => {
 
     const [isLoading, setIsLoading] = useState(false)
   
     const [data, setData] = useState([])
 
- 
-    
    useEffect(()=> {
     loadData()
    },[])
@@ -28,10 +25,16 @@ const Tab = createMaterialTopTabNavigator();
     const loadData = async () => {
       setIsLoading(true)
       const response = await apiCall.GetSubscriptions()
-      
       setData(response)
-
       setIsLoading(false)
+
+      const currentSub = await apiCall.GetUsersSubscriptions(account)
+      console.log(currentSub.subID)
+      console.log(response.id)
+    }
+    const changePlan = async(Id) => {
+      console.log(Id)
+      await apiCall.ChangeUsersSubscription(account,Id)
     }
 
     if (isLoading) {
@@ -76,7 +79,7 @@ const Tab = createMaterialTopTabNavigator();
               </React.Fragment>
             
              })}
-             <Button title="Purchase" onPress={()=>console.log("Purchase card")}/>
+             <Button title="Purchase" onPress={()=>changePlan(item.id)}/>
             </View>
             
 
@@ -95,75 +98,6 @@ const Tab = createMaterialTopTabNavigator();
 
   );
 };
-
-
-{/* <View style={styles.chooseCardsContainer}> */}
-
-      
-    
-
-
-{/* <View style={styles.imageBox}>
-    <Image style = {styles.image} source={require("../assets/image-cardyellow.png")}/>
-</View>
-
-<View style={styles.cardNameBox}>
-    <Text style={styles.cardTitle}>{data.title}</Text>
-    <Text style={styles.cardPrice}>{data.price} Per Month</Text>
-</View>
-
-<View style={styles.featureListBox}>
-
-
-  <FlatList 
-  data={data.description}
-  keyExractor={item => item}
-  renderItem={({item, id}) => (
-    <View style={styles.featureListRow}>
-      <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-      <Text style={styles.featureListText}>{item}</Text>
-    </View>
-  )}
-
-
-  />
-  
-
-    <View style={styles.featureListRow}>
-      <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-      <Text style={styles.featureListText}>All Advanced Features</Text>
-    </View>
-
-    <View style={styles.featureListRow}>
-        <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-        <Text style={styles.featureListTextPayments}>Payments (domestic):</Text>
-        <Text style={styles.featureListSubText}>Transfer in/out: No Fee Upto 50 transactions</Text>
-    </View>
-
-    <View style={styles.featureListRow}>
-      <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-      <Text style={styles.featureListTextCards}>Cards:</Text>
-      <Text style={styles.featureListSubText}>Added expense cards with spending limits: 2 Free Expense Card</Text>
-    </View>
-
-    <View style={styles.featureListRow}>
-      <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
-      <Text style={styles.featureListTextBusiness}>Business Tool Kit:</Text>
-      <Text style={styles.featureListSubText}>Free Logo Design</Text>
-      <Text style={styles.featureListSubText}>Trade Mark Registration</Text>
-      <Text style={styles.featureListSubText}>Desktop Support</Text>
-    </View>
-
-
-
-</View> */}
-
-
-
-
-
-// </View>
-
 
 const styles = StyleSheet.create({
 Standard: {
