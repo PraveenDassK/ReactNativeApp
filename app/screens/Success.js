@@ -11,7 +11,7 @@ const Success = ({route,navigation}) => {
   return (
     <Pressable
       style={styles.requested}
-      onPress={() => navigation.navigate(path)}
+      onPress={() => navigation.navigate(path, {reload: true})}
     >
      <View style={styles.mainContainer}>
          <View style={styles.titleTextRow}>

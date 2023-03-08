@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal } from "react-native";
+import { Text, StyleSheet, Image, View, ScrollView,Modal, TouchableOpacity } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/Button";
 
@@ -29,16 +29,16 @@ const SwitchAccounts = ({navigation,route}) => {
         let accounts = []
         userData.forEach((element,i) => {
             accounts.push(
-                <Pressable 
+                <TouchableOpacity 
                     key={i} 
                     onPress={() => switchAccount(element.id)}
                 >
-                    <View style = {styles.benBoxCon}>
+                    <View style = {[styles.benBoxCon, styles.boxShadow]}>
                         <View style={styles.accountTextDiv}>
                             <Text style={styles.accountName}>{element.id}</Text>
                         </View>
                     </View>
-                </Pressable>
+                </TouchableOpacity>
             )
         })
         return(
@@ -47,6 +47,32 @@ const SwitchAccounts = ({navigation,route}) => {
             </View>
         )
     }
+
+    const generateBoxShadowStyle = (
+        xOffset,
+        yOffset,
+        shadowColorIos,
+        shadowOpacity,
+        shadowRadius,
+        elevation,
+        shadowColorAndroid,
+      ) => {
+        if (Platform.OS === 'ios') {
+          styles.boxShadow = {
+            shadowColor: shadowColorIos,
+            shadowOffset: {width: xOffset, height: yOffset},
+            shadowOpacity,
+            shadowRadius,
+          };
+        } else if (Platform.OS === 'android') {
+          styles.boxShadow = {
+            elevation,
+            shadowColor: shadowColorAndroid,
+          };
+        }
+      };
+    
+      generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
 
     const switchAccount = (Id) => {
         console.log("Switch to " +Id)
@@ -58,10 +84,10 @@ const SwitchAccounts = ({navigation,route}) => {
         <View style={styles.page}>
             {/* <View style={styles.titleTextRow}>
                 <Text style={styles.titleText}>Switch Account</Text>
-            </View>             */}
+            </View>    */}
             
             <View style={styles.subTextDiv}>
-                <Text style={styles.subText}>Current Account: {authContext.accountID}</Text>
+                <Text style={styles.subText}>Selected Account: {authContext.accountID}</Text>
             </View>
 
 
@@ -70,7 +96,9 @@ const SwitchAccounts = ({navigation,route}) => {
             </View>
 
             {showUserAccounts()}
-            <Button title="Return" onPress={() => navigation.navigate("Account")} />
+            <View style={{position: "absolute", bottom: 20, width: "100%", alignItems: "center"}}>
+                <Button style={styles.boxShadow} title="Return" onPress={() => navigation.navigate("Account")} />
+            </View>
         </View>
     )
 };
@@ -87,7 +115,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       
         },
+    boxShadow : {},
     page:{
+        flex:1,
         width:"80%",
         left:"10%",
         marginTop:"2.5%",
@@ -113,7 +143,7 @@ const styles = StyleSheet.create({
     subTextDiv: {
         width: "80%",
         marginLeft: "10%",
-        marginTop: "2.5%",
+        marginTop: "5.5%",
     
       },
     

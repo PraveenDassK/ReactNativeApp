@@ -29,7 +29,9 @@ import FadeInView from "../components/fadeInview";
 import moment from "moment";
 import AppText from "../components/Text";
 
-const HomeScreenPersonal = ({ navigation }) => {
+const HomeScreenPersonal = ({ navigation, route }) => {
+
+  console.log("route", route,route?.params, route?.params?.reload)
  
   const [isLoading, setIsLoading] = useState(false)
   //Saves all the data from the API call
@@ -1137,8 +1139,8 @@ const styles = StyleSheet.create({
     marginTop: "3.5%",
    
     backgroundColor: "black",
-    height: verticalScale(260),
-    width: horizontalScale(180),
+    height: verticalScale(250),
+    width: horizontalScale(160),
     borderRadius: moderateScale(15),
     justifyContent: "center",
     padding: "5%",

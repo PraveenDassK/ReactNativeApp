@@ -32,7 +32,7 @@ const AddFunds = ({navigation}) => {
   const loadData = async () => {
     setIsLoading(true)
     const response = await apiCall.GetAllAccounts(authContext.userID)
-    console.log(response)
+    console.log("response",response)
     setData(response)
 
     let accountList = []
@@ -155,11 +155,12 @@ const AddFunds = ({navigation}) => {
           <View style={[{width: "30%", left: "36%"}]}>
           <Pressable
               onPress={() => {
-                console.log("pressed2")
+                console.log('500000000000')
                 setAmount("50")
               }}
             >
             <Text style={[styles.hello4, styles.helloColor]}>
+              
               £50
             </Text>
             <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
@@ -178,7 +179,7 @@ const AddFunds = ({navigation}) => {
           >
             <Pressable
               onPress={() => {
-              
+                console.log('1000000000000000')
                 setAmount("100")
               }}
             >
