@@ -17,6 +17,7 @@ const Tab = createMaterialTopTabNavigator();
     const [isLoading, setIsLoading] = useState(false)
   
     const [data, setData] = useState([])
+    const [currentSubscruption, setCurrentSubscription] = useState(null)
 
    useEffect(()=> {
     loadData()
@@ -30,10 +31,9 @@ const Tab = createMaterialTopTabNavigator();
 
       const currentSub = await apiCall.GetUsersSubscriptions(account)
       console.log(currentSub.subID)
-      console.log(response.id)
+      console.log(response[0].id)
     }
     const changePlan = async(Id) => {
-      console.log(Id)
       await apiCall.ChangeUsersSubscription(account,Id)
     }
 
@@ -79,7 +79,9 @@ const Tab = createMaterialTopTabNavigator();
               </React.Fragment>
             
              })}
-             <Button title="Purchase" onPress={()=>changePlan(item.id)}/>
+             {item.id == currentSubscruption ? 
+              <Button title="Purchase" onPress={()=>changePlan(item.id)}/>
+              : null}
             </View>
             
 
