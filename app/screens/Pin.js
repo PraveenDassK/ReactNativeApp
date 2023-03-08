@@ -5,7 +5,7 @@ import ReactNativePinView from 'react-native-pin-view';
 import Icon from "react-native-vector-icons/Ionicons"
 
 import AuthContext from '../auth/context'
-import api from "../api/api_list"
+import api from "../api/apiCall"
 import apiCall from "../api/api"
 
 const Pin = ({route,navigation}) => {
@@ -38,15 +38,15 @@ const Pin = ({route,navigation}) => {
    * @returns If pin is incorrect
    */
   const checkPin = async () => {
+    console.log(route)
     if (enteredPin != "0000"){
       alert("Pin is incorrect")
       pinView.current.clearAll()
       return;
     } 
     const response = await api.SendFunds(
-      20,
-      "A12274AW", 
       route.params.amount,
+      "A12274AW", 
       route.params.beneficiaryData.accountName,
       route.params.beneficiaryData.accountNumber,
       route.params.beneficiaryData.sortCode,
