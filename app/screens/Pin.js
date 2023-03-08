@@ -15,6 +15,7 @@ const Pin = ({route,navigation}) => {
   const [showRemoveButton, setShowRemoveButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
   const [showCompletedButton, setShowCompletedButton] = useState(false)
+  const authContext = useContext(AuthContext)
 
   /**
    * Pin display controlers
