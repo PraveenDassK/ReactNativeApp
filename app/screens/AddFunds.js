@@ -53,6 +53,13 @@ const AddFunds = ({navigation}) => {
   let fromName = ""
 
   const requestContact = (amount) => {
+
+    //Check if the 
+    if(!value){
+      alert("Please select a account")
+      return;
+    }
+
     if(!amount){alert("!")}
     const checkText = (text) => {
       setAmount(text)
