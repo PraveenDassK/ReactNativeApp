@@ -79,9 +79,7 @@ const Tab = createMaterialTopTabNavigator();
               </React.Fragment>
             
              })}
-             {item.id == currentSubscruption ? 
               <Button title="Purchase" onPress={()=>changePlan(item.id)}/>
-              : null}
             </View>
             
 
