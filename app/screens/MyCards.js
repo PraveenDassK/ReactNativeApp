@@ -27,6 +27,7 @@ const MyCards = ({ navigation }) => {
   const [cardnumber, setcardnumber] = useState(null);
   const [firstname, setfirstname] = useState(null);
   const [lastname, setlastname] = useState(null);
+  const [type, setType] = useState(null);
   const [cardId, setCardID] = useState(null);
   const [cardIndex, setCardIndex] = useState(0);
   const [cardData, setCardData] = useState(null);
@@ -54,6 +55,7 @@ const MyCards = ({ navigation }) => {
     setcardnumber(currentCard.maskedCardNumber)
     setInitals(currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0])
     setIsLoading(false)
+    setType(currentCard.productCode)
   };
 
   const cardDetails = () => {
@@ -182,8 +184,8 @@ const MyCards = ({ navigation }) => {
           <View style={{position: "absolute", height: "100%", width: 200, justifyContent: "center" }}>
             <View style={{marginLeft: "5%", marginTop: "50%"}}>
               <Text style={{color: "white"}}>{cardnumber}</Text>
-              <Text style={{color: "white"}}>{firstname} {lastname}
-              </Text>
+              <Text style={{color: "white"}}>{firstname} {lastname}</Text>
+              <Text style={{color: "white"}}>{type}</Text>
             </View>
           </View>
         </View>
