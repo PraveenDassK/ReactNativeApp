@@ -250,7 +250,7 @@ const Analytics = ({ navigation }) => {
               fontWeight: "800",
               fontSize: 30, 
               color: "blue"
-            }}>£ {balance}</AppText>
+            }}>£{balance}</AppText>
           </AppText>
         </View>
 
@@ -277,7 +277,7 @@ const Analytics = ({ navigation }) => {
             }, styles.boxShadow]}
           >
             <AppText style={{fontWeight: "500"}}>Total Spend</AppText>
-            <AppText style={styles.money}>£ {totalSpend.toFixed(2)}</AppText>
+            <AppText style={styles.money}>£{totalSpend.toFixed(2)}</AppText>
             <View style={{ flex: 1, flexDirection: "row" }}>
               <View style={{
                   flex:1,
@@ -311,7 +311,7 @@ const Analytics = ({ navigation }) => {
           >
             <AppText style={{fontWeight: "700"}}>Average Monthly Spendings</AppText>
             <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
-              <AppText style={styles.money}>£ {monthAverage.toFixed(2)}</AppText>
+              <AppText style={styles.money}>£{monthAverage.toFixed(2)}</AppText>
             </View>
           </View>
         </View>
@@ -721,7 +721,7 @@ const Bazier = ({ graphData }) => {
                   fontWeight="bold"
                   textAnchor="middle"
                 >
-                  {`£ ${tooltipPos.value.toFixed(2)}`}
+                  {`£${tooltipPos.value.toFixed(2)}`}
                 </TextSVG>
               </Svg>
             </View>
