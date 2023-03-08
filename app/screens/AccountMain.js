@@ -80,6 +80,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     const resposeData = await apiCall.GetUserImpact("CC11875");
     const cards = await apiCall.GetCardByAccount("686283112")
 
+    console.log("cards", cards)
+    console.log("cards2", cardData)
+
   
 
     setcardnumber(cardData.cardNumberMasked)
@@ -276,10 +279,20 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   source={require("../assets/group-31764.png")}
                 />
 
-              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
+                <Image 
+                  resizeMode="contain"
+                  style={{ zIndex: -1, position: "absolute", right: horizontalScale(0),height: verticalScale(260), width: horizontalScale(160),  top: verticalScale(0), transform: [{
+                    rotate: "0deg"
+                  }]}}
+                  source={require("../assets/tiger.png")}
+                />
+
+
+
+              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(40), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
                   {cardnumber}
               </AppText>
-              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(22.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
+              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(41.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
                 {accountname}
               </AppText>
 
