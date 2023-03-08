@@ -51,6 +51,7 @@ const [login, setLogin] = useState(false)
 const [accountID, setAccountID] = useState("A12274AW")
 //CarbonyteID
 const [userID, setUserID] = useState("C1220XHD")
+const [pin, setPin] = useState("0000")
 
 const [settings, setSettings] = useState({
   faceId: false,
@@ -171,7 +172,8 @@ if (!loaded) {
       isAuth, setIsAuth,
       accountID,setAccountID,
       userID, setUserID,
-      settings, setSettings
+      settings, setSettings,
+      pin, setPin
     }}>
       <NavigationContainer>
 
