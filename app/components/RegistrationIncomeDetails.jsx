@@ -14,9 +14,9 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const RegistrationEmailAndPhone = ({SaveDetails}) => {
+const Income = ({SaveDetails}) => {
     const handleSubmit = async () => {
-        SaveDetails(null,"EmailAndPhone")
+        SaveDetails(null,"Income")
     }
 
     return (
@@ -32,14 +32,7 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Phone Number</Text>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
-                    <Text>Email Address</Text>
+                    <Text>Income</Text>
                     <TextInput 
                         keyboardType="numeric" 
                         onBlur={() => setFieldTouched("phoneNumber")}
@@ -57,4 +50,4 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
 const styles = StyleSheet.create({
 });
 
-export default RegistrationEmailAndPhone;
+export default Income;

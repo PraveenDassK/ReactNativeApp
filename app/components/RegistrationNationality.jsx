@@ -5,18 +5,20 @@ import Screen from "./Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list";
-import { Formik } from "formik";
+import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./Button"
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const RegistrationEmailAndPhone = ({SaveDetails}) => {
-    const handleSubmit = async () => {
-        SaveDetails(null,"EmailAndPhone")
+const Nationality = ({SaveDetails}) => {
+
+    const handleSubmit = (type) => {
+        SaveDetails(null,"Nationality")
     }
 
     return (
@@ -32,21 +34,21 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Phone Number</Text>
+                    <Text>CountryOfBirth</Text>
                     <TextInput 
                         keyboardType="numeric" 
                         onBlur={() => setFieldTouched("phoneNumber")}
                         onChangeText={handleChange("phoneNumber")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
-                    <Text>Email Address</Text>
+                    <Text>Nationality</Text>
                     <TextInput 
                         keyboardType="numeric" 
                         onBlur={() => setFieldTouched("phoneNumber")}
                         onChangeText={handleChange("phoneNumber")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
-                </View>
+                  </View>                  
                 )}
             </Formik>
             <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
@@ -57,4 +59,4 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
 const styles = StyleSheet.create({
 });
 
-export default RegistrationEmailAndPhone;
+export default Nationality;

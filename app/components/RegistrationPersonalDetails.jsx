@@ -5,7 +5,7 @@ import Screen from "./Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list";
-import { Formik } from "formik";
+import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./Button"
@@ -14,9 +14,10 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const PersonalDetails = ({navigation}) => {
-    const handleSubmit = async ({ email, phoneNumber }) => {
-        
+const PersonalDetails = ({SaveDetails}) => {
+
+    const handleSubmit = (type) => {
+        SaveDetails(null,"PersonalDetails")
     }
 
     return (
@@ -68,11 +69,10 @@ const PersonalDetails = ({navigation}) => {
                         onChangeText={handleChange("phoneNumber")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
-                    <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
-                  </View>
-                  
+                  </View>                  
                 )}
             </Formik>
+            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
         </Screen>
   );
 };

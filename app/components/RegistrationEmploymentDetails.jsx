@@ -14,9 +14,9 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const RegistrationEmailAndPhone = ({SaveDetails}) => {
+const EmploymentDetails = ({SaveDetails}) => {
     const handleSubmit = async () => {
-        SaveDetails(null,"EmailAndPhone")
+        SaveDetails(null,"EmploymentDetails")
     }
 
     return (
@@ -32,20 +32,19 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Phone Number</Text>
+                    <Text>Employment details</Text>
                     <TextInput 
                         keyboardType="numeric" 
                         onBlur={() => setFieldTouched("phoneNumber")}
                         onChangeText={handleChange("phoneNumber")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
-                    <Text>Email Address</Text>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
+                    <Text>Full time</Text>
+                    <Text>Part time</Text>
+                    <Text>Unemployed</Text>
+                    <Text>Student</Text>
+                    <Text>Other</Text>
+
                 </View>
                 )}
             </Formik>
@@ -57,4 +56,4 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
 const styles = StyleSheet.create({
 });
 
-export default RegistrationEmailAndPhone;
+export default EmploymentDetails;
