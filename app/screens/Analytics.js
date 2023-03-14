@@ -250,7 +250,7 @@ const Analytics = ({ navigation }) => {
               fontWeight: "800",
               fontSize: 30, 
               color: "blue"
-            }}>£{balance}</AppText>
+            }}><AppText style={{color: "grey", fontSize: moderateScale(30)}}>£</AppText>{balance}</AppText>
           </AppText>
         </View>
 

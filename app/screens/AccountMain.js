@@ -9,9 +9,21 @@ import {
   ScrollView,
   ActivityIndicator, 
   Platform,
-  
-  
+  Dimensions
 } from "react-native";
+
+import {
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
+
+import Animated, {
+  Easing,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -28,6 +40,8 @@ import FadeInView from "../components/fadeInview";
 
 import moment from "moment";
 import AppText from "../components/Text";
+
+const {width, height} = Dimensions.get('window');
 
 const HomeScreenPersonal = ({ navigation, route }) => {
 
@@ -241,6 +255,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   }
 
   return (
+    <GestureHandlerRootView style={styles.rootView}>
     <ScrollView
       showsVerticalScrollIndicator={false}
       refreshControl={
@@ -307,6 +322,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
             </View>
           </FadeInView>
+
+          {/* <CardContainer color="red" /> */}
 
           {/* <FadeInView>
             <View style={styles.totalWalletBalanceContainer11}>
@@ -399,7 +416,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
-                <AppText style={{color: "grey", fontSize: moderateScale(26)}}>£</AppText>{balance}</AppText>
+                <AppText style={{color: "grey", fontSize: moderateScale(26)}}>£</AppText>
+                {balance}
+              </AppText>
             )}
             <AppText style={styles.dateText}>{todaydate}</AppText>
           </View>
@@ -852,10 +871,78 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         <View style={{ marginTop: "5%" }} />
       </View>
     </ScrollView>
+    </GestureHandlerRootView>
   );
 };
 
+const CardContainer = ({color}) => {
+
+  const style = useAnimatedStyle(()=> {
+    return {
+
+      position: 'absolute',
+      height: 200,
+      width: 325,
+      backgroundColor: color,
+      bottom: 30,
+      borderRadius: 8
+
+    }
+  })
+  return (
+    // <View>
+    //   <Text>here</Text>
+    // </View>
+    <GestureDetector>
+        <Card color={color} style={{style}}/>
+    </GestureDetector>
+  )
+}
+
+const Card = ({color, style}) => (
+  <Animated.View 
+    style={[styles.totalWalletBalanceContainer11, {backgroundColor: color}, style]}>
+            <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
+                Carbonyte
+            </AppText>
+              
+              <Image 
+              resizeMode="contain"
+                style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
+                  rotate: "180deg"
+                }]}}
+                source={require("../assets/group-31767.png")}
+              />
+
+              <Image 
+                resizeMode="contain"
+                style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
+                  rotate: "90deg"
+                }]}}
+                source={require("../assets/group-31764.png")}
+              />
+
+              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
+                number
+              </AppText>
+                
+              <Image 
+              resizeMode="contain"
+              style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
+                source={require("../assets/group-31766.png")}
+              />
+              
+              <AppText style={[styles.totalWalletBalanceText11, {position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
+              name
+              </AppText>
+              
+        </Animated.View>
+)
+
 const styles = StyleSheet.create({
+  rootView:{
+    flex:1
+  },
   boxShadow:{},
   divContainer: {
   },

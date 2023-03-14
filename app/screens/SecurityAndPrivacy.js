@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState, useLayoutEffect} from "react";
+import React, { useContext, useEffect, useState } from "react";
+import {AppState} from 'react-native';
+import { Asset, useAssets } from 'expo-asset';
 import {
   Text,
   StyleSheet,
@@ -7,15 +9,24 @@ import {
   Pressable,
   Switch,
   Button,
-  ActivityIndicator
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 
+
+
 const SecurityAndPrivacy = ({ navigation }) => {
+  const [assets, error] = useAssets(
+    [
+      require('../assets/icon-faceid.png'),
+      require("../assets/icon-view.png"),
+      require("../assets/blueMessage.png"),
+    ]);
+    
+
   const { setIsAuth, settings, setSettings } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false)
+
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
@@ -43,21 +54,12 @@ const SecurityAndPrivacy = ({ navigation }) => {
     }
   }, [isEnabled]);
 
-  // useEffect(()=> {
-  //   if (isEnabled1 === false) {
-  //   setSettings((prev) => ({ ...prev, hideBalance: !prev.hideBalance }));
-  //   }
-  // },[isEnabled1])
-
   const restoreSignIn = async () => {
-    setIsLoading(true)
-
     console.log("trying for signIn in security");
     const token = await authStorage.getSignInSettings();
     if (!token) return;
     console.log("restore token found in security", token.includes("true"));
     setIsEnabled(token.includes("true"));
-    setIsLoading(false)
   };
 
   //Setts the settings when coming ot the page
@@ -75,26 +77,16 @@ const SecurityAndPrivacy = ({ navigation }) => {
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const toggleSwitch1 = () => {
-    setIsLoading(true)
     setIsEnabled1((previousState) => !previousState);
     setSettings((prev) => ({ ...prev, hideBalance: !prev.hideBalance }));
-    setIsLoading(false)
   };
   const toggleSwitch2 = () => {
-    setIsLoading(true)
     setIsEnabled2((previousState) => !previousState);
     setSettings((prev) => ({ ...prev, contactAccess: !prev.contactAccess }));
-    setIsLoading(false)
   };
 
-  if(isLoading) {
-    return (
-         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-             <ActivityIndicator size={'large'} color="blue" />
-         </View>
-    )
-   }
-
+  
+ 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
@@ -106,6 +98,7 @@ const SecurityAndPrivacy = ({ navigation }) => {
           style={styles.icon}
           source={require("../assets/icon-faceid.png")}
         />
+        
 
         <Text style={styles.divText}>Sign in with Face ID</Text>
 
