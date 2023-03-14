@@ -69,7 +69,6 @@ const SecurityAndPrivacy = ({ navigation }) => {
 
   const setToggles = () => {
     console.log(settings);
-
     settings.hideBalance ? setIsEnabled1(true) : null;
     settings.contactAccess ? setIsEnabled2(true) : null;
     settings.transactionSharing ? setIsEnabled3(true) : null;
