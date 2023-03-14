@@ -9,26 +9,34 @@ import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./Button"
+
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
 const RegistrationEmailAndPhone = ({SaveDetails}) => {
-    const handleSubmit = async () => {
-        SaveDetails(null,"EmailAndPhone")
+
+    const handleSubmit = async ({ email, phoneNumber }) => {
+        SaveDetails({        
+            phoneNumber: phoneNumber,
+            emailAddress: email
+        },"EmailAndPhone")
     }
 
     return (
         <Screen>
-            <Text>A bit about you</Text>
+            <Text>Email and Phone number</Text>
             <Formik
             initialValues={{
                 email:'', 
                 phoneNumber: ''
             }}
             onSubmit={handleSubmit}
-            validationSchema={validationSchema}
+            //Comment out if needed
+            //Must be present in prod
+            //validationSchema={validationSchema}
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
@@ -40,16 +48,24 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
                     <Text>Email Address</Text>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+                    <TextInput
+                        autoCapitalize="none"
+                        textContentType="emailAdress"
+                        keyboardType="email-address"
+                        onBlur={() => setFieldTouched('email')}
+                        onChangeText={handleChange('email')}
+                        style={[
+                            styles.signUpPersonalItem,
+                            styles.mt9,
+                            styles.ml24,
+                            styles.childBorder,
+                            {padding:10}
+                            ]}
                     />
+                    <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
                 </View>
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
         </Screen>
   );
 };

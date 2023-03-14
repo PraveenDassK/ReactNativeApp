@@ -5,18 +5,37 @@ import Screen from "./Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list";
-import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+
 import Button from "./Button"
+import { Formik, Field, Form } from 'formik';
+import { Dropdown } from 'react-native-element-dropdown';
+import { CheckBox } from '@rneui/themed';
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
 const MaritalStatus = ({SaveDetails}) => {
+    const [open, setOpen] = useState(false)
+    const [isFocus, setIsFocus] = useState(false);
+    const [status, setStatus] = useState(false);
+    const [value, setValue] = useState("");
+
+    const marrigeData = [
+        {'label': 'Single', 'value': 'Single'},    
+        {'label': 'Married', 'value': 'Married'},    
+        {'label': 'Separated', 'value': 'Separated'},    
+        {'label': 'Divorced', 'value': 'Divorced'},    
+        {'label': 'Widowed', 'value': 'Widowed'},    
+        {'label': 'Domestic partnership', 'value': 'Domestic partnership'},    
+        {'label': 'Civil union', 'value': 'Civil union'}
+    ]
+
     const handleSubmit = async () => {
-        SaveDetails(null,"MaritalStatus")
+        SaveDetails(status,"MaritalStatus")
     }
 
     return (
@@ -28,21 +47,27 @@ const MaritalStatus = ({SaveDetails}) => {
                 phoneNumber: ''
             }}
             onSubmit={handleSubmit}
-            validationSchema={validationSchema}
+            //validationSchema={validationSchema}
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
                     <Text>Marital status</Text>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+                    <Dropdown
+                        data={marrigeData}
+                        maxHeight={100}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Choose one' : '....'}
+                        value={status}
+                        onChange={item => {
+                            setStatus(item.value);
+                            setIsFocus(false);
+                        }}
                     />
+                    <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
                 </View>
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
         </Screen>
   );
 };

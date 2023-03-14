@@ -10,15 +10,16 @@ import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./Button"
 
-const validationSchema = Yup.object().shape({
-    email: Yup.string().required().email().label("Email"),
-    phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
-})
+
 
 const Nationality = ({SaveDetails}) => {
 
-    const handleSubmit = (type) => {
-        SaveDetails(null,"Nationality")
+    const handleSubmit = ({country,nationality}) => {
+        console.log(country,nationality)
+        SaveDetails({
+            country: country,
+            nationality: nationality
+        },"Nationality")
     }
 
     return (
@@ -26,32 +27,29 @@ const Nationality = ({SaveDetails}) => {
             <Text>A bit about you</Text>
             <Formik
             initialValues={{
-                email:'', 
-                phoneNumber: ''
+                country:'', 
+                nationality: ''
             }}
             onSubmit={handleSubmit}
-            validationSchema={validationSchema}
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
                     <Text>CountryOfBirth</Text>
                     <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
+                        onBlur={() => setFieldTouched("country")}
+                        onChangeText={handleChange("country")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
                     <Text>Nationality</Text>
                     <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
+                        onBlur={() => setFieldTouched("nationality")}
+                        onChangeText={handleChange("nationality")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                    <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
                   </View>                  
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
         </Screen>
   );
 };

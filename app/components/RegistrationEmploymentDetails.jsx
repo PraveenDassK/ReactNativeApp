@@ -9,19 +9,27 @@ import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./Button"
+import { CheckBox } from '@rneui/themed';
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
 const EmploymentDetails = ({SaveDetails}) => {
+    const [fulltime, setFulltime] = useState(false);
+    const [parttime, setParttime] = useState(false);
+    const [unemployed, setUnemployed] = useState(false);
+    const [student, setStudent] = useState(false);
+    const [other, setOther] = useState(false);
+
     const handleSubmit = async () => {
         SaveDetails(null,"EmploymentDetails")
     }
 
     return (
         <Screen>
-            <Text>A bit about you</Text>
+            <Text>Employment details</Text>
             <Formik
             initialValues={{
                 email:'', 
@@ -32,19 +40,42 @@ const EmploymentDetails = ({SaveDetails}) => {
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Employment details</Text>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
-                    <Text>Full time</Text>
-                    <Text>Part time</Text>
-                    <Text>Unemployed</Text>
-                    <Text>Student</Text>
-                    <Text>Other</Text>
-
+                    <Text>What's your employment status?</Text>
+                    <CheckBox
+                        title="Full time"
+                        checkedIcon="dot-circle-o"
+                        uncheckedIcon="circle-o"
+                        checked={fulltime}
+                        onPress={() => setFulltime(!fulltime)}
+                        />
+                    <CheckBox
+                        title="Part time"
+                        checkedIcon="dot-circle-o"
+                        uncheckedIcon="circle-o"
+                        checked={parttime}
+                        onPress={() => setParttime(!parttime)}
+                        />
+                    <CheckBox
+                        title="Unemployed"
+                        checkedIcon="dot-circle-o"
+                        uncheckedIcon="circle-o"
+                        checked={unemployed}
+                        onPress={() => setUnemployed(!unemployed)}
+                        />
+                    <CheckBox
+                        title="Student"
+                        checkedIcon="dot-circle-o"
+                        uncheckedIcon="circle-o"
+                        checked={student}
+                        onPress={() => setStudent(!student)}
+                        />
+                    <CheckBox
+                        title="Other"
+                        checkedIcon="dot-circle-o"
+                        uncheckedIcon="circle-o"
+                        checked={other}
+                        onPress={() => setOther(!other)}
+                        />
                 </View>
                 )}
             </Formik>

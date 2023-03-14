@@ -4,41 +4,42 @@ import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWi
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
-import api from "../api/api_list";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./Button"
-const validationSchema = Yup.object().shape({
-    email: Yup.string().required().email().label("Email"),
-    phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
-})
+import PostCode from './RegistrationPostCode.jsx'
 
 const PastAddresses = ({SaveDetails}) => {
+    const [addresses, setAddresses] = useState([]);
+    const [isAdding, setAdding] = useState(false);
+
     const handleSubmit = async () => {
-        SaveDetails(null,"PastAddresses")
+        SaveDetails(addresses,"PastAddresses")
+    }
+
+    /**
+     * @dev This sets the is adding to false which will show the past addresses page when used
+     * @notice This does not validate data, validate the data on entry
+     * @param {Object} address The address object that the address finder passes back
+     */
+    const addAddress = (addressObj) => {
+        setAdding(false)
+        setAddresses(address => [...address, addressObj])
+        console.log(addresses)
     }
 
     return (
         <Screen>
-            <Text>A bit about you</Text>
-            <Formik
-            initialValues={{
-                email:'', 
-                phoneNumber: ''
-            }}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-            >
-            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Pastaddresses</Text>
-                    <Button title="Add" color="babyBlue" onPress={() => handleSubmit()} />
-
+            <Text>Past addresses</Text>
+            {isAdding ? 
+                <PostCode AddAddress = {addAddress}/>
+          :
+                <View>
+                    <Button title="Add" color="babyBlue" onPress={() => setAdding(true)} />
+                    <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
                 </View>
-                )}
-            </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
+            }
         </Screen>
   );
 };

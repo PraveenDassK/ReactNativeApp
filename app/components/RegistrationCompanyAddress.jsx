@@ -14,14 +14,14 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const Income = ({SaveDetails}) => {
+const PastAddresses = ({SaveDetails}) => {
     const handleSubmit = async () => {
-        SaveDetails(null,"Income")
+        SaveDetails(null,"CompanyAddress")
     }
 
     return (
         <Screen>
-            <Text>Income details</Text>
+            <Text>Company address</Text>
             <Formik
             initialValues={{
                 email:'', 
@@ -32,21 +32,9 @@ const Income = ({SaveDetails}) => {
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Annual income</Text>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
+                    <Text>Pastaddresses</Text>
+                    <Button title="Add" color="babyBlue" onPress={() => handleSubmit()} />
 
-                <Text>Tax residency</Text>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
                 </View>
                 )}
             </Formik>
@@ -58,4 +46,4 @@ const Income = ({SaveDetails}) => {
 const styles = StyleSheet.create({
 });
 
-export default Income;
+export default PastAddresses;

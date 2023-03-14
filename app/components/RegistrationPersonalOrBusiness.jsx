@@ -18,14 +18,14 @@ const validationSchema = Yup.object().shape({
 const PersonalOrBusiness = ({SaveDetails}) => {
     const handleSubmit = async (type) => {
         console.log(type)
-        SaveDetails("Personal")
+        SaveDetails(type)
     }
 
     return (
         <Screen>
             <Text>You want to use me for</Text>
-                <Button title="Personal" color="babyBlue" onPress={(type) => handleSubmit(type)} />
-                <Button title="Business" color="babyBlue" onPress={handleSubmit} />
+                <Button title="Personal" color="babyBlue" onPress={() => handleSubmit("Personal")} />
+                <Button title="Business" color="babyBlue" onPress={() => handleSubmit("Business")} />
         </Screen>
   );
 };
