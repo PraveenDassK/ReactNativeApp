@@ -4,7 +4,7 @@ import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWi
 import Screen from "../components/Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
-import api from "../api/api_list";
+import apiLogin from "../api/apiLogin";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
@@ -21,6 +21,14 @@ import EmploymentDetails from "../components/RegistrationEmploymentDetails.jsx"
 import Income from "../components/RegistrationIncomeDetails.jsx"
 import Success from "../components/RegistrationSuccess.jsx"
 
+import RegistrationNumber from "../components/RegistrationRegistrationNumber.jsx"
+import CompanyDetails from "../components/RegistrationCompanyDetails.jsx"
+import CompanyAddress from "../components/RegistrationCompanyAddress.jsx"
+import CompanyInformation from "../components/RegistrationCompanyInformation.jsx"
+import CompanyIncome from "../components/RegistrationCompanyIncome.jsx"
+import CompanyOperations from "../components/RegistrationCompanyOperations.jsx"
+import CompanyUsage from "../components/RegistrationCompanyUsage.jsx"
+
 const Registration = ({navigation}) => {
 
       //Personal details
@@ -33,20 +41,21 @@ const Registration = ({navigation}) => {
       const [registrationNumberDetails, setRegistrationNumberDetails] = useState(null)
       const [companyDetails, setCompanyDetails] = useState(null)
       const [screenToShow, setScreenToShow] = useState(null)
-  
+
       /**
        * @dev Use this to differentiate between Personal or business accounts
        * @param {String} type This is the choice of which account to use
        */
-      const accountSelector = async(type) => {  
+      const accountSelector = async(type) => { 
+        //sendDetails() 
         if(type == "Personal"){
+            //Change this back to PersonalDetails once done
           setScreenToShow("PersonalDetails")
           setPersonalBusiness(type)
         }else{
-          setScreenToShow("BusinessRegNumber")
+          setScreenToShow("RegistrationNumber")
           setPersonalBusiness(type)
         }
-        console.log(type)
       }
   
       /**
@@ -56,6 +65,7 @@ const Registration = ({navigation}) => {
        * @param {Str} page This is the page that the information is coming from
        */
       const detailsSaver = (details,page) => {
+        console.log(details)
         switch(page){
           case "PersonalDetails":
             setPersonalDetails(details)
@@ -89,20 +99,40 @@ const Registration = ({navigation}) => {
             setPersonalDetails(details)
             setScreenToShow("")
             return;
-        case "Copied":
+        case "RegistrationNumber":
             setPersonalDetails(details)
-            setScreenToShow("")
+            setScreenToShow("CompanyDetails")
             return;
-        case "Copied":
+        case "CompanyDetails":
             setPersonalDetails(details)
-            setScreenToShow("")
+            setScreenToShow("CompanyAddress")
+            return;
+        case "CompanyAddress":
+            setPersonalDetails(details)
+            setScreenToShow("CompanyInformation")
+            return;
+        case "CompanyInformation":
+            setPersonalDetails(details)
+            setScreenToShow("CompanyIncome")
+            return;
+        case "CompanyIncome":
+            setPersonalDetails(details)
+            setScreenToShow("CompanyOperations")
+            return;
+        case "CompanyOperations":
+            setPersonalDetails(details)
+            setScreenToShow("CompanyUsage")
+            return;
+        case "CompanyUsage":
+            setPersonalDetails(details)
+            setScreenToShow("PersonalDetails")
             return;
         case "PersonalOrBusiness":
             break;
         }
       }
+      
       const pagePicker = () => {
-        console.log(screenToShow)
         switch(screenToShow){
           case "PersonalDetails":
             return <RegistrationPersonalDetails SaveDetails = {detailsSaver}/>
@@ -120,23 +150,92 @@ const Registration = ({navigation}) => {
             return <Income SaveDetails = {detailsSaver}/>
         case "Success":
             return <Success SaveDetails = {detailsSaver}/>
-        case "Copied":
-            return <PastAddresses SaveDetails = {detailsSaver}/>
-        case "Copied":
-            return <PastAddresses SaveDetails = {detailsSaver}/>
-        case "Copied":
-            return <PastAddresses SaveDetails = {detailsSaver}/>
-        case "Copied":
-            return <PastAddresses SaveDetails = {detailsSaver}/>
+        case "RegistrationNumber":
+            return <RegistrationNumber SaveDetails = {detailsSaver}/>
+        case "CompanyDetails":
+            return <CompanyDetails SaveDetails = {detailsSaver}/>
+        case "CompanyAddress":
+            return <CompanyAddress SaveDetails = {detailsSaver}/>
+        case "CompanyInformation":
+            return <CompanyInformation SaveDetails = {detailsSaver}/>
+        case "CompanyIncome":
+            return <CompanyIncome SaveDetails = {detailsSaver}/>
+        case "CompanyOperations":
+            return <CompanyOperations SaveDetails = {detailsSaver}/>
+        case "CompanyUsage":
+            return <CompanyUsage SaveDetails = {detailsSaver}/>
         default:
             return <PersonalOrBusiness SaveDetails = {accountSelector}/>
         }
       }
 
-    const handleSubmit = async ({ email, phoneNumber }) => {
-        
-    }
-
+    /**
+     * @dev This function sends all of the details to register
+     * @notice  The only validation done here is to check if an item
+     *          has been added
+     */
+    const sendDetails = async() => {
+        console.log(accountType)
+        if(accountType == "Personal"){
+          //Make a personal account
+          console.log(personalDetails)
+          console.log(emailandPhone)
+          console.log(nationality)
+          console.log(addresses)
+          console.log(maritalStatus)
+          console.log(income)
+          const regData = [
+            {
+              "id": 0,
+              "customerId": "",
+              "emails": [
+                {
+                  "emailId": emailandPhone?.emailAddress
+                }
+              ],
+              "phoneNumbers": [
+                {
+                  "phoneNo": emailandPhone?.phoneNumber
+                }
+              ],
+              "customerDetails": {
+                "documentNo": "",
+                "documentType": "",
+                "address": addresses?.address,
+                "firstName": personalDetails?.firstName,
+                "dob": personalDetails?.birthday,
+                "nationalId": "1",
+                "lastName": personalDetails?.lastName,
+                "postCode": addresses?.postcode,
+                "postTown": "London",
+                "country": addresses?.country,
+                "locale": "",
+                "salutation": "Mr",
+                "gender": personalDetails?.gender,
+                "maritalStatus": maritalStatus,
+                "employmentDetails": "Unemployed"
+              },
+              "income": {
+                "totalIncome": "",
+                "savings": "",
+                "taxResidency": "",
+                "incomeSources": [
+                  "string"
+                ]
+              },
+              "key": "",
+              "role": "",
+              "ownershipPercentage": 0,
+              "marketingChoices": "string"
+            }
+          ];
+          const response = await apiLogin.RegisterPersonalAccount(regData)
+          console.log(response)
+          console.log(regData)
+        }else{
+          //Make a business account 
+        }
+      }
 
     return (
         <Screen>
