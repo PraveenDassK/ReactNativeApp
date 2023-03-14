@@ -29,7 +29,8 @@ import CompanyIncome from "../components/RegistrationCompanyIncome.jsx"
 import CompanyOperations from "../components/RegistrationCompanyOperations.jsx"
 import CompanyUsage from "../components/RegistrationCompanyUsage.jsx"
 
-const Registration = ({navigation}) => {
+const 
+Registration = ({navigation}) => {
 
       //Personal details
       const [accountType, setPersonalBusiness] = useState(null);

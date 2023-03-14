@@ -10,6 +10,8 @@ import moment from "moment";
 import apiCall from "../api/api";
 import apiCall2 from "../api/apiCall";
 
+
+import AppText from "../components/Text";
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -27,6 +29,7 @@ const MyCards = ({ navigation }) => {
   const [cardnumber, setcardnumber] = useState(null);
   const [firstname, setfirstname] = useState(null);
   const [lastname, setlastname] = useState(null);
+  const [role, setRole] = useState(null);
   const [type, setType] = useState(null);
   const [cardId, setCardID] = useState(null);
   const [cardIndex, setCardIndex] = useState(0);
@@ -53,6 +56,7 @@ const MyCards = ({ navigation }) => {
     setfirstname(currentCard.embossing.firstName)
     setlastname(currentCard.embossing.lastName)
     setcardnumber(currentCard.maskedCardNumber)
+    setRole(currentCard.cardRole)
     setInitals(currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0])
     setIsLoading(false)
     setType(currentCard.productCode)
@@ -100,25 +104,25 @@ const MyCards = ({ navigation }) => {
       }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>From: {transaction.account.customerName}</Text>
-            <Text style={styles.modalText}>To: {transaction.description}</Text>
-            <Text style={styles.modalText}>Amount: £{transaction.amount}</Text>
-            <Text style={styles.modalText}>Date: {transaction.transactionDate}</Text>
-            <Text style={styles.modalText}>ID: {transaction.id}</Text>
-            <Text style={styles.modalText}>Source ID: {transaction.sourceId}</Text>
-            <Text style={styles.modalText}>Currency: {transaction.currency}</Text>
+            <AppText style={styles.modalText}>From: {transaction.account.customerName}</AppText>
+            <AppText style={styles.modalText}>To: {transaction.description}</AppText>
+            <AppText style={styles.modalText}>Amount: £{transaction.amount}</AppText>
+            <AppText style={styles.modalText}>Date: {transaction.transactionDate}</AppText>
+            <AppText style={styles.modalText}>ID: {transaction.id}</AppText>
+            <AppText style={styles.modalText}>Source ID: {transaction.sourceId}</AppText>
+            <AppText style={styles.modalText}>Currency: {transaction.currency}</AppText>
 
             <TouchableOpacity style={[styles.button, styles.buttonReport]} onPress={() => reportTransaction()}>
-              <Text style={styles.textStyle}>Report</Text>
+              <AppText style={styles.textStyle}>Report</AppText>
             </TouchableOpacity>
             {settings.transactionSharing ? (
               <TouchableOpacity style={[styles.button, styles.buttonClose]} onPress={() => shareTransaction()}>
-                <Text style={styles.textStyle}>Share</Text>
+                <AppText style={styles.textStyle}>Share</AppText>
               </TouchableOpacity>
             ) : null}
 
             <TouchableOpacity style={[styles.button, styles.buttonClose]} backgroundColor="red" onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Dismiss</Text>
+              <AppText style={styles.textStyle}>Dismiss</AppText>
             </TouchableOpacity>
           </View>
         </View>
@@ -133,14 +137,14 @@ const MyCards = ({ navigation }) => {
         <TouchableOpacity style={[styles.transactionBox, styles.rounded, styles.shadow]} key={i} onPress={() => showTransaction(i)}>
           <View style={{ height: "100%", flexDirection: "row" }}>
             <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", justifyContent: "center", alignItems: "center", alignSelf: "center", marginLeft: "2.5%" }}>
-              <Text style={{ alignSelf: "center", textAlignVertical: "center" }}>{transaction.account.customerName[0]}</Text>
+              <AppText style={{ alignSelf: "center", textAlignVertical: "center" }}>{transaction.account.customerName[0]}</AppText>
             </View>
             <View style={{ flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%" }}>
-              <Text style={{ fontSize: 14, fontWeight: "700" }}>{transaction.account.customerName}</Text>
-              <Text style={{}}>{moment(transaction.transactionDate).format("MMM Do YY")}</Text>
+              <AppText style={{ fontSize: 14, fontWeight: "700" }}>{transaction.account.customerName}</AppText>
+              <AppText style={{}}>{moment(transaction.transactionDate).format("MMM Do YY")}</AppText>
             </View>
             <View style={{ flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%" }}>
-              <Text style={{ marginRight: "2.5%", fontWeight: "700" }}>£{transaction.amount.toFixed(2)}</Text>
+              <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>£{transaction.amount.toFixed(2)}</AppText>
             </View>
           </View>
         </TouchableOpacity>
@@ -163,6 +167,19 @@ const MyCards = ({ navigation }) => {
     loadData()
   };
 
+  const cardType = (card) => {
+    switch (card) {
+      case 'MC_VIRTUAL':
+        return 'virtual'
+      case 'MC_STANDARD':
+        return 'standar'      
+      case 'MC_PREMIUM':
+          return 'premium'
+      default:
+        return 'carbonyte';
+    }
+  }
+
   if(isLoading) {
     return (
          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -175,19 +192,32 @@ const MyCards = ({ navigation }) => {
     <ScrollView>
       <View style={styles.mainContainer}>
         {/* <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>My Cards</Text>
+          <AppText style={styles.titleText}>My Cards</AppText>
         </View> */}
+        
 
         <View style={{ alignItems: "center", marginTop: "5%", height: "auto"}}>
+        <AppText style={{fontSize: 20, textTransform: "capitalize", marginBottom: horizontalScale(10)}}>{cardType(type) + " card"}</AppText>
           <Image style={{width: 200, resizeMode: "contain"}} source={require("../assets/cardLion.png")} />
           {cardFrozen ? <Image style={{width: 200, height: 320, bottom: 0, position: "absolute", borderRadius: 15}} source={require("../assets/cardFrozen.png")} /> : null}
           <View style={{position: "absolute", height: "100%", width: 200, justifyContent: "center" }}>
             <View style={{marginLeft: "5%", marginTop: "50%"}}>
-              <Text style={{color: "white"}}>{cardnumber}</Text>
-              <Text style={{color: "white"}}>{firstname} {lastname}</Text>
-              <Text style={{color: "white"}}>{type}</Text>
+              <AppText style={{color: "white"}}>{cardnumber}</AppText>
+              <AppText style={{color: "white"}}>{firstname} {lastname}</AppText>
+              
             </View>
           </View>
+          <View style={styles.roleConatainer}>
+            <AppText 
+              style={[styles.role, {textTransform: "lowercase"} ]}>
+                {role}
+            </AppText>
+            <AppText 
+              style={styles.role}>
+                {" card"}
+            </AppText>
+          </View>
+
         </View>
 
         <View style={{ flexDirection: "row", width: "90%", height: 75, marginLeft: "5%", alignItems: "center" }}>
@@ -224,7 +254,17 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
   },
-
+  roleConatainer: {
+    flexDirection: "row",
+    marginTop: verticalScale(5),
+    marginBottom: verticalScale(5), 
+  },
+  role: {
+    textAlign: "center",
+    fontSize: moderateScale(11.8),
+    fontWeight: '300', 
+    color:"red",
+  },
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,
     width: GlobalStyles.DivContainer.width,
