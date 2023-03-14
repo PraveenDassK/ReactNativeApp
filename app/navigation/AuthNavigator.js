@@ -19,6 +19,7 @@ import DOB from "../screens/DOB";
 import Success from "../screens/Success";
 import SplashAnimation from "../screens/SplashAnimation"
 import Privacy from "../screens/Privacy"
+import Registration from "../screens/Registration"
 
 // import LoginScreen from "../screens/LoginScreen";
 // import RegisterScreen from "../screens/RegisterScreen";
@@ -35,9 +36,14 @@ const AuthNavigator = () => (
       component={WelcomeScreen}
       options={{ headerShown: false }}
     /> */}
+
+    {
+      //This has been changed to registration for development
+      //Will need to be changed over later
+    }
     <Stack.Screen  
       name="SplashAnimation"
-      component={gestureHandlerRootHOC(SplashAnimation)}
+      component={gestureHandlerRootHOC(Registration)}
       options={{ headerShown: false }}
     />
     <Stack.Screen  name="Onboarding1" component={gestureHandlerRootHOC(Onboarding1)}/>
