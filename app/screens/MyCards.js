@@ -202,8 +202,8 @@ const MyCards = ({ navigation }) => {
           {cardFrozen ? <Image style={{width: 200, height: 320, bottom: 0, position: "absolute", borderRadius: 15}} source={require("../assets/cardFrozen.png")} /> : null}
           <View style={{position: "absolute", height: "100%", width: 200, justifyContent: "center" }}>
             <View style={{marginLeft: "5%", marginTop: "50%"}}>
-              <AppText style={{color: "white"}}>{cardnumber}</AppText>
-              <AppText style={{color: "white"}}>{firstname} {lastname}</AppText>
+              <AppText style={[{color: "white", marginBottom: "3.5%"}, styles.totalWalletBalanceText11]}>{cardnumber}</AppText>
+              <AppText style={[{color: "white"}, styles.totalWalletBalanceText11]}>{firstname} {lastname}</AppText>
               
             </View>
           </View>
@@ -270,7 +270,13 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
   },
-
+  totalWalletBalanceText11: {
+    textAlign: "left",
+    fontSize: moderateScale(14),
+    color: "white",
+    textTransform: "uppercase",
+    fontWeight: "700"
+  },
   titleText: {
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
