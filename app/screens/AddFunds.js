@@ -97,6 +97,32 @@ const AddFunds = ({navigation}) => {
     })
   }
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   
 
   return (
@@ -229,6 +255,7 @@ const AddFunds = ({navigation}) => {
               styles.rectangleParent,
               styles.parentPosition,
               styles.parentPosition1,
+              styles.boxShadow
             ]}
           >
             <View style={styles.rectangleView} />
@@ -242,6 +269,7 @@ const AddFunds = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow: {},
  dropdownStyle: {
     width: "95%",
     marginLeft: "2.5%",

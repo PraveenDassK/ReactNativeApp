@@ -16,6 +16,32 @@ const SendMoney = ({navigation}) => {
   useEffect(() => {
     getSettings()
   },[])
+
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
   
   //API
   const getSettings = async () => {
@@ -53,7 +79,7 @@ const SendMoney = ({navigation}) => {
 
     benList.forEach((item,i) => {
       beniter.push(
-      <Pressable onPress={details => {sendDetails(i)}} key={i}>
+      <Pressable style={[styles.boxShadow, {marginBottom: verticalScale(10)}]} onPress={details => {sendDetails(i)}} key={i}>
         <View style = {styles.benBoxCon}>
 
           <View style={styles.accountImage}>
@@ -76,6 +102,7 @@ const SendMoney = ({navigation}) => {
     })
     benText = <View style = {styles.listBoxContainer}>{beniter}</View> }else{ benText =<View style = {styles.failToFind}><AppText style={{fontSize:18}}> No Accounts Found</AppText></View> }
 
+    
 return (
 <View style={styles.mainDiv}>
 
@@ -119,6 +146,8 @@ const styles = StyleSheet.create({
   accountPhoneNum: {
     opacity:0.3
   },
+  boxShadow:{}
+  ,
 
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,
