@@ -152,7 +152,7 @@ const MyCards = ({ navigation }) => {
             </View>
             <View style={{ flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%" }}>
               <AppText style={{ fontSize: 14, fontWeight: "700" }}>{transaction.account.customerName}</AppText>
-              <AppText style={{}}>{moment(transaction.transactionDate).format("MMM Do YY")}</AppText>
+              <AppText style={{opacity: 0.4}}>{moment(transaction.transactionDate).format("MMM Do YY")}</AppText>
             </View>
             <View style={{ flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%" }}>
               <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>£{transaction.amount.toFixed(2)}</AppText>
@@ -246,7 +246,9 @@ const MyCards = ({ navigation }) => {
               
             </View>
           </View>
-          <View style={styles.roleConatainer}>
+
+        </View>
+        <View style={styles.roleConatainer}>
             <AppText 
               style={[styles.role, {textTransform: "lowercase"} ]}>
                 {role}
@@ -256,8 +258,6 @@ const MyCards = ({ navigation }) => {
                 {" card"}
             </AppText>
           </View>
-
-        </View>
 
         <View style={{ flexDirection: "row", width: "90%", height: 75, marginLeft: "5%", alignItems: "center" }}>
         <View style={{flex: 3, alignItems: "flex-end"}}>
@@ -296,8 +296,11 @@ const styles = StyleSheet.create({
   },
   roleConatainer: {
     flexDirection: "row",
-    marginTop: verticalScale(5),
-    marginBottom: verticalScale(5), 
+    marginTop: verticalScale(10),
+    marginBottom: verticalScale(5),
+     
+    justifyContent: "center",
+    alignItems: "center"
   },
   role: {
     textAlign: "center",

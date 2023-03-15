@@ -4,8 +4,13 @@ import GlobalStyles from '../../GlobalStyles';
 import AuthContext from '../auth/context';
 import { useFocusEffect } from "@react-navigation/native";
 
+
+
 import api from '../api/api_list';
 import apiCall from '../api/api';
+import AppText from '../components/Text';
+
+
 
 const CardSettings = ({navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -58,34 +63,60 @@ const CardSettings = ({navigation}) => {
     const response = await api.SetToggles(authContext.accountID, isEnabled, isEnabled1, isEnabled2, isEnabled3);
   };
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   return (
     <ScrollView>
       <View style={styles.mainContainer}>
-        <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>Settings</Text>
-        </View>
+        {/* <View style={styles.titleTextRow}>
+          <AppText style={styles.titleText}>Settings</AppText>
+        </View> */}
 
-        <Pressable style={styles.groupChild} onPress={() => navigation.navigate('SpendingLimit')}>
+        <Pressable style={[styles.boxShadow]} onPress={() => navigation.navigate('SpendingLimit')}>
           <View
             style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
             <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
-              <Text style={{fontWeight: '700'}}>Spending Limit</Text>
-              <Text style={{fontWeight: '200', fontSize: 10}}>Set you monthly spending limit</Text>
+              <AppText style={{fontWeight: '700'}}>Spending Limit</AppText>
+              <AppText style={{fontWeight: '200', fontSize: 10}}>Set you monthly spending limit</AppText>
             </View>
           </View>
         </Pressable>
 
-        <Text style={{marginLeft: '10%', marginTop: '5%', fontSize: 12, fontWeight: '700'}}>Security</Text>
+        <AppText style={{marginLeft: '10%', marginTop: '5%', fontSize: 12, fontWeight: '700'}}>Security</AppText>
 
-        <View style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto'}}>
-          <View style={{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={[{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto', paddingRight: "2.5%"}, styles.boxShadow]}>
+          <View style={{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", }}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/globe.png')} />
-            <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
-              <Text style={{fontWeight: '700'}}>Online Transactions</Text>
-              <Text style={{fontWeight: '200', fontSize: 10}}>
+            <View style={{flex: 5, justifyContent: 'center', marginLeft: '2.5%'}}>
+              <AppText style={{fontWeight: '700'}}>Online Transactions</AppText>
+              <AppText style={{fontWeight: '200', fontSize: 10}}>
                 Internet based transactions are generally high-risk. You can switch them off for extra security. Payments you make using mobile wallets like Apple Pay won’t be affected.
-              </Text>
+              </AppText>
             </View>
             <Switch
               trackColor={{false: GlobalStyles.Color.gray_600, true: GlobalStyles.Color.blue_100}}
@@ -95,11 +126,11 @@ const CardSettings = ({navigation}) => {
             />
           </View>
 
-          <View style={{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/swipecard.png')} />
             <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
-              <Text style={{fontWeight: '700'}}>Swipe Payments</Text>
-              <Text style={{fontWeight: '200', fontSize: 10}}>Sometimes cards can be cloned, you can turn of the magnetic stripe here</Text>
+              <AppText style={{fontWeight: '700'}}>Swipe Payments</AppText>
+              <AppText style={{fontWeight: '200', fontSize: 10}}>Sometimes cards can be cloned, you can turn of the magnetic stripe here</AppText>
             </View>
             <Switch
               trackColor={{false: GlobalStyles.Color.gray_600, true: GlobalStyles.Color.blue_100}}
@@ -109,11 +140,11 @@ const CardSettings = ({navigation}) => {
             />
           </View>
 
-          <View style={{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/atm.png')} />
             <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
-              <Text style={{fontWeight: '700'}}>ATM Withdrawals</Text>
-              <Text style={{fontWeight: '200', fontSize: 10}}>Turn off ATM Withdrawals here</Text>
+              <AppText style={{fontWeight: '700'}}>ATM Withdrawals</AppText>
+              <AppText style={{fontWeight: '200', fontSize: 10}}>Turn off ATM Withdrawals here</AppText>
             </View>
             <Switch
               trackColor={{false: GlobalStyles.Color.gray_600, true: GlobalStyles.Color.blue_100}}
@@ -123,11 +154,11 @@ const CardSettings = ({navigation}) => {
             />
           </View>
 
-          <View style={{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/contactlesspayment-1.png')} />
             <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
-              <Text style={{fontWeight: '700'}}>Contactless Payments</Text>
-              <Text style={{fontWeight: '200', fontSize: 10}}>Turn off contactless functionality</Text>
+              <AppText style={{fontWeight: '700'}}>Contactless Payments</AppText>
+              <AppText style={{fontWeight: '200', fontSize: 10}}>Turn off contactless functionality</AppText>
             </View>
             <Switch
               trackColor={{false: GlobalStyles.Color.gray_600, true: GlobalStyles.Color.blue_100}}
@@ -138,13 +169,13 @@ const CardSettings = ({navigation}) => {
           </View>
         </View>
 
-        <View style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto'}}>
+        <View style={[{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 'auto'}, styles.boxShadow]}>
           <Pressable onPress={() => navigation.navigate('ReplaceCard')}>
             <View style={{width: '100%', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/reset.png')} />
               <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
-                <Text style={{fontWeight: '700'}}>Replace Card</Text>
-                <Text style={{fontWeight: '200', fontSize: 10}}>Lost, Stolen, Not Delivered</Text>
+                <AppText style={{fontWeight: '700'}}>Replace Card</AppText>
+                <AppText style={{fontWeight: '200', fontSize: 10}}>Lost, Stolen, Not Delivered</AppText>
               </View>
             </View>
           </Pressable>
@@ -152,20 +183,20 @@ const CardSettings = ({navigation}) => {
             <View style={{width: '100%', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/delete-redbin.png')} />
               <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
-                <Text style={{fontWeight: '700'}}>Terminate Card</Text>
-                <Text style={{fontWeight: '200', fontSize: 10}}>This card will be permanently terminated</Text>
+                <AppText style={{fontWeight: '700'}}>Terminate Card</AppText>
+                <AppText style={{fontWeight: '200', fontSize: 10}}>This card will be permanently terminated</AppText>
               </View>
             </View>
           </Pressable>
         </View>
 
-        <Pressable style={styles.groupChild} onPress={() => navigation.navigate("ChooseCardsElite")}>
+        <Pressable style={[styles.groupChild, styles.boxShadow]} onPress={() => navigation.navigate("ChooseCardsElite")}>
           <View
             style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
             <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
-              <Text style={{fontWeight: '700'}}>Upgrade Card</Text>
-              <Text style={{fontWeight: '200', fontSize: 10}}>Upgrade your card plan</Text>
+              <AppText style={{fontWeight: '700'}}>Upgrade Card</AppText>
+              <AppText style={{fontWeight: '200', fontSize: 10}}>Upgrade your card plan</AppText>
             </View>
           </View>
         </Pressable>
@@ -175,6 +206,7 @@ const CardSettings = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow:{},
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: 'auto',

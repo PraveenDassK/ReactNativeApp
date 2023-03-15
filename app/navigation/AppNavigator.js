@@ -380,7 +380,7 @@ const StackNavigator = () => {
         name="CardSettings" 
         component={gestureHandlerRootHOC(CardSettings)}
         options={{
-          title: "Card Settings",
+          title: "Settings",
        
         }}
       />
