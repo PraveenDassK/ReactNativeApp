@@ -176,7 +176,7 @@ const Transactions = ({navigation,route}) => {
                     name="close"
                     size={25}
                     color="black"
-              />
+                />
                 </TouchableOpacity>
                   <Text style={styles.modalText}>From: {transaction.account.customerName}</Text>
                   <Text style={styles.modalText}>To: {transaction.description}</Text>
@@ -187,9 +187,9 @@ const Transactions = ({navigation,route}) => {
                   <Text style={styles.modalText}>Currency: {transaction.currency}</Text>
 
                   <TouchableOpacity
-                    style={[styles.button, styles.buttonReport]}
+                    style={[styles.button, styles.buttonReport, { marginTop: verticalScale(20)}]}
                     onPress={() => reportTransaction()}>
-                    <Text style={styles.textStyle}>Report</Text>
+                    <Text style={[styles.textStyle, ]}>Report</Text>
                   </TouchableOpacity>
                   {settings.transactionSharing
                   ?

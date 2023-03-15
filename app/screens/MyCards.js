@@ -104,6 +104,17 @@ const MyCards = ({ navigation }) => {
       }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+          <TouchableOpacity
+                 
+                 style={{ width: "100%", marginBottom: verticalScale(10)}}
+                >
+                  <MaterialCommunityIcons 
+                    onPress={() => setModalVisible(!modalVisible)}
+                    name="close"
+                    size={25}
+                    color="black"
+              />
+                </TouchableOpacity>
             <AppText style={styles.modalText}>From: {transaction.account.customerName}</AppText>
             <AppText style={styles.modalText}>To: {transaction.description}</AppText>
             <AppText style={styles.modalText}>Amount: £{transaction.amount}</AppText>
@@ -112,7 +123,7 @@ const MyCards = ({ navigation }) => {
             <AppText style={styles.modalText}>Source ID: {transaction.sourceId}</AppText>
             <AppText style={styles.modalText}>Currency: {transaction.currency}</AppText>
 
-            <TouchableOpacity style={[styles.button, styles.buttonReport]} onPress={() => reportTransaction()}>
+            <TouchableOpacity style={[styles.button, styles.buttonReport, { marginTop: verticalScale(20)}]} onPress={() => reportTransaction()}>
               <AppText style={styles.textStyle}>Report</AppText>
             </TouchableOpacity>
             {settings.transactionSharing ? (
@@ -121,9 +132,9 @@ const MyCards = ({ navigation }) => {
               </TouchableOpacity>
             ) : null}
 
-            <TouchableOpacity style={[styles.button, styles.buttonClose]} backgroundColor="red" onPress={() => setModalVisible(!modalVisible)}>
+            {/* <TouchableOpacity style={[styles.button, styles.buttonClose]} backgroundColor="red" onPress={() => setModalVisible(!modalVisible)}>
               <AppText style={styles.textStyle}>Dismiss</AppText>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         </TouchableOpacity>
@@ -134,7 +145,7 @@ const MyCards = ({ navigation }) => {
   const showData = () => {
     transactionData.forEach((transaction, i) => {
       transactionList.push(
-        <TouchableOpacity style={[styles.transactionBox, styles.rounded, styles.shadow]} key={i} onPress={() => showTransaction(i)}>
+        <TouchableOpacity style={[styles.transactionBox, styles.rounded, styles.boxShadow]} key={i} onPress={() => showTransaction(i)}>
           <View style={{ height: "100%", flexDirection: "row" }}>
             <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", justifyContent: "center", alignItems: "center", alignSelf: "center", marginLeft: "2.5%" }}>
               <AppText style={{ alignSelf: "center", textAlignVertical: "center" }}>{transaction.account.customerName[0]}</AppText>
@@ -180,6 +191,32 @@ const MyCards = ({ navigation }) => {
     }
   }
 
+  const generateBoxShadowStyle = (
+    xOffset,
+    yOffset,
+    shadowColorIos,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    shadowColorAndroid,
+  ) => {
+    if (Platform.OS === 'ios') {
+      styles.boxShadow = {
+        shadowColor: shadowColorIos,
+        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOpacity,
+        shadowRadius,
+      };
+    } else if (Platform.OS === 'android') {
+      styles.boxShadow = {
+        elevation,
+        shadowColor: shadowColorAndroid,
+      };
+    }
+  };
+
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
   if(isLoading) {
     return (
          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -187,6 +224,8 @@ const MyCards = ({ navigation }) => {
          </View>
     )
    }
+
+
 
   return (
     <ScrollView>
@@ -222,7 +261,7 @@ const MyCards = ({ navigation }) => {
 
         <View style={{ flexDirection: "row", width: "90%", height: 75, marginLeft: "5%", alignItems: "center" }}>
         <View style={{flex: 3, alignItems: "flex-end"}}>
-          <TouchableOpacity onPress={() => toggleCard()}>
+          <TouchableOpacity style={styles.boxShadow} onPress={() => toggleCard()}>
             <Image style={styles.icon} source={cardFrozen ? require("../assets/icon-unfreeze.png") : require("../assets/icon-freeze.png")} />
           </TouchableOpacity>
         </View>
@@ -233,7 +272,7 @@ const MyCards = ({ navigation }) => {
         </View>
 
         <View style={{flex: 3, alignItems: "flex-start"}}>
-          <TouchableOpacity onPress={() => navigation.navigate("CardSettings")}>
+          <TouchableOpacity style={styles.boxShadow} onPress={() => navigation.navigate("CardSettings")}>
             <Image style={styles.icon} source={require("../assets/icon-settingsbutton.png")} />
           </TouchableOpacity>
         </View>
@@ -248,6 +287,7 @@ const MyCards = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  boxShadow: {},
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: GlobalStyles.DivContainer.height,
