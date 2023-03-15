@@ -134,7 +134,7 @@ const Transactions = ({navigation,route}) => {
 
   const renderLeftActions = (i) => {
     return(
-      <View style={{ backgroundColor: "grey", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
+      <View style={{ backgroundColor: "grey", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginRight: "2.5%", borderRadius: 15}}>
           <TouchableOpacity onPress={() => reportTransaction(i)}>
           <MaterialCommunityIcons 
           name="progress-alert"
