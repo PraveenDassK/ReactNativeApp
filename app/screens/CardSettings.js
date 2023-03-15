@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Text, StyleSheet, View, Image, Pressable, Switch, ScrollView} from 'react-native';
+import {Text, StyleSheet, View, Image, Pressable, Switch, ScrollView, ActivityIndicator, } from 'react-native';
 import GlobalStyles from '../../GlobalStyles';
 import AuthContext from '../auth/context';
 import { useFocusEffect } from "@react-navigation/native";
@@ -13,6 +13,7 @@ import AppText from '../components/Text';
 
 
 const CardSettings = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
@@ -48,6 +49,7 @@ const CardSettings = ({navigation}) => {
     });
 
   const getSettings = async () => {
+    setIsLoading(true)
     console.log(authContext.accountID);
     const response = await api.GetToggles(authContext.accountID);
     const cardSettings = await apiCall.cardSettings(authContext.accountID)
@@ -57,10 +59,13 @@ const CardSettings = ({navigation}) => {
     data.swipePayments ? setIsEnabled1(true) : null;
     data.atmWithdrawals ? setIsEnabled2(true) : null;
     data.contactlessPayments ? setIsEnabled3(true) : null;
+    setIsLoading(false)
   };
 
   const sendRequest = async () => {
+    setIsLoading(true)
     const response = await api.SetToggles(authContext.accountID, isEnabled, isEnabled1, isEnabled2, isEnabled3);
+    setIsLoading(false)
   };
 
   const generateBoxShadowStyle = (
@@ -88,6 +93,14 @@ const CardSettings = ({navigation}) => {
   };
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size="large" color="blue" />
+      </View>
+    )
+  }
 
   return (
     <ScrollView>
