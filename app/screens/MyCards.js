@@ -172,7 +172,7 @@ const MyCards = ({ navigation }) => {
       case 'MC_VIRTUAL':
         return 'virtual'
       case 'MC_STANDARD':
-        return 'standar'      
+        return 'standard'      
       case 'MC_PREMIUM':
           return 'premium'
       default:

@@ -280,15 +280,20 @@ const Analytics = ({ navigation }) => {
             <AppText style={styles.money}>£{totalSpend.toFixed(2)}</AppText>
             <View style={{ flex: 1, flexDirection: "row" }}>
               <View style={{
-                  flex:1,
+                  flex:2,
                   marginTop: verticalScale(5),
                   alignItems: "flex-start",
-                  width: horizontalScale(75)
+                  width: horizontalScale(75),
                 }} >
               <AppText
               style={{color: "#999", fontSize: 14,}}
               >
-                No. of Payments
+                No. of 
+              </AppText>
+              <AppText
+              style={{color: "#999", fontSize: 14,}}
+              >
+               Payments
               </AppText>
               </View>
 
