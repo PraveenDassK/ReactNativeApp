@@ -29,16 +29,14 @@ import CompanyIncome from "../components/RegistrationCompanyIncome.jsx"
 import CompanyOperations from "../components/RegistrationCompanyOperations.jsx"
 import CompanyUsage from "../components/RegistrationCompanyUsage.jsx"
 
-const 
-Registration = ({navigation}) => {
-
+const Registration = ({navigation}) => {
       //Personal details
       const [accountType, setPersonalBusiness] = useState(null);
       const [personalDetails, setPersonalDetails] = useState(null)
       const [emailandPhone, setEmailandPhone] = useState(null)
       const [nationality, setNationality] = useState(null)
       const [addresses, setAddresses] = useState(null)
-  
+
       const [registrationNumberDetails, setRegistrationNumberDetails] = useState(null)
       const [companyDetails, setCompanyDetails] = useState(null)
       const [screenToShow, setScreenToShow] = useState(null)
@@ -51,14 +49,15 @@ Registration = ({navigation}) => {
         //sendDetails() 
         if(type == "Personal"){
             //Change this back to PersonalDetails once done
-          setScreenToShow("PersonalDetails")
+          setScreenToShow("Income")
           setPersonalBusiness(type)
         }else{
-          setScreenToShow("RegistrationNumber")
+          //Change this back to RegistrationNumber once done
+          setScreenToShow("CompanyDetails")
           setPersonalBusiness(type)
         }
       }
-  
+
       /**
        * @notice Validation for the objects are done on the Component side
        * @todo Add business details in
@@ -132,7 +131,14 @@ Registration = ({navigation}) => {
             break;
         }
       }
-      
+
+      /**
+       * @notice The page name is taken from the screen to show hook
+       * @dev To change pages change use the setScreenToShow setter
+       *      and pass though the name of the screen
+       * @dev Defaults to the starting personal or business page
+       * @returns The component to show
+       */
       const pagePicker = () => {
         switch(screenToShow){
           case "PersonalDetails":
@@ -211,7 +217,7 @@ Registration = ({navigation}) => {
                 "postTown": "London",
                 "country": addresses?.country,
                 "locale": "",
-                "salutation": "Mr",
+                "salutation": "",
                 "gender": personalDetails?.gender,
                 "maritalStatus": maritalStatus,
                 "employmentDetails": "Unemployed"

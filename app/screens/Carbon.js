@@ -3,23 +3,20 @@ import {   RefreshControl, StyleSheet, View, Image, FlatList, ActivityIndicator 
 import GlobalStyles from "../../GlobalStyles";
 
 import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
-import carbonApi from "../api/carbon";
 import apiCall from "../api/api";
 import Button from "../components/Button";
-import Text from "../components/Text";
 import Screen from "../components/Screen";
-import AuthContext from "../auth/context";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 import FadeInView from "../components/fadeInview";
 import AppText from "../components/Text";
+import AuthContext from "../auth/context";
 
 const Carbon = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null);
-  const { setUser } = useContext(AuthContext);
   const [refreshing, setRefreshing] = useState(false);
-
+  const { userID, accountID } = useContext(AuthContext);
 
   useEffect(() => {
     loadData();
@@ -47,9 +44,9 @@ const Carbon = ({ route, navigation }) => {
 
   const checkout = () => {
     let obj = {
-      userId: "A121BXVM",
+      userId: accountID,
       projectLists: cart,
-      sourceAccountId: "A121BXVM",
+      sourceAccountId: accountID,
       totalAmount: amount,
     };
   };
@@ -60,10 +57,8 @@ const Carbon = ({ route, navigation }) => {
   }
 
   const onRefresh = useCallback(() => {
-    console.log("1st refresh")
     setRefreshing(true);
     setTimeout(() => {
-      console.log("2nd refresh")
       loadData()
       setRefreshing(false);
     }, 2000);

@@ -37,8 +37,7 @@ const AccountSettings = ({navigation}) => {
   const [balance, setBalance] = useState(0)
   const [subscriptions, setSubscriptions] = useState(null)
 
-  const authContext = useContext(AuthContext)
-  const {settings} = useContext(AuthContext)
+  const {settings, accountID} = useContext(AuthContext)
 
   const insets = useSafeAreaInsets();
 
@@ -51,10 +50,9 @@ const AccountSettings = ({navigation}) => {
     },[])
 
   const loadData = async() =>{
-
     setIsLoading(true)
-    const customer = await api.GetAccount(authContext.accountID)
-    const userData = await apiCall.GetUsersSubscriptions(authContext.accountID)
+    const customer = await api.GetAccount(accountID)
+    const userData = await apiCall.GetUsersSubscriptions(accountID)
     
 
     const data = customer.data.details

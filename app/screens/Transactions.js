@@ -1,5 +1,5 @@
 import React,{ useEffect, useState,useContext, useCallback } from "react";
-import { Text, StyleSheet, Image, View,  ScrollView, Modal, RefreshControl, TouchableOpacity, Alert, FlatList, LayoutAnimation, ActivityIndicator, TouchableWithoutFeedback } from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, ScrollView,Modal, RefreshControl, TouchableOpacity, Alert, FlatList, LayoutAnimation, ActivityIndicator, TouchableWithoutFeedback } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import {  Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons} from '@expo/vector-icons'
@@ -51,8 +51,8 @@ const Transactions = ({navigation,route}) => {
     const loadData = async () => {
      
         setIsLoading(true)
-        const responseBalance = await api.GetAccount(authContext.accountID);
-        const accountresponse = await api.GetAccount(authContext.accountID);
+        const responseBalance = await api.GetAccount("A122HTHM");
+        const accountresponse = await api.GetAccount("A122HTHM");
         
         const accountdata = accountresponse.data.details
         const data = responseBalance.data.details
@@ -134,7 +134,7 @@ const Transactions = ({navigation,route}) => {
 
   const renderLeftActions = (i) => {
     return(
-      <View style={{ backgroundColor: "grey", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginRight: "2.5%", borderRadius: 15}}>
+      <View style={{ backgroundColor: "grey", width: horizontalScale(70), height: verticalScale|(76), marginTop: verticalScale(15), justifyContent:"center", alignItems:"center", marginLeft: "2.5%", borderRadius: 15}}>
           <TouchableOpacity onPress={() => reportTransaction(i)}>
           <MaterialCommunityIcons 
           name="progress-alert"
@@ -160,57 +160,45 @@ const Transactions = ({navigation,route}) => {
               setModalVisible(!modalVisible);
             }}>
                <TouchableWithoutFeedback
-                style={{flex:1}}
-                onPress={() => {
-                  setModalVisible(false)
-              }}>
-              <View style={styles.centeredView}>
+      style={{flex:1}}
+      onPress={() => {
+        setModalVisible(false)
+      }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>From: {transaction.account.customerName}</Text>
+                <Text style={styles.modalText}>To: {transaction.description}</Text>
+                <Text style={styles.modalText}>Amount: £{transaction.amount}</Text>
+                <Text style={styles.modalText}>Date: {transaction.transactionDate}</Text>
+                <Text style={styles.modalText}>ID: {transaction.id}</Text>
+                <Text style={styles.modalText}>Source ID: {transaction.sourceId}</Text>
+                <Text style={styles.modalText}>Currency: {transaction.currency}</Text>
+
+                <Pressable
+                  style={[styles.button, styles.buttonReport]}
+                  onPress={() => reportTransaction()}>
+                  <Text style={styles.textStyle}>Report</Text>
+                </Pressable>
+              {settings.transactionSharing
+                ?
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => shareTransaction()}>
+                  <Text style={styles.textStyle}>Share</Text>
+                </Pressable>
+                : null}
+
+                <Pressable
+                  style={[styles.button, styles.buttonClose, {marginTop: 10}]}
+                  backgroundColor = "red"
+                  onPress={() => setModalVisible(!modalVisible)}>
+
+                  <Text style={styles.textStyle}>Dismiss</Text>
+                </Pressable>
                 
-                <View style={styles.modalView}>
-                <TouchableOpacity
-                 
-                 style={{ width: "100%", marginBottom: verticalScale(10)}}
-                >
-                  <MaterialCommunityIcons 
-                    onPress={() => setModalVisible(!modalVisible)}
-                    name="close"
-                    size={25}
-                    color="black"
-                />
-                </TouchableOpacity>
-                  <Text style={styles.modalText}>From: {transaction.account.customerName}</Text>
-                  <Text style={styles.modalText}>To: {transaction.description}</Text>
-                  <Text style={styles.modalText}>Amount: £{transaction.amount}</Text>
-                  <Text style={styles.modalText}>Date: {transaction.transactionDate}</Text>
-                  <Text style={styles.modalText}>ID: {transaction.id}</Text>
-                  <Text style={styles.modalText}>Source ID: {transaction.sourceId}</Text>
-                  <Text style={styles.modalText}>Currency: {transaction.currency}</Text>
-
-                  <TouchableOpacity
-                    style={[styles.button, styles.buttonReport, { marginTop: verticalScale(20)}]}
-                    onPress={() => reportTransaction()}>
-                    <Text style={[styles.textStyle, ]}>Report</Text>
-                  </TouchableOpacity>
-                  {settings.transactionSharing
-                  ?
-                  <TouchableOpacity
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => shareTransaction()}>
-                    <Text style={styles.textStyle}>Share</Text>
-                  </TouchableOpacity>
-                  : null}
-
-                  {/* <TouchableOpacity
-                    style={[styles.button, styles.buttonClose, {marginTop: 10}]}
-                    backgroundColor = "red"
-                    onPress={() => setModalVisible(!modalVisible)}>
-
-                    <Text style={styles.textStyle}>Dismiss</Text>
-                  </TouchableOpacity> */}
-                  
-                  
-                </View>
+                
               </View>
+            </View>
             </TouchableWithoutFeedback>
             
           </Modal>
@@ -332,7 +320,7 @@ const Transactions = ({navigation,route}) => {
              <Swipeable 
                 renderLeftActions={()=> renderLeftActions(index)}
                 renderRightActions={() =>renderRightActions(index)}>
-                <TouchableOpacity
+                <Pressable
                   style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
                   
                   onPress={() => showTransaction(index)}>
@@ -354,7 +342,7 @@ const Transactions = ({navigation,route}) => {
                   </Text>
                   </View>
                   </View>
-                </TouchableOpacity>
+                </Pressable>
           </Swipeable>
           </Animated.View>
             }}
@@ -417,7 +405,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
       },
       modalView: {
-        width: "90%",
         margin: 20,
         backgroundColor: 'white',
         borderRadius: 20,
