@@ -47,6 +47,7 @@ const Income = ({SaveDetails}) => {
                         onChangeText={handleChange("phoneNumber")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                <Text>Income sources</Text>
                 </View>
                 )}
             </Formik>

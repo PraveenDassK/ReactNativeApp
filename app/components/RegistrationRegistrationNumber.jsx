@@ -17,14 +17,13 @@ const PersonalDetails = ({SaveDetails}) => {
     const [regNum, setRegNum] = useState("");
     const [companyDetails, setCompanyDetails] = useState(null)
 
-
     const searchCompany = async() => {
         const request = await apiLoginRegister.GetCompanyByRegNo(regNum)
         setCompanyDetails(request)
         console.log(request)
     }
 
-    const sendDetails = (type) => {
+    const sendDetails = () => {
         SaveDetails(companyDetails,"RegistrationNumber")
     }
     console.log(regNum)
@@ -48,7 +47,9 @@ const PersonalDetails = ({SaveDetails}) => {
                 </View>
                 : null}
             <Button title="Search" color="babyBlue" onPress={() => searchCompany()} />
-            <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
+            {companyDetails ?  
+                <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
+            : null}
         </Screen>
   );
 };
