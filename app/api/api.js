@@ -188,7 +188,6 @@ const GetTransactionData = async(Id,amount) => {
         total += transaction.amount;
       });
       const Average = (total / amount).toFixed(2)
-      console.log("Average" + Average)
     return {
         "total" : total,
         "requestData": requestData,

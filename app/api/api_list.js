@@ -8,17 +8,9 @@ import React,{ useEffect, useState,useContext } from "react";
 const enfuceID = "A12277V1"
 const carbonyteID = "C1220XHD"
 
-const getID = () =>{
-  const authContext = useContext(AuthContext) 
-  console.log(authContext)
-  const data = authContext.accountID
-  return data
-}
-
 const GetCustomerDetails = (id) => client.get('https://api.carbonyte.io/regmodule/GetCustomerDetais?CustomerId='+id);
 
 const SendLoginOTP = (email) => {
-  console.log(email)
   return client.post("https://api.carbonyte.io/authverifymodule/SendLoginOTP?email=jack.h%40carbonyte.io&phoneNumber=447494560838")
 };
 const VerifyLoginOTP = (mailOTP,email) => client.post("https://api.carbonyte.io/authverifymodule/VerifyLoginOTP?email="+
@@ -73,11 +65,6 @@ const SetToggles = (enfuceid,
   atm,
   contactless
 ) => {
-  console.log("---")
-  console.log(online)
-  console.log(swipe)
-  console.log(atm)
-  console.log(contactless)
   const request = "https://api.carbonyte.io/cardmodule/SetToggles?accountId=" + 
     enfuceid +"&onlineTransactions="+ 
     online +"&swipePayments="+ 
@@ -94,7 +81,6 @@ const DeleteBenificiary = (carbonid,Id) => client.delete("https://api.carbonyte.
 
 const testAPI = () => {'v'
   const authContext = useContext(AuthContext) 
-  console.log(authContext)
 }
 
 const AddBeneficiary = (modulrCustomerId,phonenumber,accountName,accNum,sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?modulrCustomerId="+modulrCustomerId,
