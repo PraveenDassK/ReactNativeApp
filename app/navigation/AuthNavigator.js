@@ -99,6 +99,7 @@ const AuthNavigator = () => (
     <Stack.Screen  name="PersonalAddress" component={gestureHandlerRootHOC(PersonalAddress)}/>
     <Stack.Screen  name="DOB" component={gestureHandlerRootHOC(DOB)}/>
     <Stack.Screen  name="Success" component={gestureHandlerRootHOC(Success)}/>
+    <Stack.Screen  name="Registration" component={gestureHandlerRootHOC(Registration)}/>
     
   </Stack.Navigator>
 );
