@@ -215,7 +215,7 @@ const Registration = ({navigation}) => {
                 "address": addresses[0].address1,
                 "firstName": "Jack",
                 "dob": "29-12-1998",
-                "nationalId": "2",
+                "nationalId": "15",
                 "lastName": "Huang",
                 "postCode": addresses[0].postcode,
                 "postTown": addresses[0].area,
