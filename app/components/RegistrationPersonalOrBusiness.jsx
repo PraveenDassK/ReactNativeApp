@@ -23,14 +23,19 @@ const PersonalOrBusiness = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>You want to use me for</Text>
+            <View
+                style={styles.navigationButtons}
+            >
+                <Text>Type of account</Text>
                 <Button title="Personal" color="babyBlue" onPress={() => handleSubmit("Personal")} />
                 <Button title="Business" color="babyBlue" onPress={() => handleSubmit("Business")} />
+            </View>
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+
 });
 
 export default PersonalOrBusiness;

@@ -26,8 +26,8 @@ const PastAddresses = ({SaveDetails}) => {
     const addAddress = (addressObj) => {
         setAdding(false)
         setAddresses(address => [...address, addressObj])
-        console.log(addresses)
     }
+    console.log(addresses)
 
     return (
         <Screen>

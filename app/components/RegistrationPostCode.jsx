@@ -20,21 +20,8 @@ const Postcode = ({AddAddress}) => {
      */
     const handleSubmit = async ({postcode}) => {
         const response = await apiLogin.GetAddressByPostCode(postcode)
-        let addressObj = []
-        response?.addresses.forEach(address => {
-            const split = address.split(",")
-            addressObj.push({
-                label:split[0],
-                value:{
-                    address1: split[0],
-                    address2: split[1],
-                    area:split[5],
-                    city:split[6],
-                    postcode:postcode
-                }
-            })
-        });
-        setAddressData(addressObj)
+        console.log(response)
+        setAddressData(response)
     }
 
     const sendData = () => {

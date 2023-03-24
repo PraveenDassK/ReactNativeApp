@@ -22,7 +22,6 @@ const Success = ({SaveDetails}) => {
     return (
         <Screen>
             <Text>Success</Text>
-
             <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
         </Screen>
   );
