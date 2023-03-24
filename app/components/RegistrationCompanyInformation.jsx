@@ -17,29 +17,32 @@ const CompanyInformation = ({SaveDetails}) => {
     const [type, setType] = useState(null)
     const [isFocus, setIsFocus] = useState(false);
 
-    const sendDetails = (type) => {
-        SaveDetails(null,"CompanyInformation")
+    const handleSubmit = ({details}) => {
+        SaveDetails(details,"CompanyInformation")
     }
 
     return (
         <Screen>
             <Text>Tell us something more</Text>
             <Formik
-            onSubmit={(values) => sendData(values)}
+                initialValues={{
+                    details:''
+                }}
+                onSubmit={handleSubmit}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
                     <Text>About your business</Text>
                     <TextInput 
                         keyboardType="Text" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={setName("phoneNumber")}
+                        onBlur={() => setFieldTouched("details")}
+                        onChangeText={handleChange("details")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                    <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
                   </View>                  
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
         </Screen>
   );
 };

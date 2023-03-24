@@ -25,7 +25,6 @@ const GetCustomerDetails = async (Id) => {
         "status": requestData.status,
         "balance": requestData.balance, 
     }
-    console.log(data)
     return data
 }
 
@@ -92,13 +91,20 @@ const GetBalance = async (Id) => {
 const GetTransactions = async(Id,amount) =>  {
     let toGet = amount ? amount : 10
     const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=${toGet}`)
+    if(!request.data.result){
+        return({
+            transactions: [],
+            total: 0,
+            number:0
+        })
+    }
     const returnData = request.data.details
     let total = 0
-    returnData.content?.forEach(transaction => {
+    returnData?.content.forEach(transaction => {
         total +=transaction.amount
     })
     return({
-        transactions: returnData.content,
+        transactions: returnData?.content,
         total:total,
         number:returnData.size
     })
@@ -128,7 +134,6 @@ const GetTransactions = async(Id,amount) =>  {
 const GetScheduledPayments = async(Id) => {
     const request = await client.get(`https://api.carbonyte.io/walletmodule/Wallet/RetrieveSchedulePaymentByCarbonyteId?carbonyteId=${Id}`)
     const returnData = request.data.details
-    console.log(returnData)
     return returnData
 }
 
@@ -155,18 +160,24 @@ const GetCustomersAccounts = async (Id) => {
 const GetTransactionsThisMonth = async(Id) =>  {
     const then = (moment().startOf('month').format("YYYY-MM-DDTHH:MM:SS")).replace(/\:/g,"%3A") + "%2B0000"
     const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?fromTransactionDate=${then}`)
-    const requestData = request.data.details
+    if(!request.data.result){
+        return{
+            "total": 0,
+            "transactions": []
+        }
+    }
 
+    const requestData = request.data.details
     let total = 0
     let data = new Array(10).fill(0);
-    requestData.content.forEach(element => {
+    requestData?.content.forEach(element => {
         total += element.amount
         let category = moment().diff(element.postedDate, 'Years')
         data[category] += element.amount
     });
     return {
         "total": total,
-        "transactions": requestData.content
+        "transactions": requestData?.content
     }
 }
 
@@ -186,7 +197,6 @@ const GetAnalysisData = async (Id) =>{
     const balance = await GetBalance(Id)
     const transactions = await GetTransactions(Id,500)
     const thisMonth = await GetTransactionsThisMonth(Id)
-
     return {
         balance: balance,
         totalSpend: transactions.total,
@@ -216,7 +226,7 @@ const GetCardDetails = async(Id) => {
             "cardID": requestData.id,
             "cardNumberMasked": "**** ****  **** " + requestData.maskedCardNumber.substr(requestData.maskedCardNumber.length - 4),
             "isMain" : (requestData.cardRole == "MAIN"),
-            "inPost" : "true"
+            "inPost" : false
         }
     }catch{
         data = {
@@ -274,7 +284,6 @@ const FreezeCard = async(Id,freeze) => {
     {
         "status": freeze
     })
-    console.log(request)
     return request.data.result
 }
 
@@ -324,7 +333,6 @@ const TerminateCard = async(Id,terminate) => {
     {
         "status": terminate
     })
-    console.log(request)
     return request.data.result
 }
 
@@ -401,6 +409,7 @@ const GetProject = async(Id) => {
 const GetUserImpact = async(Id) => {
     const request = await client.get(`https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/${Id}`)
     const returnData = request.data.details
+    console.log(request.data)
     return {
         totalOffset: returnData.data.totalOffsetInTonnes.toFixed(1),
         totalAssets: returnData.data.totalNumAssets,
@@ -436,11 +445,11 @@ const GetStatments = async(Id) => {
  */
 const GetTransactionsYear = async (Id) => {
     const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
-    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=500&fromTransactionDate=" + then)
+    const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=500&fromTransactionDate=${then}`)
     const requestData = request.data.details
     let total = 0
     let data = new Array(10).fill(0);
-    requestData.content.forEach(element => {
+    requestData.content?.forEach(element => {
         total += element.amount
         let category = moment().diff(element.transactionDate, 'Years')
 
@@ -459,11 +468,11 @@ const GetTransactionsYear = async (Id) => {
 
 const GetTransactionsMonth = async (Id) => {
     const then = (moment().subtract(4,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
-    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=500&fromTransactionDate=" + then)
+    const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=500&fromTransactionDate=${then}`)
     const requestData = request.data.details
     let total = 0
     let data = new Array(4).fill(0);
-    requestData.content.forEach(element => {
+    requestData.content?.forEach(element => {
         total += element.amount
         let category = moment().diff(element.transactionDate, 'weeks')
         data[category] += element.amount
@@ -481,11 +490,11 @@ const GetTransactionsMonth = async (Id) => {
 
 const GetTransactionsWeek = async (Id) => {
     const then = (moment().subtract(1,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
-    const request = await client.get("https://api.carbonyte.io/walletmodule/GetTransactions/A12274AW?size=500&fromTransactionDate=" + then)
-    const requestData = request.data.details
+    const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=500&fromTransactionDate=${then}`)
+    const requestData = request.data
     let total = 0
     let data = new Array(8).fill(0);
-    requestData.content.forEach(element => {
+    requestData.content?.forEach(element => {
         total += element.amount
         let category = moment().diff(element.transactionDate, 'days')
 
@@ -550,7 +559,6 @@ const GetSubscriptions = async() =>{
             benefits: benefits
         })
     })
-    console.log(returnData)
     return returnData
 }
 
@@ -580,7 +588,6 @@ const ChangeUsersSubscription = async(user, Id) => {
     }else{
         //If the user has a subscription and wants to update
         const request =  await client.patch(`https://api.carbonyte.io/submodule/CustomerSub/UpdateSubcription/${user}/${Id}/Upgrade`)
-        console.log(request)
         return request
     }
 }
@@ -696,7 +703,11 @@ const ReportTransaction = (Id) => {
 
 }
 
-const GetAccount = (enfuceid) => client.get("https://api.carbonyte.io/walletmodule/GetAccount/" + enfuceid)
+const GetAccount = async(enfuceid) => {
+    const request = await client.get("https://api.carbonyte.io/walletmodule/GetAccount/" + enfuceid)
+    const requestReturn = request.data.details
+    return requestReturn
+}
 
 
 export default {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import ReactNativePinView from 'react-native-pin-view';
@@ -16,7 +16,7 @@ const Pin = ({route,navigation}) => {
   const [enteredPin, setEnteredPin] = useState("")
   const [showCompletedButton, setShowCompletedButton] = useState(false)
   const authContext = useContext(AuthContext)
-
+  const { userID, accountID } = useContext(AuthContext);
   /**
    * Pin display controlers
    */
@@ -47,7 +47,8 @@ const Pin = ({route,navigation}) => {
     } 
     const response = await api.SendFunds(
       route.params.amount,
-      "A12274AW", 
+      //"A12274AW",
+      accountID, 
       route.params.beneficiaryData.accountName,
       route.params.beneficiaryData.accountNumber,
       route.params.beneficiaryData.sortCode,

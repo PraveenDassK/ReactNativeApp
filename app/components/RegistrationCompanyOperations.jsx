@@ -22,11 +22,23 @@ const CompanyOperations = ({SaveDetails}) => {
     const [isFiveToTenYears, setIsFiveToTenYears] = useState(false);
     const [isTenPlusYears, setIsTenPlusYears] = useState(false);
 
+    const [operationTime, setOperationTime] = useState("")
+    const timeOptions = [
+        {label: "New ownership"},
+        {label: "Resuming trading"},
+        {label: "0 - 6 Months"},
+        {label: "6 Months - 1 Year"},
+        {label: "1 - 2 Years"},
+        {label: "2 - 5 Years"},
+        {label: "5 - 10 Years"},
+        {label: "10+ Years"}
+        ];
+
     /**
-     * @dev This sends the String of the 
+     * @dev This sends the String of the item back
      */
-    const sendDetails = (type) => {
-        SaveDetails(null,"CompanyOperations")
+    const sendDetails = () => {
+        SaveDetails(operationTime,"CompanyOperations")
     }
 
     return (
@@ -38,6 +50,18 @@ const CompanyOperations = ({SaveDetails}) => {
             {({ handleChange, handleSubmit, setFieldTouched}) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
                     <Text>Enter one that applies</Text>
+
+                    <Dropdown
+                        data={timeOptions}
+                        maxHeight={100}
+                        labelField="label"
+                        valueField="label"
+                        placeholder={'Select an option'}
+                        value={gender}
+                        onChange={item => {
+                            setOperationTime(item.value);
+                        }}
+                    />
 
                     <CheckBox
                     title="New ownership"

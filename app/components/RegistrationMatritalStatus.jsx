@@ -40,7 +40,7 @@ const MaritalStatus = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>A bit about you</Text>
+            <Text>Marital status</Text>
             <Formik
             initialValues={{
                 email:'', 
@@ -51,7 +51,7 @@ const MaritalStatus = ({SaveDetails}) => {
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Marital status</Text>
+                    <Text>What's your martital status</Text>
                     <Dropdown
                         data={marrigeData}
                         maxHeight={100}

@@ -420,7 +420,7 @@ Any changes will be immediately posted on Our Site and you will be deemed to hav
 of the Privacy Policy on your first use of Our Site following the alterations. We recommend that you
 check this page regularly to keep to date. This Privacy Policy was last updated on (12/12/2022)
           </Text>
-          <Button title="Close" onPress={() => accept()} />
+          <Button title="Accept" onPress={() => accept()} />
         </View> 
     </ScrollView>
     )

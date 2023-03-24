@@ -13,10 +13,9 @@ import Screen from "../components/Screen";
 
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
+  phoneNumber: Yup.string().required().min(9).max(11).label("Phone number")
 })
 
 const Login = ({ navigation }) => {
@@ -29,10 +28,7 @@ const Login = ({ navigation }) => {
     const result = await loginApi.SendLoginOTP({ email, phoneNumber })
     setUser({ email, phoneNumber })
     
-
-    console.log('please work', result.data)
     if (!result.ok) return  alert('Could not send otp')
-    // alert('Success')
     
     navigation.navigate("OTPVerificationPersonal", { registration: true })
   }

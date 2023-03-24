@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   RefreshControl,
-Text,
+  Text,
   StyleSheet,
   Image,
   View,
@@ -13,24 +13,18 @@ Text,
   ActivityIndicator, 
   FlatList
 } from "react-native";
+
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
 import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-
-
-import {
-  horizontalScale,
-  moderateScale,
-  verticalScale,
-} from "../config/metrics";
+import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
 
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 import moment from "moment";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
-
 import DoughnutChart from "../components/DoughnutChart";
 import AppText from "../components/Text";
 
@@ -39,11 +33,10 @@ const Analytics = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [active, setActive] = useState("")
   const [balance, setBal] = useState(0);
-  const [transactions, setTrans] = useState([]);
   const [totalSpend, setTotal] = useState(0);
+  const [transactions, setTrans] = useState([]);
   const [totalTransactions, setTotalTrans] = useState(0);
   const [graphData, setGraphData] = useState(null)
-  const [graphSetting, setGraph] = useState("Year")
   const [data, setData] = useState([])
   const [fulldata, setFullData] = useState([])
   const [loadMore, setLoadMore] = useState(false)
@@ -54,17 +47,23 @@ const Analytics = ({ navigation }) => {
   const [recentTransactions, setRecent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const authContext = useContext(AuthContext);
+  const { userID, accountID } = useContext(AuthContext);
 
 
   useEffect(() => {
     loadData();
   }, []);
  
+  /**
+   * @dev Loads all of the data on load
+   * @todo Change the scheduled payment to the correct account ID
+   */
   const loadData = async () => {
     setIsLoading(true)
-    const dataCall = await apiCall.GetAnalysisData(authContext.accountID);
-    // todo
-    const response = await apiCall.GetScheduledPayments("CC11875")
+    const dataCall = await apiCall.GetAnalysisData(accountID);
+    const response = await apiCall.GetScheduledPayments("CC1")
+    const graphData = await apiCall.GetTransactionsWeek(accountID);
+    
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
     setRecent([
@@ -82,63 +81,13 @@ const Analytics = ({ navigation }) => {
     ])
     setFullData(response)
 
-
-    const graphData = await apiCall.GetTransactionsWeek(authContext.accountID);
-    
     setGraphData(graphData)
     setActive("Week")
-    
-    console.log("scheduled", response, response[1].scheduleID, response[1].amount, response[1].toBeneficiariesId[0] )
     setIsLoading(false)
 
   };
 
-  const transcationKeys = (trans) => {
-    return (transKeys = Object.keys(trans));
-  };
-
-  const transactionData = (transactions) => {
-    return transactions.map((transaction) => {
-      console.log("deya", transaction.amount);
-      return transaction.amount;
-    });
-  };
-
-  const transactionDate = (transactions) => {
-    return transactions.map((transaction) => {
-      console.log("deya", transaction.transactionDate);
-      return transaction.transactionDate.split("T")[0].split("-")[1];
-    });
-  };
-
-  const transactionObj = (transactions) => {
-    const arr = transactions.map((transaction) => {
-      console.log("deya", transaction.amount);
-
-      return {
-        amount: transaction.amount,
-        date: transaction.transactionDate.split("T")[0].split("-")[1],
-      };
-    });
-
-    // const date = transactions.map((transaction) => {
-    //   console.log('deya2deya',transaction.transactionDate)
-    //   return {date: transaction.transactionDate.split("T")[0].split("-")[1]}
-    // })
-
-    let result = Object.values(
-      arr.reduce((a, { amount, date }) => {
-        if (!a[date]) a[date] = Object.assign({}, { amount, date });
-        else a[date].amount += amount;
-        return a;
-      }, {})
-    );
-
-    return result;
-  };
-
-
-    const onRefresh = useCallback(() => {
+  const onRefresh = useCallback(() => {
     console.log("1st refresh")
     setRefreshing(true);
     setTimeout(() => {
@@ -148,21 +97,26 @@ const Analytics = ({ navigation }) => {
     }, 2000);
   }, [refreshing]);
 
+  /**
+   * @dev This changes the data that is used for the graph
+   * @dev All the data procesasing is done on apiCall
+   * @param {str} time The time period to change
+   */
   const changeGraphData = async(time) => {
     setActive(time)
     
     console.log(time)
     switch(time){
       case "Year":
-          const graphDataYear = await apiCall.GetTransactionsYear(authContext.accountID);
+          const graphDataYear = await apiCall.GetTransactionsYear(accountID);
           setGraphData(graphDataYear)
         break;
       case "Month":
-          const graphDataMonth = await apiCall.GetTransactionsMonth(authContext.accountID);
+          const graphDataMonth = await apiCall.GetTransactionsMonth(accountID);
           setGraphData(graphDataMonth)
         break;
       case "Week":
-          const graphDataWeek = await apiCall.GetTransactionsWeek(authContext.accountID);
+          const graphDataWeek = await apiCall.GetTransactionsWeek(accountID);
           setGraphData(graphDataWeek)
         break;
     }
@@ -250,7 +204,7 @@ const Analytics = ({ navigation }) => {
               fontWeight: "800",
               fontSize: 30, 
               color: "blue"
-            }}><AppText style={{color: "grey", fontSize: moderateScale(30)}}>£</AppText>{balance}</AppText>
+            }}>£ {balance}</AppText>
           </AppText>
         </View>
 
@@ -277,23 +231,18 @@ const Analytics = ({ navigation }) => {
             }, styles.boxShadow]}
           >
             <AppText style={{fontWeight: "500"}}>Total Spend</AppText>
-            <AppText style={styles.money}>£{totalSpend.toFixed(2)}</AppText>
+            <AppText style={styles.money}>£ {totalSpend.toFixed(2)}</AppText>
             <View style={{ flex: 1, flexDirection: "row" }}>
               <View style={{
-                  flex:2,
+                  flex:1,
                   marginTop: verticalScale(5),
                   alignItems: "flex-start",
-                  width: horizontalScale(75),
+                  width: horizontalScale(75)
                 }} >
               <AppText
               style={{color: "#999", fontSize: 14,}}
               >
-                No. of 
-              </AppText>
-              <AppText
-              style={{color: "#999", fontSize: 14,}}
-              >
-               Payments
+                No. of Payments
               </AppText>
               </View>
 
@@ -316,7 +265,7 @@ const Analytics = ({ navigation }) => {
           >
             <AppText style={{fontWeight: "700"}}>Average Monthly Spendings</AppText>
             <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
-              <AppText style={styles.money}>£{monthAverage.toFixed(2)}</AppText>
+              <AppText style={styles.money}>£ {monthAverage.toFixed(2)}</AppText>
             </View>
           </View>
         </View>
@@ -466,7 +415,7 @@ const Analytics = ({ navigation }) => {
                       fontWeight: "700",
                     }}
                   >
-                    {transaction.sourceId[0]}
+                    {transaction?.sourceId[0]}
                   </AppText>
                 </View>
                 <View
@@ -478,10 +427,10 @@ const Analytics = ({ navigation }) => {
                   }}
                 >
                   <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                    {transaction.sourceId}
+                    {transaction?.sourceId}
                   </AppText>
                   <AppText style={{}}>
-                    {moment(transaction.transactionDate).format("LL")}
+                    {moment(transaction?.transactionDate).format("LL")}
                   </AppText>
                 </View>
                 <View
@@ -493,7 +442,7 @@ const Analytics = ({ navigation }) => {
                   }}
                 >
                   <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                    £{transaction.amount.toFixed(2)}
+                    £{transaction?.amount.toFixed(2)}
                   </AppText>
                 </View>
               </View>
@@ -540,7 +489,7 @@ const Analytics = ({ navigation }) => {
                       fontWeight: "700",
                     }}
                   >
-                     {transaction.scheduleID[0]}
+                     {transaction?.scheduleID[0]}
                   </AppText>
                 </View>
                 <View
@@ -552,10 +501,10 @@ const Analytics = ({ navigation }) => {
                   }}
                 >
                   <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                    {transaction.scheduleID}
+                    {transaction?.scheduleID}
                   </AppText>
                   <AppText style={{}}>
-                    {moment(transaction.date).format("LL")}
+                    {moment(transaction?.date).format("LL")}
                   </AppText>
                 </View>
                 <View
@@ -567,7 +516,7 @@ const Analytics = ({ navigation }) => {
                   }}
                 >
                   <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                    £{transaction.amount.toFixed(2)}
+                    £{transaction?.amount.toFixed(2)}
                   </AppText>
                 </View>
               </View>
@@ -663,7 +612,6 @@ const Bazier = ({ graphData }) => {
 
   const { total, xAxis, yAxis } = graphData
 
-  console.log("finished", total, xAxis, yAxis );
 
   return (
     <View
@@ -726,7 +674,7 @@ const Bazier = ({ graphData }) => {
                   fontWeight="bold"
                   textAnchor="middle"
                 >
-                  {`£${tooltipPos.value.toFixed(2)}`}
+                  {`£ ${tooltipPos.value.toFixed(2)}`}
                 </TextSVG>
               </Svg>
             </View>

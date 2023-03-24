@@ -23,17 +23,28 @@ const CompanyIncome = ({SaveDetails}) => {
     const [grantsSubsidiesIncome, setGrantsSubsidiesIncome] = useState(false);
     const [crowdfundingIncome, setCrowdfundingIncome] = useState(false);
 
-    const sendDetails = (type) => {
 
-        
-        SaveDetails(null,"CompanyIncome")
+    const sendDetails = () => {
+        const details = {
+            salesRevenue:salesRevenue,
+            subscriptionRevenue:subscriptionRevenue,
+            advertisingRevenue:advertisingRevenue,
+            affiliateIncome:affiliateIncome,
+            licensingFranchisingRevenue:licensingFranchisingRevenue,
+            rentalIncome:rentalIncome,
+            consultancyServicesIncome:consultancyServicesIncome,
+            grantsSubsidiesIncome:grantsSubsidiesIncome,
+            crowdfundingIncome:crowdfundingIncome
+        }
+        SaveDetails(details,"CompanyIncome")
     }
 
     return (
         <Screen>
             <Text>Your company income</Text>
             <Formik
-            onSubmit={(values) => sendData(values)}
+
+                onSubmit={(values) => sendData(values)}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>

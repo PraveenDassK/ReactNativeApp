@@ -92,7 +92,8 @@ const PersonalDetails = ({SaveDetails}) => {
         <Screen>
             <Text>A bit about you</Text>
             <Formik
-            onSubmit={(values) => sendData(values)}
+
+              onSubmit={(values) => sendData(values)}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>

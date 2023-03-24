@@ -15,7 +15,7 @@ import {
 
 
 import GlobalStyles from "../../GlobalStyles";
-import api from "../api/api_list";
+import api from "../api/apiCall";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import Button from "../components/Button";
@@ -37,29 +37,40 @@ const Settings = ({ navigation }) => {
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
- 
   const { userID, accountID, setCurrentUser } = useContext(AuthContext);
 
-
-
+  /**
+   * @dev Loads the data once
+   */
   useEffect(() => {
     loadData();
   }, []);
 
+  /**
+   * @dev Thislogs the user out
+   * @todo Wioe the current user in app.js
+   */
   const handleLogout = () => {
-    setCurrentUser(null);
     authStorage.removeToken();
     authStorage.removeSignInSetting();
+    setCurrentUser(null)
   };
 
+  /**
+   * @dev This loads all of the data for this page
+   * @todo Add validation here to check if the data exists
+   */
   const loadData = async () => {
+    //First set loading to true to show loading animation
     setIsLoading(true)
-    const response = await api.GetAccountByCustomer(userID);
-    const accountresponse = await api.GetAccount(accountID);
-    
-    const data = response.data;
-    const accountdata = accountresponse.data.details;
-    setPlan("Current Account");
+    console.log(userID)
+    const userDetails = await api.GetAllAccounts(userID);
+    const accountDetails = await api.GetAccount(accountID);
+    const subscriptionDetails = await api.GetUsersSubscriptions("147147")
+    const data = userDetails;
+    const accountdata = accountDetails;
+
+    setPlan(subscriptionDetails.subName);
     setName(accountdata.customerName);
     setBal(accountdata.balance);
     setSortCode(accountdata.identifiers[0].sortCode);
@@ -85,6 +96,10 @@ const Settings = ({ navigation }) => {
     setIsLoading(false)
   };
 
+  /**
+   * @dev Copies the associated item
+   * @todo Consolidate into one function
+   */
   const copyAccount = () => {
     console.log("Copied");
     Vibration.vibrate()
@@ -106,9 +121,9 @@ const Settings = ({ navigation }) => {
     Clipboard.setString(iban);
   };
 
+
   React.useEffect(() => {
     const swipeRight = navigation.addListener("state", (event) => {
-      console.log("event listner", event.data.state);
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount

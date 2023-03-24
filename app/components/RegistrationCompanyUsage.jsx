@@ -24,15 +24,19 @@ const CompanyUsage = ({SaveDetails}) => {
         <Screen>
             <Text>How would you use this account</Text>
             <Formik
-            onSubmit={(values) => sendData(values)}
+                initialValues={{
+                    customers:'', 
+                    outsideEU: false
+                }}
+                onSubmit={(values) => sendData(values)}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
                     <Text>Who are your main customers</Text>
                     <TextInput 
                         keyboardType="Text" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={setName("phoneNumber")}
+                        onBlur={() => setFieldTouched("customers")}
+                        onChangeText={handleChange("customers")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
                     <CheckBox
@@ -40,7 +44,7 @@ const CompanyUsage = ({SaveDetails}) => {
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
                         checked={isChecked}
-                        onPress={() => setChecked(!isChecked)}
+                        onPress={() => handleChange(outsideEU)}
                         />
                   </View>                  
                 )}

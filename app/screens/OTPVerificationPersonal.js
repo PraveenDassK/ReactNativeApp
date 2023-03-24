@@ -25,7 +25,7 @@ import AuthContext from "../auth/context";
 import Button from "../components/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import Form from "../components/forms/Form";
-import loginAPI from "../api/login";
+import loginAPI from "../api/apiLogin";
 import authStorage from "../auth/storage";
 
 const validationSchema = Yup.object().shape({
@@ -40,8 +40,16 @@ const validationSchema = Yup.object().shape({
 }); // add required if necessary
 
 const OTPVerificationPersonal = ({ navigation }) => {
-  const { user, currentUser, setCurrentUser } = useContext(AuthContext);
-  const [count, setCount] = useState(45);
+  const { 
+    user, 
+    currentUser, 
+    setCurrentUser,
+    setUserID,
+    setAccountID,
+    setUserDetails,
+    setCardID
+  } = useContext(AuthContext);
+  const [count, setCount] = useState(500);
   const [resendOTP, setResendOTP] = useState(null);
 
   const initialValues = {
@@ -85,26 +93,30 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
     setResendOTP({ email, phoneNumber, emailOTP, phoneOTP });
 
-    const result = await loginAPI.verifyLoginOTP({
-      email,
+    const result = await loginAPI.VerifyLogin({
       phoneNumber,
-      emailOTP,
+      email,
       phoneOTP,
+      emailOTP,
     });
+    if (!result) return alert("Could not verify otp");
 
-    console.log("what is login", result.ok, result.data);
+    const userID = result.data.modulrCustomerId
+    const accountId = result.data.accountDetails[0].accountId
+    const cardId = result.data.accountDetails[0].accountNo
+    console.log(userID)
+    console.log(accountId)
+    console.log(cardId)
 
-    console.log({ email, phoneNumber, emailOTP, phoneOTP });
-
-    if (!result.ok) return alert("Could not verify otp");
-
-    if (!result.data.result) return alert("Could not verify otp");
-    const currentUser = jwtDecode(result?.data?.details);
+    setUserID(userID)
+    setAccountID(accountId)
+    setCardID(cardId)
     
-    authStorage.storeToken(result?.data?.details);
-    setCurrentUser(currentUser);
-
-    console.log("authToken OTP", currentUser );
+    authStorage.storeToken(result?.token);
+    //authStorage.storeUserDetails(result?.data);
+    const decodedToken = jwtDecode(result?.token)
+    console.log(decodedToken)
+    setCurrentUser(decodedToken);
   };
 
   const resendCred = async () => {
@@ -117,7 +129,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
   useEffect(() => {
     if (count === 0) {
-      setCount(45);
+      setCount(500);
       resendCred();
     }
   }, [count]);
@@ -160,7 +172,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   onBlur={() => setFieldTouched("pVer1")}
                   onChangeText={handleChange("pVer1")}
 
-                style={styles.inputBox}
+                  style={styles.inputBox}
                 />
                 <ErrorMessage error={errors.pVer1} visible={touched.pVer1} />
                 <TextInput
@@ -261,7 +273,11 @@ const OTPVerificationPersonal = ({ navigation }) => {
                       Resend Code in 00:{count < 10 ? `0${count}` : count}
                     </Text>
               <View style={styles.button}>
-                  <Button title="Verify" color="babyBlue" onPress={handleSubmit} />
+                  <Button 
+                    title="Verify" 
+                    color="babyBlue" 
+                    onPress={handleSubmit} 
+                  />
               </View>
             </>
           )}

@@ -1,25 +1,73 @@
 import client from "./client";
+import jwt_decode from "jwt-decode";
 
-const Login = async(username,password,mobile,email) => {
-    const request = await client.get("https://api.carbonyte.io/authverifymodule/SendLoginOTP",
+/**
+ * @dev Used to get a login request
+ * @notice Sends an OTP to the requested email address
+ * @param {*} mobile Mobile number 
+ * @notice Remove the + at the end it takes a string of only numbers
+ * @param {*} email The email address
+ * @returns 
+ */
+const Login = async(mobile,email) => {
+    const request = await client.post("https://api.carbonyte.io/authverifymodule/SendLoginOTP",
     {
         "email": email,
         "phoneNumber": mobile
     })
-    return request
+    console.log(request)
+    return request?.data
 }
 
-const VerifyLogin = async(mobile,email,motp,) => {
+/**
+ * @dev This function accepts the otp and returns the account details
+ * @return The account details tied to the login
+ * @return If the OTP is incorrect then it returns null
+ * @param {str} mobile 
+ * @param {str} email 
+ * @param {str} motp 
+ * @param {str} eotp 
+ */
+const VerifyLogin = async({email, phoneNumber, emailOTP, phoneOTP}) => {
+  console.log()
     const request = await client.post("https://api.carbonyte.io/authverifymodule/VerifyLoginOTP",
     {
         "email": email,
-        "emailOTP": eotp,
-        "phoneNumber": mobile,
-        "phoneOTP": motp
+        "emailOTP": emailOTP,
+        "phoneNumber": phoneNumber,
+        "phoneOTP": phoneOTP
     })
-    return request
+    console.log(request)
+    if(!request.data.result || request.status == 500){
+      return null
+    }
+
+    const token = request.data.details
+    const decryptedToken = jwt_decode(token)
+    const accountID = "CC1"
+    const accountDetails = await GetCustomerDetails(accountID)
+    return ({
+      data : accountDetails,
+      token
+    })
 }
 
+/**
+ * @dev This should only be used to pass though the JWT ID
+ * @param {Str} Id The ID returned from the JWT
+ * @returns An object with all of the data from the endpoint in
+ */
+const GetCustomerDetails = async(Id) => {
+  const request = await client.get(`https://api.carbonyte.io/regmodule/GetCustomerDetails?customerId=${Id}`)
+  const returnData = request.data.details
+  return returnData
+}
+
+/**
+ * @param {Int} Reg This is the registration number of the company
+ * @returns null if no company is found if found
+ *          If the company number is correct then return the details
+ */
 const GetCompanyByRegNo = async(Reg) => {
     const response = await client.get(`https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`)
     console.log(response)
@@ -30,61 +78,38 @@ const GetCompanyByRegNo = async(Reg) => {
     return returnData
 }
 
+/**
+ * 
+ * @param {*} postcode 
+ * @returns 
+ */
 const GetAddressByPostCode = async (postcode) => {
   const response = await client.get(`https://api.carbonyte.io/authverifymodule/GetAddressesByPostcode?postcode=${postcode}`)
-  console.log(response)
   if(!response.data.result){
       return null
   }
   const returnData = response.data.details
-  return returnData
+  let addressObj = []
+  returnData?.addresses.forEach(address => {
+      const split = address.split(",")
+      addressObj.push({
+          label:split[0],
+          value:{
+              address1: split[0],
+              address2: split[1],
+              area:split[5],
+              city:split[6],
+              postcode:postcode
+          }
+      })
+  });
+  return addressObj
 }
 
-const RegisterPersonalAccount = async() => {
-    const response = await client.post("https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails",
-    [
-      {
-        "id": 0,
-        "customerId": "",
-        "emails": [
-          {
-            "emailId": "jack.h@carbonyte.io"
-          }
-        ],
-        "phoneNumbers": [
-          {
-            "phoneNo": "07927201649"
-          }
-        ],
-        "customerDetails": {
-          "documentNo": "",
-          "documentType": "1",
-          "address": "40 South way",
-          "firstName": "Jack",
-          "dob": "29/12/1998",
-          "nationalId": "",
-          "lastName": "Huang",
-          "postCode": "HA9 0HZ",
-          "postTown": "",
-          "salutation": "string",
-          "gender": "Male",
-          "maritalStatus": "Single",
-          "employmentDetails": "Unemployed"
-        },
-        "income": {
-          "totalIncome": "5",
-          "savings": "5",
-          "taxResidency": "GB",
-          "incomeSources": [
-            "Pensions"
-          ]
-        },
-        "key": "07927201649",
-        "role": "string",
-        "ownershipPercentage": 0,
-        "marketingChoices": "string"
-      }
-    ])
+const RegisterPersonalAccount = async(regData) => {
+  const response = await client.post("https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=personal",
+  regData
+    )
       return response;
 }
 
@@ -171,5 +196,6 @@ export default {
     GetCompanyByRegNo,
     RegisterPersonalAccount,
     RegisterBusinessAccount,
-    GetAddressByPostCode
+    GetAddressByPostCode,
+    GetCustomerDetails
 }

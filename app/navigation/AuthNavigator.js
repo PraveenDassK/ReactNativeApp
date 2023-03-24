@@ -43,7 +43,7 @@ const AuthNavigator = () => (
     }
     <Stack.Screen  
       name="SplashAnimation"
-      component={gestureHandlerRootHOC(Registration)}
+      component={gestureHandlerRootHOC(SplashAnimation)}
       options={{ headerShown: false }}
     />
     <Stack.Screen  name="Onboarding1" component={gestureHandlerRootHOC(Onboarding1)}/>
@@ -99,7 +99,6 @@ const AuthNavigator = () => (
     <Stack.Screen  name="PersonalAddress" component={gestureHandlerRootHOC(PersonalAddress)}/>
     <Stack.Screen  name="DOB" component={gestureHandlerRootHOC(DOB)}/>
     <Stack.Screen  name="Success" component={gestureHandlerRootHOC(Success)}/>
-
     
   </Stack.Navigator>
 );

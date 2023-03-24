@@ -13,128 +13,125 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 
 const CompanyDetails = ({SaveDetails}) => {
-    const [name, setName] = useState("");
     const [type, setType] = useState(null)
-    const [isFocus, setIsFocus] = useState(false);
 
-    const sendDetails = (type) => {
-        SaveDetails(null,"CompanyDetails")
+    const handleSubmit = () => {
+        SaveDetails(type,"CompanyDetails")
     }
 
     const options =  [
-        "Crop Production",
-        "Animal Production and Aquaculture",
-        "Forestry and Logging",
-        "Fishing, Hunting and Trapping",
-        "Support Activities for Agriculture and Forestry",
-        "Oil and Gas Extraction",
-        "Mining (except Oil and Gas)",
-        "Support Activities for Mining",
-        "Utilities",
-        "Construction of Buildings",
-        "Heavy and Civil Engineering Construction",
-        "Specialty Trade Contractors",
-        "Food Manufacturing",
-        "Beverage and Tobacco Product Manufacturing",
-        "Textile Mills",
-        "Textile Product Mills",
-        "Apparel Manufacturing",
-        "Leather and Allied Product Manufacturing",
-        "Wood Product Manufacturing",
-        "Paper Manufacturing",
-        "Printing and Related Support Activities",
-        "Petroleum and Coal Products Manufacturing",
-        "Chemical Manufacturing",
-        "Plastics and Rubber Products Manufacturing",
-        "Nonmetallic Mineral Product Manufacturing",
-        "Primary Metal Manufacturing",
-        "Fabricated Metal Product Manufacturing",
-        "Machinery Manufacturing",
-        "Computer and Electronic Product Manufacturing",
-        "Electrical Equipment, Appliance, and Component Manufacturing",
-        "Transportation Equipment Manufacturing",
-        "Furniture and Related Product Manufacturing",
-        "Miscellaneous Manufacturing",
-        "Merchant Wholesalers, Durable Goods",
-        "Merchant Wholesalers, Nondurable Goods",
-        "Wholesale Trade Agents and Brokers",
-        "Motor Vehicle and Parts Dealers",
-        "Building Material and Garden Equipment and Supplies Dealers",
-        "Food and Beverage Retailers",
-        "Furniture, Home Furnishings, Electronics, and Appliance Retailers",
-        "General Merchandise Retailers",
-        "Health and Personal Care Retailers",
-        "Gasoline Stations and Fuel Dealers",
-        "Clothing, Clothing Accessories, Shoe, and Jewelry Retailers",
-        "Sporting Goods, Hobby, Musical Instrument, Book, and Miscellaneous Retailers",
-        "Air Transportation",
-        "Rail Transportation",
-        "Water Transportation",
-        "Truck Transportation",
-        "Transit and Ground Passenger Transportation",
-        "Pipeline Transportation",
-        "Scenic and Sightseeing Transportation",
-        "Support Activities for Transportation",
-        "Postal Service",
-        "Couriers and Messengers",
-        "Warehousing and Storage",
-        "Motion Picture and Sound Recording Industries",
-        "Publishing Industries",
-        "Broadcasting and Content Providers",
-        "Telecommunications",
-        "Computing Infrastructure Providers, Data Processing, Web Hosting, and Related Services",
-        "Web Search Portals, Libraries, Archives, and Other Information Services",
-        "Monetary Authorities-Central Bank",
-        "Credit Intermediation and Related Activities",
-        "Securities, Commodity Contracts, and Other Financial Investments and Related Activities",
-        "Insurance Carriers and Related Activities",
-        "Funds, Trusts, and Other Financial Vehicles",
-        "Real Estate",
-        "Rental and Leasing Services",
-        "Lessors of Nonfinancial Intangible Assets (except Copyrighted Works)",
-        "Professional, Scientific, and Technical Services",
-        "Management of Companies and Enterprises",
-        "Administrative and Support Services",
-        "Waste Management and Remediation Services",
-        "Educational Services",
-        "Ambulatory Health Care Services",
-        "Hospitals",
-        "Nursing and Residential Care Facilities",
-        "Social Assistance",
-        "Performing Arts, Spectator Sports, and Related Industries",
-        "Museums, Historical Sites, and Similar Institutions",
-        "Amusement, Gambling, and Recreation Industries",
-        "Accommodation",
-        "Food Services and Drinking Places",
-        "Repair and Maintenance",
-        "Personal and Laundry Services",
-        "Religious, Grantmaking, Civic, Professional, and Similar Organizations",
-        "Private Households",
-        "Executive, Legislative, and Other General Government Support",
-        "Justice, Public Order, and Safety Activities",
-        "Administration of Human Resource Programs",
-        "Administration of Environmental Quality Programs",
-        "Administration of Housing Programs, Urban Planning, and Community Development",
-        "Administration of Economic Programs",
-        "Space Research and Technology",
-        "National Security and International Affairs"
+            { label: "Crop Production", value: "Crop Production" },
+            { label: "Animal Production and Aquaculture", value: "Animal Production and Aquaculture" },
+            { label: "Forestry and Logging", value: "Forestry and Logging" },
+            { label: "Fishing, Hunting and Trapping", value: "Fishing, Hunting and Trapping" },
+            { label: "Support Activities for Agriculture and Forestry", value: "Support Activities for Agriculture and Forestry" },
+            { label: "Oil and Gas Extraction", value: "Oil and Gas Extraction" },
+            { label: "Mining (except Oil and Gas)", value: "Mining (except Oil and Gas)" },
+            { label: "Support Activities for Mining", value: "Support Activities for Mining" },
+            { label: "Utilities", value: "Utilities" },
+            { label: "Construction of Buildings", value: "Construction of Buildings" },
+            { label: "Heavy and Civil Engineering Construction", value: "Heavy and Civil Engineering Construction" },
+            { label: "Specialty Trade Contractors", value: "Specialty Trade Contractors" },
+            { label: "Food Manufacturing", value: "Food Manufacturing" },
+            { label: "Beverage and Tobacco Product Manufacturing", value: "Beverage and Tobacco Product Manufacturing" },
+            { label: "Textile Mills", value: "Textile Mills" },
+            { label: "Textile Product Mills", value: "Textile Product Mills" },
+            { label: "Apparel Manufacturing", value: "Apparel Manufacturing" },
+            { label: "Leather and Allied Product Manufacturing", value: "Leather and Allied Product Manufacturing" },
+            { label: "Wood Product Manufacturing", value: "Wood Product Manufacturing" },
+            { label: "Paper Manufacturing", value: "Paper Manufacturing" },
+            { label: "Printing and Related Support Activities", value: "Printing and Related Support Activities" },
+            { label: "Petroleum and Coal Products Manufacturing", value: "Petroleum and Coal Products Manufacturing" },
+            { label: "Chemical Manufacturing", value: "Chemical Manufacturing" },
+            { label: "Plastics and Rubber Products Manufacturing", value: "Plastics and Rubber Products Manufacturing" },
+            { label: "Nonmetallic Mineral Product Manufacturing", value: "Nonmetallic Mineral Product Manufacturing" },
+            { label: "Primary Metal Manufacturing", value: "Primary Metal Manufacturing" },
+            { label: "Fabricated Metal Product Manufacturing", value: "Fabricated Metal Product Manufacturing" },
+            { label: "Machinery Manufacturing", value: "Machinery Manufacturing" },
+            { label: "Computer and Electronic Product Manufacturing", value: "Computer and Electronic Product Manufacturing" },
+            { label: "Electrical Equipment, Appliance, and Component Manufacturing", value: "Electrical Equipment, Appliance, and Component Manufacturing" },
+            { label: "Transportation Equipment Manufacturing", value: "Transportation Equipment Manufacturing" },
+            { label: "Furniture and Related Product Manufacturing", value: "Furniture and Related Product Manufacturing" },
+            { label: "Miscellaneous Manufacturing", value: "Miscellaneous Manufacturing" },
+            { label: "Merchant Wholesalers, Durable Goods", value: "Merchant Wholesalers, Durable Goods" },
+            { label: "Merchant Wholesalers, Nondurable Goods", value: "Merchant Wholesalers, Nondurable Goods" },
+            { label: "Wholesale Trade Agents and Brokers", value: "Wholesale Trade Agents and Brokers" },
+            { label: "Motor Vehicle and Parts Dealers", value: "Motor Vehicle and Parts Dealers" },
+            { label: "Building Material and Garden Equipment and Supplies Dealers", value: "Building Material and Garden Equipment and Supplies Dealers" },
+            { label: "Food and Beverage Retailers", value: "Food and Beverage Retailers" },
+            { label: "Furniture, Home Furnishings, Electronics, and Appliance Retailers", value: "Furniture, Home Furnishings, Electronics, and Appliance Retailers" },
+            { label: "General Merchandise Retailers", value: "General Merchandise Retailers" },
+            { label: "Health and Personal Care Retailers", value: "Health and Personal Care Retailers" },
+            { label: "Gasoline Stations and Fuel Dealers", value: "Gasoline Stations and Fuel Dealers" },
+            { label: "Clothing, Clothing Accessories, Shoe, and Jewelry Retailers", value: "Clothing, Clothing Accessories, Shoe, and Jewelry Retailers" },
+            { label: "Sporting Goods, Hobby, Musical Instrument, Book, and Miscellaneous Retailers", value: "Sporting Goods, Hobby, Musical Instrument, Book, and Miscellaneous Retailers" },
+            { label: "Air Transportation", value: "Air Transportation" },
+            { label: "Rail Transportation", value: "Rail Transportation" },
+            { label: "Water Transportation", value: "Water Transportation" },
+            { label: "Truck Transportation", value: "Truck Transportation" },
+            { label: "Transit and Ground Passenger Transportation", value: "Transit and Ground Passenger Transportation" },
+            { label: "Pipeline Transportation", value: "Pipeline Transportation" },
+            { label: "Scenic and Sightseeing Transportation", value: "Scenic and Sightseeing Transportation" },
+            { label: "Support Activities for Transportation", value: "Support Activities for Transportation" },
+            { label: "Postal Service", value: "Postal Service" },
+            { label: "Couriers and Messengers", value: "Couriers and Messengers" },
+            { label: "Warehousing and Storage", value: "Warehousing and Storage" },
+            { label: "Motion Picture and Sound Recording Industries", value: "Motion Picture and Sound Recording Industries" },
+            { label: "Publishing Industries", value: "Publishing Industries" },
+            { label: "Broadcasting and Content Providers", value: "Broadcasting and Content Providers" },
+            { label: "Telecommunications", value: "Telecommunications" },
+            { label: "Computing Infrastructure Providers, Data Processing, Web Hosting, and Related Services", value: "Computing Infrastructure Providers, Data Processing, Web Hosting, and Related Services" },
+            { label: "Web Search Portals, Libraries, Archives, and Other Information Services", value: "Web Search Portals, Libraries, Archives, and Other Information Services" },
+            { label: "Monetary Authorities-Central Bank", value: "Monetary Authorities-Central Bank" },
+            { label: "Credit Intermediation and Related Activities", value: "Credit Intermediation and Related Activities" },
+            { label: "Securities, Commodity Contracts, and Other Financial Investments and Related Activities", value: "Securities, Commodity Contracts, and Other Financial Investments and Related Activities" },
+            { label: "Insurance Carriers and Related Activities", value: "Insurance Carriers and Related Activities" },
+            { label: "Funds, Trusts, and Other Financial Vehicles", value: "Funds, Trusts, and Other Financial Vehicles" },
+            { label: "Funds, Trusts, and Other Financial Vehicles", value: "Funds, Trusts, and Other Financial Vehicles" },
+            { label: "Real Estate", value: "Real Estate" },
+            { label: "Rental and Leasing Services", value: "Rental and Leasing Services" },
+            { label: "Lessors of Nonfinancial Intangible Assets (except Copyrighted Works)", value: "Lessors of Nonfinancial Intangible Assets (except Copyrighted Works)" },
+            { label: "Professional, Scientific, and Technical Services", value: "Professional, Scientific, and Technical Services" },
+            { label: "Management of Companies and Enterprises", value: "Management of Companies and Enterprises" },
+            { label: "Administrative and Support Services", value: "Administrative and Support Services" },
+            { label: "Waste Management and Remediation Services", value: "Waste Management and Remediation Services" },
+            { label: "Educational Services", value: "Educational Services" },
+            { label: "Ambulatory Health Care Services", value: "Ambulatory Health Care Services" },
+            { label: "Hospitals", value: "Hospitals" },
+            { label: "Nursing and Residential Care Facilities", value: "Nursing and Residential Care Facilities" },
+            { label: "Social Assistance", value: "Social Assistance" },
+            { label: "Performing Arts, Spectator Sports, and Related Industries", value: "Performing Arts, Spectator Sports, and Related Industries" },
+            { label: "Museums, Historical Sites, and Similar Institutions", value: "Museums, Historical Sites, and Similar Institutions" },
+            { label: "Amusement, Gambling, and Recreation Industries", value: "Amusement, Gambling, and Recreation Industries" },
+            { label: "Accommodation", value: "Accommodation" },
+            { label: "Food Services and Drinking Places", value: "Food Services and Drinking Places" },
+            { label: "Repair and Maintenance", value: "Repair and Maintenance" },
+            { label: "Personal and Laundry Services", value: "Personal and Laundry Services" },
+            { label: "Religious, Grantmaking, Civic, Professional, and Similar Organizations", value: "Religious, Grantmaking, Civic, Professional, and Similar Organizations" },
+            { label: "Private Households", value: "Private Households" },
+            { label: "Executive, Legislative, and Other General Government Support", value: "Executive, Legislative, and Other General Government Support" },
+            { label: "Justice, Public Order, and Safety Activities", value: "Justice, Public Order, and Safety Activities" },
+            { label: "Administration of Human Resource Programs", value: "Administration of Human Resource Programs" },
+            { label: "Administration of Environmental Quality Programs", value: "Administration of Environmental Quality Programs" },
+            { label: "Administration of Housing Programs, Urban Planning, and Community Development", value: "Administration of Housing Programs, Urban Planning, and Community Development" },
+            { label: "Administration of Economic Programs", value: "Administration of Economic Programs" },
+            { label: "Space Research and Technology", value: "Space Research and Technology" },
+            { label: "National Security and International Affairs", value: "National Security and International Affairs" }
       ];
+
+
 
     return (
         <Screen>
             <Text>Your company details</Text>
             <Formik
-            onSubmit={(values) => sendData(values)}
+            initialValues={{
+                type:''
+            }}
+            onSubmit={handleSubmit}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>First name</Text>
-                    <TextInput 
-                        keyboardType="Text" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={setName("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
                     <Text>Business type</Text>
                     <Dropdown
                         data={options}
@@ -142,16 +139,15 @@ const CompanyDetails = ({SaveDetails}) => {
                         labelField="label"
                         valueField="value"
                         placeholder={'Select an option'}
-                        value={type}
+                        value={options}
                         onChange={item => {
                             setType(item.value);
-                            setIsFocus(false);
                         }}
                     />
+                    <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
                   </View>                  
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
         </Screen>
   );
 };

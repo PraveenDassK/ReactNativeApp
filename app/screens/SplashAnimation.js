@@ -5,12 +5,13 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 import GlobalStyles from "../../GlobalStyles";
 
 import FadeInView from "../components/fadeInview";
+import Button from "../components/Button"
 
-const LogoAnimation3 = ({navigation}) => {
+const SplashAnimation = ({navigation}) => {
   return (
     <Pressable
       style={styles.logoAnimation3}
-      onPress={() => navigation.navigate("Onboarding1")}
+      onPress={() => console.log("Onboarding1")}
     >
     <FadeInView>
       <View style={styles.maskGroup261Parent}>
@@ -23,15 +24,16 @@ const LogoAnimation3 = ({navigation}) => {
         <Text style={[styles.hello, styles.helloFlexBox]}>Welcome to</Text>
         <Text
           style={[styles.quickSecuredBanking, styles.helloFlexBox]}
-        >{`Quick & Secured Banking`}</Text>
+        >Your money, Your planet, Your choice</Text>
         <Image
           style={[styles.maskGroup259, styles.maskGroupLayout]}
           resizeMode="contain"
           source={require("../assets/image-carbonytetext.png")}
         />
       </View>
-          </FadeInView>
-
+            <Button title="Signup" color="babyBlue" onPress={() => navigation.navigate("Registration")} />
+            <Button title="Login" color="babyBlue" onPress={() => navigation.navigate("Login")} />
+        </FadeInView>
     </Pressable>
   );
 };
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     height: verticalScale(132),
   },
   layer12Icon: {
-    marginTop: verticalScale(-165.5),
+    marginTop: verticalScale(-135.5),
     marginLeft: horizontalScale(-63.5),
     left: "50%",
     width: horizontalScale(128),
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
   quickSecuredBanking: {
     fontSize: GlobalStyles.FontSize.size_2xl,
     fontWeight: "700",
-    color: GlobalStyles.Color.blue_100,
+    color: GlobalStyles.Color.black,
     width: "100%",
     top: "75%",
     textAlign: "center",
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   },
   maskGroup261Parent: {
     width: "100%",
-    height: verticalScale(605),
+    height: verticalScale(505),
   },
   logoAnimation3: {
     backgroundColor: GlobalStyles.Color.gray_300,
@@ -98,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogoAnimation3;
+export default SplashAnimation;

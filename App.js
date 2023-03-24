@@ -17,6 +17,7 @@ import AuthContext from "./app/auth/context";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
+import apiLogin from "./app/api/apiLogin";
 
 import CardSelection from "./app/components/CardSelection";
 
@@ -57,9 +58,15 @@ const [login, setLogin] = useState(false)
 
 
 //External
-const [accountID, setAccountID] = useState("A12274AW")
+const [accountID, setAccountID] = useState("A122HTHM")
+//A122HTHM
+//A12274AW
 //CarbonyteID
-const [userID, setUserID] = useState("C1220XHD")
+const [userID, setUserID] = useState("C122BMS7")
+const [carbonyteID, setCarbonyteID] = useState("0")
+const [cardID, setCardID] = useState("03011666")
+const [customerDetails, setCustomerDetails] = ("CC1")
+const [userDetails, setUserDetails] = useState({})
 const [pin, setPin] = useState("0000")
 
 const [settings, setSettings] = useState({
@@ -137,25 +144,31 @@ const handleAppStateChange = (nextAppState) => {
   if (nextAppState === 'inactive') {
     console.log('the app is closed');
     console.log(currentUser)
-    // setCurrentUser(null)
+    // setCurrent9User(null)
   }    
 }
 
-
-
+/**
+ * @dev This pgets the token from storage and gets the user's details from it
+ * @dev ID hooks are set here
+ * @returns null if there is no token 
+ */
 const restoreToken = async () => {
   console.log('trying for restore token')
   const token = await authStorage.getToken()
   if(!token) return
   console.log('restore token found',token)
   setCurrentUser(jwtDecode(token))
+  const result = await apiLogin.GetCustomerDetails("CC1")
+
+  setUserID(result.modulrCustomerId)
+  setAccountID(result.accountDetails[0].accountId)
+  setCardID(result.accountDetails[0].accountNo)
 }
 
 const restoreSignIn = async () => {
-  console.log('trying for restore sign in')
   const token = await authStorage.getSignInSettings()
   if(!token) return
-  console.log('restore token sign in',token, token.includes('true'))
   setIsAuth(token.includes('true'))
 }
 
@@ -183,18 +196,22 @@ if (!loaded) {
       accountID,setAccountID,
       userID, setUserID,
       settings, setSettings,
-      pin, setPin
+      pin, setPin,
+      cardID, setCardID,
+      customerDetails, setCustomerDetails
     }}>
       <NavigationContainer>
 
-        <AppNavigator />
-        {/* {!currentUser ? (
+        {/* <AppNavigator /> */}
+        {/* <AuthNavigator /> */}
+
+        {!currentUser ? (
           <AuthNavigator /> 
         ) :  currentUser ? (
           <AppNavigator /> 
         ) : (
           <AuthNavigator />
-        )} */}
+        )}
 
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}

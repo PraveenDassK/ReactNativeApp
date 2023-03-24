@@ -66,7 +66,6 @@ const CARD_DATA = [
 
 const HomeScreenPersonal = ({ navigation, route }) => {
 
-  console.log("route", route,route?.params, route?.params?.reload)
  
   const [isLoading, setIsLoading] = useState(false)
   //Saves all the data from the API call
@@ -82,7 +81,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [accountname, setaccountname] = useState(null);
   const [cardnumber, setcardnumber] = useState(null);
   const authContext = useContext(AuthContext);
-  const { settings } = useContext(AuthContext);
+  const { userID, accountID, settings, cardID, customerDetails } = useContext(AuthContext);
 
   const todaydate = moment().format("MMMM D, YYYY");
 
@@ -117,10 +116,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Gets the data for the user
   const loadData = async () => {
     setIsLoading(true)
-    const userData = await apiCall.GetCustomerDetails(authContext.accountID);
-    const cardData = await apiCall.GetCardDetails("686283112");
-    const resposeData = await apiCall.GetUserImpact("CC11875");
-    const cards = await apiCall.GetCardByAccount("686283112")
+    const userData = await apiCall.GetCustomerDetails(accountID);
+    const cardData = await apiCall.GetCardDetails(cardID);
+    const resposeData = await apiCall.GetUserImpact("CC1");
+    const transactionCall = await apiCall.GetTransactions(accountID);
+    console.log(resposeData)
     const responseDetails = await api.getCardResponse("687942912")
 
 
@@ -154,17 +154,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     }
 
-
     //Load the data for transactions
-    const transactionCall = await apiCall.GetTransactions(authContext.accountID);
-
-    
-
-    let transactionList = [];
     let pageShow = [];
     for (let i = 0; i < 5; i++) {
       let dataHold = transactionCall.transactions[i];
-      console.log("datahold",dataHold)
       pageShow.push(
         <TouchableOpacity
           style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
@@ -195,7 +188,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 
                 }}
               >
-                {dataHold.description.replace("Payment to ", "")[0]}
+                {dataHold?.description.replace("Payment to ", "")[0]}
               </AppText>
             </View>
             <View
@@ -207,10 +200,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               }}
             >
               <AppText style={{ fontSize: moderateScale(14), fontWeight: "700" }}>
-                {dataHold.description.replace("Payment to ", "")}
+                {dataHold?.description.replace("Payment to ", "")}
               </AppText>
               <AppText style={{opacity: 0.4}}>
-                {moment(dataHold.transactionDate).format("MMMM D, YYYY")}
+                {moment(dataHold?.transactionDate).format("MMMM D, YYYY")}
               </AppText>
             </View>
             <View
@@ -221,8 +214,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 marginRight: "2.5%",
               }}
             >
-              <AppText style={{ marginRight: "2.5%",fontSize: moderateScale(18), fontWeight: "700", color: !dataHold.credit ? "red": "green" }}>
-                {!dataHold.credit ? "-": "+"} £{dataHold.amount.toFixed(2)}
+              <AppText style={{ marginRight: "2.5%",fontSize: moderateScale(18), fontWeight: "700", color: !dataHold?.credit ? "red": "green" }}>
+                {!dataHold?.credit ? "-": "+"} £{dataHold?.amount.toFixed(2)}
               </AppText>
             </View>
           </View>
@@ -304,7 +297,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
 
   return (
-    <GestureHandlerRootView style={styles.rootView}>
     <ScrollView
       showsVerticalScrollIndicator={false}
       refreshControl={
@@ -360,20 +352,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   source={require("../assets/group-31764.png")}
                 />
 
-                <Image 
-                  resizeMode="contain"
-                  style={{ zIndex: -1, position: "absolute", right: horizontalScale(0),height: verticalScale(260), width: horizontalScale(160),  top: verticalScale(0), transform: [{
-                    rotate: "0deg"
-                  }]}}
-                  source={require("../assets/tiger.png")}
-                />
-
-
-
-              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(40), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
+              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
                   {cardnumber}
               </AppText>
-              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(41.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
+              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(22.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
                 {accountname}
               </AppText>
 
@@ -388,8 +370,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
             </View> */}
           </FadeInView>
-
-          {/* <CardContainer color="red" /> */}
 
           {/* <FadeInView>
             <View style={styles.totalWalletBalanceContainer11}>
@@ -448,7 +428,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
 
           
-          {status &&<AppText style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300', marginTop: verticalScale(5),marginBottom: verticalScale(5), color:"red"}}>
+          {status && <AppText style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300', marginTop: verticalScale(5),marginBottom: verticalScale(5), color:"red"}}>
               Card in post
             </AppText>
           }
@@ -482,9 +462,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
-                <AppText style={{color: "grey", fontSize: moderateScale(26)}}>£</AppText>
-                {balance}
-              </AppText>
+                <AppText style={{color: "grey", fontSize: moderateScale(26)}}>£</AppText>{balance}</AppText>
             )}
             <AppText style={styles.dateText}>{todaydate}</AppText>
           </View>
@@ -937,7 +915,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         <View style={{ marginTop: "5%" }} />
       </View>
     </ScrollView>
-    </GestureHandlerRootView>
   );
 };
 
@@ -1072,9 +1049,6 @@ const Card = ({ name, number, image, selected, onPress }) => {
 };
 
 const styles = StyleSheet.create({
-  rootView:{
-    flex:1
-  },
   boxShadow:{},
   divContainer: {
   },

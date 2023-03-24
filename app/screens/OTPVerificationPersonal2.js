@@ -99,12 +99,11 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
     console.log({ email, phoneNumber, emailOTP, phoneOTP });
 
     if (!result.ok) return alert("Could not verify otp");
-
     if (!result.data.result) return alert("Could not verify otp");
+
     const currentUser = jwtDecode(result?.data?.details);
     setCurrentUser(currentUser);
     authStorage.storeToken(result?.data?.details);
-
     console.log("authToken", currentUser);
 
     // with navigate router

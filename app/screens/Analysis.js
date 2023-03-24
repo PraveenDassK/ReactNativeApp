@@ -25,11 +25,12 @@ const Analysis = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await api.GetAccount(authContext.accountID);
+    const response = await api.GetAccount("A12274AWr");
+    const transactionCall = await api.GetTransactions()
+
     const data = response.data.details.balance
     setBal(data)
 
-    const transactionCall = await api.GetTransactions()
     const transData = transactionCall.data.details
     let total = 0
     let transCat = {}
@@ -43,13 +44,7 @@ const Analysis = ({navigation}) => {
     setTotal(total)
     setRecent([transData.content[1],transData.content[1],transData.content[2]])
     setCat(transCat)
-
-    const acc= await api.GetAccount(authContext.accountID)
-    const det = acc.data.details.associates
-    console.log(det)
-   
   } 
-  console.log(transactionCategories)
 
   return (
     <ScrollView>

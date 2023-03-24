@@ -14,13 +14,14 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 const AddFunds = ({navigation}) => {
   //Card data
-  const authContext = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState({})
   const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [cardData, setCard] = useState([]);
   const [amount, setAmount] = useState("1")
+
+  const { userID, accountID } = useContext(AuthContext);
 
   //let cardData = [{label: "01614842", value: "01614842"}]
   //Calls the API once during load
@@ -31,7 +32,7 @@ const AddFunds = ({navigation}) => {
   //Gets the data for the user
   const loadData = async () => {
     setIsLoading(true)
-    const response = await apiCall.GetAllAccounts(authContext.userID)
+    const response = await apiCall.GetAllAccounts(userID)
     console.log("response",response)
     setData(response)
 
@@ -54,8 +55,8 @@ const AddFunds = ({navigation}) => {
 
   const requestContact = (amount) => {
 
-    //Check if the 
-    if(!value){
+    //Check if an account has been selected
+    if(!value && value != 0){
       alert("Please select a account")
       return;
     }
@@ -96,32 +97,6 @@ const AddFunds = ({navigation}) => {
       beneficiaryData: benData,
     })
   }
-
-  const generateBoxShadowStyle = (
-    xOffset,
-    yOffset,
-    shadowColorIos,
-    shadowOpacity,
-    shadowRadius,
-    elevation,
-    shadowColorAndroid,
-  ) => {
-    if (Platform.OS === 'ios') {
-      styles.boxShadow = {
-        shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
-        shadowOpacity,
-        shadowRadius,
-      };
-    } else if (Platform.OS === 'android') {
-      styles.boxShadow = {
-        elevation,
-        shadowColor: shadowColorAndroid,
-      };
-    }
-  };
-
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
 
   
 
@@ -255,7 +230,6 @@ const AddFunds = ({navigation}) => {
               styles.rectangleParent,
               styles.parentPosition,
               styles.parentPosition1,
-              styles.boxShadow
             ]}
           >
             <View style={styles.rectangleView} />
@@ -269,7 +243,6 @@ const AddFunds = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  boxShadow: {},
  dropdownStyle: {
     width: "95%",
     marginLeft: "2.5%",

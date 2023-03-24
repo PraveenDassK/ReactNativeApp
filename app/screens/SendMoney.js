@@ -12,48 +12,21 @@ const SendMoney = ({navigation}) => {
   const [data, setData] = useState({})
   const [benList, setBen] = useState([])
   const authContext = useContext(AuthContext)
+  const { userID } = useContext(AuthContext);
 
   useEffect(() => {
     getSettings()
   },[])
-
-  const generateBoxShadowStyle = (
-    xOffset,
-    yOffset,
-    shadowColorIos,
-    shadowOpacity,
-    shadowRadius,
-    elevation,
-    shadowColorAndroid,
-  ) => {
-    if (Platform.OS === 'ios') {
-      styles.boxShadow = {
-        shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
-        shadowOpacity,
-        shadowRadius,
-      };
-    } else if (Platform.OS === 'android') {
-      styles.boxShadow = {
-        elevation,
-        shadowColor: shadowColorAndroid,
-      };
-    }
-  };
-
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
   
   //API
   const getSettings = async () => {
-    const response = await api.RetriveBenificiaries(authContext.userID)
+    const response = await api.RetriveBenificiaries(userID)
     const data = response.data.details.content
     setBen(data)
   }
-  console.log(authContext.userID)
   //Sending
   const sendDetails = (Id) => {
     const details = benList[Id]
-    console.log("details", details)
     navigation.navigate("BankTransferAmount",
     {bankName: "FakeName",
       accountName: details.name,
@@ -65,10 +38,10 @@ const SendMoney = ({navigation}) => {
     }) 
   }
   const deleteDetails = async(Id) => {
-    console.log(authContext.userID)
+    console.log(userID)
     const details = benList[Id].id
     console.log(details)
-    const response = await api.DeleteBenificiary(authContext.userID,details)
+    const response = await api.DeleteBenificiary(userID,details)
     console.log(response)
     getSettings()
   }
@@ -79,7 +52,7 @@ const SendMoney = ({navigation}) => {
 
     benList.forEach((item,i) => {
       beniter.push(
-      <Pressable style={[styles.boxShadow, {marginBottom: verticalScale(10)}]} onPress={details => {sendDetails(i)}} key={i}>
+      <Pressable onPress={details => {sendDetails(i)}} key={i}>
         <View style = {styles.benBoxCon}>
 
           <View style={styles.accountImage}>
@@ -102,7 +75,6 @@ const SendMoney = ({navigation}) => {
     })
     benText = <View style = {styles.listBoxContainer}>{beniter}</View> }else{ benText =<View style = {styles.failToFind}><AppText style={{fontSize:18}}> No Accounts Found</AppText></View> }
 
-    
 return (
 <View style={styles.mainDiv}>
 
@@ -146,8 +118,6 @@ const styles = StyleSheet.create({
   accountPhoneNum: {
     opacity:0.3
   },
-  boxShadow:{}
-  ,
 
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,
