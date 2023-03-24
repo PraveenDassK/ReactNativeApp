@@ -4,13 +4,9 @@ import GlobalStyles from '../../GlobalStyles';
 import AuthContext from '../auth/context';
 import { useFocusEffect } from "@react-navigation/native";
 
-
-
 import api from '../api/api_list';
-import apiCall from '../api/api';
+import apiCall from '../api/apiCall';
 import AppText from '../components/Text';
-
-
 
 const CardSettings = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -50,11 +46,9 @@ const CardSettings = ({navigation}) => {
 
   const getSettings = async () => {
     setIsLoading(true)
-    console.log(authContext.accountID);
-    const response = await api.GetToggles(authContext.accountID);
-    const cardSettings = await apiCall.cardSettings(authContext.accountID)
+    const cardSettings = await apiCall.GetSettings(authContext.accountID)
     const data = cardSettings;
-    console.log(cardSettings);
+    console.log(data)
     data.onlineTransactions ? setIsEnabled(true) : null;
     data.swipePayments ? setIsEnabled1(true) : null;
     data.atmWithdrawals ? setIsEnabled2(true) : null;
@@ -64,6 +58,7 @@ const CardSettings = ({navigation}) => {
 
   const sendRequest = async () => {
     setIsLoading(true)
+    console.log("!")
     const response = await api.SetToggles(authContext.accountID, isEnabled, isEnabled1, isEnabled2, isEnabled3);
     setIsLoading(false)
   };
@@ -86,7 +81,6 @@ const CardSettings = ({navigation}) => {
       };
     } else if (Platform.OS === 'android') {
       styles.boxShadow = {
-        elevation,
         shadowColor: shadowColorAndroid,
       };
     }
@@ -202,7 +196,7 @@ const CardSettings = ({navigation}) => {
             </View>
           </Pressable>
         </View>
-
+        
         <Pressable style={[styles.groupChild, styles.boxShadow]} onPress={() => navigation.navigate("ChooseCardsElite")}>
           <View
             style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

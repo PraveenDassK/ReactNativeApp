@@ -37,7 +37,7 @@ const Settings = ({ navigation }) => {
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const { userID, accountID } = useContext(AuthContext);
+  const { userID, accountID, setCurrentUser } = useContext(AuthContext);
 
   /**
    * @dev Loads the data once
@@ -53,6 +53,7 @@ const Settings = ({ navigation }) => {
   const handleLogout = () => {
     authStorage.removeToken();
     authStorage.removeSignInSetting();
+    setCurrentUser(null)
   };
 
   /**

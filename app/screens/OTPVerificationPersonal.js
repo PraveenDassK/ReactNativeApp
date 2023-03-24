@@ -99,7 +99,8 @@ const OTPVerificationPersonal = ({ navigation }) => {
       phoneOTP,
       emailOTP,
     });
-    
+    if (!result) return alert("Could not verify otp");
+
     const userID = result.data.modulrCustomerId
     const accountId = result.data.accountDetails[0].accountId
     const cardId = result.data.accountDetails[0].accountNo
@@ -110,12 +111,12 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setUserID(userID)
     setAccountID(accountId)
     setCardID(cardId)
-    if (!result) return alert("Could not verify otp");
     
     authStorage.storeToken(result?.token);
     //authStorage.storeUserDetails(result?.data);
-    setCurrentUser(currentUser);
-
+    const decodedToken = jwtDecode(result?.token)
+    console.log(decodedToken)
+    setCurrentUser(decodedToken);
   };
 
   const resendCred = async () => {

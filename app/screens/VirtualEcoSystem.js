@@ -236,7 +236,7 @@ const VirtualEcoSystem = ({navigation}) => {
 
         let trees = 0
         try{
-    const response = await apiCall.GetUserImpact("CC11875");
+    const response = await apiCall.GetUserImpact("CC1");
             trees = response.totalAssets
         }catch{
             

@@ -13,7 +13,7 @@ import {
 
 import moment from "moment";
 import api from "../api/api_list"
-import apiCall from "../api/api"
+import apiCall from "../api/apiCall"
 import AuthContext from "../auth/context";
 import { hide } from "expo-splash-screen";
 import Animated from "react-native-reanimated";
@@ -33,7 +33,7 @@ const Transactions = ({navigation,route}) => {
     const scrollY = React.useRef(new Animated.Value(0)).current;
 
     const authContext = useContext(AuthContext)
-    const { settings } = useContext(AuthContext);
+    const { settings, accountID } = useContext(AuthContext);
 
     //Calls the API once during load
     useEffect(() => {
@@ -62,6 +62,7 @@ const Transactions = ({navigation,route}) => {
         const response = await api.GetTransactions(authContext.accountID,10);
         const transactions = response.data.details.content
         setTransactionData(transactions)
+        console.log(transactions)
 
         let name = accountdata.customerName
         let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
@@ -83,22 +84,22 @@ const Transactions = ({navigation,route}) => {
         setModalId(Id)
     }
 
-    const reportTransaction = (Id) =>{
+    const reportTransaction = async(Id) =>{
 
         console.log("Reported")
-        console.log(Id)
         Alert.alert('Alert', 'Report This Transaction', [
           {
             text: 'Cancel',
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          {text: 'Send', onPress: () => {
+          {text: 'Send', onPress: async() => {
             console.log('OK Pressed')
-            apiCall.ReportTransaction(Id)
+            const response = await apiCall.ReportTransaction(accountID,Id.id)
+            console.log(response)
+            response.result ? alert("Report successsful") : alert("")
           }},
         ]);
-        apiCall.ReportTransaction(Id)
     }
     const shareTransaction = (Id) =>{
         console.log("Shared")
@@ -318,7 +319,7 @@ const Transactions = ({navigation,route}) => {
              return <Animated.View key={index}
              style={{transform: [{scale}]}}>
              <Swipeable 
-                renderLeftActions={()=> renderLeftActions(index)}
+                renderLeftActions={()=> renderLeftActions(item)}
                 renderRightActions={() =>renderRightActions(index)}>
                 <Pressable
                   style={[styles.transactionBox, styles.rounded, styles.boxShadow]}

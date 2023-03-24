@@ -36,6 +36,9 @@ const Registration = ({navigation}) => {
       const [emailandPhone, setEmailandPhone] = useState(null)
       const [nationality, setNationality] = useState(null)
       const [addresses, setAddresses] = useState(null)
+      const [maritalStatus, setMaritalStatus] = useState(null)
+      const [employmentDetails, setEmploymentDetails] = useState(null)
+      const [income, setIncome] = useState(null)
 
       const [registrationNumberDetails, setRegistrationNumberDetails] = useState(null)
       const [companyDetails, setCompanyDetails] = useState(null)
@@ -49,12 +52,14 @@ const Registration = ({navigation}) => {
         //sendDetails() 
         if(type == "Personal"){
             //Change this back to PersonalDetails once done
-          setScreenToShow("Income")
+          setScreenToShow("PersonalDetails")
+          setPersonalBusiness(type)
+        }else if (type == "Business"){
+          //Change this back to RegistrationNumber once done
+          setScreenToShow("RegistrationNumber")
           setPersonalBusiness(type)
         }else{
-          //Change this back to RegistrationNumber once done
-          setScreenToShow("CompanyDetails")
-          setPersonalBusiness(type)
+          navigation.navigate("Login")
         }
       }
 
@@ -72,32 +77,32 @@ const Registration = ({navigation}) => {
             setScreenToShow("EmailAndPhone")
             break;
         case "EmailAndPhone":
-            setPersonalDetails(details)
+            setEmailandPhone(details)
             setScreenToShow("Nationality")
             break;
         case "Nationality":
-            setPersonalDetails(details)
+            setNationality(details)
             setScreenToShow("PastAddresses")
             break;
         case "PastAddresses":
-            setPersonalDetails(details)
+            setAddresses(details)
             setScreenToShow("MaritalStatus")
             return;
         case "MaritalStatus":
-            setPersonalDetails(details)
+            setMaritalStatus(details)
             setScreenToShow("EmploymentDetails")
             return;
         case "EmploymentDetails":
-            setPersonalDetails(details)
+          setEmploymentDetails(details)
             setScreenToShow("Income")
             return;
         case "Income":
-            setPersonalDetails(details)
+          setIncome(details)
             setScreenToShow("Success")
             return;
         case "Success":
             setPersonalDetails(details)
-            setScreenToShow("")
+            sendDetails()
             return;
         case "RegistrationNumber":
             setPersonalDetails(details)
@@ -182,44 +187,43 @@ const Registration = ({navigation}) => {
      *          has been added
      */
     const sendDetails = async() => {
-        console.log(accountType)
+      console.log(personalDetails)
+      console.log(emailandPhone)
+      console.log(nationality)
+      console.log(income)
+      console.log(addresses)
+      console.log(employmentDetails)
         if(accountType == "Personal"){
-          //Make a personal account
-          console.log(personalDetails)
-          console.log(emailandPhone)
-          console.log(nationality)
-          console.log(addresses)
-          console.log(maritalStatus)
-          console.log(income)
-          const regData = [
+          const regData = 
+          [
             {
               "id": 0,
               "customerId": "",
               "emails": [
                 {
-                  "emailId": emailandPhone?.emailAddress
+                  "emailId": emailandPhone.emailAddress
                 }
               ],
               "phoneNumbers": [
                 {
-                  "phoneNo": emailandPhone?.phoneNumber
+                  "phoneNo": emailandPhone.phoneNumber
                 }
               ],
               "customerDetails": {
                 "documentNo": "",
                 "documentType": "",
-                "address": addresses?.address,
-                "firstName": personalDetails?.firstName,
-                "dob": personalDetails?.birthday,
-                "nationalId": "1",
-                "lastName": personalDetails?.lastName,
-                "postCode": addresses?.postcode,
-                "postTown": "London",
-                "country": addresses?.country,
+                "address": addresses[0].address1,
+                "firstName": "Jack",
+                "dob": "29-12-1998",
+                "nationalId": "2",
+                "lastName": "Huang",
+                "postCode": addresses[0].postcode,
+                "postTown": addresses[0].area,
+                "country": nationality.country,
                 "locale": "",
                 "salutation": "",
-                "gender": personalDetails?.gender,
-                "maritalStatus": maritalStatus,
+                "gender": "Male",
+                "maritalStatus": "Single",
                 "employmentDetails": "Unemployed"
               },
               "income": {
@@ -235,7 +239,7 @@ const Registration = ({navigation}) => {
               "ownershipPercentage": 0,
               "marketingChoices": "string"
             }
-          ];
+          ]
           const response = await apiLogin.RegisterPersonalAccount(regData)
           console.log(response)
           console.log(regData)
