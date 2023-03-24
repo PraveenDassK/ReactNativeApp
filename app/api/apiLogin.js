@@ -106,51 +106,10 @@ const GetAddressByPostCode = async (postcode) => {
   return addressObj
 }
 
-const RegisterPersonalAccount = async() => {
-    const response = await client.post("https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails",
-    [
-      {
-        "id": 0,
-        "customerId": "",
-        "emails": [
-          {
-            "emailId": "jack.h@carbonyte.io"
-          }
-        ],
-        "phoneNumbers": [
-          {
-            "phoneNo": "07927201649"
-          }
-        ],
-        "customerDetails": {
-          "documentNo": "",
-          "documentType": "1",
-          "address": "40 South way",
-          "firstName": "Jack",
-          "dob": "29/12/1998",
-          "nationalId": "",
-          "lastName": "Huang",
-          "postCode": "HA9 0HZ",
-          "postTown": "",
-          "salutation": "string",
-          "gender": "Male",
-          "maritalStatus": "Single",
-          "employmentDetails": "Unemployed"
-        },
-        "income": {
-          "totalIncome": "5",
-          "savings": "5",
-          "taxResidency": "GB",
-          "incomeSources": [
-            "Pensions"
-          ]
-        },
-        "key": "07927201649",
-        "role": "string",
-        "ownershipPercentage": 0,
-        "marketingChoices": "string"
-      }
-    ])
+const RegisterPersonalAccount = async(regData) => {
+  const response = await client.post("https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=personal",
+  regData
+    )
       return response;
 }
 
