@@ -111,7 +111,7 @@ const CardSettings = ({navigation}) => {
 
         <Pressable style={[styles.boxShadow]} onPress={() => navigation.navigate('SpendingLimit')}>
           <View
-            style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            style={[{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
             <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
               <AppText style={{fontWeight: '700'}}>Spending Limit</AppText>
@@ -139,7 +139,7 @@ const CardSettings = ({navigation}) => {
             />
           </View>
 
-          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
+          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/swipecard.png')} />
             <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
               <AppText style={{fontWeight: '700'}}>Swipe Payments</AppText>
@@ -153,7 +153,7 @@ const CardSettings = ({navigation}) => {
             />
           </View>
 
-          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
+          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/atm.png')} />
             <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
               <AppText style={{fontWeight: '700'}}>ATM Withdrawals</AppText>
@@ -167,7 +167,7 @@ const CardSettings = ({navigation}) => {
             />
           </View>
 
-          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
+          <View style={[{width: '100%', height: 85, borderRadius: 15, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/contactlesspayment-1.png')} />
             <View style={{flex: 7, justifyContent: 'center', marginLeft: '2.5%'}}>
               <AppText style={{fontWeight: '700'}}>Contactless Payments</AppText>
@@ -203,9 +203,9 @@ const CardSettings = ({navigation}) => {
           </Pressable>
         </View>
 
-        <Pressable style={[styles.groupChild, styles.boxShadow]} onPress={() => navigation.navigate("ChooseCardsElite")}>
+        <Pressable style={[styles.groupChild]} onPress={() => navigation.navigate("ChooseCardsElite")}>
           <View
-            style={{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            style={[{width: '90%', marginLeft: '5%', borderRadius: 15, marginTop: '5%', backgroundColor: 'white', height: 60, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}, styles.boxShadow]}>
             <Image style={{height: '70%', resizeMode: 'contain', flex: 1, alignSelf: 'center', marginLeft: '5%'}} source={require('../assets/meter-1.png')} />
             <View style={{flex: 9, justifyContent: 'center', marginLeft: '2.5%'}}>
               <AppText style={{fontWeight: '700'}}>Upgrade Card</AppText>

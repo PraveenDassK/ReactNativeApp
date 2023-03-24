@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef  } from "react";
 import { Text, View, Button, Platform ,  ActivityIndicator} from 'react-native';
 import {AppState} from 'react-native';
 import { useFonts } from 'expo-font';
+
 // import 'expo-dev-menu';
 import 'react-native-gesture-handler';
 import * as Device from 'expo-device';
@@ -11,14 +12,22 @@ import jwtDecode from 'jwt-decode'
 import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
 import * as LocalAuthentication from 'expo-local-authentication';
-
+import {decode, encode} from 'base-64'
 import AuthContext from "./app/auth/context";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 
+import CardSelection from "./app/components/CardSelection";
 
 
+if (!global.btoa) {
+  global.btoa = encode;
+  }
+  
+  if (!global.atob) {
+  global.atob = decode;
+  }
 
 
 Notifications.setNotificationHandler({
@@ -163,6 +172,7 @@ if (!loaded) {
 } else {
   SplashScreen.hideAsync()
 }
+
 
   return (
   

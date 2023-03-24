@@ -9,8 +9,13 @@ import {
   ScrollView,
   ActivityIndicator, 
   Platform,
-  Dimensions
+  Dimensions,
+  TouchableWithoutFeedback
 } from "react-native";
+
+
+
+import Swiper from 'react-native-swiper';
 
 import {
   GestureDetector,
@@ -34,6 +39,8 @@ import {
 
 import apiweb3 from "../api/web3_api";
 import apiCall from "../api/apiCall";
+import api from "../api/cardDetails";
+
 import AuthContext from "../auth/context";
 
 import FadeInView from "../components/fadeInview";
@@ -43,6 +50,20 @@ import AppText from "../components/Text";
 
 const {width, height} = Dimensions.get('window');
 
+const CARD_DATA = [
+  {
+    name: 'Card 1',
+    number: '**** **** **** 1234',
+    image: require('../assets/cardLion.png'),
+  },
+  {
+    name: 'Card 2',
+    number: '**** **** **** 5678',
+    image: require('../assets/cardLion.png'),
+  },
+  // add more card data as needed
+];
+
 const HomeScreenPersonal = ({ navigation, route }) => {
 
   console.log("route", route,route?.params, route?.params?.reload)
@@ -50,6 +71,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false)
   //Saves all the data from the API call
   const [data, setData] = useState(null);
+  const [cardResponse, setCardResponse] = useState(null)
   const [balance, setBalance] = useState(null);
   const [hideBalance, setHideBalance] = useState(false)
   const [transactionTable, setTransactionTable] = useState(null);
@@ -76,6 +98,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [price, setPrice] = useState(null)
   const [nftimg, setNftimg] = useState(null)
 
+  const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
+
+  const handleCardPress = (card) => {
+    setSelectedCard(card);
+  };
+
   
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
@@ -93,9 +121,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     const cardData = await apiCall.GetCardDetails("686283112");
     const resposeData = await apiCall.GetUserImpact("CC11875");
     const cards = await apiCall.GetCardByAccount("686283112")
+    const responseDetails = await api.getCardResponse("687942912")
 
-    console.log("cards", cards)
-    console.log("cards2", cardData)
+
+
+    console.log("cards", responseDetails.data)
+    
 
   
 
@@ -110,6 +141,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
+    setCardResponse(responseDetails.data);
 
     ////FUP Data
     try{
@@ -202,6 +234,21 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setIsLoading(false)
   };
 
+  const loadCardDetails = async (url, token) => {
+  
+    const cardDetails = await api.getCardDetails(url, token)
+    console.log("yuurrrrrr", cardDetails.data)
+  }
+
+  useEffect(()=> {
+    if(cardResponse) {
+    console.log('cardResponse1', cardResponse.cardDataUrl, cardResponse.token)
+    loadCardDetails(cardResponse.cardDataUrl, cardResponse.token)
+    }
+    
+    // loadCardDetails()
+  }, [cardResponse])
+
   let currency = "£";
   const catNames = ["Health", "Food", "House", "Shopping", "Transport"];
   const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
@@ -254,6 +301,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     )
   }
 
+
+
   return (
     <GestureHandlerRootView style={styles.rootView}>
     <ScrollView
@@ -274,7 +323,24 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
           <FadeInView>
-            <View style={styles.carbonyteCard}>
+            <Swiper
+              height={verticalScale(270)}
+              style={{paddingLeft: "30%"}}
+              showsPagination={false}
+              loop={false}
+              index={0}
+            >
+                {CARD_DATA.map((card) => (
+          <Card
+            key={card.name}
+            {...card}
+            selected={selectedCard.name === card.name}
+            onPress={() => handleCardPress(card)}
+          />
+        ))}
+
+            </Swiper>
+            {/* <View style={styles.carbonyteCard}>
               <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "800",position: "absolute", top: verticalScale(15), left:horizontalScale(15) , fontSize: moderateScale(12), textTransform: "uppercase", width: horizontalScale(50)}]}>
                   <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> money <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> planet <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> choice
               </AppText>
@@ -320,7 +386,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   source={require("../assets/group-31766.png")}
               />
 
-            </View>
+            </View> */}
           </FadeInView>
 
           {/* <CardContainer color="red" /> */}
@@ -899,45 +965,111 @@ const CardContainer = ({color}) => {
   )
 }
 
-const Card = ({color, style}) => (
-  <Animated.View 
-    style={[styles.totalWalletBalanceContainer11, {backgroundColor: color}, style]}>
-            <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
-                Carbonyte
-            </AppText>
+// const Card = ({color, style}) => (
+//   <Animated.View 
+//     style={[styles.totalWalletBalanceContainer11, {backgroundColor: color}, style]}>
+//             <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
+//                 Carbonyte
+//             </AppText>
               
-              <Image 
-              resizeMode="contain"
-                style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
-                  rotate: "180deg"
-                }]}}
-                source={require("../assets/group-31767.png")}
-              />
+//               <Image 
+//               resizeMode="contain"
+//                 style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
+//                   rotate: "180deg"
+//                 }]}}
+//                 source={require("../assets/group-31767.png")}
+//               />
 
+//               <Image 
+//                 resizeMode="contain"
+//                 style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
+//                   rotate: "90deg"
+//                 }]}}
+//                 source={require("../assets/group-31764.png")}
+//               />
+
+//               <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
+//                 number
+//               </AppText>
+                
+//               <Image 
+//               resizeMode="contain"
+//               style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
+//                 source={require("../assets/group-31766.png")}
+//               />
+              
+//               <AppText style={[styles.totalWalletBalanceText11, {position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
+//               name
+//               </AppText>
+              
+//         </Animated.View>
+// )
+
+
+const Card = ({ name, number, image, selected, onPress }) => {
+  return (
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[styles.card,]}>
+         <View style={[styles.carbonyteCard,  selected && styles.selectedCard ] }>
+              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "800",position: "absolute", top: verticalScale(15), left:horizontalScale(15) , fontSize: moderateScale(12), textTransform: "uppercase", width: horizontalScale(50)}]}>
+                  <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> money <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> planet <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> choice
+              </AppText>
               <Image 
                 resizeMode="contain"
-                style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
-                  rotate: "90deg"
-                }]}}
-                source={require("../assets/group-31764.png")}
+                  style={{position: "absolute", right: horizontalScale(20),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(20), transform: [{
+                    rotate: "0deg"
+                  }]}}
+                  source={require("../assets/icon-contactless-reverse.png")}
+                />
+
+                <Image 
+                  resizeMode="contain"
+                  style={{ position: "absolute", right: horizontalScale(50), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(25), transform: [{
+                    rotate: "0deg"
+                  }]}}
+                  source={require("../assets/group-31764.png")}
+                />
+
+                <Image 
+                  resizeMode="contain"
+                  style={{ zIndex: -1, position: "absolute", right: horizontalScale(0),height: verticalScale(260), width: horizontalScale(155),  top: verticalScale(0), transform: [{
+                    rotate: "0deg"
+                  }]}}
+                  source={require("../assets/tiger.png")}
+                />
+
+
+
+              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(40), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
+                  {number}
+              </AppText>
+              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(41.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
+                {name}
+              </AppText>
+
+              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", bottom: verticalScale(20), left:horizontalScale(15) , fontSize: moderateScale(16), textTransform: "lowercase"}]}>
+                  Carbonyte
+              </AppText>
+              <Image 
+                resizeMode="contain"
+                style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
+                  source={require("../assets/group-31766.png")}
               />
 
-              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
-                number
-              </AppText>
-                
-              <Image 
-              resizeMode="contain"
-              style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
-                source={require("../assets/group-31766.png")}
-              />
-              
-              <AppText style={[styles.totalWalletBalanceText11, {position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
-              name
-              </AppText>
-              
-        </Animated.View>
-)
+            </View>
+        {/* <View style={styles.cardHeader}>
+          <Icon name="credit-card" size={30} color="#fff" />
+          <Text style={styles.cardHeaderText}>{name}</Text>
+        </View>
+        <View style={styles.cardBody}>
+          <Text style={styles.cardBodyText}>{number}</Text>
+          <Image source={image} style={styles.cardImage} />
+          
+        </View> */}
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 
 const styles = StyleSheet.create({
   rootView:{
@@ -1462,6 +1594,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: verticalScale(250),
     borderRadius: moderateScale(15)
+  },
+  card: {
+
+    backgroundColor: '#fff',
+    
+    marginTop: "3.5%",
+    height: verticalScale(250),
+    width: horizontalScale(160),
+    borderRadius: moderateScale(15),
+    
+    marginVertical: verticalScale(20), 
+    
+  },
+  selectedCard: {
+    borderWidth:3,
+    borderColor: '#1e90ff' ,
   },
 });
 

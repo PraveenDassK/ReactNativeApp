@@ -8,6 +8,16 @@ const apiClient = create({
   headers: { Accept: 'application/vnd.github.v3+json' },
 });
 
+const environment = "demo"
+const realm = "test"
+
+export const enfuceClient = create({
+  baseURL: `https://integration-api-cat2.${environment}.ext.${realm}.cia.enfuce.com/card`,
+ 
+})
+
+
+
 
 
 // apiClient.addAsyncRequestTransform(async (request) => {
