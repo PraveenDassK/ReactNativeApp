@@ -8,12 +8,14 @@ import api from "../api/api_list";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-import Button from "./Button"
+import Button from "./AppButton"
 import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
+import colors from "../config/colors";
+
 
 const PersonalDetails = ({SaveDetails}) => {
     
@@ -89,8 +91,87 @@ const PersonalDetails = ({SaveDetails}) => {
   }
 
     return (
-        <Screen>
-            <Text>A bit about you</Text>
+        <Screen style={{backgroundColor: "white"}}>
+
+
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
+        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
+          <Text style={{fontSize: 30}}>A bit about you</Text>
+        </View>
+        
+        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,}}>
+             <Formik
+
+onSubmit={(values) => sendData(values)}
+>
+{({ handleChange, handleSubmit, setFieldTouched}) => (
+  <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+      <Text>First name</Text>
+      <TextInput 
+          placeholder="Enter you first name"
+          placeholderTextColor="#D3D3D3" 
+          keyboardType="Text" 
+          onBlur={() => setFieldTouched("phoneNumber")}
+          onChangeText={setFirstName("phoneNumber")}
+          style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+      />
+      <Text>Last name</Text>
+      <TextInput 
+          placeholder="Enter you last name"
+          placeholderTextColor="#D3D3D3" 
+          keyboardType="Text" 
+          onBlur={() => setFieldTouched("phoneNumber")}
+          onChangeText={setLastName("phoneNumber")}
+          style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+      />
+      <Text>Gender</Text>
+      <Dropdown
+          style={[styles.dropdown]}
+          containerStyle={styles.dropdownContainer}
+          data={genderData}
+          maxHeight={100}
+          labelField="label"
+          valueField="value"
+          placeholder={'Select an option'}
+          placeholderStyle={{fontSize: 14, color: "#D3D3D3"}}
+          value={gender}
+          onChange={item => {
+              setGender(item.value);
+              setIsFocus(false);
+          }}
+      />
+      <Text>Date of Birth</Text>
+      {!viewDate && <Button title="Set" textColor="black" color="white" onPress={() => setView(true)} />}
+
+      {viewDate?
+      <DateTimePicker
+          testID="dateTimePicker"
+          value={dob}
+          mode="date"
+          display="spinner"
+          onChange={onChange}
+      />: null}
+
+      <CheckBox
+          title="I have read and accepted the Privacy Policy"
+          checked={privacyPolicy}
+          onPress={() => setPrivacyPolicy(!privacyPolicy)}
+          />
+      {
+          //<Button title="Continue" color="babyBlue" onPress={handleSubmit} />
+      }
+    </View>                  
+  )}
+</Formik>
+            
+          <Button title="continue" textColor="white" color="black" onPress={() => sendDetails()} />
+        </View> 
+        </View> 
+
+      </View>
+            {/* <Text>A bit about you</Text>
             <Formik
 
               onSubmit={(values) => sendData(values)}
@@ -153,13 +234,37 @@ const PersonalDetails = ({SaveDetails}) => {
                 title="Continue" 
                 color="babyBlue" 
                 onPress={() => sendDetails()
-            }/>
+            }/> */}
 
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+  dropdown: {
+    borderRadius: 10,
+    borderWidth: 0.5,
+    height: 50,
+    paddingHorizontal: 8,
+    marginBottom: "5%",
+    marginTop: "2.5%",
+    opacity: 1,
+    borderColor: "#D3D3D3",
+
+  },
+  dropdownContainer: {
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
+  },
+  childBorder: {
+    borderWidth: 0.5,
+    borderRadius: 10,
+    borderColor: "#D3D3D3",
+    opacity: 1,
+    height: 50,
+    marginTop: "2.5%",
+    marginBottom: "5%"
+  }
 });
 
 export default PersonalDetails;
