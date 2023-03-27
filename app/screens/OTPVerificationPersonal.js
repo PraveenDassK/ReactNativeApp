@@ -20,13 +20,17 @@ import * as Yup from "yup";
 import { useFocusEffect } from "@react-navigation/native";
 import jwtDecode from "jwt-decode";
 
+import colors from "../config/colors";
+
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import Form from "../components/forms/Form";
 import loginAPI from "../api/apiLogin";
 import authStorage from "../auth/storage";
+import Screen from "../components/Screen";
+
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -145,8 +149,8 @@ const OTPVerificationPersonal = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dis
     }>
-      <View style={styles.mainContainer}>
-        <View style={styles.titleTextRow}>
+       <Screen style={{backgroundColor: "white"}}>
+        {/* <View style={styles.titleTextRow}>
           <Text style={styles.titleText}>OTP Verification</Text>
         </View>
 
@@ -154,8 +158,16 @@ const OTPVerificationPersonal = ({ navigation }) => {
           <Text style={styles.subText}>
             {`Please enter the code sent to `}{user.email}
           </Text>
+        </View> */}
+
+<View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
+        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
+          <Text style={{fontSize: 30}}>OTP Verification</Text>
         </View>
 
+
+        
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -163,11 +175,17 @@ const OTPVerificationPersonal = ({ navigation }) => {
         >
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
             <>
+              <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,}}>
+             <View style={styles.subTextRow}>
+              <Text style={styles.subText}>
+                  {`Please enter the code sent to `}+{user.phoneNumber}
+                </Text>
+              </View>
               <View style={styles.entryBoxContainer}>
                 <TextInput
                   autoFocus={true}
                   maxLength={1}
-                  placeholder="1"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer1")}
                   onChangeText={handleChange("pVer1")}
@@ -177,7 +195,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 <ErrorMessage error={errors.pVer1} visible={touched.pVer1} />
                 <TextInput
                   maxLength={1}
-                  placeholder="2"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer2")}
                   onChangeText={handleChange("pVer2")}
@@ -189,7 +206,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
                 <TextInput
                   maxLength={1}
-                  placeholder="3"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer3")}
                   onChangeText={handleChange("pVer3")}
@@ -201,7 +217,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
                 <TextInput
                   maxLength={1}
-                  placeholder="4"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer4")}
                   onChangeText={handleChange("pVer4")}
@@ -212,15 +227,16 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 <ErrorMessage error={errors.pVer4} visible={touched.pVer4} />
 
               </View>
+              
               <Text style={styles.countdown}>
-                              Resend Code in 00:{count < 10 ? `0${count}` : count}
-                            </Text>
-                            <View style={styles.subTextRow}>
-                              <Text style={styles.subText}>
-                                {`Please enter the code sent to `}+{user.phoneNumber}
-
-                              </Text>
-                            </View>
+                Resend Code in 00:{count < 10 ? `0${count}` : count}
+              </Text>
+              <View style={styles.subTextRow}>
+              <Text style={[styles.subText, {marginTop: "10%"}]}>
+                  {`Please enter the code sent to `}{user.email}
+                </Text>
+              </View>
+             
               <View style={styles.entryBoxContainer}>
                 <TextInput
                   autoFocus={true}
@@ -235,7 +251,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 <ErrorMessage error={errors.eVer1} visible={touched.eVer1} />
                 <TextInput
                   maxLength={1}
-                  placeholder="2"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("eVer2")}
                   onChangeText={handleChange("eVer2")}
@@ -247,7 +262,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
                 <TextInput
                   maxLength={1}
-                  placeholder="3"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("eVer3")}
                   onChangeText={handleChange("eVer3")}
@@ -259,7 +273,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
                 <TextInput
                   maxLength={1}
-                  placeholder="4"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("eVer4")}
                   onChangeText={handleChange("eVer4")}
@@ -269,27 +282,32 @@ const OTPVerificationPersonal = ({ navigation }) => {
                 />
                 <ErrorMessage error={errors.eVer4} visible={touched.eVer4} />
               </View>
-              <Text style={styles.countdown}>
+              <Text style={[styles.countdown, {marginBottom: "10%"}]}>
                       Resend Code in 00:{count < 10 ? `0${count}` : count}
                     </Text>
               <View style={styles.button}>
                   <Button 
                     title="Verify" 
-                    color="babyBlue" 
+                    textColor="white"
+                    color="black" 
                     onPress={handleSubmit} 
                   />
               </View>
+            </View>
             </>
           )}
 
 
         </Formik>
+        </View>
+        </View>
+        
 
 
 
 
 
-      </View>
+      </Screen>
     </TouchableWithoutFeedback>
   );
 };
@@ -338,15 +356,19 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginTop: "5%",
     borderRadius: 5,
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
+    opacity: 0.1
+    
   },
 
   countdown: {
     width: "80%",
     marginTop: "2.5%",
     marginLeft: "10%",
+    opacity: 0.3
   },
 
   button: {
@@ -356,6 +378,7 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
     justifyContent: "flex-start",
     alignItems: "flex-end",
+    marginBottom: "20%"
   },
 
   swipeUp: {

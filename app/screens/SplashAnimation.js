@@ -4,8 +4,10 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 
 import GlobalStyles from "../../GlobalStyles";
 
+
 import FadeInView from "../components/fadeInview";
-import Button from "../components/Button"
+import Button from "../components/AppButton"
+import colors from "../config/colors";
 
 const SplashAnimation = ({navigation}) => {
   return (
@@ -13,27 +15,23 @@ const SplashAnimation = ({navigation}) => {
       style={styles.logoAnimation3}
       onPress={() => console.log("Onboarding1")}
     >
-    <FadeInView>
-      <View style={styles.maskGroup261Parent}>
+   
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
+        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
+          <Text style={{fontSize: 30}}>Welcome to Carbonyte</Text>
+        </View>
+        
+        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,}}>
+          <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />
+          <Button title="Login" textColor="black" color="white" onPress={() => navigation.navigate("Login")} />
+        </View> 
+        </View> 
 
-        <Image
-          style={styles.layer12Icon}
-          resizeMode="contain"
-          source={require("../assets/logo-carbonyte.png")}
-        />
-        <Text style={[styles.hello, styles.helloFlexBox]}>Welcome to</Text>
-        <Text
-          style={[styles.quickSecuredBanking, styles.helloFlexBox]}
-        >Your money, Your planet, Your choice</Text>
-        <Image
-          style={[styles.maskGroup259, styles.maskGroupLayout]}
-          resizeMode="contain"
-          source={require("../assets/image-carbonytetext.png")}
-        />
       </View>
-            <Button title="Signup" color="babyBlue" onPress={() => navigation.navigate("Registration")} />
-            <Button title="Login" color="babyBlue" onPress={() => navigation.navigate("Login")} />
-        </FadeInView>
+
+      
     </Pressable>
   );
 };
