@@ -197,7 +197,7 @@ const Registration = ({navigation}) => {
           const regData = 
           [
             {
-              "id": 0,
+              "id": 22,
               "customerId": "",
               "emails": [
                 {
@@ -215,7 +215,7 @@ const Registration = ({navigation}) => {
                 "address": addresses[0].address1,
                 "firstName": "Jack",
                 "dob": "29-12-1998",
-                "nationalId": "15",
+                "nationalId": "22",
                 "lastName": "Huang",
                 "postCode": addresses[0].postcode,
                 "postTown": addresses[0].area,
