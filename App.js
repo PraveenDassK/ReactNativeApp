@@ -78,10 +78,8 @@ const [settings, setSettings] = useState({
 useEffect(() => {
   const prepare = async () => {
     await SplashScreen.preventAutoHideAsync()
-    
   }
   prepare()
-  
 },[])
 
 useEffect(() => {
@@ -185,7 +183,6 @@ if (!loaded) {
 } else {
   SplashScreen.hideAsync()
 }
-
 
   return (
   

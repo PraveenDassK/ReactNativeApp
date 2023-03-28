@@ -230,7 +230,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadCardDetails = async (url, token) => {
   
     const cardDetails = await api.getCardDetails(url, token)
-    console.log("yuurrrrrr", cardDetails.data)
+    console.log("card details", cardDetails.data)
   }
 
   useEffect(()=> {

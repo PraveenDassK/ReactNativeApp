@@ -56,7 +56,7 @@ const Registration = ({navigation}) => {
           setPersonalBusiness(type)
         }else if (type == "Business"){
           //Change this back to RegistrationNumber once done
-          setScreenToShow("CompanyAddress")
+          setScreenToShow("RegistrationNumber")
           setPersonalBusiness(type)
         }else{
           navigation.navigate("Login")
@@ -197,7 +197,7 @@ const Registration = ({navigation}) => {
           const regData = 
           [
             {
-              "id": 22,
+              "id": 0,
               "customerId": "",
               "emails": [
                 {
@@ -215,7 +215,7 @@ const Registration = ({navigation}) => {
                 "address": addresses[0].address1,
                 "firstName": "Jack",
                 "dob": "29-12-1998",
-                "nationalId": "22",
+                "nationalId": "15",
                 "lastName": "Huang",
                 "postCode": addresses[0].postcode,
                 "postTown": addresses[0].area,
