@@ -7,8 +7,9 @@ import GlobalStyles from "../../GlobalStyles";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-import Button from "./Button"
+import Button from "./AppButton"
 import PostCode from './RegistrationPostCode.jsx'
+import AuthScreen from "./AuthScreen";
 
 const PastAddresses = ({SaveDetails}) => {
     const [addresses, setAddresses] = useState([]);
@@ -31,7 +32,16 @@ const PastAddresses = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>Past addresses</Text>
+            <AuthScreen title="Past adresses">
+            {isAdding ? 
+                <PostCode AddAddress = {addAddress}/>
+          :
+                <View>
+                    <Button title="Add" textColor="white" color="black" onPress={() => setAdding(true)} />
+                    <Button title="Continue" textColor="black" color="white" onPress={() => handleSubmit()} />
+                </View>}
+            </AuthScreen>
+            {/* <Text>Past addresses</Text>
             {isAdding ? 
                 <PostCode AddAddress = {addAddress}/>
           :
@@ -39,7 +49,7 @@ const PastAddresses = ({SaveDetails}) => {
                     <Button title="Add" color="babyBlue" onPress={() => setAdding(true)} />
                     <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
                 </View>
-            }
+            } */}
         </Screen>
   );
 };

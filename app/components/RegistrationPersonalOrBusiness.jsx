@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./AppButton"
 import colors from "../config/colors";
+import AuthScreen from "./AuthScreen";
 
 
 
@@ -27,27 +28,11 @@ const PersonalOrBusiness = ({SaveDetails}) => {
     return (
         <Screen>
 
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
-        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-          <Text style={{fontSize: 30}}>Type of account</Text>
-        </View>
-        
-        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,}}>
+     <AuthScreen title="Type of account">
           <Button title="Personal" textColor="black" color="white" onPress={() => handleSubmit("Personal")} />
-          <Button title="Login" textColor="black" color="white" onPress={() => handleSubmit("Business")} />
-        </View> 
-        </View> 
-
-      </View>
-            {/* <View
-                style={styles.navigationButtons}
-            >
-                <Text>Type of account</Text>
-                <Button title="Personal" color="babyBlue" onPress={() => handleSubmit("Personal")} />
-                <Button title="Business" color="babyBlue" onPress={() => handleSubmit("Business")} />
-            </View> */}
+          <Button title="Business" textColor="black" color="white" onPress={() => handleSubmit("Business")} />
+     </AuthScreen>
+        
         </Screen>
   );
 };

@@ -143,7 +143,7 @@ onSubmit={(values) => sendData(values)}
           }}
       />
       <Text>Date of Birth</Text>
-      {!viewDate && <Button title="Set" textColor="black" color="white" onPress={() => setView(true)} />}
+      <Button title="Set" textColor="black" color="white" onPress={() => setView(true)} />
 
       {viewDate?
       <DateTimePicker
@@ -157,6 +157,7 @@ onSubmit={(values) => sendData(values)}
       <CheckBox
           title="I have read and accepted the Privacy Policy"
           checked={privacyPolicy}
+          checkedColor="black"
           onPress={() => setPrivacyPolicy(!privacyPolicy)}
           />
       {

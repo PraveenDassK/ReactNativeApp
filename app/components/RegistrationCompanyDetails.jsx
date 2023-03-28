@@ -7,10 +7,11 @@ import apiLoginRegister from "../api/apiLogin";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-import Button from "./Button"
+import Button from "./AppButton"
 import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
+import AuthScreen from "./AuthScreen";
 
 const CompanyDetails = ({SaveDetails}) => {
     const [type, setType] = useState(null)
@@ -123,7 +124,7 @@ const CompanyDetails = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>Your company details</Text>
+            <AuthScreen title="Your company details">
             <Formik
             initialValues={{
                 type:''
@@ -131,9 +132,11 @@ const CompanyDetails = ({SaveDetails}) => {
             onSubmit={handleSubmit}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+                <View style={[styles.component1981, styles.mt14]}>
                     <Text>Business type</Text>
                     <Dropdown
+                        style={[styles.dropdown]}
+                        containerStyle={styles.dropdownContainer}
                         data={options}
                         maxHeight={100}
                         labelField="label"
@@ -144,15 +147,31 @@ const CompanyDetails = ({SaveDetails}) => {
                             setType(item.value);
                         }}
                     />
-                    <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
+                    <Button title="Continue" color="black" textColor="white" onPress={handleSubmit} />
                   </View>                  
                 )}
             </Formik>
+            </AuthScreen>   
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+    dropdown: {
+        borderRadius: 10,
+        borderWidth: 0.5,
+        height: 50,
+        paddingHorizontal: 8,
+        marginBottom: "5%",
+        marginTop: "2.5%",
+        opacity: 1,
+        borderColor: "#D3D3D3",
+    
+      },
+      dropdownContainer: {
+        borderTopEndRadius: 10,
+        borderTopStartRadius: 10,
+      },
 });
 
 export default CompanyDetails;

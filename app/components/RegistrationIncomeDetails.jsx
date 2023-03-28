@@ -8,7 +8,8 @@ import api from "../api/api_list";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-import Button from "./Button"
+import Button from "./AppButton"
+import AuthScreen from "./AuthScreen";
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
@@ -21,7 +22,43 @@ const Income = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>Income details</Text>
+            <AuthScreen title="Income details">
+            <Formik
+            initialValues={{
+                email:'', 
+                phoneNumber: ''
+            }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+            >
+            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+                    <Text>Annual income</Text>
+                    <TextInput 
+                        keyboardType="numeric" 
+                        onBlur={() => setFieldTouched("phoneNumber")}
+                        onChangeText={handleChange("phoneNumber")}
+                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+                    />
+
+                <Text>Tax residency</Text>
+                    <TextInput 
+                        keyboardType="numeric" 
+                        onBlur={() => setFieldTouched("phoneNumber")}
+                        onChangeText={handleChange("phoneNumber")}
+                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+                    />
+                <Text>Income sources</Text>
+               
+
+                </View>
+                )}
+            </Formik>
+            <Button title="Continue" color="black" textColor="white" onPress={handleSubmit} />
+
+
+            </AuthScreen>
+            {/* <Text>Income details</Text>
             <Formik
             initialValues={{
                 email:'', 
@@ -51,12 +88,21 @@ const Income = ({SaveDetails}) => {
                 </View>
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
+            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} /> */}
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+    childBorder: {
+        borderWidth: 0.5,
+        borderRadius: 10,
+        borderColor: "#D3D3D3",
+        opacity: 1,
+        height: 50,
+        marginTop: "2.5%",
+        marginBottom: "5%"
+      }
 });
 
 export default Income;

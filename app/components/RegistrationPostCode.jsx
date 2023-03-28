@@ -8,7 +8,7 @@ import apiLogin from "../api/apiLogin";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-import Button from "./Button"
+import Button from "./AppButton"
 import { Dropdown } from 'react-native-element-dropdown';
 
 const Postcode = ({AddAddress}) => {
@@ -29,7 +29,7 @@ const Postcode = ({AddAddress}) => {
     }
 
     return (
-        <Screen>
+        <>
             <Text>Enter your postcode</Text>
             <Formik
             initialValues={{
@@ -47,19 +47,19 @@ const Postcode = ({AddAddress}) => {
                         onBlur={() => setFieldTouched('postcode')}
                         onChangeText={handleChange('postcode')}
                         style={[
-                            styles.signUpPersonalItem,
-                            styles.mt9,
-                            styles.ml24,
                             styles.childBorder,
                             {padding:10}
                             ]}
                     />
-                    <Button title="Search" color="babyBlue" onPress={handleSubmit} />
+                                <Button title="search" textColor="black" color="white" onPress={handleSubmit} />
+
+                    {/* <Button title="Search" color="babyBlue" onPress={handleSubmit} /> */}
                 </View>
                 )}
             </Formik>
-
             <Dropdown
+             style={[styles.dropdown]}
+             containerStyle={styles.dropdownContainer}
                 data={addressData}
                 maxHeight={100}
                 labelField="label"
@@ -70,12 +70,38 @@ const Postcode = ({AddAddress}) => {
                     setAddress(item.value);
                 }}
             />
-            <Button title="Add" color="babyBlue" onPress={() => sendData()} />
-        </Screen>
+            <Button title="Add" textColor="white" color="black" onPress={() => sendData()} />
+            {/* <Button title="Add" color="babyBlue" onPress={() => sendData()} /> */}
+        </>
   );
 };
 
 const styles = StyleSheet.create({
+    dropdown: {
+        borderRadius: 10,
+        borderWidth: 0.5,
+        height: 50,
+        paddingHorizontal: 8,
+        marginBottom: "5%",
+        marginTop: "2.5%",
+        opacity: 1,
+        borderColor: "#D3D3D3",
+    
+      },
+      dropdownContainer: {
+        borderBottomEndRadius: 10,
+        borderBottomStartRadius: 10,
+      },
+      childBorder: {
+        borderWidth: 0.5,
+        borderRadius: 10,
+        borderColor: "#D3D3D3",
+        opacity: 1,
+        height: 50,
+        marginTop: "2.5%",
+        marginBottom: "5%"
+      }
+
 });
 
 export default Postcode;

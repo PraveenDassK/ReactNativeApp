@@ -55,14 +55,14 @@ const AuthNavigator = () => (
     component={gestureHandlerRootHOC(Privacy)}
     options={{ title: "Privacy",
     headerShown: true,
-   }}
+    }}
     />
     <Stack.Screen  
     name="SignUpPersonalScreen" 
     component={gestureHandlerRootHOC(SignUpPersonalScreen)}
     options={{ title: "Sign Up",
     headerShown: true,
-   }}
+    }}
     />
     <Stack.Screen  
       name="Login" 

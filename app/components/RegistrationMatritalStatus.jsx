@@ -8,10 +8,11 @@ import api from "../api/api_list";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-import Button from "./Button"
+import Button from "./AppButton"
 import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
+import AuthScreen from "./AuthScreen";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -40,7 +41,39 @@ const MaritalStatus = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>Marital status</Text>
+            <AuthScreen title="Marital status">
+            <Formik
+            initialValues={{
+                email:'', 
+                phoneNumber: ''
+            }}
+            onSubmit={handleSubmit}
+            //validationSchema={validationSchema}
+            >
+            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+                    <Text>What's your martital status</Text>
+                    <Dropdown
+                        style={[styles.dropdown]}
+                        containerStyle={styles.dropdownContainer}
+                        data={marrigeData}
+                        maxHeight={100}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Choose one' : '....'}
+                        value={status}
+                        onChange={item => {
+                            setStatus(item.value);
+                            setIsFocus(false);
+                        }}
+                    />
+                    <Button title="continue" textColor="white" color="black" onPress={() => handleSubmit()} />
+                    {/* <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} /> */}
+                </View>
+                )}
+            </Formik>
+            </AuthScreen>
+            {/* <Text>Marital status</Text>
             <Formik
             initialValues={{
                 email:'', 
@@ -67,12 +100,36 @@ const MaritalStatus = ({SaveDetails}) => {
                     <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
                 </View>
                 )}
-            </Formik>
+            </Formik> */}
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+    dropdown: {
+        borderRadius: 10,
+        borderWidth: 0.5,
+        height: 50,
+        paddingHorizontal: 8,
+        marginBottom: "5%",
+        marginTop: "2.5%",
+        opacity: 1,
+        borderColor: "#D3D3D3",
+    
+      },
+      dropdownContainer: {
+        borderTopEndRadius: 10,
+        borderTopStartRadius: 10,
+      },
+      childBorder: {
+        borderWidth: 0.5,
+        borderRadius: 10,
+        borderColor: "#D3D3D3",
+        opacity: 1,
+        height: 50,
+        marginTop: "2.5%",
+        marginBottom: "5%"
+      }
 });
 
 export default MaritalStatus;
