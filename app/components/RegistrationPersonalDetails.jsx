@@ -15,6 +15,7 @@ import { CheckBox } from '@rneui/themed';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from "moment";
 import colors from "../config/colors";
+import AuthScreen from "./AuthScreen";
 
 
 const PersonalDetails = ({SaveDetails}) => {
@@ -94,15 +95,8 @@ const PersonalDetails = ({SaveDetails}) => {
         <Screen style={{backgroundColor: "white"}}>
 
 
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
-        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-          <Text style={{fontSize: 30}}>A bit about you</Text>
-        </View>
-        
-        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,}}>
-             <Formik
+    <AuthScreen title="A bit about you">
+    <Formik
 
 onSubmit={(values) => sendData(values)}
 >
@@ -168,10 +162,9 @@ onSubmit={(values) => sendData(values)}
 </Formik>
             
           <Button title="continue" textColor="white" color="black" onPress={() => sendDetails()} />
-        </View> 
-        </View> 
-
-      </View>
+    </AuthScreen>
+         
+     
             {/* <Text>A bit about you</Text>
             <Formik
 

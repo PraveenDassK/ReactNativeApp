@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./AppButton"
 import colors from "../config/colors";
+import AuthScreen from "./AuthScreen";
 
 
 
@@ -25,16 +26,8 @@ const Nationality = ({SaveDetails}) => {
 
     return (
         <Screen>
-
-<View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
-        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-          <Text style={{fontSize: 30}}>Where are you from?</Text>
-        </View>
-        
-        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,}}>
-            <Formik
+            <AuthScreen title="Where are you from?">
+               <Formik
             initialValues={{
                 country:'', 
                 nationality: ''
@@ -58,12 +51,11 @@ const Nationality = ({SaveDetails}) => {
                         <Button title="continue" textColor="white" color="black" onPress={handleSubmit} />
                   </View>                  
                 )}
-            </Formik>
+            </Formik> 
+            </AuthScreen>
+            
 
-        </View> 
-        </View> 
-
-      </View>
+    
             {/* <Text>A bit about you</Text>
             <Formik
             initialValues={{

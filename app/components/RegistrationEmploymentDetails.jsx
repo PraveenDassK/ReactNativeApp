@@ -90,57 +90,7 @@ const EmploymentDetails = ({SaveDetails}) => {
 
             
             </AuthScreen>
-            {/* <Text>Employment details</Text>
-            <Formik
-            initialValues={{
-                email:'', 
-                phoneNumber: ''
-            }}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-            >
-            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>What's your employment status?</Text>
-                    <CheckBox
-                        title="Full time"
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        checked={fulltime}
-                        onPress={() => setFulltime(!fulltime)}
-                        />
-                    <CheckBox
-                        title="Part time"
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        checked={parttime}
-                        onPress={() => setParttime(!parttime)}
-                        />
-                    <CheckBox
-                        title="Unemployed"
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        checked={unemployed}
-                        onPress={() => setUnemployed(!unemployed)}
-                        />
-                    <CheckBox
-                        title="Student"
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        checked={student}
-                        onPress={() => setStudent(!student)}
-                        />
-                    <CheckBox
-                        title="Other"
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        checked={other}
-                        onPress={() => setOther(!other)}
-                        />
-                </View>
-                )}
-            </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} /> */}
+           
         </Screen>
   );
 };

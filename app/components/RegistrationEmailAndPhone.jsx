@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 import Button from "./AppButton"
 import colors from "../config/colors";
+import AuthScreen from "./AuthScreen";
 
 
 
@@ -30,16 +31,8 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
     return (
         <Screen>
 
-
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
-        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-          <Text style={{fontSize: 30}}>A bit more about you</Text>
-        </View>
-        
-        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,}}>
-            <Formik
+<AuthScreen title="A bit more about you">
+     <Formik
             initialValues={{
                 email:'', 
                 phoneNumber: ''
@@ -78,12 +71,12 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
                 </View>
                 )}
             </Formik>
+</AuthScreen>
+      
+           
           
         
-        </View> 
-        </View> 
 
-      </View>
             {/* <Text>Email and Phone number</Text>
             <Formik
             initialValues={{
