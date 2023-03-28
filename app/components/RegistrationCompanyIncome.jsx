@@ -7,10 +7,11 @@ import apiLoginRegister from "../api/apiLogin";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-import Button from "./Button"
+import Button from "./AppButton"
 import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
+import AuthScreen from "./AuthScreen";
 
 const CompanyIncome = ({SaveDetails}) => {
     const [salesRevenue, setSalesRevenue] = useState(false);
@@ -41,18 +42,19 @@ const CompanyIncome = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>Your company income</Text>
+            <AuthScreen title="Your company income">
             <Formik
 
                 onSubmit={(values) => sendData(values)}
-            >
-            {({ handleChange, handleSubmit, setFieldTouched}) => (
+                >
+                {({ handleChange, handleSubmit, setFieldTouched}) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
                     <Text>Enter all that apply</Text>
                     <CheckBox
                         title="Sales revenue"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={salesRevenue}
                         onPress={() => setSalesRevenue(!salesRevenue)}
                     />
@@ -60,6 +62,7 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Subscription revenue"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={subscriptionRevenue}
                         onPress={() => setSubscriptionRevenue(!subscriptionRevenue)}
                     />
@@ -67,6 +70,7 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Advertising revenue"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={advertisingRevenue}
                         onPress={() => setAdvertisingRevenue(!advertisingRevenue)}
                     />
@@ -74,6 +78,7 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Affiliate income"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={affiliateIncome}
                         onPress={() => setAffiliateIncome(!affiliateIncome)}
                     />
@@ -81,6 +86,7 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Licensing or franchising"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={licensingFranchisingRevenue}
                         onPress={() => setLicensingFranchisingRevenue(!licensingFranchisingRevenue)}
                     />
@@ -88,6 +94,7 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Rental income"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={rentalIncome}
                         onPress={() => setRentalIncome(!rentalIncome)}
                     />
@@ -95,6 +102,7 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Consultancy or professional services"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={consultancyServicesIncome}
                         onPress={() => setConsultancyServicesIncome(!consultancyServicesIncome)}
                     />
@@ -102,6 +110,7 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Grants and subsidies"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={grantsSubsidiesIncome}
                         onPress={() => setGrantsSubsidiesIncome(!grantsSubsidiesIncome)}
                     />
@@ -109,18 +118,31 @@ const CompanyIncome = ({SaveDetails}) => {
                         title="Crowdfunding"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={crowdfundingIncome}
                         onPress={() => setCrowdfundingIncome(!crowdfundingIncome)}
                     />
-                  </View>                  
+                </View>                  
                 )}
-            </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
+                </Formik>
+                <Button title="Continue" color="black" textColor="white" onPress={() => sendDetails()} />
+            </AuthScreen>
+            
+            
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+    childBorder: {
+        borderWidth: 0.5,
+        borderRadius: 10,
+        borderColor: "#D3D3D3",
+        opacity: 1,
+        height: 50,
+        marginTop: "2.5%",
+        marginBottom: "5%"
+      }
 });
 
 export default CompanyIncome;

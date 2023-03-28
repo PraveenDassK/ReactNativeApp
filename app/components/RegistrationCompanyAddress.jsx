@@ -8,7 +8,8 @@ import api from "../api/api_list";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-import Button from "./Button"
+import Button from "./AppButton"
+import AuthScreen from "./AuthScreen";
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
@@ -21,7 +22,7 @@ const PastAddresses = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>Company address</Text>
+            <AuthScreen title="Company address">
             <Formik
             initialValues={{
                 email:'', 
@@ -31,14 +32,17 @@ const PastAddresses = ({SaveDetails}) => {
             validationSchema={validationSchema}
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Pastaddresses</Text>
-                    <Button title="Add" color="babyBlue" onPress={() => handleSubmit()} />
+                <View style={[styles.component1981, styles.mt14]}>
+                    <Text>Past addresses</Text>
+                    <Button title="Add" color="white" textColor="black" onPress={() => handleSubmit()} />
 
                 </View>
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
+            <Button title="Continue" color="black" textColor="white" onPress={() => handleSubmit()} />
+            </AuthScreen>
+           
+   
         </Screen>
   );
 };

@@ -7,10 +7,11 @@ import apiLoginRegister from "../api/apiLogin";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-import Button from "./Button"
+import Button from "./AppButton"
 import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
+import AuthScreen from "./AuthScreen";
 
 const CompanyOperations = ({SaveDetails}) => {
     const [isNewOwnership, setIsNewOwnership] = useState(false);
@@ -43,21 +44,23 @@ const CompanyOperations = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>How long have you been operating?</Text>
+            <AuthScreen title='How long have you been operating?'>
             <Formik
             onSubmit={(values) => sendData(values)}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+                <View style={[styles.component1981, styles.mt14]}>
                     <Text>Enter one that applies</Text>
 
                     <Dropdown
+                        style={[styles.dropdown]}
+                        containerStyle={styles.dropdownContainer}
                         data={timeOptions}
                         maxHeight={100}
                         labelField="label"
                         valueField="label"
                         placeholder={'Select an option'}
-                        value={gender}
+                        value={timeOptions}
                         onChange={item => {
                             setOperationTime(item.value);
                         }}
@@ -67,6 +70,7 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="New ownership"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isNewOwnership}
                     onPress={() => setIsNewOwnership(!isNewOwnership)}
                     />
@@ -74,6 +78,7 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="Resuming trading"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isResumingTrading}
                     onPress={() => setIsResumingTrading(!isResumingTrading)}
                     />
@@ -81,6 +86,7 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="0 - 6 Months"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isZeroToSixMonths}
                     onPress={() => setIsZeroToSixMonths(!isZeroToSixMonths)}
                     />
@@ -88,6 +94,7 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="6 Months - 1 Year"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isSixMonthsToOneYear}
                     onPress={() => setIsSixMonthsToOneYear(!isSixMonthsToOneYear)}
                     />
@@ -95,6 +102,7 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="1 - 2 Years"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isOneToTwoYears}
                     onPress={() => setIsOneToTwoYears(!isOneToTwoYears)}
                     />
@@ -102,6 +110,7 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="2 - 5 Years"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isTwoToFiveYears}
                     onPress={() => setIsTwoToFiveYears(!isTwoToFiveYears)}
                     />
@@ -109,6 +118,7 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="5 - 10 Years"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isFiveToTenYears}
                     onPress={() => setIsFiveToTenYears(!isFiveToTenYears)}
                     />
@@ -116,18 +126,38 @@ const CompanyOperations = ({SaveDetails}) => {
                     title="10 + Years"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
+                    checkedColor="black"
                     checked={isTenPlusYears}
                     onPress={() => setIsTenPlusYears(!isTenPlusYears)}
                     />
                   </View>                  
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
+            <Button title="Continue" color="black" textColor="white" onPress={() => sendDetails()} />
+            </AuthScreen>
+
+           
+          
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+    dropdown: {
+        borderRadius: 10,
+        borderWidth: 0.5,
+        height: 50,
+        paddingHorizontal: 8,
+        marginBottom: "5%",
+        marginTop: "2.5%",
+        opacity: 1,
+        borderColor: "#D3D3D3",
+    
+      },
+      dropdownContainer: {
+        borderBottomEndRadius: 10,
+        borderBottomStartRadius: 10,
+      },
 });
 
 export default CompanyOperations;

@@ -58,8 +58,8 @@ const Postcode = ({AddAddress}) => {
                 )}
             </Formik>
             <Dropdown
-             style={[styles.dropdown]}
-             containerStyle={styles.dropdownContainer}
+                style={[styles.dropdown]}
+                containerStyle={styles.dropdownContainer}
                 data={addressData}
                 maxHeight={100}
                 labelField="label"

@@ -7,10 +7,11 @@ import apiLoginRegister from "../api/apiLogin";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-import Button from "./Button"
+import Button from "./AppButton"
 import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
+import AuthScreen from "./AuthScreen";
 
 const CompanyUsage = ({SaveDetails}) => {
     const [name, setName] = useState("");
@@ -22,7 +23,7 @@ const CompanyUsage = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>How would you use this account</Text>
+            <AuthScreen title="How would you use this account">
             <Formik
                 initialValues={{
                     customers:'', 
@@ -31,7 +32,7 @@ const CompanyUsage = ({SaveDetails}) => {
                 onSubmit={(values) => sendData(values)}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+                <View style={[styles.component1981, styles.mt14,]}>
                     <Text>Who are your main customers</Text>
                     <TextInput 
                         keyboardType="Text" 
@@ -43,18 +44,29 @@ const CompanyUsage = ({SaveDetails}) => {
                         title="Are there any customers outside the EU?"
                         checkedIcon="dot-circle-o"
                         uncheckedIcon="circle-o"
+                        checkedColor="black"
                         checked={isChecked}
                         onPress={() => handleChange(outsideEU)}
                         />
                   </View>                  
                 )}
             </Formik>
-            <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
+            <Button title="Continue" color="black" textColor="white" onPress={() => sendDetails()} />
+            </AuthScreen>
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+    childBorder: {
+        borderWidth: 0.5,
+        borderRadius: 10,
+        borderColor: "#D3D3D3",
+        opacity: 1,
+        height: 50,
+        marginTop: "2.5%",
+        marginBottom: "5%"
+      }
 });
 
 export default CompanyUsage;

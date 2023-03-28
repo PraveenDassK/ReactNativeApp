@@ -7,10 +7,11 @@ import apiLoginRegister from "../api/apiLogin";
 import * as Yup from 'yup';
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-import Button from "./Button"
+import Button from "./AppButton"
 import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
+import AuthScreen from "./AuthScreen";
 
 const CompanyInformation = ({SaveDetails}) => {
     const [name, setName] = useState("");
@@ -23,7 +24,7 @@ const CompanyInformation = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <Text>Tell us something more</Text>
+            <AuthScreen title="Tell us something more">
             <Formik
                 initialValues={{
                     details:''
@@ -31,23 +32,35 @@ const CompanyInformation = ({SaveDetails}) => {
                 onSubmit={handleSubmit}
             >
             {({ handleChange, handleSubmit, setFieldTouched}) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
+                <View style={[styles.component1981, styles.mt14]}>
                     <Text>About your business</Text>
                     <TextInput 
                         keyboardType="Text" 
                         onBlur={() => setFieldTouched("details")}
                         onChangeText={handleChange("details")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+                        style={[styles.component1981Child, styles.childBorder]} 
                     />
-                    <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
+                    <Button title="Continue" color="black" textColor="white" onPress={() => handleSubmit()} />
                   </View>                  
                 )}
             </Formik>
+            </AuthScreen>
+           
+           
         </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+    childBorder: {
+        borderWidth: 0.5,
+        borderRadius: 10,
+        borderColor: "#D3D3D3",
+        opacity: 1,
+        height: 50,
+        marginTop: "2.5%",
+        marginBottom: "5%"
+      }
 });
 
 export default CompanyInformation;
