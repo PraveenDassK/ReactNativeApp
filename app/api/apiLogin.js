@@ -9,14 +9,14 @@ import jwt_decode from "jwt-decode";
  * @param {*} email The email address
  * @returns 
  */
-const Login = async(mobile,email) => {
+const Login = async({phoneNumber,email}) => {
     const request = await client.post("https://api.carbonyte.io/authverifymodule/SendLoginOTP",
     {
         "email": email,
-        "phoneNumber": mobile
+        "phoneNumber": phoneNumber
     })
     console.log(request)
-    return request?.data
+    return request.data
 }
 
 /**

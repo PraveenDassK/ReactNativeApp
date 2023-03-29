@@ -8,7 +8,7 @@ import Button from "../components/AppButton"
 import ErrorMessage from "../components/forms/ErrorMessage";
 
 import GlobalStyles from "../../GlobalStyles";
-import loginApi from "../api/login";
+import loginApi from "../api/apiLogin";
 import Screen from "../components/Screen";
 
 import colors from "../config/colors";
@@ -27,10 +27,10 @@ const Login = ({ navigation }) => {
   
   const handleSubmit = async ({ email, phoneNumber }) => {
     phoneNumber = prefix + phoneNumber
-    const result = await loginApi.SendLoginOTP({ email, phoneNumber })
+    const request = await loginApi.Login({ email, phoneNumber })
     setUser({ email, phoneNumber })
     
-    if (!result.ok) return  alert('Could not send otp')
+    if (!request.result) return  alert('Could not send otp')
     
     navigation.navigate("OTPVerificationPersonal", { registration: true })
   }
