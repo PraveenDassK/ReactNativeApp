@@ -28,6 +28,7 @@ import CompanyInformation from "../components/RegistrationCompanyInformation.jsx
 import CompanyIncome from "../components/RegistrationCompanyIncome.jsx"
 import CompanyOperations from "../components/RegistrationCompanyOperations.jsx"
 import CompanyUsage from "../components/RegistrationCompanyUsage.jsx"
+import colors from "../config/colors";
 
 const Registration = ({navigation}) => {
       //Personal details
@@ -249,7 +250,7 @@ const Registration = ({navigation}) => {
       }
 
     return (
-        <Screen>
+        <Screen style={{backgroundColor: colors.white}}>
             {pagePicker()}
         </Screen>
   );

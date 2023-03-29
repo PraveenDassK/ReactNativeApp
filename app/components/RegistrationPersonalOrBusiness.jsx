@@ -26,14 +26,14 @@ const PersonalOrBusiness = ({SaveDetails}) => {
     }
 
     return (
-        <Screen>
+       
 
      <AuthScreen title="Type of account">
           <Button title="Personal" textColor="black" color="white" onPress={() => handleSubmit("Personal")} />
           <Button title="Business" textColor="black" color="white" onPress={() => handleSubmit("Business")} />
      </AuthScreen>
         
-        </Screen>
+       
   );
 };
 

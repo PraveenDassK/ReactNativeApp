@@ -11,28 +11,24 @@ import colors from "../config/colors";
 
 const SplashAnimation = ({navigation}) => {
   return (
-    <Pressable
-      style={styles.logoAnimation3}
-      onPress={() => console.log("Onboarding1")}
-    >
    
+      
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
+      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 25,borderTopRightRadius: 25,}}>
         <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-          <Text style={{fontSize: 30}}>Welcome to Carbonyte</Text>
+          <FadeInView>
+            <Text style={{fontSize: 30}}>Welcome to Carbonyte</Text>
+          </FadeInView>
         </View>
         
-        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,}}>
+        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,}}>
           <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />
           <Button title="Login" textColor="black" color="white" onPress={() => navigation.navigate("Login")} />
         </View> 
         </View> 
-
       </View>
 
-      
-    </Pressable>
   );
 };
 
@@ -90,7 +86,7 @@ const styles = StyleSheet.create({
     height: verticalScale(505),
   },
   logoAnimation3: {
-    backgroundColor: GlobalStyles.Color.gray_300,
+    backgroundColor: colors.white,
     flex: 1,
     width: "100%",
     height: "100%",
