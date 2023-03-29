@@ -155,9 +155,14 @@ const restoreToken = async () => {
   console.log('trying for restore token')
   const token = await authStorage.getToken()
   if(!token) return
-  console.log('restore token found',token)
-  setCurrentUser(jwtDecode(token))
-  const result = await apiLogin.GetCustomerDetails("CC1")
+  const decodedToken = jwtDecode(token)
+  setCurrentUser(decodedToken)
+
+  const dataobject = JSON.parse(decodedToken.Data.substr())
+  
+  const carbonyteId = dataobject.CustomerId
+  //setCustomerDetails(carbonyteID)
+  const result = await apiLogin.GetCustomerDetails(carbonyteId)
 
   setUserID(result.modulrCustomerId)
   setAccountID(result.accountDetails[0].accountId)
