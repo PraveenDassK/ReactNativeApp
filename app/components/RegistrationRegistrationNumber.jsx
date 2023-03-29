@@ -30,9 +30,11 @@ const PersonalDetails = ({SaveDetails}) => {
     console.log(regNum)
     return (
         <Screen style={{backgroundColor: "white"}}>
-            <AuthScreen title="Company registration number">
+            <AuthScreen title="Company registration number" img="elephantCarbon">
             <View style={[styles.component1981, styles.mt14]}>
                     <TextInput 
+                        placeholder="Company registration number"
+                        placeholderTextColor="grey"
                         keyboardType="numeric" 
                         onChangeText={(value) => setRegNum(value)}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 

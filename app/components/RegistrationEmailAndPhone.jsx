@@ -31,7 +31,7 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
     return (
         <Screen>
 
-<AuthScreen title="A bit more about you">
+<AuthScreen title="A bit more about you" img="elephantCarbon">
      <Formik
             initialValues={{
                 email:'', 

@@ -26,7 +26,7 @@ const Nationality = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Where are you from?">
+            <AuthScreen title="Where are you from?" img="lion">
                <Formik
             initialValues={{
                 country:'', 

@@ -124,7 +124,7 @@ const CompanyDetails = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Your company details">
+            <AuthScreen title="Your company details" img="elephantCard2">
             <Formik
             initialValues={{
                 type:''

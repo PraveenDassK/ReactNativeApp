@@ -95,7 +95,7 @@ const PersonalDetails = ({SaveDetails}) => {
         <Screen style={{backgroundColor: "white"}}>
 
 
-    <AuthScreen title="A bit about you">
+    <AuthScreen title="A bit about you" img="bear" width="45%">
     <Formik
 
 onSubmit={(values) => sendData(values)}

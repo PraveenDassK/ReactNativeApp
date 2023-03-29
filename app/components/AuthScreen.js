@@ -1,19 +1,31 @@
 import React from 'react'
-import { Text, TouchableOpacity, View} from "react-native";
+import { Text, TouchableOpacity, View, Image} from "react-native";
+import Constants from "expo-constants";
 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import colors from '../config/colors';
+import images from '../assets/login/images'
 
 
 
-const AuthScreen = ({children, title}) => {
+const AuthScreen = ({children, title, img, width = "100%"}) => {
+  console.log("src", img)
   return (
     <View style={{ flex: 1, justifyContent: "flex-end" }}>
    
     <TouchableOpacity onPress={console.log("go back")} style={{position: "absolute", top: 10, left:10, backgroundColor: colors.light, height: 40, width: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
       <MaterialCommunityIcons name="keyboard-backspace" size={30} color={colors.black} />
-      </TouchableOpacity>
+    </TouchableOpacity>
+    <View style={{flex: 1, justifyContent: "center", alignItems: "center", }}>
+
+       <Image
+         style={{width}} 
+         resizeMode="contain"
+         source={images[img]}
+        />
+     
+      </View>
     
     <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 25,borderTopRightRadius: 25,}}>
       <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>

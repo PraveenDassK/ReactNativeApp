@@ -23,7 +23,7 @@ const CompanyUsage = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="How would you use this account">
+            <AuthScreen title="How would you use this account" img="eagleCard">
             <Formik
                 initialValues={{
                     customers:'', 

@@ -22,7 +22,7 @@ const PastAddresses = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Company address">
+            <AuthScreen title="Company address" img="elephantCarbon">
             <Formik
             initialValues={{
                 email:'', 

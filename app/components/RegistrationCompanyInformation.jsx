@@ -24,7 +24,7 @@ const CompanyInformation = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Tell us something more">
+            <AuthScreen title="Tell us something more" img="turtleCard">
             <Formik
                 initialValues={{
                     details:''
@@ -35,10 +35,16 @@ const CompanyInformation = ({SaveDetails}) => {
                 <View style={[styles.component1981, styles.mt14]}>
                     <Text>About your business</Text>
                     <TextInput 
+                        editable
+                        multiline
+                        numberOfLines={4}
+                        maxLength={50}
+                        placeholder="Write about your business in about 50 words..."
+                        placeholderTextColor="grey"
                         keyboardType="Text" 
                         onBlur={() => setFieldTouched("details")}
                         onChangeText={handleChange("details")}
-                        style={[styles.component1981Child, styles.childBorder]} 
+                        style={[styles.component1981Child, styles.childBorder,]} 
                     />
                     <Button title="Continue" color="black" textColor="white" onPress={() => handleSubmit()} />
                   </View>                  
@@ -57,7 +63,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: "#D3D3D3",
         opacity: 1,
-        height: 50,
+        height: 100,
         marginTop: "2.5%",
         marginBottom: "5%"
       }

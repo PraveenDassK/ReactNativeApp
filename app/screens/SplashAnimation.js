@@ -14,12 +14,26 @@ const SplashAnimation = ({navigation}) => {
    
       
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center" }}>
+
+         <Image
+         style={{width: "100%"}} 
+         resizeMode="contain"
+        source={require("../assets/login/LoginAnimal0.png")}
+        
+      />
+     
+      </View>
+      
+     
       <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 25,borderTopRightRadius: 25,}}>
         <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-          <FadeInView>
+          
             <Text style={{fontSize: 30}}>Welcome to Carbonyte</Text>
-          </FadeInView>
-        </View>
+         
+        </View> 
+       
         
         <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 25,
           borderTopRightRadius: 25,}}>

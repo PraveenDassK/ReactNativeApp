@@ -160,7 +160,18 @@ const OTPVerificationPersonal = ({ navigation }) => {
           </Text>
         </View> */}
 
-<View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center" }}>
+
+      <Image
+      style={{width: "70%"}} 
+      resizeMode="contain"
+      source={require("../assets/login/LoginAnimal2.png")}
+      
+
+      />
+
+      </View>
       <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
         <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
           <Text style={{fontSize: 30}}>OTP Verification</Text>

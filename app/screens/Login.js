@@ -39,6 +39,17 @@ const Login = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen style={{backgroundColor: "white"}}>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center" }}>
+
+        <Image
+        style={{width: "100%"}} 
+        resizeMode="contain"
+        source={require("../assets/login/LoginAnimalFull.png")}
+
+        />
+
+        </View>
+      
       <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
         <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
           <Text style={{fontSize: 30}}>Log in to your account</Text>

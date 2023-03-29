@@ -32,7 +32,7 @@ const PastAddresses = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Past adresses">
+            <AuthScreen title="Past adresses" img="elephantCard" width="70%">
             {isAdding ? 
                 <PostCode AddAddress = {addAddress}/>
           :

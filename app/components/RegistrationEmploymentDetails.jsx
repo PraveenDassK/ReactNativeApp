@@ -30,7 +30,7 @@ const EmploymentDetails = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Employment details">
+            <AuthScreen title="Employment details" img="eagleCard" width="70%">
             <Formik
             initialValues={{
                 email:'', 
