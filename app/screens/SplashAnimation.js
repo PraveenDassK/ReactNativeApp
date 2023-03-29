@@ -15,14 +15,14 @@ const SplashAnimation = ({navigation}) => {
       
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
       
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center" }}>
-
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center", }}>
+    <FadeInView style={{width:"100%"}}>
          <Image
-         style={{width: "100%"}} 
-         resizeMode="contain"
-        source={require("../assets/login/LoginAnimal0.png")}
-        
-      />
+          style={{width: "100%"}} 
+          resizeMode="contain"
+          source={require("../assets/login/LoginAnimal0.png")}
+         />
+      </FadeInView>
      
       </View>
       
