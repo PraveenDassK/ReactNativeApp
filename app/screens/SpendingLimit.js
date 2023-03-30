@@ -147,7 +147,7 @@ const SpendingLimit = ({ navigation, route }) => {
           (
             <Text style={{ fontSize: 28, marginTop: "2.5%", color: "red", fontWeight: "700" }}> £{(monthLim - spend).toFixed(2)}</Text>
           )}
-          <Text style={{ fontSize: 14, marginTop: "1%", fontWeight: "700", opacity:"0.3" }}>Spendable funds left</Text>
+          <Text style={{ fontSize: 14, marginTop: "1%", fontWeight: "700", opacity:0.3 }}>Spendable funds left</Text>
           </View>
         </View>
       <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", marginBottom: "5%" }}>
