@@ -36,10 +36,10 @@ const ProofOfResidencyList = () => {
               styles.councilTaxOrUtilityBillTypo,
             ]}
           >
-            <Text style={styles.bankBuilding}>Bank, building{'\n'}</Text>
-            <Text style={styles.bankBuilding}>society,{'\n'}</Text>
-            <Text style={styles.bankBuilding}>mortgage or{'\n'}</Text>
-            <Text style={styles.bankBuilding}>HMRC tax{'\n'}</Text>
+            <Text style={styles.bankBuilding}>Bank, building{"\n"}</Text>
+            <Text style={styles.bankBuilding}>society,{"\n"}</Text>
+            <Text style={styles.bankBuilding}>mortgage or{"\n"}</Text>
+            <Text style={styles.bankBuilding}>HMRC tax{"\n"}</Text>
             <Text style={styles.bankBuilding}>statement</Text>
           </Text>
           <Image
@@ -60,9 +60,9 @@ const ProofOfResidencyList = () => {
               styles.councilTaxOrUtilityBillTypo,
             ]}
           >
-            <Text style={styles.bankBuilding}>House or{'\n'}</Text>
-            <Text style={styles.bankBuilding}>motor{'\n'}</Text>
-            <Text style={styles.bankBuilding}>insurance{'\n'}</Text>
+            <Text style={styles.bankBuilding}>House or{"\n"}</Text>
+            <Text style={styles.bankBuilding}>motor{"\n"}</Text>
+            <Text style={styles.bankBuilding}>insurance{"\n"}</Text>
             <Text style={styles.bankBuilding}>certificate</Text>
           </Text>
           <Image
@@ -80,8 +80,8 @@ const ProofOfResidencyList = () => {
               styles.councilTaxOrUtilityBillTypo,
             ]}
           >
-            <Text style={styles.bankBuilding}>Council tax {'\n'}</Text>
-            <Text style={styles.bankBuilding}>or {'\n'}</Text>
+            <Text style={styles.bankBuilding}>Council tax {"\n"}</Text>
+            <Text style={styles.bankBuilding}>or {"\n"}</Text>
             <Text style={styles.bankBuilding}>utility bill</Text>
           </Text>
           <Image

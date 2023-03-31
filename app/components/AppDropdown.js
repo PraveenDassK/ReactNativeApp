@@ -1,16 +1,16 @@
 import React from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 
-const AppDropdown = () => {
+const AppDropdown = ({data, placeholder}) => {
   return (
     <Dropdown
 style={[styles.dropdown]}
 containerStyle={styles.dropdownContainer}
-data={genderData}
+data={data}
 maxHeight={100}
 labelField="label"
 valueField="value"
-placeholder={'Select an option'}
+placeholder={placeholder}
 placeholderStyle={{fontSize: 14, color: "#D3D3D3"}}
 value={gender}
 onChange={item => {

@@ -28,7 +28,7 @@ import Registration from "../screens/Registration"
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator initialRouteName="Account"
+  <Stack.Navigator initialRouteName="ProofOfResidency"
   screenOptions={{ headerShown: false }}
   >
     {/* <Stack.Screen

@@ -58,7 +58,7 @@ const Postcode = ({AddAddress}) => {
                 </View>
                 )}
             </Formik>
-            {addressData.length > 0 ? 
+            {addressData?.length > 0 ? 
             <Dropdown
                 style={[styles.dropdown]}
                 containerStyle={styles.dropdownContainer}

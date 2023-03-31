@@ -122,29 +122,7 @@ useEffect(() =>{
     };
   }, []);
 
-  useEffect(() => {
-    post()
-  }, [])
 
-  const post = async () => {
-    await fetch('https://fcm.googleapis.com/fcm/send', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `key=AAAAUyPYkuo:APA91bGcgOYVkKW8Pbr9oswCz54B29X239rrYsEOfWczNeZ7YmdQkVRrVmO3IMWVVpn-bHL96qtl3MEqHTMwRuGivcuijbVyUFMBpKKO79luRt88tJf_q108Af9AG-ZZx2t0RKciXcYd`,
-  },
-  body: JSON.stringify({
-    to: 'cOi0d_qHSfWupf6_FnDfJh:APA91bH2mYQf5TPI-o59oiI-YLNpO8uMR5GwPltKDne_qhKeInCJ2J8MtdsuNM1cLSJp-4IslPnXH2mYXefiXVyiLxh4d0VuIE8u0cXS2xvX00FjerA2WHxE1RPsjBU5c7Ii_dP9YVHx',
-    priority: 'normal',
-    data: {
-      experienceId: '@chisambwe.k/BankingApp',
-      scopeKey: '@chisambwe.k/BankingApp',
-      title: "📧 You've got mail",
-      message: 'Hello world! 🌐',
-    },
-  }),
-});
-  }
 
   const authenticate = async () => {
     "starting authentication"
@@ -229,15 +207,15 @@ if (!loaded) {
       <NavigationContainer>
 
         {/* <AppNavigator /> */}
-        {/* <AuthNavigator /> */}
+        <AuthNavigator />
 
-        {!currentUser ? (
+        {/* {!currentUser ? (
           <AuthNavigator /> 
         ) :  currentUser ? (
           <AppNavigator /> 
         ) : (
           <AuthNavigator />
-        )}
+        )} */}
 
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}
