@@ -190,7 +190,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
           borderTopRightRadius: 20,}}>
              <View style={styles.subTextRow}>
               <Text style={styles.subText}>
-                  {`Please enter the code sent to `}+{user.phoneNumber}
+                  {`Please enter the code sent to `}{user.email}
                 </Text>
               </View>
               <View style={styles.entryBoxContainer}>
@@ -244,7 +244,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
               </Text>
               <View style={styles.subTextRow}>
               <Text style={[styles.subText, {marginTop: "10%"}]}>
-                  {`Please enter the code sent to `}{user.email}
+                  {`Please enter the code sent to `}+{user.phoneNumber}
                 </Text>
               </View>
              

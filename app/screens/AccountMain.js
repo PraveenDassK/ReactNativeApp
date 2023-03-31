@@ -51,17 +51,7 @@ import AppText from "../components/Text";
 const {width, height} = Dimensions.get('window');
 
 const CARD_DATA = [
-  {
-    name: 'Card 1',
-    number: '**** **** **** 1234',
-    image: require('../assets/cardLion.png'),
-  },
-  {
-    name: 'Card 2',
-    number: '**** **** **** 5678',
-    image: require('../assets/cardLion.png'),
-  },
-  // add more card data as needed
+
 ];
 
 const HomeScreenPersonal = ({ navigation, route }) => {
@@ -120,15 +110,22 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     const cardData = await apiCall.GetCardDetails(cardID);
     const resposeData = await apiCall.GetUserImpact("CC1");
     const transactionCall = await apiCall.GetTransactions(accountID);
-    console.log(resposeData)
+    
     const responseDetails = await api.getCardResponse("687942912")
 
+    console.log(responseDetails.data)
+    const cardDetails = await api.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
 
+    console.log("card details", cardDetails.data)
+    const cardNumber = cardDetails.data.substr(548,16)
+    const cardExpiry = cardDetails.data.substr(601,4)
+    const cardCVV = cardDetails.data.substr(637,3)
+    CARD_DATA.push({
+      name: cardExpiry,
+      number: cardNumber,
+      image: require('../assets/cardLion.png'),
+    });
 
-    console.log("cards", responseDetails.data)
-    
-
-  
 
     setcardnumber(cardData.cardNumberMasked)
     setSortCode("00-00-00");
@@ -142,6 +139,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
     setCardResponse(responseDetails.data);
+
 
     ////FUP Data
     try{
@@ -228,15 +226,21 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   };
 
   const loadCardDetails = async (url, token) => {
-  
-    const cardDetails = await api.getCardDetails(url, token)
+    const cardDetails = await api.getCardDetails(url, token)    
     console.log("card details", cardDetails.data)
+    const cardNumber = cardDetails.data.substr(548,16)
+    const cardExpiry = cardDetails.data.substr(601,4)
+    const cardCVV = cardDetails.data.substr(637,3)
+    CARD_DATA.push({
+      name: cardExpiry,
+      number: cardNumber,
+      image: require('../assets/cardLion.png'),
+    });
   }
-
+  
   useEffect(()=> {
     if(cardResponse) {
-    console.log('cardResponse1', cardResponse.cardDataUrl, cardResponse.token)
-    loadCardDetails(cardResponse.cardDataUrl, cardResponse.token)
+    // loadCardDetails(cardResponse.cardDataUrl, cardResponse.token)
     }
     
     // loadCardDetails()
@@ -294,8 +298,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     )
   }
 
-
-
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -326,89 +328,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <Card
             key={card.name}
             {...card}
-            selected={selectedCard.name === card.name}
+            selected={selectedCard?.name === card.name}
             onPress={() => handleCardPress(card)}
           />
         ))}
 
             </Swiper>
-            {/* <View style={styles.carbonyteCard}>
-              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "800",position: "absolute", top: verticalScale(15), left:horizontalScale(15) , fontSize: moderateScale(12), textTransform: "uppercase", width: horizontalScale(50)}]}>
-                  <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> money <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> planet <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> choice
-              </AppText>
-              <Image 
-                resizeMode="contain"
-                  style={{position: "absolute", right: horizontalScale(20),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(20), transform: [{
-                    rotate: "0deg"
-                  }]}}
-                  source={require("../assets/icon-contactless-reverse.png")}
-                />
-
-                <Image 
-                  resizeMode="contain"
-                  style={{ position: "absolute", right: horizontalScale(50), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(25), transform: [{
-                    rotate: "0deg"
-                  }]}}
-                  source={require("../assets/group-31764.png")}
-                />
-
-              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
-                  {cardnumber}
-              </AppText>
-              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(22.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
-                {accountname}
-              </AppText>
-
-              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", bottom: verticalScale(20), left:horizontalScale(15) , fontSize: moderateScale(16), textTransform: "lowercase"}]}>
-                  Carbonyte
-              </AppText>
-              <Image 
-                resizeMode="contain"
-                style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
-                  source={require("../assets/group-31766.png")}
-              />
-
-            </View> */}
           </FadeInView>
-
-          {/* <FadeInView>
-            <View style={styles.totalWalletBalanceContainer11}>
-            <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
-                Carbonyte
-            </AppText>
-              
-              <Image 
-              resizeMode="contain"
-                style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
-                  rotate: "180deg"
-                }]}}
-                source={require("../assets/group-31767.png")}
-              />
-
-              <Image 
-                resizeMode="contain"
-                style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
-                  rotate: "90deg"
-                }]}}
-                source={require("../assets/group-31764.png")}
-              />
-
-              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
-                {cardnumber}
-              </AppText>
-                
-              <Image 
-              resizeMode="contain"
-              style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
-                source={require("../assets/group-31766.png")}
-              />
-              
-              <AppText style={[styles.totalWalletBalanceText11, {position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
-              {accountname}
-              </AppText>
-              
-            </View>
-          </FadeInView> */}
 
           </View>
 

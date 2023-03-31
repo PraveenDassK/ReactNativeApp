@@ -100,10 +100,10 @@ const Registration = ({navigation}) => {
         case "Income":
           setIncome(details)
             setScreenToShow("Success")
+            sendDetails()
             return;
         case "Success":
             setPersonalDetails(details)
-            sendDetails()
             return;
         case "RegistrationNumber":
             setPersonalDetails(details)
@@ -188,17 +188,13 @@ const Registration = ({navigation}) => {
      *          has been added
      */
     const sendDetails = async() => {
-      console.log(personalDetails)
-      console.log(emailandPhone)
-      console.log(nationality)
-      console.log(income)
-      console.log(addresses)
-      console.log(employmentDetails)
+      const Id= "30"
+      Math.floor(Math.random() * 500000  );
         if(accountType == "Personal"){
           const regData = 
           [
             {
-              "id": 0,
+              "id": Id,
               "customerId": "",
               "emails": [
                 {
@@ -214,17 +210,17 @@ const Registration = ({navigation}) => {
                 "documentNo": "",
                 "documentType": "",
                 "address": addresses[0].address1,
-                "firstName": "Jack",
-                "dob": "29-12-1998",
-                "nationalId": "15",
-                "lastName": "Huang",
+                "firstName": personalDetails.firstName,
+                "dob": "01-01-1970",
+                "nationalId": Id,
+                "lastName": personalDetails.lastName,
                 "postCode": addresses[0].postcode,
                 "postTown": addresses[0].area,
                 "country": nationality.country,
                 "locale": "",
                 "salutation": "",
-                "gender": "Male",
-                "maritalStatus": "Single",
+                "gender": personalDetails.gender,
+                "maritalStatus": maritalStatus,
                 "employmentDetails": "Unemployed"
               },
               "income": {
