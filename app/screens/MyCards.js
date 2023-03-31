@@ -15,7 +15,11 @@ import AppText from "../components/Text";
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import apiCard from "../api/cardDetails";
 
+const CARD_DATA = [
+
+];
 const MyCards = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [checked, setChecked] = useState(false);
@@ -60,6 +64,21 @@ const MyCards = ({ navigation }) => {
     setInitals(currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0])
     setIsLoading(false)
     setType(currentCard.productCode)
+
+    const responseDetails = await apiCard.getCardResponse("686283112")
+    console.log(responseDetails.data)
+
+    const cardDetails = await apiCard.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
+    console.log("card details", cardDetails.data)
+    
+    const cardNumber = cardDetails.data.substr(548,16)
+    const cardExpiry = cardDetails.data.substr(601,4)
+    const cardCVV = cardDetails.data.substr(637,3)
+    CARD_DATA.push({
+      name: cardExpiry,
+      number: cardNumber,
+      image: require('../assets/cardLion.png'),
+    });
   };
 
   const cardDetails = () => {
