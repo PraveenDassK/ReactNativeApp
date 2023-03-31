@@ -43,12 +43,10 @@ const Income = ({SaveDetails}) => {
 
                 <Text>Tax residency</Text>
                     <TextInput 
-                        keyboardType="numeric" 
                         onBlur={() => setFieldTouched("phoneNumber")}
                         onChangeText={handleChange("phoneNumber")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
-                <Text>Income sources</Text>
                
 
                 </View>

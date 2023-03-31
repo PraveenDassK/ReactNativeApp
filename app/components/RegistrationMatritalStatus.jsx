@@ -73,34 +73,6 @@ const MaritalStatus = ({SaveDetails}) => {
                 )}
             </Formik>
             </AuthScreen>
-            {/* <Text>Marital status</Text>
-            <Formik
-            initialValues={{
-                email:'', 
-                phoneNumber: ''
-            }}
-            onSubmit={handleSubmit}
-            //validationSchema={validationSchema}
-            >
-            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>What's your martital status</Text>
-                    <Dropdown
-                        data={marrigeData}
-                        maxHeight={100}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={!isFocus ? 'Choose one' : '....'}
-                        value={status}
-                        onChange={item => {
-                            setStatus(item.value);
-                            setIsFocus(false);
-                        }}
-                    />
-                    <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
-                </View>
-                )}
-            </Formik> */}
         </Screen>
   );
 };

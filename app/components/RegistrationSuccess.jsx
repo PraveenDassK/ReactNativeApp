@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
 
 const Success = ({SaveDetails}) => {
     const handleSubmit = async () => {
-        SaveDetails(null,"Success")
+        navigation.navigate("Login")
     }
 
     return (
