@@ -108,7 +108,7 @@ onSubmit={(values) => sendData(values)}
           placeholderTextColor="#D3D3D3" 
           keyboardType="Text" 
           onBlur={() => setFieldTouched("phoneNumber")}
-          onChangeText={setFirstName("phoneNumber")}
+          onChangeText={(name) => setFirstName(name)}
           style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
       />
       <Text>Last name</Text>
@@ -117,7 +117,7 @@ onSubmit={(values) => sendData(values)}
           placeholderTextColor="#D3D3D3" 
           keyboardType="Text" 
           onBlur={() => setFieldTouched("phoneNumber")}
-          onChangeText={setLastName("phoneNumber")}
+          onChangeText={(name) => setLastName(name)}
           style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
       />
       <Text>Gender</Text>
@@ -134,6 +134,7 @@ onSubmit={(values) => sendData(values)}
           onChange={item => {
               setGender(item.value);
               setIsFocus(false);
+              console.log(item)
           }}
       />
       <Text>Date of Birth</Text>

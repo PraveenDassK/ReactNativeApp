@@ -23,10 +23,11 @@ const Postcode = ({AddAddress}) => {
         console.log(response)
         setAddressData(response)
     }
-
+    
     const sendData = () => {
         AddAddress(address)
     }
+    console.log(address)
 
     return (
         <>
@@ -57,6 +58,7 @@ const Postcode = ({AddAddress}) => {
                 </View>
                 )}
             </Formik>
+            {addressData.length > 0 ? 
             <Dropdown
                 style={[styles.dropdown]}
                 containerStyle={styles.dropdownContainer}
@@ -64,14 +66,15 @@ const Postcode = ({AddAddress}) => {
                 maxHeight={100}
                 labelField="label"
                 valueField="value"
-                placeholder={address[0]}
-                value={address}
+                placeholder={addressData[0].label}
+                value={address?.address1}
                 onChange={item => {
                     setAddress(item.value);
                 }}
-            />
+            /> : 
+                <View/>
+            }
             <Button title="Add" textColor="white" color="black" onPress={() => sendData()} />
-            {/* <Button title="Add" color="babyBlue" onPress={() => sendData()} /> */}
         </>
   );
 };

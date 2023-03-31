@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"; 
 //import * as React from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard} from "react-native";
+import { StyleSheet, View, FlatList, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard} from "react-native";
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
@@ -28,7 +28,7 @@ const PastAddresses = ({SaveDetails}) => {
         setAdding(false)
         setAddresses(address => [...address, addressObj])
     }
-    console.log(addresses)
+    console.log("Addresses", addresses)
 
     return (
         <Screen>
@@ -37,6 +37,15 @@ const PastAddresses = ({SaveDetails}) => {
                 <PostCode AddAddress = {addAddress}/>
           :
                 <View>
+                    <FlatList
+                        data={addresses}
+                        renderItem={({address}) => {
+                            {console.log(address)}
+                            <View/>
+                        }}
+                        keyExtractor={addresses => addresses.id}
+                    />
+
                     <Button title="Add" textColor="white" color="black" onPress={() => setAdding(true)} />
                     <Button title="Continue" textColor="black" color="white" onPress={() => handleSubmit()} />
                 </View>}
