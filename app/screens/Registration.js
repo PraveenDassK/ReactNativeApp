@@ -148,38 +148,38 @@ const Registration = ({navigation}) => {
       const pagePicker = () => {
         switch(screenToShow){
           case "PersonalDetails":
-            return <RegistrationPersonalDetails SaveDetails = {detailsSaver}/>
-        case "EmailAndPhone":
-            return <RegistraionEmailAndPhone SaveDetails = {detailsSaver}/>
-        case "Nationality":
-            return <Nationality SaveDetails = {detailsSaver}/>
-        case "PastAddresses":
-            return <PastAddresses SaveDetails = {detailsSaver}/>
-        case "MaritalStatus":
-            return <MaritalStatus SaveDetails = {detailsSaver}/>
-        case "EmploymentDetails":
-            return <EmploymentDetails SaveDetails = {detailsSaver}/>
-        case "Income":
-            return <Income SaveDetails = {detailsSaver}/>
-        case "Success":
-            return <Success SaveDetails = {detailsSaver}/>
-        case "RegistrationNumber":
-            return <RegistrationNumber SaveDetails = {detailsSaver}/>
-        case "CompanyDetails":
-            return <CompanyDetails SaveDetails = {detailsSaver}/>
-        case "CompanyAddress":
-            return <CompanyAddress SaveDetails = {detailsSaver}/>
-        case "CompanyInformation":
-            return <CompanyInformation SaveDetails = {detailsSaver}/>
-        case "CompanyIncome":
-            return <CompanyIncome SaveDetails = {detailsSaver}/>
-        case "CompanyOperations":
-            return <CompanyOperations SaveDetails = {detailsSaver}/>
-        case "CompanyUsage":
-            return <CompanyUsage SaveDetails = {detailsSaver}/>
-        default:
-            return <PersonalOrBusiness SaveDetails = {accountSelector}/>
-        }
+            return <RegistrationPersonalDetails SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "EmailAndPhone":
+            return <RegistraionEmailAndPhone SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "Nationality":
+            return <Nationality SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "PastAddresses":
+            return <PastAddresses SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "MaritalStatus":
+            return <MaritalStatus SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "EmploymentDetails":
+            return <EmploymentDetails SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "Income":
+            return <Income SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "Success":
+            return <Success SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "RegistrationNumber":
+            return <RegistrationNumber SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "CompanyDetails":
+            return <CompanyDetails SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "CompanyAddress":
+            return <CompanyAddress SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "CompanyInformation":
+            return <CompanyInformation SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "CompanyIncome":
+            return <CompanyIncome SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "CompanyOperations":
+            return <CompanyOperations SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "CompanyUsage":
+            return <CompanyUsage SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          default:
+            return <PersonalOrBusiness SaveDetails = {accountSelector} navigation = {navigation}/>
+        }        
       }
 
     /**
