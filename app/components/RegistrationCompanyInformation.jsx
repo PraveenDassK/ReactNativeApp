@@ -13,7 +13,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 
-const CompanyInformation = ({SaveDetails}) => {
+const CompanyInformation = ({SaveDetails,setScreenToShow}) => {
     const [name, setName] = useState("");
     const [type, setType] = useState(null)
     const [isFocus, setIsFocus] = useState(false);
@@ -21,10 +21,13 @@ const CompanyInformation = ({SaveDetails}) => {
     const handleSubmit = ({details}) => {
         SaveDetails(details,"CompanyInformation")
     }
-
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("CompanyAddress")
+      }
     return (
         <Screen>
-            <AuthScreen title="Tell us something more" img="turtleCard">
+            <AuthScreen title="Tell us something more" img="turtleCard" handleBack = {handleBack}>            
             <Formik
                 initialValues={{
                     details:''

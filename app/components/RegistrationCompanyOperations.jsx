@@ -13,7 +13,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 
-const CompanyOperations = ({SaveDetails}) => {
+const CompanyOperations = ({SaveDetails,setScreenToShow}) => {
     const [isNewOwnership, setIsNewOwnership] = useState(false);
     const [isResumingTrading, setIsResumingTrading] = useState(false);
     const [isZeroToSixMonths, setIsZeroToSixMonths] = useState(false);
@@ -42,9 +42,14 @@ const CompanyOperations = ({SaveDetails}) => {
         SaveDetails(operationTime,"CompanyOperations")
     }
 
-    return (
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("")
+    }
+
+      return (
         <Screen>
-            <AuthScreen title='How long have you been operating?'>
+            <AuthScreen title='How long have you been operating?' handleBack = {handleBack}>
             <Formik
             onSubmit={(values) => sendData(values)}
             >

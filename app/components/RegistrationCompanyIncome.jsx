@@ -13,7 +13,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 
-const CompanyIncome = ({SaveDetails}) => {
+const CompanyIncome = ({SaveDetails,setScreenToShow}) => {
     const [salesRevenue, setSalesRevenue] = useState(false);
     const [subscriptionRevenue, setSubscriptionRevenue] = useState(false);
     const [advertisingRevenue, setAdvertisingRevenue] = useState(false);
@@ -40,9 +40,13 @@ const CompanyIncome = ({SaveDetails}) => {
         SaveDetails(details,"CompanyIncome")
     }
 
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("CompanyInformation")
+      }
     return (
         <Screen>
-            <AuthScreen title="Your company income">
+            <AuthScreen title="Your company income" handleBack = {handleBack}>
             <Formik
 
                 onSubmit={(values) => sendData(values)}

@@ -14,7 +14,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 
-const PersonalDetails = ({SaveDetails}) => {
+const PersonalDetails = ({SaveDetails,setScreenToShow}) => {
     const [regNum, setRegNum] = useState("");
     const [companyDetails, setCompanyDetails] = useState(null)
 
@@ -28,9 +28,14 @@ const PersonalDetails = ({SaveDetails}) => {
         SaveDetails(companyDetails,"RegistrationNumber")
     }
     console.log(regNum)
+
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("")
+      }
     return (
         <Screen style={{backgroundColor: "white"}}>
-            <AuthScreen title="Company registration number" img="elephantCarbon">
+            <AuthScreen title="Company registration number" img="elephantCarbon" handleBack = {handleBack}>
             <View style={[styles.component1981, styles.mt14]}>
                     <TextInput 
                         placeholder="Company registration number"

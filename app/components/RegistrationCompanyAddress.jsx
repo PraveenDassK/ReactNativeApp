@@ -15,14 +15,17 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const PastAddresses = ({SaveDetails}) => {
+const PastAddresses = ({SaveDetails,setScreenToShow}) => {
     const handleSubmit = async () => {
         SaveDetails(null,"CompanyAddress")
     }
-
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("")
+      }
     return (
         <Screen>
-            <AuthScreen title="Company address" img="elephantCarbon">
+            <AuthScreen title="Company address" img="elephantCarbon" handleBack = {handleBack}>
             <Formik
             initialValues={{
                 email:'', 
