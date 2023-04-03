@@ -46,8 +46,8 @@ const PastAddresses = ({SaveDetails,setScreenToShow}) => {
                {addresses.length > 0  ? (
                 <>
                     <Text>{`${addresses[0].address1}`}</Text> 
-                    <Text>{`${addresses[0].address2} `}</Text> 
-                    <Text>{`${addresses[0].area} `}</Text> 
+                    <Text>{`${addresses[0].address2.split(" ").filter(a => a != '').join(" ")} `}</Text> 
+                    <Text>{`${addresses[0].area.split(" ").filter(a => a != '').join(" ")} `}</Text> 
                     <Text>{`${addresses[0].postcode} `}</Text> 
                 </>
                ): null}
