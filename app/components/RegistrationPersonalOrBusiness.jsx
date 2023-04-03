@@ -32,7 +32,7 @@ const PersonalOrBusiness = ({SaveDetails}) => {
     return (
        
 
-     <AuthScreen title="Type of account" img="penguinCard">
+     <AuthScreen title="Type of account" img="penguinCard" handleBack = {handleBack}>
           <Button title="Personal" textColor="black" color="white" onPress={() => handleSubmit("Personal")} />
           <Button title="Business" textColor="black" color="white" onPress={() => handleSubmit("Business")} />
      </AuthScreen>
