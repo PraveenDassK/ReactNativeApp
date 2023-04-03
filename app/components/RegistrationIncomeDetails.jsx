@@ -19,10 +19,13 @@ const Income = ({SaveDetails}) => {
     const handleSubmit = async () => {
         SaveDetails(null,"Income")
     }
-
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("EmploymentDetails")
+      }
     return (
         <Screen>
-            <AuthScreen title="Income details" img="eagleCard">
+            <AuthScreen title="Income details" img="eagleCard" handleBack = {handleBack}>
             <Formik
             initialValues={{
                 email:'', 

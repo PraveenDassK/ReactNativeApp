@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const MaritalStatus = ({SaveDetails}) => {
+const MaritalStatus = ({SaveDetails,setScreenToShow}) => {
     const [open, setOpen] = useState(false)
     const [isFocus, setIsFocus] = useState(false);
     const [status, setStatus] = useState(false);
@@ -38,6 +38,10 @@ const MaritalStatus = ({SaveDetails}) => {
     const handleSubmit = async () => {
         SaveDetails(status,"MaritalStatus")
     }
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("PastAddresses")
+      }
 
     return (
         <Screen>

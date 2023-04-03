@@ -13,13 +13,17 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 
-const CompanyDetails = ({SaveDetails}) => {
+const CompanyDetails = ({SaveDetails,setScreenToShow}) => {
     const [type, setType] = useState(null)
+    const [privacyPolicy, setPrivacyPolicy] = useState(false);
 
     const handleSubmit = () => {
         SaveDetails(type,"CompanyDetails")
     }
-
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("")
+      }
     const options =  [
             { label: "Crop Production", value: "Crop Production" },
             { label: "Animal Production and Aquaculture", value: "Animal Production and Aquaculture" },
@@ -124,7 +128,7 @@ const CompanyDetails = ({SaveDetails}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Your company details" img="elephantCard2">
+            <AuthScreen title="Your company details" img="elephantCard2" handleBack = {handleBack}>
             <Formik
             initialValues={{
                 type:''
@@ -146,6 +150,12 @@ const CompanyDetails = ({SaveDetails}) => {
                         onChange={item => {
                             setType(item.value);
                         }}
+                    />
+                    <CheckBox
+                        title="I have read and accepted the Privacy Policy"
+                        checked={privacyPolicy}
+                        checkedColor="black"
+                        onPress={() => setPrivacyPolicy(!privacyPolicy)}
                     />
                     <Button title="Continue" color="black" textColor="white" onPress={handleSubmit} />
                   </View>                  

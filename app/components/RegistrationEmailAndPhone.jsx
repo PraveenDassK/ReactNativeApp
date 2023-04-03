@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const RegistrationEmailAndPhone = ({SaveDetails}) => {
+const RegistrationEmailAndPhone = ({SaveDetails,setScreenToShow}) => {
 
     const handleSubmit = async ({ email, phoneNumber }) => {
         SaveDetails({        
@@ -28,10 +28,15 @@ const RegistrationEmailAndPhone = ({SaveDetails}) => {
         },"EmailAndPhone")
     }
 
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("PersonalDetails")
+      }
+
     return (
         <Screen>
 
-<AuthScreen title="A bit more about you" img="elephantCarbon">
+<AuthScreen title="A bit more about you" img="elephantCarbon" handleBack = {handleBack}>
      <Formik
             initialValues={{
                 email:'', 

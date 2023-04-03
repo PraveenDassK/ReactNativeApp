@@ -17,7 +17,7 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const EmploymentDetails = ({SaveDetails}) => {
+const EmploymentDetails = ({SaveDetails,setScreenToShow}) => {
     const [fulltime, setFulltime] = useState(false);
     const [parttime, setParttime] = useState(false);
     const [unemployed, setUnemployed] = useState(false);
@@ -27,10 +27,14 @@ const EmploymentDetails = ({SaveDetails}) => {
     const handleSubmit = async () => {
         SaveDetails(null,"EmploymentDetails")
     }
-
+    
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("MaritalStatus")
+      }
     return (
         <Screen>
-            <AuthScreen title="Employment details" img="eagleCard" width="70%">
+            <AuthScreen title="Employment details" img="eagleCard" width="70%" handleBack = {handleBack}>
             <Formik
             initialValues={{
                 email:'', 

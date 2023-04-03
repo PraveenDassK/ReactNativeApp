@@ -13,17 +13,21 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 
-const CompanyUsage = ({SaveDetails}) => {
+const CompanyUsage = ({SaveDetails,setScreenToShow}) => {
     const [name, setName] = useState("");
     const [isChecked, setChecked] = useState(false);
 
     const sendDetails = (type) => {
         SaveDetails(null,"CompanyUsage")
     }
-
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("")
+      }
+      
     return (
         <Screen>
-            <AuthScreen title="How would you use this account" img="eagleCard">
+            <AuthScreen title="How would you use this account" img="eagleCard" handleBack = {handleBack}>
             <Formik
                 initialValues={{
                     customers:'', 
