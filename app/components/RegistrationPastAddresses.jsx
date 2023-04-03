@@ -11,7 +11,7 @@ import Button from "./AppButton"
 import PostCode from './RegistrationPostCode.jsx'
 import AuthScreen from "./AuthScreen";
 
-const PastAddresses = ({SaveDetails}) => {
+const PastAddresses = ({SaveDetails,setScreenToShow}) => {
     const [addresses, setAddresses] = useState([]);
     const [isAdding, setAdding] = useState(false);
 
@@ -30,18 +30,29 @@ const PastAddresses = ({SaveDetails}) => {
     }
     console.log("Addresses", addresses)
 
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("Nationality")
+      }
     return (
         <Screen>
-            <AuthScreen title="Past adresses" img="elephantCard" width="70%">
-               {addresses.length > 0  ? <Text>here</Text> : null}
+            <AuthScreen title="Past adresses" img="elephantCard" width="70%" handleBack = {handleBack}>
             {isAdding ? 
                 <PostCode AddAddress = {addAddress}/>
           :
                 <View>
+                    <FlatList
+                        data={addresses}
+                        renderItem={({address}) => {
+                            {console.log(address)}
+                            <View/>
+                        }}
+                        keyExtractor={addresses => addresses.id}
+                    />
+
                     <Button title="Add" textColor="white" color="black" onPress={() => setAdding(true)} />
                     <Button title="Continue" textColor="black" color="white" onPress={() => handleSubmit()} />
-                </View>
-            }
+                </View>}
             </AuthScreen>
             {/* <Text>Past addresses</Text>
             {isAdding ? 

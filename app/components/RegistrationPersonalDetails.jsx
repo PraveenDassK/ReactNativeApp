@@ -18,7 +18,7 @@ import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
 
 
-const PersonalDetails = ({SaveDetails}) => {
+const PersonalDetails = ({SaveDetails,setScreenToShow}) => {
     
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState("");
@@ -91,11 +91,16 @@ const PersonalDetails = ({SaveDetails}) => {
     },"PersonalDetails")
   }
 
+  const handleBack = () =>{
+    console.log("!")
+    setScreenToShow("")
+  }
+
     return (
         <Screen style={{backgroundColor: "white"}}>
 
 
-    <AuthScreen title="A bit about you" img="bear" width="45%">
+    <AuthScreen title="A bit about you" img="bear" width="45%" handleBack = {handleBack}>
     <Formik
 
 onSubmit={(values) => sendData(values)}

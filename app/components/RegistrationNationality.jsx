@@ -14,7 +14,7 @@ import AuthScreen from "./AuthScreen";
 
 
 
-const Nationality = ({SaveDetails}) => {
+const Nationality = ({SaveDetails,setScreenToShow}) => {
 
     const handleSubmit = ({country,nationality}) => {
         console.log(country,nationality)
@@ -23,10 +23,14 @@ const Nationality = ({SaveDetails}) => {
             nationality: nationality
         },"Nationality")
     }
-
+    const handleBack = () =>{
+        console.log("!")
+        setScreenToShow("EmailAndPhone")
+      }
+    
     return (
         <Screen>
-            <AuthScreen title="Where are you from?" img="lion">
+            <AuthScreen title="Where are you from?" img="lion" handleBack = {handleBack}>
                <Formik
             initialValues={{
                 country:'', 
@@ -53,35 +57,6 @@ const Nationality = ({SaveDetails}) => {
                 )}
             </Formik> 
             </AuthScreen>
-            
-
-    
-            {/* <Text>A bit about you</Text>
-            <Formik
-            initialValues={{
-                country:'', 
-                nationality: ''
-            }}
-            onSubmit={handleSubmit}
-            >
-            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>CountryOfBirth</Text>
-                    <TextInput 
-                        onBlur={() => setFieldTouched("country")}
-                        onChangeText={handleChange("country")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
-                    <Text>Nationality</Text>
-                    <TextInput 
-                        onBlur={() => setFieldTouched("nationality")}
-                        onChangeText={handleChange("nationality")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
-                    <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} />
-                  </View>                  
-                )}
-            </Formik> */}
         </Screen>
   );
 };
