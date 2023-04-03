@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const PersonalOrBusiness = ({SaveDetails}) => {
+const PersonalOrBusiness = ({SaveDetails,navigation}) => {
 
     const handleSubmit = async (type) => {
         console.log(type)
