@@ -14,7 +14,7 @@ const AuthScreen = ({handleBack,children, title, img, width = "100%"}) => {
   return (
     <View style={{ flex: 1, justifyContent: "flex-end",  }}>
    
-    <TouchableOpacity onPress={() => handleBack()} style={{zIndex: "100",position: "absolute", top: 10, left:10, backgroundColor: colors.light, height: 40, width: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+    <TouchableOpacity onPress={() => handleBack()} style={{zIndex: 100,position: "absolute", top: 10, left:10, backgroundColor: colors.light, height: 40, width: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
       <MaterialCommunityIcons name="keyboard-backspace" size={30} color={colors.black} />
     </TouchableOpacity>
     <View style={{flex: 1, justifyContent: "center", alignItems: "center", }}>

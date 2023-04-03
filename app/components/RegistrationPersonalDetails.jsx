@@ -18,7 +18,7 @@ import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
 
 
-const PersonalDetails = ({SaveDetails,setScreenToShow}) => {
+const PersonalDetails = ({SaveDetails,navigation}) => {
     
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState("");
