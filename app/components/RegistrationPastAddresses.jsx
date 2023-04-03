@@ -14,6 +14,11 @@ import AuthScreen from "./AuthScreen";
 const PastAddresses = ({SaveDetails}) => {
     const [addresses, setAddresses] = useState([]);
     const [isAdding, setAdding] = useState(false);
+    const [add, setAdd] = useState(null)
+
+    useEffect(()=>{
+        if(addresses.length > 0 ) setAdd(addresses.address1)
+    },[addresses, isAdding])
 
     const handleSubmit = async () => {
         SaveDetails(addresses,"PastAddresses")
@@ -33,7 +38,16 @@ const PastAddresses = ({SaveDetails}) => {
     return (
         <Screen>
             <AuthScreen title="Past adresses" img="elephantCard" width="70%">
-               {addresses.length > 0  ? <Text>here</Text> : null}
+                
+               {addresses.length > 0  ? (
+                <>
+                    <Text>{`${addresses[0].address1}`}</Text> 
+                    <Text>{`${addresses[0].address2} `}</Text> 
+                    <Text>{`${addresses[0].area} `}</Text> 
+                    <Text>{`${addresses[0].postcode} `}</Text> 
+                </>
+               ): null}
+               {console.log(addresses)}
             {isAdding ? 
                 <PostCode AddAddress = {addAddress}/>
           :
