@@ -207,15 +207,15 @@ if (!loaded) {
       <NavigationContainer>
 
         {/* <AppNavigator /> */}
-        <AuthNavigator />
+        {/* <AuthNavigator /> */}
 
-        {/* {!currentUser ? (
+        {!currentUser ? (
           <AuthNavigator /> 
         ) :  currentUser ? (
           <AppNavigator /> 
         ) : (
           <AuthNavigator />
-        )} */}
+        )}
 
         {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
         or <AuthNavigator />*/}
@@ -224,7 +224,6 @@ if (!loaded) {
     </AuthContext.Provider>    
   )
 }
-
 
 async function registerForPushNotificationsAsync() {
   let token;
