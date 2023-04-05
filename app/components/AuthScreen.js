@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity, View, Image} from "react-native";
+import { Text, TouchableOpacity,TouchableWithoutFeedback, Keyboard, View, Image} from "react-native";
 import Constants from "expo-constants";
 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -12,6 +12,7 @@ import images from '../assets/login/images'
 const AuthScreen = ({handleBack,children, title, img, width = "100%", back=true}) => {
   console.log("src", img)
   return (
+     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={{ flex: 1, justifyContent: "flex-end",  }}>
    
     {back && (
@@ -39,6 +40,7 @@ const AuthScreen = ({handleBack,children, title, img, width = "100%", back=true}
       </View> 
       </View> 
     </View>
+    </TouchableWithoutFeedback>
   )
 }
 

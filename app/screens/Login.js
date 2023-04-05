@@ -1,10 +1,18 @@
 import React, { useContext, useEffect, useLayoutEffect } from "react";
-import { StyleSheet, View, Text, TextInput, Image, TouchableWithoutFeedback, Keyboard} from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { Formik } from "formik";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 import AuthContext from "../auth/context";
-import Button from "../components/AppButton"
+import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 
 import GlobalStyles from "../../GlobalStyles";
@@ -13,136 +21,184 @@ import Screen from "../components/Screen";
 
 import colors from "../config/colors";
 
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  phoneNumber: Yup.string().required().min(9).max(11).label("Phone number")
-})
+  phoneNumber: Yup.string().required().min(9).max(11).label("Phone number"),
+});
 
 const Login = ({ navigation }) => {
-  const prefix = "44"
-  
-  const { setUser } = useContext(AuthContext)
-  
+  const prefix = "44";
+
+  const { setUser } = useContext(AuthContext);
+
   const handleSubmit = async ({ email, phoneNumber }) => {
-    phoneNumber = prefix + phoneNumber
-    const request = await loginApi.Login({ email, phoneNumber })
-    setUser({ email, phoneNumber })
-    
-    if (!request.result) return  alert('Could not send otp')
-    
-    navigation.navigate("OTPVerificationPersonal", { registration: true })
-  }
+    phoneNumber = prefix + phoneNumber;
+    const request = await loginApi.Login({ email, phoneNumber });
+    setUser({ email, phoneNumber });
+
+    if (!request.result) return alert("Could not send otp");
+
+    navigation.navigate("OTPVerificationPersonal", { registration: true });
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Screen style={{backgroundColor: "white"}}>
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center" }}>
-
-        <Image
-        style={{width: "100%"}} 
-        resizeMode="contain"
-        source={require("../assets/login/LoginAnimalFull.png")}
-
-        />
-
-        </View>
-      
-      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 20,borderTopRightRadius: 20,}}>
-        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-          <Text style={{fontSize: 30}}>Log in to your account</Text>
-          <Text style={[styles.otp, ]}>
-              OTP will be sent to verify your number and email ID.
-            </Text>
-        </View>
-
-        <Formik
-            initialValues={{email:'', phoneNumber: ''}}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
+  
+      <Screen style={{ backgroundColor: "white" }}>
+        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-              <>
-             <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,}}>
+            <Image
+              style={{ width: "100%" }}
+              resizeMode="contain"
+              source={require("../assets/login/LoginAnimalFull.png")}
+            />
+          </View>
 
-              <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-        
-                <TextInput 
-                  keyboardType="numeric" 
-                  onBlur={() => setFieldTouched("phoneNumber")}
-                  onChangeText={handleChange("phoneNumber")}
-                  style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                />
-      
+          <View
+            style={{
+              backgroundColor: colors.light,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginVertical: 30,
+              }}
+            >
+              <Text style={{ fontSize: 30 }}>Log in to your account</Text>
+              <Text style={[styles.otp]}>
+                OTP will be sent to verify your number and email ID.
+              </Text>
             </View>
-        <View style={[styles.component1971, styles.mt_850, styles.ml24]}>
-        <View style={[styles.component1971Child, styles.childBorder]} />
-        <Text style={[styles.text1, styles.networkPosition, styles.text1Typo]}>
-          +44
-        </Text>
-        <Image
-          style={[styles.maskGroup288, styles.keysPosition]}
-          resizeMode="cover"
-          source={require("../assets/image-ukflag.png")}
-        />
-      </View>
-      <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
-      <Text
-        style={[
-          styles.enterYourEmailId,
-          styles.mt27,
-          styles.ml25,
-          styles.enterColor,
-        ]}
-      >
-        
-        Enter your Email ID
-      </Text>
-      <TextInput
-      autoCapitalize="none"
-      textContentType="emailAdress"
-      keyboardType="email-address"
-      onBlur={() => setFieldTouched('email')}
-      onChangeText={handleChange('email')}
-      style={[
-          styles.signUpPersonalItem,
-          styles.mt9,
-          styles.ml24,
-          styles.childBorder,
-          {padding:10}
-        ]}
-      />
-      <ErrorMessage error={errors.email} visible={touched.email}/>
 
-     
+            <Formik
+              initialValues={{ email: "", phoneNumber: "" }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({
+                handleChange,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                touched,
+              }) => (
+                <>
+                  <View
+                    style={{
+                      paddingHorizontal: 30,
+                      paddingVertical: 50,
+                      backgroundColor: "white",
+                      borderTopLeftRadius: 20,
+                      borderTopRightRadius: 20,
+                    }}
+                  >
+                    <View
+                      style={[
+                        styles.component1981,
+                        styles.mt14,
+                        { marginLeft: horizontalScale(10) },
+                      ]}
+                    >
+                      <TextInput
+                        keyboardType="numeric"
+                        onBlur={() => setFieldTouched("phoneNumber")}
+                        onChangeText={handleChange("phoneNumber")}
+                        style={[
+                          styles.component1981Child,
+                          styles.childBorder,
+                          { padding: 10 },
+                        ]}
+                      />
+                    </View>
+                    <View
+                      style={[styles.component1971, styles.mt_850, styles.ml24]}
+                    >
+                      <View
+                        style={[styles.component1971Child, styles.childBorder]}
+                      />
+                      <Text
+                        style={[
+                          styles.text1,
+                          styles.networkPosition,
+                          styles.text1Typo,
+                        ]}
+                      >
+                        +44
+                      </Text>
+                      <Image
+                        style={[styles.maskGroup288, styles.keysPosition]}
+                        resizeMode="cover"
+                        source={require("../assets/image-ukflag.png")}
+                      />
+                    </View>
+                    <ErrorMessage
+                      error={errors.phoneNumber}
+                      visible={touched.phoneNumber}
+                    />
+                    <Text
+                      style={[
+                        styles.enterYourEmailId,
+                        styles.mt27,
+                        styles.ml25,
+                        styles.enterColor,
+                      ]}
+                    >
+                      Enter your Email ID
+                    </Text>
+                    <TextInput
+                      autoCapitalize="none"
+                      textContentType="emailAdress"
+                      keyboardType="email-address"
+                      onBlur={() => setFieldTouched("email")}
+                      onChangeText={handleChange("email")}
+                      style={[
+                        styles.signUpPersonalItem,
+                        styles.mt9,
+                        styles.ml24,
+                        styles.childBorder,
+                        { padding: 10 },
+                      ]}
+                    />
+                    <ErrorMessage
+                      error={errors.email}
+                      visible={touched.email}
+                    />
 
-            
-          <Button title="Next" textColor="white" color="black" onPress={handleSubmit} />
-    
-        </View> 
-      {/* <View style={styles.button}>
+                    <Button
+                      title="Next"
+                      textColor="white"
+                      color="black"
+                      onPress={handleSubmit}
+                    />
+                  </View>
+                  {/* <View style={styles.button}>
 
         <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
       </View> */}
-              
-              </>
-            )}
-        </Formik>
-      
-        
-        {/* <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
+                </>
+              )}
+            </Formik>
+
+            {/* <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
           borderTopRightRadius: 20,}}>
           <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />
           <Button title="Login" textColor="black" color="white" onPress={() => navigation.navigate("Login")} />
         </View>  */}
-        </View> 
+          </View>
+        </View>
 
-      </View>
-      
-      {/* <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
+        {/* <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
         <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
           <View style={[styles.hello1, styles.enterColor]}>
             <Text style={[styles.getStartedWith, styles.enterColor]}>Log in to your account</Text>
@@ -227,27 +283,26 @@ const Login = ({ navigation }) => {
     
 
       </View> */}
-      
       </Screen>
-    </TouchableWithoutFeedback>
+   
   );
 };
 
 const styles = StyleSheet.create({
-  continueButton:{
+  continueButton: {
     //backgroundColor:"#0101FD",
-    color:"#0101FD",
+    color: "#0101FD",
   },
-  button:{
+  button: {
     flex: 1,
     flexDirection: "column",
     width: "100%",
-    
+
     justifyContent: "flex-end",
     alignItems: "flex-end",
   },
   otp: {
-    fontSize: 14
+    fontSize: 14,
   },
   mt2: {
     marginTop: GlobalStyles.Margin.margin_31xs,
@@ -324,7 +379,6 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.white,
-    
   },
   help: {
     borderWidth: 1,
@@ -427,15 +481,13 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   hello1: {
-
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: verticalScale(30),
     textAlign: "left",
     fontWeight: "700",
-
   },
   enterYourMobileNumber: {
-  top: verticalScale(140),
+    top: verticalScale(140),
     left: horizontalScale(0),
     bottom: verticalScale(0),
     textAlign: "left",
@@ -538,7 +590,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   component1981Child: {
-   right: horizontalScale(0),
+    right: horizontalScale(0),
     bottom: verticalScale(790),
     left: horizontalScale(65),
     top: verticalScale(0),
@@ -742,7 +794,7 @@ const styles = StyleSheet.create({
     height: verticalScale(60),
   },
   enterYourEmailId: {
-  top: verticalScale(-5),
+    top: verticalScale(-5),
     textAlign: "left",
     fontSize: GlobalStyles.FontSize.size_base,
   },
@@ -751,12 +803,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  swipeUp : {
-  alignItems: "center",
-  justifyContent: "center",
-   top: verticalScale(50),
-  }
+  swipeUp: {
+    alignItems: "center",
+    justifyContent: "center",
+    top: verticalScale(50),
+  },
 });
-
 
 export default Login;
