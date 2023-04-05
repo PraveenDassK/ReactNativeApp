@@ -17,9 +17,9 @@ const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
 })
 
-const Success = ({SaveDetails}) => {
+const Success = ({SaveDetails,navigation}) => {
     const handleSubmit = async () => {
-        navigation.navigate("Login")
+        navigation.navigate("ProofOfResidency")
     }
 
     return (

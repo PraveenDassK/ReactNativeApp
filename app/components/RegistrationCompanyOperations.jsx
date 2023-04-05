@@ -71,7 +71,7 @@ const CompanyOperations = ({SaveDetails,setScreenToShow}) => {
                         }}
                     />
 
-                    <CheckBox
+                    {/* <CheckBox
                     title="New ownership"
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
@@ -134,7 +134,7 @@ const CompanyOperations = ({SaveDetails,setScreenToShow}) => {
                     checkedColor="black"
                     checked={isTenPlusYears}
                     onPress={() => setIsTenPlusYears(!isTenPlusYears)}
-                    />
+                    /> */}
                   </View>                  
                 )}
             </Formik>

@@ -14,7 +14,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import GlobalStyles from "../../GlobalStyles";
 // import Text from "../components/Text";
 import Screen from "../components/Screen";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import AuthContext from "../auth/context";
 import w2GlobalAPI from "../api/w2Global";
 import Icon from "../components/Icon";
@@ -84,25 +84,27 @@ const ProofOfResidency = ({ navigation }) => {
     setIsLoading(false);
   };
 
-  const handleSubmit = async ({ phoneNumber }) => {
-    setIsLoading(true);
-    const clientReference = phoneNumber;
+  const handleSubmit = async () => {
+    navigation.navigate("ProofOfID");
+    // setIsLoading(true);
+    // const clientReference = phoneNumber;
 
-    const result = await w2GlobalAPI.verifyDocument(
-      clientReference,
-      documentType,
-      frontImage,
-      backImage
-    );
+    // const result = await w2GlobalAPI.verifyDocument(
+    //   clientReference,
+    //   documentType,
+    //   frontImage,
+    //   backImage
+    // );
 
-    console.log("what is this", result.ok, result.data[0].result);
+    // console.log("what is this", result.ok, result.data[0].result);
 
-    if (!result.ok || !result.data[0].result)
-      return alert("Could not verify documents");
+    // if (!result.ok || !result.data[0].result)
+    //   return alert("Could not verify documents");
 
-    setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
-    navigation.navigate("BusinessAddress2");
-    setIsLoading(false);
+    // setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
+    // navigation.navigate("ProofOfID");
+    // setIsLoading(false);
+   
   };
 
   useEffect(() => {
@@ -118,7 +120,7 @@ const ProofOfResidency = ({ navigation }) => {
   }
 
   return (
-    <AuthScreen title="Proof of residency" img="elephantCard" width="90%">
+    <AuthScreen title="Proof of residency" img="elephantCard" width="60%">
       <CountryOfResidence />
       <View>
         <Dropdown
@@ -161,6 +163,7 @@ const ProofOfResidency = ({ navigation }) => {
           </>
         )}
       </TouchableOpacity>
+         <Button title="Continue" textColor="white" color="black" onPress={() => handleSubmit()} />
     </AuthScreen>
     // <Screen>
     //   <View style={{ flex: 1, padding: 20 }}>

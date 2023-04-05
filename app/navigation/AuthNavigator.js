@@ -13,6 +13,7 @@ import Login from "../screens/Login";
 import PersonalOrBusiness from "../screens/PersonalOrBusiness";
 import Name from "../screens/Name";
 import ProofOfResidency from "../screens/ProofOfResidency";
+import ProofOfID from "../screens/ProofOfID";
 import BusinessAddress2 from "../screens/BusinessAddress2";
 import PersonalAddress from "../screens/PersonalAddress";
 import DOB from "../screens/DOB";
@@ -95,6 +96,7 @@ const AuthNavigator = () => (
     <Stack.Screen  name="PersonalOrBusiness" component={gestureHandlerRootHOC(PersonalOrBusiness)}/>
     <Stack.Screen  name="Name" component={gestureHandlerRootHOC(Name)}/>
     <Stack.Screen  name="ProofOfResidency" component={gestureHandlerRootHOC(ProofOfResidency)}/>
+    <Stack.Screen  name="ProofOfID" component={gestureHandlerRootHOC(ProofOfID)}/>
     <Stack.Screen  name="BusinessAddress2" component={gestureHandlerRootHOC(BusinessAddress2)}/>
     <Stack.Screen  name="PersonalAddress" component={gestureHandlerRootHOC(PersonalAddress)}/>
     <Stack.Screen  name="DOB" component={gestureHandlerRootHOC(DOB)}/>

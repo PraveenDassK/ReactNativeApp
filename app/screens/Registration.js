@@ -167,7 +167,7 @@ const Registration = ({navigation}) => {
           case "Income":
             return <Income SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
           case "Success":
-            return <Success SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+            return <Success SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow} navigation = {navigation}/>
           case "RegistrationNumber":
             return <RegistrationNumber SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
           case "CompanyDetails":
