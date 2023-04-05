@@ -55,7 +55,7 @@ const Registration = ({navigation}) => {
         console.log(type)
         if(type == "Personal"){
             //Change this back to PersonalDetails once done
-          setScreenToShow("Success")
+          setScreenToShow("PersonalDetails")
           setPersonalBusiness(type)
         }else if (type == "Business"){
           //Change this back to RegistrationNumber once done
