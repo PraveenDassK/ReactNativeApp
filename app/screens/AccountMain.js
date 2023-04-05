@@ -120,6 +120,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
     console.log("Data",carbonSpendData)
+    setCatNames(carbonSpendData.labels)
+    setDataPercentages(carbonSpendData.percentages)
+
     // const cardDetails = await api.getCardDetails(responseDetails.dta.cardDataUrl, responseDetails.data.token)
     // const cardNumber = cardDetails.data.substr(548,16)
     // const cardExpiry = cardDetails.data.substr(601,4)
