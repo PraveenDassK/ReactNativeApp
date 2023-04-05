@@ -124,7 +124,8 @@ const ProofOfResidency = ({ navigation }) => {
   };
 
   return (
-    <AuthScreen title="Proof of residency" img="elephantCard" width="60%" handleBack={handleBack}>
+    <Screen>
+    <AuthScreen title="Proof of residency" img="elephantCard" width="60%" handleBack={handleBack} back={false} >
       <CountryOfResidence />
       <View>
         <Dropdown
@@ -169,6 +170,7 @@ const ProofOfResidency = ({ navigation }) => {
       </TouchableOpacity>
          <Button title="Continue" textColor="white" color="black" onPress={() => handleSubmit()} />
     </AuthScreen>
+    </Screen>
     // <Screen>
     //   <View style={{ flex: 1, padding: 20 }}>
     //     <View>

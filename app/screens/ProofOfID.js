@@ -125,6 +125,7 @@ const ProofOfID = ({ navigation }) => {
   };
 
   return (
+    <Screen>
     <AuthScreen title="Photo ID" img="elephantCard" width="60%" handleBack={handleBack}>
       <CountryOfResidence />
       <View>
@@ -170,6 +171,7 @@ const ProofOfID = ({ navigation }) => {
       </TouchableOpacity>
       <Button title="Continue" textColor="white" color="black" onPress={() => handleSubmit()} />
     </AuthScreen>
+    </Screen>
     // <Screen>
     //   <View style={{ flex: 1, padding: 20 }}>
     //     <View>
