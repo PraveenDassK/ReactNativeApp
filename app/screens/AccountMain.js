@@ -47,6 +47,7 @@ import FadeInView from "../components/fadeInview";
 
 import moment from "moment";
 import AppText from "../components/Text";
+import apiCarbon from "../api/apiCarbon"
 
 const {width, height} = Dimensions.get('window');
 
@@ -89,6 +90,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
 
+  const [catNames, setCatNames] = useState(["Health", "Food", "House", "Shopping", "Transport"]);
+  const [dataPercentages, setDataPercentages] = useState(["70%", "50%", "40%", "30%", "20%"]);
+
+
   const handleCardPress = (card) => {
     setSelectedCard(card);
   };
@@ -113,18 +118,19 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     
     const responseDetails = await api.getCardResponse("687942912")
 
-    console.log(responseDetails.data)
-    const cardDetails = await api.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
-
-    console.log("card details", cardDetails.data)
-    const cardNumber = cardDetails.data.substr(548,16)
-    const cardExpiry = cardDetails.data.substr(601,4)
-    const cardCVV = cardDetails.data.substr(637,3)
-    CARD_DATA.push({
-      name: cardExpiry,
-      number: cardNumber,
-      image: require('../assets/cardLion.png'),
-    });
+    const carbonSpendData = await apiCarbon.GetBarGraphData();
+    console.log("Data",carbonSpendData)
+    // const cardDetails = await api.getCardDetails(responseDetails.dta.cardDataUrl, responseDetails.data.token)
+    // const cardNumber = cardDetails.data.substr(548,16)
+    // const cardExpiry = cardDetails.data.substr(601,4)
+    // const cardCVV = cardDetails.data.substr(637,3)
+    
+    
+    // CARD_DATA.push({
+    //   name: cardExpiry,
+    //   number: cardNumber,
+    //   image: require('../assets/cardLion.png'),
+    // });
 
 
     setcardnumber(cardData.cardNumberMasked)
@@ -224,19 +230,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setTransactionTable(pageShow);
     setIsLoading(false)
   };
-
-  const loadCardDetails = async (url, token) => {
-    const cardDetails = await api.getCardDetails(url, token)    
-    console.log("card details", cardDetails.data)
-    const cardNumber = cardDetails.data.substr(548,16)
-    const cardExpiry = cardDetails.data.substr(601,4)
-    const cardCVV = cardDetails.data.substr(637,3)
-    CARD_DATA.push({
-      name: cardExpiry,
-      number: cardNumber,
-      image: require('../assets/cardLion.png'),
-    });
-  }
   
   useEffect(()=> {
     if(cardResponse) {
@@ -246,9 +239,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     // loadCardDetails()
   }, [cardResponse])
 
-  let currency = "£";
-  const catNames = ["Health", "Food", "House", "Shopping", "Transport"];
-  const dataPercentages = ["70%", "50%", "40%", "30%", "20%"];
 
   /**
    * @dev Data needed for this page

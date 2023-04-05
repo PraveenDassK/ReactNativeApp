@@ -27,6 +27,7 @@ import moment from "moment";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 import DoughnutChart from "../components/DoughnutChart";
 import AppText from "../components/Text";
+import apiCarbon from "../api/apiCarbon"
 
 
 const Analytics = ({ navigation }) => {
@@ -40,6 +41,7 @@ const Analytics = ({ navigation }) => {
   const [data, setData] = useState([])
   const [fulldata, setFullData] = useState([])
   const [loadMore, setLoadMore] = useState(false)
+  const [totalFootprint, setTotalFootprint] = useState(false)
 
   const [monthAverage, setMonthAverage] = useState(0);
   const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
@@ -48,6 +50,7 @@ const Analytics = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const authContext = useContext(AuthContext);
   const { userID, accountID } = useContext(AuthContext);
+  const [carbnonSpendData, setCarbonSpendData] = useState("")
 
 
   useEffect(() => {
@@ -63,7 +66,10 @@ const Analytics = ({ navigation }) => {
     const dataCall = await apiCall.GetAnalysisData(accountID);
     const response = await apiCall.GetScheduledPayments("CC1")
     const graphData = await apiCall.GetTransactionsWeek(accountID);
-    
+    const carbonSpendData = await apiCarbon.GetCarbonSpending();
+
+    setCarbonSpendData(carbonSpendData.chartData)
+    setTotalFootprint(carbonSpendData.total)
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
     setRecent([
@@ -182,11 +188,12 @@ const Analytics = ({ navigation }) => {
        <View>
        
         <View style={{position: "absolute", flex:1, justifyContent: "center", alignItems: "center", marginTop: 28, bottom:"40%", left: "20%"}}>
-          <AppText style={{fontSize:  50, fontWeight: "700",  width: 250, textAlign: "center"}}>2436</AppText>
+          <AppText style={{fontSize:  50, fontWeight: "700",  width: 250, textAlign: "center"}}>{totalFootprint}</AppText>
           <AppText style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>kg CO2</AppText>
         </View>
 
-        <DoughnutChart /></View>
+          <DoughnutChart data = {carbnonSpendData}/>
+        </View>
         <View style={[styles.balanceContainer, styles.boxShadow]}>
           <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</AppText>
           <AppText
