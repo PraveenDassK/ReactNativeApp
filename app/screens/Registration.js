@@ -52,10 +52,10 @@ const Registration = ({navigation}) => {
        * @param {String} type This is the choice of which account to use
        */
       const accountSelector = async(type) => { 
-        //sendDetails() 
+        console.log(type)
         if(type == "Personal"){
             //Change this back to PersonalDetails once done
-          setScreenToShow("PersonalDetails")
+          setScreenToShow("Success")
           setPersonalBusiness(type)
         }else if (type == "Business"){
           //Change this back to RegistrationNumber once done
@@ -153,7 +153,7 @@ const Registration = ({navigation}) => {
       const pagePicker = () => {
         switch(screenToShow){
           case "PersonalDetails":
-            return <RegistrationPersonalDetails SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+            return <RegistrationPersonalDetails SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow} accountType = {accountType}/>
           case "EmailAndPhone":
             return <RegistraionEmailAndPhone SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
           case "Nationality":
