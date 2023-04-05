@@ -72,8 +72,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [accountname, setaccountname] = useState(null);
   const [cardnumber, setcardnumber] = useState(null);
   const authContext = useContext(AuthContext);
-  const { userID, accountID, settings, cardID, customerDetails } = useContext(AuthContext);
-
+  const { carbonyteID, accountID, settings, cardID, customerDetails } = useContext(AuthContext);
+  
   const todaydate = moment().format("MMMM D, YYYY");
 
   const [numTrees, setTrees] = useState(0);
@@ -116,22 +116,25 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     const resposeData = await apiCall.GetUserImpact("CC1");
     const transactionCall = await apiCall.GetTransactions(accountID);
     
-    const responseDetails = await api.getCardResponse("687942912")
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
     setCatNames(carbonSpendData.labels)
     setDataPercentages(carbonSpendData.percentages)
 
-    // const cardDetails = await api.getCardDetails(responseDetails.dta.cardDataUrl, responseDetails.data.token)
-    // const cardNumber = cardDetails.data.substr(548,16)
-    // const cardExpiry = cardDetails.data.substr(601,4)
-    // const cardCVV = cardDetails.data.substr(637,3)
+    //CardDetails
+    const responseDetails = await api.getCardResponse("687942912")
+    console.log(responseDetails)
+    const cardDetails = await api.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
+
+    const cardNumber = cardDetails.data.substr(548,16)
+    const cardExpiry = cardDetails.data.substr(601,4)
+    const cardCVV = cardDetails.data.substr(637,3)
     
-    // CARD_DATA.push({
-    //   name: cardExpiry,
-    //   number: cardNumber,
-    //   image: require('../assets/cardLion.png'),
-    // });
+    CARD_DATA.push({
+      name: cardExpiry,
+      number: cardNumber,
+      image: require('../assets/cardLion.png'),
+    });
 
 
     setcardnumber(cardData.cardNumberMasked)
