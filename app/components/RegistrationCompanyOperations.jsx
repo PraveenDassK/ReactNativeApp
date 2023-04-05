@@ -49,7 +49,7 @@ const CompanyOperations = ({SaveDetails,setScreenToShow}) => {
 
       return (
         <Screen>
-            <AuthScreen title='How long have you been operating?' handleBack = {handleBack}>
+            <AuthScreen img="lion" title='How long have you been operating?' handleBack = {handleBack}>
             <Formik
             onSubmit={(values) => sendData(values)}
             >

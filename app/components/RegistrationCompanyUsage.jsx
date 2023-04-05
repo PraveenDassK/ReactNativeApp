@@ -12,12 +12,20 @@ import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
+import ErrorMessage from "./forms/ErrorMessage";
+
+
+const validationSchema = Yup.object().shape({
+    customers: Yup.string().required().min(1).max(50).label("First name"),
+   
+  
+  })
 
 const CompanyUsage = ({SaveDetails,setScreenToShow}) => {
     const [name, setName] = useState("");
     const [isChecked, setChecked] = useState(false);
 
-    const sendDetails = (type) => {
+    const handleSubmit = () => {
         SaveDetails(null,"CompanyUsage")
     }
     const handleBack = () =>{
@@ -30,32 +38,36 @@ const CompanyUsage = ({SaveDetails,setScreenToShow}) => {
             <AuthScreen title="How would you use this account" img="eagleCard" handleBack = {handleBack}>
             <Formik
                 initialValues={{
-                    customers:'', 
-                    outsideEU: false
+                    customers:''
                 }}
-                onSubmit={(values) => sendData(values)}
+                onSubmit={handleSubmit}
+                validationSchema={validationSchema}
             >
-            {({ handleChange, handleSubmit, setFieldTouched}) => (
+            {({ handleChange, handleSubmit, setFieldTouched,errors, touched}) => (
                 <View style={[styles.component1981, styles.mt14,]}>
                     <Text>Who are your main customers</Text>
                     <TextInput 
                         keyboardType="Text" 
+                        placeholder="Enter you main customers"
+                        placeholderTextColor="#D3D3D3"
                         onBlur={() => setFieldTouched("customers")}
                         onChangeText={handleChange("customers")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                     <ErrorMessage error={errors.customers} visible={touched.customers}/>
                     <CheckBox
-                        title="Are there any customers outside the EU?"
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        checkedColor="black"
-                        checked={isChecked}
-                        onPress={() => handleChange(outsideEU)}
-                        />
+                    title="Are there any customers outside the EU?"
+                    checkedIcon="dot-circle-o"
+                    uncheckedIcon="circle-o"
+                    checkedColor="black"
+                    checked={isChecked}
+                    onPress={() => setChecked(!isChecked)}
+                    />
+                 <Button title="Continue" color="black" textColor="white" onPress={handleSubmit} />
+
                   </View>                  
                 )}
             </Formik>
-            <Button title="Continue" color="black" textColor="white" onPress={() => sendDetails()} />
             </AuthScreen>
         </Screen>
   );

@@ -12,6 +12,14 @@ import { Formik, Field, Form } from 'formik';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
+import ErrorMessage from "./forms/ErrorMessage";
+
+const validationSchema = Yup.object().shape({
+    fullName: Yup.string().required().min(1).max(11).label("Full name"),
+    position: Yup.string().required().min(1).max(11).label("Position"),
+    fullName2: Yup.string().required().min(1).max(11).label("Full name"),
+    position2: Yup.string().required().min(1).max(11).label("Position")
+  })
 
 const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
     const [name, setName] = useState("");
@@ -34,11 +42,15 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
 
             <Formik
                 initialValues={{
-                    details:''
+                    fullName:'',
+                    position:'',
+                    fullName2:'',
+                    position2:'',
                 }}
+                validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-            {({ handleChange, handleSubmit, setFieldTouched}) => (
+            {({ handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
                 <View style={[styles.component1981, styles.mt14]}>
                     
                     <Text>Full name</Text>
@@ -49,11 +61,11 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
                         placeholder=""
                         placeholderTextColor="grey"
                         keyboardType="Text" 
-                        onBlur={() => setFieldTouched("details")}
-                        onChangeText={handleChange("details")}
+                        onBlur={() => setFieldTouched("fullName")}
+                        onChangeText={handleChange("fullName")}
                         style={[styles.component1981Child, styles.childBorder,]} 
                     />
-                    
+                     <ErrorMessage error={errors.fullName} visible={touched.fullName}/>
                     <Text>Position</Text>
                     <TextInput 
                         editable
@@ -63,11 +75,11 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
                         placeholder=""
                         placeholderTextColor="grey"
                         keyboardType="Text" 
-                        onBlur={() => setFieldTouched("details")}
-                        onChangeText={handleChange("details")}
+                        onBlur={() => setFieldTouched("position")}
+                        onChangeText={handleChange("position")}
                         style={[styles.component1981Child, styles.childBorder,]} 
                     />
-
+                     <ErrorMessage error={errors.position} visible={touched.position}/>
                     <Text>Full name</Text>
                     <TextInput 
                         editable
@@ -77,11 +89,11 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
                         placeholder=""
                         placeholderTextColor="grey"
                         keyboardType="Text" 
-                        onBlur={() => setFieldTouched("details")}
-                        onChangeText={handleChange("details")}
+                        onBlur={() => setFieldTouched("fullName2")}
+                        onChangeText={handleChange("fullName2")}
                         style={[styles.component1981Child, styles.childBorder,]} 
                     />
-
+                     <ErrorMessage error={errors.fullName2} visible={touched.fullName2}/>
                     <Text>Position</Text>
                     <TextInput 
                         editable
@@ -91,10 +103,11 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
                         placeholder=""
                         placeholderTextColor="grey"
                         keyboardType="Text" 
-                        onBlur={() => setFieldTouched("details")}
-                        onChangeText={handleChange("details")}
+                        onBlur={() => setFieldTouched("position2")}
+                        onChangeText={handleChange("position2")}
                         style={[styles.component1981Child, styles.childBorder,]} 
                     />
+                     <ErrorMessage error={errors.position2} visible={touched.position2}/>
                     <Button title="Continue" color="black" textColor="white" onPress={() => handleSubmit()} />
                   </View>                  
                 )}
