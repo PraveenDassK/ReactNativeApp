@@ -28,6 +28,8 @@ import CompanyInformation from "../components/RegistrationCompanyInformation.jsx
 import CompanyIncome from "../components/RegistrationCompanyIncome.jsx"
 import CompanyOperations from "../components/RegistrationCompanyOperations.jsx"
 import CompanyUsage from "../components/RegistrationCompanyUsage.jsx"
+import CompanyDirectors from "../components/RegistrationCompanyDirectors.jsx"
+
 import colors from "../config/colors";
 
 const Registration = ({navigation}) => {
@@ -131,8 +133,11 @@ const Registration = ({navigation}) => {
             return;
         case "CompanyUsage":
             setPersonalDetails(details)
-            setScreenToShow("PersonalDetails")
+            setScreenToShow("CompanyDirectors")
             return;
+        case "CompanyDirectors":
+          setScreenToShow("PersonalDetails")
+          break;
         case "PersonalOrBusiness":
             break;
         }
@@ -177,6 +182,8 @@ const Registration = ({navigation}) => {
             return <CompanyOperations SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
           case "CompanyUsage":
             return <CompanyUsage SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
+          case "CompanyDirectors":
+            return <CompanyDirectors SaveDetails = {detailsSaver} setScreenToShow = {setScreenToShow}/>
           default:
             return <PersonalOrBusiness SaveDetails = {accountSelector} navigation = {navigation}/>
         }        
