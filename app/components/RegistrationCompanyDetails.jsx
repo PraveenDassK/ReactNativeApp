@@ -23,7 +23,7 @@ const CompanyUsage = ({SaveDetails,setScreenToShow}) => {
     }
     const handleBack = () =>{
         console.log("!")
-        setScreenToShow("CompanyOperations")
+        setScreenToShow("RegistrationNumber")
       }
       
     return (

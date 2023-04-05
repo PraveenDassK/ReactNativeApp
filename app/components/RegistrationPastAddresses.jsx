@@ -11,7 +11,7 @@ import Button from "./AppButton"
 import PostCode from './RegistrationPostCode.jsx'
 import AuthScreen from "./AuthScreen";
 
-const PastAddresses = ({SaveDetails}) => {
+const PastAddresses = ({SaveDetails,setScreenToShow}) => {
     const [addresses, setAddresses] = useState([]);
     const [isAdding, setAdding] = useState(false);
     const [add, setAdd] = useState(null)
@@ -35,10 +35,16 @@ const PastAddresses = ({SaveDetails}) => {
     }
     console.log("Addresses", addresses)
 
+    const handleBack = () => {
+        console.log("!");
+        setScreenToShow("Nationality");
+      };
     return (
         
         <Screen>
-            <AuthScreen title="Past adresses" img="elephantCard" width="70%">
+            <AuthScreen title="Past adresses" img="elephantCard" width="70%"
+            handleBack={handleBack}
+            >
                 
                {addresses.length > 0  ? (
                 <>
