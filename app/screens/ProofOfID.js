@@ -88,7 +88,7 @@ const ProofOfID = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
-    return <Success />
+    navigation.navigate("W2Success")
     // setIsLoading(true);
     // const clientReference = phoneNumber;
 

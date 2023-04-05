@@ -21,6 +21,7 @@ import Success from "../screens/Success";
 import SplashAnimation from "../screens/SplashAnimation"
 import Privacy from "../screens/Privacy"
 import Registration from "../screens/Registration"
+import W2Success from "../screens/W2Success";
 
 // import LoginScreen from "../screens/LoginScreen";
 // import RegisterScreen from "../screens/RegisterScreen";
@@ -97,6 +98,7 @@ const AuthNavigator = () => (
     <Stack.Screen  name="Name" component={gestureHandlerRootHOC(Name)}/>
     <Stack.Screen  name="ProofOfResidency" component={gestureHandlerRootHOC(ProofOfResidency)}/>
     <Stack.Screen  name="ProofOfID" component={gestureHandlerRootHOC(ProofOfID)}/>
+    <Stack.Screen  name="W2Success" component={gestureHandlerRootHOC(W2Success)}/>
     <Stack.Screen  name="BusinessAddress2" component={gestureHandlerRootHOC(BusinessAddress2)}/>
     <Stack.Screen  name="PersonalAddress" component={gestureHandlerRootHOC(PersonalAddress)}/>
     <Stack.Screen  name="DOB" component={gestureHandlerRootHOC(DOB)}/>
