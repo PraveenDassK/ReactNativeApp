@@ -45,7 +45,7 @@ const MaritalStatus = ({SaveDetails,setScreenToShow}) => {
 
     return (
         <Screen>
-            <AuthScreen title="Marital status" img="turtleCard">
+            <AuthScreen title="Marital status" img="turtleCard" handleBack = {handleBack}>
             <Formik
             initialValues={{
                 email:'', 
