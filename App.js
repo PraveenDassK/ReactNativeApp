@@ -124,7 +124,7 @@ useEffect(() =>{
 
 
 
-  const authenticate = async () => {
+  const  authenticate = async () => {
     "starting authentication"
     const result = await LocalAuthentication.authenticateAsync()
     const device = await LocalAuthentication.supportedAuthenticationTypesAsync()

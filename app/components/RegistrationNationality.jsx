@@ -11,8 +11,12 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 import Button from "./AppButton"
 import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
+import ErrorMessage from "./forms/ErrorMessage";
 
-
+const validationSchema = Yup.object().shape({
+    country: Yup.string().required().min(3).max(11).label("Country"),
+    nationality: Yup.string().required().min(3).max(11).label("Nationality")
+  })
 
 const Nationality = ({SaveDetails,setScreenToShow}) => {
 
@@ -37,6 +41,7 @@ const Nationality = ({SaveDetails,setScreenToShow}) => {
                 nationality: ''
             }}
             onSubmit={handleSubmit}
+            validationSchema={validationSchema}
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
@@ -46,12 +51,14 @@ const Nationality = ({SaveDetails,setScreenToShow}) => {
                         onChangeText={handleChange("country")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                     <ErrorMessage error={errors.country} visible={touched.country}/>
                     <Text>Nationality</Text>
                     <TextInput 
                         onBlur={() => setFieldTouched("nationality")}
                         onChangeText={handleChange("nationality")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                     <ErrorMessage error={errors.nationality} visible={touched.nationality}/>
                         <Button title="continue" textColor="white" color="black" onPress={handleSubmit} />
                   </View>                  
                 )}

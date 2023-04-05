@@ -26,7 +26,7 @@
         "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "carbonyte.bankin",
+      "package": "com.carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },
     "description": "Carbonyte Banking App",

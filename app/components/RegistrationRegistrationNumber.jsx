@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"; 
 //import * as React from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard} from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard, Alert} from "react-native";
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
@@ -14,12 +14,15 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 
+
 const PersonalDetails = ({SaveDetails,setScreenToShow}) => {
     const [regNum, setRegNum] = useState("");
     const [companyDetails, setCompanyDetails] = useState(null)
 
     const searchCompany = async() => {
+        if(regNum == "") return Alert.alert('Invalid company address')
         const request = await apiLoginRegister.GetCompanyByRegNo(regNum)
+        if(request === null) return Alert.alert('Invalid company address')
         setCompanyDetails(request)
         console.log(request)
     }

@@ -32,9 +32,16 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
+import ErrorMessage from "./forms/ErrorMessage";
+
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required().min(1).max(11).label("First name"),
+  lastName: Yup.string().required().min(1).max(11).label("Last name"),
+
+})
 
 const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
-  const [firstName, setFirstName] = useState();
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
@@ -72,13 +79,13 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
    * @returns If an Item has failed validation it returns null
    * This will not trigger the save details
    */
-  const sendDetails = () => {
+  const handleSubmit = ({firstName, lastName}) => {
     //Checs if the names have been filled
     //If they haven't then ask to fill out
-    if (!firstName && !lastName) {
-      alert("Please fill in your name");
-      return;
-    }
+    // if (!firstName && !lastName) {
+    //   alert("Please fill in your name");
+    //   return;
+    // }
     //Then check if the privacy policy and gender box has been filled
     if (!gender) {
       alert("Please finish filling in the form");
@@ -117,15 +124,22 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <Screen style={{ backgroundColor: "white" }}>
       <AuthScreen
-        title="A bit about you"
+        title={viewDate ? "":"A bit about you"}
         img="bear"
-        width="45%"
+        width="40%"
         handleBack={handleBack}
       >
-        <Formik onSubmit={(values) => sendData(values)}>
-          {({ handleChange, handleSubmit, setFieldTouched }) => (
+        <Formik
+          initialValues={{firstName: '', lastName: ''}}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          >
+          
+          
+          {({ handleChange, handleSubmit, setFieldTouched, errors, touched}) => (
             <View
               style={[
                 styles.component1981,
@@ -138,27 +152,29 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
                 placeholder="Enter you first name"
                 placeholderTextColor="#D3D3D3"
                 keyboardType="Text"
-                onBlur={() => setFieldTouched("phoneNumber")}
-                onChangeText={(name) => setFirstName(name)}
+                onBlur={() => setFieldTouched("firstName")}
+                onChangeText={handleChange("firstName")}
                 style={[
                   styles.component1981Child,
                   styles.childBorder,
                   { padding: 10 },
                 ]}
               />
+                    <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
               <Text>Last name</Text>
               <TextInput
                 placeholder="Enter you last name"
                 placeholderTextColor="#D3D3D3"
                 keyboardType="Text"
-                onBlur={() => setFieldTouched("phoneNumber")}
-                onChangeText={(name) => setLastName(name)}
+                onBlur={() => setFieldTouched("lastName")}
+                onChangeText={handleChange("lastName")}
                 style={[
                   styles.component1981Child,
                   styles.childBorder,
                   { padding: 10 },
                 ]}
               />
+                    <ErrorMessage error={errors.lastName} visible={touched.lastName}/>
               <Text>Gender</Text>
               <Dropdown
                 style={[styles.dropdown]}
@@ -184,7 +200,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
                 onPress={() => setView(true)}
               />
 
-              {viewDate ? (
+              {viewDate && (
                 <DateTimePicker
                   testID="dateTimePicker"
                   value={dob}
@@ -192,7 +208,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
                   display="spinner"
                   onChange={onChange}
                 />
-              ) : null}
+              )}
 
               <CheckBox
                 title="I have read and accepted the Privacy Policy"
@@ -203,16 +219,17 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
               {
                 //<Button title="Continue" color="babyBlue" onPress={handleSubmit} />
               }
+                 <Button
+          title="continue"
+          textColor="white"
+          color="black"
+          onPress={handleSubmit}
+        />
             </View>
           )}
         </Formik>
 
-        <Button
-          title="continue"
-          textColor="white"
-          color="black"
-          onPress={() => sendDetails()}
-        />
+     
       </AuthScreen>
 
       {/* <Text>A bit about you</Text>
@@ -280,6 +297,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
                 onPress={() => sendDetails()
             }/> */}
     </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 

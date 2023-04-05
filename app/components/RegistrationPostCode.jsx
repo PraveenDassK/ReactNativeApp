@@ -11,6 +11,8 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 import Button from "./AppButton"
 import { Dropdown } from 'react-native-element-dropdown';
 
+
+
 const Postcode = ({AddAddress}) => {
     const [addressData, setAddressData] = useState([]);
     const [address, setAddress] = useState([]);

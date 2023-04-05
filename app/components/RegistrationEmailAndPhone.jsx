@@ -11,6 +11,7 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 import Button from "./AppButton"
 import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
+import ErrorMessage from "./forms/ErrorMessage";
 
 
 
@@ -34,6 +35,7 @@ const RegistrationEmailAndPhone = ({SaveDetails,setScreenToShow}) => {
       }
 
     return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Screen>
 
 <AuthScreen title="A bit more about you" img="elephantCarbon" handleBack = {handleBack}>
@@ -45,7 +47,7 @@ const RegistrationEmailAndPhone = ({SaveDetails,setScreenToShow}) => {
             onSubmit={handleSubmit}
             //Comment out if needed
             //Must be present in prod
-            //validationSchema={validationSchema}
+            validationSchema={validationSchema}
             >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                 <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
@@ -56,6 +58,7 @@ const RegistrationEmailAndPhone = ({SaveDetails,setScreenToShow}) => {
                         onChangeText={handleChange("phoneNumber")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                     <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
                     <Text>Email Address</Text>
                     <TextInput
                         autoCapitalize="none"
@@ -71,6 +74,7 @@ const RegistrationEmailAndPhone = ({SaveDetails,setScreenToShow}) => {
                             {padding:10}
                             ]}
                     />
+                    <ErrorMessage error={errors.email} visible={touched.email}/>
                       <Button title="continue" textColor="white" color="black" onPress={handleSubmit} />
                     
                 </View>
@@ -122,6 +126,7 @@ const RegistrationEmailAndPhone = ({SaveDetails,setScreenToShow}) => {
                 )}
             </Formik> */}
         </Screen>
+        </TouchableWithoutFeedback>
   );
 };
 

@@ -11,7 +11,7 @@ import Button from "./AppButton"
 import PostCode from './RegistrationPostCode.jsx'
 import AuthScreen from "./AuthScreen";
 
-const PastAddresses = ({SaveDetails,setScreenToShow}) => {
+const PastAddresses = ({SaveDetails}) => {
     const [addresses, setAddresses] = useState([]);
     const [isAdding, setAdding] = useState(false);
     const [add, setAdd] = useState(null)
@@ -35,19 +35,16 @@ const PastAddresses = ({SaveDetails,setScreenToShow}) => {
     }
     console.log("Addresses", addresses)
 
-    const handleBack = () =>{
-        console.log("!")
-        setScreenToShow("Nationality")
-      }
     return (
+        
         <Screen>
-            <AuthScreen title="Past adresses" img="elephantCard" width="70%" handleBack = {handleBack}>
+            <AuthScreen title="Past adresses" img="elephantCard" width="70%">
                 
                {addresses.length > 0  ? (
                 <>
                     <Text>{`${addresses[0].address1}`}</Text> 
-                    <Text>{`${addresses[0].address2.split(" ").filter(a => a != '').join(" ")}`}</Text> 
-                    <Text>{`${addresses[0].area.split(" ").filter(a => a != '').join(" ")}`}</Text> 
+                    <Text>{`${addresses[0].address2} `}</Text> 
+                    <Text>{`${addresses[0].area} `}</Text> 
                     <Text>{`${addresses[0].postcode} `}</Text> 
                 </>
                ): null}
@@ -56,18 +53,10 @@ const PastAddresses = ({SaveDetails,setScreenToShow}) => {
                 <PostCode AddAddress = {addAddress}/>
           :
                 <View>
-                    <FlatList
-                        data={addresses}
-                        renderItem={({address}) => {
-                            {console.log(address)}
-                            <View/>
-                        }}
-                        keyExtractor={addresses => addresses.id}
-                    />
-
                     <Button title="Add" textColor="white" color="black" onPress={() => setAdding(true)} />
                     <Button title="Continue" textColor="black" color="white" onPress={() => handleSubmit()} />
-                </View>}
+                </View>
+            }
             </AuthScreen>
             {/* <Text>Past addresses</Text>
             {isAdding ? 

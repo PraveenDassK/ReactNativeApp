@@ -11,12 +11,13 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 import Button from "./AppButton"
 import AuthScreen from "./AuthScreen";
 const validationSchema = Yup.object().shape({
-    email: Yup.string().required().email().label("Email"),
-    phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
+    incomeDetails: Yup.string().required().min(1).max(10).label("Annual income"),
+    taxResidency: Yup.string().required().min(1).max(10).label("Tax residency")
 })
+import ErrorMessage from "./forms/ErrorMessage";
 
 const Income = ({SaveDetails}) => {
-    const handleSubmit = async () => {
+    const handleSubmit = async ({incomeDetails, taxResidency}) => {
         SaveDetails(null,"Income")
     }
     const handleBack = () =>{
@@ -28,8 +29,8 @@ const Income = ({SaveDetails}) => {
             <AuthScreen title="Income details" img="eagleCard" handleBack = {handleBack}>
             <Formik
             initialValues={{
-                email:'', 
-                phoneNumber: ''
+                incomeDetails:'', 
+                taxResidency: ''
             }}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
@@ -39,23 +40,26 @@ const Income = ({SaveDetails}) => {
                     <Text>Annual income</Text>
                     <TextInput 
                         keyboardType="numeric" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
+                        onBlur={() => setFieldTouched("incomeDeatils")}
+                        onChangeText={handleChange("incomeDetails")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                    <ErrorMessage error={errors.incomeDetails} visible={touched.incomeDetails}/>
 
                 <Text>Tax residency</Text>
                     <TextInput 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={handleChange("phoneNumber")}
+                        onBlur={() => setFieldTouched("taxResidency")}
+                        onChangeText={handleChange("taxResidency")}
                         style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
                     />
+                    <ErrorMessage error={errors.taxResidency} visible={touched.taxResidency}/>
                
-
+               <Button title="Continue" color="black" textColor="white" onPress={handleSubmit} />
                 </View>
+                
                 )}
             </Formik>
-            <Button title="Continue" color="black" textColor="white" onPress={handleSubmit} />
+            
 
 
             </AuthScreen>
