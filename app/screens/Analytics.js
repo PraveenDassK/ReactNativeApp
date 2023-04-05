@@ -29,7 +29,6 @@ import DoughnutChart from "../components/DoughnutChart";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon"
 
-
 const Analytics = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [active, setActive] = useState("")
@@ -44,8 +43,9 @@ const Analytics = ({ navigation }) => {
   const [totalFootprint, setTotalFootprint] = useState(false)
 
   const [monthAverage, setMonthAverage] = useState(0);
-  const catNames = ["Health", "Food & Beverages", "Shopping", "Transport"];
-  const dataPercentages = ["75%", "50%", "40%", "30%"];
+  const [catNames, setCatNames] = useState(["Health", "Food", "House", "Shopping", "Transport"]);
+  const [dataPercentages, setDataPercentages] = useState(["70%", "50%", "40%", "30%", "20%"]);
+
   const [recentTransactions, setRecent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const authContext = useContext(AuthContext);
@@ -67,6 +67,10 @@ const Analytics = ({ navigation }) => {
     const response = await apiCall.GetScheduledPayments("CC1")
     const graphData = await apiCall.GetTransactionsWeek(accountID);
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
+
+    const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
+    setCatNames(carbonSpendDataBarGraph.labels)
+    setDataPercentages(carbonSpendDataBarGraph.percentages)
 
     setCarbonSpendData(carbonSpendData.chartData)
     setTotalFootprint(carbonSpendData.total)
@@ -270,7 +274,7 @@ const Analytics = ({ navigation }) => {
               padding: "5%",
             }, styles.boxShadow]}
           >
-            <AppText style={{fontWeight: "700"}}>Average Monthly Spendings</AppText>
+            <AppText style={{fontWeight: "700"}}>Average Transaction spend</AppText>
             <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
               <AppText style={styles.money}>£ {monthAverage.toFixed(2)}</AppText>
             </View>
@@ -284,6 +288,8 @@ const Analytics = ({ navigation }) => {
             style={{ width: horizontalScale(25), height: verticalScale(25)}} />
           <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Spendings</AppText>
         </View>
+
+
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
           <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
           <View
@@ -335,7 +341,8 @@ const Analytics = ({ navigation }) => {
             >
               <AppText style={styles.barText}>{dataPercentages[3]}</AppText>
             </View>
-          </View>
+        </View>
+            
 
       
           {graphData && <View style={

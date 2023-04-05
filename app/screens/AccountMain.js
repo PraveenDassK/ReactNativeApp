@@ -119,7 +119,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     const responseDetails = await api.getCardResponse("687942912")
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
-    console.log("Data",carbonSpendData)
     setCatNames(carbonSpendData.labels)
     setDataPercentages(carbonSpendData.percentages)
 
@@ -127,7 +126,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     // const cardNumber = cardDetails.data.substr(548,16)
     // const cardExpiry = cardDetails.data.substr(601,4)
     // const cardCVV = cardDetails.data.substr(637,3)
-    
     
     // CARD_DATA.push({
     //   name: cardExpiry,
@@ -461,8 +459,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
          */}
         <View style={[styles.carbonSpendingDiv, styles.boxShadow]}>
           {/**
-           * @notice the actual carbon holder
-           */}
+           * @notice The start of the carbon holder
+           */
+           }
           <View style={styles.carbonItemDiv}>
             <View style={[styles.estimatedCarbonDiv, styles.boxShadow]}>
               <View style={{ flex: 3.5 }}>
@@ -481,6 +480,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
               </View>
             </View>
+            {
+            //If the user dosen't have any carbon spending data
+            dataPercentages == [] ? 
             <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
               <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
               <View
@@ -575,9 +577,18 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 >
                   <AppText style={styles.barText}>{dataPercentages[4]}</AppText>
                 </View>
-              </View>
+              </View> 
+            </View>: 
+            <View>
+              <Text>
+                Looks like you havent bought anything yet
+              </Text>
             </View>
+            }
           </View>
+          {
+            //End of diagram
+          }
 
           <View style={[styles.carbonSpendingTitleDiv, {marginTop: verticalScale(25)}]}>
           <Image 
