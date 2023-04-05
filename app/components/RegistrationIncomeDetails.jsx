@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
 })
 import ErrorMessage from "./forms/ErrorMessage";
 
-const Income = ({SaveDetails}) => {
+const Income = ({SaveDetails,setScreenToShow}) => {
     const handleSubmit = async ({incomeDetails, taxResidency}) => {
         SaveDetails(null,"Income")
     }

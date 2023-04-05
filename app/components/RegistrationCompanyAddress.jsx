@@ -21,7 +21,7 @@ const PastAddresses = ({SaveDetails,setScreenToShow}) => {
     }
     const handleBack = () =>{
         console.log("!")
-        setScreenToShow("")
+        setScreenToShow("CompanyDetails")
       }
     return (
         <Screen>

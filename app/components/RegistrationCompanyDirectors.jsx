@@ -23,7 +23,7 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
     }
     const handleBack = () =>{
         console.log("!")
-        setScreenToShow("CompanyAddress")
+        setScreenToShow("CompanyUsage")
       }
     return (
         <Screen>

@@ -40,9 +40,7 @@ const validationSchema = Yup.object().shape({
 
 })
 
-const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
@@ -119,7 +117,11 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    console.log(accountType);
+    if(accountType == "Business"){
+      setScreenToShow("CompanyDirectors");
+      return;
+    }
     setScreenToShow("");
   };
 

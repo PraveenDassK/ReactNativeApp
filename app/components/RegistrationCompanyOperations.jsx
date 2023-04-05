@@ -44,7 +44,7 @@ const CompanyOperations = ({SaveDetails,setScreenToShow}) => {
 
     const handleBack = () =>{
         console.log("!")
-        setScreenToShow("")
+        setScreenToShow("CompanyIncome")
     }
 
       return (
