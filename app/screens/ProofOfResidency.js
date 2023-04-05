@@ -119,8 +119,12 @@ const ProofOfResidency = ({ navigation }) => {
     );
   }
 
+  const handleBack = () => {
+    
+  };
+
   return (
-    <AuthScreen title="Proof of residency" img="elephantCard" width="60%">
+    <AuthScreen title="Proof of residency" img="elephantCard" width="60%" handleBack={handleBack}>
       <CountryOfResidence />
       <View>
         <Dropdown

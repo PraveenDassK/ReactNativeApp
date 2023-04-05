@@ -120,9 +120,12 @@ const ProofOfID = ({ navigation }) => {
       </View>
     );
   }
+  const handleBack = () => {
+    navigation.navigate("ProofOfResidency")
+  };
 
   return (
-    <AuthScreen title="Photo ID" img="elephantCard" width="60%">
+    <AuthScreen title="Photo ID" img="elephantCard" width="60%" handleBack={handleBack}>
       <CountryOfResidence />
       <View>
         <Dropdown
