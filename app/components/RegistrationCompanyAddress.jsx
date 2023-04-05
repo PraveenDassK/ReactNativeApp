@@ -28,7 +28,7 @@ const CompanyAddress = ({SaveDetails,setScreenToShow}) => {
     },[addresses, isAdding])
 
     const handleSubmit = async () => {
-        SaveDetails(addresses,"PastAddresses")
+        SaveDetails(addresses,"CompanyAddress")
     }
 
     /**
@@ -40,7 +40,6 @@ const CompanyAddress = ({SaveDetails,setScreenToShow}) => {
         setAdding(false)
         setAddresses(address => [...address, addressObj])
     }
-    console.log("Addresses", addresses)
 
     const handleBack = () => {
         console.log("!");
