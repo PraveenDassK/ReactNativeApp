@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useLayoutEffect } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,6 +6,7 @@ import {
   TextInput,
   Image,
   TouchableWithoutFeedback,
+  ActivityIndicator, 
   Keyboard,
 } from "react-native";
 import { Formik } from "formik";
@@ -34,18 +35,24 @@ const validationSchema = Yup.object().shape({
 
 const Login = ({ navigation }) => {
   const prefix = "44";
+  const [isLoading, setIsLoading] = useState(false)
 
   const { setUser } = useContext(AuthContext);
 
   const handleSubmit = async ({ email, phoneNumber }) => {
+    setIsLoading(true)
     phoneNumber = prefix + phoneNumber;
     const request = await loginApi.Login({ email, phoneNumber });
+    setIsLoading(false)
     setUser({ email, phoneNumber });
+
 
     if (!request.result) return alert("Could not send otp");
 
     navigation.navigate("OTPVerificationPersonal", { registration: true });
   };
+
+ 
 
   return (
   
@@ -180,6 +187,7 @@ const Login = ({ navigation }) => {
                       textColor="white"
                       color="black"
                       onPress={handleSubmit}
+                      visible={isLoading}
                     />
                   </View>
                   {/* <View style={styles.button}>

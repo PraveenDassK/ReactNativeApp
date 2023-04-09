@@ -1,15 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, ActivityIndicator, View } from "react-native";
 
 import colors from "../config/colors";
 
-function AppButton({ title, onPress, color = "babyBlue" ,style, textColor, transform}) {
+function AppButton({ title, onPress, color = "babyBlue" ,style, textColor, transform, visible=false}) {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: colors[color] }, style ]}
       onPress={onPress}
     >
-      <Text style={[ styles.text, {color: textColor}, transform]}>{title}</Text>
+      <View style={styles.textContainer}>
+        <Text style={[ styles.text, {color: textColor}, transform]}>{title}</Text>
+        {visible && <ActivityIndicator style={{position: "absolute", left: "25%"}} size={'small'} color="white" />}
+      </View>
     </TouchableOpacity>
   );
 }
@@ -34,7 +37,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textTransform: "capitalize",
     fontWeight: "700",
+    
   },
+  textContainer: {
+    flexDirection: "row"
+  }
 });
 
 export default AppButton;

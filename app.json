@@ -4,7 +4,7 @@
     "slug": "BankingApp",
     "version": "1.2.0",
     "orientation": "portrait",
-    "icon": "./app/assets/tree@3x.png",
+    "icon": "./app/assets/logo-iconwithtext.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./app/assets/layer-129@3x.png",
@@ -19,7 +19,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "carbonyte.banking"
+      "bundleIdentifier": "carbonyte.banking",
+      "buildNumber": "1.1.1"
+
     },
     "android": {
       "adaptiveIcon": {

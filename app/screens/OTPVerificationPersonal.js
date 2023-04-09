@@ -12,6 +12,7 @@ import {
   View,
   TextInput,
   Pressable,
+  ActivityIndicator, 
   TouchableWithoutFeedback,
   Keyboard
 } from "react-native";
@@ -44,6 +45,7 @@ const validationSchema = Yup.object().shape({
 }); // add required if necessary
 
 const OTPVerificationPersonal = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const { 
     user, 
     currentUser, 
@@ -53,7 +55,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setUserDetails,
     setCardID
   } = useContext(AuthContext);
-  const [count, setCount] = useState(500);
+  const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
 
   const initialValues = {
@@ -96,13 +98,14 @@ const OTPVerificationPersonal = ({ navigation }) => {
     const phoneOTP = eVer1 + eVer2 + eVer3 + eVer4;
 
     setResendOTP({ email, phoneNumber, emailOTP, phoneOTP });
-
+    setIsLoading(true)
     const result = await loginAPI.VerifyLogin({
       phoneNumber,
       email,
       phoneOTP,
       emailOTP,
     });
+    setIsLoading(false)
     if (!result) return alert("Could not verify otp");
 
     const userID = result.data.modulrCustomerId
@@ -133,7 +136,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
   useEffect(() => {
     if (count === 0) {
-      setCount(500);
+      setCount(59);
       resendCred();
     }
   }, [count]);
@@ -146,6 +149,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
       };
     }, [])
   );
+
+
+
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dis
     }>
@@ -302,6 +309,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                     textColor="white"
                     color="black" 
                     onPress={handleSubmit} 
+                    visible={isLoading}
                   />
               </View>
             </View>

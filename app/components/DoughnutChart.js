@@ -14,7 +14,7 @@ import { VictoryPie, VictoryChart, VictoryTheme } from "victory-native";
           labelRadius={130}
           
           padAngle={1}
-          labels={({ datum }) => `${datum.x}`}
+          labels={({ datum }) => `${datum.x[0]}`}
           cornerRadius={80}
           data={data}
 />

@@ -51,6 +51,7 @@ const Analytics = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const { userID, accountID } = useContext(AuthContext);
   const [carbnonSpendData, setCarbonSpendData] = useState("")
+  const [carbonGraphData, setCarbonGraphData] = useState(null)
 
 
   useEffect(() => {
@@ -69,8 +70,11 @@ const Analytics = ({ navigation }) => {
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
 
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
+    console.log("cspending",carbonSpendDataBarGraph)
+    setCarbonGraphData(carbonSpendDataBarGraph)
     setCatNames(carbonSpendDataBarGraph.labels)
     setDataPercentages(carbonSpendDataBarGraph.percentages)
+
 
     setCarbonSpendData(carbonSpendData.chartData)
     setTotalFootprint(carbonSpendData.total)
@@ -90,6 +94,7 @@ const Analytics = ({ navigation }) => {
       response[2]
     ])
     setFullData(response)
+    console.log("responseObjj", response)
 
     setGraphData(graphData)
     setActive("Week")
@@ -131,6 +136,8 @@ const Analytics = ({ navigation }) => {
         break;
     }
   }
+
+  const colors = ["tomato", "orange", "gold", "cyan", "green"]
 
   const graphTabs = [
     {id: 1, title: "Week"},
@@ -291,6 +298,42 @@ const Analytics = ({ navigation }) => {
 
 
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
+        {catNames.map((name, index) => {
+          return(
+            <>
+            <AppText style={styles.subtitleText}>{name}</AppText>
+            <View
+              style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
+            >
+              <View
+                style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
+                width={dataPercentages[index]}
+                backgroundColor={colors[index % colors.length]}
+              >
+                <AppText style={styles.barText}>{dataPercentages[index]}</AppText>
+              </View>
+            </View>
+            </>
+
+          )
+        })}
+
+
+        
+        {/* <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
+          <View
+            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
+          >
+            <View
+              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
+              width={dataPercentages[0]}
+              backgroundColor="#E4732D"
+            >
+              <AppText style={styles.barText}>{dataPercentages[0]}</AppText>
+            </View>
+          </View>
+
+
           <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
           <View
             style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
@@ -341,7 +384,7 @@ const Analytics = ({ navigation }) => {
             >
               <AppText style={styles.barText}>{dataPercentages[3]}</AppText>
             </View>
-        </View>
+        </View> */}
             
 
       
@@ -464,17 +507,18 @@ const Analytics = ({ navigation }) => {
           </View>
         ))}
 
-        <View style={styles.titleTextRow}>
+        {fulldata && <View style={styles.titleTextRow}>
         <Image 
           resizeMode="contain"
           source={require("../assets/icon-featherpiechart.png")} 
-          style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
+          style={{ width: horizontalScale(25), height: verticalScale(25)}}
+          />
           <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Upcoming Spendings</AppText>
-        </View>
+        </View>}
 
         
 
-        {!loadMore && data.map((transaction, index) => (
+        {fulldata && !loadMore && data.map((transaction, index) => (
           <View key={index}>
             <TouchableOpacity
               style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
@@ -601,7 +645,7 @@ const Analytics = ({ navigation }) => {
           </View>
         ))}
 
-        <TouchableOpacity onPress={()=>setLoadMore(prev => !prev)} >
+        {fulldata && <TouchableOpacity onPress={()=>setLoadMore(prev => !prev)} >
           <View style={{flex:1, height: 70, justifyContent: "center", alignItems: "center"}}>
           {!loadMore ? (
             <MaterialCommunityIcons name="chevron-down" size={40} color="grey" />
@@ -609,7 +653,7 @@ const Analytics = ({ navigation }) => {
               <MaterialCommunityIcons name="chevron-up" size={40} color="grey" />
             )}
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity>}
           <View style={{height: 20, width: "100%"}}/>
       </View>
     </ScrollView>
