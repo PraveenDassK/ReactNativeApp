@@ -30,6 +30,9 @@ import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
 
+import AccountDummy from "../screens/AccountDummy";
+import AccountDummy2 from "../screens/AccountDummy2";
+
 /**
  * @notice Screens on account page to navigate to
  */
@@ -470,14 +473,6 @@ const StackNavigator = () => {
         }}
       />
 
-    <Stack.Screen 
-        name="ChooseCardsStandard5" 
-        component={gestureHandlerRootHOC(ChooseCardsStandard5)}
-        options={{
-          title: "ChooseCardsStandard5",
-       
-        }}
-      />
 <Stack.Screen 
         name="ChooseCardsElite" 
         component={gestureHandlerRootHOC(ChooseCardsElite)}
@@ -486,16 +481,6 @@ const StackNavigator = () => {
          
        
         }}
-      />
-<Stack.Screen 
-        name="ChooseCardsPremium" 
-        component={gestureHandlerRootHOC(ChooseCardsPremium)}
-        options={{
-          title: "ChooseCardsElite",
-          presentation: "transparentModal"
-       
-        }}
-        
       />
       <Stack.Screen 
         name="AccountSettings" 
@@ -571,15 +556,6 @@ const StackNavigator = () => {
        
         }}
       />
-      <Stack.Screen 
-        name="CarbonSpending" 
-        component={CarbonSpending}
-        options={{
-          title: "Carbon Spending",
-       
-        }}
-      />
-
 
     </Stack.Navigator>
   )
