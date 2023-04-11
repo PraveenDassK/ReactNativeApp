@@ -5,8 +5,6 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 
 
 import GlobalStyles from "../../GlobalStyles";
-import BankTransfer from "./BankTransfer";
-import Button from "../components/Button"
 import AppText from "../components/Text";
 
 
