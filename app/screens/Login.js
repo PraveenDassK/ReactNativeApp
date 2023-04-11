@@ -188,6 +188,7 @@ const Login = ({ navigation }) => {
                       color="black"
                       onPress={handleSubmit}
                       visible={isLoading}
+                      disabled={isLoading}
                     />
                   </View>
                   {/* <View style={styles.button}>

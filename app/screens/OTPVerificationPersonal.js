@@ -310,6 +310,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                     color="black" 
                     onPress={handleSubmit} 
                     visible={isLoading}
+                    disabled={isLoading}
                   />
               </View>
             </View>
