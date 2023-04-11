@@ -435,7 +435,7 @@ const GetStatments = async(Id) => {
 /**
  * @dev This applies to all the Get transactions by time functions
  * @dev Theese are used to get the graph data for the analysis page
- * @param {Account ID} Id 
+ * @param {Str} Id This is the ID of the account
  * @returns 
  * {
  *  total       The total spent in that period
@@ -444,15 +444,24 @@ const GetStatments = async(Id) => {
  * }
  */
 const GetTransactionsYear = async (Id) => {
+    //This gets the date range for the API to fetch
+    //Then after fetch the list of transactions
     const then = (moment().subtract(52,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
     const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=500&fromTransactionDate=${then}`)
     const requestData = request.data.details
+
+    //Count the total and intialise the array
     let total = 0
     let data = new Array(10).fill(0);
+
+
+    //This function will get the date for the end of the month first
+    const endOfMonth = moment().endOf('month')
+    console.log(endOfMonth)
+    
     requestData.content?.forEach(element => {
         total += element.amount
-        let category = moment().diff(element.transactionDate, 'Years')
-
+        let category = endOfMonth.diff(element.transactionDate, 'months')
         data[category] += element.amount
     });
     let xAxis = []
@@ -466,15 +475,31 @@ const GetTransactionsYear = async (Id) => {
     }
 }
 
+/**
+ * @dev This applies to all the Get transactions by time functions
+ * @dev Theese are used to get the graph data for the analysis page
+ * @param {Str} Id This is the ID of the account
+ * @returns 
+ * {
+ *  total       The total spent in that period
+ *  xAxis       The data for the x axis
+ *  yAxis       The data for the y axis
+ * }
+ */
 const GetTransactionsMonth = async (Id) => {
+    //This gets the date range for the API to fetch
+    //Then after fetch the list of transactions
     const then = (moment().subtract(4,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
     const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=500&fromTransactionDate=${then}`)
     const requestData = request.data.details
     let total = 0
     let data = new Array(4).fill(0);
+
+    //Gets the data
+    const endOfDay = moment().endOf('day')
     requestData.content?.forEach(element => {
         total += element.amount
-        let category = moment().diff(element.transactionDate, 'weeks')
+        let category = endOfDay.diff(element.transactionDate, 'weeks')
         data[category] += element.amount
     });
     let xAxis = []
@@ -488,22 +513,37 @@ const GetTransactionsMonth = async (Id) => {
     }
 }
 
+/**
+ * @dev This gets the data for the graphs for a weeks worth of thransactions
+ * @param {Str} Id This is the ID of the account
+ * @returns An object with graph data
+ */
 const GetTransactionsWeek = async (Id) => {
+    //This gets the date range for the API to fetch
+    //Then after fetch the list of transactions
     const then = (moment().subtract(1,'W').format("YYYY-MM-DDTHH:MM")).replace(/\:/g,"%3A") + "%3A00%2B0000"
     const request = await client.get(`https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=500&fromTransactionDate=${then}`)
     const requestData = request.data
+
+    //Count the total and intialise the array
     let total = 0
     let data = new Array(7).fill(0);
-    requestData.content?.forEach(element => {
+
+    //Calculates the y axis
+    console.log(requestData.details.content)
+    requestData.details.content?.forEach(element => {
         total += element.amount
         let category = moment().diff(element.transactionDate, 'days')
-
         data[category] += element.amount
     });
+
+    //Get lables for the graph
     let xAxis = []
     for (let i = 0; i<7;i++){
         xAxis.push(moment().subtract(i,'d').format('ddd'))
     }
+
+    //Make the object for the graph
     return {
         "total": total,
         "yAxis": data.reverse(),
