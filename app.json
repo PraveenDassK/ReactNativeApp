@@ -2,7 +2,7 @@
   "expo": {
     "name": "BankingApp",
     "slug": "BankingApp",
-    "version": "1.2.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./app/assets/logo-iconwithtext.png",
     "userInterfaceStyle": "light",
@@ -28,6 +28,7 @@
         "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
+      "versionCode": 3,
       "package": "com.carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },
