@@ -4,10 +4,11 @@ import {
   StyleSheet,
   View,
   Image,
-  Pressable,
+  TouchableOpacity,
   Switch,
   Button,
   Linking,
+  Platform
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
@@ -66,7 +67,9 @@ const AboutUs = ({ navigation }) => {
 
   const urlFacebook = "https://m.facebook.com/#!/Carbonyte-111640987687669/";
   const urlTwitter = "https://twitter.com/carbonyte_io/";
-
+  const urlAppStore= 'https://www.apple.com/uk/app-store/'
+  const urlAndroid = 'https://play.google.com/'
+  const urlImprove = 'https://play.google.com/'
   const urlBlog = "https://carbonyte.io/";
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
@@ -86,23 +89,12 @@ const AboutUs = ({ navigation }) => {
     }));
   };
 
-  const handlePressFacebook = () => {
-    Linking.canOpenURL(urlFacebook).then((supported) => {
-      return Linking.openURL(urlFacebook);
+  const handlePress = (url) => {
+    Linking.canOpenURL(url).then((supported) => {
+      return Linking.openURL(url);
     });
-  };
 
-  const handlePressBlog = () => {
-    Linking.canOpenURL(urlBlog).then((supported) => {
-      return Linking.openURL(urlBlog);
-    });
-  };
-
-  const handlePressTwitter = () => {
-    Linking.canOpenURL(urlTwitter).then((supported) => {
-      return Linking.openURL(urlTwitter);
-    });
-  };
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -120,15 +112,17 @@ const AboutUs = ({ navigation }) => {
           marginLeft: "5%",
         }}
       >
+        <TouchableOpacity onPress={()=> handlePress( Platform.OS === "ios" ? urlAppStore : urlAndroid)}>
         <View style={styles.row}>
           <Image
             style={styles.icon}
             resizeMode="contain"
             source={require("../assets/blueStar.png")}
           />
-          <Text style={styles.iconText}>Rate us on the App Store</Text>
+          <Text style={styles.iconText}>{`Rate us on the ${Platform.OS === 'ios' ? 'App' : 'Google Play'} Store`}</Text>
         </View>
-
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handlePress(urlImprove)}>
         <View style={styles.row}>
           <Image
             style={styles.icon}
@@ -137,6 +131,7 @@ const AboutUs = ({ navigation }) => {
           />
           <Text style={styles.iconText}>Tell us how to improve</Text>
         </View>
+        </TouchableOpacity>
       </View>
 
       <View
@@ -149,7 +144,7 @@ const AboutUs = ({ navigation }) => {
           marginLeft: "5%",
         }}
       >
-        <Pressable onPress={handlePressBlog}>
+        <TouchableOpacity onPress={() => handlePress(urlBlog)}>
           <View style={styles.row}>
             <Image
               style={styles.icon}
@@ -158,9 +153,9 @@ const AboutUs = ({ navigation }) => {
             />
             <Text style={styles.iconText}>Our blog</Text>
           </View>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable onPress={handlePressTwitter}>
+        <TouchableOpacity onPress={() => handlePress(urlTwitter)}>
           <View style={styles.row}>
             <Image
               style={styles.icon}
@@ -169,9 +164,9 @@ const AboutUs = ({ navigation }) => {
             />
             <Text style={styles.iconText}>Follow us on Twitter</Text>
           </View>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable onPress={handlePressFacebook}>
+        <TouchableOpacity onPress={() => handlePress(urlFacebook)}>
           <View style={styles.row}>
             <Image
               style={styles.icon}
@@ -180,7 +175,7 @@ const AboutUs = ({ navigation }) => {
             />
             <Text style={styles.iconText}>Like us on Facebook</Text>
           </View>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   );
