@@ -72,7 +72,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [accountname, setaccountname] = useState(null);
   const [cardnumber, setcardnumber] = useState(null);
   const authContext = useContext(AuthContext);
-  const { carbonyteID, accountID, settings, cardID, customerDetails } = useContext(AuthContext);
+  const { carbonyteID, accountID, settings, cardID, customerDetails, cardDetails, setCardDetails} = useContext(AuthContext);
   
   const todaydate = moment().format("MMMM D, YYYY");
 
@@ -115,28 +115,34 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     const cardData = await apiCall.GetCardDetails(cardID);
     const resposeData = await apiCall.GetUserImpact("CC1");
     const transactionCall = await apiCall.GetTransactions(accountID);
-    
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
     setCatNames(carbonSpendData.labels)
     setDataPercentages(carbonSpendData.percentages)
 
-    //CardDetails
-    const responseDetails = await api.getCardResponse("687942912")
-    console.log(responseDetails)
-    const cardDetails = await api.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
+    //If the card 
+    if(!cardDetails){
+      const responseDetails = await api.getCardResponse("687942912")
+      console.log(responseDetails)
+      const cardText = await api.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
+      console.log(cardText)
 
-    const cardNumber = cardDetails.data.substr(548,16)
-    const cardExpiry = cardDetails.data.substr(601,4)
-    const cardCVV = cardDetails.data.substr(637,3)
-    
-    CARD_DATA.push({
-      name: cardExpiry,
-      number: cardNumber,
-      image: require('../assets/cardLion.png'),
-    });
+      const cardNumber = cardText.data.substr(548,16)
+      const cardExpiry = cardText.data.substr(601,4)
+      const cardCVV = cardText.data.substr(637,3)
+      const image = require('../assets/cardLion.png')
+      setCardResponse(responseDetails.data);
 
-
+      const cardObject = {
+        name: cardExpiry,
+        number: cardNumber,
+        image: image
+      }
+      setCardDetails(cardObject)
+      
+      CARD_DATA.push(cardObject);
+    }
+    console.log(cardDetails)
     setcardnumber(cardData.cardNumberMasked)
     setSortCode("00-00-00");
     setStatus(cardData.inPost)
@@ -148,7 +154,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
-    setCardResponse(responseDetails.data);
 
 
     ////FUP Data
