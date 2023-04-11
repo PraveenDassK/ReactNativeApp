@@ -8,7 +8,6 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 import Button from "../components/Button"
 
 import apiCall from "../api/apiCall";
-import ChooseCardsPremium from "./ChooseCardsPremium";
 const Tab = createMaterialTopTabNavigator();
 
   const account = "147147"
