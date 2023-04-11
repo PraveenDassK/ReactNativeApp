@@ -29,11 +29,6 @@ import AccountMain from "../screens/AccountMain";
 import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
-import FaceScan from "../screens/FaceScan";
-//Main screen
-import AccountDummy from "../screens/AccountDummy";
-import AccountDummy2 from "../screens/AccountDummy2";
-//import SwitchAccount from "../screens/SwitchAccount"
 
 /**
  * @notice Screens on account page to navigate to
@@ -76,7 +71,6 @@ import TerminatedCard from "../screens/TerminatedCard"
 import CarbonCart from "../screens/CarbonCart"
 import CarbonProject from "../screens/CarbonProject"
 import VirtualEcoSystem from "../screens/VirtualEcoSystem"
-import ChooseCardsStandard5 from "../screens/ChooseCardsStandard5"
 import PinCart from "../screens/PinCart"
 import PinSetApp from "../screens/PinSetApp"
 
@@ -86,7 +80,6 @@ import PinSetApp from "../screens/PinSetApp"
  */
 
 import ChooseCardsElite from "../screens/ChooseCardsElite"
-import ChooseCardsPremium from "../screens/ChooseCardsPremium"
 import SecurityAndPrivacy from "../screens/SecurityAndPrivacy"
 import AccountSettings from "../screens/AccountSettings"
 import Transactions from "../screens/Transactions"
@@ -98,7 +91,6 @@ import Faq from "../screens/Faq"
 import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
-import CarbonSpending from "../screens/CarbonSpending"
 import FUP from "../screens/FUP";
 
 //Tabs and navs
