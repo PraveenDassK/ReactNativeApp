@@ -56,14 +56,13 @@ const [currentUser, setCurrentUser] = useState()
 const [isAuth, setIsAuth] = useState(false)
 const [login, setLogin] = useState(false)
 
-
 //External
 const [accountID, setAccountID] = useState("A122HTHM")
 //A122HTHM
 //A12274AW
 //CarbonyteID
 const [userID, setUserID] = useState("C122BMS7")
-const [carbonyteID, setCarbonyteID] = useState("0")
+const [cardDetails, setCardDetails] = useState(null)
 const [cardID, setCardID] = useState("03011666")
 const [customerDetails, setCustomerDetails] = ("CC1")
 const [userDetails, setUserDetails] = useState({})
@@ -202,7 +201,8 @@ if (!loaded) {
       settings, setSettings,
       pin, setPin,
       cardID, setCardID,
-      customerDetails, setCustomerDetails
+      customerDetails, setCustomerDetails,
+      cardDetails, setCardDetails
     }}>
       <NavigationContainer>
 
