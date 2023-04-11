@@ -1,182 +1,216 @@
-import React, { useContext, useEffect, useState} from "react";
-import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Pressable,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import api from "../api/api_list"
-import apiCall from "../api/apiCall"
+import api from "../api/api_list";
+import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 
+import { Dropdown } from "react-native-element-dropdown";
 
-
-import { Dropdown } from 'react-native-element-dropdown';
-
-const AddFunds = ({navigation}) => {
+const AddFunds = ({ navigation }) => {
   //Card data
-  const [isLoading, setIsLoading] = useState(false)
-  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({});
   const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [cardData, setCard] = useState([]);
-  const [amount, setAmount] = useState("1")
+  const [amount, setAmount] = useState("1");
 
   const { userID, accountID } = useContext(AuthContext);
 
   //let cardData = [{label: "01614842", value: "01614842"}]
   //Calls the API once during load
   useEffect(() => {
-    loadData()
-  },[])
-  
+    loadData();
+  }, []);
+
   //Gets the data for the user
   const loadData = async () => {
-    setIsLoading(true)
-    const response = await apiCall.GetAllAccounts(userID)
-    console.log("response",response)
-    setData(response)
+    setIsLoading(true);
+    const response = await apiCall.GetAllAccounts(userID);
+    console.log("response", response);
+    setData(response);
 
-    let accountList = []
-    response.forEach((account,i) => {
-      console.log(account)
+    let accountList = [];
+    response.forEach((account, i) => {
+      console.log(account);
       accountList.push({
         label: account.name + " £" + account.balance,
-        value: i
-      })
+        value: i,
+      });
     });
-    setCard(accountList)
-    setIsLoading(false)
-  }
+    setCard(accountList);
+    setIsLoading(false);
+  };
 
   //Screen components
 
-  const accountCode = "Card ID : " + value
-  let fromName = ""
+  const accountCode = "Card ID : " + value;
+  let fromName = "";
 
   const requestContact = (amount) => {
-
     //Check if an account has been selected
-    if(!value && value != 0){
-      alert("Please select a account")
+    if (!value && value != 0) {
+      alert("Please select a account");
       return;
     }
 
-    if(!amount){alert("!")}
+    if (!amount) {
+      alert("!");
+    }
+
     const checkText = (text) => {
-      setAmount(text)
+      setAmount(text);
       //First check if there is a value
-      if(
+      if (
         //First check if there is a value
         text == " " &&
         //Then check if it is above a limit
         text < 1000
         //Any other checks for the text add it here
-        ){
-        setValidator(false)
-      }else{
+      ) {
+        setValidator(false);
+      } else {
         //If all the checks pass then set the validator to true
-        setValidator(true)
+        setValidator(true);
       }
-    }
-    const chosenAccount = data[value]
-    console.log(chosenAccount)
+    };
+    const chosenAccount = data[value];
+    console.log(chosenAccount);
     const benData = {
       bankName: "Bank",
       accountName: chosenAccount.name,
       accountNumber: chosenAccount.identifiers[0].accountNumber,
-      iban:chosenAccount.identifiers[0].iban,
-      sortCode:chosenAccount.identifiers[0].sortCode
-    }
+      iban: chosenAccount.identifiers[0].iban,
+      sortCode: chosenAccount.identifiers[0].sortCode,
+    };
 
-    console.log(benData)
-    navigation.navigate("Pin",{
+    console.log(benData);
+    navigation.navigate("Pin", {
       amount: amount,
       name: benData.accountName,
       successScreen: "Success",
-      successText: "Transfer to " + benData.accountName + " of £" + amount + " successful",
+      successText:
+        "Transfer to " + benData.accountName + " of £" + amount + " successful",
       beneficiaryData: benData,
-    })
-  }
+    });
+  };
 
-  
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color="blue" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.requestContact}>
-      <Pressable 
-        style={styles.groupParent}
-        onPress={Keyboard.dismiss}
-      >
+      <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
         <View style={styles.helloParent}>
+          <Text style={[styles.hello1, styles.helloTypo]}>
+            {fromName}
+            {"\n"}
+          </Text>
+          <Text style={[styles.hello2, styles.helloTypo, { color: "#999" }]}>
+            {accountCode}
+          </Text>
 
-          <Text style={[styles.hello1, styles.helloTypo]}>{fromName}{'\n'}</Text>
-          <Text style={[styles.hello2, styles.helloTypo, {color: "#999"}]}>{accountCode}</Text>
-          
-          <Text style={[styles.Select_account, styles.helloTypo, {color:"#999"}]}>Select Account</Text>
-          <View style={[styles.selectBox]}
+          <Text
+            style={[styles.Select_account, styles.helloTypo, { color: "#999" }]}
           >
-            
-          <Dropdown
-           style={styles.dropdownStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={cardData}
-          maxHeight={100}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? 'Select a card' : '....'}
-          value={cardData}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-          }}
-        />
+            Select Account
+          </Text>
+          <View style={[styles.selectBox]}>
+            <Dropdown
+              style={styles.dropdownStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={cardData}
+              maxHeight={100}
+              labelField="label"
+              valueField="value"
+              placeholder={!isFocus ? "Select a card" : "...."}
+              value={cardData}
+              onChange={(item) => {
+                setValue(item.value);
+                setIsFocus(false);
+              }}
+            />
           </View>
         </View>
 
-        
-        <View
-          style={[
-            styles.groupItem,
-            styles.groupPosition1,
-          ]}
-        />
+        <View style={[styles.groupItem, styles.groupPosition1]} />
 
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
-          <View style={[styles.hello4, styles.groupViewPosition,]}>
-          <Pressable
+          <View style={[styles.hello4, styles.groupViewPosition]}>
+            <Pressable
               onPress={() => {
-                
-                setAmount("20")
+                setAmount("20");
               }}
             >
-            <Text style={[styles.hello4, styles.helloColor]}>
-              £20 
-            </Text>
-            <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
-              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
-              <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
-            </View>
+              <Text style={[styles.hello4, styles.helloColor]}>£20</Text>
+              <View
+                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
+              >
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={40}
+                  color="grey"
+                  style={{ opacity: 0.7 }}
+                />
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={30}
+                  color="grey"
+                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
+                />
+              </View>
             </Pressable>
-
           </View>
-          <View style={[{width: "30%", left: "36%"}]}>
-          <Pressable
+          <View style={[{ width: "30%", left: "36%" }]}>
+            <Pressable
               onPress={() => {
-                console.log('500000000000')
-                setAmount("50")
+                console.log("500000000000");
+                setAmount("50");
               }}
             >
-            <Text style={[styles.hello4, styles.helloColor]}>
-              
-              £50
-            </Text>
-            <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
-              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
-              <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
-            </View>
+              <Text style={[styles.hello4, styles.helloColor]}>£50</Text>
+              <View
+                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
+              >
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={40}
+                  color="grey"
+                  style={{ opacity: 0.7 }}
+                />
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={30}
+                  color="grey"
+                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
+                />
+              </View>
             </Pressable>
-
           </View>
           <View
             style={[
@@ -187,30 +221,38 @@ const AddFunds = ({navigation}) => {
           >
             <Pressable
               onPress={() => {
-                console.log('1000000000000000')
-                setAmount("100")
+                console.log("1000000000000000");
+                setAmount("100");
               }}
             >
-            <Text style={[styles.hello4, styles.helloColor]}>
-              £100
-            </Text>
-            <View style={[{ alignItems: "center", justifyContent: "flex-start"}]}>
-              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
-              <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
-            </View>
+              <Text style={[styles.hello4, styles.helloColor]}>£100</Text>
+              <View
+                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
+              >
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={40}
+                  color="grey"
+                  style={{ opacity: 0.7 }}
+                />
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={30}
+                  color="grey"
+                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
+                />
+              </View>
             </Pressable>
-
           </View>
         </View>
         <View style={[styles.helloParent2, styles.helloParent2Position]}>
-          <Text style={[styles.hello7, {color: "#999"}]}>
-            Pay{"\n"}
-          </Text>
-          <TextInput 
-          style={[styles.hello8, styles.helloTypo1]} 
-            placeholder={"£"+amount} keyboardType="numeric"
+          <Text style={[styles.hello7, { color: "#999" }]}>Pay{"\n"}</Text>
+          <TextInput
+            style={[styles.hello8, styles.helloTypo1]}
+            placeholder={"£" + amount}
+            keyboardType="numeric"
             placeholderTextColor={"blue"}
-            onChangeText = {newText => setAmount(newText)}
+            onChangeText={(newText) => setAmount(newText)}
           />
           <View
             style={[
@@ -219,7 +261,6 @@ const AddFunds = ({navigation}) => {
               styles.lineViewBorder,
             ]}
           />
-         
         </View>
         <Pressable
           style={styles.groupPressable}
@@ -243,19 +284,19 @@ const AddFunds = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
- dropdownStyle: {
+  dropdownStyle: {
     width: "95%",
     marginLeft: "2.5%",
-    paddingTop: "2.5%"
-  }, 
+    paddingTop: "2.5%",
+  },
   selectedTextStyle: {
     color: "black",
     marginLeft: "15%",
     marginTop: "1%",
   },
-  selectBox:{
-    backgroundColor:"pink",
-    width:"90%",
+  selectBox: {
+    backgroundColor: "pink",
+    width: "90%",
     marginLeft: "5%",
     marginRight: "5%",
     marginTop: "5%",
@@ -266,9 +307,9 @@ const styles = StyleSheet.create({
   Select_account: {
     top: verticalScale(-5),
     left: "5.5%",
-  }, inputSearchStyle: {
+  },
+  inputSearchStyle: {
     width: 100,
-    
   },
   helloTypo1: {
     textAlign: "center",
@@ -282,8 +323,8 @@ const styles = StyleSheet.create({
   helloTypo2: {
     fontSize: GlobalStyles.FontSize.size_base,
     color: GlobalStyles.Color.gray_700,
-    width:"100%",
-    textAlign:"center",
+    width: "100%",
+    textAlign: "center",
   },
   helloTypo: {
     color: GlobalStyles.Color.indigo_100,
@@ -331,29 +372,28 @@ const styles = StyleSheet.create({
   },
   groupChild: {},
   hello1: {
-    textAlign:"center",
+    textAlign: "center",
     fontWeight: "700",
   },
   hello2: {
     top: verticalScale(120),
-    width:"100%",
-    textAlign:"center",
+    width: "100%",
+    textAlign: "center",
   },
   hello5: {
     top: verticalScale(150),
-    width:"100%",
-    textAlign:"center",
+    width: "100%",
+    textAlign: "center",
   },
   helloParent: {
     top: verticalScale(44),
     height: verticalScale(172),
-    width:"100%",
+    width: "100%",
     position: "absolute",
   },
   groupItem: {},
   hello3: {},
   iconMaterialKeyboardVoice: {
-
     top: "50%",
     position: "absolute",
   },
@@ -376,7 +416,6 @@ const styles = StyleSheet.create({
   helloContainer: {
     width: "100%",
     left: "10%",
-
   },
   groupIcon: {},
   groupView: {
@@ -389,30 +428,27 @@ const styles = StyleSheet.create({
   groupContainer: {
     marginTop: verticalScale(150),
     height: verticalScale(50),
-    width: "100%"
+    width: "100%",
   },
   hello7: {
-    width:"100%",
-    textAlign:"center",
+    width: "100%",
+    textAlign: "center",
     fontSize: GlobalStyles.FontSize.size_xl,
   },
   hello8: {
     top: verticalScale(28),
     textAlign: "center",
-    width:"100%",
+    width: "100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
     color: GlobalStyles.Color.gray_700,
   },
   lineView: {
-  top: verticalScale(110),
-  width: "90%",
-  left: "5%",
+    top: verticalScale(110),
+    width: "90%",
+    left: "5%",
     bottom: verticalScale(-1),
-
   },
-  helloParent2: {
-
-  },
+  helloParent2: {},
   rectangleView: {
     height: "100%",
     top: "-20%",
@@ -424,7 +460,6 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   maskGroup236: {
-
     top: verticalScale(0),
     left: horizontalScale(0),
   },
@@ -432,23 +467,22 @@ const styles = StyleSheet.create({
     left: horizontalScale(0),
   },
   hello9: {
-    width:"100%",
-    textAlign:"center",
+    width: "100%",
+    textAlign: "center",
     textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.black,
     textAlign: "center",
-    top:"15%"
+    top: "15%",
   },
   groupPressable: {
-  top: "87.5%",
+    top: "87.5%",
     height: verticalScale(60),
-    width:"100%",
+    width: "100%",
     position: "relative",
   },
   groupParent: {
-
     shadowColor: "rgba(1, 1, 253, 0.1)",
     shadowOffset: {
       width: horizontalScale(0),
