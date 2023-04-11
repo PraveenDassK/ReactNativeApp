@@ -563,12 +563,27 @@ const GetTransactionsWeek = async (Id) => {
 const GetLimits = async(Id) => {
     const spend = await (await GetTransactionsMonth()).total
     const request = await client.get(`https://api.carbonyte.io/transactionmodule/GetBudget?accountId=${Id}`)
+    if(request.data.resultMessage == "No budget found for the specified Account Id"){
+        await SetLimit(Id,0)
+    }
+
+    console.log(request.data)
     const requestData = request.data.details
     return {
         spend:spend,
         monthlyAmount:requestData.monthlyAmount
     }
 }
+
+const SetLimit = async(enfuceid,amount) =>{  
+    const request = await client.post("https://api.carbonyte.io/transactionmodule/SetBudget?accountId=" + 
+    enfuceid + 
+    "&periodType=monthly&amount=" + amount)
+    console.log(request.data)
+    return request
+}
+
+
 
 /**
  * 
@@ -739,8 +754,9 @@ const StatmentPost = (Id) => {
     }
 }
 
-const ReportTransaction = (Id) => {
-
+const ReportTransaction = async(accountID, transactionId) => {
+    const request = await client.post(`https://api.carbonyte.io/transactionmodule/DisputeTransaction?accountId=${accountID}&transactionId=${transactionId}`)
+    return request.data
 }
 
 const GetAccount = async(enfuceid) => {
