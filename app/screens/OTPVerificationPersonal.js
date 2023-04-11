@@ -206,8 +206,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer1")}
-                  onChangeText={handleChange("pVer1")}
-
+                  onChangeText={() => {
+                    handleChange("pVer1")
+                    pVer2Ref.current.focus()
+                  }}
                   style={styles.inputBox}
                 />
                 <ErrorMessage error={errors.pVer1} visible={touched.pVer1} />
@@ -215,7 +217,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer2")}
-                  onChangeText={handleChange("pVer2")}
+                  onChangeText={() => {
+                    handleChange("pVer2")
+                    pVer3Ref.current.focus()
+                  }}
                   ref={pVer2Ref}
                   returnKeyType="next"
                   style={styles.inputBox}
@@ -226,7 +231,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer3")}
-                  onChangeText={handleChange("pVer3")}
+                  onChangeText={() => {
+                    handleChange("pVer3")
+                    pVer4Ref.current.focus()
+                  }}
                   ref={pVer3Ref}
                   returnKeyType="next"
                   style={styles.inputBox}
@@ -237,7 +245,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("pVer4")}
-                  onChangeText={handleChange("pVer4")}
+                  onChangeText={() => {
+                    handleChange("pVer4")
+                    eVer1Ref.current.focus()
+                  }}
                   ref={pVer4Ref}
                   returnKeyType="next"
                   style={styles.inputBox}
@@ -257,12 +268,13 @@ const OTPVerificationPersonal = ({ navigation }) => {
              
               <View style={styles.entryBoxContainer}>
                 <TextInput
-                  autoFocus={true}
                   maxLength={1}
-                  placeholder="1"
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("eVer1")}
-                  onChangeText={handleChange("eVer1")}
+                  onChangeText={() => {
+                    handleChange("eVer1")
+                    eVer2Ref.current.focus()
+                  }}
                   ref={eVer1Ref}
                   style={styles.inputBox}
                 />
@@ -271,7 +283,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("eVer2")}
-                  onChangeText={handleChange("eVer2")}
+                  onChangeText={() => {
+                    handleChange("eVer2")
+                    eVer3Ref.current.focus()
+                  }}
                   ref={eVer2Ref}
                   returnKeyType="next"
                   style={styles.inputBox}
@@ -282,7 +297,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("eVer3")}
-                  onChangeText={handleChange("eVer3")}
+                  onChangeText={() => {
+                    handleChange("eVer3")
+                    eVer4Ref.current.focus()
+                  }}
                   ref={eVer3Ref}
                   returnKeyType="next"
                   style={styles.inputBox}
@@ -293,7 +311,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                   maxLength={1}
                   keyboardType="numeric"
                   onBlur={() => setFieldTouched("eVer4")}
-                  onChangeText={handleChange("eVer4")}
+                  onChangeText={() => {
+                    handleChange("eVer4")
+                    // pVer3Ref.current.focus()
+                  }}
                   ref={eVer4Ref}
                   returnKeyType="next"
                   style={styles.inputBox}
@@ -380,7 +401,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    opacity: 0.1
+    
     
   },
 
