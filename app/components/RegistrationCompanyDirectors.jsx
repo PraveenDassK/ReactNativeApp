@@ -34,7 +34,7 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
         setScreenToShow("CompanyUsage")
       }
     return (
-        <Screen>
+      
             <AuthScreen title="Directors or Partners" img="bear" handleBack = {handleBack}>            
             <Text>
                 Carbonyte would like to know the details of two of your partners or directors
@@ -115,7 +115,7 @@ const CompanyDirectors = ({SaveDetails,setScreenToShow}) => {
             </AuthScreen>
            
            
-        </Screen>
+      
   );
 };
 

@@ -37,10 +37,9 @@ import ErrorMessage from "./forms/ErrorMessage";
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().min(1).max(11).label("First name"),
   lastName: Yup.string().required().min(1).max(11).label("Last name"),
+});
 
-})
-
-const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
+const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
@@ -77,7 +76,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
    * @returns If an Item has failed validation it returns null
    * This will not trigger the save details
    */
-  const handleSubmit = ({firstName, lastName}) => {
+  const handleSubmit = ({ firstName, lastName }) => {
     //Checs if the names have been filled
     //If they haven't then ask to fill out
     // if (!firstName && !lastName) {
@@ -118,7 +117,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
 
   const handleBack = () => {
     console.log(accountType);
-    if(accountType == "Business"){
+    if (accountType == "Business") {
       setScreenToShow("CompanyDirectors");
       return;
     }
@@ -127,21 +126,24 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <Screen style={{ backgroundColor: "white" }}>
       <AuthScreen
-        title={viewDate ? "":"A bit about you"}
+        title={viewDate ? "" : "A bit about you"}
         img="bear"
         width="40%"
         handleBack={handleBack}
       >
         <Formik
-          initialValues={{firstName: '', lastName: ''}}
+          initialValues={{ firstName: "", lastName: "" }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
-          >
-          
-          
-          {({ handleChange, handleSubmit, setFieldTouched, errors, touched}) => (
+        >
+          {({
+            handleChange,
+            handleSubmit,
+            setFieldTouched,
+            errors,
+            touched,
+          }) => (
             <View
               style={[
                 styles.component1981,
@@ -162,7 +164,10 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
                   { padding: 10 },
                 ]}
               />
-                    <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
+              <ErrorMessage
+                error={errors.firstName}
+                visible={touched.firstName}
+              />
               <Text>Last name</Text>
               <TextInput
                 placeholder="Enter you last name"
@@ -176,7 +181,10 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
                   { padding: 10 },
                 ]}
               />
-                    <ErrorMessage error={errors.lastName} visible={touched.lastName}/>
+              <ErrorMessage
+                error={errors.lastName}
+                visible={touched.lastName}
+              />
               <Text>Gender</Text>
               <Dropdown
                 style={[styles.dropdown]}
@@ -221,17 +229,15 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
               {
                 //<Button title="Continue" color="babyBlue" onPress={handleSubmit} />
               }
-                 <Button
-          title="continue"
-          textColor="white"
-          color="black"
-          onPress={handleSubmit}
-        />
+              <Button
+                title="continue"
+                textColor="white"
+                color="black"
+                onPress={handleSubmit}
+              />
             </View>
           )}
         </Formik>
-
-     
       </AuthScreen>
 
       {/* <Text>A bit about you</Text>
@@ -298,7 +304,6 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow,accountType }) => {
                 color="babyBlue" 
                 onPress={() => sendDetails()
             }/> */}
-    </Screen>
     </TouchableWithoutFeedback>
   );
 };

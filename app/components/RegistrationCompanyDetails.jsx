@@ -47,63 +47,55 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
   };
 
   return (
-    <Screen>
-      <AuthScreen
-        title="How would you use this account"
-        img="eagleCard"
-        handleBack={handleBack}
+    <AuthScreen
+      title="How would you use this account"
+      img="eagleCard"
+      handleBack={handleBack}
+    >
+      <Formik
+        initialValues={{
+          customers: "",
+        }}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
       >
-        <Formik
-          initialValues={{
-            customers: "",
-          }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          {({
-            handleChange,
-            handleSubmit,
-            setFieldTouched,
-            errors,
-            touched,
-          }) => (
-            <View style={[styles.component1981, styles.mt14]}>
-              <Text>Who are your main customers</Text>
-              <TextInput
-                keyboardType="Text"
-                placeholder="Enter you main customers"
-                placeholderTextColor="#D3D3D3"
-                onBlur={() => setFieldTouched("customers")}
-                onChangeText={handleChange("customers")}
-                style={[
-                  styles.component1981Child,
-                  styles.childBorder,
-                  { padding: 10 },
-                ]}
-              />
-              <ErrorMessage
-                error={errors.customers}
-                visible={touched.customers}
-              />
-              <CheckBox
-                title="Are there any customers outside the EU?"
-                checkedIcon="dot-circle-o"
-                uncheckedIcon="circle-o"
-                checkedColor="black"
-                checked={isChecked}
-                onPress={() => setChecked(!isChecked)}
-              />
-              <Button
-                title="Continue"
-                color="black"
-                textColor="white"
-                onPress={handleSubmit}
-              />
-            </View>
-          )}
-        </Formik>
-      </AuthScreen>
-    </Screen>
+        {({ handleChange, handleSubmit, setFieldTouched, errors, touched }) => (
+          <View style={[styles.component1981, styles.mt14]}>
+            <Text>Who are your main customers</Text>
+            <TextInput
+              keyboardType="Text"
+              placeholder="Enter you main customers"
+              placeholderTextColor="#D3D3D3"
+              onBlur={() => setFieldTouched("customers")}
+              onChangeText={handleChange("customers")}
+              style={[
+                styles.component1981Child,
+                styles.childBorder,
+                { padding: 10 },
+              ]}
+            />
+            <ErrorMessage
+              error={errors.customers}
+              visible={touched.customers}
+            />
+            <CheckBox
+              title="Are there any customers outside the EU?"
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+              checkedColor="black"
+              checked={isChecked}
+              onPress={() => setChecked(!isChecked)}
+            />
+            <Button
+              title="Continue"
+              color="black"
+              textColor="white"
+              onPress={handleSubmit}
+            />
+          </View>
+        )}
+      </Formik>
+    </AuthScreen>
   );
 };
 

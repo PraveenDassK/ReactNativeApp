@@ -53,75 +53,48 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
     setScreenToShow("");
   };
   return (
-    <Screen style={{ backgroundColor: "white" }}>
-      <AuthScreen
-        title="Company registration number"
-        img="elephantCarbon"
-        handleBack={handleBack}
-      >
-        <View style={[styles.component1981, styles.mt14]}>
-          <TextInput
-            placeholder="Company registration number"
-            placeholderTextColor="grey"
-            keyboardType="numeric"
-            onChangeText={(value) => setRegNum(value)}
-            style={[
-              styles.component1981Child,
-              styles.childBorder,
-              { padding: 10 },
-            ]}
-          />
-        </View>
-        {companyDetails ? (
-          <View style={styles.spacing}>
-            <Text style={styles.spacing}>Are these your details?</Text>
-            <Text>
-              {companyDetails.registered_office_address.address_line_1}
-            </Text>
-            <Text>
-              {companyDetails.registered_office_address.address_line_2}
-            </Text>
-            <Text>{companyDetails.registered_office_address.locality}</Text>
-            <Text>{companyDetails.registered_office_address.postal_code}</Text>
-          </View>
-        ) : null}
-        <Button
-          title="Search"
-          color="white"
-          textColor="black"
-          onPress={() => searchCompany()}
+    <AuthScreen
+      title="Company registration number"
+      img="elephantCarbon"
+      handleBack={handleBack}
+    >
+      <View style={[styles.component1981, styles.mt14]}>
+        <TextInput
+          placeholder="Company registration number"
+          placeholderTextColor="grey"
+          keyboardType="numeric"
+          onChangeText={(value) => setRegNum(value)}
+          style={[
+            styles.component1981Child,
+            styles.childBorder,
+            { padding: 10 },
+          ]}
         />
-        {companyDetails ? (
-          <Button
-            title="Continue"
-            color="black"
-            textColor="white"
-            onPress={() => sendDetails()}
-          />
-        ) : null}
-      </AuthScreen>
-      {/* <Text>Company registration number</Text>
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <TextInput 
-                        keyboardType="numeric" 
-                        onChangeText={(value) => setRegNum(value)}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
-                </View>
-                {companyDetails?
-                <View>
-                    <Text>Are theese your details?</Text>    
-                    <Text>{companyDetails.registered_office_address.address_line_1}</Text>    
-                    <Text>{companyDetails.registered_office_address.address_line_2}</Text>    
-                    <Text>{companyDetails.registered_office_address.locality}</Text>    
-                    <Text>{companyDetails.registered_office_address.postal_code}</Text>    
-                </View>
-                : null}
-            <Button title="Search" color="babyBlue" onPress={() => searchCompany()} />
-            {companyDetails ?  
-                <Button title="Continue" color="babyBlue" onPress={() => sendDetails()} />
-            : null} */}
-    </Screen>
+      </View>
+      {companyDetails ? (
+        <View style={styles.spacing}>
+          <Text style={styles.spacing}>Are these your details?</Text>
+          <Text>{companyDetails.registered_office_address.address_line_1}</Text>
+          <Text>{companyDetails.registered_office_address.address_line_2}</Text>
+          <Text>{companyDetails.registered_office_address.locality}</Text>
+          <Text>{companyDetails.registered_office_address.postal_code}</Text>
+        </View>
+      ) : null}
+      <Button
+        title="Search"
+        color="white"
+        textColor="black"
+        onPress={() => searchCompany()}
+      />
+      {companyDetails ? (
+        <Button
+          title="Continue"
+          color="black"
+          textColor="white"
+          onPress={() => sendDetails()}
+        />
+      ) : null}
+    </AuthScreen>
   );
 };
 
