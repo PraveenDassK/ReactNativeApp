@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback , TouchableOpacity, KeyboardAvoidingView, Platform} from "react-native";
+import { Text, StyleSheet, Image, View, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView, Platform, Pressable} from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
@@ -33,7 +33,7 @@ const BankTransferAmount = ({ route, navigation }) => {
     <KeyboardAvoidingView 
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     style={styles.requestContact}>
-    <Pressable 
+    <Pressable
       style={styles.groupParent}
       onPress={Keyboard.dismiss}
     >
@@ -47,7 +47,7 @@ const BankTransferAmount = ({ route, navigation }) => {
 
       <View style={[styles.groupContainer, styles.helloParent2Position]}>
         <View style={[styles.hello4, styles.groupViewPosition,]}>
-        <Pressable
+        <TouchableOpacity
             onPress={() => {
               
               setAmount("20")
@@ -60,11 +60,11 @@ const BankTransferAmount = ({ route, navigation }) => {
             <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
             <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
           </View>
-          </Pressable>
+          </TouchableOpacity>
 
         </View>
         <View style={[{width: "30%", left: "36%"}]}>
-        <Pressable
+        <TouchableOpacity
             onPress={() => {
             
               setAmount("50")
@@ -77,7 +77,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
             <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
           </View>
-          </Pressable>
+          </TouchableOpacity>
 
         </View>
         <View
@@ -87,7 +87,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             styles.parentPosition1,
           ]}
         >
-          <Pressable
+          <TouchableOpacity
             onPress={() => {
             
               setAmount("100")
@@ -100,7 +100,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             <MaterialCommunityIcons name="chevron-up" size={40} color="grey" style={{opacity: 0.7}} />
             <MaterialCommunityIcons name="chevron-up" size={30} color="grey" style={{position: "absolute", top: "40%", opacity: 0.4}} />
           </View>
-          </Pressable>
+          </TouchableOpacity>
 
         </View>
       </View>
@@ -123,8 +123,8 @@ const BankTransferAmount = ({ route, navigation }) => {
         />
        
       </View>
-      <Pressable
-        style={styles.groupPressable}
+      <TouchableOpacity
+        style={styles.groupTouchableOpacity}
         onPress={() => requestContact(amount)}
        
       >
@@ -139,79 +139,10 @@ const BankTransferAmount = ({ route, navigation }) => {
           <View style={[styles.maskGroup236, styles.parentPosition]} />
         </View>
         <Text style={styles.hello9}>ADD FUNDS</Text>
-      </Pressable>
+      </TouchableOpacity>
     </Pressable>
   </KeyboardAvoidingView>
-    // <View style={styles.mainContainer}>
-    //   <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
-
-    //     <View style={styles.centerDiv}>
-    //       <AppText style={styles.centerText}>
-    //         {accountName}
-    //         {"\n"}
-    //       </AppText>
-    //       <AppText style={styles.centerText}>{accountCode}</AppText>
-    //       <AppText style={styles.centerText}>{sortCode}</AppText>
-
-    //       <View style={styles.paymentDiv}>
-    //         <AppText style={{ textAlign: "center", fontSize: 16 }}>Pay</AppText>
-    //         <TextInput
-    //           style={{ textAlign: "center", fontSize: 60, fontWeight: "700" }}
-    //           placeholder={"£" + amount}
-    //           placeholderTextColor="blue"
-    //           keyboardType="numeric"
-    //           onChangeText={(newText) => setAmount(newText)}
-    //         />
-    //         <View
-    //           style={{
-    //             width: "90%",
-    //             marginLeft: "5%",
-    //             height: 1,
-    //             backgroundColor: "grey",
-    //           }}
-    //         />
-    //         <View
-    //           style={{
-    //             width: "100%",
-    //             flexDirection: "row",
-    //             height: 100,
-    //             justifyContent: "center",
-    //             marginTop: "2.5%"
-    //           }}
-    //         >
-    //           <Pressable style={{ flex: 3, width: "30%", alignItems: "flex-end"}}
-    //             onPress={() => {
-    //               setAmount("20");
-    //             }}
-    //           >
-    //             <AppText style={{fontSize: 25, color: "grey"}}>£20</AppText>
-    //           </Pressable>
-
-    //           <Pressable style={{ flex: 3, width: "30%"}}
-    //             onPress={() => {
-    //               setAmount("50");
-    //             }}
-    //           >
-    //             <AppText style={{textAlign: "left", fontSize: 25, color: "grey"}}>£50</AppText>
-    //           </Pressable>
-    //           <Pressable style={{ flex: 3, width: "30%" }}
-    //             onPress={() => {
-    //               setAmount("100");
-    //             }}
-    //           >
-    //             <AppText style={{fontSize: 25, color: "grey"}}>£100</AppText>
-    //           </Pressable>
-    //         </View>
-    //       </View>
-    //     </View>
-
-    //   </Pressable>
-    //   <View style={styles.bottom}>
-    //                   <TouchableOpacity style={styles.button}>
-    //                       <Button title="Send" color="babyBlue" onPress={() => requestContact(amount)}/>
-    //                   </TouchableOpacity>
-    //               </View>
-    // </View>
+  
   );
 };
 
@@ -414,7 +345,7 @@ const styles = StyleSheet.create({
      textAlign: "center",
      top:"15%"
    },
-   groupPressable: {
+   groupTouchableOpacity: {
    top: "57.5%",
      height: verticalScale(60),
      width:"100%",

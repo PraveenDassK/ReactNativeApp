@@ -4,13 +4,15 @@ import {
   StyleSheet,
   Image,
   View,
-  Pressable,
+  TouchableOpacity,
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   ActivityIndicator,
-  Platform
+  Platform,
+  Alert,
+  Pressable
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -95,7 +97,7 @@ const AddFunds = ({ navigation }) => {
       }
     };
     const chosenAccount = data[value];
-    if(!chosenAccount) return;
+    if(!chosenAccount) return Alert.alert("Select a card");
     const benData = {
       bankName: "Bank",
       accountName: chosenAccount.name,
@@ -167,7 +169,7 @@ const AddFunds = ({ navigation }) => {
 
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.hello4, styles.groupViewPosition]}>
-            <Pressable
+            <TouchableOpacity
               onPress={() => {
                 setAmount("20");
               }}
@@ -189,10 +191,10 @@ const AddFunds = ({ navigation }) => {
                   style={{ position: "absolute", top: "40%", opacity: 0.4 }}
                 />
               </View>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={[{ width: "30%", left: "36%" }]}>
-            <Pressable
+            <TouchableOpacity
               onPress={() => {
                 console.log("500000000000");
                 setAmount("50");
@@ -215,7 +217,7 @@ const AddFunds = ({ navigation }) => {
                   style={{ position: "absolute", top: "40%", opacity: 0.4 }}
                 />
               </View>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View
             style={[
@@ -224,7 +226,7 @@ const AddFunds = ({ navigation }) => {
               styles.parentPosition1,
             ]}
           >
-            <Pressable
+            <TouchableOpacity
               onPress={() => {
                 console.log("1000000000000000");
                 setAmount("100");
@@ -247,7 +249,7 @@ const AddFunds = ({ navigation }) => {
                   style={{ position: "absolute", top: "40%", opacity: 0.4 }}
                 />
               </View>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={[styles.helloParent2, styles.helloParent2Position]}>
@@ -267,8 +269,8 @@ const AddFunds = ({ navigation }) => {
             ]}
           />
         </View>
-        <Pressable
-          style={styles.groupPressable}
+        <TouchableOpacity
+          style={styles.groupTouchableOpacity}
           onPress={() => requestContact(amount)}
         >
           <View
@@ -282,7 +284,7 @@ const AddFunds = ({ navigation }) => {
             <View style={[styles.maskGroup236, styles.parentPosition]} />
           </View>
           <Text style={styles.hello9}>ADD FUNDS</Text>
-        </Pressable>
+        </TouchableOpacity>
       </Pressable>
     </KeyboardAvoidingView>
   );
@@ -481,7 +483,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     top: "15%",
   },
-  groupPressable: {
+  groupTouchableOpacity: {
     top: "87.5%",
     height: verticalScale(60),
     width: "100%",
