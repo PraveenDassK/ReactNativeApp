@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback , TouchableOpacity} from "react-native";
+import { Text, StyleSheet, Image, View, Pressable, TextInput, Keyboard, TouchableWithoutFeedback , TouchableOpacity, KeyboardAvoidingView, Platform} from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
@@ -30,7 +30,9 @@ const BankTransferAmount = ({ route, navigation }) => {
 
 
   return (
-    <View style={styles.requestContact}>
+    <KeyboardAvoidingView 
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={styles.requestContact}>
     <Pressable 
       style={styles.groupParent}
       onPress={Keyboard.dismiss}
@@ -139,7 +141,7 @@ const BankTransferAmount = ({ route, navigation }) => {
         <Text style={styles.hello9}>ADD FUNDS</Text>
       </Pressable>
     </Pressable>
-  </View>
+  </KeyboardAvoidingView>
     // <View style={styles.mainContainer}>
     //   <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
 

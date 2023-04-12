@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState, useCallback, Fragment } from "react";
 import {
   RefreshControl,
   Text,
@@ -50,7 +50,7 @@ const Analytics = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const authContext = useContext(AuthContext);
   const { userID, accountID } = useContext(AuthContext);
-  const [carbnonSpendData, setCarbonSpendData] = useState("")
+  const [carbnonSpendData, setCarbonSpendData] = useState([])
   const [carbonGraphData, setCarbonGraphData] = useState(null)
 
 
@@ -203,7 +203,7 @@ const Analytics = ({ navigation }) => {
           <AppText style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>kg CO2</AppText>
         </View>
 
-          <DoughnutChart data = {carbnonSpendData}/>
+          <DoughnutChart data={carbnonSpendData} />
         </View>
         <View style={[styles.balanceContainer, styles.boxShadow]}>
           <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</AppText>
@@ -300,7 +300,7 @@ const Analytics = ({ navigation }) => {
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
         {catNames.map((name, index) => {
           return(
-            <>
+            <Fragment key={`${name+index}`}>
             <AppText style={styles.subtitleText}>{name}</AppText>
             <View
               style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
@@ -313,7 +313,7 @@ const Analytics = ({ navigation }) => {
                 <AppText style={styles.barText}>{dataPercentages[index]}</AppText>
               </View>
             </View>
-            </>
+            </Fragment>
 
           )
         })}

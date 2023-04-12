@@ -1,14 +1,26 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet, SafeAreaView, View, TouchableWithoutFeedback, Keyboard} from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
 function Screen({ children, style }) {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <SafeAreaView style={[styles.screen, style]}>
-      <View style={[styles.view, style]}>{children}</View>
-    </SafeAreaView>
-    </TouchableWithoutFeedback>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={[styles.screen, style]}>
+          <View style={[styles.view, style]}>{children}</View>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -8,7 +8,9 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   ActivityIndicator,
+  Platform
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -122,7 +124,10 @@ const AddFunds = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.requestContact}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.requestContact}
+    >
       <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
         <View style={styles.helloParent}>
           <Text style={[styles.hello1, styles.helloTypo]}>
@@ -279,7 +284,7 @@ const AddFunds = ({ navigation }) => {
           <Text style={styles.hello9}>ADD FUNDS</Text>
         </Pressable>
       </Pressable>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
