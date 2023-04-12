@@ -123,20 +123,24 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //If the card 
     if(!cardDetails){
       const responseDetails = await api.getCardResponse("687942912")
-      console.log(responseDetails)
       const cardText = await api.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
-      console.log(cardText)
 
-      const cardNumber = cardText.data.substr(548,16)
-      const cardExpiry = cardText.data.substr(601,4)
-      const cardCVV = cardText.data.substr(637,3)
-      const image = require('../assets/cardLion.png')
       setCardResponse(responseDetails.data);
 
+      const cardExpiry = cardText.data.substr(601,4)
+      const formattedExpiraty =  cardExpiry.slice(0, 2) + "/" + cardExpiry.slice(2);
+
+      const cardCVV = cardText.data.substr(637,3)
+      const image = require('../assets/cardLion.png')
+
+      const cardNumber = cardText.data.substr(548,16)
+      const formattedCard = cardNumber.replace(/(.{4})/g, '$1 ');
+
       const cardObject = {
-        name: cardExpiry,
-        number: cardNumber,
-        image: image
+        name: formattedExpiraty,
+        number: formattedCard,
+        image: image,
+        cvv: cardCVV
       }
       setCardDetails(cardObject)
       
@@ -955,7 +959,7 @@ const Card = ({ name, number, image, selected, onPress }) => {
 
 
 
-              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(40), fontSize: moderateScale(16) ,fontWeight:'400'}]}>
+              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(40), fontSize: moderateScale(14) ,fontWeight:'400'}]}>
                   {number}
               </AppText>
               <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(41.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
