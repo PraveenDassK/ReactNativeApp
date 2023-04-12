@@ -12,7 +12,7 @@ import {
   ActivityIndicator,
   Platform,
   Alert,
-  Pressable
+  Pressable,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -97,7 +97,7 @@ const AddFunds = ({ navigation }) => {
       }
     };
     const chosenAccount = data[value];
-    if(!chosenAccount) return Alert.alert("Select a card");
+    if (!chosenAccount) return Alert.alert("Select a card");
     const benData = {
       bankName: "Bank",
       accountName: chosenAccount.name,
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: "100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
-    color: GlobalStyles.Color.gray_700,
+    color: "blue",
   },
   lineView: {
     top: verticalScale(110),
