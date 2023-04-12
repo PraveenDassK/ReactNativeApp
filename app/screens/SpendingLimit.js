@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch, Button, ScrollView, ActivityIndicator } from "react-native";
+import { Text, StyleSheet, View, Image, Pressable, Switch, Button, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Screen from "../components/Screen";
@@ -70,6 +70,10 @@ const SpendingLimit = ({ navigation, route }) => {
   }
 
   return (
+  <KeyboardAvoidingView
+  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+  style={{flex: 1}}
+  >
   <ScrollView>
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
@@ -161,6 +165,7 @@ const SpendingLimit = ({ navigation, route }) => {
       <View style={{width: "100%", height: 35}}/>
     </View>
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
