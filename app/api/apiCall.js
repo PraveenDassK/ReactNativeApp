@@ -371,7 +371,7 @@ const GetProjectList = async() => {
             tags:project.tags
         })
     });
-    return returnData
+    return returnData.slice(0, 6);
 }
 
 /**
