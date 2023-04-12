@@ -95,7 +95,7 @@ const AddFunds = ({ navigation }) => {
       }
     };
     const chosenAccount = data[value];
-    console.log(chosenAccount);
+    if(!chosenAccount) return;
     const benData = {
       bankName: "Bank",
       accountName: chosenAccount.name,
