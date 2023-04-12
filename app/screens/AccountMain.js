@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useContext, useCallback, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+  useRef,
+} from "react";
 import {
   RefreshControl,
   Text,
@@ -7,20 +13,18 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator, 
+  ActivityIndicator,
   Platform,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
 
-
-
-import Swiper from 'react-native-swiper';
+import Swiper from "react-native-swiper";
 
 import {
   GestureDetector,
   GestureHandlerRootView,
-} from 'react-native-gesture-handler';
+} from "react-native-gesture-handler";
 
 import Animated, {
   Easing,
@@ -28,7 +32,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
 import GlobalStyles from "../../GlobalStyles";
 import {
@@ -47,23 +51,19 @@ import FadeInView from "../components/fadeInview";
 
 import moment from "moment";
 import AppText from "../components/Text";
-import apiCarbon from "../api/apiCarbon"
+import apiCarbon from "../api/apiCarbon";
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
-const CARD_DATA = [
-
-];
+const CARD_DATA = [];
 
 const HomeScreenPersonal = ({ navigation, route }) => {
-
- 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   //Saves all the data from the API call
   const [data, setData] = useState(null);
-  const [cardResponse, setCardResponse] = useState(null)
+  const [cardResponse, setCardResponse] = useState(null);
   const [balance, setBalance] = useState(null);
-  const [hideBalance, setHideBalance] = useState(false)
+  const [hideBalance, setHideBalance] = useState(false);
   const [transactionTable, setTransactionTable] = useState(null);
 
   const [status, setStatus] = useState(null);
@@ -72,8 +72,16 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [accountname, setaccountname] = useState(null);
   const [cardnumber, setcardnumber] = useState(null);
   const authContext = useContext(AuthContext);
-  const { carbonyteID, accountID, settings, cardID, customerDetails, cardDetails, setCardDetails} = useContext(AuthContext);
-  
+  const {
+    carbonyteID,
+    accountID,
+    settings,
+    cardID,
+    customerDetails,
+    cardDetails,
+    setCardDetails,
+  } = useContext(AuthContext);
+
   const todaydate = moment().format("MMMM D, YYYY");
 
   const [numTrees, setTrees] = useState(0);
@@ -83,22 +91,32 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  const [name, setName] = useState(null)
-  const [description, setDescription] = useState(null)
-  const [price, setPrice] = useState(null)
-  const [nftimg, setNftimg] = useState(null)
+  const [name, setName] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [nftimg, setNftimg] = useState(null);
 
   const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
 
-  const [catNames, setCatNames] = useState(["Health", "Food", "House", "Shopping", "Transport"]);
-  const [dataPercentages, setDataPercentages] = useState(["70%", "50%", "40%", "30%", "20%"]);
-
+  const [catNames, setCatNames] = useState([
+    "Health",
+    "Food",
+    "House",
+    "Shopping",
+    "Transport",
+  ]);
+  const [dataPercentages, setDataPercentages] = useState([
+    "70%",
+    "50%",
+    "40%",
+    "30%",
+    "20%",
+  ]);
 
   const handleCardPress = (card) => {
     setSelectedCard(card);
   };
 
-  
   const TotalAmount = numTrees;
   const TokenAmount = numTrees;
   const carbonAmount = numCarbon;
@@ -110,46 +128,50 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   //Gets the data for the user
   const loadData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const userData = await apiCall.GetCustomerDetails(accountID);
     const cardData = await apiCall.GetCardDetails(cardID);
     const resposeData = await apiCall.GetUserImpact("CC1");
     const transactionCall = await apiCall.GetTransactions(accountID);
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
-    setCatNames(carbonSpendData.labels)
-    setDataPercentages(carbonSpendData.percentages)
+    setCatNames(carbonSpendData.labels);
+    setDataPercentages(carbonSpendData.percentages);
 
-    //If the card 
-    if(!cardDetails){
-      const responseDetails = await api.getCardResponse("687942912")
-      const cardText = await api.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
+    //If the card
+    if (!cardDetails) {
+      const responseDetails = await api.getCardResponse("687942912");
+      const cardText = await api.getCardDetails(
+        responseDetails.data.cardDataUrl,
+        responseDetails.data.token
+      );
 
       setCardResponse(responseDetails.data);
 
-      const cardExpiry = cardText.data.substr(601,4)
-      const formattedExpiraty =  cardExpiry.slice(0, 2) + "/" + cardExpiry.slice(2);
+      const cardExpiry = cardText.data.substr(601, 4);
+      const formattedExpiraty =
+        cardExpiry.slice(0, 2) + "/" + cardExpiry.slice(2);
 
-      const cardCVV = cardText.data.substr(637,3)
-      const image = require('../assets/cardLion.png')
+      const cardCVV = cardText.data.substr(637, 3);
+      const image = require("../assets/cardLion.png");
 
-      const cardNumber = cardText.data.substr(548,16)
-      const formattedCard = cardNumber.replace(/(.{4})/g, '$1 ');
+      const cardNumber = cardText.data.substr(548, 16);
+      const formattedCard = cardNumber.replace(/(.{4})/g, "$1 ");
 
       const cardObject = {
         name: formattedExpiraty,
         number: formattedCard,
         image: image,
-        cvv: cardCVV
-      }
-      setCardDetails(cardObject)
-      
+        cvv: cardCVV,
+      };
+      setCardDetails(cardObject);
+
       CARD_DATA.push(cardObject);
     }
-    console.log(cardDetails)
-    setcardnumber(cardData.cardNumberMasked)
+    console.log(cardDetails);
+    setcardnumber(cardData.cardNumberMasked);
     setSortCode("00-00-00");
-    setStatus(cardData.inPost)
+    setStatus(cardData.inPost);
 
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
@@ -159,17 +181,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
 
-
     ////FUP Data
-    try{
-      const NFTresponse = await apiweb3.GetBalance()
-      setName(NFTresponse.data.data.nftData[0].data.name)
-      setDescription(NFTresponse.data.data.nftData[0].data.description)
-      setPrice(NFTresponse.data.data.nftData[0].data.price)
-      setNftimg(NFTresponse.data.data.nftData[0].data.url)
-    }catch{
-
-    }
+    try {
+      const NFTresponse = await apiweb3.GetBalance();
+      setName(NFTresponse.data.data.nftData[0].data.name);
+      setDescription(NFTresponse.data.data.nftData[0].data.description);
+      setPrice(NFTresponse.data.data.nftData[0].data.price);
+      setNftimg(NFTresponse.data.data.nftData[0].data.url);
+    } catch {}
 
     //Load the data for transactions
     let pageShow = [];
@@ -202,7 +221,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   alignItems: "center",
                   textAlignVertical: "center",
                   fontWeight: "700",
-                
                 }}
               >
                 {dataHold?.description.replace("Payment to ", "")[0]}
@@ -216,10 +234,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 marginLeft: "5%",
               }}
             >
-              <AppText style={{ fontSize: moderateScale(14), fontWeight: "700" }}>
+              <AppText
+                style={{ fontSize: moderateScale(14), fontWeight: "700" }}
+              >
                 {dataHold?.description.replace("Payment to ", "")}
               </AppText>
-              <AppText style={{opacity: 0.4}}>
+              <AppText style={{ opacity: 0.4 }}>
                 {moment(dataHold?.transactionDate).format("MMMM D, YYYY")}
               </AppText>
             </View>
@@ -231,8 +251,15 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 marginRight: "2.5%",
               }}
             >
-              <AppText style={{ marginRight: "2.5%",fontSize: moderateScale(18), fontWeight: "700", color: !dataHold?.credit ? "red": "green" }}>
-                {!dataHold?.credit ? "-": "+"} £{dataHold?.amount.toFixed(2)}
+              <AppText
+                style={{
+                  marginRight: "2.5%",
+                  fontSize: moderateScale(18),
+                  fontWeight: "700",
+                  color: !dataHold?.credit ? "red" : "green",
+                }}
+              >
+                {!dataHold?.credit ? "-" : "+"} £{dataHold?.amount.toFixed(2)}
               </AppText>
             </View>
           </View>
@@ -241,17 +268,16 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     }
 
     setTransactionTable(pageShow);
-    setIsLoading(false)
+    setIsLoading(false);
   };
-  
-  useEffect(()=> {
-    if(cardResponse) {
-    // loadCardDetails(cardResponse.cardDataUrl, cardResponse.token)
-    }
-    
-    // loadCardDetails()
-  }, [cardResponse])
 
+  useEffect(() => {
+    if (cardResponse) {
+      // loadCardDetails(cardResponse.cardDataUrl, cardResponse.token)
+    }
+
+    // loadCardDetails()
+  }, [cardResponse]);
 
   /**
    * @dev Data needed for this page
@@ -262,7 +288,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      loadData()
+      loadData();
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
@@ -274,16 +300,16 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     shadowOpacity,
     shadowRadius,
     elevation,
-    shadowColorAndroid,
+    shadowColorAndroid
   ) => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       styles.boxShadow = {
         shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOffset: { width: xOffset, height: yOffset },
         shadowOpacity,
         shadowRadius,
       };
-    } else if (Platform.OS === 'android') {
+    } else if (Platform.OS === "android") {
       styles.boxShadow = {
         elevation,
         shadowColor: shadowColorAndroid,
@@ -291,14 +317,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     }
   };
 
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+  generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator size="large" color="blue" />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="blue" />
       </View>
-    )
+    );
   }
 
   return (
@@ -306,64 +332,112 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
-    
+      }
+    >
       <View style={styles.screen}>
-
         <View style={styles.divContainer}>
-          <AppText style={{fontWeight: "700", textAlign: "center", marginTop: verticalScale(20)}}>
-              Business Account
-            </AppText>
-            <AppText style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300'}}>
-              {sortCode} | {accountnumber} 
-            </AppText>
-          <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-
-          <FadeInView>
-            <Swiper
-              height={verticalScale(270)}
-              style={{paddingLeft: "30%"}}
-              showsPagination={false}
-              loop={false}
-              index={0}
-            >
+          <AppText
+            style={{
+              fontWeight: "700",
+              textAlign: "center",
+              marginTop: verticalScale(20),
+            }}
+          >
+            Business Account
+          </AppText>
+          <AppText
+            style={{
+              textAlign: "center",
+              fontSize: moderateScale(11.8),
+              fontWeight: "300",
+            }}
+          >
+            {sortCode} | {accountnumber}
+          </AppText>
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <FadeInView>
+              <Swiper
+                height={verticalScale(270)}
+                style={{ paddingLeft: "30%" }}
+                showsPagination={false}
+                loop={false}
+                index={0}
+              >
                 {CARD_DATA.map((card) => (
-          <Card
-            key={card.name}
-            {...card}
-            selected={selectedCard?.name === card.name}
-            onPress={() => handleCardPress(card)}
-          />
-        ))}
-
-            </Swiper>
-          </FadeInView>
-
+                  <Card
+                    key={card.name}
+                    {...card}
+                    selected={selectedCard?.name === card.name}
+                    onPress={() => handleCardPress(card)}
+                  />
+                ))}
+              </Swiper>
+            </FadeInView>
           </View>
 
-          <View style={{flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-evenly"}}>
-              <TouchableOpacity
-              onPress={()=> setHideBalance(prev => !prev)}
-               style={[{ alignItems: "center", justifyContent: "center", backgroundColor: "white", width: horizontalScale(40), height: verticalScale(40), borderRadius: moderateScale(20), padding: 10}, ]}>
-                <Image 
-                  resizeMode="contain" 
-                  source={require("../assets/icon-view.png")}
-                  style={{height: verticalScale(25), width: horizontalScale(25)}}
-                />
-              </TouchableOpacity>
-             
-        
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => setHideBalance((prev) => !prev)}
+              style={[
+                {
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  width: horizontalScale(40),
+                  height: verticalScale(40),
+                  borderRadius: moderateScale(20),
+                  padding: 10,
+                },
+              ]}
+            >
+              <Image
+                resizeMode="contain"
+                source={require("../assets/icon-view.png")}
+                style={{
+                  height: verticalScale(25),
+                  width: horizontalScale(25),
+                }}
+              />
+            </TouchableOpacity>
           </View>
 
-
-          
-          {status && <AppText style={{textAlign: "center", fontSize: moderateScale(11.8), fontWeight: '300', marginTop: verticalScale(5),marginBottom: verticalScale(5), color:"red"}}>
+          {status && (
+            <AppText
+              style={{
+                textAlign: "center",
+                fontSize: moderateScale(11.8),
+                fontWeight: "300",
+                marginTop: verticalScale(5),
+                marginBottom: verticalScale(5),
+                color: "red",
+              }}
+            >
               Card in post
             </AppText>
-          }
+          )}
 
-          <View style={[styles.totalWalletBalanceContainer, styles.boxShadow, {fontFamily: "Helvetica"}]}>
-            <AppText style={[styles.totalWalletBalanceText, {fontFamily: "Helvetica"}]}>
+          <View
+            style={[
+              styles.totalWalletBalanceContainer,
+              styles.boxShadow,
+              { fontFamily: "Helvetica" },
+            ]}
+          >
+            <AppText
+              style={[
+                styles.totalWalletBalanceText,
+                { fontFamily: "Helvetica" },
+              ]}
+            >
               Total Wallet Balance
             </AppText>
             {settings.hideBalance || hideBalance ? (
@@ -385,13 +459,17 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                     elevation: 5,
                     borderRadius: moderateScale(10),
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    marginBottom: verticalScale(10) 
+                    marginBottom: verticalScale(10),
                   }}
                 />
               </View>
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
-                <AppText style={{color: "grey", fontSize: moderateScale(26)}}>£</AppText>{balance}</AppText>
+                <AppText style={{ color: "grey", fontSize: moderateScale(26) }}>
+                  £
+                </AppText>
+                {balance}
+              </AppText>
             )}
             <AppText style={styles.dateText}>{todaydate}</AppText>
           </View>
@@ -401,7 +479,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               onPress={() => navigation.navigate("AddFunds")}
               style={[styles.inputBox, styles.boxShadow]}
             >
-              
               <View style={styles.inputBoxDiv}>
                 <Image
                   style={styles.inputIcon}
@@ -411,7 +488,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 <AppText style={styles.inputBoxText}>Add Funds</AppText>
               </View>
             </TouchableOpacity>
-           
 
             <TouchableOpacity
               onPress={() => navigation.navigate("SendMoney")}
@@ -458,12 +534,22 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         </View>
 
         <View style={styles.carbonSpendingTitleDiv}>
-        <Image 
-          resizeMode="contain"
-          source={require("../assets/group-31984.png")} 
-          style={{ width: horizontalScale(25), height: verticalScale(25)}}
-        />
-          <AppText style={[styles.titleText, { fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo"}] }>Carbon Spending</AppText>
+          <Image
+            resizeMode="contain"
+            source={require("../assets/group-31984.png")}
+            style={{ width: horizontalScale(25), height: verticalScale(25) }}
+          />
+          <AppText
+            style={[
+              styles.titleText,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Typo",
+              },
+            ]}
+          >
+            Carbon Spending
+          </AppText>
         </View>
 
         {/**
@@ -472,8 +558,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         <View style={[styles.carbonSpendingDiv, styles.boxShadow]}>
           {/**
            * @notice The start of the carbon holder
-           */
-           }
+           */}
           <View style={styles.carbonItemDiv}>
             <View style={[styles.estimatedCarbonDiv, styles.boxShadow]}>
               <View style={{ flex: 3.5 }}>
@@ -493,122 +578,151 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             </View>
             {
-            //If the user dosen't have any carbon spending data
-            dataPercentages == [] ? 
-            <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-              <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
+              //If the user dosen't have any carbon spending data
+              dataPercentages == [] ? (
                 <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[0]}
-                  backgroundColor="#E4732D"
+                  style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}
                 >
-                  <AppText style={styles.barText}>{dataPercentages[0]}</AppText>
-                </View>
-              </View>
+                  <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarBackground,
+                      styles.rounded,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.carbonSpendingAnalysysBarProgress,
+                        styles.rounded,
+                      ]}
+                      width={dataPercentages[0]}
+                      backgroundColor="#E4732D"
+                    >
+                      <AppText style={styles.barText}>
+                        {dataPercentages[0]}
+                      </AppText>
+                    </View>
+                  </View>
 
-              <AppText style={styles.subtitleText}>{catNames[1]}</AppText>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[1]}
-                  backgroundColor="#F3B53F"
-                >
-                  <AppText style={styles.barText}>{dataPercentages[1]}</AppText>
-                </View>
-              </View>
+                  <AppText style={styles.subtitleText}>{catNames[1]}</AppText>
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarBackground,
+                      styles.rounded,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.carbonSpendingAnalysysBarProgress,
+                        styles.rounded,
+                      ]}
+                      width={dataPercentages[1]}
+                      backgroundColor="#F3B53F"
+                    >
+                      <AppText style={styles.barText}>
+                        {dataPercentages[1]}
+                      </AppText>
+                    </View>
+                  </View>
 
-              <AppText style={styles.subtitleText}>{catNames[2]}</AppText>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[2]}
-                  backgroundColor="#DC85F5"
-                >
-                  <AppText style={styles.barText}>{dataPercentages[2]}</AppText>
-                </View>
-              </View>
+                  <AppText style={styles.subtitleText}>{catNames[2]}</AppText>
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarBackground,
+                      styles.rounded,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.carbonSpendingAnalysysBarProgress,
+                        styles.rounded,
+                      ]}
+                      width={dataPercentages[2]}
+                      backgroundColor="#DC85F5"
+                    >
+                      <AppText style={styles.barText}>
+                        {dataPercentages[2]}
+                      </AppText>
+                    </View>
+                  </View>
 
-              <AppText style={styles.subtitleText}>{catNames[3]}</AppText>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[3]}
-                  backgroundColor="#5888F5"
-                >
-                  <AppText style={styles.barText}>{dataPercentages[3]}</AppText>
-                </View>
-              </View>
+                  <AppText style={styles.subtitleText}>{catNames[3]}</AppText>
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarBackground,
+                      styles.rounded,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.carbonSpendingAnalysysBarProgress,
+                        styles.rounded,
+                      ]}
+                      width={dataPercentages[3]}
+                      backgroundColor="#5888F5"
+                    >
+                      <AppText style={styles.barText}>
+                        {dataPercentages[3]}
+                      </AppText>
+                    </View>
+                  </View>
 
-              <AppText style={styles.subtitleText}>{catNames[4]}</AppText>
-              <View
-                style={[
-                  styles.carbonSpendingAnalysysBarBackground,
-                  styles.rounded,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarProgress,
-                    styles.rounded,
-                  ]}
-                  width={dataPercentages[4]}
-                  backgroundColor="#5AC661"
-                >
-                  <AppText style={styles.barText}>{dataPercentages[4]}</AppText>
+                  <AppText style={styles.subtitleText}>{catNames[4]}</AppText>
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarBackground,
+                      styles.rounded,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.carbonSpendingAnalysysBarProgress,
+                        styles.rounded,
+                      ]}
+                      width={dataPercentages[4]}
+                      backgroundColor="#5AC661"
+                    >
+                      <AppText style={styles.barText}>
+                        {dataPercentages[4]}
+                      </AppText>
+                    </View>
+                  </View>
                 </View>
-              </View> 
-            </View>: 
-            <View>
-              <Text>
-                Looks like you havent bought anything yet
-              </Text>
-            </View>
+              ) : (
+                <View
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  <Text>Looks like you havent bought anything yet</Text>
+                </View>
+              )
             }
           </View>
           {
             //End of diagram
           }
 
-          <View style={[styles.carbonSpendingTitleDiv, {marginTop: verticalScale(25)}]}>
-          <Image 
-          resizeMode="contain"
-          source={require("../assets/group-31984.png")} 
-          style={{ width: horizontalScale(25), height: verticalScale(25)}}
-        />
-            <AppText style={[styles.titleText, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo"}]}>Carbon Assets </AppText>
+          <View
+            style={[
+              styles.carbonSpendingTitleDiv,
+              { marginTop: verticalScale(25) },
+            ]}
+          >
+            <Image
+              resizeMode="contain"
+              source={require("../assets/group-31984.png")}
+              style={{ width: horizontalScale(25), height: verticalScale(25) }}
+            />
+            <AppText
+              style={[
+                styles.titleText,
+                {
+                  fontWeight: Platform.OS === "android" ? "normal" : "700",
+                  fontFamily: "Typo",
+                },
+              ]}
+            >
+              Carbon Assets{" "}
+            </AppText>
           </View>
           <View style={[styles.carbonAssetsDiv]}>
             <View style={styles.carbonAssetsDivLeft}>
@@ -662,7 +776,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             <View style={{ height: "100%", flexDirection: "row" }}>
               <View
                 style={{
-                  width: horizontalScale (50),
+                  width: horizontalScale(50),
                   height: verticalScale(50),
                   borderRadius: moderateScale(25),
                   backgroundColor: "#F6F5F8",
@@ -671,21 +785,23 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   marginLeft: "2.5%",
                 }}
               >
-                <View style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}>
-                <AppText
+                <View
                   style={{
+                    flex: 1,
                     justifyContent: "center",
                     alignItems: "center",
-                    fontWeight: "700",
                   }}
                 >
-                  {projects[0]?.name?.charAt(0)}
-                </AppText>
-              </View>
+                  <AppText
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      fontWeight: "700",
+                    }}
+                  >
+                    {projects[0]?.name?.charAt(0)}
+                  </AppText>
+                </View>
               </View>
               <View
                 style={{
@@ -695,10 +811,21 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   marginLeft: "5%",
                 }}
               >
-                <AppText style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
-                <AppText style={{fontWeight: "400"}}>{projects[0]?.name}</AppText> £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
+                <AppText
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "700",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  <AppText style={{ fontWeight: "400" }}>
+                    {projects[0]?.name}
+                  </AppText>{" "}
+                  £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
                 </AppText>
-                <AppText style={{opacity: 0.4}}>{moment(projects[0]?.lastUpdated).format("MMMM D, YYYY")}</AppText>
+                <AppText style={{ opacity: 0.4 }}>
+                  {moment(projects[0]?.lastUpdated).format("MMMM D, YYYY")}
+                </AppText>
               </View>
               <View
                 style={{
@@ -708,7 +835,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   marginRight: "2.5%",
                 }}
               >
-                <AppText style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
+                <AppText
+                  style={{
+                    marginRight: "2.5%",
+                    fontWeight: "500",
+                    fontSize: 18,
+                  }}
+                >
                   1
                 </AppText>
               </View>
@@ -746,7 +879,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                     justifyContent: "center",
                     alignItems: "center",
                     textAlignVertical: "center",
-                  
+
                     fontWeight: "700",
                   }}
                 >
@@ -761,10 +894,21 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   marginLeft: "5%",
                 }}
               >
-                <AppText style={{ fontSize: 14, fontWeight: "700", textTransform: "capitalize" }}>
-                  <AppText style={{fontWeight: "400"}}>{projects[1]?.name} </AppText>£{projects[1]?.displayAssetPrice} / {projects[1]?.type}
+                <AppText
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "700",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  <AppText style={{ fontWeight: "400" }}>
+                    {projects[1]?.name}{" "}
+                  </AppText>
+                  £{projects[1]?.displayAssetPrice} / {projects[1]?.type}
                 </AppText>
-                <AppText style={{opacity: 0.4}}>{moment(projects[1]?.lastUpdated).format("MMMM D, YYYY")}</AppText>
+                <AppText style={{ opacity: 0.4 }}>
+                  {moment(projects[1]?.lastUpdated).format("MMMM D, YYYY")}
+                </AppText>
               </View>
               <View
                 style={{
@@ -774,7 +918,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   marginRight: "2.5%",
                 }}
               >
-                <AppText style={{ marginRight: "2.5%", fontWeight: "500", fontSize: 18 }}>
+                <AppText
+                  style={{
+                    marginRight: "2.5%",
+                    fontWeight: "500",
+                    fontSize: 18,
+                  }}
+                >
                   1
                 </AppText>
               </View>
@@ -787,57 +937,102 @@ const HomeScreenPersonal = ({ navigation, route }) => {
          */}
 
         <View style={[styles.carbonSpendingTitleDiv, styles.boxShadow]}>
-        <Image 
-          resizeMode="contain"
-          source={require("../assets/icon-withdraw.png")} 
-          style={{ width: horizontalScale(25), height: verticalScale(25)}}
-        />
-          <AppText style={[styles.titleText, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo"}]}>Recent Transactions</AppText>
+          <Image
+            resizeMode="contain"
+            source={require("../assets/icon-withdraw.png")}
+            style={{ width: horizontalScale(25), height: verticalScale(25) }}
+          />
+          <AppText
+            style={[
+              styles.titleText,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Typo",
+              },
+            ]}
+          >
+            Recent Transactions
+          </AppText>
         </View>
         <View style={styles.transactionsContainer}>{transactionTable}</View>
-        
-        {nftimg && <View style={[styles.NFTContainer, styles.boxShadow]}>
-          <AppText style={[styles.titleText, {fontWeight: Platform.OS === "android" ? "normal" : "700", fontFamily: "Typo"}]}>NFT Assets</AppText>
-          <ScrollView style={{width: "100%", marginTop: "5%"}}>
 
-          <Image style={styles.NFTinputIcon} source={{uri:nftimg}} />
+        {nftimg && (
+          <View style={[styles.NFTContainer, styles.boxShadow]}>
+            <AppText
+              style={[
+                styles.titleText,
+                {
+                  fontWeight: Platform.OS === "android" ? "normal" : "700",
+                  fontFamily: "Typo",
+                },
+              ]}
+            >
+              NFT Assets
+            </AppText>
+            <ScrollView style={{ width: "100%", marginTop: "5%" }}>
+              <Image style={styles.NFTinputIcon} source={{ uri: nftimg }} />
 
-          <AppText style={styles.NFTNameText}>
-            <AppText style={{fontWeight:'bold'}}>{name}</AppText> 
-          </AppText>
-          <AppText style={styles.NFTPriceText}>
-          <AppText style={{fontWeight:'bold'}}>{price}</AppText> 
-        </AppText>
-    
-          </ScrollView>
-        </View>}
+              <AppText style={styles.NFTNameText}>
+                <AppText style={{ fontWeight: "bold" }}>{name}</AppText>
+              </AppText>
+              <AppText style={styles.NFTPriceText}>
+                <AppText style={{ fontWeight: "bold" }}>{price}</AppText>
+              </AppText>
+            </ScrollView>
+          </View>
+        )}
 
-        <View style={[styles.carbonContainer, styles.rounded , styles.boxShadow]}>
+        <View
+          style={[styles.carbonContainer, styles.rounded, styles.boxShadow]}
+        >
           <View style={styles.treeContainer}>
             <Image
               style={styles.treeImage}
               resizeMode="contain"
               source={require("../assets/image-tree.png")}
             />
-            <View style={{position: "absolute",height: 350, width: 350, top:130, left:5}}>
-            <Image 
-              resizeMode="contain"
-              source={require("../assets/group-32017.png")}
-              style={{ height: 375, width: 380,}}
-            /></View>
+            <View
+              style={{
+                position: "absolute",
+                height: 350,
+                width: 350,
+                top: 130,
+                left: 5,
+              }}
+            >
+              <Image
+                resizeMode="contain"
+                source={require("../assets/group-32017.png")}
+                style={{ height: 375, width: 380 }}
+              />
+            </View>
           </View>
-          <View style={{flex: 1}} >
+          <View style={{ flex: 1 }}>
             <AppText
-              style={{ textAlign: "center", fontWeight: "700", fontSize: moderateScale(24) }}
+              style={{
+                textAlign: "center",
+                fontWeight: "700",
+                fontSize: moderateScale(24),
+              }}
             >
               Congratulations!
             </AppText>
-            <View style={{marginTop: verticalScale(6),  flex:1, alignItems: "center"}}>
-            <AppText style={{ textAlign: "center", width: horizontalScale(250) }}>
-              You have planted {TotalAmount} trees with advance card purchase
-            </AppText>
+            <View
+              style={{
+                marginTop: verticalScale(6),
+                flex: 1,
+                alignItems: "center",
+              }}
+            >
+              <AppText
+                style={{ textAlign: "center", width: horizontalScale(250) }}
+              >
+                You have planted {TotalAmount} trees with advance card purchase
+              </AppText>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate("VirtualEcoSystem")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("VirtualEcoSystem")}
+            >
               <AppText
                 style={{
                   marginTop: verticalScale(0),
@@ -860,38 +1055,35 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   );
 };
 
-const CardContainer = ({color}) => {
-
-  const style = useAnimatedStyle(()=> {
+const CardContainer = ({ color }) => {
+  const style = useAnimatedStyle(() => {
     return {
-
-      position: 'absolute',
+      position: "absolute",
       height: 200,
       width: 325,
       backgroundColor: color,
       bottom: 30,
-      borderRadius: 8
-
-    }
-  })
+      borderRadius: 8,
+    };
+  });
   return (
     // <View>
     //   <Text>here</Text>
     // </View>
     <GestureDetector>
-        <Card color={color} style={{style}}/>
+      <Card color={color} style={{ style }} />
     </GestureDetector>
-  )
-}
+  );
+};
 
 // const Card = ({color, style}) => (
-//   <Animated.View 
+//   <Animated.View
 //     style={[styles.totalWalletBalanceContainer11, {backgroundColor: color}, style]}>
 //             <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
 //                 Carbonyte
 //             </AppText>
-              
-//               <Image 
+
+//               <Image
 //               resizeMode="contain"
 //                 style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
 //                   rotate: "180deg"
@@ -899,7 +1091,7 @@ const CardContainer = ({color}) => {
 //                 source={require("../assets/group-31767.png")}
 //               />
 
-//               <Image 
+//               <Image
 //                 resizeMode="contain"
 //                 style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
 //                   rotate: "90deg"
@@ -910,72 +1102,172 @@ const CardContainer = ({color}) => {
 //               <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
 //                 number
 //               </AppText>
-                
-//               <Image 
+
+//               <Image
 //               resizeMode="contain"
 //               style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
 //                 source={require("../assets/group-31766.png")}
 //               />
-              
+
 //               <AppText style={[styles.totalWalletBalanceText11, {position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
 //               name
 //               </AppText>
-              
+
 //         </Animated.View>
 // )
-
 
 const Card = ({ name, number, image, selected, onPress }) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={[styles.card,]}>
-         <View style={[styles.carbonyteCard,  selected && styles.selectedCard ] }>
-              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "800",position: "absolute", top: verticalScale(15), left:horizontalScale(15) , fontSize: moderateScale(12), textTransform: "uppercase", width: horizontalScale(50)}]}>
-                  <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> money <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> planet <AppText style={{color: "white",fontWeight: Platform.OS === "android" ? "normal" : "300"}}>your</AppText> choice
-              </AppText>
-              <Image 
-                resizeMode="contain"
-                  style={{position: "absolute", right: horizontalScale(20),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(20), transform: [{
-                    rotate: "0deg"
-                  }]}}
-                  source={require("../assets/icon-contactless-reverse.png")}
-                />
+      <View style={[styles.card]}>
+        <View style={[styles.carbonyteCard, selected && styles.selectedCard]}>
+          <AppText
+            style={[
+              styles.totalWalletBalanceText11,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "800",
+                position: "absolute",
+                top: verticalScale(15),
+                left: horizontalScale(15),
+                fontSize: moderateScale(12),
+                textTransform: "uppercase",
+                width: horizontalScale(50),
+              },
+            ]}
+          >
+            <AppText
+              style={{
+                color: "white",
+                fontWeight: Platform.OS === "android" ? "normal" : "300",
+              }}
+            >
+              your
+            </AppText>{" "}
+            money{" "}
+            <AppText
+              style={{
+                color: "white",
+                fontWeight: Platform.OS === "android" ? "normal" : "300",
+              }}
+            >
+              your
+            </AppText>{" "}
+            planet{" "}
+            <AppText
+              style={{
+                color: "white",
+                fontWeight: Platform.OS === "android" ? "normal" : "300",
+              }}
+            >
+              your
+            </AppText>{" "}
+            choice
+          </AppText>
+          <Image
+            resizeMode="contain"
+            style={{
+              position: "absolute",
+              right: horizontalScale(20),
+              height: verticalScale(30),
+              width: horizontalScale(20),
+              top: verticalScale(20),
+              transform: [
+                {
+                  rotate: "0deg",
+                },
+              ],
+            }}
+            source={require("../assets/icon-contactless-reverse.png")}
+          />
 
-                <Image 
-                  resizeMode="contain"
-                  style={{ position: "absolute", right: horizontalScale(50), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(25), transform: [{
-                    rotate: "0deg"
-                  }]}}
-                  source={require("../assets/group-31764.png")}
-                />
+          <Image
+            resizeMode="contain"
+            style={{
+              position: "absolute",
+              right: horizontalScale(50),
+              height: verticalScale(20),
+              width: horizontalScale(30),
+              top: verticalScale(25),
+              transform: [
+                {
+                  rotate: "0deg",
+                },
+              ],
+            }}
+            source={require("../assets/group-31764.png")}
+          />
 
-                <Image 
-                  resizeMode="contain"
-                  style={{ zIndex: -1, position: "absolute", right: horizontalScale(0),height: verticalScale(260), width: horizontalScale(155),  top: verticalScale(0), transform: [{
-                    rotate: "0deg"
-                  }]}}
-                  source={require("../assets/tiger.png")}
-                />
+          <Image
+            resizeMode="contain"
+            style={{
+              zIndex: -1,
+              position: "absolute",
+              right: horizontalScale(0),
+              height: verticalScale(260),
+              width: horizontalScale(155),
+              top: verticalScale(0),
+              transform: [
+                {
+                  rotate: "0deg",
+                },
+              ],
+            }}
+            source={require("../assets/tiger.png")}
+          />
 
+          <AppText
+            style={[
+              styles.totalWalletBalanceText11,
+              {
+                top: verticalScale(40),
+                fontSize: moderateScale(14),
+                fontWeight: "400",
+              },
+            ]}
+          >
+            {number}
+          </AppText>
+          <AppText
+            style={[
+              styles.totalWalletBalanceText11,
+              {
+                top: verticalScale(41.5),
+                fontSize: moderateScale(10),
+                wordSpacing: 20,
+              },
+            ]}
+          >
+            {name}
+          </AppText>
 
-
-              <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(40), fontSize: moderateScale(14) ,fontWeight:'400'}]}>
-                  {number}
-              </AppText>
-              <AppText style={[styles.totalWalletBalanceText11, {top: verticalScale(41.5) , fontSize: moderateScale(10), wordSpacing: 20}]}>
-                {name}
-              </AppText>
-
-              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", bottom: verticalScale(20), left:horizontalScale(15) , fontSize: moderateScale(16), textTransform: "lowercase"}]}>
-                  Carbonyte
-              </AppText>
-              <Image 
-                resizeMode="contain"
-                style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
-                  source={require("../assets/group-31766.png")}
-              />
-
-            </View>
+          <AppText
+            style={[
+              styles.totalWalletBalanceText11,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Typo",
+                position: "absolute",
+                bottom: verticalScale(20),
+                left: horizontalScale(15),
+                fontSize: moderateScale(16),
+                textTransform: "lowercase",
+              },
+            ]}
+          >
+            Carbonyte
+          </AppText>
+          <Image
+            resizeMode="contain"
+            style={{
+              position: "absolute",
+              bottom: verticalScale(10),
+              right: horizontalScale(20),
+              height: verticalScale(45),
+              width: horizontalScale(45),
+            }}
+            source={require("../assets/group-31766.png")}
+          />
+        </View>
         {/* <View style={styles.cardHeader}>
           <Icon name="credit-card" size={30} color="#fff" />
           <Text style={styles.cardHeaderText}>{name}</Text>
@@ -991,9 +1283,8 @@ const Card = ({ name, number, image, selected, onPress }) => {
 };
 
 const styles = StyleSheet.create({
-  boxShadow:{},
-  divContainer: {
-  },
+  boxShadow: {},
+  divContainer: {},
   congratulationsText: {
     textAlign: "center",
     width: "100%",
@@ -1011,7 +1302,7 @@ const styles = StyleSheet.create({
     marginTop: "2.5%",
     fontSize: moderateScale(15),
     fontWeight: "500",
-    opacity: 0.5
+    opacity: 0.5,
   },
   barText: {
     left: horizontalScale(20),
@@ -1149,7 +1440,6 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: GlobalStyles.DivContainer.flex,
-   
   },
 
   NavBarTop: {
@@ -1266,50 +1556,47 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(15),
     flexDirection: "column",
     paddingHorizontal: "2.5%",
-    paddingVertical:"5.5%",
+    paddingVertical: "5.5%",
     justifyContent: "center",
   },
   totalWalletBalanceContainer11: {
     marginTop: "3.5%",
     width: GlobalStyles.DivContainer.width,
-    
+
     backgroundColor: "blue",
     height: verticalScale(170),
     width: horizontalScale(290),
     borderRadius: moderateScale(15),
     justifyContent: "center",
     padding: "5%",
-   alignItems: "center",
-    marginVertical: verticalScale(20), 
-    
+    alignItems: "center",
+    marginVertical: verticalScale(20),
   },
   carbonyteCard: {
     marginTop: "3.5%",
-   
+
     backgroundColor: "black",
     height: verticalScale(250),
     width: horizontalScale(160),
     borderRadius: moderateScale(15),
     justifyContent: "center",
     padding: "5%",
-    
-    marginVertical: verticalScale(20), 
-    
-  },
 
+    marginVertical: verticalScale(20),
+  },
 
   totalWalletBalanceText: {
     textAlign: "center",
     fontSize: moderateScale(14),
-    marginBottom:verticalScale(8),
-    fontWeight: "500"
+    marginBottom: verticalScale(8),
+    fontWeight: "500",
   },
   totalWalletBalanceText11: {
     textAlign: "left",
     fontSize: moderateScale(14),
     color: "white",
     textTransform: "uppercase",
-    fontWeight: "700"
+    fontWeight: "700",
   },
   BalanceText: {
     fontSize: moderateScale(26),
@@ -1325,7 +1612,7 @@ const styles = StyleSheet.create({
   dateText: {
     textAlign: "center",
     fontSize: moderateScale(14),
-    fontWeight: "500"
+    fontWeight: "500",
   },
   dateText11: {
     textAlign: "left",
@@ -1334,17 +1621,17 @@ const styles = StyleSheet.create({
   dateText12: {
     textAlign: "left",
     fontSize: moderateScale(14),
-    marginTop:5,
+    marginTop: 5,
   },
   dateText13: {
     textAlign: "left",
     fontSize: moderateScale(14),
-    marginTop:verticalScale(5),
+    marginTop: verticalScale(5),
   },
   dateText14: {
     textAlign: "left",
     fontSize: moderateScale(14),
-    marginTop:verticalScale(5),
+    marginTop: verticalScale(5),
   },
   buttonContainer: {
     marginTop: "2.5%",
@@ -1362,15 +1649,12 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(10),
     paddingBottom: verticalScale(18),
     paddingTop: verticalScale(25),
-    
-
   },
 
   inputBoxDiv: {
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    
   },
 
   inputIcon: {
@@ -1383,7 +1667,7 @@ const styles = StyleSheet.create({
     marginTop: "5.5%",
     fontSize: moderateScale(10),
     textAlign: "center",
-    fontWeight: "500"
+    fontWeight: "500",
   },
 
   carbonSpendingDiv: {},
@@ -1509,23 +1793,21 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     width: "100%",
     height: verticalScale(250),
-    borderRadius: moderateScale(15)
+    borderRadius: moderateScale(15),
   },
   card: {
+    backgroundColor: "#fff",
 
-    backgroundColor: '#fff',
-    
     marginTop: "3.5%",
     height: verticalScale(250),
     width: horizontalScale(160),
     borderRadius: moderateScale(15),
-    
-    marginVertical: verticalScale(20), 
-    
+
+    marginVertical: verticalScale(20),
   },
   selectedCard: {
-    borderWidth:3,
-    borderColor: '#1e90ff' ,
+    borderWidth: 3,
+    borderColor: "#1e90ff",
   },
 });
 
