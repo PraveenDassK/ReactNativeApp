@@ -41,7 +41,7 @@ const Settings = ({ navigation }) => {
    */
   useEffect(() => {
     loadData();
-  }, []);
+  }, [accountID]);
 
   /**
    * @dev Thislogs the user out

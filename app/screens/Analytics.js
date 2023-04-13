@@ -55,9 +55,9 @@ const Analytics = ({ navigation }) => {
 
 
   useEffect(() => {
+ console.log("account",accountID)
     loadData();
-  }, []);
- 
+  }, [accountID,userID]);
   /**
    * @dev Loads all of the data on load
    * @todo Change the scheduled payment to the correct account ID
@@ -70,7 +70,6 @@ const Analytics = ({ navigation }) => {
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
 
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
-    console.log("cspending",carbonSpendDataBarGraph)
     setCarbonGraphData(carbonSpendDataBarGraph)
     setCatNames(carbonSpendDataBarGraph.labels)
     setDataPercentages(carbonSpendDataBarGraph.percentages)
@@ -94,7 +93,6 @@ const Analytics = ({ navigation }) => {
       response[2]
     ])
     setFullData(response)
-    console.log("responseObjj", response)
 
     setGraphData(graphData)
     setActive("Week")
@@ -103,10 +101,8 @@ const Analytics = ({ navigation }) => {
   };
 
   const onRefresh = useCallback(() => {
-    console.log("1st refresh")
     setRefreshing(true);
     setTimeout(() => {
-      console.log("2nd refresh")
       loadData()
       setRefreshing(false);
     }, 2000);
@@ -120,7 +116,6 @@ const Analytics = ({ navigation }) => {
   const changeGraphData = async(time) => {
     setActive(time)
     
-    console.log(time)
     switch(time){
       case "Year":
           const graphDataYear = await apiCall.GetTransactionsYear(accountID);

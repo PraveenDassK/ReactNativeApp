@@ -125,7 +125,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Calls the API once during load
   useEffect(() => {
     loadData();
-  }, []);
+  }, [accountID]);
 
   //Gets the data for the user
   const loadData = async () => {
@@ -171,7 +171,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       CARD_DATA.push(cardObject);
     }
 
-    console.log(cardDetails);
     setcardnumber(cardData.cardNumberMasked);
     setSortCode("00-00-00");
     setStatus(cardData.inPost);
