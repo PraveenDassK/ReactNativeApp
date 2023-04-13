@@ -14,17 +14,6 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
-
-
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-// import AccountNavigator from "./AccountNavigator";
-// import FeedNavigator from "./FeedNavigator";
-// import ListingEditScreen from "../screens/ListingEditScreen";
-// import NewListingButton from "./NewListingButton";
-// import routes from "./routes";
-// import navigation from "./rootNavigation";
-// import useNotifications from "../hooks/useNotifications";
 import AccountMain from "../screens/AccountMain";
 import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
@@ -64,19 +53,15 @@ import IWasAVictimOfFraudOrThe from "../screens/IWasAVictimOfFraudOrThe"
 import Terminate from "../screens/Terminate"
 import TerminatedCard from "../screens/TerminatedCard"
 
-
-
-//No pages for analysis
-
 /**
  * @notice Screens on the carbon page to navigate to
  */
+import ChooseCardsStandard5 from "../screens/ChooseCardsStandard5"
 import CarbonCart from "../screens/CarbonCart"
 import CarbonProject from "../screens/CarbonProject"
 import VirtualEcoSystem from "../screens/VirtualEcoSystem"
 import PinCart from "../screens/PinCart"
 import PinSetApp from "../screens/PinSetApp"
-
 
 /**
  * @notice Screens on the settings page to navigate to
@@ -464,6 +449,15 @@ const StackNavigator = () => {
        
         }}
       />
+      <Stack.Screen 
+        name="ChooseCardsStandard5" 
+        component={gestureHandlerRootHOC(ChooseCardsStandard5)}
+        options={{
+          title: "ChooseCardsStandard5",
+       
+        }}
+      />
+
       <Stack.Screen 
         name="VirtualEcoSystem" 
         component={gestureHandlerRootHOC(VirtualEcoSystem)}
