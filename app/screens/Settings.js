@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback} from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   RefreshControl,
   Image,
@@ -10,9 +10,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Vibration
+  Vibration,
 } from "react-native";
-
 
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/apiCall";
@@ -22,10 +21,8 @@ import Button from "../components/Button";
 import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
 
-
-
 const Settings = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const [account, setAccNum] = useState(null);
   const [sortcode, setSortCode] = useState(null);
   const [fullname, setName] = useState(null);
@@ -53,7 +50,7 @@ const Settings = ({ navigation }) => {
   const handleLogout = () => {
     authStorage.removeToken();
     authStorage.removeSignInSetting();
-    setCurrentUser(null)
+    setCurrentUser(null);
   };
 
   /**
@@ -62,11 +59,11 @@ const Settings = ({ navigation }) => {
    */
   const loadData = async () => {
     //First set loading to true to show loading animation
-    setIsLoading(true)
-    console.log(userID)
+    setIsLoading(true);
+    console.log(userID);
     const userDetails = await api.GetAllAccounts(userID);
     const accountDetails = await api.GetAccount(accountID);
-    const subscriptionDetails = await api.GetUsersSubscriptions("147147")
+    const subscriptionDetails = await api.GetUsersSubscriptions("147147");
     const data = userDetails;
     const accountdata = accountDetails;
 
@@ -93,7 +90,7 @@ const Settings = ({ navigation }) => {
       initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
     }
     setInitals(initialsHold);
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   /**
@@ -102,42 +99,38 @@ const Settings = ({ navigation }) => {
    */
   const copyAccount = () => {
     console.log("Copied");
-    Vibration.vibrate()
+    Vibration.vibrate();
     alert("Account code copied");
     Clipboard.setString(account);
   };
 
   const copySort = () => {
     console.log("Copied");
-    Vibration.vibrate()
+    Vibration.vibrate();
     alert("Sort code copied");
     Clipboard.setString(sortcode);
   };
 
   const copyIban = () => {
     console.log("Copied");
-    Vibration.vibrate()
+    Vibration.vibrate();
     alert("Iban copied");
     Clipboard.setString(iban);
   };
 
-
   React.useEffect(() => {
-    const swipeRight = navigation.addListener("state", (event) => {
-    });
+    const swipeRight = navigation.addListener("state", (event) => {});
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return swipeRight;
   }, [navigation]);
 
- 
-
   const onRefresh = useCallback(() => {
-    console.log("1st refresh")
+    console.log("1st refresh");
     setRefreshing(true);
     setTimeout(() => {
-      console.log("2nd refresh")
-      loadData()
+      console.log("2nd refresh");
+      loadData();
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
@@ -149,16 +142,16 @@ const Settings = ({ navigation }) => {
     shadowOpacity,
     shadowRadius,
     elevation,
-    shadowColorAndroid,
+    shadowColorAndroid
   ) => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       styles.boxShadow = {
         shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOffset: { width: xOffset, height: yOffset },
         shadowOpacity,
         shadowRadius,
       };
-    } else if (Platform.OS === 'android') {
+    } else if (Platform.OS === "android") {
       styles.boxShadow = {
         elevation,
         shadowColor: shadowColorAndroid,
@@ -166,14 +159,14 @@ const Settings = ({ navigation }) => {
     }
   };
 
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+  generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
-  if(isLoading) {
+  if (isLoading) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator size="large" color="blue" />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="blue" />
       </View>
-    )
+    );
   }
 
   return (
@@ -184,50 +177,88 @@ const Settings = ({ navigation }) => {
       }
     >
       <View style={styles.mainContainer}>
-        <View style={[styles.titleTextRow,{flex:1, flexDirection: "row"}]}>
-          <View style={[ {justifyContent: "center"}]}>
-            <AppText style={[styles.titleText, styles.customTitle]}>{fullname}</AppText>
-            <AppText style={[styles.subText, styles.customTitle,{marginTop: verticalScale(1), opacity: 0.4}]}>{plan}</AppText>
+        <View style={[styles.titleTextRow, { flex: 1, flexDirection: "row" }]}>
+          <View style={[{ justifyContent: "center" }]}>
+            <AppText style={[styles.titleText, styles.customTitle]}>
+              {fullname}
+            </AppText>
+            <AppText
+              style={[
+                styles.subText,
+                styles.customTitle,
+                { marginTop: verticalScale(1), opacity: 0.4 },
+              ]}
+            >
+              {plan}
+            </AppText>
           </View>
-          <View style={[{ flex: 1, justifyContent: "center",alignItems: "flex-end"}, styles.boxShadow]}>
-            <View style={[{width:80, height: 80, borderRadius: 40, backgroundColor: "white", justifyContent: "center", alignItems:"center"}]}><AppText style={[{fontSize: 28}]}>{initials}</AppText></View>
+          <View
+            style={[
+              { flex: 1, justifyContent: "center", alignItems: "flex-end" },
+              styles.boxShadow,
+            ]}
+          >
+            <View
+              style={[
+                {
+                  width: 80,
+                  height: 80,
+                  borderRadius: 40,
+                  backgroundColor: "white",
+                  justifyContent: "center",
+                  alignItems: "center",
+                },
+              ]}
+            >
+              <AppText style={[{ fontSize: 28 }]}>{initials}</AppText>
+            </View>
           </View>
         </View>
-        
-
 
         <View style={styles.subTextRow}>
-          <AppText style={[styles.subText, styles.customTitle, {fontWeight: "normal"}]}>Account Details</AppText>
+          <AppText
+            style={[
+              styles.subText,
+              styles.customTitle,
+              { fontWeight: "normal" },
+            ]}
+          >
+            Account Details
+          </AppText>
         </View>
 
         <View style={[styles.accountDetailsDiv, styles.boxShadow]}>
           <View style={styles.accountDetailsRow}>
-            <View style={{flex:1}}>
-              <AppText style={[styles.divStart, styles.customTitle]}>Currency</AppText>
+            <View style={{ flex: 1 }}>
+              <AppText style={[styles.divStart, styles.customTitle]}>
+                Currency
+              </AppText>
             </View>
 
-            <View style={[styles.splitDiv,]}>
+            <View style={[styles.splitDiv]}>
               <Image
                 style={{
                   resizeMode: "contain",
                   height: "50%",
                   width: 30,
                   marginRight: "5%",
-                  
                 }}
                 source={require("../assets/image-ukflag.png")}
               />
-              <AppText style={[styles.divEnd, styles.customTitle, ]}>{currency}</AppText>
+              <AppText style={[styles.divEnd, styles.customTitle]}>
+                {currency}
+              </AppText>
             </View>
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <View style={{flex:1,}}>
-
-              <AppText style={[styles.divStart, styles.customTitle, ]}>Account</AppText>
+            <View style={{ flex: 1 }}>
+              <AppText style={[styles.divStart, styles.customTitle]}>
+                Account
+              </AppText>
             </View>
 
-            <View style={[styles.splitDiv,]}>
+            <View style={[styles.splitDiv]}>
               <Pressable style={styles.helloParent} onPress={copyAccount}>
                 <Image
                   style={{
@@ -240,18 +271,25 @@ const Settings = ({ navigation }) => {
                 />
               </Pressable>
             </View>
-            
-            <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
 
-              <AppText style={[styles.divEnd, styles.customTitle, ]}>{account}</AppText>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <AppText style={[styles.divEnd, styles.customTitle]}>
+                {account}
+              </AppText>
             </View>
-
           </View>
 
           <View style={styles.accountDetailsRow}>
-
-            <View style={{flex:1}}>
-              <AppText style={[styles.divStart, styles.customTitle]}>Sort Code</AppText>
+            <View style={{ flex: 1 }}>
+              <AppText style={[styles.divStart, styles.customTitle]}>
+                Sort Code
+              </AppText>
             </View>
 
             <View style={styles.splitDiv}>
@@ -268,15 +306,24 @@ const Settings = ({ navigation }) => {
               </Pressable>
             </View>
 
-            <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
-              <AppText style={[styles.divEnd, styles.customTitle]}>{sortcode}</AppText>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <AppText style={[styles.divEnd, styles.customTitle]}>
+                {sortcode}
+              </AppText>
             </View>
-            
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <View style={{flex:1}}>
-              <AppText style={[styles.divStart, styles.customTitle]}>Iban</AppText>
+            <View style={{ flex: 1 }}>
+              <AppText style={[styles.divStart, styles.customTitle]}>
+                Iban
+              </AppText>
             </View>
 
             <View style={styles.splitDiv}>
@@ -291,20 +338,37 @@ const Settings = ({ navigation }) => {
                   source={require("../assets/icon-materialcontentcopy.png")}
                 />
               </Pressable>
-
             </View>
-            <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
-              <AppText style={[styles.divEnd, styles.customTitle]}>{iban}</AppText>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <AppText style={[styles.divEnd, styles.customTitle]}>
+                {iban}
+              </AppText>
             </View>
           </View>
 
           <View style={styles.accountDetailsRow}>
-            <View style={{flex:1}}>
-              <AppText style={[styles.divStart, styles.customTitle]}>Status</AppText>
+            <View style={{ flex: 1 }}>
+              <AppText style={[styles.divStart, styles.customTitle]}>
+                Status
+              </AppText>
             </View>
             <View style={styles.splitDiv}>
-              <View style={{flex:1, justifyContent:"flex-end", alignItems: "flex-end"}}>
-                <AppText style={[styles.divEnd, styles.customTitle]}>{status}</AppText>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+              >
+                <AppText style={[styles.divEnd, styles.customTitle]}>
+                  {status}
+                </AppText>
               </View>
             </View>
           </View>
@@ -315,7 +379,7 @@ const Settings = ({ navigation }) => {
             title="My Plan"
             style={[styles.boxShadow]}
             color="babyBlue"
-            transform={{textTransform: "none"}}
+            transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ChooseCardsElite")}
           />
         </TouchableOpacity>
@@ -324,7 +388,7 @@ const Settings = ({ navigation }) => {
             title="Account"
             style={styles.boxShadow}
             color="babyBlue"
-            transform={{textTransform: "none"}}
+            transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AccountSettings")}
           />
         </TouchableOpacity>
@@ -333,7 +397,7 @@ const Settings = ({ navigation }) => {
             title="Security & Privacy"
             style={styles.boxShadow}
             color="babyBlue"
-            transform={{textTransform: "none"}}
+            transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
           />
         </TouchableOpacity>
@@ -342,7 +406,7 @@ const Settings = ({ navigation }) => {
             title="About us"
             style={styles.boxShadow}
             color="babyBlue"
-            transform={{textTransform: "none"}}
+            transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AboutUs")}
           />
         </TouchableOpacity>
@@ -354,33 +418,51 @@ const Settings = ({ navigation }) => {
             color="babyBlue"
             onPress={() => navigation.navigate("Faq")}
           />
-            </TouchableOpacity>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}>
           <Button
             title="Reset app pin"
             style={styles.boxShadow}
             color="babyBlue"
-            transform={{textTransform: "none"}}
+            transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("PinSetApp")}
           />
         </TouchableOpacity>
 
-        <Pressable style={{height: 50, flexDirection: "row", justifyContent: "center", alignItems: "center", width: "90%", marginLeft: "5%"}} onPress={handleLogout}>
-
+        <Pressable
+          style={{
+            height: 50,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "90%",
+            marginLeft: "5%",
+          }}
+          onPress={handleLogout}
+        >
           <Image
             style={styles.iconOpenAccountLogout}
             resizeMode="cover"
             source={require("../assets/icon-openaccountlogout.png")}
           />
-          <AppText style={{marginLeft: "2.5%", color: "blue"}}>Log out</AppText>
+          <AppText style={{ marginLeft: "2.5%", color: "blue" }}>
+            Log out
+          </AppText>
         </Pressable>
 
         <Pressable
-          style={{height: 50, flexDirection: "row", justifyContent: "center", alignItems: "center", width: "90%", marginLeft: "5%"}}
+          style={{
+            height: 50,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "90%",
+            marginLeft: "5%",
+          }}
           onPress={() => navigation.navigate("TermsAndConditions")}
         >
-          <AppText style={{color: "blue"}}>Terms & Conditions</AppText>
+          <AppText style={{ color: "blue" }}>Terms & Conditions</AppText>
         </Pressable>
       </View>
     </ScrollView>
@@ -397,8 +479,8 @@ const styles = StyleSheet.create({
   },
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
-    fontFamily: "Typo", 
-    color: "#1B2356"
+    fontFamily: "Typo",
+    color: "#1B2356",
   },
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,
@@ -426,17 +508,17 @@ const styles = StyleSheet.create({
   accountDetailsDiv: {
     width: "90%",
     backgroundColor: "white",
-  
+
     marginLeft: "5%",
     borderRadius: 15,
     marginTop: "1%",
     marginBottom: "5%",
     paddingHorizontal: "5%",
-    paddingVertical :"2.5%"
+    paddingVertical: "2.5%",
   },
 
   accountDetailsRow: {
-    flex:1,
+    flex: 1,
     flexDirection: "row",
     width: "100%",
     height: 35,
@@ -447,7 +529,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 2,
     justifyContent: "flex-end",
-    
+
     height: "100%",
     alignItems: "center",
   },

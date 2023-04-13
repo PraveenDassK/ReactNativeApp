@@ -17,7 +17,7 @@ import {
   Platform,
   Dimensions,
   TouchableWithoutFeedback,
-  Vibration
+  Vibration,
 } from "react-native";
 
 import Swiper from "react-native-swiper";
@@ -390,8 +390,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           >
             <TouchableOpacity
               onPress={() => {
-                setHideBalance((prev) => !prev)
-                Vibration.vibrate()
+                setHideBalance((prev) => !prev);
+                Vibration.vibrate();
               }}
               style={[
                 {
