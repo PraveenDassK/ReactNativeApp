@@ -57,14 +57,14 @@ const [isAuth, setIsAuth] = useState(false)
 const [login, setLogin] = useState(false)
 
 //External
-const [accountID, setAccountID] = useState("A122HTHM")
+const [accountID, setAccountID] = useState("")
 //A122HTHM
 //A12274AW
 //CarbonyteID
-const [userID, setUserID] = useState("C122BMS7")
+const [userID, setUserID] = useState("")
 const [cardDetails, setCardDetails] = useState(null)
-const [cardID, setCardID] = useState("03011666")
-const [customerDetails, setCustomerDetails] = ("CC1")
+const [cardID, setCardID] = useState("")
+const [customerDetails, setCustomerDetails] = ("")
 const [userDetails, setUserDetails] = useState({})
 const [pin, setPin] = useState("0000")
 
