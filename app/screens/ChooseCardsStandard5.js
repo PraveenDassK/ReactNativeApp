@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
-import apiCall from "../api/api";
+import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 import moment from "moment";
 
@@ -27,8 +27,9 @@ const ChooseCardsStandard5 = ({ navigation }) => {
 
   //Gets the data for the user
   const loadData = async () => {
-    let response = await apiCall.GetUserImpacts();
-    const assets = response.assets;
+    let response = await apiCall.GetUserImpact("CC1");
+    const assets = response.allAssets;
+    console.log(assets)
     let trees = 0;
     let carbon = 0;
     assets.forEach((element) => {
