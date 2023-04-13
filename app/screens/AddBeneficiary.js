@@ -184,9 +184,10 @@ const AddBeneficiary = ({ navigation }) => {
 const styles = StyleSheet.create({
   boxShadow: {},
   container: {
+    flex:1,
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
-    minHeight: 830,
-    height: "auto",
+    
+  
   },
   bottom: {
     bottom: "5%",

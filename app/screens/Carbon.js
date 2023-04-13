@@ -1,8 +1,19 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import {   RefreshControl, StyleSheet, View, Image, FlatList, ActivityIndicator } from "react-native";
+import {
+  RefreshControl,
+  StyleSheet,
+  View,
+  Image,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../config/metrics";
 import apiCall from "../api/api";
 import Button from "../components/Button";
 import Screen from "../components/Screen";
@@ -13,7 +24,7 @@ import AppText from "../components/Text";
 import AuthContext from "../auth/context";
 
 const Carbon = ({ route, navigation }) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { userID, accountID } = useContext(AuthContext);
@@ -23,10 +34,10 @@ const Carbon = ({ route, navigation }) => {
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const response = await apiCall.GetProjectList();
     setData(response);
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   const [cart, setCart] = useState([]);
@@ -52,14 +63,14 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const goToBasket = () => {
-    navigation.navigate("CarbonCart", cart)
-    setCart([])
-  }
+    navigation.navigate("CarbonCart", cart);
+    setCart([]);
+  };
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      loadData()
+      loadData();
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
@@ -71,16 +82,16 @@ const Carbon = ({ route, navigation }) => {
     shadowOpacity,
     shadowRadius,
     elevation,
-    shadowColorAndroid,
+    shadowColorAndroid
   ) => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       styles.boxShadow = {
         shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOffset: { width: xOffset, height: yOffset },
         shadowOpacity,
         shadowRadius,
       };
-    } else if (Platform.OS === 'android') {
+    } else if (Platform.OS === "android") {
       styles.boxShadow = {
         elevation,
         shadowColor: shadowColorAndroid,
@@ -88,149 +99,275 @@ const Carbon = ({ route, navigation }) => {
     }
   };
 
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+  generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
-  if(isLoading) {
+  if (isLoading) {
     return (
-         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-             <ActivityIndicator size="large" color="blue"/>
-         </View>
-    )
-   }
-  
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
+  }
+
   return (
-    <Screen style={{ backgroundColor: "#F6F5F8" }}>
+    <View style={styles.mainContainer}>
       {cart && cart.length ? (
-        <Pressable style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }} onPress={() => goToBasket()}>
-          <Image resizeMode="contain" style={{ width: horizontalScale(120), height: verticalScale(120) }} source={require("../assets/ShoppingIcon.png")} />
+        <Pressable
+          style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }}
+          onPress={() => goToBasket()}
+        >
+          <Image
+            resizeMode="contain"
+            style={{ width: horizontalScale(120), height: verticalScale(120) }}
+            source={require("../assets/ShoppingIcon.png")}
+          />
         </Pressable>
       ) : null}
-
-      <View style={styles.mainContainer}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          ListHeaderComponent={
-            <View style={styles.container}>
-              <View style={styles.titleTextRow}>
-                <AppText style={[styles.titleText, {lineHeight: 30}, styles.customTitle]}>Remove Carbon,</AppText>
-                <AppText style={[styles.titleText, {lineHeight: 30}, styles.customTitle]}>Restore Nature</AppText>
-              </View>
-              <FadeInView>
-                <View style={styles.treeContainer}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        ListHeaderComponent={
+          <View style={styles.container}>
+            <View style={styles.titleTextRow}>
+              <AppText
+                style={[
+                  styles.titleText,
+                  { lineHeight: 30 },
+                  styles.customTitle,
+                ]}
+              >
+                Remove Carbon,
+              </AppText>
+              <AppText
+                style={[
+                  styles.titleText,
+                  { lineHeight: 30 },
+                  styles.customTitle,
+                ]}
+              >
+                Restore Nature
+              </AppText>
+            </View>
+            <FadeInView>
+              <View style={styles.treeContainer}>
                 <Image
-                style={styles.treeImage}
-                resizeMode="contain"
-                source={require("../assets/leafTree.png")}
-              />
-            
-                </View>
-              </FadeInView>
-              {/* <AppText>
+                  style={styles.treeImage}
+                  resizeMode="contain"
+                  source={require("../assets/leafTree.png")}
+                />
+              </View>
+            </FadeInView>
+            {/* <AppText>
                 At Carbonyte we help you to track, reduce and calvulate your C0<AppText style={{fontSize: 15, lineHeight: 37}}>2</AppText>emission from your daily transcation
             </AppText> */}
 
-              <Button title="CALCULATE CARBON FOOTPRINT" color="babyBlue" style={styles.boxShadow} onPress={() => navigation.navigate("CarbonTonnesRemoved")} />
-              <View style={styles.subContainer}>
-                <AppText numberOflines={3} style={styles.AppText}>
-                  At Carbonyte we help you track, reduce and calculate your C02 emission from your daily transaction
-                </AppText>
-              </View>
-              <View style={[styles.subTitle, { marginTop: verticalScale(40) }]}>
-                <View style={styles.investNature}>
-                  <AppText style={[styles.titleText, styles.customTitle]}>Invest in</AppText>
-                  <AppText style={[styles.titleText, styles.customTitle]}>Nature</AppText>
-                </View>
-                <View style={{ alignItems: "flex-start", justifyContent: "center" }}>
-                  <Image resizeMode="contain" style={{ width: horizontalScale(120), height: verticalScale(120), marginLeft: horizontalScale(100) }} source={require("../assets/image-twotrees.png")} />
-                </View>
-              </View>
-              <View style={{ marginTop: verticalScale(20) }}>
-                <View style={styles.doubleButtonDiv}>
-                  <Button style={{ width: "49%", borderColor: "#D8EBF9", borderWidth: horizontalScale(1.5) }} title="VISIT YOUR VIRTUAL FOREST" color="none" fontColor={{ color: "blue" }} onPress={() => navigation.navigate("VirtualEcoSystem")} />
-                  <Button style={{ width: "49%", borderColor: "#D8EBF9", borderWidth: horizontalScale(1.5) }} title="VISIT YOUR ECO SUMMARY" color="none" fontColor={{ color: "blue" }} onPress={() => navigation.navigate("ChooseCardsStandard5")} />
-                </View>
-              </View>
-
-              <View style={{ marginBottom: "5%", textAlign: "center" }}>
-                <AppText style={styles.description}>Remove your carbon footprint and restore nature in seconds with our revolutionary instant purchase platform. Just choose what you want to balance - personal, business or travel impact - then go climate positive</AppText>
-                <AppText style={styles.description}>We only profile high-quality projects that meet our minimum standards in relation to carbon + biodiversity + social benefits</AppText>
-              </View>
-
-              {cart && cart.length ? (
-                      <Button title="Visit Your Cart" color="babyBlue"  style={styles.boxShadow} onPress={() => navigation.navigate("CarbonCart", cart)} />
-                    ) : <Button title="Visit Your Cart" color="babyBlue"  style={styles.boxShadow} onPress={() => alert("Your cart is empty, please add some items to your basket")} />}
-              <AppText style={[styles.textSub, { marginTop: verticalScale(50) }]}>Select your project</AppText>
+            <Button
+              title="CALCULATE CARBON FOOTPRINT"
+              color="babyBlue"
+              style={styles.boxShadow}
+              onPress={() => navigation.navigate("CarbonTonnesRemoved")}
+            />
+            <View style={styles.subContainer}>
+              <AppText numberOflines={3} style={styles.AppText}>
+                At Carbonyte we help you track, reduce and calculate your C02
+                emission from your daily transaction
+              </AppText>
             </View>
-          }
-          data={data}
-          keyExtractor={(data) => data.id.toString()}
-          renderItem={({ item }) => (
-            <View style={[styles.listItems,  styles.boxShadow]}>
-              <Image
-                resizeMode={item.image !== "" ? "contain" : "contain"}
-                style={[
-                  styles.listImage,
-                  {
-                    width: horizontalScale(300),
-                    height: verticalScale(180),
-                    resizeMode: "stretch",
-                  },
-                ]}
-                source={item.image != "" ? { uri: item.image } : require("../assets/BearWithUs.png")}
-              />
-
-              <View style={styles.subTitle}>
-                <View style={styles.subTitleText}>
-                  <AppText style={styles.textSub}>{item.displayName}</AppText>
-                </View>
-                <View style={styles.subTitlePrice}>
-                  <AppText style={[styles.priceSub, {color: "blue"}]}>£{item.asset.displayAssetPriceWithMarkup.toFixed(2)}</AppText>
-                  <AppText style={[styles.tree, {color: "blue", textTransform: item.asset.type == "LAND" ? "none" :"capitalize"}]}>/{item.asset.type == "LAND" ? "tCO2e" : item.asset.type}</AppText>
-                </View>
-              </View>
-              <View style={{ width: "100%", alignItems: "flex-start" }}>
-                <AppText style={styles.description}>
-                  {item.description
-                    .replace(/<[^>]*>/g, "")
-                    .substring(0, 200)
-                    .trim()}
-                  ...
+            <View style={[styles.subTitle, { marginTop: verticalScale(40) }]}>
+              <View style={styles.investNature}>
+                <AppText style={[styles.titleText, styles.customTitle]}>
+                  Invest in
+                </AppText>
+                <AppText style={[styles.titleText, styles.customTitle]}>
+                  Nature
                 </AppText>
               </View>
+              <View
+                style={{ alignItems: "flex-start", justifyContent: "center" }}
+              >
+                <Image
+                  resizeMode="contain"
+                  style={{
+                    width: horizontalScale(120),
+                    height: verticalScale(120),
+                    marginLeft: horizontalScale(100),
+                  }}
+                  source={require("../assets/image-twotrees.png")}
+                />
+              </View>
+            </View>
+            <View style={{ marginTop: verticalScale(20) }}>
               <View style={styles.doubleButtonDiv}>
-                <Button style={{ width: "49%" }} title="ADD TO CART" color="babyBlue" onPress={() => addToCart(item.id)} />
-                <Button style={{ width: "49%" }} title="Learn More" color="babyBlue" onPress={() => navigation.navigate("CarbonProject", { Id: item.id })} />
-              </View>
-              <View style={styles.benifitsContainer}>
-                {item.tags.length ? (
-                  <View>
-                    <AppText style={[styles.tags, styles.tree]}>Co-benefits</AppText>
-                  </View>
-                ) : null}
-                <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-                  {item.tags.map((tag, index) => (
-                    <View key={index} style={index !== 0 ? styles.tagsContainer : [styles.tagsContainer, { marginLeft: horizontalScale(0) }]}>
-                      <AppText style={styles.tags}>{tag}</AppText>
-                    </View>
-                  ))}
-                </View>
+                <Button
+                  style={{
+                    width: "49%",
+                    borderColor: "#D8EBF9",
+                    borderWidth: horizontalScale(1.5),
+                  }}
+                  title="VISIT YOUR VIRTUAL FOREST"
+                  color="none"
+                  fontColor={{ color: "blue" }}
+                  onPress={() => navigation.navigate("VirtualEcoSystem")}
+                />
+                <Button
+                  style={{
+                    width: "49%",
+                    borderColor: "#D8EBF9",
+                    borderWidth: horizontalScale(1.5),
+                  }}
+                  title="VISIT YOUR ECO SUMMARY"
+                  color="none"
+                  fontColor={{ color: "blue" }}
+                  onPress={() => navigation.navigate("ChooseCardsStandard5")}
+                />
               </View>
             </View>
-          )}
-        />
-      </View>
-    </Screen>
+
+            <View style={{ marginBottom: "5%", textAlign: "center" }}>
+              <AppText style={styles.description}>
+                Remove your carbon footprint and restore nature in seconds with
+                our revolutionary instant purchase platform. Just choose what
+                you want to balance - personal, business or travel impact - then
+                go climate positive
+              </AppText>
+              <AppText style={styles.description}>
+                We only profile high-quality projects that meet our minimum
+                standards in relation to carbon + biodiversity + social benefits
+              </AppText>
+            </View>
+
+            {cart && cart.length ? (
+              <Button
+                title="Visit Your Cart"
+                color="babyBlue"
+                style={styles.boxShadow}
+                onPress={() => navigation.navigate("CarbonCart", cart)}
+              />
+            ) : (
+              <Button
+                title="Visit Your Cart"
+                color="babyBlue"
+                style={styles.boxShadow}
+                onPress={() =>
+                  alert(
+                    "Your cart is empty, please add some items to your basket"
+                  )
+                }
+              />
+            )}
+            <AppText style={[styles.textSub, { marginTop: verticalScale(50) }]}>
+              Select your project
+            </AppText>
+          </View>
+        }
+        data={data}
+        keyExtractor={(data) => data.id.toString()}
+        renderItem={({ item }) => (
+          <View style={[styles.listItems, styles.boxShadow]}>
+            <Image
+              resizeMode={item.image !== "" ? "contain" : "contain"}
+              style={[
+                styles.listImage,
+                {
+                  width: horizontalScale(300),
+                  height: verticalScale(180),
+                  resizeMode: "stretch",
+                },
+              ]}
+              source={
+                item.image != ""
+                  ? { uri: item.image }
+                  : require("../assets/BearWithUs.png")
+              }
+            />
+
+            <View style={styles.subTitle}>
+              <View style={styles.subTitleText}>
+                <AppText style={styles.textSub}>{item.displayName}</AppText>
+              </View>
+              <View style={styles.subTitlePrice}>
+                <AppText style={[styles.priceSub, { color: "blue" }]}>
+                  £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
+                </AppText>
+                <AppText
+                  style={[
+                    styles.tree,
+                    {
+                      color: "blue",
+                      textTransform:
+                        item.asset.type == "LAND" ? "none" : "capitalize",
+                    },
+                  ]}
+                >
+                  /{item.asset.type == "LAND" ? "tCO2e" : item.asset.type}
+                </AppText>
+              </View>
+            </View>
+            <View style={{ width: "100%", alignItems: "flex-start" }}>
+              <AppText style={styles.description}>
+                {item.description
+                  .replace(/<[^>]*>/g, "")
+                  .substring(0, 200)
+                  .trim()}
+                ...
+              </AppText>
+            </View>
+            <View style={styles.doubleButtonDiv}>
+              <Button
+                style={{ width: "49%" }}
+                title="ADD TO CART"
+                color="babyBlue"
+                onPress={() => addToCart(item.id)}
+              />
+              <Button
+                style={{ width: "49%" }}
+                title="Learn More"
+                color="babyBlue"
+                onPress={() =>
+                  navigation.navigate("CarbonProject", { Id: item.id })
+                }
+              />
+            </View>
+            <View style={styles.benifitsContainer}>
+              {item.tags.length ? (
+                <View>
+                  <AppText style={[styles.tags, styles.tree]}>
+                    Co-benefits
+                  </AppText>
+                </View>
+              ) : null}
+              <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
+                {item.tags.map((tag, index) => (
+                  <View
+                    key={index}
+                    style={
+                      index !== 0
+                        ? styles.tagsContainer
+                        : [
+                            styles.tagsContainer,
+                            { marginLeft: horizontalScale(0) },
+                          ]
+                    }
+                  >
+                    <AppText style={styles.tags}>{tag}</AppText>
+                  </View>
+                ))}
+              </View>
+            </View>
+          </View>
+        )}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  boxShadow:{},
+  boxShadow: {},
   treeImage: {
     height: verticalScale(300),
-    width: horizontalScale(300)
+    width: horizontalScale(300),
   },
   benifitsContainer: {
     width: "100%",
@@ -241,8 +378,8 @@ const styles = StyleSheet.create({
   },
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
-    fontFamily: "Typo", 
-    color: "#1B2356"
+    fontFamily: "Typo",
+    color: "#1B2356",
   },
   description: {
     color: "grey",
@@ -349,8 +486,6 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
     color: GlobalStyles.NavBarBottomText.fontColor,
-   
-  
   },
 
   doubleButtonDiv: {

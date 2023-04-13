@@ -17,6 +17,7 @@ import {
   Platform,
   Dimensions,
   TouchableWithoutFeedback,
+  Vibration
 } from "react-native";
 
 import Swiper from "react-native-swiper";
@@ -148,11 +149,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
       setCardResponse(responseDetails.data);
 
-      const cardExpiry = cardText.data.substr(601, 4);
+      const cardExpiry = cardText?.data?.substr(601, 4);
       const formattedExpiraty =
-        cardExpiry.slice(0, 2) + "/" + cardExpiry.slice(2);
+        cardExpiry?.slice(0, 2) + "/" + cardExpiry.slice(2);
 
       const cardCVV = cardText.data.substr(637, 3);
+
       const image = require("../assets/cardLion.png");
 
       const cardNumber = cardText.data.substr(548, 16);
@@ -168,6 +170,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
       CARD_DATA.push(cardObject);
     }
+
     console.log(cardDetails);
     setcardnumber(cardData.cardNumberMasked);
     setSortCode("00-00-00");
@@ -386,7 +389,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             }}
           >
             <TouchableOpacity
-              onPress={() => setHideBalance((prev) => !prev)}
+              onPress={() => {
+                setHideBalance((prev) => !prev)
+                Vibration.vibrate()
+              }}
               style={[
                 {
                   alignItems: "center",
