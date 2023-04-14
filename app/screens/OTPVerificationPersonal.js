@@ -120,6 +120,11 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setAccountID(accountId);
     setCardID(cardId);
 
+    const notificationToken = registerForPushNotificationsAsync()
+    const pushNotification = await loginAPI.SendPushNotificationToken({
+      tokenID:notificationToken
+    })
+
     authStorage.storeToken(result?.token);
     //authStorage.storeUserDetails(result?.data);
     const decodedToken = jwtDecode(result?.token);
