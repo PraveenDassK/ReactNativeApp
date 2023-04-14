@@ -110,6 +110,7 @@ const Login = ({ navigation }) => {
                       borderTopRightRadius: 20,
                     }}
                   >
+                    <Text>Mobile number</Text>
                     <View
                       style={[
                         styles.component1981,
@@ -161,7 +162,7 @@ const Login = ({ navigation }) => {
                         styles.enterColor,
                       ]}
                     >
-                      Enter your Email ID
+                      Email ID
                     </Text>
                     <TextInput
                       autoCapitalize="none"
