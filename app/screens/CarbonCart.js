@@ -25,8 +25,6 @@ const CarbonCart = ({route,navigation }) => {
     let totalItems = 0
     console.log(cart)
     for(let i = 0; i < cart.length; i++){
-      let project = await apiCall.GetProject(cart[i].projectId)
-
       let name = cart[i].name
       totalPrice += +cart[i].price
 
