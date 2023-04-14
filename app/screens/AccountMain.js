@@ -169,6 +169,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       setCardDetails(cardObject);
 
       CARD_DATA.push(cardObject);
+      CARD_DATA.push(cardObject);
     }
 
     setcardnumber(cardData.cardNumberMasked);
