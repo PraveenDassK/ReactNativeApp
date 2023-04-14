@@ -190,6 +190,11 @@ const RegisterBusinessAccount = async() => {
         "can_file": true
       })
 }
+const SendPushNotificationToken = async ({customerID,tokenID}) => {
+  const response = await client.post(`https://api.carbonyte.io/authverifymodule/SaveTokenDetails?customerID=${customerID}&tokenId=${tokenID}&DeviceId=1`)
+   return response
+}
+
 export default {
     Login,
     VerifyLogin,
@@ -197,5 +202,6 @@ export default {
     RegisterPersonalAccount,
     RegisterBusinessAccount,
     GetAddressByPostCode,
-    GetCustomerDetails
+    GetCustomerDetails,
+    SendPushNotificationToken
 }
