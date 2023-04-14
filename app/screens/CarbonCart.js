@@ -27,12 +27,12 @@ const CarbonCart = ({route,navigation }) => {
     for(let i = 0; i < cart.length; i++){
       let project = await apiCall.GetProject(cart[i].projectId)
 
-      let name = project.name
-      totalPrice += +project.price
+      let name = cart[i].name
+      totalPrice += +cart[i].price
 
       let price = {
-        "price" : (project.price * cart[i].quantity).toFixed(2),
-        "item" : project.name,
+        "price" : (cart[i].price * cart[i].quantity).toFixed(2),
+        "item" : cart[i].name,
         "amount" : cart[i].quantity
       }
       projects.push({price,name})

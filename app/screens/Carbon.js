@@ -44,25 +44,26 @@ const Carbon = ({ route, navigation }) => {
   
   /**
    * @dev This function adds a project to the cart
-   * @param {Str} ID The project ID selected
+   * @param {obj} ID The project object selected
    */
-  const addToCart = (ID) => {
+  const addToCart = (item) => {
     //Check here if the project already exists
-    const multipleChecker = cart.findIndex(existingArr => existingArr.projectId === ID)
-    console.log(multipleChecker)
+    const multipleChecker = cart.findIndex(existingArr => existingArr.projectId === item.id)
 
     if(multipleChecker === -1){
       //If it dosen't exist already
     let arrobj = {
-      projectId: ID,
+      projectId: item.id,
+      name: item.displayName,
+      price: item.asset.displayAssetPriceWithMarkup,
       quantity: 1,
     };
     setCart((prevArray) => [...prevArray, arrobj]);
     }else{
       //If the item already exists
-      setCart(prevArray => prevArray.map(item => {
-        if (item.projectId === ID) {
-          return { ...item, quantity: item.quantity + 1 };
+      setCart(prevArray => prevArray.map(prev => {
+        if (prev.projectId === item.id) {
+          return { ...prev, quantity: prev.quantity + 1 };
         }
         return item;
       }));
@@ -334,7 +335,7 @@ const Carbon = ({ route, navigation }) => {
                 style={{ width: "49%" }}
                 title="ADD TO CART"
                 color="babyBlue"
-                onPress={() => addToCart(item.id)}
+                onPress={() => addToCart(item)}
               />
               <Button
                 style={{ width: "49%" }}
