@@ -20,6 +20,7 @@ import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
 import CardSelection from "./app/components/CardSelection";
+import FaceCapture from "./app/screens/FaceCapture";
 
 
 if (!global.btoa) {
@@ -189,6 +190,8 @@ if (!loaded) {
 } else {
   SplashScreen.hideAsync()
 }
+
+// return <FaceCapture />
 
   return (
   

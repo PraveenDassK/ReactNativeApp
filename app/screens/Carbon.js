@@ -266,22 +266,19 @@ const Carbon = ({ route, navigation }) => {
         keyExtractor={(data) => data.id.toString()}
         renderItem={({ item }) => (
           <View style={[styles.listItems, styles.boxShadow]}>
-            <Image
-              resizeMode={item.image !== "" ? "contain" : "contain"}
-              style={[
-                styles.listImage,
-                {
-                  width: horizontalScale(300),
-                  height: verticalScale(180),
-                  resizeMode: "stretch",
-                },
-              ]}
-              source={
-                item.image != ""
-                  ? { uri: item.image }
-                  : require("../assets/BearWithUs.png")
-              }
-            />
+           <Image
+           
+           style={[
+             styles.listImage,
+             styles.responsiveImage
+           ,
+           ]}
+           source={
+             item.image != ""
+               ? { uri: item.image }
+               : require("../assets/BearWithUs.png")
+           }
+         />
 
             <View style={styles.subTitle}>
               <View style={styles.subTitleText}>
@@ -493,6 +490,13 @@ const styles = StyleSheet.create({
     width: "100%",
 
     justifyContent: "space-between",
+  },
+  responsiveImage: {
+    width: '100%',
+    // Without height undefined it won't work
+    height: undefined,
+    // figure out your image aspect ratio
+    aspectRatio: 135 / 76,
   },
 });
 

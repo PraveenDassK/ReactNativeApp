@@ -470,7 +470,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
-                <AppText style={{ color: "grey", fontSize: moderateScale(26) }}>
+                <AppText style={[styles.blueTitle,{fontSize: moderateScale(26) }]}>
                   £
                 </AppText>
                 {balance}
