@@ -5,59 +5,44 @@ import GlobalStyles from "../../GlobalStyles";
 import apiCall from "../api/apiCall";
 import Button from "../components/Button";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
+import AuthContext from "../auth/context";
 
 const CarbonCart = ({route,navigation }) => {
   const [data, setData] = useState([])
   const [display, setshow] = useState([])
   const [amount, setAmount] = useState("0")
   const [price, setPrice] = useState("0")
+  const { userID, accountID, cart, setCart } = useContext(AuthContext);
 
   useEffect(() => {
     loadData()
   },[])
 
   const loadData = async () => {
-    const projectList = route.params
     let projects = []
 
     let totalPrice = 0
     let totalItems = 0
-
-    for(let i = 0; i < projectList.length; i++){
-      let project = await apiCall.GetProject(projectList[i].projectId)
+    console.log(cart)
+    for(let i = 0; i < cart.length; i++){
+      let project = await apiCall.GetProject(cart[i].projectId)
 
       let name = project.name
       totalPrice += +project.price
 
       let price = {
-        "price" : project.price,
+        "price" : (project.price * cart[i].quantity).toFixed(2),
         "item" : project.name,
-        "amount" : projectList.amount
+        "amount" : cart[i].quantity
       }
       projects.push({price,name})
       setData(projects)
     }
-
+    console.log(data)
     let show = []
 
-    data.forEach(item => {
-      totalItems ++
-      show.push(
-        <View>
-          <Text>
-            {item.name}
-          </Text>
-          <Text>
-            £{item.price.price} per {item.price.item}
-          </Text>
-          <Text>
-            x{item.price.amount}
-          </Text>
-        </View>
-      )
-    })
     setshow(show)
-    setAmount(projectList.length)
+    setAmount(cart.length)
     setPrice(totalPrice)
   }
 
@@ -66,12 +51,12 @@ const CarbonCart = ({route,navigation }) => {
     const projectToBuy = route.params
     const purchaseObj = {
       "carbonyteUserId": "CC11875",
-      "projectLists": route.params,
+      "projectLists": cart,
       "sourceAccountId": "A12274AW",
       "totalAmount": route.params.length
     }
     navigation.navigate("PinCart",purchaseObj)
-
+    setCart([]);
   } 
   
   return (
@@ -92,7 +77,7 @@ const CarbonCart = ({route,navigation }) => {
         <FlatList data={data} renderItem={({item}) => (
             <View style={styles.list}>
                 <Text style={styles.col1}>{item?.name}</Text>
-                <Text style={styles.col2}>{1}</Text>
+                <Text style={styles.col2}>{item.price.amount}</Text>
                 <Text style={styles.col3}>£{item?.price.price}</Text>
             </View>
         )}

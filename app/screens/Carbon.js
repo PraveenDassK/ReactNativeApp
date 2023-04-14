@@ -27,7 +27,7 @@ const Carbon = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const { userID, accountID } = useContext(AuthContext);
+  const { userID, accountID, cart, setCart } = useContext(AuthContext);
 
   useEffect(() => {
     loadData();
@@ -40,17 +40,33 @@ const Carbon = ({ route, navigation }) => {
     setIsLoading(false);
   };
 
-  const [cart, setCart] = useState([]);
   let amount = 0;
-  //Buy functions
+  
+  /**
+   * @dev This function adds a project to the cart
+   * @param {Str} ID The project ID selected
+   */
   const addToCart = (ID) => {
+    //Check here if the project already exists
+    const multipleChecker = cart.findIndex(existingArr => existingArr.projectId === ID)
+    console.log(multipleChecker)
+
+    if(multipleChecker === -1){
+      //If it dosen't exist already
     let arrobj = {
       projectId: ID,
       quantity: 1,
     };
     setCart((prevArray) => [...prevArray, arrobj]);
-    amount++;
-    checkout();
+    }else{
+      //If the item already exists
+      setCart(prevArray => prevArray.map(item => {
+        if (item.projectId === ID) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      }));
+    }
   };
 
   const checkout = () => {
@@ -64,7 +80,6 @@ const Carbon = ({ route, navigation }) => {
 
   const goToBasket = () => {
     navigation.navigate("CarbonCart", cart);
-    setCart([]);
   };
 
   const onRefresh = useCallback(() => {
@@ -266,19 +281,22 @@ const Carbon = ({ route, navigation }) => {
         keyExtractor={(data) => data.id.toString()}
         renderItem={({ item }) => (
           <View style={[styles.listItems, styles.boxShadow]}>
-           <Image
-           
-           style={[
-             styles.listImage,
-             styles.responsiveImage
-           ,
-           ]}
-           source={
-             item.image != ""
-               ? { uri: item.image }
-               : require("../assets/BearWithUs.png")
-           }
-         />
+            <Image
+              resizeMode={item.image !== "" ? "contain" : "contain"}
+              style={[
+                styles.listImage,
+                {
+                  width: horizontalScale(300),
+                  height: verticalScale(180),
+                  resizeMode: "stretch",
+                },
+              ]}
+              source={
+                item.image != ""
+                  ? { uri: item.image }
+                  : require("../assets/BearWithUs.png")
+              }
+            />
 
             <View style={styles.subTitle}>
               <View style={styles.subTitleText}>
@@ -490,13 +508,6 @@ const styles = StyleSheet.create({
     width: "100%",
 
     justifyContent: "space-between",
-  },
-  responsiveImage: {
-    width: '100%',
-    // Without height undefined it won't work
-    height: undefined,
-    // figure out your image aspect ratio
-    aspectRatio: 135 / 76,
   },
 });
 
