@@ -54,7 +54,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setAccountID,
     setUserDetails,
     setCardID,
-    pushToken
+    expoPushToken
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -123,7 +123,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setCardID(cardId);
 
     const pushNotification = await loginAPI.SendPushNotificationToken({
-      tokenID:pushToken
+      tokenID:expoPushToken
     })
 
     authStorage.storeToken(result?.token);
