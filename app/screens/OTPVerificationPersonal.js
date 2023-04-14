@@ -31,6 +31,7 @@ import Form from "../components/forms/Form";
 import loginAPI from "../api/apiLogin";
 import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
+import {registerForPushNotificationsAsync} from "../utility/pushToken.js";
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -53,6 +54,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setAccountID,
     setUserDetails,
     setCardID,
+    pushToken
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -120,9 +122,8 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setAccountID(accountId);
     setCardID(cardId);
 
-    const notificationToken = registerForPushNotificationsAsync()
     const pushNotification = await loginAPI.SendPushNotificationToken({
-      tokenID:notificationToken
+      tokenID:pushToken
     })
 
     authStorage.storeToken(result?.token);
@@ -149,7 +150,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      const countdownId = setInterval(countdown, 1000);
+      const countdownId = setInterval(countdown, 59);
       return () => {
         clearInterval(countdownId);
       };

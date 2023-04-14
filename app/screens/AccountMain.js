@@ -130,6 +130,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Gets the data for the user
   const loadData = async () => {
     setIsLoading(true);
+    if(!accountID)return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const cardData = await apiCall.GetCardDetails(cardID);
     const resposeData = await apiCall.GetUserImpact("CC1");

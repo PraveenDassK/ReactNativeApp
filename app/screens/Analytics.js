@@ -64,6 +64,7 @@ const Analytics = ({ navigation }) => {
    */
   const loadData = async () => {
     setIsLoading(true)
+    if(!accountID)return;
     const dataCall = await apiCall.GetAnalysisData(accountID);
     const response = await apiCall.GetScheduledPayments("CC1")
     const graphData = await apiCall.GetTransactionsWeek(accountID);
