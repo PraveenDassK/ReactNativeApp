@@ -78,6 +78,7 @@ const [pin, setPin] = useState("0000")
 
 //Shopping card Details
 const [cart, setCart] = useState([])
+const [pushToken, setPushToken] = useState()
 
 const [settings, setSettings] = useState({
   faceId: false,
@@ -214,7 +215,8 @@ if (!loaded) {
       cardID, setCardID,
       customerDetails, setCustomerDetails,
       cardDetails, setCardDetails,
-      cart, setCart
+      cart, setCart,
+      pushToken, setPushToken
     }}>
       <NavigationContainer>
 
@@ -262,6 +264,7 @@ async function registerForPushNotificationsAsync() {
     }
     token = (await Notifications.getDevicePushTokenAsync()).data;
     console.log(token);
+    setPushToken(token)
   } else {
     alert('Must use physical device for Push Notifications');
   }
