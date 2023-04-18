@@ -55,7 +55,6 @@ const GetCarbonSpending = async() => {
       };
       chartData.push(chartDatum);
     });
-    console.log("total",total)
     //Change to KG
     total = total/1000
     return {chartData,total};
