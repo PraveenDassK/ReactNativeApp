@@ -4,7 +4,7 @@
     "slug": "carbonyte",
     "version": "1.1.0",
     "orientation": "portrait",
-    "icon": "./app/assets/logo-iconwithtext.png",
+    "icon": "./app/assets/logo-carbonyte.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./app/assets/layer-129@3x.png",
