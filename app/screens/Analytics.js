@@ -807,7 +807,7 @@ const styles = StyleSheet.create({
   },
 
   money: {
-    color: "#0101FD",
+    color: "blue",
     fontWeight: "700",
     fontSize: 16
   },

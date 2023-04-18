@@ -29,8 +29,10 @@ import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import Form from "../components/forms/Form";
 import loginAPI from "../api/apiLogin";
+import loginApi from "../api/apiLogin";
 import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -45,6 +47,7 @@ const validationSchema = Yup.object().shape({
 
 const OTPVerificationPersonal = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [resetVisible, setResetVisible] = useState(false);
   const {
     user,
     currentUser,
@@ -131,14 +134,16 @@ const OTPVerificationPersonal = ({ navigation }) => {
     const email = user.email;
     const phoneNumber = user.phoneNumber;
 
-    // const result = await loginAPI.SendLoginOTP({ email, phoneNumber})
-    console.log(email, phoneNumber);
+    const result = await loginApi.Login({ email, phoneNumber });
+    console.log(email, phoneNumber, result);
+    setResetVisible(false);
+    setCount(59);
   };
 
   useEffect(() => {
     if (count === 0) {
-      setCount(59);
-      resendCred();
+      //setCount(59);
+      setResetVisible(true);
     }
   }, [count]);
 
@@ -279,9 +284,19 @@ const OTPVerificationPersonal = ({ navigation }) => {
                       />
                     </View>
 
-                    <Text style={styles.countdown}>
-                      Resend Code in 00:{count < 10 ? `0${count}` : count}
-                    </Text>
+                    {!resetVisible ? (
+                      <Text style={styles.countdown}>
+                        Resend Code in 00:{count < 10 ? `0${count}` : count}
+                      </Text>
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.resendContainer}
+                        onPress={resendCred}
+                      >
+                        <Text style={styles.resendItem}>Resend</Text>
+                      </TouchableOpacity>
+                    )}
+
                     <View style={styles.subTextRow}>
                       <Text style={[styles.subText, { marginTop: "10%" }]}>
                         {`Please enter the code sent to `}+{user.phoneNumber}
@@ -346,9 +361,21 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         visible={touched.eVer4}
                       />
                     </View>
-                    <Text style={[styles.countdown, { marginBottom: "10%" }]}>
-                      Resend Code in 00:{count < 10 ? `0${count}` : count}
-                    </Text>
+                    {!resetVisible ? (
+                      <Text style={[styles.countdown, { marginBottom: "10%" }]}>
+                        Resend Code in 00:{count < 10 ? `0${count}` : count}
+                      </Text>
+                    ) : (
+                      <TouchableOpacity
+                        style={[
+                          styles.resendContainer,
+                          { marginBottom: "10%" },
+                        ]}
+                        onPress={resendCred}
+                      >
+                        <Text style={styles.resendItem}>Resend</Text>
+                      </TouchableOpacity>
+                    )}
                     <View style={styles.button}>
                       <Button
                         title="Verify"
@@ -371,6 +398,15 @@ const OTPVerificationPersonal = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  resendContainer: {
+    width: "80%",
+    marginTop: "2.5%",
+    marginLeft: "10%",
+  },
+  resendItem: {
+    color: "blue",
+    textDecorationLine: "underline",
+  },
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     minHeight: "100%",

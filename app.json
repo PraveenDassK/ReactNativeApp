@@ -21,7 +21,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "carbonyte.banking",
       "buildNumber": "1.1.2"
-
     },
     "android": {
       "adaptiveIcon": {
