@@ -195,8 +195,8 @@ const Registration = ({navigation}) => {
      *          has been added
      */
     const sendDetails = async() => {
-      const Id= "30"
-      Math.floor(Math.random() * 500000  );
+      const Id= Math.floor(Math.random() * 500000  );
+      console.log(Id)
         if(accountType == "Personal"){
           const regData = 
           [

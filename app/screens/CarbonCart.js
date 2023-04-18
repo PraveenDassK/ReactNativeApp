@@ -12,7 +12,7 @@ const CarbonCart = ({route,navigation }) => {
   const [display, setshow] = useState([])
   const [amount, setAmount] = useState("0")
   const [price, setPrice] = useState("0")
-  const { userID, accountID, cart, setCart } = useContext(AuthContext);
+  const { customerDetails, accountID, cart, setCart } = useContext(AuthContext);
 
   useEffect(() => {
     loadData()
@@ -48,9 +48,9 @@ const CarbonCart = ({route,navigation }) => {
     //setData("")
     const projectToBuy = route.params
     const purchaseObj = {
-      "carbonyteUserId": "CC11875",
+      "carbonyteUserId": customerDetails,
       "projectLists": cart,
-      "sourceAccountId": "A12274AW",
+      "sourceAccountId": accountID,
       "totalAmount": route.params.length
     }
     navigation.navigate("PinCart",purchaseObj)

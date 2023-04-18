@@ -32,7 +32,6 @@ const Transactions = ({navigation,route}) => {
 
     const scrollY = React.useRef(new Animated.Value(0)).current;
 
-    const authContext = useContext(AuthContext)
     const { settings, accountID } = useContext(AuthContext);
 
     //Calls the API once during load
@@ -49,35 +48,15 @@ const Transactions = ({navigation,route}) => {
     
 
     const loadData = async () => {
-     
         setIsLoading(true)
-        const responseBalance = await api.GetAccount("A122HTHM");
-        const accountresponse = await api.GetAccount("A122HTHM");
-        
-        const accountdata = accountresponse.data.details
-        const data = responseBalance.data.details
-        setBalance(data.availableBalance)
-        console.log(authContext.accountID)
         //Load the data for transactions
-        const response = await api.GetTransactions(authContext.accountID,10);
+        const response = await api.GetTransactions(accountID,10);
         const transactions = response.data.details.content
         setTransactionData(transactions)
         console.log(transactions)
-
-        let name = accountdata.customerName
-        let names = name.split(' '), initialsHold = names[0].substring(0, 1).toUpperCase();
-    
-        if (names.length > 1) {
-          initialsHold += names[names.length - 1].substring(0, 1).toUpperCase();
-         }
-        console.log(initialsHold)
-        setInitals(initialsHold)
-         setHide(false)
-         setIsLoading(false)
-  
+        setHide(false)
+        setIsLoading(false)
     }
-
-    let transactionList = []
 
     const showTransaction = (Id) => {
         setModalVisible(true)
@@ -95,9 +74,8 @@ const Transactions = ({navigation,route}) => {
           },
           {text: 'Send', onPress: async() => {
             console.log('OK Pressed')
-            const response = await apiCall.ReportTransaction(accountID,Id.id)
-            console.log(response)
-            response.result ? alert("Report successsful") : alert("")
+            const response = await apiCall.ReportTransaction("A122HTHM",Id.id)
+            response.result ? alert("Report successsful") : alert("Report unsucessful")
           }},
         ]);
     }

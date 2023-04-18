@@ -133,7 +133,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     if(!accountID)return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const cardData = await apiCall.GetCardDetails(cardID);
-    const resposeData = await apiCall.GetUserImpact("CC1");
+    const resposeData = await apiCall.GetUserImpact(customerDetails);
     const transactionCall = await apiCall.GetTransactions(accountID);
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
@@ -184,15 +184,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
-
-    ////FUP Data
-    try {
-      const NFTresponse = await apiweb3.GetBalance();
-      setName(NFTresponse.data.data.nftData[0].data.name);
-      setDescription(NFTresponse.data.data.nftData[0].data.description);
-      setPrice(NFTresponse.data.data.nftData[0].data.price);
-      setNftimg(NFTresponse.data.data.nftData[0].data.url);
-    } catch {}
 
     //Load the data for transactions
     let pageShow = [];
