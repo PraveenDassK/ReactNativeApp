@@ -71,7 +71,7 @@ const [cardDetails, setCardDetails] = useState(null)
 const [cardID, setCardID] = useState("")
 
 //Carbonyte ID CC1
-const [customerDetails, setCustomerDetails] = ("")
+const [customerDetails, setCustomerDetails] = useState("")
 
 //App Pin
 const [pin, setPin] = useState("0000")
@@ -176,7 +176,7 @@ const restoreToken = async () => {
   const carbonyteId = dataobject.CustomerId
   //setCustomerDetails(carbonyteID)
   const result = await apiLogin.GetCustomerDetails(carbonyteId)
-
+  console.log(result)
   setUserID(result.modulrCustomerId)
   setAccountID(result.accountDetails[0].accountId)
   setCardID(result.accountDetails[0].accountNo)
