@@ -22,13 +22,7 @@ const ITEMS = [
   },
   {
     id:2, title: "limits", route: "SpendingLimit"
-  },
-  {
-    id:3, title: "account and verification letter", route: "AccountLetter"
-  },
-  
-
-
+  }
 ]
 
 const AccountSettings = ({navigation}) => {

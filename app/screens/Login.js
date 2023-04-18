@@ -42,12 +42,10 @@ const Login = ({ navigation }) => {
   const handleSubmit = async ({ email, phoneNumber }) => {
     setIsLoading(true)
     phoneNumber = prefix + phoneNumber;
-    const request = await loginApi.Login({ email, phoneNumber });
+    // const request = await loginApi.Login({ email, phoneNumber });
     setIsLoading(false)
     setUser({ email, phoneNumber });
-
-
-    if (!request.result) return alert("Could not send otp");
+    // if (!request.result) return alert("Could not send otp");
 
     navigation.navigate("OTPVerificationPersonal", { registration: true });
   };
@@ -110,6 +108,7 @@ const Login = ({ navigation }) => {
                       borderTopRightRadius: 20,
                     }}
                   >
+                    <Text>Mobile number</Text>
                     <View
                       style={[
                         styles.component1981,
@@ -161,7 +160,7 @@ const Login = ({ navigation }) => {
                         styles.enterColor,
                       ]}
                     >
-                      Enter your Email ID
+                      Email ID
                     </Text>
                     <TextInput
                       autoCapitalize="none"

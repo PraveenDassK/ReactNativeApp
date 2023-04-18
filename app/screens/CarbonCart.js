@@ -12,7 +12,7 @@ const CarbonCart = ({route,navigation }) => {
   const [display, setshow] = useState([])
   const [amount, setAmount] = useState("0")
   const [price, setPrice] = useState("0")
-  const { userID, accountID, cart, setCart } = useContext(AuthContext);
+  const { customerDetails, accountID, cart, setCart } = useContext(AuthContext);
 
   useEffect(() => {
     loadData()
@@ -25,14 +25,12 @@ const CarbonCart = ({route,navigation }) => {
     let totalItems = 0
     console.log(cart)
     for(let i = 0; i < cart.length; i++){
-      let project = await apiCall.GetProject(cart[i].projectId)
-
-      let name = project.name
-      totalPrice += +project.price
+      let name = cart[i].name
+      totalPrice += +cart[i].price
 
       let price = {
-        "price" : (project.price * cart[i].quantity).toFixed(2),
-        "item" : project.name,
+        "price" : (cart[i].price * cart[i].quantity).toFixed(2),
+        "item" : cart[i].name,
         "amount" : cart[i].quantity
       }
       projects.push({price,name})
@@ -50,9 +48,9 @@ const CarbonCart = ({route,navigation }) => {
     //setData("")
     const projectToBuy = route.params
     const purchaseObj = {
-      "carbonyteUserId": "CC11875",
+      "carbonyteUserId": customerDetails,
       "projectLists": cart,
-      "sourceAccountId": "A12274AW",
+      "sourceAccountId": accountID,
       "totalAmount": route.params.length
     }
     navigation.navigate("PinCart",purchaseObj)

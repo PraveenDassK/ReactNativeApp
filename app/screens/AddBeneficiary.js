@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
   accountName: Yup.string().required().min(1).max(30).label("Account name"),
   phoneNumber: Yup.string().required().matches(/^[0-9]+$/, "Phone number must be digits").min(9).max(11).label("Phone number"),
   sortCode: Yup.string().required().matches(/^[0-9]+$/, "Sort code must be digits").min(6, 'Must be exactly 6 digits').max(6, 'Must be exactly 6 digits').label("Sort code"),
-  accNum: Yup.string().required().matches(/^[0-9]+$/, "Account number must be digits").min(8, 'Must be exactly 8 digits').max(8, 'Must be exactly 8 digits').label("Account number"),
+  //accNum: Yup.string().required().matches(/^[0-9]+$/, "Account number must be digits").min(8, 'Must be exactly 8 digits').max(8, 'Must be exactly 8 digits').label("Account number"),
 });
 
 const items = [

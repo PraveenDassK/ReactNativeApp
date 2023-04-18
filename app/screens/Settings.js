@@ -60,7 +60,8 @@ const Settings = ({ navigation }) => {
   const loadData = async () => {
     //First set loading to true to show loading animation
     setIsLoading(true);
-    console.log(userID);
+    if(!accountID)return;
+
     const userDetails = await api.GetAllAccounts(userID);
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("147147");

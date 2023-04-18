@@ -44,7 +44,11 @@ const VerifyLogin = async({email, phoneNumber, emailOTP, phoneOTP}) => {
 
     const token = request.data.details
     const decryptedToken = jwt_decode(token)
-    const accountID = "CC1"
+
+    const userData = JSON.parse(decryptedToken.Data.substr())
+    console.log(userData)
+
+    const accountID = userData.customerID
     const accountDetails = await GetCustomerDetails(accountID)
     return ({
       data : accountDetails,
@@ -190,6 +194,11 @@ const RegisterBusinessAccount = async() => {
         "can_file": true
       })
 }
+const SendPushNotificationToken = async ({customerID,tokenID}) => {
+  const response = await client.post(`https://api.carbonyte.io/authverifymodule/SaveTokenDetails?customerID=${customerID}&tokenId=${tokenID}&DeviceId=1`)
+   return response
+}
+
 export default {
     Login,
     VerifyLogin,
@@ -197,5 +206,6 @@ export default {
     RegisterPersonalAccount,
     RegisterBusinessAccount,
     GetAddressByPostCode,
-    GetCustomerDetails
+    GetCustomerDetails,
+    SendPushNotificationToken
 }

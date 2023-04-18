@@ -32,6 +32,7 @@ import loginAPI from "../api/apiLogin";
 import loginApi from "../api/apiLogin";
 import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
+import {registerForPushNotificationsAsync} from "../utility/pushToken.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
@@ -56,6 +57,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setAccountID,
     setUserDetails,
     setCardID,
+    expoPushToken
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -122,6 +124,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setUserID(userID);
     setAccountID(accountId);
     setCardID(cardId);
+
+    const pushNotification = await loginAPI.SendPushNotificationToken({
+      tokenID:expoPushToken
+    })
 
     authStorage.storeToken(result?.token);
     //authStorage.storeUserDetails(result?.data);

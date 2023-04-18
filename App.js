@@ -20,7 +20,6 @@ import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
 import CardSelection from "./app/components/CardSelection";
-import FaceCapture from "./app/screens/FaceCapture";
 
 
 if (!global.btoa) {
@@ -57,17 +56,29 @@ const [currentUser, setCurrentUser] = useState()
 const [isAuth, setIsAuth] = useState(false)
 const [login, setLogin] = useState(false)
 
-//External
+/**
+ * @dev IDs used though the app
+ */
+
+//Enfuse customer ID A122HTHM
 const [accountID, setAccountID] = useState("")
-//A122HTHM
-//A12274AW
-//CarbonyteID
+
+//Modulr ID C122BMS7
 const [userID, setUserID] = useState("")
+
+//Card ID and Enfuse card details A122HTHM
 const [cardDetails, setCardDetails] = useState(null)
 const [cardID, setCardID] = useState("")
-const [customerDetails, setCustomerDetails] = ("")
-const [userDetails, setUserDetails] = useState({})
+
+//Carbonyte ID CC1
+const [customerDetails, setCustomerDetails] = useState("")
+
+//App Pin
 const [pin, setPin] = useState("0000")
+
+//Shopping card Details
+const [cart, setCart] = useState([])
+const [pushToken, setPushToken] = useState("")
 
 const [settings, setSettings] = useState({
   faceId: false,
@@ -165,7 +176,7 @@ const restoreToken = async () => {
   const carbonyteId = dataobject.CustomerId
   //setCustomerDetails(carbonyteID)
   const result = await apiLogin.GetCustomerDetails(carbonyteId)
-
+  console.log(result)
   setUserID(result.modulrCustomerId)
   setAccountID(result.accountDetails[0].accountId)
   setCardID(result.accountDetails[0].accountNo)
@@ -191,8 +202,6 @@ if (!loaded) {
   SplashScreen.hideAsync()
 }
 
-// return <FaceCapture />
-
   return (
   
     <AuthContext.Provider value={{
@@ -205,7 +214,9 @@ if (!loaded) {
       pin, setPin,
       cardID, setCardID,
       customerDetails, setCustomerDetails,
-      cardDetails, setCardDetails
+      cardDetails, setCardDetails,
+      cart, setCart,
+      expoPushToken
     }}>
       <NavigationContainer>
 
@@ -252,7 +263,6 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getDevicePushTokenAsync()).data;
-    console.log(token);
   } else {
     alert('Must use physical device for Push Notifications');
   }
