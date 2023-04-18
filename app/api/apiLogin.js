@@ -44,7 +44,11 @@ const VerifyLogin = async({email, phoneNumber, emailOTP, phoneOTP}) => {
 
     const token = request.data.details
     const decryptedToken = jwt_decode(token)
-    const accountID = "CC1"
+
+    const userData = JSON.parse(decryptedToken.Data.substr())
+    console.log(userData)
+
+    const accountID = userData.customerID
     const accountDetails = await GetCustomerDetails(accountID)
     return ({
       data : accountDetails,
