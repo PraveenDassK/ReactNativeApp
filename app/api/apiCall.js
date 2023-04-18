@@ -407,18 +407,25 @@ const GetProject = async(Id) => {
  * assets       An array of the last four projects bought
  */
 const GetUserImpact = async(Id) => {
-    const request = await client.get(`https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/${Id}`)
-    const returnData = request.data.details
-    console.log(request.data)
-    return {
-        totalOffset: returnData.data.totalOffsetInTonnes.toFixed(1),
-        totalAssets: returnData.data.totalNumAssets,
-        assets: [
-            returnData.assets[0],
-            returnData.assets[1],
-            returnData.assets[2],
-            returnData.assets[3]
-        ]
+    try{
+        const request = await client.get(`https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/${Id}`)
+        const returnData = request.data.details
+        return {
+            totalOffset: returnData.data.totalOffsetInTonnes.toFixed(1),
+            totalAssets: returnData.data.totalNumAssets,
+            assets: [
+                returnData.assets[0],
+                returnData.assets[1],
+                returnData.assets[2],
+                returnData.assets[3]
+            ]
+        }
+    }catch{
+        return {
+            totalOffset: 0,
+            totalAssets: 0,
+            assets: []
+        }
     }
 }
 
@@ -756,6 +763,7 @@ const StatmentPost = (Id) => {
 
 const ReportTransaction = async(accountID, transactionId) => {
     const request = await client.post(`https://api.carbonyte.io/transactionmodule/DisputeTransaction?accountId=${accountID}&transactionId=${transactionId}`)
+    console.log(request)
     return request.data
 }
 
