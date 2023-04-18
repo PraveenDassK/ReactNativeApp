@@ -14,8 +14,7 @@ import AuthContext from "../auth/context";
 import moment from "moment";
 
 const ChooseCardsStandard5 = ({ navigation }) => {
-  const authContext = useContext(AuthContext);
-  const [data, setData] = useState({});
+  const {customerDetails} = useContext(AuthContext);
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
   const [projects, setProjects] = useState([]);
@@ -27,7 +26,7 @@ const ChooseCardsStandard5 = ({ navigation }) => {
 
   //Gets the data for the user
   const loadData = async () => {
-    let response = await apiCall.GetUserImpact("CC1");
+    let response = await apiCall.GetUserImpact(customerDetails);
     const assets = response.allAssets;
     console.log(assets)
     let trees = 0;

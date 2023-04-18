@@ -22,7 +22,7 @@ const ITEMS = [
   },
   {
     id:2, title: "limits", route: "SpendingLimit"
-  }
+  },
 ]
 
 const AccountSettings = ({navigation}) => {

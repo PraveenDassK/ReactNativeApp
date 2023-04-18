@@ -4,6 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/Button";
 
 import apiCarbon from "../api/apiCarbon"
+import apiLogin from "../api/apiLogin"
 import AuthContext from "../auth/context";
 
 import DoughnutChart from "../components/DoughnutChart";
@@ -20,9 +21,22 @@ const TestEnviro = ({navigation}) => {
   },[])
 
   const loadData = async() =>{
-    const response = await apiCarbon.GetCarbonSpending();
+    const response = await apiLogin.VerifyLogin(
+      {
+        "email": "saily.s@carbonyte.io",
+        "emailOTP": "9398",
+        "phoneNumber": "8698743985",
+        "phoneOTP": "9090"
+      }
+    );
     console.log(response)
     setData(response)
+    // {
+    //   "email": "saily.s@carbonyte.io",
+    //   "emailOTP": "9398",
+    //   "phoneNumber": "8698743985",
+    //   "phoneOTP": "9090"
+    // }
   }
 
   return (
@@ -33,7 +47,6 @@ const TestEnviro = ({navigation}) => {
         style={styles.boxShadow} 
         onPress={() => loadData()} 
       />
-      <DoughnutChart data = {data}/>
     </View>
   )
 };

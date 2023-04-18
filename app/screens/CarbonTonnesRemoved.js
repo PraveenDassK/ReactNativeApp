@@ -18,7 +18,7 @@ import moment from "moment";
 
 
 const CarbonTonnesRemoved = ({ navigation }) => {
-  const authContext = useContext(AuthContext);
+  const {customerDetails} = useContext(AuthContext);
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
   const numArray = [0, 0, numTrees, 0, 0, 0];
@@ -32,7 +32,7 @@ const CarbonTonnesRemoved = ({ navigation }) => {
   }, []);
 
   const loadData = async () => {
-    const response = await apiCall.GetUserImpact("CC11875");
+    const response = await apiCall.GetUserImpact(customerDetails);
     setTrees(response.totalAssets);
     setCarbon(response.totalOffset);
     setMonths([

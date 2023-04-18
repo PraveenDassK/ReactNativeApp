@@ -74,7 +74,7 @@ const Transactions = ({navigation,route}) => {
           },
           {text: 'Send', onPress: async() => {
             console.log('OK Pressed')
-            const response = await apiCall.ReportTransaction("A122HTHM",Id.id)
+            const response = await apiCall.ReportTransaction(accountID,Id.id)
             response.result ? alert("Report successsful") : alert("Report unsucessful")
           }},
         ]);

@@ -217,11 +217,7 @@ const VirtualEcoSystem = ({navigation}) => {
     const [name, setName] = useState("Your forest")
     const [forestValue, setTrees] = useState("0");
 
-    const { accountID } = useContext(AuthContext)
-
-    const treeImages = [
-        "../assets/Forest/2.png"
-    ]
+    const { accountID,customerDetails } = useContext(AuthContext)
 
     //Calls the API once during load
     useEffect(() => {
@@ -236,7 +232,7 @@ const VirtualEcoSystem = ({navigation}) => {
 
         let trees = 0
         try{
-    const response = await apiCall.GetUserImpact("CC1");
+    const response = await apiCall.GetUserImpact(customerDetails);
             trees = response.totalAssets
         }catch{
             

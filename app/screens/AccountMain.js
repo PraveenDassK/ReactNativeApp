@@ -1,67 +1,24 @@
-import React, {
-  useEffect,
-  useState,
-  useContext,
-  useCallback,
-  useRef,
-} from "react";
-import {
-  RefreshControl,
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Platform,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Vibration,
-} from "react-native";
-
+import React, {useEffect,useState,useContext,useCallback,useRef} from "react";
+import {RefreshControl,Text,StyleSheet,Image,View,TouchableOpacity,ScrollView,ActivityIndicator,Platform,Dimensions,TouchableWithoutFeedback,Vibration} from "react-native";
 import Swiper from "react-native-swiper";
-
-import {
-  GestureDetector,
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
-
-import Animated, {
-  Easing,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-
+import {GestureDetector,GestureHandlerRootView} from "react-native-gesture-handler";
+import Animated, {Easing,interpolate,useAnimatedStyle,useSharedValue,withTiming} from "react-native-reanimated";
 import GlobalStyles from "../../GlobalStyles";
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from "../config/scaling";
-
+import {horizontalScale,verticalScale,moderateScale} from "../config/scaling";
 import apiweb3 from "../api/web3_api";
 import apiCall from "../api/apiCall";
 import api from "../api/cardDetails";
-
 import AuthContext from "../auth/context";
-
 import FadeInView from "../components/fadeInview";
-
 import moment from "moment";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 
-const { width, height } = Dimensions.get("window");
-
 const CARD_DATA = [];
 
 const HomeScreenPersonal = ({ navigation, route }) => {
+
   const [isLoading, setIsLoading] = useState(false);
-  //Saves all the data from the API call
-  const [data, setData] = useState(null);
   const [cardResponse, setCardResponse] = useState(null);
   const [balance, setBalance] = useState(null);
   const [hideBalance, setHideBalance] = useState(false);
@@ -70,9 +27,16 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [status, setStatus] = useState(null);
   const [accountnumber, setaccountnumber] = useState(null);
   const [sortCode, setSortCode] = useState(null);
-  const [accountname, setaccountname] = useState(null);
-  const [cardnumber, setcardnumber] = useState(null);
-  const authContext = useContext(AuthContext);
+  
+  const [numTrees, setTrees] = useState(0);
+  const [numCarbon, setCarbon] = useState(0);
+  const [animalsSaved, setAnimalsSaved] = useState(0);
+  const [projects, setProjects] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [name, setName] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [nftimg, setNftimg] = useState(null);
+
   const {
     carbonyteID,
     accountID,
@@ -84,19 +48,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   } = useContext(AuthContext);
 
   const todaydate = moment().format("MMMM D, YYYY");
-
-  const [numTrees, setTrees] = useState(0);
-  const [numCarbon, setCarbon] = useState(0);
-  const [animalsSaved, setAnimalsSaved] = useState(0);
-  const [projects, setProjects] = useState([]);
-
-  const [refreshing, setRefreshing] = useState(false);
-
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [nftimg, setNftimg] = useState(null);
-
   const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
 
   const [catNames, setCatNames] = useState([
@@ -116,6 +67,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const handleCardPress = (card) => {
     setSelectedCard(card);
+    console.log(card)
   };
 
   const TotalAmount = numTrees;
@@ -140,7 +92,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setCatNames(carbonSpendData.labels);
     setDataPercentages(carbonSpendData.percentages);
 
-    //If the card
+    //If the card data is not there
     if (!cardDetails) {
       const responseDetails = await api.getCardResponse("687942912");
       const cardText = await api.getCardDetails(
@@ -173,13 +125,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       CARD_DATA.push(cardObject);
     }
 
-    setcardnumber(cardData.cardNumberMasked);
     setSortCode("00-00-00");
     setStatus(cardData.inPost);
 
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
-    setaccountname(userData.name);
 
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
