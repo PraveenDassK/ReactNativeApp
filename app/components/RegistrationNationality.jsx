@@ -30,8 +30,8 @@ import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
 
 const validationSchema = Yup.object().shape({
-  country: Yup.string().required().min(3).max(11).label("Country"),
-  nationality: Yup.string().required().min(3).max(11).label("Nationality"),
+  country: Yup.string().required().min(2).max(11).label("Country"),
+  nationality: Yup.string().required().min(2).max(11).label("Nationality"),
 });
 
 const Nationality = ({ SaveDetails, setScreenToShow }) => {
