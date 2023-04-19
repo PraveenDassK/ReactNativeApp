@@ -1,10 +1,42 @@
-import React, {useEffect,useState,useContext,useCallback,useRef} from "react";
-import {RefreshControl,Text,StyleSheet,Image,View,TouchableOpacity,ScrollView,ActivityIndicator,Platform,Dimensions,TouchableWithoutFeedback,Vibration} from "react-native";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+  useRef,
+} from "react";
+import {
+  RefreshControl,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Vibration,
+} from "react-native";
 import Swiper from "react-native-swiper";
-import {GestureDetector,GestureHandlerRootView} from "react-native-gesture-handler";
-import Animated, {Easing,interpolate,useAnimatedStyle,useSharedValue,withTiming} from "react-native-reanimated";
+import {
+  GestureDetector,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
+import Animated, {
+  Easing,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import GlobalStyles from "../../GlobalStyles";
-import {horizontalScale,verticalScale,moderateScale} from "../config/scaling";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 import apiweb3 from "../api/web3_api";
 import apiCall from "../api/apiCall";
 import api from "../api/cardDetails";
@@ -17,7 +49,6 @@ import apiCarbon from "../api/apiCarbon";
 const CARD_DATA = [];
 
 const HomeScreenPersonal = ({ navigation, route }) => {
-
   const [isLoading, setIsLoading] = useState(false);
   const [cardResponse, setCardResponse] = useState(null);
   const [balance, setBalance] = useState(null);
@@ -27,7 +58,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [status, setStatus] = useState(null);
   const [accountnumber, setaccountnumber] = useState(null);
   const [sortCode, setSortCode] = useState(null);
-  
+
   const [numTrees, setTrees] = useState(0);
   const [numCarbon, setCarbon] = useState(0);
   const [animalsSaved, setAnimalsSaved] = useState(0);
@@ -67,7 +98,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const handleCardPress = (card) => {
     setSelectedCard(card);
-    console.log(card)
+    console.log(card);
   };
 
   const TotalAmount = numTrees;
@@ -82,7 +113,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Gets the data for the user
   const loadData = async () => {
     setIsLoading(true);
-    if(!accountID)return;
+    if (!accountID) return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const cardData = await apiCall.GetCardDetails(cardID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
@@ -96,8 +127,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     if (!cardDetails) {
       const responseDetails = await api.getCardResponse("687942912");
       const cardText = await api.getCardDetails(
-        responseDetails.data.cardDataUrl,
-        responseDetails.data.token
+        responseDetails?.data?.cardDataUrl,
+        responseDetails?.data?.token
       );
 
       setCardResponse(responseDetails.data);
@@ -413,7 +444,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
-                <AppText style={[styles.blueTitle,{fontSize: moderateScale(26) }]}>
+                <AppText
+                  style={[styles.blueTitle, { fontSize: moderateScale(26) }]}
+                >
                   £
                 </AppText>
                 {balance}

@@ -67,7 +67,7 @@ const SetLimit = ({navigation}) => {
         </View>
         
         <TextInput style={[styles.hello1, styles.helloColor, styles.helloTypo]}
-          placeholder = {"£"+amount}
+          placeholder = {"£"}
           keyboardType="numeric"
           onChangeText={newText => checkText(newText)}
         />

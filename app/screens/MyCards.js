@@ -82,8 +82,8 @@ const MyCards = ({ navigation }) => {
     console.log(responseDetails.data);
 
     const cardDetails = await apiCard.getCardDetails(
-      responseDetails.data.cardDataUrl,
-      responseDetails.data.token
+      responseDetails?.data?.cardDataUrl,
+      responseDetails?.data?.token
     );
     console.log("card details", cardDetails.data);
 
