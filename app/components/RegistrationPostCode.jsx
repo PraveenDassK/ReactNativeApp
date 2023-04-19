@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react"; 
+import React, { useContext, useEffect, useState } from "react";
 //import * as React from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard} from "react-native";
+import { StyleSheet, View, SafeAreaView, Text, TextInput, Image, Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard } from "react-native";
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
@@ -13,19 +13,32 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 
 
-const Postcode = ({AddAddress}) => {
+const Postcode = ({ AddAddress }) => {
     const [addressData, setAddressData] = useState([]);
     const [address, setAddress] = useState([]);
 
     /**
      * @dev This finds the correct postcodes
      */
-    const handleSubmit = async ({postcode}) => {
+    const handleSubmit = async ({ postcode }) => {
         const response = await apiLogin.GetAddressByPostCode(postcode)
         console.log(response)
         setAddressData(response)
+
+        //Remove this on live
+        // const dummyAddress = [{
+        //     label: "Fake address",
+        //     value:{
+        //         address1: "123",
+        //         address2: "456",
+        //         area: "Area 5",
+        //         city: "City 6",
+        //         postcode:postcode
+        //     }
+        // }]
+        // setAddressData(dummyAddress)
     }
-    
+
     const sendData = () => {
         AddAddress(address)
     }
@@ -35,50 +48,53 @@ const Postcode = ({AddAddress}) => {
         <>
             <Text>Enter your postcode</Text>
             <Formik
-            initialValues={{
-                postcode: ''
-            }}
-            onSubmit={handleSubmit}
+                initialValues={{
+                    postcode: ''
+                }}
+                onSubmit={handleSubmit}
             >
-            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>Postcode</Text>
-                    <TextInput
-                        autoCapitalize="none"
-                        textContentType="postcode"
-                        keyboardType="postcode"
-                        onBlur={() => setFieldTouched('postcode')}
-                        onChangeText={handleChange('postcode')}
-                        style={[
-                            styles.childBorder,
-                            {padding:10}
+                {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+                    <View style={[styles.component1981, styles.mt14, { marginLeft: horizontalScale(10) }]}>
+                        <Text>Postcode</Text>
+                        <TextInput
+                            autoCapitalize="none"
+                            textContentType="postcode"
+                            keyboardType="postcode"
+                            onBlur={() => setFieldTouched('postcode')}
+                            onChangeText={handleChange('postcode')}
+                            style={[
+                                styles.childBorder,
+                                { padding: 10 }
                             ]}
-                    />
-                                <Button title="search" textColor="black" color="white" onPress={handleSubmit} />
+                        />
+                        <Button title="search" textColor="black" color="white" onPress={handleSubmit} />
 
-                    {/* <Button title="Search" color="babyBlue" onPress={handleSubmit} /> */}
-                </View>
+                        {/* <Button title="Search" color="babyBlue" onPress={handleSubmit} /> */}
+                    </View>
                 )}
             </Formik>
-            {addressData?.length > 0 ? 
-            <Dropdown
-                style={[styles.dropdown]}
-                containerStyle={styles.dropdownContainer}
-                data={addressData}
-                maxHeight={100}
-                labelField="label"
-                valueField="value"
-                placeholder={addressData[0].label}
-                value={address?.address1}
-                onChange={item => {
-                    setAddress(item.value);
-                }}
-            /> : 
-                <View/>
+            {addressData?.length > 0 ?
+                <View>
+                    <Dropdown
+                        style={[styles.dropdown]}
+                        containerStyle={styles.dropdownContainer}
+                        data={addressData}
+                        maxHeight={100}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={addressData[0].label}
+                        value={address?.address1}
+                        onChange={item => {
+                            setAddress(item.value);
+                        }}
+                    />
+                    <Button title="Add" textColor="white" color="black" onPress={() => sendData()} />
+                </View>
+                :
+                <View />
             }
-            <Button title="Add" textColor="white" color="black" onPress={() => sendData()} />
         </>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
@@ -91,13 +107,13 @@ const styles = StyleSheet.create({
         marginTop: "2.5%",
         opacity: 1,
         borderColor: "#D3D3D3",
-    
-      },
-      dropdownContainer: {
+
+    },
+    dropdownContainer: {
         borderBottomEndRadius: 10,
         borderBottomStartRadius: 10,
-      },
-      childBorder: {
+    },
+    childBorder: {
         borderWidth: 0.5,
         borderRadius: 10,
         borderColor: "#D3D3D3",
@@ -105,7 +121,7 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop: "2.5%",
         marginBottom: "5%"
-      }
+    }
 
 });
 

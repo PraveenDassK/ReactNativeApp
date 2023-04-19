@@ -72,7 +72,7 @@ const Registration = ({navigation}) => {
        * @param {Object} details The details that the component sends back
        * @param {Str} page This is the page that the information is coming from
        */
-      const detailsSaver = (details,page) => {
+      const detailsSaver = async(details,page) => {
         console.log(details)
         switch(page){
           case "PersonalDetails":
@@ -101,8 +101,13 @@ const Registration = ({navigation}) => {
             return;
         case "Income":
           setIncome(details)
-            setScreenToShow("Success")
-            sendDetails()
+            if(await sendDetails()){
+              //If successful
+              setScreenToShow("Success")
+            }else{
+              //If unsuccessful
+              alert("Registration unsuccessful")
+            }
             return;
         case "Success":
             setPersonalDetails(details)
@@ -195,8 +200,10 @@ const Registration = ({navigation}) => {
      *          has been added
      */
     const sendDetails = async() => {
-      const Id= Math.floor(Math.random() * 500000  );
+      // const Id= Math.floor(Math.random() * 500000  );
+      const Id = "10";
       console.log(Id)
+      console.log(accountType)
         if(accountType == "Personal"){
           const regData = 
           [
@@ -235,7 +242,7 @@ const Registration = ({navigation}) => {
                 "savings": "",
                 "taxResidency": "",
                 "incomeSources": [
-                  "string"
+                  ""
                 ]
               },
               "key": "",
@@ -244,12 +251,17 @@ const Registration = ({navigation}) => {
               "marketingChoices": "string"
             }
           ]
-          const response = await apiLogin.RegisterPersonalAccount(regData)
-          console.log(response)
           console.log(regData)
+          const response = await apiLogin.RegisterPersonalAccount(regData)
+          console.log(response.data)
+          //If registration was not successfull
+          if(!response.data.result)return false;
         }else{
           //Make a business account 
+          console.log("Else")
+          
         }
+        return true;
       }
 
     return (
