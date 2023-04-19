@@ -113,7 +113,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     });
     setIsLoading(false);
     if (!result) return alert("Could not verify otp");
-
+    console.log("Result", result)
     const userID = result.data.modulrCustomerId;
     const accountId = result.data.accountDetails[0].accountId;
     const cardId = result.data.accountDetails[0].accountNo;

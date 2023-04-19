@@ -46,13 +46,15 @@ const VerifyLogin = async({email, phoneNumber, emailOTP, phoneOTP}) => {
     const decryptedToken = jwt_decode(token)
 
     const userData = JSON.parse(decryptedToken.Data.substr())
-    console.log(userData)
+    console.log("UserData",userData)
 
-    const accountID = userData.customerID
+    const accountID = userData.CustomerId
+    console.log(accountID)
     const accountDetails = await GetCustomerDetails(accountID)
+
     return ({
       data : accountDetails,
-      token
+      token: token
     })
 }
 
