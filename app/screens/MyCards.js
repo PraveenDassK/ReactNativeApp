@@ -1,8 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, Modal, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+} from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 
 import api from "../api/api_list";
 import AuthContext from "../auth/context";
@@ -10,18 +24,15 @@ import moment from "moment";
 import apiCall from "../api/api";
 import apiCall2 from "../api/apiCall";
 
-
 import AppText from "../components/Text";
 import cardYellow from "../assets/image-cardyellow.png";
 import cardYellowFrozen from "../assets/cardFrozen.png";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import apiCard from "../api/cardDetails";
 
-const CARD_DATA = [
-
-];
+const CARD_DATA = [];
 const MyCards = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const toggleChecked = () => setChecked((value) => !value);
 
@@ -46,46 +57,53 @@ const MyCards = ({ navigation }) => {
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     //Get the transaction data
     const response = await api.GetTransactions(authContext.accountID, 5);
     const transactions = response.data.details.content;
     setTransactionData(transactions);
 
-    const cards = await apiCall.GetCardByAccount("686283112")
-    setCardData(cards)
-    const currentCard = cards[cardIndex]
+    const cards = await apiCall.GetCardByAccount("686283112");
+    setCardData(cards);
+    const currentCard = cards[cardIndex];
     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
-    console.log(currentCard)
-    setfirstname(currentCard.embossing.firstName)
-    setlastname(currentCard.embossing.lastName)
-    setcardnumber(currentCard.maskedCardNumber)
-    setRole(currentCard.cardRole)
-    setInitals(currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0])
-    setIsLoading(false)
-    setType(currentCard.productCode)
+    console.log(currentCard);
+    setfirstname(currentCard.embossing.firstName);
+    setlastname(currentCard.embossing.lastName);
+    setcardnumber(currentCard.maskedCardNumber);
+    setRole(currentCard.cardRole);
+    setInitals(
+      currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
+    );
+    setIsLoading(false);
+    setType(currentCard.productCode);
 
-    const responseDetails = await apiCard.getCardResponse("686283112")
-    console.log(responseDetails.data)
+    const responseDetails = await apiCard.getCardResponse("686283112");
+    console.log(responseDetails.data);
 
-    const cardDetails = await apiCard.getCardDetails(responseDetails.data.cardDataUrl, responseDetails.data.token)
-    console.log("card details", cardDetails.data)
-    
-    const cardNumber = cardDetails.data.substr(548,16)
-    const cardExpiry = cardDetails.data.substr(601,4)
-    const cardCVV = cardDetails.data.substr(637,3)
+    const cardDetails = await apiCard.getCardDetails(
+      responseDetails.data.cardDataUrl,
+      responseDetails.data.token
+    );
+    console.log("card details", cardDetails.data);
+
+    const cardNumber = cardDetails?.data?.substr(548, 16);
+    const cardExpiry = cardDetails?.data?.substr(601, 4);
+    const cardCVV = cardDetails?.data?.substr(637, 3);
     CARD_DATA.push({
       name: cardExpiry,
       number: cardNumber,
-      image: require('../assets/cardLion.png'),
+      image: require("../assets/cardLion.png"),
     });
   };
 
   const cardDetails = () => {
-    console.log(cardData)
-    cardData[cardIndex].status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
-    console.log(cardData[cardIndex].status)
-  }
+    console.log(cardData);
+    cardData[cardIndex].status != "CARD_OK"
+      ? setFrozen(true)
+      : setFrozen(false);
+    console.log(cardData[cardIndex].status);
+  };
 
   let transactionList = [];
   const showTransaction = (Id) => {
@@ -104,10 +122,8 @@ const MyCards = ({ navigation }) => {
     let transaction = transactionData[modalId];
     console.log(transaction);
 
-   
     return (
       <Modal
-      
         animationType="none"
         transparent={true}
         visible={modalVisible}
@@ -117,45 +133,67 @@ const MyCards = ({ navigation }) => {
         }}
       >
         <TouchableOpacity
-      style={{flex:1}}
-      onPress={() => {
-        setModalVisible(false)
-      }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-          <TouchableOpacity
-                 
-                 style={{ width: "100%", marginBottom: verticalScale(10)}}
-                >
-                  <MaterialCommunityIcons 
-                    onPress={() => setModalVisible(!modalVisible)}
-                    name="close"
-                    size={25}
-                    color="black"
-              />
-                </TouchableOpacity>
-            <AppText style={styles.modalText}>From: {transaction.account.customerName}</AppText>
-            <AppText style={styles.modalText}>To: {transaction.description}</AppText>
-            <AppText style={styles.modalText}>Amount: £{transaction.amount}</AppText>
-            <AppText style={styles.modalText}>Date: {transaction.transactionDate}</AppText>
-            <AppText style={styles.modalText}>ID: {transaction.id}</AppText>
-            <AppText style={styles.modalText}>Source ID: {transaction.sourceId}</AppText>
-            <AppText style={styles.modalText}>Currency: {transaction.currency}</AppText>
-
-            <TouchableOpacity style={[styles.button, styles.buttonReport, { marginTop: verticalScale(20)}]} onPress={() => reportTransaction()}>
-              <AppText style={styles.textStyle}>Report</AppText>
-            </TouchableOpacity>
-            {settings.transactionSharing ? (
-              <TouchableOpacity style={[styles.button, styles.buttonClose]} onPress={() => shareTransaction()}>
-                <AppText style={styles.textStyle}>Share</AppText>
+          style={{ flex: 1 }}
+          onPress={() => {
+            setModalVisible(false);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TouchableOpacity
+                style={{ width: "100%", marginBottom: verticalScale(10) }}
+              >
+                <MaterialCommunityIcons
+                  onPress={() => setModalVisible(!modalVisible)}
+                  name="close"
+                  size={25}
+                  color="black"
+                />
               </TouchableOpacity>
-            ) : null}
+              <AppText style={styles.modalText}>
+                From: {transaction.account.customerName}
+              </AppText>
+              <AppText style={styles.modalText}>
+                To: {transaction.description}
+              </AppText>
+              <AppText style={styles.modalText}>
+                Amount: £{transaction.amount}
+              </AppText>
+              <AppText style={styles.modalText}>
+                Date: {transaction.transactionDate}
+              </AppText>
+              <AppText style={styles.modalText}>ID: {transaction.id}</AppText>
+              <AppText style={styles.modalText}>
+                Source ID: {transaction.sourceId}
+              </AppText>
+              <AppText style={styles.modalText}>
+                Currency: {transaction.currency}
+              </AppText>
 
-            {/* <TouchableOpacity style={[styles.button, styles.buttonClose]} backgroundColor="red" onPress={() => setModalVisible(!modalVisible)}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  styles.buttonReport,
+                  { marginTop: verticalScale(20) },
+                ]}
+                onPress={() => reportTransaction()}
+              >
+                <AppText style={styles.textStyle}>Report</AppText>
+              </TouchableOpacity>
+              {settings.transactionSharing ? (
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => shareTransaction()}
+                >
+                  <AppText style={styles.textStyle}>Share</AppText>
+                </TouchableOpacity>
+              ) : null}
+
+              {/* <TouchableOpacity style={[styles.button, styles.buttonClose]} backgroundColor="red" onPress={() => setModalVisible(!modalVisible)}>
               <AppText style={styles.textStyle}>Dismiss</AppText>
             </TouchableOpacity> */}
+            </View>
           </View>
-        </View>
         </TouchableOpacity>
       </Modal>
     );
@@ -164,17 +202,57 @@ const MyCards = ({ navigation }) => {
   const showData = () => {
     transactionData.forEach((transaction, i) => {
       transactionList.push(
-        <TouchableOpacity style={[styles.transactionBox, styles.rounded, styles.boxShadow]} key={i} onPress={() => showTransaction(i)}>
+        <TouchableOpacity
+          style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
+          key={i}
+          onPress={() => showTransaction(i)}
+        >
           <View style={{ height: "100%", flexDirection: "row" }}>
-            <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: "#F6F5F8", borderColor: "black", justifyContent: "center", alignItems: "center", alignSelf: "center", marginLeft: "2.5%" }}>
-              <AppText style={{ alignSelf: "center", textAlignVertical: "center" }}>{transaction.account.customerName[0]}</AppText>
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+                backgroundColor: "#F6F5F8",
+                borderColor: "black",
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                marginLeft: "2.5%",
+              }}
+            >
+              <AppText
+                style={{ alignSelf: "center", textAlignVertical: "center" }}
+              >
+                {transaction.account.customerName[0]}
+              </AppText>
             </View>
-            <View style={{ flex: 3.5, alignSelf: "center", justifyContent: "space-evenly", marginLeft: "5%" }}>
-              <AppText style={{ fontSize: 14, fontWeight: "700" }}>{transaction.account.customerName}</AppText>
-              <AppText style={{opacity: 0.4}}>{moment(transaction.transactionDate).format("MMM Do YY")}</AppText>
+            <View
+              style={{
+                flex: 3.5,
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                marginLeft: "5%",
+              }}
+            >
+              <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                {transaction.account.customerName}
+              </AppText>
+              <AppText style={{ opacity: 0.4 }}>
+                {moment(transaction.transactionDate).format("MMM Do YY")}
+              </AppText>
             </View>
-            <View style={{ flex: 5, justifyContent: "space-evenly", alignItems: "flex-end", marginRight: "2.5%" }}>
-              <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>£{transaction.amount.toFixed(2)}</AppText>
+            <View
+              style={{
+                flex: 5,
+                justifyContent: "space-evenly",
+                alignItems: "flex-end",
+                marginRight: "2.5%",
+              }}
+            >
+              <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                £{transaction.amount.toFixed(2)}
+              </AppText>
             </View>
           </View>
         </TouchableOpacity>
@@ -187,28 +265,34 @@ const MyCards = ({ navigation }) => {
   const [cardFrozen, setFrozen] = useState(false);
   const toggleCard = async () => {
     setFrozen(!cardFrozen);
-    console.log(cardData[cardIndex].status)
-    if(cardData[cardIndex].status == "CARD_OK"){
-      const request = await apiCall2.FreezeCard(cardData[cardIndex].id,"CARD_BLOCKED")
-    }else{
-      console.log("unfreeze")
-      const request = await apiCall2.FreezeCard(cardData[cardIndex].id,"CARD_OK")
+    console.log(cardData[cardIndex].status);
+    if (cardData[cardIndex].status == "CARD_OK") {
+      const request = await apiCall2.FreezeCard(
+        cardData[cardIndex].id,
+        "CARD_BLOCKED"
+      );
+    } else {
+      console.log("unfreeze");
+      const request = await apiCall2.FreezeCard(
+        cardData[cardIndex].id,
+        "CARD_OK"
+      );
     }
-    loadData()
+    loadData();
   };
 
   const cardType = (card) => {
     switch (card) {
-      case 'MC_VIRTUAL':
-        return 'virtual'
-      case 'MC_STANDARD':
-        return 'standard'      
-      case 'MC_PREMIUM':
-          return 'premium'
+      case "MC_VIRTUAL":
+        return "virtual";
+      case "MC_STANDARD":
+        return "standard";
+      case "MC_PREMIUM":
+        return "premium";
       default:
-        return 'carbonyte';
+        return "carbonyte";
     }
-  }
+  };
 
   const generateBoxShadowStyle = (
     xOffset,
@@ -217,16 +301,16 @@ const MyCards = ({ navigation }) => {
     shadowOpacity,
     shadowRadius,
     elevation,
-    shadowColorAndroid,
+    shadowColorAndroid
   ) => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       styles.boxShadow = {
         shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOffset: { width: xOffset, height: yOffset },
         shadowOpacity,
         shadowRadius,
       };
-    } else if (Platform.OS === 'android') {
+    } else if (Platform.OS === "android") {
       styles.boxShadow = {
         elevation,
         shadowColor: shadowColorAndroid,
@@ -234,17 +318,15 @@ const MyCards = ({ navigation }) => {
     }
   };
 
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+  generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
-  if(isLoading) {
+  if (isLoading) {
     return (
-         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-             <ActivityIndicator size={'large'} color="blue" />
-         </View>
-    )
-   }
-
-
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color="blue" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -252,49 +334,108 @@ const MyCards = ({ navigation }) => {
         {/* <View style={styles.titleTextRow}>
           <AppText style={styles.titleText}>My Cards</AppText>
         </View> */}
-        
 
-        <View style={{ alignItems: "center", marginTop: "5%", height: "auto"}}>
-        <AppText style={{fontSize: 20, textTransform: "capitalize", marginBottom: horizontalScale(10)}}>{cardType(type) + " card"}</AppText>
-          <Image style={{width: 200, resizeMode: "contain"}} source={require("../assets/cardLion.png")} />
-          {cardFrozen ? <Image style={{width: 200, height: 320, bottom: 0, position: "absolute", borderRadius: 15}} source={require("../assets/cardFrozen.png")} /> : null}
-          <View style={{position: "absolute", height: "100%", width: 200, justifyContent: "center" }}>
-            <View style={{marginLeft: "5%", marginTop: "50%"}}>
-              <AppText style={[{color: "white", marginBottom: "3.5%"}, styles.totalWalletBalanceText11]}>{cardnumber}</AppText>
-              <AppText style={[{color: "white"}, styles.totalWalletBalanceText11]}>{firstname} {lastname}</AppText>
-              
+        <View style={{ alignItems: "center", marginTop: "5%", height: "auto" }}>
+          <AppText
+            style={{
+              fontSize: 20,
+              textTransform: "capitalize",
+              marginBottom: horizontalScale(10),
+            }}
+          >
+            {cardType(type) + " card"}
+          </AppText>
+          <Image
+            style={{ width: 200, resizeMode: "contain" }}
+            source={require("../assets/cardLion.png")}
+          />
+          {cardFrozen ? (
+            <Image
+              style={{
+                width: 200,
+                height: 320,
+                bottom: 0,
+                position: "absolute",
+                borderRadius: 15,
+              }}
+              source={require("../assets/cardFrozen.png")}
+            />
+          ) : null}
+          <View
+            style={{
+              position: "absolute",
+              height: "100%",
+              width: 200,
+              justifyContent: "center",
+            }}
+          >
+            <View style={{ marginLeft: "5%", marginTop: "50%" }}>
+              <AppText
+                style={[
+                  { color: "white", marginBottom: "3.5%" },
+                  styles.totalWalletBalanceText11,
+                ]}
+              >
+                {cardnumber}
+              </AppText>
+              <AppText
+                style={[{ color: "white" }, styles.totalWalletBalanceText11]}
+              >
+                {firstname} {lastname}
+              </AppText>
             </View>
           </View>
-
         </View>
         <View style={styles.roleConatainer}>
-            <AppText 
-              style={[styles.role, {textTransform: "lowercase"} ]}>
-                {role}
-            </AppText>
-            <AppText 
-              style={styles.role}>
-                {" card"}
-            </AppText>
+          <AppText style={[styles.role, { textTransform: "lowercase" }]}>
+            {role}
+          </AppText>
+          <AppText style={styles.role}>{" card"}</AppText>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            width: "90%",
+            height: 75,
+            marginLeft: "5%",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ flex: 3, alignItems: "flex-end" }}>
+            <TouchableOpacity
+              style={styles.boxShadow}
+              onPress={() => toggleCard()}
+            >
+              <Image
+                style={styles.icon}
+                source={
+                  cardFrozen
+                    ? require("../assets/icon-unfreeze.png")
+                    : require("../assets/icon-freeze.png")
+                }
+              />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <TouchableOpacity onPress={() => navigation.navigate("PinSetApp")}>
+              <MaterialCommunityIcons name="lock" size={35} color="blue" />
+            </TouchableOpacity>
           </View>
 
-        <View style={{ flexDirection: "row", width: "90%", height: 75, marginLeft: "5%", alignItems: "center" }}>
-        <View style={{flex: 3, alignItems: "flex-end"}}>
-          <TouchableOpacity style={styles.boxShadow} onPress={() => toggleCard()}>
-            <Image style={styles.icon} source={cardFrozen ? require("../assets/icon-unfreeze.png") : require("../assets/icon-freeze.png")} />
-          </TouchableOpacity>
-        </View>
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-          <TouchableOpacity onPress={() => navigation.navigate("PinSetApp")}>
-            <MaterialCommunityIcons name="lock" size={35} color="blue" />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{flex: 3, alignItems: "flex-start"}}>
-          <TouchableOpacity style={styles.boxShadow} onPress={() => navigation.navigate("CardSettings")}>
-            <Image style={styles.icon} source={require("../assets/icon-settingsbutton.png")} />
-          </TouchableOpacity>
-        </View>
+          <View style={{ flex: 3, alignItems: "flex-start" }}>
+            <TouchableOpacity
+              style={styles.boxShadow}
+              onPress={() => navigation.navigate("CardSettings")}
+            >
+              <Image
+                style={styles.icon}
+                source={require("../assets/icon-settingsbutton.png")}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         {transactionList}
         {modalVisible ? modal() : null}
@@ -317,15 +458,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: verticalScale(10),
     marginBottom: verticalScale(5),
-     
+
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   role: {
     textAlign: "center",
     fontSize: moderateScale(11.8),
-    fontWeight: '300', 
-    color:"red",
+    fontWeight: "300",
+    color: "red",
   },
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,
@@ -337,7 +478,7 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(14),
     color: "white",
     textTransform: "uppercase",
-    fontWeight: "700"
+    fontWeight: "700",
   },
   titleText: {
     fontSize: GlobalStyles.Title.fontSize,
