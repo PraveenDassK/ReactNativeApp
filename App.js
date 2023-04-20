@@ -9,7 +9,6 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { NavigationContainer } from "@react-navigation/native";
 import jwtDecode from 'jwt-decode'
-import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
 import * as LocalAuthentication from 'expo-local-authentication';
 import {decode, encode} from 'base-64'
@@ -18,9 +17,6 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
-
-import CardSelection from "./app/components/CardSelection";
-
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -133,8 +129,6 @@ useEffect(() =>{
     };
   }, []);
 
-
-
   const  authenticate = async () => {
     "starting authentication"
     const result = await LocalAuthentication.authenticateAsync()
@@ -166,20 +160,18 @@ const handleAppStateChange = (nextAppState) => {
  */
 const restoreToken = async () => {
   console.log('trying for restore token')
+  //Get the token from storage
   const token = await authStorage.getToken()
   if(!token) return
-  const decodedToken = jwtDecode(token)
-  setCurrentUser(decodedToken)
+  console.log("token",token)
 
-  const dataobject = JSON.parse(decodedToken.Data.substr())
-  
-  const carbonyteId = dataobject.CustomerId
-  //setCustomerDetails(carbonyteID)
-  const result = await apiLogin.GetCustomerDetails(carbonyteId)
-  console.log(result)
-  setUserID(result.modulrCustomerId)
-  setAccountID(result.accountDetails[0].accountId)
-  setCardID(result.accountDetails[0].accountNo)
+  //Get the IDs here
+  const IDs = await apiLogin.GetIDs(token)
+  setCurrentUser(IDs.token)
+  setUserID(IDs.userID)
+  setAccountID(IDs.accountID)
+  setCardID(IDs.cardID)
+  setCustomerDetails(IDs.customerDetails)
 }
 
 const restoreSignIn = async () => {
