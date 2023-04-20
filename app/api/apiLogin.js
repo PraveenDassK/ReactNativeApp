@@ -48,17 +48,15 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
 
   const token = request?.data?.details;
   const decryptedToken = jwt_decode(token);
-
   const userData = JSON.parse(decryptedToken.Data.substr());
-  console.log("UserData", userData);
 
   const accountID = userData.CustomerId;
-  console.log(accountID);
   const accountDetails = await GetCustomerDetails(accountID);
 
   return {
     data: accountDetails,
     token: token,
+    customerID: accountID
   };
 };
 
@@ -205,12 +203,31 @@ const RegisterBusinessAccount = async () => {
     }
   );
 };
-const SendPushNotificationToken = async ({ customerID, tokenID }) => {
+const SendPushNotificationToken = async ({ customerID, tokenID, deviceID, deviceName, macAddress, operatingSystem }) => {
   const response = await client.post(
-    `https://api.carbonyte.io/authverifymodule/SaveTokenDetails?customerID=${customerID}&tokenId=${tokenID}&DeviceId=1`
+    `https://api.carbonyte.io/authverifymodule/SaveDeviceDetails?customerID=${customerID}&tokenId=${tokenID}&DeviceId=${deviceID}&deviceName=${deviceName}&macAddress=${macAddress}&operatingSystem=${operatingSystem}`
   );
   return response;
 };
+
+const GetIDs = async(JWT) => {
+  const token = JWT;
+  const decryptedToken = jwt_decode(token);
+  const tokenData = JSON.parse(decryptedToken.Data.substr());
+
+  const accountID = tokenData.CustomerId;
+  const accountData = await GetCustomerDetails(accountID);
+  console.log(accountData.accountDetails)
+  return{
+    token: JWT,
+    userID: accountData.modulrCustomerId,
+    accountID: accountData.accountDetails[0]?.accountId,
+    cardID: accountData.accountDetails[0]?.accountNo,
+    customerDetails: accountID
+
+  }
+}
+
 
 export default {
   Login,
@@ -221,4 +238,5 @@ export default {
   GetAddressByPostCode,
   GetCustomerDetails,
   SendPushNotificationToken,
+  GetIDs
 };
