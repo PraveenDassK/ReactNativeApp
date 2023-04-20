@@ -11,8 +11,6 @@ import {
   Image,
   View,
   TextInput,
-  Pressable,
-  ActivityIndicator,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -27,13 +25,12 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
-import Form from "../components/forms/Form";
-import loginAPI from "../api/apiLogin";
 import loginApi from "../api/apiLogin";
 import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
-import {registerForPushNotificationsAsync} from "../utility/pushToken.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+import * as Device from 'expo-device';
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -57,7 +54,8 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setAccountID,
     setUserDetails,
     setCardID,
-    expoPushToken
+    expoPushToken,
+    setCustomerDetails
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -86,6 +84,12 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setCount((prev) => prev - 1);
   };
 
+  /**
+   * @dev This function sends to OTP to the endpoint
+   *      Then we get the JWT back
+   * @param {Obj} param0 
+   * @returns False if OTP fails
+   */
   const handleSubmit = async ({
     pVer1,
     pVer2,
@@ -96,44 +100,47 @@ const OTPVerificationPersonal = ({ navigation }) => {
     eVer3,
     eVer4,
   }) => {
+    //Variable setup for OTP
     const email = user.email;
     const phoneNumber = user.phoneNumber;
     const emailOTP = pVer1 + pVer2 + pVer3 + pVer4;
     const phoneOTP = eVer1 + eVer2 + eVer3 + eVer4;
 
-    console.log(email, phoneNumber, emailOTP, phoneOTP);
-
     setResendOTP({ email, phoneNumber, emailOTP, phoneOTP });
+
+    //This sets the loading icon and disables the button
     setIsLoading(true);
+
+    //Sending of the OTP is here
     const result = await loginAPI.VerifyLogin({
       phoneNumber,
       email,
       phoneOTP,
       emailOTP,
     });
-    setIsLoading(false);
     if (!result) return alert("Could not verify otp");
-    console.log("Result", result)
-    const userID = result.data.modulrCustomerId;
-    const accountId = result.data.accountDetails[0].accountId;
-    const cardId = result.data.accountDetails[0].accountNo;
-    console.log(userID);
-    console.log(accountId);
-    console.log(cardId);
-
-    setUserID(userID);
-    setAccountID(accountId);
-    setCardID(cardId);
-
-    const pushNotification = await loginAPI.SendPushNotificationToken({
-      tokenID:expoPushToken
-    })
 
     authStorage.storeToken(result?.token);
-    //authStorage.storeUserDetails(result?.data);
-    const decodedToken = jwtDecode(result?.token);
-    console.log(decodedToken);
-    setCurrentUser(decodedToken);
+    const IDs = await apiLogin.GetIDs(result?.token)
+    setCurrentUser(IDs.token)
+    setUserID(IDs.userID)
+    setAccountID(IDs.accountID)
+    setCardID(IDs.cardID)
+    setCustomerDetails(IDs.customerDetails)
+
+    
+    const pushNotification = await loginAPI.SendPushNotificationToken({
+      tokenID:expoPushToken,
+      customerID: IDs.customerDetails,
+      deviceID: Device.osInternalBuildId,
+      deviceName: Device.deviceName,
+      macAddress: "",
+      operatingSystem: Device.osName
+    })
+    console.log(pushNotification)
+
+    //Turns off the loading
+    setIsLoading(false);
   };
 
   const resendCred = async () => {
