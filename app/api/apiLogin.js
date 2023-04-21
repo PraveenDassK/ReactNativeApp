@@ -210,24 +210,35 @@ const SendPushNotificationToken = async ({ customerID, tokenID, deviceID, device
   return response;
 };
 
+/**
+ * @dev This gets the IDs of the tokens
+ * @todo Validation
+ * @param {str} JWT The string of a token
+ * @returns Obj an object of all the IDs
+ */
 const GetIDs = async(JWT) => {
-  const token = JWT;
-  const decryptedToken = jwt_decode(token);
-  const tokenData = JSON.parse(decryptedToken.Data.substr());
+  try{
+    //Decrypt the token and get the data
+    const decryptedToken = jwt_decode(JWT);
+    const tokenData = JSON.parse(decryptedToken.Data.substr());
 
-  const accountID = tokenData.CustomerId;
-  const accountData = await GetCustomerDetails(accountID);
-  console.log(accountData.accountDetails)
-  return{
-    token: JWT,
-    userID: accountData.modulrCustomerId,
-    accountID: accountData.accountDetails[0]?.accountId,
-    cardID: accountData.accountDetails[0]?.accountNo,
-    customerDetails: accountID
-
+    //Isolate the customer ID
+    const accountID = tokenData.CustomerId;
+    
+    //Get all the other IDs
+    const accountData = await GetCustomerDetails(accountID);
+    
+    return{
+      token: JWT,
+      userID: accountData.modulrCustomerId,
+      accountID: accountData.accountDetails[0]?.accountId,
+      cardID: accountData.accountDetails[0]?.accountNo,
+      customerDetails: accountID
+    }
+  }catch{
+    return null
   }
 }
-
 
 export default {
   Login,

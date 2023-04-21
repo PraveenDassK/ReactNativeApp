@@ -239,6 +239,7 @@ const GetCardDetails = async (Id) => {
       `https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=${Id}`
     );
     const requestData = request?.data?.details[0];
+    console.log(requestData)
     data = {
       accountId: requestData.id,
       cardID: requestData.id,
