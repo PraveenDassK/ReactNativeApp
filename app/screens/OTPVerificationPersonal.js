@@ -120,8 +120,15 @@ const OTPVerificationPersonal = ({ navigation }) => {
     });
     if (!result) return alert("Could not verify otp");
 
-    authStorage.storeToken(result?.token);
     const IDs = await apiLogin.GetIDs(result?.token)
+
+    //If the account details cannot be found
+    if(!IDs){
+      alert("Warning your account could not be authenticated")
+      return;
+    }
+    
+    authStorage.storeToken(result?.token);
     setCurrentUser(IDs.token)
     setUserID(IDs.userID)
     setAccountID(IDs.accountID)

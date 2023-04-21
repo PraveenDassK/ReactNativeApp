@@ -110,12 +110,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     loadData();
   }, [accountID]);
 
-  //Gets the data for the user
+  /**
+   * @dev 
+   * @returns Stops load if the account ID is not present
+   */
   const loadData = async () => {
     setIsLoading(true);
     if (!accountID) return;
     const userData = await apiCall.GetCustomerDetails(accountID);
-    const cardData = await apiCall.GetCardDetails(cardID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
     const transactionCall = await apiCall.GetTransactions(accountID);
 
@@ -123,41 +125,17 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setCatNames(carbonSpendData.labels);
     setDataPercentages(carbonSpendData.percentages);
 
-    //If the card data is not there
-    if (!cardDetails) {
-      const responseDetails = await api.getCardResponse("687942912");
-      const cardText = await api.getCardDetails(
-        responseDetails?.data?.cardDataUrl,
-        responseDetails?.data?.token
-      );
-
-      setCardResponse(responseDetails.data);
-
-      const cardExpiry = cardText?.data?.substr(601, 4);
-      const formattedExpiraty =
-        cardExpiry?.slice(0, 2) + "/" + cardExpiry.slice(2);
-
-      const cardCVV = cardText.data.substr(637, 3);
-
-      const image = require("../assets/cardLion.png");
-
-      const cardNumber = cardText.data.substr(548, 16);
-      const formattedCard = cardNumber.replace(/(.{4})/g, "$1 ");
-
-      const cardObject = {
-        name: formattedExpiraty,
-        number: formattedCard,
-        image: image,
-        cvv: cardCVV,
-      };
+    //If the card data is not there get the card details
+    if (!cardDetails ) {
+      const cardObject = await api.GetCardFromID("687942912");
+      console.log(cardObject)
       setCardDetails(cardObject);
+      setSortCode("00-00-00");
 
       CARD_DATA.push(cardObject);
       CARD_DATA.push(cardObject);
     }
 
-    setSortCode("00-00-00");
-    setStatus(cardData.inPost);
 
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
