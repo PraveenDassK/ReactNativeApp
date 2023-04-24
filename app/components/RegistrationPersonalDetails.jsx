@@ -12,7 +12,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
-  Modal
+  Modal,
 } from "react-native";
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
@@ -34,7 +34,8 @@ import moment from "moment";
 import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
-import Privacy from './PrivacyPolicy';
+import Privacy from "./PrivacyPolicy";
+import { set } from "react-native-reanimated";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().min(1).max(11).label("First name"),
@@ -42,6 +43,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
+
+  const [visible, setVisible] = useState(false)
+  const [disbled, setDisabled] = useState(true)
+  
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
@@ -134,6 +139,17 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
         width="40%"
         handleBack={handleBack}
       >
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setVisible(!visible);
+          }}
+        >
+          <Privacy setIsOpen={setVisible}/>
+        </Modal>
         <Formik
           initialValues={{ firstName: "", lastName: "" }}
           onSubmit={handleSubmit}
@@ -221,13 +237,20 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                   onChange={onChange}
                 />
               )}
+             
 
               <CheckBox
+               
                 title="I have read and accepted the Privacy Policy"
                 checked={privacyPolicy}
                 checkedColor="black"
-                onPress={() => setPrivacyPolicy(!privacyPolicy)}
+                onPress={() => {
+                  
+                  setVisible(true)
+                  setPrivacyPolicy(true);
+                }}
               />
+             
 
               <Button
                 title="continue"
