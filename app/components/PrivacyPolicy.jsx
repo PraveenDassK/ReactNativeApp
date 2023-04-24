@@ -20,7 +20,7 @@ const PrivacyPolicy = ({ setIsOpen }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={[styles.myCards1, styles.historyTypo]}>Privacy policy</Text>
       <View style={styles.totalWalletBalanceContainer}>
         <Text>
