@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import {
   View,
   KeyboardAvoidingView,
@@ -12,98 +14,67 @@ import {
   TouchableOpacity,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import AuthContext from "../auth/context";
-import api from "../api/api_list";
-import Button from "../components/Button";
-import { verticalScale } from "../config/scaling";
-import { Formik } from "formik";
-import * as Yup from "yup";
-
 import ErrorMessage from "../components/forms/ErrorMessage";
+import { verticalScale } from "../config/scaling";
+import Button from "../components/Button";
 
 const validationSchema = Yup.object().shape({
-  bankName: Yup.string().required().min(1).max(30).label("Bank name"),
-  accountName: Yup.string().required().min(1).max(30).label("Account name"),
-  phoneNumber: Yup.string()
+  title: Yup.string().required().min(1).max(30).label("Schedulde payment"),
+  amount: Yup.number().required("Must be number").label("Amount"),
+  toAccount: Yup.string()
     .required()
-    .matches(/^[0-9]+$/, "Phone number must be digits")
-    .min(9)
-    .max(11)
+    .matches(/^[0-9]+$/, "Account must be digits")
+    .min(8, "Must be exactly 8 digits")
+    .max(8, "Must be exactly 8 digits")
     .label("Phone number"),
-  sortCode: Yup.string()
+  fromAccount: Yup.string()
     .required()
-    .matches(/^[0-9]+$/, "Sort code must be digits")
-    .min(6, "Must be exactly 6 digits")
-    .max(6, "Must be exactly 6 digits")
+    .matches(/^[0-9]+$/, "Account  must be digits")
+    .min(8, "Must be exactly 8 digits")
+    .max(8, "Must be exactly 8 digits")
     .label("Sort code"),
-  //accNum: Yup.string().required().matches(/^[0-9]+$/, "Account number must be digits").min(8, 'Must be exactly 8 digits').max(8, 'Must be exactly 8 digits').label("Account number"),
+  timePeriod: Yup.string()
+    .required()
+    // .matches(/^[0-9]+$/, "Account number must be digits")
+    // .min(8, "Must be exactly 8 digits")
+    // .max(8, "Must be exactly 8 digits")
+    // .label("Account number"),
 });
 
 const items = [
   {
     id: 1,
-    label: "Name of the bank",
-    placeholder: "Enter bank name",
-    initialValue: "bankName",
+    label: "Name of the scheduled payment: ",
+    placeholder: "Enter scheduled payment name",
+    initialValue: "title",
   },
   {
     id: 2,
-    label: "Phone Number",
-    placeholder: "Enter phone number",
-    initialValue: "phoneNumber",
+    label: "Amount: ",
+    placeholder: "Enter the amount",
+    initialValue: "amount",
   },
   {
     id: 3,
-    label: "Account Owner Name",
-    placeholder: "Enter owner name",
-    initialValue: "accountName",
+    label: "To Account: ",
+    placeholder: "Enter account",
+    initialValue: "toAccount",
   },
   {
     id: 4,
-    label: "Account Number",
-    placeholder: "Enter Account number",
-    initialValue: "accNum",
+    label: "From Account: ",
+    placeholder: "Enter account",
+    initialValue: "fromAccount",
   },
   {
     id: 5,
-    label: "Sort Code",
-    placeholder: "Enter sort code",
-    initialValue: "sortCode",
+    label: "Time period: ",
+    placeholder: "Enter time period",
+    initialValue: "timePeriod",
   },
 ];
 
-const AddBeneficiary = ({ navigation }) => {
-  const [bankName, setBankName] = useState("");
-  const [accountName, setAccountName] = useState("");
-  const [phoneNumber, setIban] = useState("");
-  const [sortCode, setPhoneNumber] = useState("");
-  const [accNum, setAccNum] = useState("");
-  const authContext = useContext(AuthContext);
-
-  const handleSubmit = async ({
-    bankName,
-    accountName,
-    phoneNumber,
-    accNum,
-    sortCode,
-  }) => {
-    const response = await api.AddBeneficiary(
-      authContext.userID,
-      phoneNumber,
-      accountName,
-      accNum,
-      sortCode
-    );
-    navigation.navigate("BankTransferAmount", {
-      bankName: bankName,
-      accountName: accountName,
-      phoneNumber: phoneNumber,
-      sortCode: sortCode,
-      accNum: accNum,
-    });
-    console.log(response);
-  };
-
+const ScheduledPayment = () => {
   const generateBoxShadowStyle = (
     xOffset,
     yOffset,
@@ -130,6 +101,10 @@ const AddBeneficiary = ({ navigation }) => {
 
   generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
+  const handleSubmit = async ({title, amount, toAccount, fromAccount, timePeriod}) => {
+    console.log(title, amount, toAccount, fromAccount, timePeriod);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -139,11 +114,11 @@ const AddBeneficiary = ({ navigation }) => {
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
             initialValues={{
-              bankName: "",
-              accountName: "",
-              phoneNumber: "",
-              sortCode: "",
-              accNum: "",
+             title: "",
+             amount: "",
+             toAccount: "",
+             fromAccount: "",
+             timePeriod: ""
             }}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
@@ -214,7 +189,6 @@ const AddBeneficiary = ({ navigation }) => {
     </KeyboardAvoidingView>
   );
 };
-
 const styles = StyleSheet.create({
   boxShadow: {},
   container: {
@@ -232,5 +206,4 @@ const styles = StyleSheet.create({
     left: "5%",
   },
 });
-
-export default AddBeneficiary;
+export default ScheduledPayment;
