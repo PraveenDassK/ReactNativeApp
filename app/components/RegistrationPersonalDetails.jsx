@@ -12,6 +12,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
+  Modal
 } from "react-native";
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
@@ -33,6 +34,7 @@ import moment from "moment";
 import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
+import Privacy from './PrivacyPolicy';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().min(1).max(11).label("First name"),
@@ -226,9 +228,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                 checkedColor="black"
                 onPress={() => setPrivacyPolicy(!privacyPolicy)}
               />
-              {
-                //<Button title="Continue" color="babyBlue" onPress={handleSubmit} />
-              }
+
               <Button
                 title="continue"
                 textColor="white"
@@ -239,71 +239,6 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
           )}
         </Formik>
       </AuthScreen>
-
-      {/* <Text>A bit about you</Text>
-            <Formik
-
-              onSubmit={(values) => sendData(values)}
-            >
-            {({ handleChange, handleSubmit, setFieldTouched}) => (
-                <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-                    <Text>First name</Text>
-                    <TextInput 
-                        keyboardType="Text" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={setFirstName("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
-                    <Text>Last name</Text>
-                    <TextInput 
-                        keyboardType="Text" 
-                        onBlur={() => setFieldTouched("phoneNumber")}
-                        onChangeText={setLastName("phoneNumber")}
-                        style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
-                    />
-                    <Text>Gender</Text>
-                    <Dropdown
-                        data={genderData}
-                        maxHeight={100}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={'Select an option'}
-                        value={gender}
-                        onChange={item => {
-                            setGender(item.value);
-                            setIsFocus(false);
-                        }}
-                    />
-                    <Text>Date of Birth</Text>
-                    <Button title="Set" color="babyBlue" onPress={() => setView(true)} />
-
-                    {viewDate?
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={dob}
-                        mode="date"
-                        display="spinner"
-                        onChange={onChange}
-                    />: null}
-
-                    <CheckBox
-                        title="I have read and accepted the privacy policy"
-                        checkedIcon="dot-circle-o"
-                        uncheckedIcon="circle-o"
-                        checked={privacyPolicy}
-                        onPress={() => setPrivacyPolicy(!privacyPolicy)}
-                        />
-                    {
-                        //<Button title="Continue" color="babyBlue" onPress={handleSubmit} />
-                    }
-                  </View>                  
-                )}
-            </Formik>
-            <Button 
-                title="Continue" 
-                color="babyBlue" 
-                onPress={() => sendDetails()
-            }/> */}
     </TouchableWithoutFeedback>
   );
 };

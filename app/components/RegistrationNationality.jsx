@@ -11,6 +11,7 @@ import {
   useWindowDimensions,
   Dimensions,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
 } from "react-native";
 import Screen from "./Screen";
@@ -28,18 +29,19 @@ import Button from "./AppButton";
 import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
-
-const validationSchema = Yup.object().shape({
-  country: Yup.string().required().min(2).max(11).label("Country"),
-  nationality: Yup.string().required().min(2).max(11).label("Nationality"),
-});
+import { CountryPicker } from "react-native-country-codes-picker";
 
 const Nationality = ({ SaveDetails, setScreenToShow }) => {
-  const handleSubmit = ({ country, nationality }) => {
-    console.log(country, nationality);
+  const [showNationality, setNationalityShow] = useState(false);
+  const [showBirth, setBirthShow] = useState(false);
+  const [nationality, setNationality] = useState('');
+  const [birth, setBirth] = useState('');
+  
+  const handleSubmit = () => {
+    console.log(birth, nationality);
     SaveDetails(
       {
-        country: country,
+        country: birth,
         nationality: nationality,
       },
       "Nationality"
@@ -58,7 +60,6 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
           nationality: "",
         }}
         onSubmit={handleSubmit}
-        validationSchema={validationSchema}
       >
         {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
           <View
@@ -69,26 +70,62 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
             ]}
           >
             <Text>Country of birth</Text>
-            <TextInput
-              onBlur={() => setFieldTouched("country")}
-              onChangeText={handleChange("country")}
-              style={[
-                styles.component1981Child,
-                styles.childBorder,
-                { padding: 10 },
-              ]}
+
+            <TouchableOpacity
+              onPress={() => setBirthShow(true)}
+              style={{
+                width: '80%',
+                height: 60,
+                backgroundColor: 'black',
+                padding: 10,
+              }}
+            >
+              <Text style={{
+                color: 'white',
+                fontSize: 20
+              }}>
+                {birth}
+              </Text>
+            </TouchableOpacity>
+            <CountryPicker
+              show={showBirth}
+              // when picker button press you will get the country object with dial code
+              pickerButtonOnPress={(item) => {
+                console.log(item.name.en)
+                setBirth(item.name.en);
+                setBirthShow(false);
+              }}
             />
+
             <ErrorMessage error={errors.country} visible={touched.country} />
             <Text>Nationality</Text>
-            <TextInput
-              onBlur={() => setFieldTouched("nationality")}
-              onChangeText={handleChange("nationality")}
-              style={[
-                styles.component1981Child,
-                styles.childBorder,
-                { padding: 10 },
-              ]}
+
+            <TouchableOpacity
+              onPress={() => setNationalityShow(true)}
+              style={{
+                width: '80%',
+                height: 60,
+                backgroundColor: 'black',
+                padding: 10,
+              }}
+            >
+              <Text style={{
+                color: 'white',
+                fontSize: 20
+              }}>
+                {nationality}
+              </Text>
+            </TouchableOpacity>
+            <CountryPicker
+              show={showNationality}
+              // when picker button press you will get the country object with dial code
+              pickerButtonOnPress={(item) => {
+                setNationality(item.name.en);
+                setNationalityShow(false);
+              }}
             />
+
+
             <ErrorMessage
               error={errors.nationality}
               visible={touched.nationality}
