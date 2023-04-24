@@ -12,6 +12,7 @@
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
     "@haskkor/react-native-pincode": "^1.22.6",
+    "@react-native-clipboard/clipboard": "^1.11.2",
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/datetimepicker": "6.5.2",
     "@react-native-community/masked-view": "^0.1.11",
