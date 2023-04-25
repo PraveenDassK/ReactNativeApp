@@ -1,58 +1,66 @@
-import React,{ useEffect, useState,useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { FlatList, Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/Button";
 
 import apiCarbon from "../api/apiCarbon"
+import apiCall from "../api/apiCall"
+import apiDevices from "../api/apiDevices"
 import apiLogin from "../api/apiLogin"
 import AuthContext from "../auth/context";
 
-import DoughnutChart from "../components/DoughnutChart";
+const devices = [
+];
 
-const TestEnviro = ({navigation}) => {
-  //Calls the API once during load
-  const authContext = useContext(AuthContext)
-  const [data, setData] = useState("")
-  
+const TestEnviro = ({ navigation }) => {
+  const { customerDetails } = useContext(AuthContext)
+  const [devices, setDevices] = useState([])
+
+  const renderItem = ({ item }) => {
+    console.log("item", item)
+    return (
+      <View>
+        <Text>{item.name}</Text>
+      </View>)
+  }
+
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus',  () => {
-      loadData()
-    })
-  },[])
+    loadData()
+  }, [customerDetails])
 
-  const loadData = async() =>{
-    const response = await apiLogin.VerifyLogin(
-      {
-        "email": "saily.s@carbonyte.io",
-        "emailOTP": "9398",
-        "phoneNumber": "8698743985",
-        "phoneOTP": "9090"
+  /**
+   * @dev Loads the device data into devices
+   * @returns Null if no customer details are present
+   *          The return should only be for devlopment only
+   */
+  const loadData = async () => {
+    console.log("load")
+    if (!customerDetails) return;
+    const request = await apiDevices.GetDevices(customerDetails)
+    request.details.forEach((device, i) => {
+      const newDevice = {
+        id: i,
+        device: device
       }
-    );
-    console.log(response)
-    setData(response)
-    // {
-    //   "email": "saily.s@carbonyte.io",
-    //   "emailOTP": "9398",
-    //   "phoneNumber": "8698743985",
-    //   "phoneOTP": "9090"
-    // }
+      setDevices(prevDevices => [...prevDevices, newDevice]);
+    });
   }
 
   return (
     <View>
-      <Button 
-        title="Reload" 
-        color="babyBlue" 
-        style={styles.boxShadow} 
-        onPress={() => loadData()} 
+      <Button
+        title="Reload"
+        color="babyBlue"
+        style={styles.boxShadow}
+        onPress={() => loadData()}
       />
+
     </View>
   )
 };
 
 const styles = StyleSheet.create({
-  page:{
+  page: {
 
   },
 
