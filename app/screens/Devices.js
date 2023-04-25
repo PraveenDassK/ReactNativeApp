@@ -3,26 +3,13 @@ import { FlatList, Text, StyleSheet, Image, View, Pressable, ScrollView } from "
 import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/Button";
 
-import apiCarbon from "../api/apiCarbon"
-import apiCall from "../api/apiCall"
 import apiDevices from "../api/apiDevices"
-import apiLogin from "../api/apiLogin"
 import AuthContext from "../auth/context";
 
-const devices = [
-];
 
 const TestEnviro = ({ navigation }) => {
   const { customerDetails } = useContext(AuthContext)
   const [devices, setDevices] = useState([])
-
-  const renderItem = ({ item }) => {
-    console.log("item", item)
-    return (
-      <View>
-        <Text>{item.name}</Text>
-      </View>)
-  }
 
   useEffect(() => {
     loadData()
@@ -37,6 +24,8 @@ const TestEnviro = ({ navigation }) => {
     console.log("load")
     if (!customerDetails) return;
     const request = await apiDevices.GetDevices(customerDetails)
+
+    //For each device add it to the hook
     request.details.forEach((device, i) => {
       const newDevice = {
         id: i,
