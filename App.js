@@ -17,6 +17,7 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
+import GroupBeneficiary from "./app/screens/GroupBeneficiary";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -193,7 +194,7 @@ if (!loaded) {
 } else {
   SplashScreen.hideAsync()
 }
-
+return <GroupBeneficiary />
   return (
   
     <AuthContext.Provider value={{

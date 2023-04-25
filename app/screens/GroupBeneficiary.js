@@ -8,11 +8,17 @@ import {
   Pressable,
   FlatList,
 } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import { Dropdown } from "react-native-element-dropdown";
 import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 
 import Icon from "../components/Icon";
+
+const validationSchema = Yup.object().shape({
+  createGroup: Yup.string().required().min(1).max(30).label("Group name"),
+});
 
 const DATA = [
   {
@@ -58,62 +64,72 @@ const GroupBeneficiary = () => {
     console.log("handleSent");
   };
 
-  const handleSubmit = () => {
-    console.log("Submitted");
+  const handleSubmit = ({ createGroup }) => {
+    console.log("Submitted", createGroup);
   };
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.containerText}>Create Group</Text>
       </View>
-      <View style={styles.container}>
-        <Text>Group Name</Text>
-        <TextInput
-          placeholder="Enter the group name"
-          placeholderTextColor="#D3D3D3"
-          keyboardType="Text"
-          // onBlur={() => setFieldTouched("firstName")}
-          // onChangeText={handleChange("firstName")}
-          style={[styles.childBorder, { padding: 10 }]}
-        />
-        {/* <ErrorMessage
-                error={errors.firstName}
-                visible={touched.firstName}
-              /> */}
-        <Text>Select Beneficiary</Text>
-        <Dropdown
-          style={[styles.dropdown]}
-          containerStyle={styles.dropdownContainer}
-          data={beneficiary}
-          maxHeight={100}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select"}
-          value={1}
-          onChange={(item) => {
-            // setStatus(item.value);
-            // setIsFocus(false);
-          }}
-        />
-        <View>
-          {groupData && (
-            <FlatList
-              data={groupData}
-              renderItem={({ item, index }) => (
-                <BeneficiaryWidget
-                  initials={item.initials}
-                  name={item.name}
-                  onDelete={() => handleDelete(index)}
-                  onSend={handleSend}
+      <Formik
+        initialValues={{
+          createGroup: "",
+        }}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
+        {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+          <>
+          <View style={styles.container}>
+            <Text>Group Name</Text>
+            <TextInput
+              placeholder="Enter the group name"
+              placeholderTextColor="#D3D3D3"
+              keyboardType="Text"
+              onBlur={() => setFieldTouched("createGroup")}
+              onChangeText={handleChange("createGroup")}
+              style={[styles.childBorder, { padding: 10 }]}
+            />
+            <ErrorMessage
+                error={errors.createGroup}
+                visible={touched.createGroup}
+              />
+            <Text style={{marginTop:"5%"}}>Select Beneficiary</Text>
+            <Dropdown
+              style={[styles.dropdown]}
+              containerStyle={styles.dropdownContainer}
+              data={beneficiary}
+              maxHeight={100}
+              labelField="label"
+              valueField="value"
+              placeholder={"Select"}
+              value={1}
+              onChange={(item) => {
+                // setStatus(item.value);
+                // setIsFocus(false);
+              }}
+            />
+            <View>
+              {groupData && (
+                <FlatList
+                  data={groupData}
+                  renderItem={({ item, index }) => (
+                    <BeneficiaryWidget
+                      initials={item.initials}
+                      name={item.name}
+                      onDelete={() => handleDelete(index)}
+                      onSend={handleSend}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
                 />
               )}
-              keyExtractor={(item) => item.id}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            />
-          )}
-        </View>
-      </View>
+            </View>
+          </View>
+
 
       <View style={styles.buttonContainer}>
         <Button
@@ -123,6 +139,12 @@ const GroupBeneficiary = () => {
           onPress={handleSubmit}
         />
       </View>
+          </>
+        )}
+      </Formik>
+
+
+      
     </View>
   );
 };
@@ -230,6 +252,6 @@ const styles = StyleSheet.create({
     opacity: 1,
     height: 50,
     marginTop: "2.5%",
-    marginBottom: "5%",
+   
   },
 });

@@ -63,8 +63,6 @@ const RegistrationEmailAndPhone = ({ SaveDetails, setScreenToShow }) => {
             phoneNumber: "",
           }}
           onSubmit={handleSubmit}
-          //Comment out if needed
-          //Must be present in prod
           validationSchema={validationSchema}
         >
           {({
