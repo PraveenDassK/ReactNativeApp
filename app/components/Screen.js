@@ -2,9 +2,10 @@ import React from "react";
 import Constants from "expo-constants";
 import { StyleSheet, SafeAreaView, View, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform} from "react-native";
 
-function Screen({ children, style }) {
+function Screen({ children, style, enabled = true }) {
   return (
     <KeyboardAvoidingView
+    enabled={enabled}
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     style={styles.screen}
     >
