@@ -70,15 +70,6 @@ const Carbon = ({ route, navigation }) => {
     }
   };
 
-  const checkout = () => {
-    let obj = {
-      userId: accountID,
-      projectLists: cart,
-      sourceAccountId: accountID,
-      totalAmount: amount,
-    };
-  };
-
   const goToBasket = () => {
     navigation.navigate("CarbonCart", cart);
   };

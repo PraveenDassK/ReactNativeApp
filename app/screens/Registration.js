@@ -101,13 +101,15 @@ const Registration = ({navigation}) => {
             return;
         case "Income":
           setIncome(details)
-            if(await sendDetails()){
-              //If successful
-              setScreenToShow("Success")
-            }else{
-              //If unsuccessful
-              alert("Registration unsuccessful")
-            }
+          sendDetails()
+          setScreenToShow("Success")
+            // if(await sendDetails()){
+            //   //If successful
+            //   setScreenToShow("Success")
+            // }else{
+            //   //If unsuccessful
+            //   alert("Registration unsuccessful")
+            // }
             return;
         case "Success":
             setPersonalDetails(details)
@@ -208,8 +210,6 @@ const Registration = ({navigation}) => {
           const regData = 
           [
             {
-              "id": Id,
-              "customerId": "",
               "emails": [
                 {
                   "emailId": emailandPhone.emailAddress
@@ -225,7 +225,7 @@ const Registration = ({navigation}) => {
                 "documentType": "",
                 "address": addresses[0].address1,
                 "firstName": personalDetails.firstName,
-                "dob": "01-01-1970",
+                "dob": personalDetails.birthday,
                 "nationalId": Id,
                 "lastName": personalDetails.lastName,
                 "postCode": addresses[0].postcode,

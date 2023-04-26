@@ -431,6 +431,16 @@ const Settings = ({ navigation }) => {
           />
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.button}>
+          <Button
+            title="DeleteAccount"
+            style={styles.boxShadow}
+            color="babyBlue"
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("DeleteAccount")}
+          />
+        </TouchableOpacity>
+
         <Pressable
           style={{
             height: 50,
