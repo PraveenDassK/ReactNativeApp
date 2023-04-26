@@ -5,12 +5,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
 import {
-  
+
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
@@ -80,6 +80,8 @@ import TermsAndConditions from "../screens/TermsAndConditions"
 import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import FUP from "../screens/FUP";
+import DeleteAccount from "../screens/DeleteAccount";
+import TestEnviro from "../screens/TestEnviro";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -95,24 +97,24 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ 
+    <View style={{
       flexDirection: 'row',
       height: 80,
       alignItems: "flex-end",
       backgroundColor: "#F6F5F8",
       marginBottom: "1.5%"
-      }}>
+    }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
-        
+
 
         const onPress = () => {
           setSelectTabs(route)
@@ -143,38 +145,39 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
         return (
           <React.Fragment
-          key={route.name.toString()}
-          >
-          {index == 5  ? null : 
-          index == 0 ? null :
-         
-          <TouchableOpacity
             key={route.name.toString()}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1 }}
-          ><Animated.View style={{
-          
-            paddingVertical: 0,
-            
-          
-          }}>
-            <Animated.Text  
-              style={{ opacity, 
-              textAlign:"center",
-              fontFamily:"Helvetica",
-              fontWeight: isFocused ? "bold" : "normal",
-              
-              
-              
-            }}>
-                {label}
-            </Animated.Text></Animated.View>
-          </TouchableOpacity>}
+          >
+            {index == 5 ? null :
+              index == 0 ? null :
+
+                <TouchableOpacity
+                  key={route.name.toString()}
+                  accessibilityRole="button"
+                  accessibilityState={isFocused ? { selected: true } : {}}
+                  accessibilityLabel={options.tabBarAccessibilityLabel}
+                  testID={options.tabBarTestID}
+                  onPress={onPress}
+                  onLongPress={onLongPress}
+                  style={{ flex: 1 }}
+                ><Animated.View style={{
+
+                  paddingVertical: 0,
+
+
+                }}>
+                    <Animated.Text
+                      style={{
+                        opacity,
+                        textAlign: "center",
+                        fontFamily: "Helvetica",
+                        fontWeight: isFocused ? "bold" : "normal",
+
+
+
+                      }}>
+                      {label}
+                    </Animated.Text></Animated.View>
+                </TouchableOpacity>}
           </React.Fragment>
         );
       })}
@@ -202,35 +205,34 @@ const leftToRightAnimation = {
 };
 
 const StackNavigator = () => {
-  return(
+  return (
     <Stack.Navigator
-    screenOptions={{
-     gestureEnabled: true,
-     gestureResponseDistance: 100,
-     gestureDirection: "horizontal",
-     initialRouteName:"Account",
-     headerTitleStyle: {
-      fontFamily: "Typo",
-      fontWeight: "normal",
-      fontSize: 28,
-      color: "#00035b"
-    },
-    headerBackTitleVisible: false,
-    headerStyle: {backgroundColor: "transparent"}
-    }} 
+      screenOptions={{
+        gestureEnabled: true,
+        gestureResponseDistance: 100,
+        gestureDirection: "horizontal",
+        initialRouteName: "Account",
+        headerTitleStyle: {
+          fontFamily: "Typo",
+          fontWeight: "normal",
+          fontSize: 28,
+          color: "#00035b"
+        },
+        headerBackTitleVisible: false,
+        headerStyle: { backgroundColor: "transparent" }
+      }}
     >
-      <Stack.Screen 
-        name="Account" 
+      <Stack.Screen
+        name="Account"
         component={AppNavigator}
         options={{
           title: "Carbonyte",
           headerShown: false,
         }}
       />
-      
 
-      <Stack.Screen 
-        name="AddFunds" 
+      <Stack.Screen
+        name="AddFunds"
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "Add Funds",
@@ -239,29 +241,29 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
           headerBackTitleVisible: false,
-          headerStyle: {backgroundColor: "white"}
+          headerStyle: { backgroundColor: "white" }
         }}
       />
 
       <Stack.Screen
-              name="AboutUs"
-              component={gestureHandlerRootHOC(AboutUs)}
-              options={{
-                title: "About Us",
-              }}
-            />
+        name="AboutUs"
+        component={gestureHandlerRootHOC(AboutUs)}
+        options={{
+          title: "About Us",
+        }}
+      />
 
 
-        <Stack.Screen
-          name="Faq"
-          component={gestureHandlerRootHOC(Faq)}
-          options={{
-            title: "Faq",
+      <Stack.Screen
+        name="Faq"
+        component={gestureHandlerRootHOC(Faq)}
+        options={{
+          title: "Faq",
 
-          }}
-        />
-      <Stack.Screen 
-        name="SendMoney" 
+        }}
+      />
+      <Stack.Screen
+        name="SendMoney"
         component={gestureHandlerRootHOC(SendMoney)}
         options={{
           title: "Send Money",
@@ -270,263 +272,272 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
           headerBackTitleVisible: false,
-          headerStyle: {backgroundColor: "white"}
-        }}
-      />
-
-      <Stack.Screen 
-        name="Pin" 
-        component={gestureHandlerRootHOC(Pin)}
-        options={{
-          title: "Pin",
-       
+          headerStyle: { backgroundColor: "white" }
         }}
       />
 
       <Stack.Screen
-              name="PinCart"
-              component={gestureHandlerRootHOC(PinCart)}
-              options={{
-                title: "PinCart",
+        name="Pin"
+        component={gestureHandlerRootHOC(Pin)}
+        options={{
+          title: "Pin",
 
-              }}
-            />
-      <Stack.Screen 
-        name="FUP" 
+        }}
+      />
+
+      <Stack.Screen
+        name="PinCart"
+        component={gestureHandlerRootHOC(PinCart)}
+        options={{
+          title: "PinCart",
+
+        }}
+      />
+      <Stack.Screen
+        name="FUP"
         component={gestureHandlerRootHOC(FUP)}
         options={{
           title: "FUP",
-       
+
         }}
       />
 
-    <Stack.Screen 
-        name="Success" 
+      <Stack.Screen
+        name="DeleteAccount"
+        component={gestureHandlerRootHOC(DeleteAccount)}
+        options={{
+          title: "DeleteAccount",
+
+        }}
+      />
+
+      <Stack.Screen
+        name="Success"
         component={gestureHandlerRootHOC(Success)}
         options={{
           title: "Success",
-       
+
         }}
       />
 
-    <Stack.Screen 
-        name="AddBeneficiary" 
+      <Stack.Screen
+        name="AddBeneficiary"
         component={gestureHandlerRootHOC(AddBeneficiary)}
         options={{
           title: "Bank Details",
-          presentation: 'modal' ,
+          presentation: 'modal',
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
           headerBackTitleVisible: false,
-       
+
         }}
       />
 
-      <Stack.Screen 
-        name="BankTransferAmount" 
+      <Stack.Screen
+        name="BankTransferAmount"
         component={gestureHandlerRootHOC(BankTransferAmount)}
         options={{
           title: "Send Funds",
-          presentation: 'modal' ,
+          presentation: 'modal',
           headerShown: false,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
           headerBackTitleVisible: false,
-          headerStyle: {backgroundColor: "white"}
-       
+          headerStyle: { backgroundColor: "white" }
+
         }}
       />
 
-    <Stack.Screen 
-        name="MyCards" 
+      <Stack.Screen
+        name="MyCards"
         component={gestureHandlerRootHOC(MyCards)}
         options={{
           title: "My Cards",
-          presentation: 'modal' ,
+          presentation: 'modal',
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
           headerBackTitleVisible: false,
-          headerStyle: {backgroundColor: "transparent"}
+          headerStyle: { backgroundColor: "transparent" }
         }}
-      
+
       />
 
-    <Stack.Screen 
-        name="CardSettings" 
+      <Stack.Screen
+        name="CardSettings"
         component={gestureHandlerRootHOC(CardSettings)}
         options={{
           title: "Settings",
-       
+
         }}
       />
 
-    <Stack.Screen 
-        name="SpendingLimit" 
+      <Stack.Screen
+        name="SpendingLimit"
         component={gestureHandlerRootHOC(SpendingLimit)}
         options={{
           title: "Spending Limit",
-       
+
         }}
       />
 
-    <Stack.Screen 
-        name="SetLimit" 
+      <Stack.Screen
+        name="SetLimit"
         component={gestureHandlerRootHOC(SetLimit)}
         options={{
           title: "Set Limit",
-       
+
         }}
       />
 
-  <Stack.Screen 
-        name="ReplaceCard" 
+      <Stack.Screen
+        name="ReplaceCard"
         component={gestureHandlerRootHOC(ReplaceCard)}
         options={{
           title: "Replace Card",
-       
+
         }}
       />
-      
-      <Stack.Screen 
-        name="ItsDamagedOrDoesntWork" 
+
+      <Stack.Screen
+        name="ItsDamagedOrDoesntWork"
         component={gestureHandlerRootHOC(ItsDamagedOrDoesntWork)}
         options={{
           title: "ItsDamagedOrDoesntWork",
-       
+
         }}
       />
-        <Stack.Screen 
-        name="ItWasLost" 
+      <Stack.Screen
+        name="ItWasLost"
         component={gestureHandlerRootHOC(ItWasLost)}
         options={{
           title: "Lost",
-       
+
         }}
       />
-        <Stack.Screen 
-        name="IWasAVictimOfFraudOrThe" 
+      <Stack.Screen
+        name="IWasAVictimOfFraudOrThe"
         component={gestureHandlerRootHOC(IWasAVictimOfFraudOrThe)}
         options={{
           title: "Report",
-       
+
         }}
       />
-        <Stack.Screen 
-        name="Terminate" 
+      <Stack.Screen
+        name="Terminate"
         component={gestureHandlerRootHOC(Terminate)}
         options={{
           title: "Terminate",
-       
+
         }}
       />
-      <Stack.Screen 
-        name="TerminatedCard" 
+      <Stack.Screen
+        name="TerminatedCard"
         component={gestureHandlerRootHOC(TerminatedCard)}
         options={{
           title: "Terminated Card",
-       
+
         }}
       />
 
-<Stack.Screen 
-        name="CarbonCart" 
+      <Stack.Screen
+        name="CarbonCart"
         component={gestureHandlerRootHOC(CarbonCart)}
         options={{
           title: "Cart",
-       
+
         }}
       />
-      <Stack.Screen 
-        name="CarbonProject" 
+      <Stack.Screen
+        name="CarbonProject"
         component={gestureHandlerRootHOC(CarbonProject)}
         options={{
           title: "Carbon Project",
-       
+
         }}
       />
-      <Stack.Screen 
-        name="ChooseCardsStandard5" 
+      <Stack.Screen
+        name="ChooseCardsStandard5"
         component={gestureHandlerRootHOC(ChooseCardsStandard5)}
         options={{
           title: "ChooseCardsStandard5",
-       
+
         }}
       />
 
-      <Stack.Screen 
-        name="VirtualEcoSystem" 
+      <Stack.Screen
+        name="VirtualEcoSystem"
         component={gestureHandlerRootHOC(VirtualEcoSystem)}
         options={{
           title: "Virtual EcoSystem",
-       
+
         }}
       />
 
-<Stack.Screen 
-        name="ChooseCardsElite" 
+      <Stack.Screen
+        name="ChooseCardsElite"
         component={gestureHandlerRootHOC(ChooseCardsElite)}
         options={{
           title: "Choose Cards",
-         
-       
+
+
         }}
       />
-      <Stack.Screen 
-        name="AccountSettings" 
+      <Stack.Screen
+        name="AccountSettings"
         component={gestureHandlerRootHOC(AccountSettings)}
         options={{
           title: "Settings",
-       
+
         }}
       />
-      <Stack.Screen 
-        name="SecurityAndPrivacy" 
+      <Stack.Screen
+        name="SecurityAndPrivacy"
         component={gestureHandlerRootHOC(SecurityAndPrivacy)}
         options={{
           title: "Security & Privacy",
-       
+
         }}
       />
-      <Stack.Screen 
-        name="Transactions" 
+      <Stack.Screen
+        name="Transactions"
         component={gestureHandlerRootHOC(Transactions)}
         options={{
           title: "Transactions",
-       
+
         }}
       />
-       <Stack.Screen 
-        name="PinSetApp" 
+      <Stack.Screen
+        name="PinSetApp"
         component={gestureHandlerRootHOC(PinSetApp)}
         options={{
           title: "Pin Set",
-       
+
         }}
       />
-      <Stack.Screen 
-        name="AccountLetter" 
+      <Stack.Screen
+        name="AccountLetter"
         component={gestureHandlerRootHOC(AccountLetter)}
         options={{
           title: "AccountLetter",
-       
+
         }}
       />
-      <Stack.Screen 
-              name="TermsAndConditions" 
-              component={gestureHandlerRootHOC(TermsAndConditions)}
-              options={{
-                title: "Terms & Conditions",
-             
-              }}
-            />
+      <Stack.Screen
+        name="TermsAndConditions"
+        component={gestureHandlerRootHOC(TermsAndConditions)}
+        options={{
+          title: "Terms & Conditions",
 
-    <Stack.Screen 
-        name="SwitchAccounts" 
+        }}
+      />
+
+      <Stack.Screen
+        name="SwitchAccounts"
         component={gestureHandlerRootHOC(SwitchAccounts)}
         options={{
           title: "Switch Accounts",
@@ -535,19 +546,19 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
           headerBackTitleVisible: false,
-          headerStyle: {backgroundColor: "transparent"},
+          headerStyle: { backgroundColor: "transparent" },
         }}
-        
+
       />
 
 
-          
-      <Stack.Screen 
-        name="CarbonTonnesRemoved" 
+
+      <Stack.Screen
+        name="CarbonTonnesRemoved"
         component={CarbonTonnesRemoved}
         options={{
           title: "Carbon",
-       
+
         }}
       />
 
@@ -557,23 +568,23 @@ const StackNavigator = () => {
 
 const ChooseCardsEliteNavigator = () => {
 
-  
+
 
   return (
     <Tab.Navigator >
       <Tab.Screen
-        name="Standard" 
+        name="Standard"
         component={gestureHandlerRootHOC(ChooseCardsElite)}
       />
       <Tab.Screen
-        name="Premium" 
+        name="Premium"
         component={gestureHandlerRootHOC(ChooseCardsElite)}
       />
       <Tab.Screen
-        name="Elite" 
+        name="Elite"
         component={gestureHandlerRootHOC(ChooseCardsElite)}
       />
-    
+
     </Tab.Navigator>
   )
 }
@@ -587,71 +598,71 @@ const AppNavigator = () => {
 
   return (
     <Tab.Navigator
-    tabBar={props => <MyTabBar {...props} />}
-    initialRouteName="AccountTab"
+      tabBar={props => <MyTabBar {...props} />}
+      initialRouteName="AccountTab"
     >
-     <Tab.Screen 
-      name="Loop1" 
-      component={gestureHandlerRootHOC(AccountDummy2)}
-      options={{
-        tabBarShowLabel: false,
-        headerShown: false,
-        presentation: 'modal',
-        animationTypeForReplace: 'push',
-        animation:'slide_from_left',
+      <Tab.Screen
+        name="Loop1"
+        component={gestureHandlerRootHOC(AccountDummy2)}
+        options={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          presentation: 'modal',
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_left',
 
-        tabBarItemStyle: {
-         "width": 7
-        },
-        tabBarLabelStyle: {
-          "width": 0
-        }
+          tabBarItemStyle: {
+            "width": 7
+          },
+          tabBarLabelStyle: {
+            "width": 0
+          }
 
-      }} />
-    
-    <Tab.Screen 
-      name="AccountTab" 
-      component={gestureHandlerRootHOC(AccountMain)}
-      options={{
-        title: "Account"
-      }}
+        }} />
+
+      <Tab.Screen
+        name="AccountTab"
+        component={gestureHandlerRootHOC(AccountMain)}
+        options={{
+          title: "Account"
+        }}
       />
-    <Tab.Screen 
-      name="Analysis" 
-      component={Analytics}
-      options={{
-        
-      }}
+      <Tab.Screen
+        name="Analysis"
+        component={Analytics}
+        options={{
+
+        }}
       />
-    <Tab.Screen 
-      name="CarbonTab" 
-      component={gestureHandlerRootHOC(Carbon)}
-      options={{
-        title: "Carbon"
-      }}
-    />
-    <Tab.Screen 
-      name="Profile" 
-      component={gestureHandlerRootHOC(Settings)}
-    />
-    <Tab.Screen 
-      name="Loop" 
-      component={gestureHandlerRootHOC(AccountDummy)}
-      options={{
-        headerShown: false,
-        presentation: 'modal',
-        animationTypeForReplace: 'push',
-        animation:'slide_from_left'
-      }}
+      <Tab.Screen
+        name="CarbonTab"
+        component={gestureHandlerRootHOC(Carbon)}
+        options={{
+          title: "Carbon"
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={gestureHandlerRootHOC(Settings)}
+      />
+      <Tab.Screen
+        name="Loop"
+        component={gestureHandlerRootHOC(AccountDummy)}
+        options={{
+          headerShown: false,
+          presentation: 'modal',
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_left'
+        }}
       // listeners={({ navigation, route }) => ({
       //   focus: () => {
-         
+
       //     // Do something with the `navigation` object
       //     navigation.navigate('AccountTab');
       //   },
       // })}
-    />
-  </Tab.Navigator>
+      />
+    </Tab.Navigator>
   );
 };
 
