@@ -6,12 +6,13 @@ import {
   Text,
   View,
   Pressable,
-  Clipboard,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
   Vibration,
 } from "react-native";
+
+import * as Clipboard from "expo-clipboard";
 
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/apiCall";
@@ -60,7 +61,7 @@ const Settings = ({ navigation }) => {
   const loadData = async () => {
     //First set loading to true to show loading animation
     setIsLoading(true);
-    if(!accountID)return;
+    if (!accountID) return;
 
     const userDetails = await api.GetAllAccounts(userID);
     const accountDetails = await api.GetAccount(accountID);
@@ -98,25 +99,25 @@ const Settings = ({ navigation }) => {
    * @dev Copies the associated item
    * @todo Consolidate into one function
    */
-  const copyAccount = () => {
+  const copyAccount = async () => {
     console.log("Copied");
     Vibration.vibrate();
     alert("Account code copied");
-    Clipboard.setString(account);
+    await Clipboard.setStringAsync(account);
   };
 
-  const copySort = () => {
+  const copySort = async () => {
     console.log("Copied");
     Vibration.vibrate();
     alert("Sort code copied");
-    Clipboard.setString(sortcode);
+    await Clipboard.setStringAsync(sortcode);
   };
 
-  const copyIban = () => {
+  const copyIban = async () => {
     console.log("Copied");
     Vibration.vibrate();
     alert("Iban copied");
-    Clipboard.setString(iban);
+    await Clipboard.setStringAsync(iban);
   };
 
   React.useEffect(() => {

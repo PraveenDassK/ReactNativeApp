@@ -1,7 +1,9 @@
 import React from 'react'
+import { StyleSheet } from 'react-native';
+
 import { Dropdown } from 'react-native-element-dropdown';
 
-const AppDropdown = ({data, placeholder}) => {
+const AppDropdown = ({data, placeholder, onChange}) => {
   return (
     <Dropdown
 style={[styles.dropdown]}
@@ -12,16 +14,14 @@ labelField="label"
 valueField="value"
 placeholder={placeholder}
 placeholderStyle={{fontSize: 14, color: "#D3D3D3"}}
-value={gender}
-onChange={item => {
-    setGender(item.value);
-    setIsFocus(false);
-}}
+value={0}
+onChange={item => onChange(item)}
 />
   )
 }
  const styles = StyleSheet.create({
     dropdown: {
+      width:"100%",
         borderRadius: 10,
         borderWidth: 0.5,
         height: 50,

@@ -7,14 +7,16 @@ import {
   Vibration,
 } from "react-native";
 
-import Clipboard from "@react-native-clipboard/clipboard";
+import * as Clipboard from 'expo-clipboard';
 
 const Referral = ({ refCode = 9090 }) => {
-  const copyReferral = () => {
+  const copyReferral = async () => {
     console.log("clicked", refCode);
     Vibration.vibrate();
     alert("Referral copied");
-    Clipboard.setString(refCode);
+    await Clipboard.setStringAsync(`${refCode}`);
+
+    // Clipboard.setString(refCode);
   };
 
   return (
