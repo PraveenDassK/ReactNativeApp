@@ -4,8 +4,7 @@ import GlobalStyles from '../../GlobalStyles';
 import AuthContext from '../auth/context';
 import { useFocusEffect } from "@react-navigation/native";
 
-import api from '../api/api_list';
-import apiCall from '../api/apiCall';
+import apiSettings from '../api/apiSettings';
 import AppText from '../components/Text';
 
 const CardSettings = ({navigation}) => {
@@ -46,7 +45,7 @@ const CardSettings = ({navigation}) => {
 
   const getSettings = async () => {
     setIsLoading(true)
-    const cardSettings = await apiCall.GetSettings(authContext.accountID)
+    const cardSettings = await apiSettings.GetSettings(authContext.accountID)
     const data = cardSettings;
     console.log(data)
     data.onlineTransactions ? setIsEnabled(true) : null;
@@ -59,7 +58,7 @@ const CardSettings = ({navigation}) => {
   const sendRequest = async () => {
     setIsLoading(true)
     console.log("!")
-    const response = await api.SetToggles(authContext.accountID, isEnabled, isEnabled1, isEnabled2, isEnabled3);
+    const response = await apiSettings.SetToggles(authContext.accountID, isEnabled, isEnabled1, isEnabled2, isEnabled3);
     setIsLoading(false)
   };
 

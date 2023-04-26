@@ -82,12 +82,16 @@ const PastAddresses = ({ SaveDetails, setScreenToShow }) => {
             color="black"
             onPress={() => setAdding(true)}
           />
-          <Button
-            title="Continue"
-            textColor="black"
-            color="white"
-            onPress={() => handleSubmit()}
-          />
+
+          {addresses.length > 0 ?
+            <Button
+              title="Continue"
+              textColor="black"
+              color="white"
+              onPress={() => handleSubmit()}
+            /> : null}
+
+
         </View>
       )}
     </AuthScreen>

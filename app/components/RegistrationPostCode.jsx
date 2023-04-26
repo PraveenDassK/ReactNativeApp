@@ -15,28 +15,28 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 const Postcode = ({ AddAddress }) => {
     const [addressData, setAddressData] = useState([]);
-    const [address, setAddress] = useState([]);
+    const [address, setAddress] = useState(null);
 
     /**
      * @dev This finds the correct postcodes
      */
     const handleSubmit = async ({ postcode }) => {
-        const response = await apiLogin.GetAddressByPostCode(postcode)
-        console.log(response)
-        setAddressData(response)
+        // const response = await apiLogin.GetAddressByPostCode(postcode)
+        // console.log(response)
+        // setAddressData(response)
 
-        //Remove this on live
-        // const dummyAddress = [{
-        //     label: "Fake address",
-        //     value:{
-        //         address1: "123",
-        //         address2: "456",
-        //         area: "Area 5",
-        //         city: "City 6",
-        //         postcode:postcode
-        //     }
-        // }]
-        // setAddressData(dummyAddress)
+        // Remove this on live
+        const dummyAddress = [{
+            label: "Fake address",
+            value:{
+                address1: "123",
+                address2: "456",
+                area: "Area 5",
+                city: "City 6",
+                postcode:postcode
+            }
+        }]
+        setAddressData(dummyAddress)
     }
 
     const sendData = () => {
@@ -82,13 +82,15 @@ const Postcode = ({ AddAddress }) => {
                         maxHeight={100}
                         labelField="label"
                         valueField="value"
-                        placeholder={addressData[0].label}
+                        placeholder={"Search your address"}
                         value={address?.address1}
                         onChange={item => {
                             setAddress(item.value);
                         }}
                     />
+                    {address ? 
                     <Button title="Add" textColor="white" color="black" onPress={() => sendData()} />
+                    : null}
                 </View>
                 :
                 <View />

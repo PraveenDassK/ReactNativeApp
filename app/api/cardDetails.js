@@ -57,14 +57,14 @@ const GetCardFromID = async(ID) => {
 
   const cardExpiry = cardText?.data?.substr(601, 4);
   const formattedExpiraty =
-    cardExpiry?.slice(0, 2) + "/" + cardExpiry.slice(2);
+    cardExpiry?.slice(0, 2) + "/" + cardExpiry?.slice(2);
 
-  const cardCVV = cardText.data.substr(637, 3);
+  const cardCVV = cardText?.data.substr(637, 3);
 
   const image = require("../assets/cardLion.png");
 
-  const cardNumber = cardText.data.substr(548, 16);
-  const formattedCard = cardNumber.replace(/(.{4})/g, "$1 ");
+  const cardNumber = cardText?.data.substr(548, 16);
+  const formattedCard = cardNumber?.replace(/(.{4})/g, "$1 ");
 
   return{
     name: formattedExpiraty,
