@@ -112,7 +112,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setIsLoading(true);
 
     //Sending of the OTP is here
-    const result = await loginAPI.VerifyLogin({
+    const result = await loginApi.VerifyLogin({
       phoneNumber,
       email,
       phoneOTP,
@@ -120,7 +120,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     });
     if (!result) return alert("Could not verify otp");
 
-    const IDs = await apiLogin.GetIDs(result?.token)
+    const IDs = await loginApi.GetIDs(result?.token)
 
     //If the account details cannot be found
     if(!IDs){
