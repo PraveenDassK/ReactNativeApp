@@ -58,7 +58,7 @@ const PastAddresses = ({ SaveDetails, setScreenToShow }) => {
   };
   return (
     <AuthScreen
-      title="Past adresses"
+      title="Past address"
       img="elephantCard"
       width="70%"
       handleBack={handleBack}
