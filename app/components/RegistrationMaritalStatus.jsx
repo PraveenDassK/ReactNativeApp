@@ -77,7 +77,7 @@ const MaritalStatus = ({ SaveDetails, setScreenToShow }) => {
               { marginLeft: horizontalScale(10) },
             ]}
           >
-            <Text>What's your martital status</Text>
+            <Text>What's your marital status</Text>
             <Dropdown
               style={[styles.dropdown]}
               containerStyle={styles.dropdownContainer}

@@ -32,7 +32,7 @@ import RegistraionEmailAndPhone from "../components/RegistrationEmailAndPhone.js
 import PersonalOrBusiness from "../components/RegistrationPersonalOrBusiness.jsx";
 import Nationality from "../components/RegistrationNationality.jsx";
 import PastAddresses from "../components/RegistrationPastAddresses.jsx";
-import MaritalStatus from "../components/RegistrationMatritalStatus.jsx";
+import MaritalStatus from "../components/RegistrationMaritalStatus.jsx";
 import EmploymentDetails from "../components/RegistrationEmploymentDetails.jsx";
 import Income from "../components/RegistrationIncomeDetails.jsx";
 import Success from "../components/RegistrationSuccess.jsx";
