@@ -26,6 +26,7 @@ const Tab = createMaterialTopTabNavigator();
       setIsLoading(true)
       const response = await apiCall.GetSubscriptions()
       setData(response)
+      console.log("benefits",response[2]['benefits'][0])
       setIsLoading(false)
 
       const currentSub = await apiCall.GetUsersSubscriptions(account)
@@ -73,7 +74,7 @@ const Tab = createMaterialTopTabNavigator();
                   <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
                   <Text style={styles.featureListText}>{benefit.name}</Text>
                 </View> 
-                <Text style={{marginBottom: "2.5%"}}>{benefit.benefits}</Text>
+                {benefit.benefits.map(benefit => <Text style={{marginBottom: "2.5%"}}>{benefit.name}</Text> )}
                 
               </React.Fragment>
             
