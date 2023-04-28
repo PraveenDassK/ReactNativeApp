@@ -34,11 +34,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
-  const [fulltime, setFulltime] = useState(false);
-  const [parttime, setParttime] = useState(false);
-  const [unemployed, setUnemployed] = useState(false);
-  const [student, setStudent] = useState(false);
-  const [other, setOther] = useState(false);
+  const [selected, setSelected] = useState("");
+
 
   const handleSubmit = async () => {
     SaveDetails(null, "EmploymentDetails");
@@ -48,6 +45,8 @@ const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
     console.log("!");
     setScreenToShow("MaritalStatus");
   };
+
+  const handleCheck = () => {};
   return (
     <AuthScreen
       title="Employment details"
@@ -77,40 +76,40 @@ const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
               checkedIcon="dot-circle-o"
               checkedColor="black"
               uncheckedIcon="circle-o"
-              checked={fulltime}
-              onPress={() => setFulltime(!fulltime)}
+              checked={"fulltime" === selected}
+              onPress={() => setSelected("fulltime")}
             />
             <CheckBox
               title="Part time"
               checkedIcon="dot-circle-o"
               checkedColor="black"
               uncheckedIcon="circle-o"
-              checked={parttime}
-              onPress={() => setParttime(!parttime)}
+              checked={"parttime" === selected}
+              onPress={() => setSelected("parttime")}
             />
             <CheckBox
               title="Unemployed"
               checkedIcon="dot-circle-o"
               checkedColor="black"
               uncheckedIcon="circle-o"
-              checked={unemployed}
-              onPress={() => setUnemployed(!unemployed)}
+              checked={"unemployed" === selected}
+              onPress={() => setSelected("unemployed")}
             />
             <CheckBox
               title="Student"
               checkedIcon="dot-circle-o"
               checkedColor="black"
               uncheckedIcon="circle-o"
-              checked={student}
-              onPress={() => setStudent(!student)}
+              checked={"student" === selected}
+              onPress={() => setSelected("student")}
             />
             <CheckBox
               title="Other"
               checkedIcon="dot-circle-o"
               checkedColor="black"
               uncheckedIcon="circle-o"
-              checked={other}
-              onPress={() => setOther(!other)}
+              checked={"other" === selected}
+              onPress={() => setSelected("other")}
             />
           </View>
         )}
