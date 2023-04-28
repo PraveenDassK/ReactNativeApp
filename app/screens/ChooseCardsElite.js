@@ -74,7 +74,7 @@ const Tab = createMaterialTopTabNavigator();
                   <Image style = {styles.iconImage} source={require("../assets/icon-awesomecheckcircle.png")}/>
                   <Text style={styles.featureListText}>{benefit.name}</Text>
                 </View> 
-                {benefit.benefits.map(benefit => <Text style={{marginBottom: "2.5%"}}>{benefit.name}</Text> )}
+                {benefit.benefits.map(benefit => <Text style={{marginBottom: "2.5%", marginLeft: "10%"}}>- {benefit.name}</Text> )}
                 
               </React.Fragment>
             
