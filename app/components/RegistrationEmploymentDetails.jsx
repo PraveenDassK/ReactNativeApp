@@ -36,7 +36,6 @@ const validationSchema = Yup.object().shape({
 const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
   const [selected, setSelected] = useState("");
 
-
   const handleSubmit = async () => {
     SaveDetails(null, "EmploymentDetails");
   };
@@ -111,6 +110,12 @@ const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
               checked={"other" === selected}
               onPress={() => setSelected("other")}
             />
+            {"other" === selected && (
+              <TextInput
+                style={[styles.childBorder, { padding: 10, marginTop:10 }]}
+                onChangeText={setSelected}
+              />
+            )}
           </View>
         )}
       </Formik>
@@ -124,6 +129,16 @@ const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  childBorder: {
+    borderWidth: 0.5,
+    borderRadius: 10,
+    borderColor: "#D3D3D3",
+    opacity: 1,
+    height: 50,
+    marginTop: "2.5%",
+    marginBottom: "5%",
+  },
+});
 
 export default EmploymentDetails;
