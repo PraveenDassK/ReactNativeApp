@@ -81,6 +81,7 @@ const MaritalStatus = ({ SaveDetails, setScreenToShow }) => {
             <Dropdown
               style={[styles.dropdown]}
               containerStyle={styles.dropdownContainer}
+              dropdownPosition="bottom"
               data={marrigeData}
               maxHeight={100}
               labelField="label"
@@ -118,8 +119,8 @@ const styles = StyleSheet.create({
     borderColor: "#D3D3D3",
   },
   dropdownContainer: {
-    borderTopEndRadius: 10,
-    borderTopStartRadius: 10,
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
   },
   childBorder: {
     borderWidth: 0.5,
