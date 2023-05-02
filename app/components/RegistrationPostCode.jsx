@@ -34,26 +34,25 @@ const Postcode = ({ AddAddress }) => {
   /**
    * @dev This finds the correct postcodes
    */
-  const handleSubmit = async ({ postcode }) => {
-    // const response = await apiLogin.GetAddressByPostCode(postcode)
-    // console.log(response)
-    // setAddressData(response)
+    const handleSubmit = async ({ postcode }) => {
+        // const response = await apiLogin.GetAddressByPostCode(postcode)
+        // console.log(response)
+        // setAddressData(response)
 
-    // Remove this on live
-    const dummyAddress = [
-      {
-        label: "Fake address",
-        value: {
-          address1: "123",
-          address2: "456",
-          area: "Area 5",
-          city: "City 6",
-          postcode: postcode,
-        },
-      },
-    ];
-    setAddressData(dummyAddress);
-  };
+        // Remove this on live
+        const dummyAddress = [{
+            label: "Fake address",
+            value:{
+                address1: "123 street",
+                address2: "456 house",
+                area: "Area 5",
+                city: "City 6",
+                locale:"en_GB",
+                postcode:postcode
+            }
+        }]
+        setAddressData(dummyAddress)
+    }
 
   const sendData = () => {
     AddAddress(address);
