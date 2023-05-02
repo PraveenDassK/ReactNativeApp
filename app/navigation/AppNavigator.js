@@ -83,6 +83,8 @@ import FUP from "../screens/FUP";
 import DeleteAccount from "../screens/DeleteAccount";
 import TestEnviro from "../screens/TestEnviro";
 
+import GroupBeneficiary from "../screens/GroupBeneficiary";
+
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 // const Stack = createNativeStackNavigator();
@@ -267,6 +269,20 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(SendMoney)}
         options={{
           title: "Send Money",
+          presentation: 'modal',
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" }
+        }}
+      />
+
+      <Stack.Screen
+        name="GroupBeneficiary"
+        component={gestureHandlerRootHOC(GroupBeneficiary)}
+        options={{
+          title: "GroupBeneficiary",
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
