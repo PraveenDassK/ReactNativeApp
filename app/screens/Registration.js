@@ -51,13 +51,20 @@ import colors from "../config/colors";
 const Registration = ({ navigation }) => {
   //Personal details
   const [accountType, setPersonalBusiness] = useState(null);
-  const [personalDetails, setPersonalDetails] = useState(null);
-  const [emailandPhone, setEmailandPhone] = useState(null);
-  const [nationality, setNationality] = useState(null);
-  const [addresses, setAddresses] = useState(null);
-  const [maritalStatus, setMaritalStatus] = useState(null);
-  const [employmentDetails, setEmploymentDetails] = useState(null);
-  const [income, setIncome] = useState(null);
+  const [personalDetails, setPersonalDetails] = useState(null)
+  const [emailandPhone, setEmailandPhone] = useState(null)
+  const [nationality, setNationality] = useState(null)
+  const [addresses, setAddresses] = useState(null)
+  const [maritalStatus, setMaritalStatus] = useState("single")
+  const [employmentDetails, setEmploymentDetails] = useState("employed")
+  const [income, setIncome] = useState({
+    "totalIncome": "",
+    "savings": "",
+    "taxResidency": "Uk",
+    "incomeSources": [
+      "Salary"
+    ]
+  })
 
   const [registrationNumberDetails, setRegistrationNumberDetails] =
     useState(null);
@@ -306,109 +313,62 @@ const Registration = ({ navigation }) => {
    *          has been added
    */
   const sendDetails = async () => {
-    const Id = Math.floor(Math.random() * 500000);
-    // const Id = "10";
-    console.log(Id);
-    console.log(accountType);
-    if (accountType == "Personal") {
-      const regData = [
+    const Id = String(Math.floor(Math.random() * 500000));
+    // const Idperm = "10";
+    // return false
+    console.log(Id)
+    console.log(emailandPhone)
+    console.log(personalDetails)
+    console.log(addresses)
+    console.log(maritalStatus)
+    console.log(nationality)
+    console.log(nationality.country)
+    // if (accountType == "Personal") {
+    const regData =
+      [
         {
-          emails: [
+          "emails": [
             {
-              emailId: emailandPhone.emailAddress,
-            },
+              "emailId": emailandPhone.emailAddress
+            }
           ],
-          phoneNumbers: [
+          "phoneNumbers": [
             {
-              phoneNo: emailandPhone.phoneNumber,
-            },
+              "phoneNo": emailandPhone.phoneNumber
+            }
           ],
-          customerDetails: {
-            documentNo: "",
-            documentType: "",
-            address: addresses[0].address1,
-            firstName: personalDetails.firstName,
-            dob: personalDetails.birthday,
-            nationalId: Id,
-            lastName: personalDetails.lastName,
-            postCode: addresses[0].postcode,
-            postTown: addresses[0].area,
-            country: nationality.country,
-            locale: "",
-            salutation: "",
-            gender: personalDetails.gender,
-            maritalStatus: maritalStatus,
-            employmentDetails: "Unemployed",
+          "customerDetails": {
+            "documentNo": "",
+            "documentType": "",
+            "address": addresses[0].address1,
+            "firstName": personalDetails.firstName,
+            "dob": "01-01-1970",
+            "nationalId": Id,
+            "lastName": personalDetails.lastName,
+            "postCode": addresses[0].postcode,
+            "postTown": addresses[0].area,
+            "country": nationality.country,
+            "locale": addresses[0].locale,
+            "salutation": "",
+            "gender": personalDetails.gender,
+            "maritalStatus": maritalStatus,
+            "employmentDetails": employmentDetails
           },
-          income: {
-            totalIncome: "",
-            savings: "",
-            taxResidency: "",
-            incomeSources: [""],
-          },
-          key: "",
-          role: "",
-          ownershipPercentage: 0,
-          marketingChoices: "string",
-        },
-      ];
-      console.log(regData);
-      const response = await apiLogin.RegisterPersonalAccount(regData);
-      console.log(response.data);
-      //If registration was not successfull
-      if (!response.data.result) return false;
-    } else {
-      const regData = [
-        {
-          emails: [
-            {
-              emailId: emailandPhone.emailAddress,
-            },
-          ],
-          phoneNumbers: [
-            {
-              phoneNo: emailandPhone.phoneNumber,
-            },
-          ],
-          customerDetails: {
-            documentNo: "",
-            documentType: "",
-            address: addresses[0].address1,
-            firstName: personalDetails.firstName,
-            dob: "01-01-1970",
-            nationalId: Id,
-            lastName: personalDetails.lastName,
-            postCode: addresses[0].postcode,
-            postTown: addresses[0].area,
-            country: nationality.country,
-            locale: "",
-            salutation: "",
-            gender: personalDetails.gender,
-            maritalStatus: maritalStatus,
-            employmentDetails: "Unemployed",
-          },
-          income: {
-            totalIncome: "",
-            savings: "",
-            taxResidency: "",
-            incomeSources: [""],
-          },
-          key: "",
-          role: "",
-          ownershipPercentage: 0,
-          marketingChoices: "string",
-        },
-      ];
-      console.log(regData);
-      const response = await apiLogin.RegisterPersonalAccount(regData);
-      console.log(response.data);
-      //If registration was not successfull
-      if (!response.data.result) return false;
-      //Make a business account
-      console.log("Else");
-    }
+          "income": income,
+          "key": "",
+          "role": "",
+          "ownershipPercentage": 0,
+          "marketingChoices": "string"
+        }
+      ]
+    console.log(regData)
+    const response = await apiLogin.RegisterPersonalAccount(regData)
+    console.log(response.data)
+    // If registration was not successfull
+    if (!response.data.result) return false;
+    // return false;
     return true;
-  };
+  }
 
   return (
     <Screen
