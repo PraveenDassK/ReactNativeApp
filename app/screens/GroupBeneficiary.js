@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   TextInput,
@@ -13,43 +13,46 @@ import * as Yup from "yup";
 import { Dropdown } from "react-native-element-dropdown";
 import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
+import AuthContext from "../auth/context";
 
 import Icon from "../components/Icon";
+
+import apiBeneficiaries from "../api/apiBeneficiaries"
 
 const validationSchema = Yup.object().shape({
   createGroup: Yup.string().required().min(1).max(30).label("Group name"),
 });
 
 const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    name: "Ryan Garcia",
-    initials: "RG",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    name: "Jack Holland",
-    initials: "JH",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    name: "Nicky Valencia",
-    initials: "NV",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d42",
-    name: "Laney MacNally",
-    initials: "LM",
-  },
+
 ];
 
 const BENEFICIARY = [
-  { label: "Mark Price", value: "Single" },
-  { label: "Amy Bryant", value: "Married" },
+
 ];
 const GroupBeneficiary = () => {
   const [groupData, setGroupData] = useState(DATA);
   const [beneficiary, setBeneficiary] = useState(BENEFICIARY);
+  const { userID, customerDetails } = useContext(AuthContext);
+
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  /**
+   * @dev This loads the data of the user's beneficiary to add it to the list
+   */
+  const loadData = async () => {
+    const request = await apiBeneficiaries.GetUserBeneficiaries(userID)
+    console.log(request)
+    setBeneficiary(request)
+    await apiBeneficiaries.GetGroupBeneficiaries(customerDetails)
+  }
+
+  const handleSelect = (beneficiaryItem) => {
+    console.log(beneficiaryItem)
+    setGroupData([beneficiaryItem])
+  }
 
   const handleDelete = (flatIndex) => {
     setGroupData([
@@ -64,9 +67,31 @@ const GroupBeneficiary = () => {
     console.log("handleSent");
   };
 
-  const handleSubmit = ({ createGroup }) => {
+  /**
+   * 
+   * @param {*} param0 
+   */
+  const handleSubmit = async ({ createGroup }) => {
     console.log("Submitted", createGroup);
+    console.log(groupData)
+    let beneficiaryData = []
+    groupData.forEach(beneficiary => {
+      console.log(beneficiary)
+      beneficiaryData.push({
+        "beneficiariesId": beneficiary.id,
+        "beneficiariesName": beneficiary.name
+      })
+    })
+    console.log(beneficiaryData)
+    await apiBeneficiaries.CreateNewGroupBeneficiary(
+      {
+        "carbonyteId": customerDetails,
+        "groupName": createGroup,
+        "beneficiariesDetails": beneficiaryData
+      }
+    )
   };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleContainer}>
@@ -81,70 +106,71 @@ const GroupBeneficiary = () => {
       >
         {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
           <>
-          <View style={styles.container}>
-            <Text>Group Name</Text>
-            <TextInput
-              placeholder="Enter the group name"
-              placeholderTextColor="#D3D3D3"
-              keyboardType="Text"
-              onBlur={() => setFieldTouched("createGroup")}
-              onChangeText={handleChange("createGroup")}
-              style={[styles.childBorder, { padding: 10 }]}
-            />
-            <ErrorMessage
+            <View style={styles.container}>
+              <Text>Group Name</Text>
+              <TextInput
+                placeholder="Enter the group name"
+                placeholderTextColor="#D3D3D3"
+                keyboardType="Text"
+                onBlur={() => setFieldTouched("createGroup")}
+                onChangeText={handleChange("createGroup")}
+                style={[styles.childBorder, { padding: 10 }]}
+              />
+              <ErrorMessage
                 error={errors.createGroup}
                 visible={touched.createGroup}
               />
-            <Text style={{marginTop:"5%"}}>Select Beneficiary</Text>
-            <Dropdown
-              style={[styles.dropdown]}
-              containerStyle={styles.dropdownContainer}
-              data={beneficiary}
-              maxHeight={100}
-              labelField="label"
-              valueField="value"
-              placeholder={"Select"}
-              value={1}
-              onChange={(item) => {
-                // setStatus(item.value);
-                // setIsFocus(false);
-              }}
-            />
-            <View>
-              {groupData && (
-                <FlatList
-                  data={groupData}
-                  renderItem={({ item, index }) => (
-                    <BeneficiaryWidget
-                      initials={item.initials}
-                      name={item.name}
-                      onDelete={() => handleDelete(index)}
-                      onSend={handleSend}
-                    />
-                  )}
-                  keyExtractor={(item) => item.id}
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                />
-              )}
+              <Text style={{ marginTop: "5%" }}>Select Beneficiary</Text>
+              <Dropdown
+                style={[styles.dropdown]}
+                containerStyle={styles.dropdownContainer}
+                data={beneficiary}
+                maxHeight={100}
+                labelField="name"
+                valueField="id"
+                placeholder={"Select"}
+                value={1}
+                onChange={(item) => {
+                  handleSelect(item)
+                  // setStatus(item.value);
+                  // setIsFocus(false);
+                }}
+              />
+              <View>
+                {groupData && (
+                  <FlatList
+                    data={groupData}
+                    renderItem={({ item, index }) => (
+                      <BeneficiaryWidget
+                        initials={item.name[0]}
+                        name={item.name}
+                        onDelete={() => handleDelete(index)}
+                        onSend={handleSend}
+                      />
+                    )}
+                    keyExtractor={(item) => item.id}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                  />
+                )}
+              </View>
             </View>
-          </View>
 
 
-      <View style={styles.buttonContainer}>
-        <Button
-          title="create group"
-          textColor="white"
-          color="black"
-          onPress={handleSubmit}
-        />
-      </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title="create group"
+                textColor="white"
+                color="black"
+                onPress={handleSubmit}
+              />
+            </View>
           </>
         )}
       </Formik>
 
 
-      
+
     </View>
   );
 };
@@ -152,7 +178,6 @@ const GroupBeneficiary = () => {
 const BeneficiaryWidget = ({
   initials = "RG",
   name = "Ryan Garcia",
-
   onDelete = () => console.log("Delete"),
   onSend = () => console.log("Send"),
 }) => {
@@ -252,6 +277,6 @@ const styles = StyleSheet.create({
     opacity: 1,
     height: 50,
     marginTop: "2.5%",
-   
+
   },
 });
