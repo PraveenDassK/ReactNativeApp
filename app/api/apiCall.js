@@ -628,7 +628,7 @@ const GetLimits = async (Id) => {
   if (
     request.data.resultMessage == "No budget found for the specified Account Id"
   ) {
-    await SetLimit(Id, 0);
+    return null
   }
 
   console.log(request.data);

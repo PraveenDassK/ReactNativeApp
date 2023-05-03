@@ -37,8 +37,8 @@ const SpendingLimit = ({ navigation, route }) => {
     //Gets the data from the api
     setIsLoading(true)
     const response = await apiCall.GetLimits(authContext.accountID);
-    const spendTotal = response.spend
-    const monthlyAmount = response.monthlyAmount
+    const spendTotal = response === null ? 0 : response.spend
+    const monthlyAmount = response === null ? 0 : response.monthlyAmount
  
     setMonLim(monthlyAmount);
     setSpend(spendTotal);
