@@ -53,8 +53,14 @@ const PastAddresses = ({ SaveDetails, setScreenToShow }) => {
   console.log("Addresses", addresses);
 
   const handleBack = () => {
-    console.log("!");
-    setScreenToShow("Nationality");
+    console.log(isAdding);
+    //If on the postcode screen then go back to past address instead
+    if (isAdding) {
+      setAdding(false);
+    } else {
+      setScreenToShow("Nationality");
+
+    }
   };
   return (
     <AuthScreen

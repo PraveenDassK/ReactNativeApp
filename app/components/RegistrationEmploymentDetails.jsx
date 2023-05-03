@@ -35,6 +35,7 @@ const validationSchema = Yup.object().shape({
 
 const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
   const [selected, setSelected] = useState("");
+  const [otherText, setText] = useState("");
 
   const handleSubmit = async () => {
     SaveDetails(null, "EmploymentDetails");
@@ -113,7 +114,8 @@ const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
             {"other" === selected && (
               <TextInput
                 style={[styles.childBorder, { padding: 10, marginTop:10 }]}
-                onChangeText={setSelected}
+                onChangeText={setText}
+                value = {otherText}
               />
             )}
           </View>

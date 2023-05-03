@@ -36,6 +36,7 @@ import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
 import Privacy from "./PrivacyPolicy";
 import { set } from "react-native-reanimated";
+import DateTimePickerComponent from "./Datepicker";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().min(1).max(11).label("First name"),
@@ -46,7 +47,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
 
   const [visible, setVisible] = useState(false)
   const [disbled, setDisabled] = useState(true)
-  
+
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
@@ -56,11 +57,12 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [dob, setDOB] = useState(new Date(1598051730000));
   const [viewDate, setView] = useState(false);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setBirthday(currentDate);
-    setView(false);
-  };
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate;
+  //   console.log(selectedDate)
+  //   setBirthday(currentDate);
+  //   setView(false);
+  // };
 
   const genderData = [
     {
@@ -131,6 +133,30 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
     setScreenToShow("");
   };
 
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+  console.log(String(date))
+
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <AuthScreen
@@ -148,7 +174,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
             setVisible(!visible);
           }}
         >
-          <Privacy setIsOpen={setVisible}/>
+          <Privacy setIsOpen={setVisible} />
         </Modal>
         <Formik
           initialValues={{ firstName: "", lastName: "" }}
@@ -221,36 +247,37 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                 }}
               />
               <Text>Date of Birth</Text>
-              <Button
-                title="Set"
-                textColor="black"
-                color="white"
-                onPress={() => setView(true)}
-              />
 
-              {viewDate && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={dob}
-                  mode="date"
-                  display="spinner"
-                  onChange={onChange}
-                />
-              )}
-             
+              <View style={styles.container}>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    onPress={showDatepicker}
+                    title= {moment(date).format('MMM DD YYYY')}
+                  />
+                </View>
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display="spinner"
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+
 
               <CheckBox
-               
+
                 title="I have read and accepted the Privacy Policy"
                 checked={privacyPolicy}
                 checkedColor="black"
                 onPress={() => {
-                  
                   setVisible(true)
                   setPrivacyPolicy(true);
                 }}
               />
-             
 
               <Button
                 title="continue"

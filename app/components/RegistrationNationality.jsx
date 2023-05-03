@@ -36,7 +36,7 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
   const [showBirth, setBirthShow] = useState(false);
   const [nationality, setNationality] = useState('');
   const [birth, setBirth] = useState('');
-  
+
   const handleSubmit = () => {
     console.log(birth, nationality);
     SaveDetails(
@@ -74,14 +74,15 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
             <TouchableOpacity
               onPress={() => setBirthShow(true)}
               style={{
-                width: '80%',
+                width: '100%',
                 height: 60,
-                backgroundColor: 'black',
+                backgroundColor: 'white',
+                borderWidth: 1,
                 padding: 10,
               }}
             >
               <Text style={{
-                color: 'white',
+                color: 'black',
                 fontSize: 20
               }}>
                 {birth}
@@ -103,14 +104,15 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
             <TouchableOpacity
               onPress={() => setNationalityShow(true)}
               style={{
-                width: '80%',
+                width: '100%',
                 height: 60,
-                backgroundColor: 'black',
+                backgroundColor: 'white',
+                borderWidth: 1,
                 padding: 10,
               }}
             >
               <Text style={{
-                color: 'white',
+                color: 'black',
                 fontSize: 20
               }}>
                 {nationality}
@@ -124,7 +126,6 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
                 setNationalityShow(false);
               }}
             />
-
 
             <ErrorMessage
               error={errors.nationality}

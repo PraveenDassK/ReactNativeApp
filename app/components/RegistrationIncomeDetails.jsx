@@ -33,9 +33,20 @@ const validationSchema = Yup.object().shape({
 import ErrorMessage from "./forms/ErrorMessage";
 
 const Income = ({ SaveDetails, setScreenToShow }) => {
-  const handleSubmit = async ({ incomeDetails, taxResidency }) => {
-    SaveDetails(null, "Income");
+  const handleSubmit = async ({ incomeDetails, taxResidency, nationalInsurance }) => {
+    SaveDetails({
+      "incomeDetails": {
+        "totalIncome": incomeDetails,
+        "savings": "",
+        "taxResidency": taxResidency,
+        "incomeSources": [
+          "Salary"
+        ]
+      },
+      nationalInsurance: nationalInsurance
+    }, "Income");
   };
+
   const handleBack = () => {
     console.log("!");
     setScreenToShow("EmploymentDetails");
@@ -46,6 +57,7 @@ const Income = ({ SaveDetails, setScreenToShow }) => {
         initialValues={{
           incomeDetails: "",
           taxResidency: "",
+          nationalInsurance: "",
         }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
@@ -78,6 +90,17 @@ const Income = ({ SaveDetails, setScreenToShow }) => {
             <TextInput
               onBlur={() => setFieldTouched("taxResidency")}
               onChangeText={handleChange("taxResidency")}
+              style={[
+                styles.component1981Child,
+                styles.childBorder,
+                { padding: 10 },
+              ]}
+            />
+
+            <Text>National insurance number</Text>
+            <TextInput
+              onBlur={() => setFieldTouched("nationalInsurance")}
+              onChangeText={handleChange("nationalInsurance")}
               style={[
                 styles.component1981Child,
                 styles.childBorder,
