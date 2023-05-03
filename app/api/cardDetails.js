@@ -2,8 +2,9 @@
 import { enfuceClient as client } from './client'
 
 /**
- * 
- * @param {Str} id The user ID number of the account 687942912
+ * @dev This gets the token to request the card details
+ * @todo Update the username and password in the payload to live when live
+ * @param {Str} id The user ID number of the account for example 687942912
  * @returns The endpoint data and post data to pass to the endpoint
  */
 const getCardResponse = (id) => {
@@ -22,10 +23,10 @@ const getCardResponse = (id) => {
 }
 
 /**
- * 
- * @param {*} url 
- * @param {*} token 
- * @returns 
+ * @dev This gets the card details
+ * @param {Str} url The URL provided by the getCardResponse return
+ * @param {Srt} token The request token provided by the getCardResponse return
+ * @returns The unedited HTML return for the card details
  */
 const getCardDetails = (url, token) => {
   client.setBaseURL(url)
