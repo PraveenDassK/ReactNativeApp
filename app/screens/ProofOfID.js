@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ActivityIndicator,
-  Text
+  Text,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -22,8 +22,6 @@ import CategoryPickerItem from "../components/CategoryPickerItem";
 import AuthScreen from "../components/AuthScreen";
 import { Dropdown } from "react-native-element-dropdown";
 import Success from "../components/RegistrationSuccess";
-
-
 
 const data = [
   { label: "Passport (recommended)", value: "passport" },
@@ -49,7 +47,7 @@ const ProofOfID = ({ navigation }) => {
   const selectImage = async (document) => {
     setIsLoading(true);
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
@@ -70,7 +68,7 @@ const ProofOfID = ({ navigation }) => {
   const selectImage2 = async () => {
     setIsLoading(true);
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
@@ -88,7 +86,7 @@ const ProofOfID = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
-    navigation.navigate("W2Success")
+    navigation.navigate("W2Success");
     // setIsLoading(true);
     // const clientReference = phoneNumber;
 
@@ -121,56 +119,77 @@ const ProofOfID = ({ navigation }) => {
     );
   }
   const handleBack = () => {
-    navigation.navigate("ProofOfResidency")
+    navigation.navigate("ProofOfResidency");
   };
 
   return (
     <Screen>
-    <AuthScreen title="Photo ID" img="elephantCard" width="60%" handleBack={handleBack}>
-      <CountryOfResidence />
-      <View>
-        <Dropdown
-          style={[styles.dropdown]}
-          containerStyle={styles.dropdownContainer}
-          data={data}
-          maxHeight={100}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select"}
-          placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
-          value={documentType}
-          onChange={(item) => {
-            setDocumentType(item.value);
-          }}
-        />
-      </View>
-
-      <TouchableOpacity
-        style={styles.uploadContainer}
-        onPress={() => selectImage(documentType)}
+      <AuthScreen
+        title="Photo ID"
+        img="elephantCard"
+        width="60%"
+        handleBack={handleBack}
       >
-        {!frontImage ? (
-          <>
-            <MaterialCommunityIcons
-              name="plus-circle-outline"
-              color="#D3D3D3"
-              size={30}
-            />
-            <Text style={{ color: "#D3D3D3" }}>Add document</Text>
-          </>
-        ) : (
-          <>
-            <MaterialCommunityIcons
-              name="ticket-confirmation"
-              color="#D3D3D3"
-              size={30}
-            />
-            <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
-          </>
-        )}
-      </TouchableOpacity>
-      <Button title="Continue" textColor="white" color="black" onPress={() => handleSubmit()} />
-    </AuthScreen>
+        <CountryOfResidence />
+        <View>
+          <Dropdown
+            style={[styles.dropdown]}
+            containerStyle={styles.dropdownContainer}
+            data={data}
+            maxHeight={100}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select"}
+            placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
+            value={documentType}
+            onChange={(item) => {
+              setDocumentType(item.value);
+            }}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={styles.uploadContainer}
+          onPress={() => selectImage(documentType)}
+        >
+          {!frontImage ? (
+            <>
+              <MaterialCommunityIcons
+                name="plus-circle-outline"
+                color="#D3D3D3"
+                size={30}
+              />
+              <Text style={{ color: "#D3D3D3" }}>Add document</Text>
+            </>
+          ) : (
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems:"center"}}>
+              {imageUri && (
+                <View style={{ flex:1, justifyContent:"center", alignItems:"center"}}>
+                  <Image
+                    source={{ uri: imageUri }}
+                    style={{ width: 100, height: 100 }}
+                  />
+
+                </View>
+              )}
+              <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+                <MaterialCommunityIcons
+                  name="check-circle"
+                  color="#D3D3D3"
+                  size={30}
+                />
+                <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
+              </View>
+            </View>
+          )}
+        </TouchableOpacity>
+        <Button
+          title="Continue"
+          textColor="white"
+          color="black"
+          onPress={() => handleSubmit()}
+        />
+      </AuthScreen>
     </Screen>
     // <Screen>
     //   <View style={{ flex: 1, padding: 20 }}>
@@ -243,7 +262,7 @@ const ProofOfID = ({ navigation }) => {
 const CountryOfResidence = () => {
   return (
     <View>
-      <Text >Issuing country</Text>
+      <Text>Issuing country</Text>
       <View style={styles.container}>
         <View style={styles.containerImage}>
           <TouchableOpacity>
@@ -255,9 +274,7 @@ const CountryOfResidence = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.containerItem}>
-          <Text >
-            United Kingdom
-          </Text>
+          <Text>United Kingdom</Text>
         </View>
       </View>
     </View>
@@ -452,3 +469,124 @@ const styles = StyleSheet.create({
 });
 
 export default ProofOfID;
+
+// import {
+//   Camera,
+//   CameraType,
+// } from "expo-camera";
+// import { useEffect, useState } from "react";
+// import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+// import * as FaceDetector from "expo-face-detector";
+
+// export default function App() {
+//   const [permission, setPermission] = useState({});
+//   const [faceData, setFaceData] = useState([]);
+
+//   useEffect(() => {
+//     requestPermissions();
+//   }, []);
+
+//   const requestPermissions = async () => {
+//     try {
+//     const {  status } = Camera.requestCameraPermissionsAsync()
+//     setPermission(status === "granted");
+//     console.log("status",status)
+//     } catch (e) {
+//       console.log('errpr',e)
+//     }
+//   };
+
+//   if (permission !== false) {
+//     return (
+//       <View style={[styles.container, {justifyContent: "center", alignItems: "center"}]}>
+//         <Text>No Access </Text>
+//       </View>
+//     );
+//   }
+//   const getFaceDataView = () => {
+//     if (faceData.length === 0) {
+//       return (
+//         <View style={styles.faces}>
+//           <Text style={styles.faceDesc}>No faces:</Text>
+//         </View>
+//       );
+//     } else {
+//       return faceData.map((face, index) => {
+//         const eyesShut =
+//           face.rightEyeOpenProbability < 0.4 &&
+//           face.leftEyeOpenProbability < 0.4;
+//         const winking =
+//           !eyesShut &&
+//           (face.rightEyeOpenProbability < 0.4 ||
+//             face.leftEyeOpenProbability < 0.4);
+//         const smiling = face.smilingProbability > 0.7;
+//         return (
+//           <>
+
+//           <View style={styles.faces} key={index}>
+//             <Text style={styles.faceDesc}>
+//               Eyes Shut: {eyesShut.toString()}
+//             </Text>
+//             <Text style={styles.faceDesc}>Winking: {winking.toString()}</Text>
+//             <Text style={styles.faceDesc}>Smiling: {smiling.toString()}</Text>
+
+//           </View>
+//           <View>
+//               <Button title="press me" onPress={handleCapture}/>
+//             </View>
+//           </>
+//         );
+//       });
+//     }
+//   };
+
+//   const handleFaceDetected = ({ faces}) => {
+//     setFaceData(faces);
+//     console.log(faces[0]);
+//   };
+
+//   const handleCapture = () => {
+
+//   }
+
+//   return (
+//     <View style={styles.container}>
+//       <Camera
+//         f
+//         type={CameraType.front}
+//         style={styles.camera}
+//         onFacesDetected={handleFaceDetected}
+//         faceDetectorSettings={{
+//           mode: FaceDetector.FaceDetectorMode.accurate,
+//           detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+//           runClassifications: FaceDetector.FaceDetectorClassifications.none,
+//           minDetectionInterval: 100,
+//           tracking: true,
+//         }}
+//       >
+//         {getFaceDataView()}
+//       </Camera>
+//     </View>
+//   );
+// }
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+//   camera: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   faces: {
+//     backgroundColor: "#ffffff",
+//     alignSelf: "stretch",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     margin: 16,
+//     opacity: 0.2
+//   },
+//   faceDesc: {
+//     fontSize: 20,
+//   },
+// });

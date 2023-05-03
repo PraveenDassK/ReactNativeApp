@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ActivityIndicator,
-  Text
+  Text,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -46,7 +46,7 @@ const ProofOfResidency = ({ navigation }) => {
   const selectImage = async (document) => {
     setIsLoading(true);
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
@@ -67,7 +67,7 @@ const ProofOfResidency = ({ navigation }) => {
   const selectImage2 = async () => {
     setIsLoading(true);
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
@@ -104,7 +104,6 @@ const ProofOfResidency = ({ navigation }) => {
     // setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
     // navigation.navigate("ProofOfID");
     // setIsLoading(false);
-   
   };
 
   useEffect(() => {
@@ -119,57 +118,95 @@ const ProofOfResidency = ({ navigation }) => {
     );
   }
 
-  const handleBack = () => {
-    
-  };
+  const handleBack = () => {};
 
   return (
     <Screen>
-    <AuthScreen title="Proof of residency" img="elephantCard" width="60%" handleBack={handleBack} back={false} >
-      <CountryOfResidence />
-      <View>
-        <Dropdown
-          style={[styles.dropdown]}
-          containerStyle={styles.dropdownContainer}
-          data={data}
-          maxHeight={100}
-          labelField="label"
-          valueField="value"
-          placeholder={"Select"}
-          placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
-          value={documentType}
-          onChange={(item) => {
-            setDocumentType(item.value);
-          }}
-        />
-      </View>
-
-      <TouchableOpacity
-        style={styles.uploadContainer}
-        onPress={() => selectImage(documentType)}
+      <AuthScreen
+        title="Proof of residency"
+        img="elephantCard"
+        width="60%"
+        handleBack={handleBack}
+        back={false}
       >
-        {!frontImage ? (
-          <>
-            <MaterialCommunityIcons
-              name="plus-circle-outline"
-              color="#D3D3D3"
-              size={30}
-            />
-            <Text style={{ color: "#D3D3D3" }}>Add document</Text>
-          </>
-        ) : (
-          <>
-            <MaterialCommunityIcons
-              name="ticket-confirmation"
-              color="#D3D3D3"
-              size={30}
-            />
-            <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
-          </>
-        )}
-      </TouchableOpacity>
-         <Button title="Continue" textColor="white" color="black" onPress={() => handleSubmit()} />
-    </AuthScreen>
+        <CountryOfResidence />
+        <View>
+          <Dropdown
+            style={[styles.dropdown]}
+            containerStyle={styles.dropdownContainer}
+            data={data}
+            maxHeight={100}
+            labelField="label"
+            valueField="value"
+            placeholder={"Select"}
+            placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
+            value={documentType}
+            onChange={(item) => {
+              setDocumentType(item.value);
+            }}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={styles.uploadContainer}
+          onPress={() => selectImage(documentType)}
+        >
+          {!frontImage ? (
+            <>
+              <MaterialCommunityIcons
+                name="plus-circle-outline"
+                color="#D3D3D3"
+                size={30}
+              />
+              <Text style={{ color: "#D3D3D3" }}>Add document</Text>
+            </>
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {imageUri && (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    source={{ uri: imageUri }}
+                    style={{ width: 150, height: 150 }}
+                  />
+                </View>
+              )}
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="check-circle"
+                  color="#D3D3D3"
+                  size={30}
+                />
+                <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
+              </View>
+            </View>
+          )}
+        </TouchableOpacity>
+        <Button
+          title="Continue"
+          textColor="white"
+          color="black"
+          onPress={() => handleSubmit()}
+        />
+      </AuthScreen>
     </Screen>
     // <Screen>
     //   <View style={{ flex: 1, padding: 20 }}>
@@ -242,7 +279,7 @@ const ProofOfResidency = ({ navigation }) => {
 const CountryOfResidence = () => {
   return (
     <View>
-      <Text >Issuing country</Text>
+      <Text>Issuing country</Text>
       <View style={styles.container}>
         <View style={styles.containerImage}>
           <TouchableOpacity>
@@ -254,9 +291,7 @@ const CountryOfResidence = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.containerItem}>
-          <Text >
-            United Kingdom
-          </Text>
+          <Text>United Kingdom</Text>
         </View>
       </View>
     </View>

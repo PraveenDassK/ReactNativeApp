@@ -2098,6 +2098,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@koale/useworker@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@koale/useworker@npm:4.0.2"
+  dependencies:
+    dequal: ^1.0.0
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 5d0894979ca9f24db747df21e0ded53b7ee24f9db4cf714a18f9f9bab79af538554cc5915fe8bd7e89560a1abfac036679b9985bbfdd3f4ddc9d820c1b676c9b
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -3841,9 +3852,11 @@ __metadata:
     expo-app-loading: ~2.1.1
     expo-asset: ~8.7.0
     expo-blur: ~12.0.1
+    expo-camera: ~13.1.0
     expo-clipboard: ~4.0.1
     expo-dev-client: ~2.0.1
     expo-device: ~5.0.0
+    expo-face-detector: ~12.0.0
     expo-font: ~11.0.1
     expo-image-picker: ~14.0.2
     expo-local-authentication: ~13.0.2
@@ -5855,6 +5868,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dequal@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "dequal@npm:1.0.1"
+  checksum: 92a80c10ec52c256e306ef44c6640f0f2451edfba795b314aec90ee2770930f472c95e8f438b2fb80b0060033d0b5589f2ccb243c0ddd3e9a427c0faa92035c3
+  languageName: node
+  linkType: hard
+
 "des.js@npm:^1.0.0":
   version: 1.0.1
   resolution: "des.js@npm:1.0.1"
@@ -6573,6 +6593,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-camera@npm:~13.1.0":
+  version: 13.1.0
+  resolution: "expo-camera@npm:13.1.0"
+  dependencies:
+    "@koale/useworker": ^4.0.2
+    invariant: ^2.2.4
+  peerDependencies:
+    expo: "*"
+  checksum: 78bfa446f6e6f5c3f86aa7b9ab33069074cba46fbc20237ad9db0655c263063f70fe57d2882ae766d0bd335b8a0435e862ef9339d710cb2680531fac67f34b0d
+  languageName: node
+  linkType: hard
+
 "expo-clipboard@npm:~4.0.1":
   version: 4.0.2
   resolution: "expo-clipboard@npm:4.0.2"
@@ -6660,6 +6692,15 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: b9024aec559552cea625f545af63cedc7be300ca4f5f0f7e92e17b9367bcb7c7960cc2fc37b3b5ee7b3d570f14d176609200922df4355de95d4a96bc69f9c20d
+  languageName: node
+  linkType: hard
+
+"expo-face-detector@npm:~12.0.0":
+  version: 12.0.0
+  resolution: "expo-face-detector@npm:12.0.0"
+  peerDependencies:
+    expo: "*"
+  checksum: e84790509896e423389a5d704061e32662992803bdb0d50098b07e2328f2a0eb7c7a4e098aa17cb79e32757c8cfa4481f5b628590c8c895070998cf5e728568e
   languageName: node
   linkType: hard
 

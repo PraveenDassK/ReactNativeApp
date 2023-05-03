@@ -167,14 +167,17 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
       >
         <Modal
           animationType="slide"
-          transparent={true}
+          transparent="false"
           visible={visible}
           onRequestClose={() => {
             Alert.alert("Modal has been closed.");
             setVisible(!visible);
           }}
         >
+       
           <Privacy setIsOpen={setVisible} />
+
+        
         </Modal>
         <Formik
           initialValues={{ firstName: "", lastName: "" }}
