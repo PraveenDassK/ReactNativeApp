@@ -84,6 +84,7 @@ import DeleteAccount from "../screens/DeleteAccount";
 import TestEnviro from "../screens/TestEnviro";
 
 import GroupBeneficiary from "../screens/GroupBeneficiary";
+import ScheduledPayment from "../screens/ScheduledPayment";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -238,6 +239,19 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(AddFunds)}
         options={{
           title: "Add Funds",
+          presentation: 'modal',
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" }
+        }}
+      />
+      <Stack.Screen
+        name="ScheduledPayment"
+        component={gestureHandlerRootHOC(ScheduledPayment)}
+        options={{
+          title: "ScheduledPayment",
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
