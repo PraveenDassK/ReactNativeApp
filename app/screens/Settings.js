@@ -121,7 +121,7 @@ const Settings = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    const swipeRight = navigation.addListener("state", (event) => {});
+    const swipeRight = navigation.addListener("state", (event) => { });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return swipeRight;
@@ -403,6 +403,17 @@ const Settings = ({ navigation }) => {
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
           />
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Button
+            title="Schedule payment"
+            style={styles.boxShadow}
+            color="babyBlue"
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("ScheduledPayment")}
+          />
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.button}>
           <Button
             title="About us"
@@ -434,7 +445,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="DeleteAccount"
+            title="Delete Account"
             style={styles.boxShadow}
             color="babyBlue"
             transform={{ textTransform: "none" }}
