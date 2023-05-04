@@ -35,6 +35,7 @@ import PastAddresses from "../components/RegistrationPastAddresses.jsx";
 import MaritalStatus from "../components/RegistrationMaritalStatus.jsx";
 import EmploymentDetails from "../components/RegistrationEmploymentDetails.jsx";
 import Income from "../components/RegistrationIncomeDetails.jsx";
+import Confirm from "../components/RegistrationSendDetails";
 import Success from "../components/RegistrationSuccess.jsx";
 
 import RegistrationNumber from "../components/RegistrationRegistrationNumber.jsx";
@@ -69,10 +70,13 @@ const Registration = ({ navigation }) => {
     "nationalInsurance": "1"
   })
 
-  const [registrationNumberDetails, setRegistrationNumberDetails] =
-    useState(null);
+  const [registrationNumberDetails, setRegistrationNumberDetails] = useState(null);
   const [companyDetails, setCompanyDetails] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
+
+  useEffect(() => {
+
+  }, [])
 
   /**
    * @dev Use this to differentiate between Personal or business accounts
@@ -123,28 +127,26 @@ const Registration = ({ navigation }) => {
         setScreenToShow("EmploymentDetails");
         return;
       case "EmploymentDetails":
-        setEmploymentDetails(details);
+        //setEmploymentDetails(details);
         setScreenToShow("Income");
         return;
       case "Income":
-        await setIncome(details)
-        console.log(details)
-        console.log(income)
-        // sendDetails()
-        // setScreenToShow("Success")
+        setIncome(details)
+        setScreenToShow("Confirm");
+        return;
+      case "Confirm":
+        //Confirms and sends the data
         if (await sendDetails()) {
           //If successful
           setScreenToShow("Success");
         } else {
           //If unsuccessful
           alert("Registration is unsuccessful");
-        }
-        return;
+        } return;
       case "Success":
-        setPersonalDetails(details);
         return;
       case "RegistrationNumber":
-        setPersonalDetails(details);
+        setRegistrationNumberDetails(details);
         setScreenToShow("CompanyDetails");
         return;
       case "CompanyDetails":
@@ -234,6 +236,13 @@ const Registration = ({ navigation }) => {
       case "Income":
         return (
           <Income
+            SaveDetails={detailsSaver}
+            setScreenToShow={setScreenToShow}
+          />
+        );
+      case "Confirm":
+        return (
+          <Confirm
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
           />
@@ -427,7 +436,7 @@ const Registration = ({ navigation }) => {
             "postTown": addresses[0].area,
             "country": nationality.country,
             "locale": addresses[0].locale,
-            "salutation": "",
+            "salutation": "Mr",
             "gender": personalDetails.gender,
             "maritalStatus": maritalStatus,
             "employmentDetails": employmentDetails
@@ -436,7 +445,7 @@ const Registration = ({ navigation }) => {
           "key": "",
           "role": "",
           "ownershipPercentage": 0,
-          "marketingChoices": "string"
+          "marketingChoices": ""
         }
       ]
     console.log(regData)
