@@ -44,9 +44,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
-
-  const [visible, setVisible] = useState(false)
-  const [disbled, setDisabled] = useState(true)
+  const [visible, setVisible] = useState(false);
+  const [disbled, setDisabled] = useState(true);
 
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
@@ -134,27 +133,27 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   };
 
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShow(Platform.OS === "ios");
     setDate(currentDate);
   };
-  console.log(String(date))
+  console.log(String(date));
 
-  const showMode = currentMode => {
+  const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
   };
 
   const showDatepicker = () => {
-    showMode('date');
+    showMode("date");
   };
 
   const showTimepicker = () => {
-    showMode('time');
+    showMode("time");
   };
 
   return (
@@ -167,17 +166,14 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
       >
         <Modal
           animationType="slide"
-          transparent="false"
+          transparent={false}
           visible={visible}
           onRequestClose={() => {
             Alert.alert("Modal has been closed.");
             setVisible(!visible);
           }}
         >
-       
           <Privacy setIsOpen={setVisible} />
-
-        
         </Modal>
         <Formik
           initialValues={{ firstName: "", lastName: "" }}
@@ -255,7 +251,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                 <View style={styles.buttonContainer}>
                   <Button
                     onPress={showDatepicker}
-                    title= {moment(date).format('MMM DD YYYY')}
+                    title={moment(date).format("MMM DD YYYY")}
                   />
                 </View>
                 {show && (
@@ -270,14 +266,12 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                 )}
               </View>
 
-
               <CheckBox
-
                 title="I have read and accepted the Privacy Policy"
                 checked={privacyPolicy}
                 checkedColor="black"
                 onPress={() => {
-                  setVisible(true)
+                  setVisible(true);
                   setPrivacyPolicy(true);
                 }}
               />

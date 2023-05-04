@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import {AppState} from 'react-native';
-import { Asset, useAssets } from 'expo-asset';
+import { AppState } from "react-native";
+import { Asset, useAssets } from "expo-asset";
 import {
   Text,
   StyleSheet,
@@ -14,16 +14,12 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 
-
-
 const SecurityAndPrivacy = ({ navigation }) => {
-  const [assets, error] = useAssets(
-    [
-      require('../assets/icon-faceid.png'),
-      require("../assets/icon-view.png"),
-      require("../assets/blueMessage.png"),
-    ]);
-    
+  const [assets, error] = useAssets([
+    require("../assets/icon-faceid.png"),
+    require("../assets/icon-view.png"),
+    require("../assets/blueMessage.png"),
+  ]);
 
   const { setIsAuth, settings, setSettings } = useContext(AuthContext);
 
@@ -55,7 +51,6 @@ const SecurityAndPrivacy = ({ navigation }) => {
   }, [isEnabled]);
 
   const restoreSignIn = async () => {
-    console.log("trying for signIn in security");
     const token = await authStorage.getSignInSettings();
     if (!token) return;
     console.log("restore token found in security", token.includes("true"));
@@ -84,8 +79,6 @@ const SecurityAndPrivacy = ({ navigation }) => {
     setSettings((prev) => ({ ...prev, contactAccess: !prev.contactAccess }));
   };
 
-  
- 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
@@ -97,7 +90,6 @@ const SecurityAndPrivacy = ({ navigation }) => {
           style={styles.icon}
           source={require("../assets/icon-faceid.png")}
         />
-        
 
         <Text style={styles.divText}>Sign in with Face ID</Text>
 

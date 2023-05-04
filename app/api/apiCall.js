@@ -239,7 +239,7 @@ const GetCardDetails = async (Id) => {
       `https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=${Id}`
     );
     const requestData = request?.data?.details[0];
-    console.log(requestData)
+    console.log(requestData);
     data = {
       accountId: requestData.id,
       cardID: requestData.id,
@@ -511,7 +511,7 @@ const GetTransactionsYear = async (Id) => {
   const endOfMonth = moment().endOf("month");
   console.log(endOfMonth);
 
-  requestData.content?.forEach((element) => {
+  requestData?.content?.forEach((element) => {
     total += element.amount;
     let category = endOfMonth.diff(element.transactionDate, "months");
     data[category] += element.amount;
@@ -553,7 +553,7 @@ const GetTransactionsMonth = async (Id) => {
 
   //Gets the data
   const endOfDay = moment().endOf("day");
-  requestData.content?.forEach((element) => {
+  requestData?.content?.forEach((element) => {
     total += element.amount;
     let category = endOfDay.diff(element.transactionDate, "weeks");
     data[category] += element.amount;
@@ -628,14 +628,14 @@ const GetLimits = async (Id) => {
   if (
     request.data.resultMessage == "No budget found for the specified Account Id"
   ) {
-    return null
+    return null;
   }
 
-  console.log(request.data);
+  console.log("request data", request.data);
   const requestData = request?.data?.details;
   return {
     spend: spend,
-    monthlyAmount: requestData.monthlyAmount,
+    monthlyAmount: requestData?.monthlyAmount,
   };
 };
 
