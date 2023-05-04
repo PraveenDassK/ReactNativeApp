@@ -72,24 +72,26 @@ const GroupBeneficiary = () => {
    * @param {*} param0 
    */
   const handleSubmit = async ({ createGroup }) => {
-    console.log("Submitted", createGroup);
-    console.log(groupData)
     let beneficiaryData = []
     groupData.forEach(beneficiary => {
-      console.log(beneficiary)
       beneficiaryData.push({
         "beneficiariesId": beneficiary.id,
         "beneficiariesName": beneficiary.name
       })
     })
-    console.log(beneficiaryData)
-    await apiBeneficiaries.CreateNewGroupBeneficiary(
+    const success = await apiBeneficiaries.CreateNewGroupBeneficiary(
       {
         "carbonyteId": customerDetails,
         "groupName": createGroup,
         "beneficiariesDetails": beneficiaryData
       }
     )
+
+    if(success){
+
+    }else{
+
+    }
   };
 
   return (

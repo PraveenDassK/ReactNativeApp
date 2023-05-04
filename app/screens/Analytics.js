@@ -67,6 +67,7 @@ const Analytics = ({ navigation }) => {
     if(!accountID)return;
     const dataCall = await apiCall.GetAnalysisData(accountID);
     const response = await apiCall.GetScheduledPayments("CC1")
+    console.log("Scheduled", response)
     const graphData = await apiCall.GetTransactionsWeek(accountID);
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
 

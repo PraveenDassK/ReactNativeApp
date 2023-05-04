@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -18,6 +18,9 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import { verticalScale } from "../config/scaling";
 import Button from "../components/Button";
 
+import apiBeneficiaries from "../api/apiBeneficiaries";
+import AuthContext from "../auth/context";
+
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).max(30).label("Schedulde payment"),
   amount: Yup.number().required("Must be number").label("Amount"),
@@ -35,10 +38,10 @@ const validationSchema = Yup.object().shape({
     .label("Sort code"),
   timePeriod: Yup.string()
     .required()
-    // .matches(/^[0-9]+$/, "Account number must be digits")
-    // .min(8, "Must be exactly 8 digits")
-    // .max(8, "Must be exactly 8 digits")
-    // .label("Account number"),
+  // .matches(/^[0-9]+$/, "Account number must be digits")
+  // .min(8, "Must be exactly 8 digits")
+  // .max(8, "Must be exactly 8 digits")
+  // .label("Account number"),
 });
 
 const items = [
@@ -75,6 +78,16 @@ const items = [
 ];
 
 const ScheduledPayment = () => {
+  const { userID, customerDetails } = useContext(AuthContext);
+  
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    
+  }
+
   const generateBoxShadowStyle = (
     xOffset,
     yOffset,
@@ -101,8 +114,20 @@ const ScheduledPayment = () => {
 
   generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
-  const handleSubmit = async ({title, amount, toAccount, fromAccount, timePeriod}) => {
+  const handleSubmit = async ({ title, amount, toAccount, fromAccount, timePeriod }) => {
     console.log(title, amount, toAccount, fromAccount, timePeriod);
+
+    const obj = {
+      "individualOrGroupType": 0,
+      "fromCarbonyteId": customerDetails,
+      "frommodulrAccountId": userID,
+      "toBeneficiaryOrGroupId": "string",
+      "date": "2023-05-02" + "T00:00:00.000Z",
+      "amount": 0
+    }
+    apiBeneficiaries.SchedulePayment(obj)
+
+
   };
 
   return (
@@ -114,11 +139,11 @@ const ScheduledPayment = () => {
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
             initialValues={{
-             title: "",
-             amount: "",
-             toAccount: "",
-             fromAccount: "",
-             timePeriod: ""
+              title: "",
+              amount: "",
+              toAccount: "",
+              fromAccount: "",
+              timePeriod: ""
             }}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}

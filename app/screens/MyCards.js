@@ -50,7 +50,12 @@ const MyCards = ({ navigation }) => {
   const [cardIndex, setCardIndex] = useState(0);
   const [cardData, setCardData] = useState(null);
   const authContext = useContext(AuthContext);
-  const { settings } = useContext(AuthContext);
+  const { 
+    settings,
+    cardID,
+    customerDetails,
+    cardDetails 
+  } = useContext(AuthContext);
 
   useEffect(() => {
     loadData();
@@ -67,10 +72,7 @@ const MyCards = ({ navigation }) => {
     setCardData(cards);
     const currentCard = cards[cardIndex];
     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
-    console.log(currentCard);
-    setfirstname(currentCard.embossing.firstName);
-    setlastname(currentCard.embossing.lastName);
-    setcardnumber(currentCard.maskedCardNumber);
+
     setRole(currentCard.cardRole);
     setInitals(
       currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
@@ -78,33 +80,13 @@ const MyCards = ({ navigation }) => {
     setIsLoading(false);
     setType(currentCard.productCode);
 
-    const responseDetails = await apiCard.getCardResponse("686283112");
-    console.log(responseDetails.data);
-
-    const cardDetails = await apiCard.getCardDetails(
-      responseDetails?.data?.cardDataUrl,
-      responseDetails?.data?.token
-    );
-    console.log("card details", cardDetails.data);
-
-    const cardNumber = cardDetails?.data?.substr(548, 16);
-    const cardExpiry = cardDetails?.data?.substr(601, 4);
-    const cardCVV = cardDetails?.data?.substr(637, 3);
-    CARD_DATA.push({
-      name: cardExpiry,
-      number: cardNumber,
-      image: require("../assets/cardLion.png"),
-    });
+    setcardnumber(cardDetails.number);
+    setfirstname("CVV " + cardDetails.cvv)
+    setlastname(cardDetails.name)
+    console.log(cardDetails)
   };
 
-  const cardDetails = () => {
-    console.log(cardData);
-    cardData[cardIndex].status != "CARD_OK"
-      ? setFrozen(true)
-      : setFrozen(false);
-    console.log(cardData[cardIndex].status);
-  };
-
+  
   let transactionList = [];
   const showTransaction = (Id) => {
     setModalVisible(true);

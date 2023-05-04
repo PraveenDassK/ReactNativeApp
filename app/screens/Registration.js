@@ -35,6 +35,7 @@ import PastAddresses from "../components/RegistrationPastAddresses.jsx";
 import MaritalStatus from "../components/RegistrationMaritalStatus.jsx";
 import EmploymentDetails from "../components/RegistrationEmploymentDetails.jsx";
 import Income from "../components/RegistrationIncomeDetails.jsx";
+import Confirm from "../components/RegistrationSendDetails";
 import Success from "../components/RegistrationSuccess.jsx";
 
 import RegistrationNumber from "../components/RegistrationRegistrationNumber.jsx";
@@ -58,18 +59,24 @@ const Registration = ({ navigation }) => {
   const [maritalStatus, setMaritalStatus] = useState("single")
   const [employmentDetails, setEmploymentDetails] = useState("employed")
   const [income, setIncome] = useState({
-    "totalIncome": "",
-    "savings": "",
-    "taxResidency": "Uk",
-    "incomeSources": [
-      "Salary"
-    ]
+    "incomeDetails": {
+      "totalIncome": "0",
+      "savings": "",
+      "taxResidency": "Uk",
+      "incomeSources": [
+        "Salary"
+      ]
+    },
+    "nationalInsurance": "1"
   })
 
-  const [registrationNumberDetails, setRegistrationNumberDetails] =
-    useState(null);
+  const [registrationNumberDetails, setRegistrationNumberDetails] = useState(null);
   const [companyDetails, setCompanyDetails] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
+
+  useEffect(() => {
+
+  }, [])
 
   /**
    * @dev Use this to differentiate between Personal or business accounts
@@ -120,26 +127,26 @@ const Registration = ({ navigation }) => {
         setScreenToShow("EmploymentDetails");
         return;
       case "EmploymentDetails":
-        setEmploymentDetails(details);
+        //setEmploymentDetails(details);
         setScreenToShow("Income");
         return;
       case "Income":
-        // setIncome(details)
-        // sendDetails()
-        // setScreenToShow("Success")
+        setIncome(details)
+        setScreenToShow("Confirm");
+        return;
+      case "Confirm":
+        //Confirms and sends the data
         if (await sendDetails()) {
           //If successful
           setScreenToShow("Success");
         } else {
           //If unsuccessful
           alert("Registration is unsuccessful");
-        }
-        return;
+        } return;
       case "Success":
-        setPersonalDetails(details);
         return;
       case "RegistrationNumber":
-        setPersonalDetails(details);
+        setRegistrationNumberDetails(details);
         setScreenToShow("CompanyDetails");
         return;
       case "CompanyDetails":
@@ -233,6 +240,13 @@ const Registration = ({ navigation }) => {
             setScreenToShow={setScreenToShow}
           />
         );
+      case "Confirm":
+        return (
+          <Confirm
+            SaveDetails={detailsSaver}
+            setScreenToShow={setScreenToShow}
+          />
+        );
       case "Success":
         return (
           <Success
@@ -313,7 +327,8 @@ const Registration = ({ navigation }) => {
    *          has been added
    */
   const sendDetails = async () => {
-    const Id = String(Math.floor(Math.random() * 500000));
+    // const Id = String(Math.floor(Math.random() * 500000));
+    const Id = income.nationalInsurance
     // const Idperm = "10";
     // return false
     console.log(Id)
@@ -324,6 +339,78 @@ const Registration = ({ navigation }) => {
     console.log(nationality)
     console.log(nationality.country)
     // if (accountType == "Personal") {
+
+    const businessRegData = {
+      type: "string",
+      company_status: "string",
+      etag: "string",
+      aboutBusiness: "string",
+      incomeSources: ["string"],
+      operationTime: "string",
+      targetCustomer: "string",
+      customerOutOfUk: "string",
+      sic_codes: ["string"],
+      registered_office_is_in_dispute: true,
+      jurisdiction: "string",
+      undeliverable_registered_office_address: true,
+      links: {
+        self: "string",
+        filing_history: "string",
+        persons_with_significant_control: "string",
+        officers: "string",
+      },
+      company_name: "string",
+      accounts: {
+        next_made_up_to: "string",
+        next_due: "string",
+        overdue: true,
+        accounting_reference_date: {
+          month: "string",
+          day: "string",
+        },
+        last_accounts: {
+          type: "string",
+          made_up_to: "string",
+          period_start_on: "string",
+          period_end_on: "string",
+        },
+        next_accounts: {
+          overdue: true,
+          due_on: "string",
+          period_start_on: "string",
+          period_end_on: "string",
+        },
+      },
+      previous_company_names: [
+        {
+          ceased_on: "string",
+          effective_from: "string",
+          name: "string",
+        },
+      ],
+      date_of_creation: "string",
+      company_number: "string",
+      has_insolvency_history: true,
+      has_charges: true,
+      confirmation_statement: {
+        next_made_up_to: "string",
+        next_due: "string",
+        overdue: true,
+        last_made_up_to: "string",
+      },
+      registered_office_address: {
+        country: "string",
+        address_line_1: "string",
+        postal_code: "string",
+        locality: "string",
+        address_line_2: "string",
+        region: "string",
+        dateMovedIn: "string",
+      },
+      has_super_secure_pscs: true,
+      can_file: true,
+    }
+
     const regData =
       [
         {
@@ -349,16 +436,16 @@ const Registration = ({ navigation }) => {
             "postTown": addresses[0].area,
             "country": nationality.country,
             "locale": addresses[0].locale,
-            "salutation": "",
+            "salutation": "Mr",
             "gender": personalDetails.gender,
             "maritalStatus": maritalStatus,
             "employmentDetails": employmentDetails
           },
-          "income": income,
+          "income": income.incomeDetails,
           "key": "",
           "role": "",
           "ownershipPercentage": 0,
-          "marketingChoices": "string"
+          "marketingChoices": ""
         }
       ]
     console.log(regData)
