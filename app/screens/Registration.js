@@ -13,7 +13,6 @@ import MaritalStatus from "../components/RegistrationMaritalStatus.jsx";
 import EmploymentDetails from "../components/RegistrationEmploymentDetails.jsx";
 import Income from "../components/RegistrationIncomeDetails.jsx";
 import Confirm from "../components/RegistrationSendDetails";
-import Confirm from "../components/RegistrationSendDetails";
 import Success from "../components/RegistrationSuccess.jsx";
 
 import RegistrationNumber from "../components/RegistrationRegistrationNumber.jsx";

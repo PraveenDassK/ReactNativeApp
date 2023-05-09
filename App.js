@@ -30,7 +30,6 @@ if (!global.atob) {
 if (!global.atob) {
   global.atob = decode;
 }
-}
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
