@@ -51,23 +51,7 @@ const ProofOfResidency = ({ navigation }) => {
         base64: true,
       });
 
-      console.log(result.assets[0]);
-
-      if (!result.canceled) {
-        setImageUri(result.assets[0].uri);
-        setFrontImage(result.assets[0].base64);
-        setDocumentType(document);
-      }
-    } catch (error) {
-      console.log("Error reading an image", error);
-    }
-    setIsLoading(false);
-  };
-
-  const selectImage2 = async () => {
-    setIsLoading(true);
-    try {
-      const result = await ImagePicker.launchCameraAsync({
+      const resultBack = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
@@ -76,7 +60,9 @@ const ProofOfResidency = ({ navigation }) => {
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
-        setBackImage(result.assets[0].base64);
+        setFrontImage(result.assets[0].base64);
+        setBackImage(resultBack.assets[0].base64);
+        setDocumentType("ID3");
       }
     } catch (error) {
       console.log("Error reading an image", error);
@@ -84,26 +70,28 @@ const ProofOfResidency = ({ navigation }) => {
     setIsLoading(false);
   };
 
+
   const handleSubmit = async () => {
+    // navigation.navigate("ProofOfID");//ID1
+    setIsLoading(true);
+    const clientReference = "CC1";
+
+    const result = await w2GlobalAPI.verifyDocument(
+      clientReference,
+      documentType,
+      frontImage,
+      backImage
+    );
+    console.log(result)
+
+    if (!result.data[0].result) {
+      setIsLoading(false);
+      return alert("Could not verify documents");
+    }
+
+    setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
     navigation.navigate("ProofOfID");
-    // setIsLoading(true);
-    // const clientReference = phoneNumber;
-
-    // const result = await w2GlobalAPI.verifyDocument(
-    //   clientReference,
-    //   documentType,
-    //   frontImage,
-    //   backImage
-    // );
-
-    // console.log("what is this", result.ok, result.data[0].result);
-
-    // if (!result.ok || !result.data[0].result)
-    //   return alert("Could not verify documents");
-
-    // setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
-    // navigation.navigate("ProofOfID");
-    // setIsLoading(false);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -118,7 +106,7 @@ const ProofOfResidency = ({ navigation }) => {
     );
   }
 
-  const handleBack = () => {};
+  const handleBack = () => { };
 
   return (
     <Screen>

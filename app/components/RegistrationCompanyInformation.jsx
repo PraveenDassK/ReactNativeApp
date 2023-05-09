@@ -30,9 +30,6 @@ import { CheckBox } from "@rneui/themed";
 import AuthScreen from "./AuthScreen";
 
 const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
-  const [name, setName] = useState("");
-  const [type, setType] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
 
   const handleSubmit = ({ details }) => {
     SaveDetails(details, "CompanyInformation");

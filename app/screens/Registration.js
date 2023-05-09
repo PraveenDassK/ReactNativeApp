@@ -1,31 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 //import * as React from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Text,
-  TextInput,
-  Image,
-  Pressable,
-  useWindowDimensions,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import {StyleSheet} from "react-native";
 import Screen from "../components/Screen";
-import AuthContext from "../auth/context";
-import GlobalStyles from "../../GlobalStyles";
 import apiLogin from "../api/apiLogin";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from "../config/scaling";
-import ErrorMessage from "../components/forms/ErrorMessage";
-import Button from "../components/Button";
 
 import RegistrationPersonalDetails from "../components/RegistrationPersonalDetails.jsx";
 import RegistraionEmailAndPhone from "../components/RegistrationEmailAndPhone.jsx";
@@ -35,6 +12,7 @@ import PastAddresses from "../components/RegistrationPastAddresses.jsx";
 import MaritalStatus from "../components/RegistrationMaritalStatus.jsx";
 import EmploymentDetails from "../components/RegistrationEmploymentDetails.jsx";
 import Income from "../components/RegistrationIncomeDetails.jsx";
+import Confirm from "../components/RegistrationSendDetails";
 import Success from "../components/RegistrationSuccess.jsx";
 
 import RegistrationNumber from "../components/RegistrationRegistrationNumber.jsx";
@@ -45,6 +23,7 @@ import CompanyIncome from "../components/RegistrationCompanyIncome.jsx";
 import CompanyOperations from "../components/RegistrationCompanyOperations.jsx";
 import CompanyUsage from "../components/RegistrationCompanyUsage.jsx";
 import CompanyDirectors from "../components/RegistrationCompanyDirectors.jsx";
+import CompanyConfirm from "../components/RegistrationCompanySendDetails";
 
 import colors from "../config/colors";
 
@@ -69,10 +48,14 @@ const Registration = ({ navigation }) => {
     "nationalInsurance": "1"
   })
 
-  const [registrationNumberDetails, setRegistrationNumberDetails] =
-    useState(null);
+  const [companyHouse, setRegistrationNumberDetails] = useState(null);
   const [companyDetails, setCompanyDetails] = useState(null);
+  const [companyInformation, setCompanyInformation] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
+
+  useEffect(() => {
+
+  }, [])
 
   /**
    * @dev Use this to differentiate between Personal or business accounts
@@ -123,40 +106,38 @@ const Registration = ({ navigation }) => {
         setScreenToShow("EmploymentDetails");
         return;
       case "EmploymentDetails":
-        setEmploymentDetails(details);
+        //setEmploymentDetails(details);
         setScreenToShow("Income");
         return;
       case "Income":
-        await setIncome(details)
-        console.log(details)
-        console.log(income)
-        // sendDetails()
-        // setScreenToShow("Success")
-        if (await sendDetails()) {
+        setIncome(details)
+        setScreenToShow("Confirm");
+        return;
+      case "Confirm":
+        //Confirms and sends the data
+        if (await sendDetails("Personal")) {
           //If successful
           setScreenToShow("Success");
         } else {
           //If unsuccessful
           alert("Registration is unsuccessful");
-        }
-        return;
+        } return;
       case "Success":
-        setPersonalDetails(details);
         return;
       case "RegistrationNumber":
-        setPersonalDetails(details);
+        setRegistrationNumberDetails(details);
         setScreenToShow("CompanyDetails");
         return;
       case "CompanyDetails":
-        setPersonalDetails(details);
+        //setCompanyDetails(details);
         setScreenToShow("CompanyAddress");
         return;
       case "CompanyAddress":
-        setPersonalDetails(details);
+        //setPersonalDetails(details);
         setScreenToShow("CompanyInformation");
         return;
       case "CompanyInformation":
-        setPersonalDetails(details);
+        setCompanyInformation(details);
         setScreenToShow("CompanyIncome");
         return;
       case "CompanyIncome":
@@ -172,8 +153,18 @@ const Registration = ({ navigation }) => {
         setScreenToShow("CompanyDirectors");
         return;
       case "CompanyDirectors":
-        setScreenToShow("PersonalDetails");
+        setScreenToShow("CompanyConfirm");
         break;
+      case "CompanyConfirm":
+        //Confirms and sends the data
+        const callResult = await sendDetails("Business") 
+        if (callResult === true) {
+          //If successful
+          setScreenToShow("PersonalDetails");
+        } else {
+          //If unsuccessful
+          alert(callResult);
+        } return;
       case "PersonalOrBusiness":
         break;
     }
@@ -234,6 +225,13 @@ const Registration = ({ navigation }) => {
       case "Income":
         return (
           <Income
+            SaveDetails={detailsSaver}
+            setScreenToShow={setScreenToShow}
+          />
+        );
+      case "Confirm":
+        return (
+          <Confirm
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
           />
@@ -302,6 +300,13 @@ const Registration = ({ navigation }) => {
             setScreenToShow={setScreenToShow}
           />
         );
+        case "CompanyConfirm":
+          return (
+            <CompanyConfirm
+              SaveDetails={detailsSaver}
+              setScreenToShow={setScreenToShow}
+            />
+          );
       default:
         return (
           <PersonalOrBusiness
@@ -317,135 +322,101 @@ const Registration = ({ navigation }) => {
    * @notice  The only validation done here is to check if an item
    *          has been added
    */
-  const sendDetails = async () => {
+  const sendDetails = async (type) => {
     // const Id = String(Math.floor(Math.random() * 500000));
     const Id = income.nationalInsurance
-    // const Idperm = "10";
-    // return false
-    console.log(Id)
-    console.log(emailandPhone)
-    console.log(personalDetails)
-    console.log(addresses)
-    console.log(maritalStatus)
-    console.log(nationality)
-    console.log(nationality.country)
-    // if (accountType == "Personal") {
+    if (type == "Personal") {
 
-    const businessRegData = {
-      type: "string",
-      company_status: "string",
-      etag: "string",
-      aboutBusiness: "string",
-      incomeSources: ["string"],
-      operationTime: "string",
-      targetCustomer: "string",
-      customerOutOfUk: "string",
-      sic_codes: ["string"],
-      registered_office_is_in_dispute: true,
-      jurisdiction: "string",
-      undeliverable_registered_office_address: true,
-      links: {
-        self: "string",
-        filing_history: "string",
-        persons_with_significant_control: "string",
-        officers: "string",
-      },
-      company_name: "string",
-      accounts: {
-        next_made_up_to: "string",
-        next_due: "string",
-        overdue: true,
-        accounting_reference_date: {
-          month: "string",
-          day: "string",
+      const regData =
+        [
+          {
+            "emails": [
+              {
+                "emailId": emailandPhone.emailAddress
+              }
+            ],
+            "phoneNumbers": [
+              {
+                "phoneNo": emailandPhone.phoneNumber
+              }
+            ],
+            "customerDetails": {
+              "documentNo": "",
+              "documentType": "",
+              "address": addresses[0].address1,
+              "firstName": personalDetails.firstName,
+              "dob": "01-01-1970",
+              "nationalId": Id,
+              "lastName": personalDetails.lastName,
+              "postCode": addresses[0].postcode,
+              "postTown": addresses[0].area,
+              "country": nationality.country,
+              "locale": addresses[0].locale,
+              "salutation": "Mr",
+              "gender": personalDetails.gender,
+              "maritalStatus": maritalStatus,
+              "employmentDetails": employmentDetails
+            },
+            "income": income.incomeDetails,
+            "key": "",
+            "role": "",
+            "ownershipPercentage": 0,
+            "marketingChoices": ""
+          }
+        ]
+      console.log(regData)
+      const response = await apiLogin.RegisterPersonalAccount(regData)
+      console.log(response.data)
+      // If registration was not successfull
+      if (!response.data.result) return false;
+      // return false;
+      return true;
+    } else {
+      //Business registration
+      const businessRegData = companyHouse
+      const regObj = {
+        type: companyHouse.type,
+        company_status: companyHouse.company_status,
+        etag: companyHouse.etag,
+        aboutBusiness: companyInformation,
+        incomeSources: ["Sales revenue"],
+        operationTime: "New ownership",
+        targetCustomer: "People",
+        customerOutOfUk: "True",
+        sic_codes: companyHouse.sic_codes,
+        registered_office_is_in_dispute: companyHouse.registered_office_is_in_dispute,
+        jurisdiction: companyHouse.jurisdiction,
+        undeliverable_registered_office_address: companyHouse.undeliverable_registered_office_address,
+        links: companyHouse.links,
+        company_name: companyHouse.company_name,
+        accounts: companyHouse.accounts,
+        previous_company_names: companyHouse.previous_company_names,
+        date_of_creation: companyHouse.date_of_creation,
+        company_number: companyHouse.company_number,
+        has_insolvency_history: companyHouse.has_insolvency_history,
+        has_charges: companyHouse.has_charges,
+        confirmation_statement: companyHouse.confirmation_statement,
+        registered_office_address: {
+          country: "UK",
+          address_line_1: companyHouse.registered_office_address.address_line_1,
+          postal_code: companyHouse.registered_office_address.postal_code,
+          locality: companyHouse.registered_office_address.locality,
+          address_line_2: companyHouse.registered_office_address.address_line_2,
+          region: "London",
+          locale: "en_GB",
+          dateMovedIn: "2010-01-01",
         },
-        last_accounts: {
-          type: "string",
-          made_up_to: "string",
-          period_start_on: "string",
-          period_end_on: "string",
-        },
-        next_accounts: {
-          overdue: true,
-          due_on: "string",
-          period_start_on: "string",
-          period_end_on: "string",
-        },
-      },
-      previous_company_names: [
-        {
-          ceased_on: "string",
-          effective_from: "string",
-          name: "string",
-        },
-      ],
-      date_of_creation: "string",
-      company_number: "string",
-      has_insolvency_history: true,
-      has_charges: true,
-      confirmation_statement: {
-        next_made_up_to: "string",
-        next_due: "string",
-        overdue: true,
-        last_made_up_to: "string",
-      },
-      registered_office_address: {
-        country: "string",
-        address_line_1: "string",
-        postal_code: "string",
-        locality: "string",
-        address_line_2: "string",
-        region: "string",
-        dateMovedIn: "string",
-      },
-      has_super_secure_pscs: true,
-      can_file: true,
+        has_super_secure_pscs: companyHouse.has_super_secure_pscs,
+        can_file: companyHouse.can_file,
+      }
+      const response = await apiLogin.RegisterBusinessAccount(regObj)
+      console.log(regObj)
+
+      if (!response.data.result) return response.data.resultMessage;
+      console.log(response)
+      // return false;
+      return true;
     }
-
-    const regData =
-      [
-        {
-          "emails": [
-            {
-              "emailId": emailandPhone.emailAddress
-            }
-          ],
-          "phoneNumbers": [
-            {
-              "phoneNo": emailandPhone.phoneNumber
-            }
-          ],
-          "customerDetails": {
-            "documentNo": "",
-            "documentType": "",
-            "address": addresses[0].address1,
-            "firstName": personalDetails.firstName,
-            "dob": "01-01-1970",
-            "nationalId": Id,
-            "lastName": personalDetails.lastName,
-            "postCode": addresses[0].postcode,
-            "postTown": addresses[0].area,
-            "country": nationality.country,
-            "locale": addresses[0].locale,
-            "salutation": "",
-            "gender": personalDetails.gender,
-            "maritalStatus": maritalStatus,
-            "employmentDetails": employmentDetails
-          },
-          "income": income.incomeDetails,
-          "key": "",
-          "role": "",
-          "ownershipPercentage": 0,
-          "marketingChoices": "string"
-        }
-      ]
-    console.log(regData)
-    const response = await apiLogin.RegisterPersonalAccount(regData)
-    console.log(response.data)
-    // If registration was not successfull
-    if (!response.data.result) return false;
-    // return false;
-    return true;
   }
 
   return (

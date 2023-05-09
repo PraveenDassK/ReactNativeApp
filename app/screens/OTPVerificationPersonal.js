@@ -118,15 +118,17 @@ const OTPVerificationPersonal = ({ navigation }) => {
       phoneOTP,
       emailOTP,
     });
+    console.log(result)
     if (!result) return alert("Could not verify otp");
 
     const IDs = await loginApi.GetIDs(result?.token)
 
     //If the account details cannot be found
-    if(!IDs){
-      alert("Warning your account could not be authenticated")
-      return;
-    }
+    // console.log(IDs)
+    // if(!IDs){
+    //   alert("Warning your account could not be authenticated")
+    //   return;
+    // }
     
     authStorage.storeToken(result?.token);
     setCurrentUser(IDs.token)
@@ -135,8 +137,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setCardID(IDs.cardID)
     setCustomerDetails(IDs.customerDetails)
 
-    
-    const pushNotification = await loginAPI.SendPushNotificationToken({
+    const pushNotification = await loginApi.SendPushNotificationToken({
       tokenID:expoPushToken,
       customerID: IDs.customerDetails,
       deviceID: Device.osInternalBuildId,

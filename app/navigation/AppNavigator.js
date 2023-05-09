@@ -85,6 +85,7 @@ import TestEnviro from "../screens/TestEnviro";
 
 import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
+import FirstTimeSetup from "../screens/FirstTimeSetup";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -233,7 +234,15 @@ const StackNavigator = () => {
           headerShown: false,
         }}
       />
-
+      <Stack.Screen
+        name="FirstTimeSetup"
+        component={FirstTimeSetup}
+        options={{
+          title: "Carbonyte",
+          headerShown: false,
+        }}
+      />
+      
       <Stack.Screen
         name="AddFunds"
         component={gestureHandlerRootHOC(AddFunds)}
