@@ -41,8 +41,9 @@ const ChooseCardsElite = ({ navigation }) => {
     const response = await apiCall.GetSubscriptions();
     setData(response);
     console.log("benefits", response[2]["benefits"][0]);
-    setIsLoading(false);
+    
     const currentSub = await apiCall.GetUsersSubscriptions(account);
+    setIsLoading(false);
     console.log(currentSub.subID);
     console.log(response[0].id);
   };

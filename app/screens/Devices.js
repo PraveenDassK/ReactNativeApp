@@ -9,6 +9,7 @@ import {
   Pressable,
   ScrollView,
   Platform,
+  ActivityIndicator
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
@@ -26,7 +27,9 @@ const COLORS = ["orange", "blue", "red"];
 const Devices = ({ navigation }) => {
   const { customerDetails } = useContext(AuthContext);
   const [devices, setDevices] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+
 
   useEffect(() => {
     loadData();
@@ -38,7 +41,7 @@ const Devices = ({ navigation }) => {
    *          The return should only be for devlopment only
    */
   const loadData = async () => {
-    console.log("load");
+    setIsLoading(true);
     if (!customerDetails) return;
     const request = await apiDevices.GetDevices(customerDetails);
     console.log("request");
@@ -46,6 +49,7 @@ const Devices = ({ navigation }) => {
     const resDevices = request?.details;
 
     setDevices(resDevices);
+    setIsLoading(false);
   };
 
   const generateBoxShadowStyle = (
@@ -92,6 +96,14 @@ const Devices = ({ navigation }) => {
 
     // apiSignout if not setDevices to the old devices
   };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView
