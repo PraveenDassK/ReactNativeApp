@@ -80,14 +80,13 @@ const SpendingLimit = ({ navigation, route }) => {
    */
   const spendingToggle = async () => {
     if (isEnabled) {
-      const amount = "0.00001"
-      const response = await api.SetLimit(authContext.accountID, amount)
-      console.log("setLimit",response)
+      const amount = "0.00001";
+      const response = await api.SetLimit(authContext.accountID, amount);
+      console.log("setLimit", response);
       setIsEnabled(false);
       storage.storeLimits(false);
       setPercent(0);
       setMonLim(0);
-
     } else {
       setIsEnabled(true);
       storage.storeLimits(true);

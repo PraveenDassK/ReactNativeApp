@@ -7,7 +7,7 @@ import apiDevices from "../api/apiDevices"
 import AuthContext from "../auth/context";
 
 
-const TestEnviro = ({ navigation }) => {
+const Devices = ({ navigation }) => {
   const { customerDetails } = useContext(AuthContext)
   const [devices, setDevices] = useState([])
 
@@ -49,10 +49,10 @@ const TestEnviro = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  page: {
+  container: {
 
   },
 
 });
 
-export default TestEnviro;
+export default Devices;
