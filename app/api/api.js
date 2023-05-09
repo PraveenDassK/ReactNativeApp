@@ -101,7 +101,7 @@ const GetTransactionsWeek = async (Id) => {
 
   let total = 0;
   let data = new Array(10).fill(0);
-  requestData.content.forEach((element) => {
+  requestData?.content.forEach((element) => {
     total += element.amount;
     let category = moment().diff(element.postedDate, "Years");
     data[category] += element.amount;
@@ -139,7 +139,7 @@ const GetTransactionsMonth = async (Id) => {
 
   let total = 0;
   let data = new Array(10).fill(0);
-  requestData.content.forEach((element) => {
+  requestData?.content.forEach((element) => {
     total += element.amount;
     let category = moment().diff(element.postedDate, "Years");
     data[category] += element.amount;
@@ -176,7 +176,7 @@ const GetTransactionsYear = async (Id) => {
 
   let total = 0;
   let data = new Array(10).fill(0);
-  requestData.content.forEach((element) => {
+  requestData?.content.forEach((element) => {
     total += element.amount;
     let category = moment().diff(element.postedDate, "Years");
     data[category] += element.amount;
@@ -270,7 +270,7 @@ const GetTransactionData = async (Id, amount) => {
   );
   const requestData = request?.data?.details;
   let total = 0;
-  requestData.content.forEach((transaction) => {
+  requestData?.content.forEach((transaction) => {
     total += transaction.amount;
   });
   const Average = (total / amount).toFixed(2);
@@ -294,7 +294,7 @@ const GetAllTransactionsThisMonth = async () => {
   const requestData = request?.data?.details;
 
   let total = 0;
-  requestData.content.forEach((element) => {
+  requestData?.content.forEach((element) => {
     total += element.amount;
   });
   return {

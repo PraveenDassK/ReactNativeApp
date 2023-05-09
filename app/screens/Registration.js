@@ -13,6 +13,7 @@ import MaritalStatus from "../components/RegistrationMaritalStatus.jsx";
 import EmploymentDetails from "../components/RegistrationEmploymentDetails.jsx";
 import Income from "../components/RegistrationIncomeDetails.jsx";
 import Confirm from "../components/RegistrationSendDetails";
+import Confirm from "../components/RegistrationSendDetails";
 import Success from "../components/RegistrationSuccess.jsx";
 
 import RegistrationNumber from "../components/RegistrationRegistrationNumber.jsx";
@@ -52,6 +53,10 @@ const Registration = ({ navigation }) => {
   const [companyDetails, setCompanyDetails] = useState(null);
   const [companyInformation, setCompanyInformation] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
+
+  useEffect(() => {
+
+  }, [])
 
   useEffect(() => {
 
@@ -106,6 +111,7 @@ const Registration = ({ navigation }) => {
         setScreenToShow("EmploymentDetails");
         return;
       case "EmploymentDetails":
+        //setEmploymentDetails(details);
         //setEmploymentDetails(details);
         setScreenToShow("Income");
         return;

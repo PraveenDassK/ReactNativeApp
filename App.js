@@ -4,9 +4,9 @@ import { AppState } from 'react-native';
 import { useFonts } from 'expo-font';
 
 // import 'expo-dev-menu';
-import 'react-native-gesture-handler';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
+import "react-native-gesture-handler";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import jwtDecode from 'jwt-decode'
 import * as SplashScreen from 'expo-splash-screen';
@@ -25,9 +25,12 @@ if (!global.btoa) {
 }
 
 if (!global.atob) {
-  global.atob = decode;
 }
 
+if (!global.atob) {
+  global.atob = decode;
+}
+}
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -38,10 +41,9 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-
   const [loaded] = useFonts({
-    Helvetica: require('./app/assets/fonts/Helvetica.ttf'),
-    Typo: require("./app/assets/fonts/typo-grotesk.regular.otf")
+    Helvetica: require("./app/assets/fonts/Helvetica.ttf"),
+    Typo: require("./app/assets/fonts/typo-grotesk.regular.otf"),
   });
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -54,6 +56,9 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState()
   const [isAuth, setIsAuth] = useState(false)
 
+  /**
+   * @dev IDs used though the app
+   */
   /**
    * @dev IDs used though the app
    */
@@ -126,10 +131,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange);
+    AppState.addEventListener("change", handleAppStateChange);
 
     return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
+      AppState.removeEventListener("change", handleAppStateChange);
     };
   }, []);
 
@@ -139,15 +144,15 @@ export default function App() {
     const device = await LocalAuthentication.supportedAuthenticationTypesAsync()
     if (result.success) {
       // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
-      console.log('turn off authenticator', result.success)
-      setIsAuth(false)
+      console.log("turn off authenticator", result.success);
+      setIsAuth(false);
     }
     // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
     if (!result.success) {
       console.log('not authenticated', result.success)
       alert('not authenticated')
     }
-  }
+  };
 
   const handleAppStateChange = (nextAppState) => {
     if (nextAppState === 'inactive') {
