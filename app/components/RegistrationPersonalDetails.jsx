@@ -173,7 +173,10 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
             setVisible(!visible);
           }}
         >
+
           <Privacy setIsOpen={setVisible} />
+
+
         </Modal>
         <Formik
           initialValues={{ firstName: "", lastName: "" }}
@@ -251,7 +254,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                 <View style={styles.buttonContainer}>
                   <Button
                     onPress={showDatepicker}
-                    title={moment(date).format("MMM DD YYYY")}
+                    title={moment(date).format('MMM DD YYYY')}
                   />
                 </View>
                 {show && (

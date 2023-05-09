@@ -33,7 +33,7 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   const [type, setType] = useState(null);
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = ({incomeDetails}) => {
     SaveDetails(type, "CompanyDetails");
   };
   const handleBack = () => {
@@ -370,6 +370,7 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
         <Formik
           initialValues={{
             type: "",
+            incomeDetails: "",
           }}
           onSubmit={handleSubmit}
         >

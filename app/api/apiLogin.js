@@ -82,7 +82,6 @@ const GetCompanyByRegNo = async (Reg) => {
   const response = await client.get(
     `https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`
   );
-  console.log(response);
   if (!response.data.result) {
     return null;
   }
@@ -128,81 +127,14 @@ const RegisterPersonalAccount = async (regData) => {
   return response;
 };
 
-const RegisterBusinessAccount = async () => {
+const RegisterBusinessAccount = async (regData) => {
   const response = await client.post(
     "https://api.carbonyte.io/regmodule/SaveCompanyDetails",
-    {
-      type: "string",
-      company_status: "string",
-      etag: "string",
-      aboutBusiness: "string",
-      incomeSources: ["string"],
-      operationTime: "string",
-      targetCustomer: "string",
-      customerOutOfUk: "string",
-      sic_codes: ["string"],
-      registered_office_is_in_dispute: true,
-      jurisdiction: "string",
-      undeliverable_registered_office_address: true,
-      links: {
-        self: "string",
-        filing_history: "string",
-        persons_with_significant_control: "string",
-        officers: "string",
-      },
-      company_name: "string",
-      accounts: {
-        next_made_up_to: "string",
-        next_due: "string",
-        overdue: true,
-        accounting_reference_date: {
-          month: "string",
-          day: "string",
-        },
-        last_accounts: {
-          type: "string",
-          made_up_to: "string",
-          period_start_on: "string",
-          period_end_on: "string",
-        },
-        next_accounts: {
-          overdue: true,
-          due_on: "string",
-          period_start_on: "string",
-          period_end_on: "string",
-        },
-      },
-      previous_company_names: [
-        {
-          ceased_on: "string",
-          effective_from: "string",
-          name: "string",
-        },
-      ],
-      date_of_creation: "string",
-      company_number: "string",
-      has_insolvency_history: true,
-      has_charges: true,
-      confirmation_statement: {
-        next_made_up_to: "string",
-        next_due: "string",
-        overdue: true,
-        last_made_up_to: "string",
-      },
-      registered_office_address: {
-        country: "string",
-        address_line_1: "string",
-        postal_code: "string",
-        locality: "string",
-        address_line_2: "string",
-        region: "string",
-        dateMovedIn: "string",
-      },
-      has_super_secure_pscs: true,
-      can_file: true,
-    }
+    regData
   );
+  return response
 };
+
 const SendPushNotificationToken = async ({ customerID, tokenID, deviceID, deviceName, macAddress, operatingSystem }) => {
   const response = await client.post(
     `https://api.carbonyte.io/authverifymodule/SaveDeviceDetails?customerID=${customerID}&tokenId=${tokenID}&DeviceId=${deviceID}&deviceName=${deviceName}&macAddress=${macAddress}&operatingSystem=${operatingSystem}`
@@ -216,28 +148,36 @@ const SendPushNotificationToken = async ({ customerID, tokenID, deviceID, device
  * @param {str} JWT The string of a token
  * @returns Obj an object of all the IDs
  */
-const GetIDs = async(JWT) => {
-  try{
+const GetIDs = async (JWT) => {
+  try {
     //Decrypt the token and get the data
     const decryptedToken = jwt_decode(JWT);
     const tokenData = JSON.parse(decryptedToken.Data.substr());
 
     //Isolate the customer ID
     const accountID = tokenData.CustomerId;
-    
+
     //Get all the other IDs
     const accountData = await GetCustomerDetails(accountID);
-    
-    return{
+    const missingAccountSetup = false
+    if(missingAccountSetup){
+      return "Missing Setup"
+    }
+
+    return {
       token: JWT,
       userID: accountData.modulrCustomerId,
       accountID: accountData.accountDetails[0]?.accountId,
       cardID: accountData.accountDetails[0]?.accountNo,
       customerDetails: accountID
     }
-  }catch{
+  } catch {
     return null
   }
+}
+
+const VerifyDocument = async() => {
+
 }
 
 export default {
@@ -249,5 +189,6 @@ export default {
   GetAddressByPostCode,
   GetCustomerDetails,
   SendPushNotificationToken,
-  GetIDs
+  GetIDs,
+  VerifyDocument
 };

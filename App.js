@@ -1,29 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Text, View, Button, Platform, ActivityIndicator } from "react-native";
-import { AppState } from "react-native";
-import { useFonts } from "expo-font";
+import { Text, View, Button, Platform, ActivityIndicator } from 'react-native';
+import { AppState } from 'react-native';
+import { useFonts } from 'expo-font';
 
 // import 'expo-dev-menu';
 import "react-native-gesture-handler";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
-import jwtDecode from "jwt-decode";
-import * as SplashScreen from "expo-splash-screen";
-import * as LocalAuthentication from "expo-local-authentication";
-import { decode, encode } from "base-64";
+import jwtDecode from 'jwt-decode'
+import * as SplashScreen from 'expo-splash-screen';
+import * as LocalAuthentication from 'expo-local-authentication';
+import { decode, encode } from 'base-64'
 import AuthContext from "./app/auth/context";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
+import { registerForPushNotificationsAsync } from "./app/utility/pushnotificationRegister.js"
+
 if (!global.btoa) {
   global.btoa = encode;
 }
 
 if (!global.atob) {
+}
+
+if (!global.atob) {
   global.atob = decode;
+}
 }
 
 Notifications.setNotificationHandler({
@@ -39,89 +45,90 @@ export default function App() {
     Helvetica: require("./app/assets/fonts/Helvetica.ttf"),
     Typo: require("./app/assets/fonts/typo-grotesk.regular.otf"),
   });
-
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const [user, setUser] = useState();
-  const [currentUser, setCurrentUser] = useState();
-  const [isAuth, setIsAuth] = useState(false);
-  const [login, setLogin] = useState(false);
+  //Push token
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
 
+  const [user, setUser] = useState()
+  const [currentUser, setCurrentUser] = useState()
+  const [isAuth, setIsAuth] = useState(false)
+
+  /**
+   * @dev IDs used though the app
+   */
   /**
    * @dev IDs used though the app
    */
 
   //Enfuse customer ID A122HTHM
-  const [accountID, setAccountID] = useState("");
+  const [accountID, setAccountID] = useState("")
 
   //Modulr ID C122BMS7
-  const [userID, setUserID] = useState("");
+  const [userID, setUserID] = useState("")
 
   //Card ID and Enfuse card details A122HTHM
-  const [cardDetails, setCardDetails] = useState(null);
-  const [cardID, setCardID] = useState("");
+  const [cardDetails, setCardDetails] = useState(null)
+  const [cardID, setCardID] = useState("")
 
   //Carbonyte ID CC1
-  const [customerDetails, setCustomerDetails] = useState("");
+  const [customerDetails, setCustomerDetails] = useState("")
+
+  const [missingAccountSetup, setMissingAccountSetup] = useState(false)
+
 
   //App Pin
-  const [pin, setPin] = useState("0000");
+  const [pin, setPin] = useState("0000")
 
   //Shopping card Details
-  const [cart, setCart] = useState([]);
-  const [pushToken, setPushToken] = useState("");
+  const [cart, setCart] = useState([])
 
   const [settings, setSettings] = useState({
     faceId: false,
     hideBalance: false,
-    transactionSharing: false,
-  });
+    transactionSharing: false
+  })
 
   useEffect(() => {
     const prepare = async () => {
-      await SplashScreen.preventAutoHideAsync();
-    };
-    prepare();
-  }, []);
+      await SplashScreen.preventAutoHideAsync()
+    }
+    prepare()
+  }, [])
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
 
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
 
     return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
+      Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
+
+
   useEffect(() => {
     // console.log('auth storage', currentUser === true, signedAuth.signedIn)
     if (isAuth) {
-      authenticate();
+      authenticate()
     }
-    console.log("currentUser & isAuth on load", currentUser, isAuth);
-  }, [currentUser, isAuth]);
+    console.log('currentUser & isAuth on load', currentUser, isAuth)
+  }, [currentUser, isAuth])
 
   useEffect(() => {
-    restoreToken();
-    restoreSignIn();
-  }, []);
+    restoreToken()
+    restoreSignIn()
+  }, [])
 
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChange);
@@ -132,10 +139,9 @@ export default function App() {
   }, []);
 
   const authenticate = async () => {
-    "starting authentication";
-    const result = await LocalAuthentication.authenticateAsync();
-    const device =
-      await LocalAuthentication.supportedAuthenticationTypesAsync();
+    "starting authentication"
+    const result = await LocalAuthentication.authenticateAsync()
+    const device = await LocalAuthentication.supportedAuthenticationTypesAsync()
     if (result.success) {
       // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
       console.log("turn off authenticator", result.success);
@@ -143,91 +149,79 @@ export default function App() {
     }
     // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
     if (!result.success) {
-      console.log("not authenticated", result.success);
-      alert("not authenticated");
+      console.log('not authenticated', result.success)
+      alert('not authenticated')
     }
   };
 
   const handleAppStateChange = (nextAppState) => {
-    if (nextAppState === "inactive") {
-      console.log("the app is closed");
-      console.log(currentUser);
+    if (nextAppState === 'inactive') {
+      console.log('the app is closed');
+      console.log(currentUser)
       // setCurrent9User(null)
     }
-  };
+  }
 
   /**
    * @dev This pgets the token from storage and gets the user's details from it
    * @dev ID hooks are set here
-   * @returns null if there is no token
+   * @returns null if there is no token 
    */
   const restoreToken = async () => {
-    console.log("trying for restore token");
+    console.log('trying for restore token')
     //Get the token from storage
-    const token = await authStorage.getToken();
-    if (!token) return;
-    console.log("token", token);
+    const token = await authStorage.getToken()
+    if (!token) return
+    console.log("token", token)
 
     //Get the IDs here
-    const IDs = await apiLogin.GetIDs(token);
-    setCurrentUser(IDs.token);
-    setUserID(IDs.userID);
-    setAccountID(IDs.accountID);
-    setCardID(IDs.cardID);
-    setCustomerDetails(IDs.customerDetails);
-  };
+    const IDs = await apiLogin.GetIDs(token)
+    setCurrentUser(token)
+    if (IDs == "Missing Setup") { setMissingAccountSetup(true) }
+    setUserID(IDs.userID)
+    setAccountID(IDs.accountID)
+    setCardID(IDs.cardID)
+    setCustomerDetails(IDs.customerDetails)
+  }
 
   const restoreSignIn = async () => {
-    const token = await authStorage.getSignInSettings();
-    if (!token) return;
-    setIsAuth(token.includes("true"));
-  };
+    const token = await authStorage.getSignInSettings()
+    if (!token) return
+    setIsAuth(token.includes('true'))
+  }
 
   if (!AppState.currentState) {
-    setIsAuth(null);
+    setIsAuth(null)
   }
 
   if (!loaded) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <ActivityIndicator size="large" color="blue" />
       </View>
-    );
+    )
   } else {
-    SplashScreen.hideAsync();
+    SplashScreen.hideAsync()
   }
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        currentUser,
-        setCurrentUser,
-        isAuth,
-        setIsAuth,
-        accountID,
-        setAccountID,
-        userID,
-        setUserID,
-        settings,
-        setSettings,
-        pin,
-        setPin,
-        cardID,
-        setCardID,
-        customerDetails,
-        setCustomerDetails,
-        cardDetails,
-        setCardDetails,
-        cart,
-        setCart,
-        expoPushToken,
-      }}
-    >
+
+    <AuthContext.Provider value={{
+      user, setUser,
+      currentUser, setCurrentUser,
+      isAuth, setIsAuth,
+      accountID, setAccountID,
+      userID, setUserID,
+      settings, setSettings,
+      pin, setPin,
+      cardID, setCardID,
+      customerDetails, setCustomerDetails,
+      cardDetails, setCardDetails,
+      cart, setCart,
+      expoPushToken,
+      missingAccountSetup, setMissingAccountSetup
+    }}>
       <NavigationContainer>
-        {/* <AppNavigator /> */}
-        {/* <AuthNavigator /> */}
 
         {!currentUser ? (
           <AuthNavigator />
@@ -237,44 +231,12 @@ export default function App() {
           <AuthNavigator />
         )}
 
-        {/* @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
-        or <AuthNavigator />*/}
+        {/**
+         *  @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
+            or <AuthNavigator />
+        */}
+
       </NavigationContainer>
     </AuthContext.Provider>
-  );
-}
-
-async function registerForPushNotificationsAsync() {
-  let token;
-
-  if (Platform.OS === "android") {
-    await Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      alert(
-        "Failed to get push token for push notification! Please update permissions to continue use the App."
-      );
-      return;
-    }
-    token = (await Notifications.getDevicePushTokenAsync()).data;
-  } else {
-    alert("Must use physical device for Push Notifications");
-  }
-  console.log("pushToken", token);
-
-  return token;
+  )
 }

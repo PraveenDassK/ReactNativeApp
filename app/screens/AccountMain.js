@@ -76,8 +76,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     customerDetails,
     cardDetails,
     setCardDetails,
+    missingAccountSetup
   } = useContext(AuthContext);
-
+  console.log(cardID)
   const todaydate = moment().format("MMMM D, YYYY");
   const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
 
@@ -109,7 +110,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   useEffect(() => {
     loadData();
   }, [accountID]);
-
+  
+  useEffect(() => {
+    if(missingAccountSetup){
+      navigation.navigate("FirstTimeSetup");
+    }
+  }, [missingAccountSetup]);
   /**
    * @dev 
    * @returns Stops load if the account ID is not present

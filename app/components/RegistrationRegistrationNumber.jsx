@@ -1,57 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
 //import * as React from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Text,
-  TextInput,
-  Image,
-  Pressable,
-  useWindowDimensions,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Alert,
-} from "react-native";
-import Screen from "./Screen";
-import AuthContext from "../auth/context";
-import GlobalStyles from "../../GlobalStyles";
+import {StyleSheet,View,Text,TextInput,Alert} from "react-native";
 import apiLoginRegister from "../api/apiLogin";
-import * as Yup from "yup";
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from "../config/scaling";
 
 import Button from "./AppButton";
-import { Formik, Field, Form } from "formik";
-import { Dropdown } from "react-native-element-dropdown";
-import { CheckBox } from "@rneui/themed";
 import AuthScreen from "./AuthScreen";
 
-const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
+import SICCodes from "../utility/sicCodes.json";
+const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
   const [regNum, setRegNum] = useState("");
   const [companyDetails, setCompanyDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [sicCode, setSicCode] = useState(null)
 
+  /**
+   * @dev This gets the company data and the SIC code
+   * @returns alert if the company cannot be found
+   */
   const searchCompany = async () => {
     if (regNum == "") return Alert.alert("Invalid company address");
+    setLoading(true)
     const request = await apiLoginRegister.GetCompanyByRegNo(regNum);
+    setLoading(false)
     if (request === null) return Alert.alert("Invalid company address");
+
+    const sicCode = SICCodes.filter(SICCodes => +request.sic_codes[0].includes(SICCodes.sic_code))[0].section;
+    console.log(sicCode)
+    setSicCode(sicCode)
+    
     setCompanyDetails(request);
-    console.log(request);
   };
 
   const sendDetails = () => {
     SaveDetails(companyDetails, "RegistrationNumber");
   };
-  console.log(regNum);
 
   const handleBack = () => {
     console.log("!");
     setScreenToShow("");
   };
+
   return (
     <AuthScreen
       title="Company registration number"
@@ -74,18 +62,28 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow }) => {
       {companyDetails ? (
         <View style={styles.spacing}>
           <Text style={styles.spacing}>Are these your details?</Text>
+          <Text>{companyDetails.company_name}</Text>
           <Text>{companyDetails.registered_office_address.address_line_1}</Text>
           <Text>{companyDetails.registered_office_address.address_line_2}</Text>
           <Text>{companyDetails.registered_office_address.locality}</Text>
           <Text>{companyDetails.registered_office_address.postal_code}</Text>
         </View>
       ) : null}
-      <Button
-        title="Search"
-        color="white"
-        textColor="black"
-        onPress={() => searchCompany()}
-      />
+      {loading ?
+        <Button
+          title="Searching"
+          color="white"
+          textColor="black"
+          onPress={() => { }}
+        /> :
+        <Button
+          title="Search"
+          color="white"
+          textColor="black"
+          onPress={() => searchCompany()}
+        />
+      }
+
       {companyDetails ? (
         <Button
           title="Continue"
@@ -113,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PersonalDetails;
+export default BusinessDetails;
