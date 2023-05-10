@@ -33,7 +33,7 @@ const SplashAnimation = ({navigation}) => {
         <Text>Version 0.0.5</Text>
         <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 25,
           borderTopRightRadius: 25,}}>
-          <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("ProofOfResidency")} />
+          <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />
           <Button title="Login" textColor="black" color="white" onPress={() => navigation.navigate("Login")} />
         </View> 
         </View> 

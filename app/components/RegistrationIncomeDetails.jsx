@@ -26,11 +26,14 @@ import {
 } from "../config/scaling";
 import Button from "./AppButton";
 import AuthScreen from "./AuthScreen";
+import ErrorMessage from "./forms/ErrorMessage";
+
 const validationSchema = Yup.object().shape({
   incomeDetails: Yup.string().required().min(1).max(10).label("Annual income"),
   taxResidency: Yup.string().required().min(1).max(10).label("Tax residency"),
+  nationalInsurance: Yup.string().required().min(1).max(10).label("National Insurance"),
 });
-import ErrorMessage from "./forms/ErrorMessage";
+
 
 const Income = ({ SaveDetails, setScreenToShow }) => {
   const handleSubmit = async ({ incomeDetails, taxResidency, nationalInsurance }) => {
@@ -97,6 +100,10 @@ const Income = ({ SaveDetails, setScreenToShow }) => {
               ]}
             />
 
+            <ErrorMessage
+              error={errors.taxResidency}
+              visible={touched.taxResidency}
+            />
             <Text>National insurance number</Text>
             <TextInput
               onBlur={() => setFieldTouched("nationalInsurance")}
@@ -107,9 +114,9 @@ const Income = ({ SaveDetails, setScreenToShow }) => {
                 { padding: 10 },
               ]}
             />
-            <ErrorMessage
-              error={errors.taxResidency}
-              visible={touched.taxResidency}
+             <ErrorMessage
+              error={errors.nationalInsurance}
+              visible={touched.nationalInsurance}
             />
 
             <Button
