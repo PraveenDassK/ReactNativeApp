@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useContext, Fragment, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  Fragment,
+  useCallback,
+} from "react";
 import {
   RefreshControl,
   FlatList,
@@ -9,7 +15,7 @@ import {
   Pressable,
   ScrollView,
   Platform,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
@@ -25,11 +31,10 @@ const DEVICES = ["cellphone", "tablet-android"];
 const COLORS = ["orange", "blue", "red"];
 
 const Devices = ({ navigation }) => {
-  const { customerDetails } = useContext(AuthContext);
+  const { customerDetails, } = useContext(AuthContext);
   const [devices, setDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-
 
   useEffect(() => {
     loadData();
@@ -81,20 +86,25 @@ const Devices = ({ navigation }) => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      loadData()
+      loadData();
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
 
-  const handleSignout = (deviceIndex) => {
+  const handleSignout = async (deviceIndex, deviceId) => {
     const oldDevices = devices;
     setDevices(
       devices.filter((device, index) => {
-        return index !== deviceIndex
+        return index !== deviceIndex;
       })
     );
 
     // apiSignout if not setDevices to the old devices
+
+    const signedOut = await apiDevices.DeleteDevice(customerDetails, deviceId)
+    if (!signedOut) {
+      alert("Sign out failed")
+      setDevices(oldDevices)}
   };
 
   if (isLoading) {
@@ -107,13 +117,12 @@ const Devices = ({ navigation }) => {
 
   return (
     <ScrollView
-    style={styles.container}
-    showsVerticalScrollIndicator={false}
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }
-  >
-
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={styles.headerContainer}>
         <View style={styles.headerItem}>
           <MaterialCommunityIcons
@@ -145,7 +154,7 @@ const Devices = ({ navigation }) => {
                   os={device.operatingSystem}
                   date={device.createdDate}
                   index={index}
-                  onSignout={(index) => handleSignout(index)}
+                  onSignout={(index) => handleSignout(index, device.deviceId)}
                 />
               </Fragment>
             );
@@ -221,7 +230,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    marginBottom: "4%"
+    marginBottom: "4%",
   },
   headerItem: {
     marginBottom: 10,
