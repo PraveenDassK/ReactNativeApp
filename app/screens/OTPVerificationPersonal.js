@@ -30,7 +30,7 @@ import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import * as Device from 'expo-device';
+import * as Device from "expo-device";
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -55,7 +55,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setUserDetails,
     setCardID,
     expoPushToken,
-    setCustomerDetails
+    setCustomerDetails,
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -87,7 +87,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
   /**
    * @dev This function sends to OTP to the endpoint
    *      Then we get the JWT back
-   * @param {Obj} param0 
+   * @param {Obj} param0
    * @returns False if OTP fails
    */
   const handleSubmit = async ({
@@ -118,10 +118,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
       phoneOTP,
       emailOTP,
     });
-    console.log(result)
+    console.log(result);
     if (!result) return alert("Could not verify otp");
 
-    const IDs = await loginApi.GetIDs(result?.token)
+    const IDs = await loginApi.GetIDs(result?.token);
 
     //If the account details cannot be found
     // console.log(IDs)
@@ -129,23 +129,23 @@ const OTPVerificationPersonal = ({ navigation }) => {
     //   alert("Warning your account could not be authenticated")
     //   return;
     // }
-    
+
     authStorage.storeToken(result?.token);
-    setCurrentUser(IDs.token)
-    setUserID(IDs.userID)
-    setAccountID(IDs.accountID)
-    setCardID(IDs.cardID)
-    setCustomerDetails(IDs.customerDetails)
+    setCurrentUser(IDs.token);
+    setUserID(IDs.userID);
+    setAccountID(IDs.accountID);
+    setCardID(IDs.cardID);
+    setCustomerDetails(IDs.customerDetails);
 
     const pushNotification = await loginApi.SendPushNotificationToken({
-      tokenID:expoPushToken,
+      tokenID: expoPushToken,
       customerID: IDs.customerDetails,
       deviceID: Device.osInternalBuildId,
       deviceName: Device.deviceName,
       macAddress: "",
-      operatingSystem: Device.osName
-    })
-    console.log(pushNotification)
+      operatingSystem: Device.osName,
+    });
+    console.log(pushNotification);
 
     //Turns off the loading
     setIsLoading(false);
@@ -251,8 +251,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         maxLength={1}
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer1")}
-                        onChangeText={handleChange("pVer1")}
-                        onChange={() => pVer2Ref.current.focus()}
+                        onChangeText={(e) => {
+                          handleChange("pVer1");
+                          if (e.length) pVer2Ref.current.focus();
+                        }}
                         style={styles.inputBox}
                       />
                       <ErrorMessage
@@ -263,8 +265,13 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         maxLength={1}
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer2")}
-                        onChangeText={handleChange("pVer2")}
-                        onChange={() => pVer3Ref.current.focus()}
+                        onChangeText={(e) => {
+                          handleChange("pVer2");
+                          if (e.length) pVer3Ref.current.focus();
+                        }}
+                        // onChange={() => {
+                        //   console.log("pVer", pVer2Ref.current.value)
+                        //   pVer3Ref.current.focus()}}
                         ref={pVer2Ref}
                         returnKeyType="next"
                         style={styles.inputBox}
@@ -278,8 +285,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         maxLength={1}
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer3")}
-                        onChangeText={handleChange("pVer3")}
-                        onChange={() => pVer4Ref.current.focus()}
+                        onChangeText={(e) => {
+                          handleChange("pVer3");
+                          if (e.length) pVer4Ref.current.focus();
+                        }}
                         ref={pVer3Ref}
                         returnKeyType="next"
                         style={styles.inputBox}
@@ -293,8 +302,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         maxLength={1}
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer4")}
-                        onChangeText={handleChange("pVer4")}
-                        onChange={() => eVer1Ref.current.focus()}
+                        onChangeText={(e) => {
+                          handleChange("pVer4");
+                          if (e.length) eVer1Ref.current.focus();
+                        }}
                         ref={pVer4Ref}
                         returnKeyType="next"
                         style={styles.inputBox}
@@ -329,8 +340,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         maxLength={1}
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("eVer1")}
-                        onChangeText={handleChange("eVer1")}
-                        onChange={() => eVer2Ref.current.focus()}
+                        onChangeText={(e) => {
+                          handleChange("eVer1");
+                          if (e.length) eVer2Ref.current.focus();
+                        }}
                         ref={eVer1Ref}
                         style={styles.inputBox}
                       />
@@ -342,8 +355,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         maxLength={1}
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("eVer2")}
-                        onChangeText={handleChange("eVer2")}
-                        onChange={() => eVer3Ref.current.focus()}
+                        onChangeText={(e) => {
+                          handleChange("eVer2");
+                          if (e.length) eVer3Ref.current.focus();
+                        }}
                         ref={eVer2Ref}
                         returnKeyType="next"
                         style={styles.inputBox}
@@ -357,8 +372,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         maxLength={1}
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("eVer3")}
-                        onChangeText={handleChange("eVer3")}
-                        onChange={() => eVer4Ref.current.focus()}
+                        onChangeText={(e) => {
+                          handleChange("eVer3");
+                          if (e.length) eVer4Ref.current.focus();
+                        }}
                         ref={eVer3Ref}
                         returnKeyType="next"
                         style={styles.inputBox}
