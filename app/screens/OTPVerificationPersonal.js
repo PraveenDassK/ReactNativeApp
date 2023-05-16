@@ -136,7 +136,14 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setAccountID(IDs.accountID)
     setCardID(IDs.cardID)
     setCustomerDetails(IDs.customerDetails)
-
+    console.log({      
+      tokenID:expoPushToken,
+      customerID: IDs.customerDetails,
+      deviceID: Device.osInternalBuildId,
+      deviceName: Device.deviceName,
+      macAddress: "",
+      operatingSystem: Device.osName
+    })
     const pushNotification = await loginApi.SendPushNotificationToken({
       tokenID:expoPushToken,
       customerID: IDs.customerDetails,
@@ -145,7 +152,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
       macAddress: "",
       operatingSystem: Device.osName
     })
-    console.log(pushNotification)
+    console.log("notification",pushNotification)
 
     //Turns off the loading
     setIsLoading(false);

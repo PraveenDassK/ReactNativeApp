@@ -15,6 +15,7 @@ const Pin = ({route,navigation}) => {
   const [showRemoveButton, setShowRemoveButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
   const [showCompletedButton, setShowCompletedButton] = useState(false)
+  const authContext = useContext(AuthContext);
 
   /**
    * Pin display controlers
@@ -38,7 +39,7 @@ const Pin = ({route,navigation}) => {
    * @returns If pin is incorrect
    */
   const checkPin = async () => {
-    if (enteredPin != "0000"){
+    if (enteredPin != authContext.pin){
       alert("Pin is incorrect")
       return;
     } 

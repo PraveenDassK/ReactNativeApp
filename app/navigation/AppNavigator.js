@@ -62,6 +62,7 @@ import CarbonProject from "../screens/CarbonProject"
 import VirtualEcoSystem from "../screens/VirtualEcoSystem"
 import PinCart from "../screens/PinCart"
 import PinSetApp from "../screens/PinSetApp"
+import PinSet from "../screens/PinSet"
 
 /**
  * @notice Screens on the settings page to navigate to
@@ -287,6 +288,15 @@ const StackNavigator = () => {
 
         }}
       />
+      <Stack.Screen
+        name="PinSet"
+        component={gestureHandlerRootHOC(PinSet)}
+        options={{
+          title: "PinSet",
+
+        }}
+      />
+
       <Stack.Screen
         name="SendMoney"
         component={gestureHandlerRootHOC(SendMoney)}

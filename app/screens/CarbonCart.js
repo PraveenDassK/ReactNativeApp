@@ -27,7 +27,7 @@ const CarbonCart = ({ route, navigation }) => {
         console.log(cart)
         for (let i = 0; i < cart.length; i++) {
             let name = cart[i].name
-            totalPrice += +cart[i].price
+            totalPrice += +cart[i].price * cart[i].quantity
             console.log(cart[i].price)
             let price = {
                 "price": (cart[i].price * cart[i].quantity).toFixed(2),
@@ -42,7 +42,7 @@ const CarbonCart = ({ route, navigation }) => {
 
         setshow(show)
         setAmount(cart.length)
-        setPrice(totalPrice)
+        setPrice(totalPrice.toFixed(2))
     }
 
     const buy = async () => {

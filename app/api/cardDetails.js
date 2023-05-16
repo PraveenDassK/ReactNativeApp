@@ -1,6 +1,18 @@
-
 import { enfuceClient as client } from './client'
 
+const getPinControlToken = async(id) => {
+    //https://integration-api-cat2.{{environment}}.ext.{{realm}}.cia.enfuce.com/pincontrol/v2/plastic/{plasticId}
+    const data = id
+    const cardId = id
+    const endpoint = `pincontrol/v2/plastic/${id}`
+    
+    return await client.post(endpoint, data, {
+      auth: {
+        username: 'carbonyte_test_demo_apiuser',
+        password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
+      },
+    });}
+    
 /**
  * @dev This gets the token to request the card details
  * @todo Update the username and password in the payload to live when live
@@ -10,15 +22,13 @@ import { enfuceClient as client } from './client'
 const getCardResponse = (id) => {
   const data = id
   const cardId = id
-  const endpoint = `/v4/card/${cardId}/controlToken?auditUser=`
-
+  const endpoint = `card/v4/card/${cardId}/controlToken?auditUser=`
   
   return client.post(endpoint, data, {
     auth: {
       username: 'carbonyte_test_demo_apiuser',
       password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
     },
-
   });
 }
 
@@ -78,5 +88,6 @@ const GetCardFromID = async(ID) => {
 export default {
   getCardDetails,
   getCardResponse,
-  GetCardFromID
+  GetCardFromID,
+  getPinControlToken
 }

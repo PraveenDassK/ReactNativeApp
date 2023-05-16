@@ -4,9 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 import ReactNativePinView from 'react-native-pin-view';
 import Icon from "react-native-vector-icons/Ionicons"
 
-import AuthContext from '../auth/context'
-import api from "../api/api_list"
-import apiCall from "../api/api"
+import cardDetails from "../api/cardDetails"
 
 const Pin = ({route,navigation}) => {
   
@@ -16,6 +14,10 @@ const Pin = ({route,navigation}) => {
   const [showCompletedButton, setShowCompletedButton] = useState(false)
   const [firstPin, setFirstPin] = useState("")
   const [title, setTitle] = useState(route.params?.title ? route.params.title : "Enter New Pin")
+
+  useEffect(() => {
+    loadIFrame()
+  },[])
 
   /**
    * Pin display controlers
@@ -32,11 +34,17 @@ const Pin = ({route,navigation}) => {
       setShowCompletedButton(false)
     }
   }, [enteredPin])
-  console.log(enteredPin)
+
+
+  const loadIFrame = async() => {
+    console.log("!")
+    const IframeToken = await cardDetails.getPinControlToken("9999140099689729")
+    console.log(IframeToken)
+  }
 
   /**
-   * @
-   * @returns If pin is incorrect
+   * @dev This is the controler if the pin is correct or not
+   * @returns null If pin is incorrect
    */
   const checkPin = async () => {
     if(firstPin == ""){
@@ -45,7 +53,9 @@ const Pin = ({route,navigation}) => {
       setTitle("Confirm Pin")
     }else if (firstPin == enteredPin){
       alert("Pin set")
-      apiCall.SetPin(firstPin)
+
+      //@todo change to enfuse
+      //apiCall.SetPin(firstPin)
       navigation.navigate("Account")
     }else{
       alert("Pin does not match")

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, useWindowDimensions } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
@@ -6,17 +6,22 @@ import GlobalStyles from "../../GlobalStyles";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 import Button from "../components/Button"
+import AuthContext from "../auth/context";
 
 import apiCall from "../api/apiCall";
 const Tab = createMaterialTopTabNavigator();
 
-const account = "147147"
 const ChooseCardsElite = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(false)
 
   const [data, setData] = useState([])
   const [currentSubscruption, setCurrentSubscription] = useState(null)
+
+  const {
+    customerDetails
+  } = useContext(AuthContext);
+  const account = customerDetails
 
   useEffect(() => {
     loadData()

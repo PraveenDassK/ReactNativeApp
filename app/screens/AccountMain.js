@@ -78,7 +78,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setCardDetails,
     missingAccountSetup
   } = useContext(AuthContext);
-  console.log(cardID)
+
   const todaydate = moment().format("MMMM D, YYYY");
   const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
 
