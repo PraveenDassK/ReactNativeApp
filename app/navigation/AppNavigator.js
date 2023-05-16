@@ -87,6 +87,7 @@ import TestEnviro from "../screens/TestEnviro";
 import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
+import Devices from "../screens/Devices";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -430,6 +431,14 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(SpendingLimit)}
         options={{
           title: "Spending Limit",
+
+        }}
+      />
+      <Stack.Screen
+        name="Devices"
+        component={gestureHandlerRootHOC(Devices)}
+        options={{
+          title: "Devices",
 
         }}
       />

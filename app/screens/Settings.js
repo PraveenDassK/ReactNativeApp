@@ -416,6 +416,16 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
+            title="Devices"
+            style={styles.boxShadow}
+            color="babyBlue"
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("Devices")}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Button
             title="About us"
             style={styles.boxShadow}
             color="babyBlue"
@@ -442,6 +452,7 @@ const Settings = ({ navigation }) => {
             onPress={() => navigation.navigate("PinSetApp")}
           />
         </TouchableOpacity>
+
 
         <TouchableOpacity style={styles.button}>
           <Button
