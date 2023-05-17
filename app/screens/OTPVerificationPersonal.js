@@ -100,6 +100,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     eVer3,
     eVer4,
   }) => {
+
     //Variable setup for OTP
     const email = user.email;
     const phoneNumber = user.phoneNumber;
@@ -252,7 +253,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer1")}
                         onChangeText={(e) => {
-                          handleChange("pVer1");
+                          handleChange("pVer1")(e);
                           if (e.length) pVer2Ref.current.focus();
                         }}
                         style={styles.inputBox}
@@ -266,7 +267,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer2")}
                         onChangeText={(e) => {
-                          handleChange("pVer2");
+                          handleChange("pVer2")(e);
                           if (e.length) pVer3Ref.current.focus();
                         }}
                         // onChange={() => {
@@ -286,7 +287,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer3")}
                         onChangeText={(e) => {
-                          handleChange("pVer3");
+                          handleChange("pVer3")(e);
                           if (e.length) pVer4Ref.current.focus();
                         }}
                         ref={pVer3Ref}
@@ -303,7 +304,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("pVer4")}
                         onChangeText={(e) => {
-                          handleChange("pVer4");
+                          handleChange("pVer4")(e);
                           if (e.length) eVer1Ref.current.focus();
                         }}
                         ref={pVer4Ref}
@@ -341,7 +342,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("eVer1")}
                         onChangeText={(e) => {
-                          handleChange("eVer1");
+                          handleChange("eVer1")(e);
                           if (e.length) eVer2Ref.current.focus();
                         }}
                         ref={eVer1Ref}
@@ -356,7 +357,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("eVer2")}
                         onChangeText={(e) => {
-                          handleChange("eVer2");
+                          handleChange("eVer2")(e);
                           if (e.length) eVer3Ref.current.focus();
                         }}
                         ref={eVer2Ref}
@@ -373,7 +374,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("eVer3")}
                         onChangeText={(e) => {
-                          handleChange("eVer3");
+                          handleChange("eVer3")(e);
                           if (e.length) eVer4Ref.current.focus();
                         }}
                         ref={eVer3Ref}

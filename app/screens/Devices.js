@@ -181,7 +181,7 @@ const Device = ({ name, os, date, index, onSignout }) => {
           color={COLORS[index % COLORS.length]}
         />
         <View style={styles.deviceTextContainer}>
-          <Text>{name} (Last watched) </Text>
+          <Text>{name} (Device name) </Text>
         </View>
       </View>
       <View style={styles.deviceItemContainer}>
