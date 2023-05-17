@@ -402,7 +402,7 @@ const MyCards = ({ navigation }) => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <TouchableOpacity onPress={() => navigation.navigate("PinSetApp")}>
+            <TouchableOpacity onPress={() => navigation.navigate("PinSet")}>
               <MaterialCommunityIcons name="lock" size={35} color="blue" />
             </TouchableOpacity>
           </View>

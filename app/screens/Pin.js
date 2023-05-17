@@ -50,7 +50,6 @@ const Pin = ({ route, navigation }) => {
     setLoading(true);
     const response = await api.SendFunds(
       route.params.amount,
-      //"A12274AW",
       accountID,
       route.params.beneficiaryData.accountName,
       route.params.beneficiaryData.accountNumber,

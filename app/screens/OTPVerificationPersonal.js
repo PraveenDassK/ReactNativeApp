@@ -5,15 +5,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import {
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import {Text,StyleSheet,Image,View,TextInput,TouchableWithoutFeedback,Keyboard} from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useFocusEffect } from "@react-navigation/native";
@@ -30,7 +22,7 @@ import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import * as Device from "expo-device";
+import * as Device from 'expo-device';
 
 const validationSchema = Yup.object().shape({
   // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
@@ -55,7 +47,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setUserDetails,
     setCardID,
     expoPushToken,
-    setCustomerDetails,
+    setCustomerDetails
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -87,7 +79,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
   /**
    * @dev This function sends to OTP to the endpoint
    *      Then we get the JWT back
-   * @param {Obj} param0
+   * @param {Obj} param0 
    * @returns False if OTP fails
    */
   const handleSubmit = async ({
@@ -119,10 +111,10 @@ const OTPVerificationPersonal = ({ navigation }) => {
       phoneOTP,
       emailOTP,
     });
-    console.log(result);
+    console.log(result)
     if (!result) return alert("Could not verify otp");
 
-    const IDs = await loginApi.GetIDs(result?.token);
+    const IDs = await loginApi.GetIDs(result?.token)
 
     //If the account details cannot be found
     // console.log(IDs)
@@ -130,23 +122,23 @@ const OTPVerificationPersonal = ({ navigation }) => {
     //   alert("Warning your account could not be authenticated")
     //   return;
     // }
-
+    
     authStorage.storeToken(result?.token);
-    setCurrentUser(IDs.token);
-    setUserID(IDs.userID);
-    setAccountID(IDs.accountID);
-    setCardID(IDs.cardID);
-    setCustomerDetails(IDs.customerDetails);
+    setCurrentUser(IDs.token)
+    setUserID(IDs.userID)
+    setAccountID(IDs.accountID)
+    setCardID(IDs.cardID)
+    setCustomerDetails(IDs.customerDetails)
 
     const pushNotification = await loginApi.SendPushNotificationToken({
-      tokenID: expoPushToken,
+      tokenID:expoPushToken,
       customerID: IDs.customerDetails,
       deviceID: Device.osInternalBuildId,
       deviceName: Device.deviceName,
       macAddress: "",
-      operatingSystem: Device.osName,
-    });
-    console.log(pushNotification);
+      operatingSystem: Device.osName
+    })
+    console.log(pushNotification)
 
     //Turns off the loading
     setIsLoading(false);

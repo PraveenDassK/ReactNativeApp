@@ -1,5 +1,6 @@
 import client from "./client";
 import jwt_decode from "jwt-decode";
+import * as Device from 'expo-device';
 
 /**
  * @dev Used to get a login request
@@ -31,7 +32,6 @@ const Login = async ({ phoneNumber, email }) => {
  * @param {str} eotp
  */
 const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
-  console.log();
   const request = await client.post(
     "https://api.carbonyte.io/authverifymodule/VerifyLoginOTP",
     {
@@ -41,7 +41,6 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
       phoneOTP: phoneOTP,
     }
   );
-  console.log(request);
   if (!request.data.result || request.status == 500) {
     return null;
   }
@@ -120,6 +119,7 @@ const GetAddressByPostCode = async (postcode) => {
 };
 
 const RegisterPersonalAccount = async (regData) => {
+  const device = Device.osInternalBuildId
   const response = await client.post(
     "https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=personal",
     regData
@@ -137,7 +137,7 @@ const RegisterBusinessAccount = async (regData) => {
 
 const SendPushNotificationToken = async ({ customerID, tokenID, deviceID, deviceName, macAddress, operatingSystem }) => {
   const response = await client.post(
-    `https://api.carbonyte.io/authverifymodule/SaveDeviceDetails?customerID=${customerID}&tokenId=${tokenID}&DeviceId=${deviceID}&deviceName=${deviceName}&macAddress=${macAddress}&operatingSystem=${operatingSystem}`
+    `https://api.carbonyte.io/authverifymodule/SaveDeviceDetails/${customerID}/${tokenID}/${deviceID}?deviceName=${deviceName}&macAddress=${macAddress}&operatingSystem=${operatingSystem}`
   );
   return response;
 };
@@ -160,7 +160,7 @@ const GetIDs = async (JWT) => {
     //Get all the other IDs
     const accountData = await GetCustomerDetails(accountID);
     const missingAccountSetup = false
-    if(missingAccountSetup){
+    if (missingAccountSetup) {
       return "Missing Setup"
     }
 
@@ -176,8 +176,19 @@ const GetIDs = async (JWT) => {
   }
 }
 
-const VerifyDocument = async() => {
-
+const VerifyDocument = async () => {
+  const device = Device.osInternalBuildId
+  const obj = [
+    {
+      "clientReference": "",
+      "documentType": "",
+      "frontImage": "",
+      "backImage": ""
+    }
+  ]
+  //https://api.carbonyte.io/authverifymodule/VerifyDocument
+  const response = await client.post(`https://api.carbonyte.io/authverifymodule/VerifyDocument`,obj)
+  return response
 }
 
 export default {

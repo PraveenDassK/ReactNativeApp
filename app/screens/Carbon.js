@@ -295,14 +295,14 @@ const Carbon = ({ route, navigation }) => {
                 <AppText style={styles.textSub}>{item.displayName}</AppText>
               </View>
               <View style={styles.subTitlePrice}>
-                <AppText style={[styles.priceSub, { color: "blue" }]}>
+                <AppText style={[styles.priceSub, { color: "black" }]}>
                   £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
                 </AppText>
                 <AppText
                   style={[
                     styles.tree,
                     {
-                      color: "blue",
+                      color: "black",
                       textTransform:
                         item.asset.type == "LAND" ? "none" : "capitalize",
                     },
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   },
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
-    fontFamily: "Typo",
+    fontFamily: "Helvetica",
     color: "#1B2356",
   },
   description: {

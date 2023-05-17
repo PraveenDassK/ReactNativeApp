@@ -72,22 +72,21 @@ const ProofOfResidency = ({ navigation }) => {
 
 
   const handleSubmit = async () => {
-    // navigation.navigate("ProofOfID");//ID1
     setIsLoading(true);
     const clientReference = "CC1";
 
-    const result = await w2GlobalAPI.verifyDocument(
-      clientReference,
-      documentType,
-      frontImage,
-      backImage
-    );
-    console.log(result)
+    // const result = await w2GlobalAPI.verifyDocument(
+    //   clientReference,
+    //   documentType,
+    //   frontImage,
+    //   backImage
+    // );
+    // console.log(result)
 
-    if (!result.data[0].result) {
-      setIsLoading(false);
-      return alert("Could not verify documents");
-    }
+    // if (!result.data[0].result) {
+    //   setIsLoading(false);
+    //   return alert("Could not verify documents");
+    // }
 
     setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
     navigation.navigate("ProofOfID");
