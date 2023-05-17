@@ -67,7 +67,7 @@ const Card = ({ name, number, image, selected, onPress }) => {
                 {name}
               </AppText>
 
-              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", bottom: verticalScale(20), left:horizontalScale(15) , fontSize: moderateScale(16), textTransform: "lowercase"}]}>
+              <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",position: "absolute", bottom: verticalScale(20), left:horizontalScale(15) , fontSize: moderateScale(16), textTransform: "lowercase"}]}>
                   Carbonyte
               </AppText>
               <Image 

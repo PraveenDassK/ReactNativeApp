@@ -171,7 +171,7 @@ const Analytics = ({ navigation }) => {
   if(isLoading) {
     return (
          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-             <ActivityIndicator size={'large'} color="blue" />
+             <ActivityIndicator size={'large'} color="black" />
          </View>
     )
    }
@@ -190,7 +190,7 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View style={{flex:1, justifyContent: "center", alignItems: "center", marginTop: 28,}}>
-          <AppText style={{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo", fontSize: 24,  width: 250, textAlign: "center"}}>Your average monthly Carbon Footprint is</AppText>
+          <AppText style={{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica", fontSize: 24,  width: 250, textAlign: "center"}}>Your average monthly Carbon Footprint is</AppText>
         </View>
 
        <View>
@@ -290,7 +290,7 @@ const Analytics = ({ navigation }) => {
             source={require("../assets/icon-featherpiechart.png")} 
             resizeMode="contain"
             style={{ width: horizontalScale(25), height: verticalScale(25)}} />
-          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Spendings</AppText>
+          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",fontSize: 24}]}>Spendings</AppText>
         </View>
 
 
@@ -437,7 +437,7 @@ const Analytics = ({ navigation }) => {
           resizeMode="contain"
           source={require("../assets/icon-withdraw.png")} 
           style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
-          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Recent transactions</AppText>
+          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",fontSize: 24}]}>Recent transactions</AppText>
         </View>
 
         {recentTransactions.map((transaction, index) => (
@@ -510,7 +510,7 @@ const Analytics = ({ navigation }) => {
           source={require("../assets/icon-featherpiechart.png")} 
           style={{ width: horizontalScale(25), height: verticalScale(25)}}
           />
-          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",fontSize: 24}]}>Upcoming Spendings</AppText>
+          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",fontSize: 24}]}>Upcoming Spendings</AppText>
         </View>}
 
         
@@ -696,7 +696,7 @@ const Bazier = ({ graphData }) => {
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
-          fillShadowGradientFrom: "blue",
+          fillShadowGradientFrom: "black",
           fillShadowGradientTo: "#F6F5F8",
           strokeWidth: 5,
           style: { borderRadius: 16 },
@@ -724,7 +724,7 @@ const Bazier = ({ graphData }) => {
                 <TextSVG
                   x={tooltipPos.x + 15}
                   y={tooltipPos.y + 30}
-                  fill="blue"
+                  fill="black"
                   fontSize="10"
                   fontWeight="bold"
                   textAnchor="middle"

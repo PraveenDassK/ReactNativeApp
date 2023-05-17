@@ -49,9 +49,7 @@ const Login = ({ navigation }) => {
 
     navigation.navigate("OTPVerificationPersonal", { registration: true });
   };
-
  
-
   return (
   
       <Screen style={{ backgroundColor: "white" }}>

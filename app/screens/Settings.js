@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
   },
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
-    fontFamily: "Typo",
+    fontFamily: "Helvetica",
     color: "#1B2356",
   },
   titleTextRow: {

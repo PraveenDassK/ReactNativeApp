@@ -32,7 +32,6 @@ const Login = async ({ phoneNumber, email }) => {
  * @param {str} eotp
  */
 const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
-  console.log();
   const request = await client.post(
     "https://api.carbonyte.io/authverifymodule/VerifyLoginOTP",
     {
@@ -42,7 +41,6 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
       phoneOTP: phoneOTP,
     }
   );
-  console.log(request);
   if (!request.data.result || request.status == 500) {
     return null;
   }

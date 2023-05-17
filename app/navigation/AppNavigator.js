@@ -219,7 +219,7 @@ const StackNavigator = () => {
         gestureDirection: "horizontal",
         initialRouteName: "Account",
         headerTitleStyle: {
-          fontFamily: "Typo",
+          fontFamily: "Helvetica",
           fontWeight: "normal",
           fontSize: 28,
           color: "#00035b"

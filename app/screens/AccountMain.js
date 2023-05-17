@@ -509,7 +509,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               styles.titleText,
               {
                 fontWeight: Platform.OS === "android" ? "normal" : "700",
-                fontFamily: "Typo",
+                fontFamily: "Helvetica",
               },
             ]}
           >
@@ -682,7 +682,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 styles.titleText,
                 {
                   fontWeight: Platform.OS === "android" ? "normal" : "700",
-                  fontFamily: "Typo",
+                  fontFamily: "Helvetica",
                 },
               ]}
             >
@@ -912,7 +912,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               styles.titleText,
               {
                 fontWeight: Platform.OS === "android" ? "normal" : "700",
-                fontFamily: "Typo",
+                fontFamily: "Helvetica",
               },
             ]}
           >
@@ -928,7 +928,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 styles.titleText,
                 {
                   fontWeight: Platform.OS === "android" ? "normal" : "700",
-                  fontFamily: "Typo",
+                  fontFamily: "Helvetica",
                 },
               ]}
             >
@@ -1044,7 +1044,7 @@ const CardContainer = ({ color }) => {
 // const Card = ({color, style}) => (
 //   <Animated.View
 //     style={[styles.totalWalletBalanceContainer11, {backgroundColor: color}, style]}>
-//             <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Typo",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
+//             <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
 //                 Carbonyte
 //             </AppText>
 
@@ -1210,7 +1210,7 @@ const Card = ({ name, number, image, selected, onPress }) => {
               styles.totalWalletBalanceText11,
               {
                 fontWeight: Platform.OS === "android" ? "normal" : "700",
-                fontFamily: "Typo",
+                fontFamily: "Helvetica",
                 position: "absolute",
                 bottom: verticalScale(20),
                 left: horizontalScale(15),
