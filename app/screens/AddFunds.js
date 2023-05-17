@@ -2,15 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   StyleSheet,
-  Image,
   View,
   TouchableOpacity,
   TextInput,
   Keyboard,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
   ActivityIndicator,
-  Platform,
   Alert,
   Pressable,
 } from "react-native";
@@ -27,6 +23,7 @@ import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 
 import { Dropdown } from "react-native-element-dropdown";
+import KeyboardAvoider from "../components/KeyboardAvoider";
 
 const AddFunds = ({ navigation }) => {
   //Card data
@@ -126,10 +123,7 @@ const AddFunds = ({ navigation }) => {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.requestContact}
-    >
+    <KeyboardAvoider>
       <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
         <View style={styles.helloParent}>
           <Text style={[styles.hello1, styles.helloTypo]}>
@@ -286,7 +280,7 @@ const AddFunds = ({ navigation }) => {
           <Text style={styles.hello9}>ADD FUNDS</Text>
         </TouchableOpacity>
       </Pressable>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 
