@@ -18,7 +18,6 @@ import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
-import { registerForPushNotificationsAsync } from "./app/utility/pushnotificationRegister.js";
 import Devices from "./app/screens/Devices";
 
 if (!global.btoa) {
@@ -101,7 +100,7 @@ export default function App() {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
     );
-
+    console.log(expoPushToken)
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);
@@ -256,4 +255,36 @@ export default function App() {
       </NavigationContainer>
     </AuthContext.Provider>
   );
+}
+
+export async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+          name: 'default',
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: '#FF231F7C',
+      });
+  }
+
+  if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+          const { status } = await Notifications.requestPermissionsAsync();
+          finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+          alert('Failed to get push token for push notification! Please update permissions to continue use the App.');
+          return;
+      }
+      token = (await Notifications.getDevicePushTokenAsync()).data;
+  } else {
+      alert('Must use physical device for Push Notifications');
+  }
+  console.log("pushToken", token)
+
+  return token;
 }
