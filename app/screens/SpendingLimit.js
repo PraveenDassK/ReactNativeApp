@@ -6,27 +6,21 @@ import {
   Image,
   Pressable,
   Switch,
-  Button,
   ScrollView,
   ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
-import Screen from "../components/Screen";
+
 import api from "../api/api_list";
 import apiCall from "../api/apiCall";
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from "../config/scaling";
+
 import { useFocusEffect } from "@react-navigation/native";
 
 import SinglePie from "../components/SinglePie";
 
 import storage from "../auth/storage";
+import KeyboardAvoider from "../components/KeyboardAvoider";
 
 const SpendingLimit = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -104,10 +98,7 @@ const SpendingLimit = ({ navigation, route }) => {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
+    <KeyboardAvoider>
       <ScrollView>
         <View style={styles.mainContainer}>
           <View style={styles.titleTextRow}>
@@ -304,7 +295,7 @@ const SpendingLimit = ({ navigation, route }) => {
           <View style={{ width: "100%", height: 35 }} />
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 

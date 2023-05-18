@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   StyleSheet,
-  Image,
   View,
   TouchableOpacity,
   TextInput,
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -20,6 +17,7 @@ import {
 
 import GlobalStyles from "../../GlobalStyles";
 import AppText from "../components/Text";
+import KeyboardAvoider from "../components/KeyboardAvoider";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
@@ -45,10 +43,7 @@ const BankTransferAmount = ({ route, navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.requestContact}
-    >
+    <KeyboardAvoider>
       <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
         <View
           style={{
@@ -202,7 +197,7 @@ const BankTransferAmount = ({ route, navigation }) => {
           <Text style={styles.hello9}>ADD FUNDS</Text>
         </TouchableOpacity>
       </Pressable>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 

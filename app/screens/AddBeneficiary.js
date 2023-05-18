@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
-  KeyboardAvoidingView,
   TextInput,
   StyleSheet,
   Text,
   Platform,
   TouchableWithoutFeedback,
-  Pressable,
   Keyboard,
   TouchableOpacity,
 } from "react-native";
@@ -20,6 +18,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 import ErrorMessage from "../components/forms/ErrorMessage";
+import KeyboardAvoider from "../components/KeyboardAvoider";
 
 const validationSchema = Yup.object().shape({
   bankName: Yup.string().required().min(1).max(30).label("Bank name"),
@@ -137,10 +136,7 @@ const AddBeneficiary = ({ navigation }) => {
   generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
+    <KeyboardAvoider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
@@ -217,7 +213,7 @@ const AddBeneficiary = ({ navigation }) => {
           </Formik>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 

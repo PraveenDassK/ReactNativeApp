@@ -3,13 +3,11 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import {
   View,
-  KeyboardAvoidingView,
   TextInput,
   StyleSheet,
   Text,
   Platform,
   TouchableWithoutFeedback,
-  Pressable,
   Keyboard,
   TouchableOpacity,
 } from "react-native";
@@ -20,6 +18,7 @@ import Button from "../components/Button";
 
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import AuthContext from "../auth/context";
+import KeyboardAvoider from "../components/KeyboardAvoider";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).max(30).label("Schedulde payment"),
@@ -36,8 +35,7 @@ const validationSchema = Yup.object().shape({
     .min(8, "Must be exactly 8 digits")
     .max(8, "Must be exactly 8 digits")
     .label("Sort code"),
-  timePeriod: Yup.string()
-    .required()
+  timePeriod: Yup.string().required(),
   // .matches(/^[0-9]+$/, "Account number must be digits")
   // .min(8, "Must be exactly 8 digits")
   // .max(8, "Must be exactly 8 digits")
@@ -79,14 +77,12 @@ const items = [
 
 const ScheduledPayment = () => {
   const { userID, customerDetails } = useContext(AuthContext);
-  
+
   useEffect(() => {
     loadData();
   }, []);
 
-  const loadData = async () => {
-    
-  }
+  const loadData = async () => {};
 
   const generateBoxShadowStyle = (
     xOffset,
@@ -114,27 +110,28 @@ const ScheduledPayment = () => {
 
   generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
-  const handleSubmit = async ({ title, amount, toAccount, fromAccount, timePeriod }) => {
+  const handleSubmit = async ({
+    title,
+    amount,
+    toAccount,
+    fromAccount,
+    timePeriod,
+  }) => {
     console.log(title, amount, toAccount, fromAccount, timePeriod);
 
     const obj = {
-      "individualOrGroupType": 0,
-      "fromCarbonyteId": customerDetails,
-      "frommodulrAccountId": userID,
-      "toBeneficiaryOrGroupId": "string",
-      "date": "2023-05-02" + "T00:00:00.000Z",
-      "amount": 0
-    }
-    apiBeneficiaries.SchedulePayment(obj)
-
-
+      individualOrGroupType: 0,
+      fromCarbonyteId: customerDetails,
+      frommodulrAccountId: userID,
+      toBeneficiaryOrGroupId: "string",
+      date: "2023-05-02" + "T00:00:00.000Z",
+      amount: 0,
+    };
+    apiBeneficiaries.SchedulePayment(obj);
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
+    <KeyboardAvoider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
@@ -143,7 +140,7 @@ const ScheduledPayment = () => {
               amount: "",
               toAccount: "",
               fromAccount: "",
-              timePeriod: ""
+              timePeriod: "",
             }}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
@@ -211,7 +208,7 @@ const ScheduledPayment = () => {
           </Formik>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 };
 const styles = StyleSheet.create({

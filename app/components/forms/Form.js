@@ -1,18 +1,11 @@
 import React from "react";
 import { Formik } from "formik";
-import {
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  StyleSheet,
-  Keyboard,
-} from "react-native";
+import { TouchableWithoutFeedback, StyleSheet, Keyboard } from "react-native";
+import KeyboardAvoider from "../KeyboardAvoider";
 
 function AppForm({ initialValues, onSubmit, validationSchema, children }) {
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
+    <KeyboardAvoider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Formik
           initialValues={initialValues}
@@ -22,7 +15,7 @@ function AppForm({ initialValues, onSubmit, validationSchema, children }) {
           {() => <>{children}</>}
         </Formik>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAvoider>
   );
 }
 
