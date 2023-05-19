@@ -21,7 +21,6 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 
 const validationSchema = Yup.object().shape({
-  bankName: Yup.string().required().min(1).max(30).label("Bank name"),
   accountName: Yup.string().required().min(1).max(30).label("Account name"),
   phoneNumber: Yup.string()
     .required()
@@ -45,12 +44,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const items = [
-  {
-    id: 1,
-    label: "Name of the bank",
-    placeholder: "Enter bank name",
-    initialValue: "bankName",
-  },
   {
     id: 2,
     label: "Phone Number",
@@ -78,7 +71,6 @@ const items = [
 ];
 
 const AddBeneficiary = ({ navigation }) => {
-  const [bankName, setBankName] = useState("");
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setIban] = useState("");
   const [sortCode, setPhoneNumber] = useState("");
@@ -86,7 +78,6 @@ const AddBeneficiary = ({ navigation }) => {
   const authContext = useContext(AuthContext);
 
   const handleSubmit = async ({
-    bankName,
     accountName,
     phoneNumber,
     accNum,
@@ -99,13 +90,7 @@ const AddBeneficiary = ({ navigation }) => {
       accNum,
       sortCode
     );
-    navigation.navigate("BankTransferAmount", {
-      bankName: bankName,
-      accountName: accountName,
-      phoneNumber: phoneNumber,
-      sortCode: sortCode,
-      accNum: accNum,
-    });
+    navigation.navigate("SendMoney");
     console.log(response);
   };
 
@@ -141,7 +126,6 @@ const AddBeneficiary = ({ navigation }) => {
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
             initialValues={{
-              bankName: "",
               accountName: "",
               phoneNumber: "",
               sortCode: "",

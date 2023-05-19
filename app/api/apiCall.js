@@ -315,7 +315,7 @@ const FreezeCard = async (Id, freeze) => {
       status: freeze,
     }
   );
-  return request.data.result;
+  return request;
 };
 
 /**
@@ -768,7 +768,8 @@ const RetriveGroupBeneficiares = async (Id) => {
 };
 
 /**Posters */
-const SendFunds = (amount, from, name, accountNumber, sortCode, address) => {
+const SendFunds = (amount, from, name, accountNumber, sortCode, address,reference) => {
+  console.log(reference)
   const request = client.post(
     "https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
     {
@@ -783,7 +784,7 @@ const SendFunds = (amount, from, name, accountNumber, sortCode, address) => {
       },
       currency: "GBP",
       amount: amount,
-      reference: "Transfer",
+      reference: reference,
     }
   );
   return request;

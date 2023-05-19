@@ -253,12 +253,15 @@ const MyCards = ({ navigation }) => {
         cardData[cardIndex].id,
         "CARD_BLOCKED"
       );
+      console.log(request)
+
     } else {
       console.log("unfreeze");
       const request = await apiCall2.FreezeCard(
         cardData[cardIndex].id,
         "CARD_OK"
       );
+      console.log(request)
     }
     loadData();
   };

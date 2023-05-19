@@ -65,7 +65,7 @@ const Settings = ({ navigation }) => {
 
     const userDetails = await api.GetAllAccounts(userID);
     const accountDetails = await api.GetAccount(accountID);
-    const subscriptionDetails = await api.GetUsersSubscriptions("147147");
+    const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
     const data = userDetails;
     const accountdata = accountDetails;
 
@@ -401,16 +401,6 @@ const Settings = ({ navigation }) => {
             color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}>
-          <Button
-            title="Schedule payment"
-            style={styles.boxShadow}
-            color="babyBlue"
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("ScheduledPayment")}
           />
         </TouchableOpacity>
 

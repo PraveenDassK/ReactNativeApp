@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useIsFocused } from '@react-navigation/native';
 import { Text, StyleSheet, View, Image, Pressable, Switch, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
@@ -8,17 +9,17 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 
 import AppText from "../components/Text";
 import apiBeneficiaries from "../api/apiBeneficiaries"
+import Button from "../components/Button";
 
 const SendMoney = ({ navigation }) => {
-  const [data, setData] = useState({})
   const [benList, setBen] = useState([])
   const [groupList, setGroup] = useState([])
-  const authContext = useContext(AuthContext)
   const { userID, customerDetails } = useContext(AuthContext);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     getSettings()
-  }, [])
+  }, [isFocused])
 
   //API
   const getSettings = async () => {
@@ -122,6 +123,16 @@ const SendMoney = ({ navigation }) => {
         </TouchableOpacity>
         <View style={styles.iconImage}></View>
       </View>
+
+      <TouchableOpacity style={styles.button}>
+          <Button
+            title="Schedule payment"
+            style={styles.boxShadow}
+            color="babyBlue"
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("ScheduledPayment")}
+          />
+        </TouchableOpacity>
 
     </View>
 

@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import AuthContext from "../auth/context";
 import api from "../api/apiCall";
-import apiCall from "../api/api";
+import authStorage from "../auth/storage";
 
 const Pin = ({ route, navigation }) => {
   let title = route.params.title ? route.params.title : "Enter Pin";
@@ -36,17 +36,17 @@ const Pin = ({ route, navigation }) => {
   console.log(enteredPin);
 
   /**
-   * @
+   * @dev checks if the pin is correct
    * @returns If pin is incorrect
    */
   const checkPin = async () => {
     console.log(route);
-    if (enteredPin != authContext.pin) {
+    if ('"' + enteredPin + '"' != await authStorage.getPasscode()) {
       alert("Pin is incorrect");
       pinView.current.clearAll();
       return;
     }
-
+    console.log(route.params.reference)
     setLoading(true);
     const response = await api.SendFunds(
       route.params.amount,
@@ -54,7 +54,8 @@ const Pin = ({ route, navigation }) => {
       route.params.beneficiaryData.accountName,
       route.params.beneficiaryData.accountNumber,
       route.params.beneficiaryData.sortCode,
-      route.params.beneficiaryData.address
+      route.params.beneficiaryData.address,
+      route.params.reference
     );
     setLoading(false);
     console.log(response);

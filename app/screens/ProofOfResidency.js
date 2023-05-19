@@ -30,7 +30,7 @@ const data = [
 ];
 
 const ProofOfResidency = ({ navigation }) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, expoPushToken } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [imageUri, setImageUri] = useState();
@@ -75,21 +75,22 @@ const ProofOfResidency = ({ navigation }) => {
     setIsLoading(true);
     const clientReference = "CC1";
 
-    // const result = await w2GlobalAPI.verifyDocument(
-    //   clientReference,
-    //   documentType,
-    //   frontImage,
-    //   backImage
-    // );
-    // console.log(result)
+    const result = await w2GlobalAPI.verifyDocument(
+      clientReference,
+      documentType,
+      frontImage,
+      backImage,
+      "fGa4HO8mRjiCxBFdu2iSs7:APA91bHHo7yZSKgMXIyrKW5H8zKLYL5cbD3VtPVaDgi4Evce0pO0WMMQImJr4uI-xAlZ_93lEl-osgDTcEQ2HhGH3U_pwmnxdz5IiEYcgtr7yP_XViiR4zG9IteUh46RrztVWGrervfM",
+    );
+    console.log(result)
 
-    // if (!result.data[0].result) {
+    // if (!result?.data.result) {
     //   setIsLoading(false);
     //   return alert("Could not verify documents");
     // }
 
-    setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
-    navigation.navigate("ProofOfID");
+    // setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
+    // navigation.navigate("ProofOfID");
     setIsLoading(false);
   };
 
