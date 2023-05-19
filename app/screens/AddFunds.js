@@ -253,7 +253,9 @@ const AddFunds = ({ navigation }) => {
             placeholder={"£" + amount}
             keyboardType="numeric"
             placeholderTextColor={"blue"}
-            onChangeText={(newText) => setAmount(newText)}
+            value = {
+              amount}
+            onChangeText={(e) => setAmount(e)}
           />
           <View
             style={[

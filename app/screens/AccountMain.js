@@ -45,6 +45,7 @@ import FadeInView from "../components/fadeInview";
 import moment from "moment";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
+import authStorage from "../auth/storage";
 
 const CARD_DATA = [];
 
@@ -110,12 +111,24 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   useEffect(() => {
     loadData();
   }, [accountID]);
-  
+
+  // useEffect(() => {
+  //   if(missingAccountSetup){
+  //     navigation.navigate("FirstTimeSetup");
+  //   }
+  // }, [missingAccountSetup]);
+
   useEffect(() => {
-    if(missingAccountSetup){
-      navigation.navigate("FirstTimeSetup");
+    checkForInitalPasscode()
+  }, [])
+
+  const checkForInitalPasscode = async () => {
+    console.log(await authStorage.getPasscode())
+    if (await authStorage.getPasscode() == null) {
+      navigation.navigate("PinSetApp")
     }
-  }, [missingAccountSetup]);
+  }
+
   /**
    * @dev 
    * @returns Stops load if the account ID is not present
@@ -132,7 +145,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setDataPercentages(carbonSpendData.percentages);
 
     //If the card data is not there get the card details
-    if (!cardDetails ) {
+    if (!cardDetails) {
       const cardObject = await api.GetCardFromID("687942912");
       console.log(cardObject)
       setCardDetails(cardObject);

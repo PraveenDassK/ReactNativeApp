@@ -28,12 +28,27 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   // let amount = (amount ? amount : 1).toString();
 
+  const [reference, setReference] = useState('');
+
+  const handleTextChange = (text) => {
+    setReference(text);
+  };
+
+  const handleSave = () => {
+    // Do something with the saved reference
+    console.log('Saved reference:', reference);
+    // ...
+  };
+
+
+
   const requestContact = (amount) => {
     console.log(
       "Transfer to " + accountName + " of £" + amount + " successful"
     );
     navigation.navigate("Pin", {
       amount: amount,
+      refrence:reference,
       name: accountName,
       successScreen: "Success",
       successText:
@@ -79,6 +94,14 @@ const BankTransferAmount = ({ route, navigation }) => {
             style={{ marginBottom: "2.5%", fontSize: 25, fontWeight: "400" }}
           >{`+44 ${phoneNumber}`}</AppText>
         </View>
+        <View>
+          <TextInput
+            onChangeText={handleTextChange}
+            value={reference}
+            placeholder="Enter a reference"
+          />
+        </View>
+
 
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.hello4, styles.groupViewPosition]}>

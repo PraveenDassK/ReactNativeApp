@@ -30,7 +30,7 @@ const DATA = [
 const BENEFICIARY = [
 
 ];
-const GroupBeneficiary = () => {
+const GroupBeneficiary = ({ navigation }) => {
   const [groupData, setGroupData] = useState(DATA);
   const [beneficiary, setBeneficiary] = useState(BENEFICIARY);
   const { userID, customerDetails } = useContext(AuthContext);
@@ -51,7 +51,7 @@ const GroupBeneficiary = () => {
 
   const handleSelect = (beneficiaryItem) => {
     console.log(beneficiaryItem)
-    setGroupData([beneficiaryItem])
+    setGroupData(prevData => [...prevData,beneficiaryItem])
   }
 
   const handleDelete = (flatIndex) => {
@@ -92,6 +92,7 @@ const GroupBeneficiary = () => {
     }else{
 
     }
+    navigation.navigate("SendMoney")
   };
 
   return (

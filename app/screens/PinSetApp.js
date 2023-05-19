@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState,useContext } from "react"
+import React, { useEffect, useRef, useState, useContext } from "react"
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import ReactNativePinView from 'react-native-pin-view';
@@ -7,9 +7,10 @@ import Icon from "react-native-vector-icons/Ionicons"
 import AuthContext from '../auth/context'
 import api from "../api/api_list"
 import apiCall from "../api/api"
+import authStorage from "../auth/storage";
 
-const Pin = ({route,navigation}) => {
-  
+const Pin = ({ route, navigation }) => {
+
   const pinView = useRef(null)
   const [showRemoveButton, setShowRemoveButton] = useState(false)
   const [enteredPin, setEnteredPin] = useState("")
@@ -23,45 +24,60 @@ const Pin = ({route,navigation}) => {
    * Pin display controlers
    */
   useEffect(() => {
+    //Checks if the back button should show
     if (enteredPin.length > 0) {
       setShowRemoveButton(true)
     } else {
       setShowRemoveButton(false)
     }
+
+    //Checks if the enter button should show
     if (enteredPin.length === 4) {
       setShowCompletedButton(true)
     } else {
       setShowCompletedButton(false)
     }
   }, [enteredPin])
-  console.log(enteredPin)
 
+  useEffect(async () => {
+    //Checks if a pin has been set, if it hasn't do this
+    if(await authStorage.getPasscode() == null){
+      setPinCheck(true)
+      setTitle("Enter new Pin")
+      pinView.current.clearAll()
+    }
+  }, [])
   /**
-   * @
-   * @returns If pin is incorrect
+   * @dev This checks the pin
+   * @returns Null If pin is incorrect
    */
   const checkPin = async () => {
-    if(pinCheck == false){
-      if(enteredPin == authContext.pin){
+    console.log(await authStorage.getPasscode())
+    console.log(enteredPin)
+
+    //Old pin checker
+    if (pinCheck == false) {
+      if ('"' + enteredPin + '"' == await authStorage.getPasscode()) {
         setPinCheck(true)
         setTitle("Enter new Pin")
         pinView.current.clearAll()
 
-      }else{
+      } else {
         alert("Pin is incorrect")
         pinView.current.clearAll()
       }
       return;
-    }else{
-      if(firstPin == ""){
+    } else {
+      if (firstPin == "") {
         setFirstPin(enteredPin)
         pinView.current.clearAll()
         setTitle("Confirm Pin")
-      }else if (firstPin == enteredPin){
+      } else if (firstPin == enteredPin) {
         alert("Pin set")
         authContext.setPin(firstPin)
+        authStorage.storePasscode(firstPin)
         navigation.navigate("Account")
-      }else{
+      } else {
         alert("Pin does not match")
         pinView.current.clearAll()
         setTitle("Enter New Pin")
@@ -69,53 +85,52 @@ const Pin = ({route,navigation}) => {
       }
     }
   }
-  console.log(pinCheck)
 
   return (
-      <View style={[styles.sendEnterPin1,styles.sendEnterPin1Child]} >
-        <Text style={[styles.hello, styles.mt_615]}>{title}</Text>
+    <View style={[styles.sendEnterPin1, styles.sendEnterPin1Child]} >
+      <Text style={[styles.hello, styles.mt_615]}>{title}</Text>
       <ReactNativePinView
-         style={[styles.sendEnterPin12,styles.sendEnterPin1Child]}
-            inputSize={12}
-            ref={pinView}
-            pinLength={4}
-            buttonSize={60}
-            onValueChange={value => setEnteredPin(value)}
-            buttonAreaStyle={{
-              marginTop: 24,
-            }}
-            inputAreaStyle={{
-              marginBottom: 24,
-            }}
-            inputViewEmptyStyle={{
-              backgroundColor: "transparent",
-              borderWidth: 1,
-              borderColor: GlobalStyles.Color.indigo_100,
-            }}
-            inputViewFilledStyle={{
-              backgroundColor: GlobalStyles.Color.indigo_100,
-            }}
-            buttonTextStyle={{
-              color:GlobalStyles.Color.indigo_100,
-            }}
-            onButtonPress={key => {
-              if (key === "custom_left") {
-                pinView.current.clear()
-              }
-              if (key === "custom_right") {
-                checkPin()
-              }
-            }}
-            customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={36} color={GlobalStyles.Color.indigo_100} /> : undefined}
-            customRightButton={showCompletedButton ? <View>
-              <Text>
-                Enter
-              </Text>
-            </View>
-             : undefined}
-          ></ReactNativePinView>
-      
-      </View>
+        style={[styles.sendEnterPin12, styles.sendEnterPin1Child]}
+        inputSize={12}
+        ref={pinView}
+        pinLength={4}
+        buttonSize={60}
+        onValueChange={value => setEnteredPin(value)}
+        buttonAreaStyle={{
+          marginTop: 24,
+        }}
+        inputAreaStyle={{
+          marginBottom: 24,
+        }}
+        inputViewEmptyStyle={{
+          backgroundColor: "transparent",
+          borderWidth: 1,
+          borderColor: GlobalStyles.Color.indigo_100,
+        }}
+        inputViewFilledStyle={{
+          backgroundColor: GlobalStyles.Color.indigo_100,
+        }}
+        buttonTextStyle={{
+          color: GlobalStyles.Color.indigo_100,
+        }}
+        onButtonPress={key => {
+          if (key === "custom_left") {
+            pinView.current.clear()
+          }
+          if (key === "custom_right") {
+            checkPin()
+          }
+        }}
+        customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={36} color={GlobalStyles.Color.indigo_100} /> : undefined}
+        customRightButton={showCompletedButton ? <View>
+          <Text>
+            Enter
+          </Text>
+        </View>
+          : undefined}
+      ></ReactNativePinView>
+
+    </View>
   );
 };
 
@@ -216,7 +231,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "center",
-    marginTop:50,
+    marginTop: 50,
   },
   sendEnterPin1: {
     backgroundColor: GlobalStyles.Color.gray_100,
