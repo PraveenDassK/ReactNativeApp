@@ -1,115 +1,141 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import ReactNativePinView from 'react-native-pin-view';
-import Icon from "react-native-vector-icons/Ionicons"
+import ReactNativePinView from "react-native-pin-view";
+import Icon from "react-native-vector-icons/Ionicons";
 
-import cardDetails from "../api/cardDetails"
+import cardDetails from "../api/cardDetails";
+import pinControl from "../api/pinControl";
 
-const Pin = ({route,navigation}) => {
-  
-  const pinView = useRef(null)
-  const [showRemoveButton, setShowRemoveButton] = useState(false)
-  const [enteredPin, setEnteredPin] = useState("")
-  const [showCompletedButton, setShowCompletedButton] = useState(false)
-  const [firstPin, setFirstPin] = useState("")
-  const [title, setTitle] = useState(route.params?.title ? route.params.title : "Enter New Pin")
+import WebView from "react-native-webview";
+
+const Pin = ({ route, navigation }) => {
+  const pinView = useRef(null);
+  const [showRemoveButton, setShowRemoveButton] = useState(false);
+  const [enteredPin, setEnteredPin] = useState("");
+  const [showCompletedButton, setShowCompletedButton] = useState(false);
+  const [firstPin, setFirstPin] = useState("");
+  const [title, setTitle] = useState(
+    route.params?.title ? route.params.title : "Enter New Pin"
+  );
 
   useEffect(() => {
-    loadIFrame()
-  },[])
+    // cardDetails.getPlasticCards('714613712');
+    pinControl.getAccessToken()
+
+  }, []);
+
+  // useEffect(() => {
+  //   loadIFrame();
+  // }, []);
 
   /**
    * Pin display controlers
    */
   useEffect(() => {
     if (enteredPin.length > 0) {
-      setShowRemoveButton(true)
+      setShowRemoveButton(true);
     } else {
-      setShowRemoveButton(false)
+      setShowRemoveButton(false);
     }
     if (enteredPin.length === 4) {
-      setShowCompletedButton(true)
+      setShowCompletedButton(true);
     } else {
-      setShowCompletedButton(false)
+      setShowCompletedButton(false);
     }
-  }, [enteredPin])
+  }, [enteredPin]);
 
-
-  const loadIFrame = async() => {
-    console.log("!")
-    const IframeToken = await cardDetails.getPinControlToken("9999140099689729")
-    console.log(IframeToken)
-  }
+  const loadIFrame = async () => {
+    console.log("!");
+    const IframeToken = await cardDetails.getPinControlToken(
+      "9999140099689729"
+    );
+    console.log(IframeToken);
+  };
 
   /**
    * @dev This is the controler if the pin is correct or not
    * @returns null If pin is incorrect
    */
   const checkPin = async () => {
-    if(firstPin == ""){
-      setFirstPin(enteredPin)
-      pinView.current.clearAll()
-      setTitle("Confirm Pin")
-    }else if (firstPin == enteredPin){
-      alert("Pin set")
+    if (firstPin == "") {
+      setFirstPin(enteredPin);
+      pinView.current.clearAll();
+      setTitle("Confirm Pin");
+    } else if (firstPin == enteredPin) {
+      alert("Pin set");
 
       //@todo change to enfuse
       //apiCall.SetPin(firstPin)
-      navigation.navigate("Account")
-    }else{
-      alert("Pin does not match")
-      pinView.current.clearAll()
-      setTitle("Enter New Pin")
-      setFirstPin("")
+      navigation.navigate("Account");
+    } else {
+      alert("Pin does not match");
+      pinView.current.clearAll();
+      setTitle("Enter New Pin");
+      setFirstPin("");
     }
-  }
+  };
 
   return (
-      <View style={[styles.sendEnterPin1,styles.sendEnterPin1Child]} >
-        <Text style={[styles.hello, styles.mt_615]}>{title}</Text>
+    <WebView
+      source={{ uri: "https://www.google.com" }}
+      // onMessage={(event) => console.log(event.nativeEvent.data)}
+    />
+  );
+
+  return (
+    <View style={[styles.sendEnterPin1, styles.sendEnterPin1Child]}>
+      <Text style={[styles.hello, styles.mt_615]}>{title}</Text>
       <ReactNativePinView
-         style={[styles.sendEnterPin12,styles.sendEnterPin1Child]}
-            inputSize={12}
-            ref={pinView}
-            pinLength={4}
-            buttonSize={60}
-            onValueChange={value => setEnteredPin(value)}
-            buttonAreaStyle={{
-              marginTop: 24,
-            }}
-            inputAreaStyle={{
-              marginBottom: 24,
-            }}
-            inputViewEmptyStyle={{
-              backgroundColor: "transparent",
-              borderWidth: 1,
-              borderColor: GlobalStyles.Color.indigo_100,
-            }}
-            inputViewFilledStyle={{
-              backgroundColor: GlobalStyles.Color.indigo_100,
-            }}
-            buttonTextStyle={{
-              color:GlobalStyles.Color.indigo_100,
-            }}
-            onButtonPress={key => {
-              if (key === "custom_left") {
-                pinView.current.clear()
-              }
-              if (key === "custom_right") {
-                checkPin()
-              }
-            }}
-            customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={36} color={GlobalStyles.Color.indigo_100} /> : undefined}
-            customRightButton={showCompletedButton ? <View>
-              <Text>
-                Enter
-              </Text>
+        style={[styles.sendEnterPin12, styles.sendEnterPin1Child]}
+        inputSize={12}
+        ref={pinView}
+        pinLength={4}
+        buttonSize={60}
+        onValueChange={(value) => setEnteredPin(value)}
+        buttonAreaStyle={{
+          marginTop: 24,
+        }}
+        inputAreaStyle={{
+          marginBottom: 24,
+        }}
+        inputViewEmptyStyle={{
+          backgroundColor: "transparent",
+          borderWidth: 1,
+          borderColor: GlobalStyles.Color.indigo_100,
+        }}
+        inputViewFilledStyle={{
+          backgroundColor: GlobalStyles.Color.indigo_100,
+        }}
+        buttonTextStyle={{
+          color: GlobalStyles.Color.indigo_100,
+        }}
+        onButtonPress={(key) => {
+          if (key === "custom_left") {
+            pinView.current.clear();
+          }
+          if (key === "custom_right") {
+            checkPin();
+          }
+        }}
+        customLeftButton={
+          showRemoveButton ? (
+            <Icon
+              name={"ios-backspace"}
+              size={36}
+              color={GlobalStyles.Color.indigo_100}
+            />
+          ) : undefined
+        }
+        customRightButton={
+          showCompletedButton ? (
+            <View>
+              <Text>Enter</Text>
             </View>
-             : undefined}
-          ></ReactNativePinView>
-      
-      </View>
+          ) : undefined
+        }
+      ></ReactNativePinView>
+    </View>
   );
 };
 
@@ -210,7 +236,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "center",
-    marginTop:50,
+    marginTop: 50,
   },
   sendEnterPin1: {
     backgroundColor: GlobalStyles.Color.gray_100,
