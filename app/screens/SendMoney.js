@@ -45,7 +45,6 @@ const SendMoney = ({ navigation }) => {
         iban: details.destinationIdentifier.iban,
         sortCode: details.destinationIdentifier.sortCode,
         phoneNumber: details.phoneNumber
-
       })
   }
   
