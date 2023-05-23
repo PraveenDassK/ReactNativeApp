@@ -81,12 +81,22 @@ const GetCompanyByRegNo = async (Reg) => {
   const response = await client.get(
     `https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`
   );
+  console.log(response.data)
   if (!response.data.result) {
     return null;
   }
   const returnData = response.data.details;
   return returnData;
 };
+
+const getCompanyRegNoByName = async (name) => {
+  const response = await client.get(
+    `https://api.carbonyte.io/authverifymodule/AdvanceCompanySearch?company_name_includes=${name}`
+  );
+  console.log(response.data)
+  const returnData = response.data.details.top_hit.company_number;
+  return returnData;
+}
 
 /**
  *
@@ -187,7 +197,7 @@ const VerifyDocument = async () => {
     }
   ]
   //https://api.carbonyte.io/authverifymodule/VerifyDocument
-  const response = await client.post(`https://api.carbonyte.io/authverifymodule/VerifyDocument`,obj)
+  const response = await client.post(`https://api.carbonyte.io/authverifymodule/VerifyDocument`, obj)
   return response
 }
 
@@ -201,5 +211,6 @@ export default {
   GetCustomerDetails,
   SendPushNotificationToken,
   GetIDs,
-  VerifyDocument
+  VerifyDocument,
+  getCompanyRegNoByName
 };

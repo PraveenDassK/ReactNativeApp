@@ -9,6 +9,7 @@ import AuthScreen from "./AuthScreen";
 import SICCodes from "../utility/sicCodes.json";
 const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
   const [regNum, setRegNum] = useState("");
+  const [regName, setRegName] = useState("");
   const [companyDetails, setCompanyDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sicCode, setSicCode] = useState(null)
@@ -18,9 +19,11 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
    * @returns alert if the company cannot be found
    */
   const searchCompany = async () => {
-    if (regNum == "") return Alert.alert("Invalid company address");
+    if (regName == "") return Alert.alert("Invalid company address");
     setLoading(true)
-    const request = await apiLoginRegister.GetCompanyByRegNo(regNum);
+    const regNumber = await apiLoginRegister.getCompanyRegNoByName(regName)
+
+    const request = await apiLoginRegister.GetCompanyByRegNo(regNumber);
     setLoading(false)
     if (request === null) return Alert.alert("Invalid company address");
 
@@ -42,16 +45,15 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
 
   return (
     <AuthScreen
-      title="Company registration number"
+      title="Company name"
       img="elephantCarbon"
       handleBack={handleBack}
     >
       <View style={[styles.component1981, styles.mt14]}>
         <TextInput
-          placeholder="Company registration number"
+          placeholder="Company name"
           placeholderTextColor="grey"
-          keyboardType="numeric"
-          onChangeText={(value) => setRegNum(value)}
+          onChangeText={(value) => setRegName(value)}
           style={[
             styles.component1981Child,
             styles.childBorder,

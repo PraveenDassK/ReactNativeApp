@@ -5,11 +5,10 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import {Text,StyleSheet,Image,View,TextInput,TouchableWithoutFeedback,Keyboard} from "react-native";
+import { Text, StyleSheet, Image, View, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useFocusEffect } from "@react-navigation/native";
-import jwtDecode from "jwt-decode";
 
 import colors from "../config/colors";
 
@@ -122,7 +121,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     //   alert("Warning your account could not be authenticated")
     //   return;
     // }
-    
+
     authStorage.storeToken(result?.token);
     setCurrentUser(IDs.token)
     setUserID(IDs.userID)
@@ -131,7 +130,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
     setCustomerDetails(IDs.customerDetails)
 
     const pushNotification = await loginApi.SendPushNotificationToken({
-      tokenID:expoPushToken,
+      tokenID: expoPushToken,
       customerID: IDs.customerDetails,
       deviceID: Device.osInternalBuildId,
       deviceName: Device.deviceName,
@@ -173,15 +172,6 @@ const OTPVerificationPersonal = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dis}>
       <Screen style={{ backgroundColor: "white" }}>
-        {/* <View style={styles.titleTextRow}>
-          <Text style={styles.titleText}>OTP Verification</Text>
-        </View>
-
-        <View style={styles.subTextRow}>
-          <Text style={styles.subText}>
-            {`Please enter the code sent to `}{user.email}
-          </Text>
-        </View> */}
 
         <View style={{ flex: 1, justifyContent: "flex-end" }}>
           <View

@@ -80,8 +80,8 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
             />
             <CheckBox
               title="Are there any customers outside the EU?"
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
+              checkedIcon="check-square-o"
+              uncheckedIcon="square-o"
               checkedColor="black"
               checked={isChecked}
               onPress={() => setChecked(!isChecked)}

@@ -79,6 +79,7 @@
     "rn-country-dropdown-picker": "^2.1.8",
     "victory-native": "^36.6.8",
     "wrn-echarts": "^0.1.5",
+    "xcode": "^3.0.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

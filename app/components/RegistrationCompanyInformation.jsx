@@ -57,8 +57,9 @@ const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
               editable
               multiline
               numberOfLines={4}
-              maxLength={50}
-              placeholder="Write about your business in about 50 words..."
+              maxLength={500}
+              minLength={250}
+              placeholder="Write about your business... (min 250 characters)"
               placeholderTextColor="grey"
               keyboardType="Text"
               onBlur={() => setFieldTouched("details")}

@@ -36,7 +36,6 @@ import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
 import Privacy from "./PrivacyPolicy";
 import { set } from "react-native-reanimated";
-import DateTimePickerComponent from "./Datepicker";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().min(1).max(11).label("First name"),
