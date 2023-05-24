@@ -21,6 +21,7 @@ import Icon from "../components/Icon";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import AuthScreen from "../components/AuthScreen";
 import { Dropdown } from "react-native-element-dropdown";
+import Success from "../components/RegistrationSuccess";
 
 const data = [
   { label: "Passport (recommended)", value: "passport" },
@@ -29,8 +30,8 @@ const data = [
   { label: "Birth ceritificate", value: "birth_certificate" },
 ];
 
-const ProofOfResidency = ({ navigation }) => {
-  const { user, setUser, expoPushToken } = useContext(AuthContext);
+const ProofOfStructure = ({ navigation }) => {
+  const { user, setUser } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [imageUri, setImageUri] = useState();
@@ -50,19 +51,13 @@ const ProofOfResidency = ({ navigation }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
-      alert("Scan the back")
-      const resultBack = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        base64: true,
-      });
 
       console.log(result.assets[0]);
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
         setFrontImage(result.assets[0].base64);
-        setBackImage(resultBack.assets[0].base64);
-        setDocumentType("ID3");
+        setDocumentType(document);
       }
     } catch (error) {
       console.log("Error reading an image", error);
@@ -70,26 +65,8 @@ const ProofOfResidency = ({ navigation }) => {
     setIsLoading(false);
   };
 
-
   const handleSubmit = async () => {
-    setIsLoading(true);
-
-    // const result = await w2GlobalAPI.verifyDocument(
-    //   clientReference,
-    //   documentType,
-    //   frontImage,
-    //   backImage,
-    //   "fGa4HO8mRjiCxBFdu2iSs7:APA91bHHo7yZSKgMXIyrKW5H8zKLYL5cbD3VtPVaDgi4Evce0pO0WMMQImJr4uI-xAlZ_93lEl-osgDTcEQ2HhGH3U_pwmnxdz5IiEYcgtr7yP_XViiR4zG9IteUh46RrztVWGrervfM",
-    // );
-
-    // if (!result?.data.result) {
-    //   setIsLoading(false);
-    //   return alert("Could not verify documents");
-    // }
-
-    // setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
-    setIsLoading(false);
-    navigation.navigate("ProofOfID");
+    navigation.navigate("W2Success");
   };
 
   useEffect(() => {
@@ -103,34 +80,23 @@ const ProofOfResidency = ({ navigation }) => {
       </View>
     );
   }
-
-  const handleBack = () => { };
+  const handleBack = () => {
+    navigation.navigate("ProofOfAuthority");
+  };
 
   return (
     <Screen>
       <AuthScreen
-        title="Proof of residency"
+        title="Send us a picture of you"
         img="elephantCard"
         width="60%"
         handleBack={handleBack}
-        back={false}
       >
-        <CountryOfResidence />
+
         <View>
-          <Dropdown
-            style={[styles.dropdown]}
-            containerStyle={styles.dropdownContainer}
-            data={data}
-            maxHeight={100}
-            labelField="label"
-            valueField="value"
-            placeholder={"Select"}
-            placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
-            value={documentType}
-            onChange={(item) => {
-              setDocumentType(item.value);
-            }}
-          />
+          <Text>
+            Please upload a document confirming the structure of the company
+          </Text>
         </View>
 
         <TouchableOpacity
@@ -147,35 +113,17 @@ const ProofOfResidency = ({ navigation }) => {
               <Text style={{ color: "#D3D3D3" }}>Add document</Text>
             </>
           ) : (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               {imageUri && (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                   <Image
                     source={{ uri: imageUri }}
-                    style={{ width: 150, height: 150 }}
+                    style={{ width: 100, height: 100 }}
                   />
+
                 </View>
               )}
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <MaterialCommunityIcons
                   name="check-circle"
                   color="#D3D3D3"
@@ -194,71 +142,6 @@ const ProofOfResidency = ({ navigation }) => {
         />
       </AuthScreen>
     </Screen>
-    // <Screen>
-    //   <View style={{ flex: 1, padding: 20 }}>
-    //     <View>
-    //       <Text style={{ fontSize: 26, fontWeight: "700", color: "#00003d" }}>
-    //         Proof of Residency
-    //       </Text>
-    //     </View>
-    //     <View style={{ marginTop: 20 }}>
-    //       <Text style={styles.signedSelect}>
-    //         Please provide us a proof of your residence
-    //       </Text>
-    //     </View>
-
-    //     <CountryOfResidence />
-
-    //     <View style={styles.signedContainer}>
-    //       <Text style={styles.signedSelect}>
-    //         Select one document from the below categories
-    //       </Text>
-    //       {!frontImage && (
-    //         <View style={styles.selectionContainer}>
-    //           <ImageSelector
-    //             title="Current signed passport"
-    //             onPress={() => selectImage("ID3")}
-    //           />
-    //           <ImageSelector
-    //             title="Current photo-card driving license"
-    //             onPress={() => selectImage("ID1")}
-    //           />
-    //         </View>
-    //       )}
-    //     </View>
-
-    //     {frontImage && <ImageReview />}
-
-    //     {frontImage && !backImage && (
-    //       <View style={styles.signedContainer}>
-    //         <Text style={styles.signedSelect}>
-    //           Select one document from the below categories
-    //         </Text>
-    //         <View style={styles.selectionContainer}>
-    //           <ImageSelector title="Back of document" onPress={selectImage2} />
-    //           {/* <TouchableOpacity style={styles.selectionBox1} onPress={selectImage2}>
-    //           <Text style={styles.selectionText}>Back of document</Text>
-    //         </TouchableOpacity> */}
-    //         </View>
-    //       </View>
-    //     )}
-
-    //     {backImage && (
-    //       <>
-    //         <View style={styles.signedContainer}>
-    //           <Text style={styles.signedSelect}>
-    //             Select one document from the below categories
-    //           </Text>
-    //           <ImageReview />
-    //         </View>
-
-    //         <View style={styles.continueButton}>
-    //           <Button title="Continue" onPress={() => handleSubmit(user)} />
-    //         </View>
-    //       </>
-    //     )}
-    //   </View>
-    // </Screen>
   );
 };
 
@@ -381,9 +264,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 10,
-    // shadowColor: "grey",
-    // shadowOpacity: 1,
-    // shadowRadius: 10,
   },
   selectionBox1: {
     borderWidth: 1,
@@ -471,4 +351,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProofOfResidency;
+export default ProofOfStructure;

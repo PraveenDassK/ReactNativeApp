@@ -303,6 +303,8 @@ const Registration = ({ navigation }) => {
           <CompanyDirectors
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
+            companyType = {companyHouse.type}
+            companyNumber={companyHouse.company_number}
           />
         );
         case "CompanyConfirm":
