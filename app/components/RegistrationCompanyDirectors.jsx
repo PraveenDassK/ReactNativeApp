@@ -13,61 +13,80 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CheckBox } from '@rneui/themed';
 import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
-
-const validationSchema = Yup.object().shape({
-
-})
+import apiLogin from "../api/apiLogin";
 
 const CompanyDirectors = ({ SaveDetails, setScreenToShow, companyType, companyNumber }) => {
-    const [directors, setDirectors] = useState([])
+    const [directors, setDirectors] = useState([{
+        "email": "jack.h@carbonyte.io",
+        "phoneNumber": "7927201649",
+        "address": {
+            address1: "123 street",
+            address2: "456 house",
+            area: "Area 5",
+            city: "City 6",
+            locale: "en_GB",
+            postcode: "WD40 1UB"
+        },
+        "firstName": "Jack",
+        "lastName": "Huang",
+        "dob": "01-01-1970",
+        "nationalID": "2",
+        "country": "UK",
+        "gender": "Male",
+        "ownershipPercentage": "50",
+        "role": "Director"
+    }])
     const [beneficalOwners, setBeneficalOwners] = useState([])
     const [controlingIntrests, setControlingIntrests] = useState([])
 
-    const handleSubmit = () => {
-        
-        const details = {
-            "emails": [
-                {
-                    "emailId": emailandPhone.emailAddress
-                }
-            ],
-            "phoneNumbers": [
-                {
-                    "phoneNo": emailandPhone.phoneNumber
-                }
-            ],
-            "customerDetails": {
-                "documentNo": "",
-                "documentType": "",
-                "address": addresses[0].address1,
-                "firstName": personalDetails.firstName,
-                "dob": "01-01-1970",
-                "nationalId": Id,
-                "lastName": personalDetails.lastName,
-                "postCode": addresses[0].postcode,
-                "postTown": addresses[0].area,
-                "country": nationality.country,
-                "locale": addresses[0].locale,
-                "salutation": "Mr",
-                "gender": personalDetails.gender,
-                "maritalStatus": maritalStatus,
-                "employmentDetails": employmentDetails
-            },
-            "income": income.incomeDetails,
-            "key": "",
-            "role": "",
-            "ownershipPercentage": 0,
-            "marketingChoices": ""
-        }
+    const handleSubmit = async() => {
+        let detailSubmission = []
+        directors.forEach(person => {
+            console.log(person)
+            detailSubmission.push({
+                "emails": [
+                    {
+                        "emailId": person.email
+                    }
+                ],
+                "phoneNumbers": [
+                    {
+                        "phoneNo": person.phoneNumber
+                    }
+                ],
+                "customerDetails": {
+                    "documentNo": "",
+                    "documentType": "",
+                    "address": person.address?.address1,
+                    "firstName": person.firstName,
+                    "dob": person.dob,
+                    "nationalId": person.nationalID,
+                    "lastName": person.lastName,
+                    "postCode": person.address?.postcode,
+                    "postTown": person.address?.area,
+                    "country": "UK",
+                    "locale": person.address?.locale,
+                    "salutation": "Mr",
+                    "gender": person.gender,
+                    "maritalStatus": "",
+                    "employmentDetails": ""
+                },
+                "income": "",
+                "key": companyNumber,
+                "role": person.role,
+                "ownershipPercentage": person.ownershipPercentage,
+                "marketingChoices": ""
+            })
+        })
+        console.log(detailSubmission)
         //SaveDetails(details, "CompanyDirectors")
+        const response = await apiLogin.RegisterBusinessUsers(detailSubmission)
+        console.log(response.data)
     }
     const handleBack = () => {
         console.log("!")
         setScreenToShow("CompanyUsage")
     }
-    console.log(companyType)
-
-
 
     return (
 
@@ -78,7 +97,12 @@ const CompanyDirectors = ({ SaveDetails, setScreenToShow, companyType, companyNu
             <Text>
                 Company Type: {companyType}
             </Text>
-
+            <Button
+                title="Continue"
+                color="black"
+                textColor="white"
+                onPress={() => handleSubmit()}
+            />
 
 
         </AuthScreen>

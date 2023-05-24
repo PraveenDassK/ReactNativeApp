@@ -145,6 +145,15 @@ const RegisterBusinessAccount = async (regData) => {
   return response
 };
 
+const RegisterBusinessUsers = async (regData) => {
+  const device = Device.osInternalBuildId
+  const response = await client.post(
+    "https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=business",
+    regData
+  );
+  return response;
+};
+
 const SendPushNotificationToken = async ({ customerID, tokenID, deviceID, deviceName, macAddress, operatingSystem }) => {
   const response = await client.post(
     `https://api.carbonyte.io/authverifymodule/SaveDeviceDetails/${customerID}/${tokenID}/${deviceID}?deviceName=${deviceName}&macAddress=${macAddress}&operatingSystem=${operatingSystem}`
@@ -212,5 +221,6 @@ export default {
   SendPushNotificationToken,
   GetIDs,
   VerifyDocument,
-  getCompanyRegNoByName
+  getCompanyRegNoByName,
+  RegisterBusinessUsers
 };
