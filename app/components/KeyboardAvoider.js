@@ -3,9 +3,7 @@ import { StyleSheet, Keyboard, findNodeHandle,
   TextInput, Animated, Easing, Platform, Dimensions
 } from 'react-native';
 
-const checkIsPortrait = (dims) => {
-  return dims.width < dims.height;
-}
+
 
 const KeyboardAvoider = ({ yOffset = 200, children }) => {
   const ref = React.useRef(null);

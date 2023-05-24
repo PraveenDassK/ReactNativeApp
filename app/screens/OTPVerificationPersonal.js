@@ -13,11 +13,11 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useFocusEffect } from "@react-navigation/native";
-import jwtDecode from "jwt-decode";
 
 import colors from "../config/colors";
 
@@ -28,7 +28,7 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import loginApi from "../api/apiLogin";
 import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {} from "react-native-gesture-handler";
 
 import * as Device from "expo-device";
 
@@ -43,7 +43,7 @@ const validationSchema = Yup.object().shape({
   // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
 }); // add required if necessary
 
-const OTPVerificationPersonal = ({ navigation }) => {
+const OTPVerificationPersonal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [resetVisible, setResetVisible] = useState(false);
   const {
@@ -178,250 +178,243 @@ const OTPVerificationPersonal = ({ navigation }) => {
   );
 
 
-  return (
-      <Screen style={{ backgroundColor: "white" }}>
-    
 
-        <View style={{ flex: 1, justifyContent: "flex-end" }}>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Image
-              style={{ width: "70%" }}
-              resizeMode="contain"
-              source={require("../assets/login/LoginAnimal2.png")}
-            />
-          </View>
+  return (
+    <Screen style={{ backgroundColor: "white" }}>
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Image
+            style={{ width: "70%" }}
+            resizeMode="contain"
+            source={require("../assets/login/LoginAnimal2.png")}
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: colors.light,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          }}
+        >
           <View
             style={{
-              backgroundColor: colors.light,
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 30,
             }}
           >
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginVertical: 30,
-              }}
-            >
-              <Text style={{ fontSize: 30 }}>OTP Verification</Text>
-            </View>
-
-            <Formik
-              initialValues={initialValues}
-              onSubmit={handleSubmit}
-              validationSchema={validationSchema}
-            >
-              {({
-                handleChange,
-                handleSubmit,
-                errors,
-                setFieldTouched,
-                touched,
-              }) => (
-                <>
-                  <View
-                    style={{
-                      paddingHorizontal: 30,
-                      paddingVertical: 50,
-                      backgroundColor: "white",
-                      borderTopLeftRadius: 20,
-                      borderTopRightRadius: 20,
-                    }}
-                  >
-                    <View style={styles.subTextRow}>
-                      <Text style={styles.subText}>
-                        {`Please enter the code sent to `}
-                        {user.email}
-                      </Text>
-                    </View>
-                    <View style={styles.entryBoxContainer}>
-                      <TextInput
-                        autoFocus={true}
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("pVer1")}
-                        onChangeText={(e) => {
-                          handleChange("pVer1")(e);
-                          if (e.length) pVer2Ref.current.focus();
-                        }}
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.pVer1}
-                        visible={touched.pVer1}
-                      />
-                      <TextInput
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("pVer2")}
-                        onChangeText={(e) => {
-                          handleChange("pVer2")(e);
-                          if (e.length) pVer3Ref.current.focus();
-                        }}
-                       
-                        ref={pVer2Ref}
-                        returnKeyType="next"
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.pVer2}
-                        visible={touched.pVer2}
-                      />
-
-                      <TextInput
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("pVer3")}
-                        onChangeText={(e) => {
-                          handleChange("pVer3")(e);
-                          if (e.length) pVer4Ref.current.focus();
-                        }}
-                        ref={pVer3Ref}
-                        returnKeyType="next"
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.pVer3}
-                        visible={touched.pVer3}
-                      />
-
-                      <TextInput
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("pVer4")}
-                        onChangeText={(e) => {
-                          handleChange("pVer4")(e);
-                          if (e.length) eVer1Ref.current.focus();
-                        }}
-                        ref={pVer4Ref}
-                        returnKeyType="next"
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.pVer4}
-                        visible={touched.pVer4}
-                      />
-                    </View>
-
-                    {!resetVisible ? (
-                      <Text style={styles.countdown}>
-                        Resend Code in 00:{count < 10 ? `0${count}` : count}
-                      </Text>
-                    ) : (
-                      <TouchableOpacity
-                        style={styles.resendContainer}
-                        onPress={resendCred}
-                      >
-                        <Text style={styles.resendItem}>Resend</Text>
-                      </TouchableOpacity>
-                    )}
-
-                    <View style={styles.subTextRow}>
-                      <Text style={[styles.subText, { marginTop: "10%" }]}>
-                        {`Please enter the code sent to `}+{user.phoneNumber}
-                      </Text>
-                    </View>
-
-                    <View style={styles.entryBoxContainer}>
-                      <TextInput
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("eVer1")}
-                        onChangeText={(e) => {
-                          handleChange("eVer1")(e);
-                          if (e.length) eVer2Ref.current.focus();
-                        }}
-                        ref={eVer1Ref}
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.eVer1}
-                        visible={touched.eVer1}
-                      />
-                      <TextInput
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("eVer2")}
-                        onChangeText={(e) => {
-                          handleChange("eVer2")(e);
-                          if (e.length) eVer3Ref.current.focus();
-                        }}
-                        ref={eVer2Ref}
-                        returnKeyType="next"
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.eVer2}
-                        visible={touched.eVer2}
-                      />
-
-                      <TextInput
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("eVer3")}
-                        onChangeText={(e) => {
-                          handleChange("eVer3")(e);
-                          if (e.length) eVer4Ref.current.focus();
-                        }}
-                        ref={eVer3Ref}
-                        returnKeyType="next"
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.eVer3}
-                        visible={touched.eVer3}
-                      />
-
-                      <TextInput
-                        maxLength={1}
-                        keyboardType="numeric"
-                        onBlur={() => setFieldTouched("eVer4")}
-                        onChangeText={handleChange("eVer4")}
-                        ref={eVer4Ref}
-                        returnKeyType="next"
-                        style={styles.inputBox}
-                      />
-                      <ErrorMessage
-                        error={errors.eVer4}
-                        visible={touched.eVer4}
-                      />
-                    </View>
-                    {!resetVisible ? (
-                      <Text style={[styles.countdown, { marginBottom: "10%" }]}>
-                        Resend Code in 00:{count < 10 ? `0${count}` : count}
-                      </Text>
-                    ) : (
-                      <TouchableOpacity
-                        style={[
-                          styles.resendContainer,
-                          { marginBottom: "10%" },
-                        ]}
-                        onPress={resendCred}
-                      >
-                        <Text style={styles.resendItem}>Resend</Text>
-                      </TouchableOpacity>
-                    )}
-                    <View style={styles.button}>
-                      <Button
-                        title="Verify"
-                        textColor="white"
-                        color="black"
-                        onPress={handleSubmit}
-                        visible={isLoading}
-                        disabled={isLoading}
-                      />
-                    </View>
-                  </View>
-                </>
-              )}
-            </Formik>
+            <Text style={{ fontSize: 30 }}>OTP Verification</Text>
           </View>
+
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            {({
+              handleChange,
+              handleSubmit,
+              errors,
+              setFieldTouched,
+              touched,
+            }) => (
+              <>
+                <View
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 50,
+                    backgroundColor: "white",
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
+                  }}
+                >
+                  <View style={styles.subTextRow}>
+                    <Text style={styles.subText}>
+                      {`Please enter the code sent to ${user.email}`}
+                    </Text>
+                  </View>
+                  <View style={styles.entryBoxContainer}>
+                    <TextInput
+                      autoFocus={true}
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer1")}
+                      onChangeText={(e) => {
+                        handleChange("pVer1")(e);
+                        if (e.length) pVer2Ref.current.focus();
+                      }}
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer1}
+                      visible={touched.pVer1}
+                    />
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer2")}
+                      onChangeText={(e) => {
+                        handleChange("pVer2")(e);
+                        if (e.length) pVer3Ref.current.focus();
+                      }}
+                      ref={pVer2Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer2}
+                      visible={touched.pVer2}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer3")}
+                      onChangeText={(e) => {
+                        handleChange("pVer3")(e);
+                        if (e.length) pVer4Ref.current.focus();
+                      }}
+                      ref={pVer3Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer3}
+                      visible={touched.pVer3}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer4")}
+                      onChangeText={(e) => {
+                        handleChange("pVer4")(e);
+                        if (e.length) eVer1Ref.current.focus();
+                      }}
+                      ref={pVer4Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer4}
+                      visible={touched.pVer4}
+                    />
+                  </View>
+
+                  {!resetVisible ? (
+                    <Text style={styles.countdown}>
+                      Resend Code in 00:{count < 10 ? `0${count}` : count}
+                    </Text>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.resendContainer}
+                      onPress={resendCred}
+                    >
+                      <Text style={styles.resendItem}>Resend</Text>
+                    </TouchableOpacity>
+                  )}
+
+                  <View style={styles.subTextRow}>
+                    <Text style={[styles.subText, { marginTop: "10%" }]}>
+                      {`Please enter the code sent to ${user.phoneNumber}`}
+                    </Text>
+                  </View>
+
+                  <View style={styles.entryBoxContainer}>
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer1")}
+                      onChangeText={(e) => {
+                        handleChange("eVer1")(e);
+                        if (e.length) eVer2Ref.current.focus();
+                      }}
+                      ref={eVer1Ref}
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer1}
+                      visible={touched.eVer1}
+                    />
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer2")}
+                      onChangeText={(e) => {
+                        handleChange("eVer2")(e);
+                        if (e.length) eVer3Ref.current.focus();
+                      }}
+                      ref={eVer2Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer2}
+                      visible={touched.eVer2}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer3")}
+                      onChangeText={(e) => {
+                        handleChange("eVer3")(e);
+                        if (e.length) eVer4Ref.current.focus();
+                      }}
+                      ref={eVer3Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer3}
+                      visible={touched.eVer3}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer4")}
+                      onChangeText={handleChange("eVer4")}
+                      ref={eVer4Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer4}
+                      visible={touched.eVer4}
+                    />
+                  </View>
+                  {!resetVisible ? (
+                    <Text style={[styles.countdown, { marginBottom: "10%" }]}>
+                      Resend Code in 00:{count < 10 ? `0${count}` : count}
+                    </Text>
+                  ) : (
+                    <TouchableOpacity
+                      style={[styles.resendContainer, { marginBottom: "10%" }]}
+                      onPress={resendCred}
+                    >
+                      <Text style={styles.resendItem}>Resend</Text>
+                    </TouchableOpacity>
+                  )}
+                  <View style={styles.button}>
+                    <Button
+                      title="Verify"
+                      textColor="white"
+                      color="black"
+                      onPress={handleSubmit}
+                      visible={isLoading}
+                      disabled={isLoading}
+                    />
+                  </View>
+                </View>
+              </>
+            )}
+          </Formik>
         </View>
-      </Screen>
-   
+      </View>
+    </Screen>
   );
 };
 

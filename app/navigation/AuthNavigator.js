@@ -20,26 +20,14 @@ import Privacy from "../screens/Privacy"
 import Registration from "../screens/Registration"
 import W2Success from "../screens/W2Success";
 
-// import LoginScreen from "../screens/LoginScreen";
-// import RegisterScreen from "../screens/RegisterScreen";
-// import WelcomeScreen from "../screens/WelcomeScreen";
+
 
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator initialRouteName="Account"
+  <Stack.Navigator initialRouteName=""
   screenOptions={{ headerShown: false }}
   >
-    {/* <Stack.Screen
-      name="Welcome"
-      component={WelcomeScreen}
-      options={{ headerShown: false }}
-    /> */}
-
-    {
-      //This has been changed to registration for development
-      //Will need to be changed over later
-    }
     <Stack.Screen  
       name="SplashAnimation"
       component={gestureHandlerRootHOC(SplashAnimation)}
