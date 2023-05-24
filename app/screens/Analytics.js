@@ -293,7 +293,6 @@ const Analytics = ({ navigation }) => {
           <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",fontSize: 24}]}>Spendings</AppText>
         </View>
 
-
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
         {catNames.map((name, index) => {
           return(
@@ -314,75 +313,6 @@ const Analytics = ({ navigation }) => {
 
           )
         })}
-
-
-        
-        {/* <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
-          <View
-            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
-          >
-            <View
-              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
-              width={dataPercentages[0]}
-              backgroundColor="#E4732D"
-            >
-              <AppText style={styles.barText}>{dataPercentages[0]}</AppText>
-            </View>
-          </View>
-
-
-          <AppText style={styles.subtitleText}>{catNames[0]}</AppText>
-          <View
-            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
-          >
-            <View
-              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
-              width={dataPercentages[0]}
-              backgroundColor="#E4732D"
-            >
-              <AppText style={styles.barText}>{dataPercentages[0]}</AppText>
-            </View>
-          </View>
-
-          <AppText style={styles.subtitleText}>{catNames[1]}</AppText>
-          <View
-            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
-          >
-            <View
-              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
-              width={dataPercentages[1]}
-              backgroundColor="#F3B53F"
-            >
-              <AppText style={styles.barText}>{dataPercentages[1]}</AppText>
-            </View>
-          </View>
-
-          <AppText style={styles.subtitleText}>{catNames[2]}</AppText>
-          <View
-            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
-          >
-            <View
-              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
-              width={dataPercentages[2]}
-              backgroundColor="#DC85F5"
-            >
-              <AppText style={styles.barText}>{dataPercentages[2]}</AppText>
-            </View>
-          </View>
-
-          <AppText style={styles.subtitleText}>{catNames[3]}</AppText>
-          <View
-            style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
-          >
-            <View
-              style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
-              width={dataPercentages[3]}
-              backgroundColor="#5888F5"
-            >
-              <AppText style={styles.barText}>{dataPercentages[3]}</AppText>
-            </View>
-        </View> */}
-            
 
       
           {graphData && <View style={

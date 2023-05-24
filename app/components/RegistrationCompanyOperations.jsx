@@ -42,7 +42,6 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
   const [operationTime, setOperationTime] = useState("");
   const timeOptions = [
     { label: "New ownership" },
-    { label: "Resuming trading" },
     { label: "0 - 6 Months" },
     { label: "6 Months - 1 Year" },
     { label: "1 - 2 Years" },
@@ -66,7 +65,7 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
   return (
     <AuthScreen
       img="lion"
-      title="How long have you been operating?"
+      title="When were you incorparated?"
       handleBack={handleBack}
     >
       <Formik onSubmit={(values) => sendData(values)}>

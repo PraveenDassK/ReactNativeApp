@@ -36,7 +36,7 @@ const Pin = ({ route, navigation }) => {
   console.log(enteredPin);
 
   /**
-   * @dev checks if the pin is correct
+   * @
    * @returns If pin is incorrect
    */
   const checkPin = async () => {
@@ -46,7 +46,7 @@ const Pin = ({ route, navigation }) => {
       pinView.current.clearAll();
       return;
     }
-    console.log(route.params.reference)
+
     setLoading(true);
     const response = await api.SendFunds(
       route.params.amount,
@@ -54,8 +54,7 @@ const Pin = ({ route, navigation }) => {
       route.params.beneficiaryData.accountName,
       route.params.beneficiaryData.accountNumber,
       route.params.beneficiaryData.sortCode,
-      route.params.beneficiaryData.address,
-      route.params.reference
+      route.params.beneficiaryData.address
     );
     setLoading(false);
     console.log(response);

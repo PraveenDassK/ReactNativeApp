@@ -62,7 +62,7 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
   };
   return (
     <AuthScreen
-      title="Where is it located?"
+      title="What is the trading address?"
       img="elephantCard"
       width="70%"
       handleBack={handleBack}

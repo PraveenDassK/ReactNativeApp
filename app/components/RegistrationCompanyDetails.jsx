@@ -33,15 +33,34 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   const [type, setType] = useState(null);
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
 
-  const handleSubmit = ({incomeDetails}) => {
+  const handleSubmit = ({ incomeDetails }) => {
     SaveDetails(type, "CompanyDetails");
   };
   const handleBack = () => {
     console.log("!");
     setScreenToShow("RegistrationNumber");
   };
+
+  function sortOptions(options) {
+    return options.sort((a, b) => {
+      const labelA = a.label.toUpperCase();
+      const labelB = b.label.toUpperCase();
+
+      if (labelA > labelB) {
+        return -1;
+      }
+      if (labelA < labelB) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   const options = [
-    { label: "Crop Production", value: "Crop Production" },
+    {
+      label: "Crop Production",
+      value: "Crop Production"
+    },
     {
       label: "Animal Production and Aquaculture",
       value: "Animal Production and Aquaculture",
@@ -380,7 +399,7 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
               <Dropdown
                 style={[styles.dropdown]}
                 containerStyle={styles.dropdownContainer}
-                data={options}
+                data={sortOptions(options)}
                 maxHeight={100}
                 labelField="label"
                 valueField="value"

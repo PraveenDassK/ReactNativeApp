@@ -11,7 +11,6 @@ import { horizontalScale, verticalScale, moderateScale } from "../config/scaling
 import ErrorMessage from "../components/forms/ErrorMessage";
 import Button from "../components/Button"
 
-import DatePicker from 'react-native-date-picker'
 import RegistrationPersonalDetails from "../components/RegistrationPersonalDetails.jsx"
 import RegistraionEmailAndPhone from "../components/RegistrationPersonalDetails.jsx"
 import PersonalOrBusiness from "../components/RegistrationPersonalOrBusiness.jsx"

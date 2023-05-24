@@ -21,7 +21,6 @@ import Icon from "../components/Icon";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import AuthScreen from "../components/AuthScreen";
 import { Dropdown } from "react-native-element-dropdown";
-import Success from "../components/RegistrationSuccess";
 
 const data = [
   { label: "Passport (recommended)", value: "passport" },
@@ -30,8 +29,8 @@ const data = [
   { label: "Birth ceritificate", value: "birth_certificate" },
 ];
 
-const ProofOfID = ({ navigation }) => {
-  const { user, setUser } = useContext(AuthContext);
+const ProofOfAddress = ({ navigation }) => {
+  const { user, setUser, expoPushToken } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [imageUri, setImageUri] = useState();
@@ -71,46 +70,26 @@ const ProofOfID = ({ navigation }) => {
     setIsLoading(false);
   };
 
-  // const selectImage2 = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const result = await ImagePicker.launchCameraAsync({
-  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //       base64: true,
-  //     });
-
-  //     console.log(result.assets[0]);
-
-  //     if (!result.canceled) {
-  //       setImageUri(result.assets[0].uri);
-  //       setBackImage(result.assets[0].base64);
-  //     }
-  //   } catch (error) {
-  //     console.log("Error reading an image", error);
-  //   }
-  //   setIsLoading(false);
-  // };
 
   const handleSubmit = async () => {
-    navigation.navigate("ProofOfFace");
-    // setIsLoading(true);
-    // const clientReference = phoneNumber;
+    setIsLoading(true);
 
     // const result = await w2GlobalAPI.verifyDocument(
     //   clientReference,
     //   documentType,
     //   frontImage,
-    //   backImage
+    //   backImage,
+    //   "fGa4HO8mRjiCxBFdu2iSs7:APA91bHHo7yZSKgMXIyrKW5H8zKLYL5cbD3VtPVaDgi4Evce0pO0WMMQImJr4uI-xAlZ_93lEl-osgDTcEQ2HhGH3U_pwmnxdz5IiEYcgtr7yP_XViiR4zG9IteUh46RrztVWGrervfM",
     // );
 
-    // console.log("what is this", result.ok, result.data[0].result);
-
-    // if (!result.ok || !result.data[0].result)
+    // if (!result?.data.result) {
+    //   setIsLoading(false);
     //   return alert("Could not verify documents");
+    // }
 
     // setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
-    // navigation.navigate("BusinessAddress2");
-    // setIsLoading(false);
+    setIsLoading(false);
+    navigation.navigate("ProofOfID");
   };
 
   useEffect(() => {
@@ -124,17 +103,17 @@ const ProofOfID = ({ navigation }) => {
       </View>
     );
   }
-  const handleBack = () => {
-    navigation.navigate("ProofOfResidency");
-  };
+
+  const handleBack = () => { };
 
   return (
     <Screen>
       <AuthScreen
-        title="Photo ID"
+        title="Proof of address"
         img="elephantCard"
         width="60%"
         handleBack={handleBack}
+        back={false}
       >
         <CountryOfResidence />
         <View>
@@ -168,17 +147,35 @@ const ProofOfID = ({ navigation }) => {
               <Text style={{ color: "#D3D3D3" }}>Add document</Text>
             </>
           ) : (
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems:"center"}}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               {imageUri && (
-                <View style={{ flex:1, justifyContent:"center", alignItems:"center"}}>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Image
                     source={{ uri: imageUri }}
-                    style={{ width: 100, height: 100 }}
+                    style={{ width: 150, height: 150 }}
                   />
-
                 </View>
               )}
-              <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <MaterialCommunityIcons
                   name="check-circle"
                   color="#D3D3D3"
@@ -281,6 +278,40 @@ const CountryOfResidence = () => {
         </View>
         <View style={styles.containerItem}>
           <Text>United Kingdom</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const ImageSelector = ({ title, onPress }) => {
+  return (
+    <TouchableOpacity style={styles.selectionBox1} onPress={onPress}>
+      <View style={styles.selectionItem1}>
+        <Icon
+          name="chevron-up"
+          iconColor="blue"
+          backgroundColor="transparent"
+          size={50}
+        />
+      </View>
+      <View style={styles.selectionItem2}>
+        <Text style={[styles.selectionText, styles.proofFont]}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const ImageReview = () => {
+  return (
+    <View style={styles.reviewHolder}>
+      <View style={styles.reviewContainer}>
+        <Text style={styles.proofFont}>Currently Signed</Text>
+        <View style={styles.reviewText}>
+          <Icon name="check-circle" backgroundColor="none" iconColor="blue" />
+          <View style={styles.reviewSubText}>
+            <Text style={styles.proofFont}>Under review</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -440,125 +471,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProofOfID;
-
-// import {
-//   Camera,
-//   CameraType,
-// } from "expo-camera";
-// import { useEffect, useState } from "react";
-// import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-// import * as FaceDetector from "expo-face-detector";
-
-// export default function App() {
-//   const [permission, setPermission] = useState({});
-//   const [faceData, setFaceData] = useState([]);
-
-//   useEffect(() => {
-//     requestPermissions();
-//   }, []);
-
-//   const requestPermissions = async () => {
-//     try {
-//     const {  status } = Camera.requestCameraPermissionsAsync()
-//     setPermission(status === "granted");
-//     console.log("status",status)
-//     } catch (e) {
-//       console.log('errpr',e)
-//     }
-//   };
-
-//   if (permission !== false) {
-//     return (
-//       <View style={[styles.container, {justifyContent: "center", alignItems: "center"}]}>
-//         <Text>No Access </Text>
-//       </View>
-//     );
-//   }
-//   const getFaceDataView = () => {
-//     if (faceData.length === 0) {
-//       return (
-//         <View style={styles.faces}>
-//           <Text style={styles.faceDesc}>No faces:</Text>
-//         </View>
-//       );
-//     } else {
-//       return faceData.map((face, index) => {
-//         const eyesShut =
-//           face.rightEyeOpenProbability < 0.4 &&
-//           face.leftEyeOpenProbability < 0.4;
-//         const winking =
-//           !eyesShut &&
-//           (face.rightEyeOpenProbability < 0.4 ||
-//             face.leftEyeOpenProbability < 0.4);
-//         const smiling = face.smilingProbability > 0.7;
-//         return (
-//           <>
-
-//           <View style={styles.faces} key={index}>
-//             <Text style={styles.faceDesc}>
-//               Eyes Shut: {eyesShut.toString()}
-//             </Text>
-//             <Text style={styles.faceDesc}>Winking: {winking.toString()}</Text>
-//             <Text style={styles.faceDesc}>Smiling: {smiling.toString()}</Text>
-
-//           </View>
-//           <View>
-//               <Button title="press me" onPress={handleCapture}/>
-//             </View>
-//           </>
-//         );
-//       });
-//     }
-//   };
-
-//   const handleFaceDetected = ({ faces}) => {
-//     setFaceData(faces);
-//     console.log(faces[0]);
-//   };
-
-//   const handleCapture = () => {
-
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <Camera
-//         f
-//         type={CameraType.front}
-//         style={styles.camera}
-//         onFacesDetected={handleFaceDetected}
-//         faceDetectorSettings={{
-//           mode: FaceDetector.FaceDetectorMode.accurate,
-//           detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
-//           runClassifications: FaceDetector.FaceDetectorClassifications.none,
-//           minDetectionInterval: 100,
-//           tracking: true,
-//         }}
-//       >
-//         {getFaceDataView()}
-//       </Camera>
-//     </View>
-//   );
-// }
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   camera: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   faces: {
-//     backgroundColor: "#ffffff",
-//     alignSelf: "stretch",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     margin: 16,
-//     opacity: 0.2
-//   },
-//   faceDesc: {
-//     fontSize: 20,
-//   },
-// });
+export default ProofOfAddress;

@@ -146,7 +146,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     //If the card data is not there get the card details
     if (!cardDetails) {
-      const cardObject = await api.GetCardFromID("687942912");
+      const cardObject = await api.GetCardFromID("714613712");
       console.log(cardObject)
       setCardDetails(cardObject);
       setSortCode("00-00-00");
