@@ -19,6 +19,8 @@ import GlobalStyles from "../../GlobalStyles";
 import AppText from "../components/Text";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 
+import AppDropdown from "../components/AppDropdown";
+
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
@@ -29,6 +31,11 @@ const BankTransferAmount = ({ route, navigation }) => {
   // let amount = (amount ? amount : 1).toString();
 
   const [reference, setReference] = useState('');
+
+  const paymentTypes = [{
+    label:"",
+    value:""
+  }]
 
   const handleTextChange = (text) => {
     setReference(text);
@@ -102,7 +109,7 @@ const BankTransferAmount = ({ route, navigation }) => {
           />
         </View>
 
-
+        <AppDropdown/>
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.hello4, styles.groupViewPosition]}>
             <TouchableOpacity
