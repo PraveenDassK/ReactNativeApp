@@ -22,9 +22,10 @@ import CompanyInformation from "../components/RegistrationCompanyInformation.jsx
 import CompanyIncome from "../components/RegistrationCompanyIncome.jsx";
 import CompanyOperations from "../components/RegistrationCompanyOperations.jsx";
 import CompanyUsage from "../components/RegistrationCompanyUsage.jsx";
-import CompanyDirectors from "../components/RegistrationCompanyDirectors.jsx";
+import CompanyDirectors from "../components/RegistrationDirectorsPartners.jsx";
 import CompanyConfirm from "../components/RegistrationCompanySendDetails";
 
+import RegistrationDirectorsPartners from "../components/RegistrationDirectorsPartners.jsx";
 import colors from "../config/colors";
 
 const Registration = ({ navigation }) => {
@@ -300,7 +301,7 @@ const Registration = ({ navigation }) => {
         );
       case "CompanyDirectors":
         return (
-          <CompanyDirectors
+          <RegistrationDirectorsPartners
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
             companyType = {companyHouse.type}

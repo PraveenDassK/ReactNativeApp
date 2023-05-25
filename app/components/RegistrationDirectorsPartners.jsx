@@ -5,30 +5,44 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
- 
+
 } from "react-native";
 
 import Screen from "./Screen";
 import Button from "./AppButton";
 
+import RegistrationCompanyDBCDetails from "./RegistrationCompanyDBCDetails";
+import RegistrationCompanyDBCDetails2 from "./RegistrationCompanyDBCDetails2";
+
 const DIRECTORS = [
-  { id: 1, firstname: "James", lastname: "Jones" },
-  { id: 2, firstname: "Isiah", lastname: "Thomas" },
-  { id: 3, firstname: "Juliet", lastname: "Newman" },
-  { id: 4, firstname: "Eme", lastname: "Udoka" },
+  {
+    id: 1,
+    "email": "jack.h@carbonyte.io",
+    "phoneNumber": "7927201649",
+    "address": {
+      address1: "123 street",
+      address2: "456 house",
+      area: "Area 5",
+      city: "City 6",
+      locale: "en_GB",
+      postcode: "WD40 1UB"
+    },
+    firstName: "Jack",
+    lastName: "Huang",
+    "dob": "01-01-1970",
+    "nationalID": "2",
+    "country": "UK",
+    "gender": "Male",
+    "ownershipPercentage": "50",
+    "role": "Director"
+  }
 ];
 const BENEFITS = [
-  { id: 1, firstname: "John", lastname: "Smith" },
-  { id: 2, firstname: "Emily", lastname: "Davis" },
-  { id: 3, firstname: "Michael", lastname: "Johnson" },
-  { id: 4, firstname: "Sophia", lastname: "Wilson" },
+
 ];
 
 const INTRESTS = [
-  { id: 1, firstname: "Olivia", lastname: "Brown" },
-  { id: 2, firstname: "Ethan", lastname: "Robinson" },
-  { id: 3, firstname: "Ava", lastname: "Clark" },
-  { id: 4, firstname: "William", lastname: "Adams" },
+
 ];
 
 const RegistrationDirectorsPartners = () => {
@@ -36,6 +50,8 @@ const RegistrationDirectorsPartners = () => {
   const [directors, setDirectors] = useState(DIRECTORS);
   const [beneficialOwners, setOwners] = useState(BENEFITS);
   const [controllingInterests, setIntrests] = useState(INTRESTS);
+
+  const [screen, setScreen] = useState("")
 
   const handleDelete = (id, items, setItems) => {
     const originalPeople = [...items];
@@ -45,15 +61,14 @@ const RegistrationDirectorsPartners = () => {
 
   return (
     <Screen>
-    <View
-          style={styles.mainContainer}
-         
-        >
-
-      <ScrollView
-        style={{ flex: 1 }}
-        showsVerticalScrollIndicator={false}
+      <View
+        style={styles.mainContainer}
       >
+
+        <ScrollView
+          style={{ flex: 1 }}
+          showsVerticalScrollIndicator={false}
+        >
           <View onStartShouldSetResponder={() => true}>
             <View style={styles.directorPartnerContainer}>
               <DirectorPartnerItems
@@ -82,11 +97,10 @@ const RegistrationDirectorsPartners = () => {
             </View>
           </View>
 
-      </ScrollView>
+        </ScrollView>
+        <Button title={"confirm"} textColor={"white"} color={"black"} />
 
-          <Button title={"confirm"} textColor={"white"} color={"black"} />
-
-        </View>
+      </View>
     </Screen>
   );
 };
@@ -102,9 +116,10 @@ const DirectorPartnerItems = ({ items, onDelete, title }) => {
       {items.map((item) => (
         <Fragment key={item.id}>
           <RegistrationInputList
-            firstname={item.firstname}
+            firstName={item.firstName}
             onPress={() => onDelete(item.id)}
           />
+          {console.log(item)}
         </Fragment>
       ))}
     </View>
@@ -124,11 +139,11 @@ const RegistrationInputSelect = ({ name, onAdd }) => {
   );
 };
 
-const RegistrationInputList = ({ firstname, onPress }) => {
+const RegistrationInputList = ({ firstName, onPress }) => {
   return (
     <View style={styles.inputListContainer}>
       <View style={styles.inputListTextContainer}>
-        <Text>{firstname}</Text>
+        <Text>{firstName}</Text>
       </View>
       <Button
         title={"delete"}
@@ -146,7 +161,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     width: "100%",
   },
-  directorPartnerContainer:{
+  directorPartnerContainer: {
     marginVertical: "2.5%"
   },
   dropdownContainer: {

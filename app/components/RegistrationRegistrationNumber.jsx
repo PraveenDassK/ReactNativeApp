@@ -50,6 +50,9 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
       handleBack={handleBack}
     >
       <View style={[styles.component1981, styles.mt14]}>
+        <Text>
+          We need the name of your company to search on company house
+        </Text>
         <TextInput
           placeholder="Company name"
           placeholderTextColor="grey"

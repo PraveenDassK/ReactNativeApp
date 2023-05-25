@@ -395,6 +395,13 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
         >
           {({ handleChange, handleSubmit, setFieldTouched }) => (
             <View style={[styles.component1981, styles.mt14]}>
+                            <Text>Annual income</Text>
+              <TextInput
+                keyboardType="numeric"
+                onBlur={() => setFieldTouched("incomeDeatils")}
+                onChangeText={handleChange("incomeDetails")}
+                style={[styles.childBorder, { padding: 10 }]}
+              />
               <Text>Business type</Text>
               <Dropdown
                 style={[styles.dropdown]}
@@ -409,13 +416,7 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
                   setType(item.value);
                 }}
               />
-              <Text>Annual income</Text>
-              <TextInput
-                keyboardType="numeric"
-                onBlur={() => setFieldTouched("incomeDeatils")}
-                onChangeText={handleChange("incomeDetails")}
-                style={[styles.childBorder, { padding: 10 }]}
-              />
+
               <CheckBox
                 title="I have read and accepted the Privacy Policy"
                 checked={privacyPolicy}

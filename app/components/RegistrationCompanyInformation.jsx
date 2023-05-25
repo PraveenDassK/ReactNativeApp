@@ -32,6 +32,10 @@ import AuthScreen from "./AuthScreen";
 const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
 
   const handleSubmit = ({ details }) => {
+    if(details.length < 250){
+      return;
+    }
+    console.log(details)
     SaveDetails(details, "CompanyInformation");
   };
   const handleBack = () => {
@@ -50,7 +54,7 @@ const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
         }}
         onSubmit={handleSubmit}
       >
-        {({ handleChange, handleSubmit, setFieldTouched }) => (
+        {({ handleChange, handleSubmit, setFieldTouched, values }) => (
           <View style={[styles.component1981, styles.mt14]}>
             <Text>About your business</Text>
             <TextInput
@@ -66,6 +70,7 @@ const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
               onChangeText={handleChange("details")}
               style={[styles.component1981Child, styles.childBorder]}
             />
+            <Text>Character count: {values.details.length} / 250</Text>
             <Button
               title="Continue"
               color="black"
