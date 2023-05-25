@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { gestureHandlerRootHOC } from "react-native-gesture-handler"
+import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 import Onboarding1 from "../screens/Onboarding1";
 import Onboarding2 from "../screens/Onboarding2";
@@ -20,27 +20,34 @@ import ProofOfAuthority from "../screens/ProofOfAuthority";
 import ProofOfStructure from "../screens/ProofOfStructure";
 
 import PersonalAddress from "../screens/PersonalAddress";
-import SplashAnimation from "../screens/SplashAnimation"
-import Privacy from "../screens/Privacy"
-import Registration from "../screens/Registration"
+import SplashAnimation from "../screens/SplashAnimation";
+import Privacy from "../screens/Privacy";
+import Registration from "../screens/Registration";
 import W2Success from "../screens/W2Success";
-
-
+import RegistrationCompanyDBCDetails from "../components/RegistrationCompanyDBCDetails";
+import RegistrationCompanyDBCDetails2 from "../components/RegistrationCompanyDBCDetails2";
 
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator initialRouteName=""
-  screenOptions={{ headerShown: false }}
-  >
-    <Stack.Screen  
+  <Stack.Navigator initialRouteName="" screenOptions={{ headerShown: false }}>
+    <Stack.Screen
       name="SplashAnimation"
       component={gestureHandlerRootHOC(SplashAnimation)}
       options={{ headerShown: false }}
     />
-    <Stack.Screen name="Onboarding1" component={gestureHandlerRootHOC(Onboarding1)} />
-    <Stack.Screen name="Onboarding2" component={gestureHandlerRootHOC(Onboarding2)} />
-    <Stack.Screen name="Onboarding3" component={gestureHandlerRootHOC(Onboarding3)} />
+    <Stack.Screen
+      name="Onboarding1"
+      component={gestureHandlerRootHOC(Onboarding1)}
+    />
+    <Stack.Screen
+      name="Onboarding2"
+      component={gestureHandlerRootHOC(Onboarding2)}
+    />
+    <Stack.Screen
+      name="Onboarding3"
+      component={gestureHandlerRootHOC(Onboarding3)}
+    />
 
     <Stack.Screen
       name="Privacy"
@@ -86,18 +93,52 @@ const AuthNavigator = () => (
       }}
     />
 
-    <Stack.Screen name="PersonalOrBusiness" component={gestureHandlerRootHOC(PersonalOrBusiness)} />
+    <Stack.Screen
+      name="PersonalOrBusiness"
+      component={gestureHandlerRootHOC(PersonalOrBusiness)}
+    />
     <Stack.Screen name="Name" component={gestureHandlerRootHOC(Name)} />
-    <Stack.Screen name="ProofOfResidency" component={gestureHandlerRootHOC(ProofOfResidency)} />
-    <Stack.Screen name="ProofOfID" component={gestureHandlerRootHOC(ProofOfID)} />
-    <Stack.Screen name="ProofOfFace" component={gestureHandlerRootHOC(ProofOfFace)} />
-    <Stack.Screen name="ProofOfAuthority" component={gestureHandlerRootHOC(ProofOfAuthority)} />
-    <Stack.Screen name="ProofOfStructure" component={gestureHandlerRootHOC(ProofOfStructure)} />
+    <Stack.Screen
+      name="ProofOfResidency"
+      component={gestureHandlerRootHOC(ProofOfResidency)}
+    />
+    <Stack.Screen
+      name="ProofOfID"
+      component={gestureHandlerRootHOC(ProofOfID)}
+    />
+    <Stack.Screen
+      name="ProofOfFace"
+      component={gestureHandlerRootHOC(ProofOfFace)}
+    />
+    <Stack.Screen
+      name="ProofOfAuthority"
+      component={gestureHandlerRootHOC(ProofOfAuthority)}
+    />
+    <Stack.Screen
+      name="ProofOfStructure"
+      component={gestureHandlerRootHOC(ProofOfStructure)}
+    />
 
-    <Stack.Screen name="W2Success" component={gestureHandlerRootHOC(W2Success)} />
-    <Stack.Screen name="PersonalAddress" component={gestureHandlerRootHOC(PersonalAddress)} />
-    <Stack.Screen name="Registration" component={gestureHandlerRootHOC(Registration)} />
-
+    <Stack.Screen
+      name="W2Success"
+      component={gestureHandlerRootHOC(W2Success)}
+    />
+    <Stack.Screen
+      name="PersonalAddress"
+      component={gestureHandlerRootHOC(PersonalAddress)}
+    />
+    <Stack.Screen
+      name="Registration"
+      component={gestureHandlerRootHOC(Registration)}
+    />
+    <Stack.Screen
+      name="RegistrationDBC"
+      component={gestureHandlerRootHOC(RegistrationCompanyDBCDetails)}
+    />
+    <Stack.Screen
+      name="RegistrationDBC2"
+      component={gestureHandlerRootHOC(RegistrationCompanyDBCDetails2)}
+    />
   </Stack.Navigator>
 );
 

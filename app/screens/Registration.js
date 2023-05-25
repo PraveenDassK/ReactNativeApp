@@ -29,6 +29,8 @@ import RegistrationDirectorsPartners from "../components/RegistrationDirectorsPa
 import colors from "../config/colors";
 
 const Registration = ({ navigation }) => {
+
+
   //Personal details
   const [accountType, setPersonalBusiness] = useState(null);
   const [personalDetails, setPersonalDetails] = useState(null)
@@ -302,6 +304,7 @@ const Registration = ({ navigation }) => {
       case "CompanyDirectors":
         return (
           <RegistrationDirectorsPartners
+            navigation= {navigation}
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
             companyType = {companyHouse.type}
