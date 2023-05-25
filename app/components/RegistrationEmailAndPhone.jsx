@@ -97,7 +97,7 @@ const RegistrationEmailAndPhone = ({ SaveDetails, setScreenToShow }) => {
               <Text>Email Address</Text>
               <TextInput
                 autoCapitalize="none"
-                textContentType="emailAdress"
+                textContentType="emailAddress"
                 keyboardType="email-address"
                 onBlur={() => setFieldTouched("email")}
                 onChangeText={handleChange("email")}

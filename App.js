@@ -1,14 +1,15 @@
+import "react-native-gesture-handler";
+import "expo-dev-menu";
+
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, Button, Platform, ActivityIndicator } from "react-native";
 import { AppState } from "react-native";
 import { useFonts } from "expo-font";
 
-// import 'expo-dev-menu';
-import "react-native-gesture-handler";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
-import jwtDecode from "jwt-decode";
+
 import * as SplashScreen from "expo-splash-screen";
 import * as LocalAuthentication from "expo-local-authentication";
 import { decode, encode } from "base-64";
@@ -17,8 +18,6 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
-
-import Devices from "./app/screens/Devices";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -100,7 +99,7 @@ export default function App() {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
     );
-    console.log(expoPushToken)
+    console.log(expoPushToken);
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);
@@ -260,31 +259,34 @@ export default function App() {
 export async function registerForPushNotificationsAsync() {
   let token;
 
-  if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('default', {
-          name: 'default',
-          importance: Notifications.AndroidImportance.MAX,
-          vibrationPattern: [0, 250, 250, 250],
-          lightColor: '#FF231F7C',
-      });
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
   }
 
   if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-          const { status } = await Notifications.requestPermissionsAsync();
-          finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-          alert('Failed to get push token for push notification! Please update permissions to continue use the App.');
-          return;
-      }
-      token = (await Notifications.getDevicePushTokenAsync()).data;
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert(
+        "Failed to get push token for push notification! Please update permissions to continue use the App."
+      );
+      return;
+    }
+    token = (await Notifications.getDevicePushTokenAsync()).data;
   } else {
-      alert('Must use physical device for Push Notifications');
+    alert("Must use physical device for Push Notifications");
   }
-  console.log("pushToken", token)
+  console.log("pushToken", token);
 
   return token;
 }

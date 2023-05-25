@@ -1,4 +1,4 @@
-import Constants from "expo-constants";
+// import Constants from "expo-constants";
 
 const settings = {
   dev: {
@@ -14,7 +14,7 @@ const settings = {
 
 const getCurrentSettings = () => {
   if (__DEV__) return settings.dev;
-  if (Constants.manifest.releaseChannel === "staging") return settings.staging;
+  // if (Constants.manifest.releaseChannel === "staging") return settings.staging;
   return settings.prod;
 };
 

@@ -3,26 +3,22 @@ import { StyleSheet, Keyboard, findNodeHandle,
   TextInput, Animated, Easing, Platform, Dimensions
 } from 'react-native';
 
-const checkIsPortrait = (dims) => {
-  return dims.width < dims.height;
-}
+
 
 const KeyboardAvoider = ({ yOffset = 200, children }) => {
   const ref = React.useRef(null);
   const [kbOffset, setKbOffset] = React.useState(0);
   const kbOffsetAnim = React.useRef(new Animated.Value(0)).current;
 
-  // Handle a special case on Android where rotating from landscape to portrait causes the offset to fail
-  const [isPortrait, setIsPortrait] = React.useState(checkIsPortrait(Dimensions.get('screen')));
-  const [justRotated, setJustRotated] = React.useState(false);
+
   
   const updateOffset = (toValue) => {
     setKbOffset(toValue);
 
-    const didJustRotate = justRotated[0];
-    const duration = didJustRotate ? 1000 : 100;
-    const easing = didJustRotate ? null : Easing.out(Easing.ease);
-    if (didJustRotate) justRotated[1](false);
+   
+    const duration =  100;
+    const easing = Easing.out(Easing.ease);
+  
 
     Animated.timing(kbOffsetAnim, {
       toValue: -toValue,
@@ -41,21 +37,12 @@ const KeyboardAvoider = ({ yOffset = 200, children }) => {
       Platform.select({ios: "keyboardWillHide", android: "keyboardDidHide"}), 
       onKeyboardHide
     );
-
-    const onOrientationChange = () => {
-      const portrait = checkIsPortrait(Dimensions.get('screen'));
-      justRotated[1](!isPortrait[0] && portrait);
-      isPortrait[1](portrait);
-    };
-
-    if (Platform.OS === 'android') {
-      Dimensions.addEventListener("change", onOrientationChange);
-    }
+    
 
     return () => {
       kbShow.remove();
       kbHide.remove();
-      Dimensions.removeEventListener("change", onOrientationChange);
+     
     }
   }, []);
 

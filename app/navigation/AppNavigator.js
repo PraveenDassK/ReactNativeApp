@@ -82,7 +82,7 @@ import SwitchAccounts from "../screens/SwitchAccounts"
 import CarbonTonnesRemoved from "../screens/CarbonTonnesRemoved"
 import FUP from "../screens/FUP";
 import DeleteAccount from "../screens/DeleteAccount";
-import TestEnviro from "../screens/TestEnviro";
+
 
 import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
@@ -95,7 +95,7 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 import { Animated, View, TouchableOpacity, Platform } from 'react-native';
-import { set } from "react-native-reanimated";
+
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("")
@@ -193,22 +193,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
 
 
-const leftToRightAnimation = {
-  cardStyleInterpolator: ({ current, layouts }) => {
-    return {
-      cardStyle: {
-        transform: [
-          {
-            translateX: current.progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [layouts.screen.width, 0],
-            }),
-          },
-        ],
-      },
-    };
-  },
-};
+
 
 const StackNavigator = () => {
   return (

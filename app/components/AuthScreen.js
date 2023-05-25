@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, TouchableOpacity,TouchableWithoutFeedback, Keyboard, View, Image} from "react-native";
-import Constants from "expo-constants";
+
 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 

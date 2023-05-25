@@ -3,21 +3,15 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
-  SafeAreaView,
+
   Text,
   TextInput,
-  Image,
-  Pressable,
-  useWindowDimensions,
-  Dimensions,
+
   TouchableWithoutFeedback,
   Keyboard,
   Modal,
 } from "react-native";
-import Screen from "./Screen";
-import AuthContext from "../auth/context";
-import GlobalStyles from "../../GlobalStyles";
-import api from "../api/api_list";
+
 import * as Yup from "yup";
 import {
   horizontalScale,
@@ -31,11 +25,11 @@ import { Dropdown } from "react-native-element-dropdown";
 import { CheckBox } from "@rneui/themed";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-import colors from "../config/colors";
+
 import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
 import Privacy from "./PrivacyPolicy";
-import { set } from "react-native-reanimated";
+
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().min(1).max(11).label("First name"),
@@ -44,7 +38,7 @@ const validationSchema = Yup.object().shape({
 
 const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [visible, setVisible] = useState(false);
-  const [disbled, setDisabled] = useState(true);
+
 
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
@@ -55,12 +49,6 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [dob, setDOB] = useState(new Date(1598051730000));
   const [viewDate, setView] = useState(false);
 
-  // const onChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate;
-  //   console.log(selectedDate)
-  //   setBirthday(currentDate);
-  //   setView(false);
-  // };
 
   const genderData = [
     {
@@ -135,11 +123,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-  };
+  
   console.log(String(date));
 
   const showMode = (currentMode) => {

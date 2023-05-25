@@ -162,7 +162,7 @@ const Login = ({ navigation }) => {
                     </Text>
                     <TextInput
                       autoCapitalize="none"
-                      textContentType="emailAdress"
+                      textContentType="emailAddress"
                       keyboardType="email-address"
                       onBlur={() => setFieldTouched("email")}
                       onChangeText={handleChange("email")}

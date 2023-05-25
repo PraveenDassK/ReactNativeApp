@@ -4,7 +4,7 @@ const getPinControlToken = async(id) => {
     //https://integration-api-cat2.{{environment}}.ext.{{realm}}.cia.enfuce.com/pincontrol/v2/plastic/{plasticId}
     const data = id
     const cardId = id
-    const endpoint = `pincontrol/v2/plastic/${id}`
+    const endpoint = `/pincontrol/v2/plastic/${id}`
     
     return await client.post(endpoint, data, {
       auth: {
@@ -22,7 +22,7 @@ const getPinControlToken = async(id) => {
 const getCardResponse = (id) => {
   const data = id
   const cardId = id
-  const endpoint = `card/v4/card/${cardId}/controlToken?auditUser=`
+  const endpoint = `/card/v4/card/${cardId}/controlToken?auditUser=`
   
   return client.post(endpoint, data, {
     auth: {
@@ -40,9 +40,7 @@ const getCardResponse = (id) => {
  */
 const getCardDetails = (url, token) => {
   client.setBaseURL(url)
-  client.setHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded'
-  })
+
 
   return client.any({
     method: 'POST', params: { token }, data: {}, headers: {
@@ -64,7 +62,7 @@ const GetCardFromID = async(ID) => {
     responseDetails?.data?.cardDataUrl,
     responseDetails?.data?.token
   );
-  console.log(cardText)
+  console.log(responseDetails,cardText)
 
   const cardExpiry = cardText?.data?.substr(601, 4);
   const formattedExpiraty =
@@ -85,9 +83,26 @@ const GetCardFromID = async(ID) => {
   };
 }
 
+const getPlasticCards = async (id) => {
+  client.setBaseURL('https://integration-api-cat2.demo.ext.test.cia.enfuce.com')
+  const endpoint = `/card/v3/${id}/plastic?auditUser=`
+
+//const string = 'https://integration-api-cat2.demo.ext.test.cia.enfuce.com/card/v3/714613712/plastic?auditUser='
+
+  const response = await client.get(endpoint, null, {
+    
+    auth: {
+      username: 'carbonyte_test_demo_apiuser',
+      password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
+    }})
+
+  console.log('plastic cards', response.ok, response.data, response)
+}
+
 export default {
   getCardDetails,
   getCardResponse,
   GetCardFromID,
-  getPinControlToken
+  getPinControlToken,
+  getPlasticCards
 }

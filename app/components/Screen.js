@@ -1,15 +1,14 @@
 import React from "react";
-import Constants from "expo-constants";
+// import Constants from "expo-constants";
 import { StyleSheet, SafeAreaView, View, TouchableWithoutFeedback, Keyboard,  Platform} from "react-native";
 import KeyboardAvoider from "./KeyboardAvoider";
 
 function Screen({ children, style, enabled = true }) {
   return (
 <KeyboardAvoider>
-
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView style={[styles.view, style]}>
-      <View style={[styles.view, style]}>{children}</View>
+      {children}
     </SafeAreaView>
     </TouchableWithoutFeedback>
    </KeyboardAvoider>
