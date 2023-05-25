@@ -48,6 +48,7 @@ const Pin = ({ route, navigation }) => {
     }
 
     setLoading(true);
+    console.log(route.params.beneficiaryData)
     const response = await api.SendFunds(
       route.params.amount,
       accountID,

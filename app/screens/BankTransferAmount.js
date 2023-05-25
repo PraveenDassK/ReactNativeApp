@@ -24,6 +24,7 @@ import AppDropdown from "../components/AppDropdown";
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
+  const [paymentType,setPaymentType] = useState("")
   const { accountName, phoneNumber } = route.params;
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
@@ -32,10 +33,25 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const [reference, setReference] = useState('');
 
-  const paymentTypes = [{
-    label:"",
-    value:""
-  }]
+  const paymentTypes = [
+    {
+      label: "Bacs",
+      value: "Bacs"
+    },
+    {
+      label: "Outbound",
+      value: "Outbound"
+    },
+    {
+      label: "Chaps",
+      value: "Chaps"
+    },
+    {
+      label: "Internal",
+      value: "Internal"
+    }
+  ];
+  
 
   const handleTextChange = (text) => {
     setReference(text);
@@ -109,7 +125,7 @@ const BankTransferAmount = ({ route, navigation }) => {
           />
         </View>
 
-        <AppDropdown/>
+        <AppDropdown data = {paymentTypes} onChange = {setPaymentType} value = {paymentType} placeholder = "Payment type"/>
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.hello4, styles.groupViewPosition]}>
             <TouchableOpacity

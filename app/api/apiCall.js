@@ -770,6 +770,7 @@ const RetriveGroupBeneficiares = async (Id) => {
 /**Posters */
 const SendFunds = (amount, from, name, accountNumber, sortCode, address,reference) => {
   console.log(reference)
+  let responseText = reference ? reference : "Transfer"
   const request = client.post(
     "https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
     {
@@ -784,7 +785,7 @@ const SendFunds = (amount, from, name, accountNumber, sortCode, address,referenc
       },
       currency: "GBP",
       amount: amount,
-      reference: reference,
+      reference: responseText,
     }
   );
   return request;

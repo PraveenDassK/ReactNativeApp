@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import { Dropdown } from 'react-native-element-dropdown';
 
-const AppDropdown = ({data, placeholder, onChange}) => {
+const AppDropdown = ({data, placeholder, onChange, value}) => {
   return (
     <Dropdown
 style={[styles.dropdown]}
@@ -14,7 +14,7 @@ labelField="label"
 valueField="value"
 placeholder={placeholder}
 placeholderStyle={{fontSize: 14, color: "#D3D3D3"}}
-value={0}
+value={value}
 onChange={item => onChange(item)}
 />
   )
