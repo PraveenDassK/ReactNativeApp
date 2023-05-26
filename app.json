@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "carbonyte.banking",
-      "buildNumber": "1.1.13"
+      "buildNumber": "1.1.14"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",

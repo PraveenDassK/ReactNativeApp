@@ -132,7 +132,7 @@ const Registration = ({ navigation }) => {
         return;
       case "RegistrationNumber":
         setRegistrationNumberDetails(details);
-        setScreenToShow("CompanyDirectors");
+        setScreenToShow("CompanyDetails");
         return;
       case "CompanyDetails":
         //setCompanyDetails(details);
@@ -156,7 +156,7 @@ const Registration = ({ navigation }) => {
         return;
       case "CompanyUsage":
         setPersonalDetails(details);
-        setScreenToShow("CompanyDirectors");
+        setScreenToShow("CompanyConfirm");
         return;
       case "CompanyDirectors":
         setScreenToShow("CompanyConfirm");
