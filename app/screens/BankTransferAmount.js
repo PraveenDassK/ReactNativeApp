@@ -215,6 +215,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             style={[styles.hello8, styles.helloTypo1]}
             placeholder={"£" + amount}
             keyboardType="numeric"
+            value = {amount}
             placeholderTextColor={"blue"}
             onChangeText={(newText) => setAmount(newText)}
           />
@@ -240,7 +241,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             <View style={styles.rectangleView} />
             <View style={[styles.maskGroup236, styles.parentPosition]} />
           </View>
-          <Text style={styles.hello9}>ADD FUNDS</Text>
+          <Text style={styles.hello9}>Send</Text>
         </TouchableOpacity>
       </Pressable>
     </KeyboardAvoider>
@@ -441,7 +442,7 @@ const styles = StyleSheet.create({
     top: "15%",
   },
   groupTouchableOpacity: {
-    top: "57.5%",
+    top: "45.5%",
     height: verticalScale(60),
     width: "100%",
     position: "relative",

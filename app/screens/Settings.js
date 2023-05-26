@@ -435,7 +435,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Reset app pin"
+            title="Reset app passcode"
             style={styles.boxShadow}
             color="babyBlue"
             transform={{ textTransform: "none" }}

@@ -558,7 +558,7 @@ const StackNavigator = () => {
         name="PinSetApp"
         component={gestureHandlerRootHOC(PinSetApp)}
         options={{
-          title: "Pin Set",
+          title: "Passcode reset",
 
         }}
       />

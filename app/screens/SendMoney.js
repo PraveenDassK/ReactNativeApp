@@ -151,7 +151,7 @@ const SendMoney = ({ navigation }) => {
         </View>
 
         {benText}
-
+{/*
         <View style={styles.peopleIconDiv}>
           <TouchableOpacity
             style={styles.plusImage}
@@ -175,6 +175,7 @@ const SendMoney = ({ navigation }) => {
             </Fragment>
           ))}
         </View>
+          */}
 
         <TouchableOpacity style={styles.buttonContainer}>
 

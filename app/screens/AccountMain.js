@@ -1211,7 +1211,6 @@ const Card = ({ name, number, image, selected, onPress }) => {
               {
                 top: verticalScale(41.5),
                 fontSize: moderateScale(10),
-                wordSpacing: 20,
               },
             ]}
           >
