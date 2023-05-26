@@ -21,9 +21,10 @@ const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number"),
 });
 
-const RegistrationCompanyDBCDetails = () => {
+const RegistrationCompanyDBCDetails = ({navigation}) => {
   const handleSubmit = ({ firstName, lastName }) => {
     console.log(firstName, lastName);
+    navigation.navigate('RegistrationDBC2')
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

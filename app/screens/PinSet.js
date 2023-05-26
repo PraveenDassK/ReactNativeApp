@@ -20,8 +20,11 @@ const Pin = ({ route, navigation }) => {
   );
 
   useEffect(() => {
-    // cardDetails.getPlasticCards('714613712');
-    pinControl.getAccessToken()
+      // different ID to test
+      // 714613712 // 46359612 // 38759312 // 687942912 // 714613712// Physical Card2 ID: 715767812 46765612
+
+    // cardDetails.getPlasticCards('715767812');
+    pinControl.getAccessToken('46765612')
 
   }, []);
 
@@ -78,7 +81,7 @@ const Pin = ({ route, navigation }) => {
 
   return (
     <WebView
-      source={{ uri: "https://www.google.com" }}
+      source={{ uri: "https://pin-web.demo.ext.test.cia.enfuce.com/pinweb/viewframe" }}
       // onMessage={(event) => console.log(event.nativeEvent.data)}
     />
   );

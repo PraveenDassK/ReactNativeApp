@@ -1,4 +1,5 @@
 import { enfuceClient as client } from './client'
+import {format as prettyFormat} from 'pretty-format'; // development only
 
 const getPinControlToken = async(id) => {
     //https://integration-api-cat2.{{environment}}.ext.{{realm}}.cia.enfuce.com/pincontrol/v2/plastic/{plasticId}
@@ -96,7 +97,7 @@ const getPlasticCards = async (id) => {
       password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
     }})
 
-  console.log('plastic cards', response.ok, response.data, response)
+  console.log('plastic cards', response.ok, prettyFormat(response.data),prettyFormat(response))
 }
 
 export default {

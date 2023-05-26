@@ -45,7 +45,8 @@ const INTRESTS = [
 
 ];
 
-const RegistrationDirectorsPartners = () => {
+const RegistrationDirectorsPartners = ({navigation}) => {
+
 
   const [directors, setDirectors] = useState(DIRECTORS);
   const [beneficialOwners, setOwners] = useState(BENEFITS);
@@ -72,6 +73,7 @@ const RegistrationDirectorsPartners = () => {
           <View onStartShouldSetResponder={() => true}>
             <View style={styles.directorPartnerContainer}>
               <DirectorPartnerItems
+                navigation={navigation}
                 title={"Directors"}
                 items={directors}
                 onDelete={(item) => handleDelete(item, directors, setDirectors)}
@@ -79,6 +81,7 @@ const RegistrationDirectorsPartners = () => {
             </View>
             <View style={styles.directorPartnerContainer}>
               <DirectorPartnerItems
+                navigation={navigation}
                 title={"Beneficial owners"}
                 items={beneficialOwners}
                 onDelete={(item) =>
@@ -88,6 +91,7 @@ const RegistrationDirectorsPartners = () => {
             </View>
             <View style={styles.directorPartnerContainer}>
               <DirectorPartnerItems
+                navigation={navigation}
                 title={"Controlling intrests"}
                 items={controllingInterests}
                 onDelete={(item) =>
@@ -105,12 +109,15 @@ const RegistrationDirectorsPartners = () => {
   );
 };
 
-const DirectorPartnerItems = ({ items, onDelete, title }) => {
+const DirectorPartnerItems = ({ navigation, items, onDelete, title }) => {
   return (
     <View>
       <RegistrationInputSelect
         name={title}
-        onAdd={() => console.log("onAdd pressed ")}
+        onAdd={() => {
+          console.log("onAdd pressed ")
+          navigation.navigate('RegistrationDBC')
+        }}
       />
 
       {items.map((item) => (
