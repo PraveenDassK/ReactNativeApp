@@ -11,14 +11,18 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
+
 import GlobalStyles from "../../GlobalStyles";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import { verticalScale } from "../config/scaling";
 import Button from "../components/Button";
-
+import Dropdown from "../components/AppDropdown";
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import AuthContext from "../auth/context";
+
 import KeyboardAvoider from "../components/KeyboardAvoider";
+
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).max(30).label("Schedulde payment"),
@@ -55,28 +59,46 @@ const items = [
     placeholder: "Enter the amount",
     initialValue: "amount",
   },
-  {
-    id: 3,
-    label: "To Account: ",
-    placeholder: "Enter account",
-    initialValue: "toAccount",
-  },
-  {
-    id: 4,
-    label: "From Account: ",
-    placeholder: "Enter account",
-    initialValue: "fromAccount",
-  },
-  {
-    id: 5,
-    label: "Time period: ",
-    placeholder: "Enter time period",
-    initialValue: "timePeriod",
-  },
+  // {
+  //   id: 3,
+  //   label: "To Account: ",
+  //   placeholder: "Enter account",
+  //   initialValue: "toAccount",
+  // },
+  // {
+  //   id: 4,
+  //   label: "From Account: ",
+  //   placeholder: "Enter account",
+  //   initialValue: "fromAccount",
+  // },
+  // {
+  //   id: 5,
+  //   label: "Time period: ",
+  //   placeholder: "Enter time period",
+  //   initialValue: "timePeriod",
+  // },
+];
+
+const BENEFICIARY = [
+  { label: "Item 1", value: "1" },
+  { label: "Item 2", value: "2" },
+  { label: "Item 3", value: "3" },
+  { label: "Item 4", value: "4" },
+  { label: "Item 5", value: "5" },
+  { label: "Item 6", value: "6" },
+  { label: "Item 7", value: "7" },
+  { label: "Item 8", value: "8" },
 ];
 
 const ScheduledPayment = () => {
+  const [date, setDate] = useState(new Date());
   const { userID, customerDetails } = useContext(AuthContext);
+  const [beneficiary, setBeneficiary] = useState(BENEFICIARY);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+  };
 
   useEffect(() => {
     loadData();
@@ -133,7 +155,7 @@ const ScheduledPayment = () => {
   return (
     <KeyboardAvoider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
+        <View style={styles.container}>
           <Formik
             initialValues={{
               title: "",
@@ -154,16 +176,10 @@ const ScheduledPayment = () => {
             }) => (
               <>
                 <View>
-                  {/* <View style={{ width: "100%", height: "auto", justifyContent: "center", alignItems: "center", height: 50}}>
-                <Text style={{  fontSize: 20 }}>Bank Details</Text>
-              </View> */}
-
                   {items.map((item, index) => (
                     <View
                       key={item.id}
                       style={{
-                        width: "90%",
-                        marginLeft: "5%",
                         marginBottom: "5%",
                       }}
                     >
@@ -188,6 +204,24 @@ const ScheduledPayment = () => {
                       />
                     </View>
                   ))}
+                  <View>
+                    <Dropdown
+                      data={beneficiary}
+                      onChange={(item) => handleChange(item.value)}
+                    />
+                  </View>
+                  <View>
+                  <Text>Schedulde date & time</Text>
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode="datetime"
+                    is24Hour={true}
+                    display="spinner"
+                    onChange={onChange}
+                  />
+                  </View>
+                  
                 </View>
                 <View
                   style={[
@@ -216,6 +250,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    paddingVertical: verticalScale(60),
+    paddingHorizontal: "5%",
   },
   bottom: {
     bottom: "5%",
@@ -223,9 +259,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 
-  button: {
-    width: "90%",
-    left: "5%",
-  },
+  button: {},
 });
 export default ScheduledPayment;

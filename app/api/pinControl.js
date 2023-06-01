@@ -1,6 +1,7 @@
 import { create } from "apisauce";
 import qs from 'qs';
 import { format as prettyFormat } from "pretty-format"; //development only
+import { string } from "yup";
 
 const environment = "demo";
 const realm = "test";
@@ -40,15 +41,18 @@ const getAccessToken = async (plasticId) => {
     const formData = qs.stringify({ controlId: id });
 
     const headers = {
+      Accept: 'text/html',
       "Content-Type": "application/x-www-form-urlencoded",
     };
 
     const pinURLResponse = await api.post(
-      pinURL,
-      formData,
+      `${pinURL}?controlId=${id}`,
+      {controlId: id},
       { headers }
     );
-    console.log("pinURLRes", prettyFormat(pinURLResponse));
+    console.log("pinURLRes", prettyFormat(pinURLResponse ));
+
+    return pinURLResponse.data
 
     // const { id, pinURL, pinFrameURL } = response.data;
     // console.log('pin response',id, pinURL, pinFrameURL)
