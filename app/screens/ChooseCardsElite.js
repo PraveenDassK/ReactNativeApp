@@ -1,5 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Text, StyleSheet, View, Image, Pressable, ScrollView, FlatList, ActivityIndicator, TouchableOpacity, useWindowDimensions } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  ScrollView,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import GlobalStyles from "../../GlobalStyles";
@@ -9,23 +20,21 @@ import {
   moderateScale,
 } from "../config/scaling";
 
-import Button from "../components/Button"
+import Button from "../components/AppButton";
 import AuthContext from "../auth/context";
 
 import apiCall from "../api/apiCall";
 const Tab = createMaterialTopTabNavigator();
 
-const account = "147147"
+const account = "147147";
 const ChooseCardsElite = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [data, setData] = useState([])
-  const [currentSubscruption, setCurrentSubscription] = useState(null)
+  const [data, setData] = useState([]);
+  const [currentSubscruption, setCurrentSubscription] = useState(null);
 
-  const {
-    customerDetails
-  } = useContext(AuthContext);
-  const account = customerDetails
+  const { customerDetails } = useContext(AuthContext);
+  const account = customerDetails;
 
   useEffect(() => {
     loadData();
@@ -36,7 +45,7 @@ const ChooseCardsElite = ({ navigation }) => {
     const response = await apiCall.GetSubscriptions();
     setData(response);
     console.log("benefits", response[2]["benefits"][0]);
-    
+
     const currentSub = await apiCall.GetUsersSubscriptions(account);
     setIsLoading(false);
     console.log(currentSub.subID);
@@ -49,7 +58,7 @@ const ChooseCardsElite = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }

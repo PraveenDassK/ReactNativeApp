@@ -77,7 +77,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     customerDetails,
     cardDetails,
     setCardDetails,
-    missingAccountSetup
+    missingAccountSetup,
   } = useContext(AuthContext);
 
   const todaydate = moment().format("MMMM D, YYYY");
@@ -119,18 +119,18 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   // }, [missingAccountSetup]);
 
   useEffect(() => {
-    checkForInitalPasscode()
-  }, [])
+    checkForInitalPasscode();
+  }, []);
 
   const checkForInitalPasscode = async () => {
-    console.log(await authStorage.getPasscode())
-    if (await authStorage.getPasscode() == null) {
-      navigation.navigate("PinSetApp")
+    console.log(await authStorage.getPasscode());
+    if ((await authStorage.getPasscode()) == null) {
+      navigation.navigate("PinSetApp");
     }
-  }
+  };
 
   /**
-   * @dev 
+   * @dev
    * @returns Stops load if the account ID is not present
    */
   const loadData = async () => {
@@ -147,14 +147,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //If the card data is not there get the card details
     if (!cardDetails) {
       const cardObject = await api.GetCardFromID("714613712");
-      console.log(cardObject)
+      console.log(cardObject);
       setCardDetails(cardObject);
       setSortCode("00-00-00");
 
       CARD_DATA.push(cardObject);
       CARD_DATA.push(cardObject);
     }
-
 
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
@@ -295,7 +294,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }

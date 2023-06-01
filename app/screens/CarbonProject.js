@@ -1,11 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 import apiCall from "../api/api";
 import AuthContext from "../auth/context";
-import Button from "../components/Button";
-import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
+import Button from "../components/AppButton";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../config/metrics";
 
 const CarbonProject = ({ navigation, route }) => {
   const [data, setData] = useState(null);
@@ -24,17 +35,26 @@ const CarbonProject = ({ navigation, route }) => {
   const formatData = () => {
     if (data != null) {
       projects.push(
-          <View key={data.id} style={styles.rectanglePressable}>
-            <View style={styles.mainContainer}>
-              <View style={styles.titleTextRow}>
-                <Text style={styles.titleText}>{data.displayName}</Text>
-              </View>
-            </View>
-            <Image style={styles.image} source={data.image  != "" ? { uri: data.image } : require("../assets/icon-bluecheck.png")} />
-            <View style={{ backgroundColor: "white" }}>
-              <Text style={{ textAlign: "center" }}>{data.description.replace(/<[^>]*>/g, "\n")}</Text>
+        <View key={data.id} style={styles.rectanglePressable}>
+          <View style={styles.mainContainer}>
+            <View style={styles.titleTextRow}>
+              <Text style={styles.titleText}>{data.displayName}</Text>
             </View>
           </View>
+          <Image
+            style={styles.image}
+            source={
+              data.image != ""
+                ? { uri: data.image }
+                : require("../assets/icon-bluecheck.png")
+            }
+          />
+          <View style={{ backgroundColor: "white" }}>
+            <Text style={{ textAlign: "center" }}>
+              {data.description.replace(/<[^>]*>/g, "\n")}
+            </Text>
+          </View>
+        </View>
       );
     }
   };
@@ -44,7 +64,7 @@ const CarbonProject = ({ navigation, route }) => {
   return (
     <View style={styles.mainPage}>
       <ScrollView style={styles.page}>{projects}</ScrollView>
-      <View style={{ width: "100%", backgroundColor: "red", height: 100}} />
+      <View style={{ width: "100%", backgroundColor: "red", height: 100 }} />
     </View>
   );
 };

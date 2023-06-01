@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
@@ -107,14 +107,12 @@ const SwitchAccounts = ({ navigation, route }) => {
             width: "100%",
             alignItems: "center",
           }}
-        >
-          
-        </View>
+        ></View>
         <Button
-            style={styles.boxShadow}
-            title="Return"
-            onPress={() => navigation.navigate("Account")}
-          />
+          style={styles.boxShadow}
+          title="Return"
+          onPress={() => navigation.navigate("Account")}
+        />
       </View>
     </ScrollView>
   );

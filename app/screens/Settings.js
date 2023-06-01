@@ -18,7 +18,7 @@ import GlobalStyles from "../../GlobalStyles";
 import api from "../api/apiCall";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
 
@@ -166,7 +166,7 @@ const Settings = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }

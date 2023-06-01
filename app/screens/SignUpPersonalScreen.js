@@ -17,7 +17,7 @@ import * as Yup from "yup";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AuthContext from "../auth/context";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import FadeInView from "../components/fadeInview";
 import GlobalStyles from "../../GlobalStyles";

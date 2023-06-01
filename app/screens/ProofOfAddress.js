@@ -50,7 +50,7 @@ const ProofOfAddress = ({ navigation }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
-      alert("Scan the back")
+      alert("Scan the back");
       const resultBack = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
@@ -69,7 +69,6 @@ const ProofOfAddress = ({ navigation }) => {
     }
     setIsLoading(false);
   };
-
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -99,12 +98,12 @@ const ProofOfAddress = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
 
-  const handleBack = () => { };
+  const handleBack = () => {};
 
   return (
     <Screen>

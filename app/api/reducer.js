@@ -5,7 +5,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 import api from "../api/api_list"
 import AuthContext from "../auth/context";
-import Button from "../components/Button"
+import Button from "../components/AppButton";
 
 const AccountMain = ({navigation}) => {
   //Saves all the data from the API call

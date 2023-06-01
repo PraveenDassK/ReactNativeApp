@@ -3,10 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
-
   Text,
   TextInput,
-
   TouchableWithoutFeedback,
   Keyboard,
   Modal,
@@ -30,7 +28,6 @@ import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
 import Privacy from "./PrivacyPolicy";
 
-
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().min(1).max(11).label("First name"),
   lastName: Yup.string().required().min(1).max(11).label("Last name"),
@@ -38,7 +35,6 @@ const validationSchema = Yup.object().shape({
 
 const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [visible, setVisible] = useState(false);
-
 
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState(moment().toDate());
@@ -48,7 +44,6 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   //Date
   const [dob, setDOB] = useState(new Date(1598051730000));
   const [viewDate, setView] = useState(false);
-
 
   const genderData = [
     {
@@ -123,7 +118,6 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
-  
   console.log(String(date));
 
   const showMode = (currentMode) => {
@@ -156,10 +150,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
             setVisible(!visible);
           }}
         >
-
           <Privacy setIsOpen={setVisible} />
-
-
         </Modal>
         <Formik
           initialValues={{ firstName: "", lastName: "" }}
@@ -237,7 +228,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                 <View style={styles.buttonContainer}>
                   <Button
                     onPress={showDatepicker}
-                    title={moment(date).format('MMM DD YYYY')}
+                    title={moment(date).format("MMM DD YYYY")}
                   />
                 </View>
                 {show && (

@@ -12,7 +12,7 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import api from "../api/api_list";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import { verticalScale } from "../config/scaling";
 import { Formik } from "formik";
 import * as Yup from "yup";

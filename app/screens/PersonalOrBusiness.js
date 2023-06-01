@@ -2,30 +2,25 @@ import React, { useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 
 import AuthContext from "../auth/context";
-import Screen from "../components/Screen"
+import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 
 const PersonalOrBusiness = ({ navigation }) => {
-
-  const { setUser }= useContext(AuthContext)
+  const { setUser } = useContext(AuthContext);
 
   const handlePersonal = () => {
-    setUser(prev => ({...prev, accountType: 'personal'}))
-    navigation.navigate('Name')
-  }
+    setUser((prev) => ({ ...prev, accountType: "personal" }));
+    navigation.navigate("Name");
+  };
 
   const handleBusiness = () => {
-    setUser(prev => ({...prev, accountType: 'business'}))
-    console.log("navigate to business page g")
-    navigation.navigate('Name')
-  }
-
-
+    setUser((prev) => ({ ...prev, accountType: "business" }));
+    console.log("navigate to business page g");
+    navigation.navigate("Name");
+  };
 
   return (
-
-    
     <Screen>
       <View style={styles.personalOrBusiness}>
         <View style={styles.helloParent}>
@@ -44,14 +39,14 @@ const PersonalOrBusiness = ({ navigation }) => {
               <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
             </View>
             <Text style={[styles.hello1, styles.helloTypo]} onPress={handleBusiness}>Business</Text> */}
-            <Button title="business" onPress={handleBusiness}/>
+            <Button title="business" onPress={handleBusiness} />
           </Pressable>
-          <Pressable style={[styles.rectangleGroup, styles.groupPosition]}
+          <Pressable
+            style={[styles.rectangleGroup, styles.groupPosition]}
             onPress={() => navigation.navigate("Name")}
-           >
-            <Button title="personal" onPress={handlePersonal}/>
+          >
+            <Button title="personal" onPress={handlePersonal} />
           </Pressable>
-        
         </View>
       </View>
     </Screen>
@@ -64,7 +59,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     position: "absolute",
-    width:"100%"
+    width: "100%",
   },
   maskGroup236Position: {
     left: 0,
@@ -88,7 +83,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     top: "50%",
     position: "absolute",
-    width: "100%"
+    width: "100%",
   },
   groupChild: {
     marginLeft: -76.42,
@@ -117,7 +112,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "40%",
-    width:"100%"
+    width: "100%",
   },
   groupParent: {
     bottom: 0,
@@ -128,7 +123,7 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "65.72%",
-    width:"100%"
+    width: "100%",
   },
   helloParent: {
     width: "100%",

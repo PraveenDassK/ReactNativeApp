@@ -11,7 +11,7 @@ import {
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
 import apiCall from "../api/apiCall";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import {
   horizontalScale,
   verticalScale,

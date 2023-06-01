@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";

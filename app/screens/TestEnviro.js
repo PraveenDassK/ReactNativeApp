@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 
 import apiCarbon from "../api/apiCarbon";
 import apiCall from "../api/apiCall";

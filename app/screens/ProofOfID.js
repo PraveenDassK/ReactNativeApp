@@ -51,7 +51,7 @@ const ProofOfID = ({ navigation }) => {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
-      alert("Scan the back")
+      alert("Scan the back");
       const resultBack = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
@@ -120,7 +120,7 @@ const ProofOfID = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
@@ -168,17 +168,35 @@ const ProofOfID = ({ navigation }) => {
               <Text style={{ color: "#D3D3D3" }}>Add document</Text>
             </>
           ) : (
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems:"center"}}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               {imageUri && (
-                <View style={{ flex:1, justifyContent:"center", alignItems:"center"}}>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Image
                     source={{ uri: imageUri }}
                     style={{ width: 100, height: 100 }}
                   />
-
                 </View>
               )}
-              <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <MaterialCommunityIcons
                   name="check-circle"
                   color="#D3D3D3"

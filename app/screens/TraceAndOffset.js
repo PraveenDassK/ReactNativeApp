@@ -15,7 +15,7 @@ import {
   ScrollView,
 } from "react-native";
 import * as Yup from "yup";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import Form from "../components/forms/Form";

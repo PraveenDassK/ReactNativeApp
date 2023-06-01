@@ -23,7 +23,7 @@ import jwtDecode from "jwt-decode";
 
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import Form from "../components/forms/Form";
 import otpVerificationAPI from "../api/otpVerification";

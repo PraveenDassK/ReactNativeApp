@@ -15,14 +15,14 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import { verticalScale } from "../config/scaling";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import Dropdown from "../components/AppDropdown";
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import AuthContext from "../auth/context";
 
 import KeyboardAvoider from "../components/KeyboardAvoider";
 
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).max(30).label("Schedulde payment"),
@@ -211,17 +211,16 @@ const ScheduledPayment = () => {
                     />
                   </View>
                   <View>
-                  <Text>Schedulde date & time</Text>
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode="datetime"
-                    is24Hour={true}
-                    display="spinner"
-                    onChange={onChange}
-                  />
+                    <Text>Schedulde date & time</Text>
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={date}
+                      mode="datetime"
+                      is24Hour={true}
+                      display="spinner"
+                      onChange={onChange}
+                    />
                   </View>
-                  
                 </View>
                 <View
                   style={[
@@ -230,10 +229,7 @@ const ScheduledPayment = () => {
                   ]}
                 >
                   <TouchableOpacity style={styles.button}>
-                    <Button
-                      title="Confirm"
-                      onPress={handleSubmit}
-                    />
+                    <Button title="Confirm" onPress={handleSubmit} />
                   </TouchableOpacity>
                 </View>
               </>
