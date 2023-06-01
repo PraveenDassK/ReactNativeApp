@@ -79,7 +79,16 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
       {isAdding ? (
         <PostCode AddAddress={addAddress} />
       ) : (
+
         <View>
+          <CheckBox
+            title="Are there any customers outside the EU?"
+            checkedIcon="check-square-o"
+            uncheckedIcon="square-o"
+            checkedColor="black"
+            checked={isChecked}
+            onPress={() => setChecked(!isChecked)}
+          />
           <Button
             title="Add"
             textColor="white"

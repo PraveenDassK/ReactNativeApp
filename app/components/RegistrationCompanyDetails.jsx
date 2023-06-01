@@ -46,10 +46,10 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
       const labelA = a.label.toUpperCase();
       const labelB = b.label.toUpperCase();
 
-      if (labelA > labelB) {
+      if (labelA < labelB) {
         return -1;
       }
-      if (labelA < labelB) {
+      if (labelA > labelB) {
         return 1;
       }
       return 0;

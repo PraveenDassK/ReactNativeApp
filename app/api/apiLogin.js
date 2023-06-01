@@ -41,6 +41,7 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
       phoneOTP: phoneOTP,
     }
   );
+  console.log(request.data)
   if (!request.data.result || request.status == 500) {
     return null;
   }

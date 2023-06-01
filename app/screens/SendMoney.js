@@ -36,6 +36,10 @@ const SendMoney = ({ navigation }) => {
     getSettings();
   }, [isFocused]);
 
+  useEffect(() => {
+    getSettings();
+  }, []);
+
   //API
   const getSettings = async () => {
     //Gets single beneficiaries
@@ -151,7 +155,7 @@ const SendMoney = ({ navigation }) => {
         </View>
 
         {benText}
-{/*
+
         <View style={styles.peopleIconDiv}>
           <TouchableOpacity
             style={styles.plusImage}
@@ -175,13 +179,13 @@ const SendMoney = ({ navigation }) => {
             </Fragment>
           ))}
         </View>
-          */}
+
 
         <TouchableOpacity style={styles.buttonContainer}>
 
           <Button
             title="Schedule payment"
-            style={[styles.boxShadow, {width: "80%"}]}
+            style={[styles.boxShadow, { width: "80%" }]}
             color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ScheduledPayment")}
@@ -194,7 +198,7 @@ const SendMoney = ({ navigation }) => {
 
 const GroupBeneficiary = ({ groupName, beneficiaries }) => {
   return (
-    <Pressable onPress={()=> console.log('send money to beneficiaries')}>
+    <Pressable onPress={() => console.log('send money to beneficiaries')}>
       <View style={styles.benBoxCon}>
         <View style={styles.accountImage}>
           <AppText style={styles.accountName}>{groupName[0]}</AppText>
@@ -202,14 +206,14 @@ const GroupBeneficiary = ({ groupName, beneficiaries }) => {
 
         <View style={styles.accountTextDiv}>
           <AppText style={styles.accountName}>{groupName}</AppText>
-          {beneficiaries.map(({beneficiariesId, beneficiariesName}) => (
+          {beneficiaries.map(({ beneficiariesId, beneficiariesName }) => (
             <Fragment key={beneficiariesId}>
               <AppText style={styles.accountPhoneNum}>{beneficiariesName}</AppText>
             </Fragment>
           ))}
         </View>
 
-        <Pressable onPress={()=> console.log('delete beneficiary')} style={styles.deleteButton}>
+        <Pressable onPress={() => console.log('delete beneficiary')} style={styles.deleteButton}>
           <AppText style={{ color: "tomato" }}>Delete</AppText>
         </Pressable>
       </View>
@@ -230,7 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: "10%"
-   
+
   },
 
   accountPhoneNum: {

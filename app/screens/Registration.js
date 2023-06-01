@@ -158,7 +158,7 @@ const Registration = ({ navigation }) => {
         return;
       case "CompanyUsage":
         setPersonalDetails(details);
-        setScreenToShow("CompanyConfirm");
+        setScreenToShow("CompanyDirectors");
         return;
       case "CompanyDirectors":
         setScreenToShow("CompanyConfirm");
@@ -303,7 +303,7 @@ const Registration = ({ navigation }) => {
         );
       case "CompanyDirectors":
         return (
-          <RegistrationDirectorsPartners
+          <CompanyDirectors
             navigation= {navigation}
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
