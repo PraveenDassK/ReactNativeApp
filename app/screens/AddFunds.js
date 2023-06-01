@@ -452,13 +452,13 @@ const styles = StyleSheet.create({
     bottom: verticalScale(-1),
   },
   helloParent2: {},
-  rectangleView: {
+         rectangleView: {
     height: "100%",
     top: "-20%",
     left: "5%",
 
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: "#D8EBF9",
+    backgroundColor: "black",
     position: "absolute",
     width: "90%",
   },
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.white,
     textAlign: "center",
     top: "15%",
   },

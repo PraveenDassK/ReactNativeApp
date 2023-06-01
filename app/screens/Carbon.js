@@ -172,7 +172,7 @@ const Carbon = ({ route, navigation }) => {
 
             <Button
               title="CALCULATE CARBON FOOTPRINT"
-              color="babyBlue"
+      
               style={styles.boxShadow}
               onPress={() => navigation.navigate("CarbonTonnesRemoved")}
             />
@@ -214,7 +214,7 @@ const Carbon = ({ route, navigation }) => {
                     borderWidth: horizontalScale(1.5),
                   }}
                   title="VISIT YOUR VIRTUAL FOREST"
-                  color="none"
+                  
                   fontColor={{ color: "blue" }}
                   onPress={() => navigation.navigate("VirtualEcoSystem")}
                 />
@@ -225,7 +225,7 @@ const Carbon = ({ route, navigation }) => {
                     borderWidth: horizontalScale(1.5),
                   }}
                   title="VISIT YOUR ECO SUMMARY"
-                  color="none"
+                  
                   fontColor={{ color: "blue" }}
                   onPress={() => navigation.navigate("ChooseCardsStandard5")}
                 />
@@ -248,14 +248,14 @@ const Carbon = ({ route, navigation }) => {
             {cart && cart.length ? (
               <Button
                 title="Visit Your Cart"
-                color="babyBlue"
+        
                 style={styles.boxShadow}
                 onPress={() => navigation.navigate("CarbonCart", cart)}
               />
             ) : (
               <Button
                 title="Visit Your Cart"
-                color="babyBlue"
+        
                 style={styles.boxShadow}
                 onPress={() =>
                   alert(
@@ -325,13 +325,13 @@ const Carbon = ({ route, navigation }) => {
               <Button
                 style={{ width: "49%" }}
                 title="ADD TO CART"
-                color="babyBlue"
+        
                 onPress={() => addToCart(item)}
               />
               <Button
                 style={{ width: "49%" }}
                 title="Learn More"
-                color="babyBlue"
+        
                 onPress={() =>
                   navigation.navigate("CarbonProject", { Id: item.id })
                 }

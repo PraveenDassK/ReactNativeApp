@@ -1,18 +1,34 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, SafeAreaView, Text, TextInput, Image,Pressable, useWindowDimensions, Dimensions, TouchableWithoutFeedback, Keyboard} from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Text,
+  TextInput,
+  Image,
+  Pressable,
+  useWindowDimensions,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { Formik } from "formik";
-import * as Yup from 'yup';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import * as Yup from "yup";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AuthContext from "../auth/context";
-import Button from "../components/Button"
+import Button from "../components/Button";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import FadeInView from "../components/fadeInview";
 import GlobalStyles from "../../GlobalStyles";
 import otpApi from "../api/otp";
 import Screen from "../components/Screen";
-import SwipeUp from "../components/SwipeUp"
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import SwipeUp from "../components/SwipeUp";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   Easing,
@@ -20,202 +36,221 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withTiming
+  withTiming,
 } from "react-native-reanimated";
-
-
-
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
-})
+  phoneNumber: Yup.string().required().min(10).max(10).label("Phone number"),
+});
 
 const SignUpPersonalScreen = ({ navigation }) => {
-  const { height } = useWindowDimensions()
-  
-  const y = useSharedValue(0)
-  
+  const { height } = useWindowDimensions();
 
-  const prefix = "44"
+  const y = useSharedValue(0);
 
-  const { setUser } = useContext(AuthContext)
+  const prefix = "44";
+
+  const { setUser } = useContext(AuthContext);
 
   const handleSubmit = async ({ email, phoneNumber }) => {
-    phoneNumber = prefix + phoneNumber
-    const result = await otpApi.otp({ email, phoneNumber })
-    setUser({ email, phoneNumber })
+    phoneNumber = prefix + phoneNumber;
+    const result = await otpApi.otp({ email, phoneNumber });
+    setUser({ email, phoneNumber });
 
-    console.log(result.data)
-    if (!result.ok) return  alert('Could not send otp')
+    console.log(result.data);
+    if (!result.ok) return alert("Could not send otp");
     // alert('Success')
-    
-    navigation.navigate("OTPVerificationPersonal2", { registration: true })
-  }
+
+    navigation.navigate("OTPVerificationPersonal2", { registration: true });
+  };
 
   const fn = () => {
-    navigation.navigate("Login")
-  }
+    navigation.navigate("Login");
+  };
 
   const swipeUpGestureHandler = useAnimatedGestureHandler({
     onStart: () => {
-      console.log("On Start")
+      console.log("On Start");
     },
     onActive: (event) => {
-      console.log("On Active")
-      y.value = event.translationY
-      
+      console.log("On Active");
+      y.value = event.translationY;
     },
     onEnd: (event) => {
-      'worklet';
-       console.log("On End", event.velocityY)
+      "worklet";
+      console.log("On End", event.velocityY);
       if (y.value < -height / 2 || event.velocityY < -500) {
-        runOnJS(fn)()
-        y.value = withTiming(0, { easing: Easing.linear});
-        
+        runOnJS(fn)();
+        y.value = withTiming(0, { easing: Easing.linear });
       } else {
         // reset
-        y.value = withTiming(0, {easing: Easing.linear});
+        y.value = withTiming(0, { easing: Easing.linear });
       }
-    }
-  })
+    },
+  });
 
   const animatedContainerStyle = useAnimatedStyle(() => ({
-    transform: [{translateY: withTiming(y.value, 
-      { 
-        duration: 100,
-        easing: Easing.linear
-      })}],
-  }))
+    transform: [
+      {
+        translateY: withTiming(y.value, {
+          duration: 100,
+          easing: Easing.linear,
+        }),
+      },
+    ],
+  }));
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <Animated.View style={[{flex:1},animatedContainerStyle]}>
-    
-    <Screen>
-      {/* <SwipeUp> */}
-    <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
-      
-      <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
-        <View style={[styles.hello1, styles.enterColor]}>
-          <Text style={[styles.getStartedWith, styles.enterColor]}>Get Started With</Text>
-          <Text style={styles.getStartedWith}>Carbonyte</Text>
-        </View>
-        <Text style={[styles.enterYourMobileNumber, styles.enterColor]}>
-          Enter your mobile number
-        </Text>
-        <Text style={[styles.hello2, styles.text1Typo]}>
-          <Text>We will send an OTP to verify</Text>
-        </Text>
-        <Text style={[styles.hello2, styles.text1Typo, {top:"60%"}]}>
-          <Text >your number and email ID.</Text>
-        </Text>
-      </View>
+      <Animated.View style={[{ flex: 1 }, animatedContainerStyle]}>
+        <Screen>
+          {/* <SwipeUp> */}
+          <View style={[styles.signUpPersonal, { marginTop: 26 }]}>
+            <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
+              <View style={[styles.hello1, styles.enterColor]}>
+                <Text style={[styles.getStartedWith, styles.enterColor]}>
+                  Get Started With
+                </Text>
+                <Text style={styles.getStartedWith}>Carbonyte</Text>
+              </View>
+              <Text style={[styles.enterYourMobileNumber, styles.enterColor]}>
+                Enter your mobile number
+              </Text>
+              <Text style={[styles.hello2, styles.text1Typo]}>
+                <Text>We will send an OTP to verify</Text>
+              </Text>
+              <Text style={[styles.hello2, styles.text1Typo, { top: "60%" }]}>
+                <Text>your number and email ID.</Text>
+              </Text>
+            </View>
 
-      <Formik
-          initialValues={{email:'', phoneNumber: ''}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-            <>
-            <View style={[styles.component1981, styles.mt14,{marginLeft:horizontalScale(10)}]}>
-      
-              <TextInput 
-                keyboardType="numeric" 
-                onBlur={() => setFieldTouched("phoneNumber")}
-                onChangeText={handleChange("phoneNumber")}
-                style={[styles.component1981Child, styles.childBorder, {padding:10}]} 
+            <Formik
+              initialValues={{ email: "", phoneNumber: "" }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({
+                handleChange,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                touched,
+              }) => (
+                <>
+                  <View
+                    style={[
+                      styles.component1981,
+                      styles.mt14,
+                      { marginLeft: horizontalScale(10) },
+                    ]}
+                  >
+                    <TextInput
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("phoneNumber")}
+                      onChangeText={handleChange("phoneNumber")}
+                      style={[
+                        styles.component1981Child,
+                        styles.childBorder,
+                        { padding: 10 },
+                      ]}
+                    />
+                  </View>
+                  <View
+                    style={[styles.component1971, styles.mt_850, styles.ml24]}
+                  >
+                    <View
+                      style={[styles.component1971Child, styles.childBorder]}
+                    />
+                    <Text
+                      style={[
+                        styles.text1,
+                        styles.networkPosition,
+                        styles.text1Typo,
+                      ]}
+                    >
+                      +44
+                    </Text>
+                    <Image
+                      style={[styles.maskGroup288, styles.keysPosition]}
+                      resizeMode="cover"
+                      source={require("../assets/image-ukflag.png")}
+                    />
+                  </View>
+                  <ErrorMessage
+                    error={errors.phoneNumber}
+                    visible={touched.phoneNumber}
+                  />
+                  <Text
+                    style={[
+                      styles.enterYourEmailId,
+                      styles.mt27,
+                      styles.ml25,
+                      styles.enterColor,
+                    ]}
+                  >
+                    Enter your Email ID
+                  </Text>
+                  <TextInput
+                    autoCapitalize="none"
+                    textContentType="emailAddress"
+                    keyboardType="email-address"
+                    onBlur={() => setFieldTouched("email")}
+                    onChangeText={handleChange("email")}
+                    style={[
+                      styles.signUpPersonalItem,
+                      styles.mt9,
+                      styles.ml24,
+                      styles.childBorder,
+                      { padding: 10 },
+                    ]}
+                  />
+                  <ErrorMessage error={errors.email} visible={touched.email} />
+                  <View style={styles.button}>
+                    <Button title="Continue" onPress={handleSubmit} />
+                  </View>
+                </>
+              )}
+            </Formik>
+            <View style={styles.swipeUp}>
+              <MaterialCommunityIcons
+                name="chevron-up"
+                size={24}
+                color="black"
               />
-     
+              <FadeInView>
+                <Text>Swipe up if you already have an account</Text>
+              </FadeInView>
+            </View>
           </View>
-      <View style={[styles.component1971, styles.mt_850, styles.ml24]}>
-      <View style={[styles.component1971Child, styles.childBorder]} />
-      <Text style={[styles.text1, styles.networkPosition, styles.text1Typo]}>
-        +44
-      </Text>
-      <Image
-        style={[styles.maskGroup288, styles.keysPosition]}
-        resizeMode="cover"
-        source={require("../assets/image-ukflag.png")}
-      />
-    </View>
-    <ErrorMessage error={errors.phoneNumber} visible={touched.phoneNumber}/>
-    <Text
-      style={[
-        styles.enterYourEmailId,
-        styles.mt27,
-        styles.ml25,
-        styles.enterColor,
-      ]}
-    >
-      
-      Enter your Email ID
-    </Text>
-    <TextInput
-    autoCapitalize="none"
-    textContentType="emailAddress"
-    keyboardType="email-address"
-    onBlur={() => setFieldTouched('email')}
-    onChangeText={handleChange('email')}
-    style={[
-        styles.signUpPersonalItem,
-        styles.mt9,
-        styles.ml24,
-        styles.childBorder,
-        {padding:10}
-      ]}
-    />
-     <ErrorMessage error={errors.email} visible={touched.email}/>
-    <View style={styles.button}>
-
-      <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
-    </View>
-            
-            </>
-          )}
-        </Formik>
-      <View style={styles.swipeUp}>
-        <MaterialCommunityIcons name="chevron-up" size={24} color="black" />
-        <FadeInView>
-          <Text>Swipe up if you already have an account</Text>
-        </FadeInView>
-      </View>
-      
-        
-
-    </View>
-    {/* </SwipeUp> */}
-    <PanGestureHandler onGestureEvent={swipeUpGestureHandler} >
-        <Animated.View 
-        style={{
-        
-          position: "absolute",
-          backgroundColor: "none",
-          left:0,
-          bottom:0,
-          width: "100%",
-          height:100,
-        }}>
-
-        </Animated.View>
-       
-      </PanGestureHandler> 
-    </Screen>
-    </Animated.View>
+          {/* </SwipeUp> */}
+          <PanGestureHandler onGestureEvent={swipeUpGestureHandler}>
+            <Animated.View
+              style={{
+                position: "absolute",
+                backgroundColor: "none",
+                left: 0,
+                bottom: 0,
+                width: "100%",
+                height: 100,
+              }}
+            ></Animated.View>
+          </PanGestureHandler>
+        </Screen>
+      </Animated.View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  continueButton:{
+  continueButton: {
     //backgroundColor:"#0101FD",
-    color:"#0101FD",
+    color: "#0101FD",
   },
-  button:{
+  button: {
     marginTop: verticalScale(150),
     //color:"#0101FD",
-    backgroundColor:"#D8EBF9",
+    backgroundColor: "#D8EBF9",
     color: "#1A1A1A",
     borderRadius: 15,
   },
@@ -294,7 +329,6 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: GlobalStyles.Color.white,
-    
   },
   help: {
     borderWidth: 1,
@@ -397,15 +431,13 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   hello1: {
-
     fontSize: GlobalStyles.FontSize.size_8xl,
     lineHeight: verticalScale(30),
     textAlign: "left",
     fontWeight: "700",
-
   },
   enterYourMobileNumber: {
-  top: verticalScale(140),
+    top: verticalScale(140),
     left: horizontalScale(0),
     bottom: verticalScale(0),
     textAlign: "left",
@@ -508,7 +540,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   component1981Child: {
-   right: horizontalScale(0),
+    right: horizontalScale(0),
     bottom: verticalScale(790),
     left: horizontalScale(65),
     top: verticalScale(0),
@@ -712,7 +744,7 @@ const styles = StyleSheet.create({
     height: verticalScale(60),
   },
   enterYourEmailId: {
-  top: verticalScale(-5),
+    top: verticalScale(-5),
     textAlign: "left",
     fontSize: GlobalStyles.FontSize.size_base,
   },
@@ -721,12 +753,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  swipeUp : {
-  alignItems: "center",
-  justifyContent: "center",
-   top: verticalScale(50),
-  }
+  swipeUp: {
+    alignItems: "center",
+    justifyContent: "center",
+    top: verticalScale(50),
+  },
 });
-
 
 export default SignUpPersonalScreen;

@@ -121,7 +121,7 @@ const Settings = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    const swipeRight = navigation.addListener("state", (event) => { });
+    const swipeRight = navigation.addListener("state", (event) => {});
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return swipeRight;
@@ -380,7 +380,6 @@ const Settings = ({ navigation }) => {
           <Button
             title="My Plan"
             style={[styles.boxShadow]}
-            color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ChooseCardsElite")}
           />
@@ -389,7 +388,6 @@ const Settings = ({ navigation }) => {
           <Button
             title="Account"
             style={styles.boxShadow}
-            color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AccountSettings")}
           />
@@ -398,7 +396,6 @@ const Settings = ({ navigation }) => {
           <Button
             title="Security & Privacy"
             style={styles.boxShadow}
-            color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
           />
@@ -408,7 +405,6 @@ const Settings = ({ navigation }) => {
           <Button
             title="Devices"
             style={styles.boxShadow}
-            color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("Devices")}
           />
@@ -418,7 +414,6 @@ const Settings = ({ navigation }) => {
           <Button
             title="About us"
             style={styles.boxShadow}
-            color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AboutUs")}
           />
@@ -428,7 +423,6 @@ const Settings = ({ navigation }) => {
           <Button
             title="Faq"
             style={styles.boxShadow}
-            color="babyBlue"
             onPress={() => navigation.navigate("Faq")}
           />
         </TouchableOpacity>
@@ -437,18 +431,15 @@ const Settings = ({ navigation }) => {
           <Button
             title="Reset app pin"
             style={styles.boxShadow}
-            color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("PinSetApp")}
           />
         </TouchableOpacity>
 
-
         <TouchableOpacity style={styles.button}>
           <Button
             title="Delete Account"
             style={styles.boxShadow}
-            color="babyBlue"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("DeleteAccount")}
           />

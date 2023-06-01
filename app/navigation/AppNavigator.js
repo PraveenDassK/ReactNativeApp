@@ -95,6 +95,7 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 import { Animated, View, TouchableOpacity, Platform } from 'react-native';
+import GlobalStyles from "../../GlobalStyles";
 
 
 function MyTabBar({ state, descriptors, navigation, position }) {
@@ -207,7 +208,7 @@ const StackNavigator = () => {
           fontFamily: "Helvetica",
           fontWeight: "normal",
           fontSize: 28,
-          color: "#00035b"
+          
         },
         headerBackTitleVisible: false,
         headerStyle: { backgroundColor: "transparent" }
@@ -238,7 +239,7 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" }
         }}
@@ -247,13 +248,13 @@ const StackNavigator = () => {
         name="ScheduledPayment"
         component={gestureHandlerRootHOC(ScheduledPayment)}
         options={{
-          title: "ScheduledPayment",
+          title: "Scheduled Payment",
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" }
+          headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
         }}
       />
 
@@ -291,9 +292,9 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" }
+          headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
         }}
       />
 
@@ -305,9 +306,9 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" }
+          headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
         }}
       />
 
@@ -364,7 +365,7 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
 
         }}
@@ -379,9 +380,9 @@ const StackNavigator = () => {
           headerShown: false,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" }
+          headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
 
         }}
       />
@@ -395,7 +396,7 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" }
         }}
@@ -587,7 +588,7 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} color="blue" />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
         }}

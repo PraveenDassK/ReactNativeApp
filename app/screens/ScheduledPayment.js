@@ -232,7 +232,6 @@ const ScheduledPayment = () => {
                   <TouchableOpacity style={styles.button}>
                     <Button
                       title="Confirm"
-                      color="babyBlue"
                       onPress={handleSubmit}
                     />
                   </TouchableOpacity>

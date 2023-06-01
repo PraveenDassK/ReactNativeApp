@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { Text, StyleSheet, View, TextInput, } from "react-native";
+import { Text, StyleSheet, View, TextInput } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
-import { Formik } from "formik"
-import * as Yup from 'yup'
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import AuthContext from "../auth/context";
 import Button from "../components/Button";
@@ -12,18 +12,18 @@ import Screen from "../components/Screen";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().label("First name"),
-  lastName: Yup.string().required().label("Last name")
-})
+  lastName: Yup.string().required().label("Last name"),
+});
 
-const Name = ({navigation}) => {
+const Name = ({ navigation }) => {
   //const navigation = useNavigation();
-  const { user, setUser } = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext);
 
-  const handleSubmit = ({firstName, lastName}) => {
-    setUser(prev => ({...prev, firstName, lastName}))
-    console.log(user)
-    navigation.navigate("ProofOfResidency")
-  }
+  const handleSubmit = ({ firstName, lastName }) => {
+    setUser((prev) => ({ ...prev, firstName, lastName }));
+    console.log(user);
+    navigation.navigate("ProofOfResidency");
+  };
 
   return (
     <Screen>
@@ -43,7 +43,7 @@ const Name = ({navigation}) => {
               styles.namePosition,
             ]}
           >
-            First Name 
+            First Name
           </Text>
           <Text
             style={[
@@ -56,49 +56,64 @@ const Name = ({navigation}) => {
             Last Name
           </Text>
           <Formik
-          initialValues={{firstName:"", lastName:""}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+            initialValues={{ firstName: "", lastName: "" }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
           >
-              {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-            <>
-            <TextInput
-            
-              keyboardType="default" 
-              onBlur={() => setFieldTouched("firstName")}
-              onChangeText={handleChange("firstName")}
-              style={[styles.groupChild, styles.groupBorder,styles.inputText]}
-              
-            />
-              <View style={{ position: "absolute", top:190}}>
-                <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
-            </View>
-            <TextInput 
-               
-                keyboardType="default" 
-                onBlur={() => setFieldTouched("lastName")}
-                onChangeText={handleChange("lastName")}
-                style={[styles.groupItem, styles.groupBorder, styles.inputText]} 
-               
-            />
-            <View style={{ position: "absolute", top:300}}>
-                <ErrorMessage error={errors.lastName} visible={touched.lastName}/>
-            </View>
-            <View
-              style={[styles.groupContainer, styles.groupContainerPosition]}
-            >
-              {/* <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
+            {({
+              handleChange,
+              handleSubmit,
+              errors,
+              setFieldTouched,
+              touched,
+            }) => (
+              <>
+                <TextInput
+                  keyboardType="default"
+                  onBlur={() => setFieldTouched("firstName")}
+                  onChangeText={handleChange("firstName")}
+                  style={[
+                    styles.groupChild,
+                    styles.groupBorder,
+                    styles.inputText,
+                  ]}
+                />
+                <View style={{ position: "absolute", top: 190 }}>
+                  <ErrorMessage
+                    error={errors.firstName}
+                    visible={touched.firstName}
+                  />
+                </View>
+                <TextInput
+                  keyboardType="default"
+                  onBlur={() => setFieldTouched("lastName")}
+                  onChangeText={handleChange("lastName")}
+                  style={[
+                    styles.groupItem,
+                    styles.groupBorder,
+                    styles.inputText,
+                  ]}
+                />
+                <View style={{ position: "absolute", top: 300 }}>
+                  <ErrorMessage
+                    error={errors.lastName}
+                    visible={touched.lastName}
+                  />
+                </View>
+                <View
+                  style={[styles.groupContainer, styles.groupContainerPosition]}
+                >
+                  {/* <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
                 <View style={styles.groupInner} />
                 <View style={styles.maskGroup236} />
               </View> */}
-              {/* <Text style={[styles.hello2, styles.helloTypo]} onPress={() => navigation.navigate("ProofOfResisendcyListA1")}>Continue</Text> */}
-            </View>
-            <View style={{ top: 350 }}>
-
-              <Button title="Continue" color="babyBlue" onPress={handleSubmit} />
-            </View>
-            </>
-          )}
+                  {/* <Text style={[styles.hello2, styles.helloTypo]} onPress={() => navigation.navigate("ProofOfResisendcyListA1")}>Continue</Text> */}
+                </View>
+                <View style={{ top: 350 }}>
+                  <Button title="Continue" onPress={handleSubmit} />
+                </View>
+              </>
+            )}
           </Formik>
         </View>
       </View>
@@ -111,12 +126,12 @@ const styles = StyleSheet.create({
     //fontFamily: GlobalStyles.FontFamily.helvetica,
     textAlign: "left",
     position: "absolute",
-    width:"100%"
+    width: "100%",
   },
   nameTypo: {
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
-   // fontFamily: GlobalStyles.FontFamily.helvetica,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   namePosition: {
     color: GlobalStyles.Color.indigo_100,
@@ -149,7 +164,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     position: "absolute",
-    width:"100%"
+    width: "100%",
   },
   hello1: {
     marginTop: 14.74,
@@ -164,7 +179,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   inputText: {
-    padding: 10
+    padding: 10,
   },
   firstName: {
     marginTop: -104.5,

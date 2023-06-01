@@ -99,7 +99,7 @@ const MaritalStatus = ({ SaveDetails, setScreenToShow }) => {
               color="black"
               onPress={() => handleSubmit()}
             />
-            {/* <Button title="Continue" color="babyBlue" onPress={() => handleSubmit()} /> */}
+            {/* <Button title="Continue"   onPress={() => handleSubmit()} /> */}
           </View>
         )}
       </Formik>

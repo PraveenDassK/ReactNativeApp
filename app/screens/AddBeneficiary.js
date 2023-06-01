@@ -185,11 +185,7 @@ const AddBeneficiary = ({ navigation }) => {
                   ]}
                 >
                   <TouchableOpacity style={styles.button}>
-                    <Button
-                      title="Confirm"
-                      color="babyBlue"
-                      onPress={handleSubmit}
-                    />
+                    <Button title="Confirm" onPress={handleSubmit} />
                   </TouchableOpacity>
                 </View>
               </>

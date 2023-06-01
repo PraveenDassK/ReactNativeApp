@@ -180,8 +180,8 @@ const SendMoney = ({ navigation }) => {
 
           <Button
             title="Schedule payment"
-            style={[styles.boxShadow, {width: "80%"}]}
-            color="babyBlue"
+            style={[styles.boxShadow, {width: "90%"}]}
+        
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ScheduledPayment")}
           />
