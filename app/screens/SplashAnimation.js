@@ -30,7 +30,7 @@ const SplashAnimation = ({navigation}) => {
 
         </View> 
        
-        <Text>Version 0.0.6</Text>
+        <Text>Version 0.0.6 hotfix 1</Text>
         <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 25,
           borderTopRightRadius: 25,}}>
           <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />

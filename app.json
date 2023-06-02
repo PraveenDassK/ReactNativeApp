@@ -27,7 +27,7 @@
         "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 22,
+      "versionCode": 23,
       "package": "com.carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },

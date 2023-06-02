@@ -27,6 +27,7 @@ import {
 import Button from "./AppButton";
 import AuthScreen from "./AuthScreen";
 import PostCode from "./RegistrationPostCode.jsx";
+import { CheckBox } from "@rneui/themed";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -37,6 +38,8 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
   const [addresses, setAddresses] = useState([]);
   const [isAdding, setAdding] = useState(false);
   const [add, setAdd] = useState(null);
+  const [isChecked, setChecked] = useState(false);
+
 
   useEffect(() => {
     if (addresses.length > 0) setAdd(addresses.address1);
@@ -81,14 +84,14 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
       ) : (
 
         <View>
-          <CheckBox
-            title="Are there any customers outside the EU?"
+          {/* <CheckBox
+            title="Is the trading address the same as the registred address?"
             checkedIcon="check-square-o"
             uncheckedIcon="square-o"
             checkedColor="black"
             checked={isChecked}
             onPress={() => setChecked(!isChecked)}
-          />
+          /> */}
           <Button
             title="Add"
             textColor="white"
