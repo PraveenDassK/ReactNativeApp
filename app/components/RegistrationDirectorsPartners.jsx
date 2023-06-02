@@ -47,7 +47,6 @@ const INTRESTS = [
 
 const RegistrationDirectorsPartners = ({navigation}) => {
 
-
   const [directors, setDirectors] = useState(DIRECTORS);
   const [beneficialOwners, setOwners] = useState(BENEFITS);
   const [controllingInterests, setIntrests] = useState(INTRESTS);
