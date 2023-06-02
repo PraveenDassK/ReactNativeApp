@@ -26,6 +26,12 @@ import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 const Tab = createMaterialTopTabNavigator();
 
+const BUSINESS_CARDS = [
+  require("../assets/cards/Business01.png"),
+  require("../assets/cards/Business02.png"),
+  require("../assets/cards/Business03.png"),
+];
+
 const account = "147147";
 const ChooseCardsElite = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +82,7 @@ const ChooseCardsElite = ({ navigation }) => {
                       <View style={styles.imageBox}>
                         <Image
                           style={styles.image}
-                          source={require("../assets/image-cardyellow.png")}
+                          source={BUSINESS_CARDS[index % BUSINESS_CARDS.length]}
                         />
                       </View>
 
