@@ -134,7 +134,7 @@ const Registration = ({ navigation }) => {
         return;
       case "RegistrationNumber":
         setRegistrationNumberDetails(details);
-        setScreenToShow("CompanyDetails");
+        setScreenToShow("CompanyDirectors");
         return;
       case "CompanyDetails":
         //setCompanyDetails(details);
@@ -165,10 +165,11 @@ const Registration = ({ navigation }) => {
         break;
       case "CompanyConfirm":
         //Confirms and sends the data
-        const callResult = await sendDetails("Business") 
+        //const callResult = await sendDetails("Business") 
+        const callResult = true
         if (callResult === true) {
           //If successful
-          setScreenToShow("PersonalDetails");
+          setScreenToShow("Success");
         } else {
           //If unsuccessful
           alert(callResult);
@@ -307,8 +308,8 @@ const Registration = ({ navigation }) => {
             navigation= {navigation}
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
-            companyType = {companyHouse.type}
-            companyNumber={companyHouse.company_number}
+            // companyType = {companyHouse.type}
+            // companyNumber={companyHouse.company_number}
           />
         );
         case "CompanyConfirm":

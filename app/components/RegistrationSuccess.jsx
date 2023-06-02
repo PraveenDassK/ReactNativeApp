@@ -44,7 +44,8 @@ const Success = ({ SaveDetails, navigation }) => {
           <Text style={styles.successText}>Congratulations</Text>
           <Text style={styles.successText}>Welcome to Carbonyte!</Text>
           <Text style={styles.successSubText}>
-            Your carbonyte account is ready
+            Your carbonyte account is ready. 
+            We need a few more details before you can use it.
           </Text>
         </View>
       </FadeInView>
