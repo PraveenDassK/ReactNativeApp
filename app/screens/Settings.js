@@ -429,7 +429,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Reset app pin"
+            title="Reset app passcode"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("PinSetApp")}

@@ -6,12 +6,13 @@ import client from "./client";
  * @returns An array with the beneficiary data or empty is there is no data or an error
  */
 const GetUserBeneficiaries = async (ID) => {
-    const beneficiaryRequest = await client.get(`https://api.carbonyte.io/walletmodule/Wallet/RetrieveBeneficiaries?customerId=C122BMS7`)
+    const beneficiaryRequest = await client.get(
+        `https://api.carbonyte.io/walletmodule/Wallet/RetrieveBeneficiaries?customerId=C122BMS7`
+    );
     if (beneficiaryRequest.data.result) {
-
     }
-    return beneficiaryRequest.data.details.content
-}
+    return beneficiaryRequest.data.details.content;
+};
 
 /**
  * @dev This gets the group benefificiaries for the user
@@ -19,12 +20,13 @@ const GetUserBeneficiaries = async (ID) => {
  * @returns An array with all of the beneficiaries
  */
 const GetGroupBeneficiaries = async (ID) => {
-    const request = await client.get(`https://api.carbonyte.io/walletmodule/Wallet/RetrieveGroupBeneficiariesByCarbonyteId?carbonyteId=${ID}`)
-    console.log(request.data)
+    const request = await client.get(
+        `https://api.carbonyte.io/walletmodule/Wallet/RetrieveGroupBeneficiariesByCarbonyteId?carbonyteId=${ID}`
+    );
     //If the call failed
-    if (!request.data.result) return ""
-    return request.data.details
-}
+    if (!request.data.result) return "";
+    return request.data.details;
+};
 
 /**
  * 
@@ -42,17 +44,17 @@ const GetGroupBeneficiaries = async (ID) => {
  * @returns True if the addition was a success
  */
 const CreateNewGroupBeneficiary = async (obj) => {
-    console.log(obj)
-    const post = await client.post(`https://api.carbonyte.io/walletmodule/Wallet/NewGroupBeneficiary`,
+    console.log(obj);
+    const post = await client.post(
+        `https://api.carbonyte.io/walletmodule/Wallet/NewGroupBeneficiary`,
         obj
-    )
+    );
 
     //On success
     if (post.data.result) {
-
     }
-    return post.data.result
-}
+    return post.data.result;
+};
 
 /**
  * 
@@ -68,27 +70,48 @@ const CreateNewGroupBeneficiary = async (obj) => {
  * @returns 
  */
 const SchedulePayment = async (obj) => {
-    const scheduleRequest = await client.post(`https://api.carbonyte.io/walletmodule/Wallet/SchedulePayment`, obj)
+    const scheduleRequest = await client.post(
+        `https://api.carbonyte.io/walletmodule/Wallet/SchedulePayment`,
+        obj
+    );
     //If successful
     if (scheduleRequest.data.result) {
-
     }
-    return scheduleRequest.data.details
-}
+    return scheduleRequest.data.details;
+};
 
 const GetScheduledPayments = async (ID) => {
-    const request = await client.patch(`https://api.carbonyte.io/walletmodule/Wallet/RetrieveSchedulePaymentByCarbonyteId?carbonyteId=${ID}`)
+    const request = await client.patch(
+        `https://api.carbonyte.io/walletmodule/Wallet/RetrieveSchedulePaymentByCarbonyteId?carbonyteId=${ID}`
+    );
     //If no data
     if (!request.data.result) {
-        return null
+        return null;
     }
-    return request.data.details
+    return request.data.details;
+};
+
+const checkBeneficary = async (userAccount) => {
+    const obj = {
+        "paymentAccountId": "A122HTHM",
+        "sortCode": "000000",
+        "accountNumber": "12345674",
+        "secondaryAccountId": "1",
+        "accountType": "PERSONAL",
+        "name": "a"
+    }
+    const beneficaryCheckRequest = await client.post(`https://api.carbonyte.io/walletmodule/AccountNameCheck/${userAccount}`,
+        obj
+    )
+    return beneficaryCheckRequest?.data.details
 }
+
 
 export default {
     GetUserBeneficiaries,
     GetGroupBeneficiaries,
     CreateNewGroupBeneficiary,
     SchedulePayment,
-    GetScheduledPayments
+    GetScheduledPayments,
+    checkBeneficary
 };

@@ -128,7 +128,7 @@ const Devices = ({ navigation }) => {
         <View style={styles.headerItem}>
           <MaterialCommunityIcons
             name="security"
-            color={colors.babyBlue}
+            
             size={60}
           />
         </View>
@@ -194,7 +194,6 @@ const Device = ({ name, os, date, index, onSignout }) => {
       <View style={styles.deviceItemContainer}>
         <Button
           title="Sign out"
-          textColor="black"
           onPress={() => onSignout(index)}
         />
       </View>

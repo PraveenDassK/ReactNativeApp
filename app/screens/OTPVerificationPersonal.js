@@ -119,7 +119,10 @@ const OTPVerificationPersonal = () => {
       emailOTP,
     });
     console.log(result);
-    if (!result) return alert("Could not verify otp");
+    if (!result){
+      setIsLoading(false)
+      return alert("Could not verify otp");
+    } 
 
     const IDs = await loginApi.GetIDs(result?.token);
 

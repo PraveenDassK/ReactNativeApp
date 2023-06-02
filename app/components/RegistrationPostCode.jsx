@@ -26,6 +26,7 @@ import {
 } from "../config/scaling";
 import Button from "./AppButton";
 import { Dropdown } from "react-native-element-dropdown";
+import { CheckBox } from "@rneui/themed";
 
 const Postcode = ({ AddAddress }) => {
   const [addressData, setAddressData] = useState([]);

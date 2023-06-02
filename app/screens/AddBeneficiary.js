@@ -12,6 +12,7 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import api from "../api/api_list";
+import apiBeneficiaries from "../api/apiBeneficiaries";
 import Button from "../components/AppButton";
 import { verticalScale } from "../config/scaling";
 import { Formik } from "formik";
@@ -83,15 +84,19 @@ const AddBeneficiary = ({ navigation }) => {
     accNum,
     sortCode,
   }) => {
-    const response = await api.AddBeneficiary(
-      authContext.userID,
-      phoneNumber,
-      accountName,
-      accNum,
-      sortCode
-    );
-    navigation.navigate("SendMoney");
-    console.log(response);
+    const beneficaryCheck = await apiBeneficiaries.checkBeneficary()
+    console.log(beneficaryCheck.result.code == "MATCHED")
+    if (beneficaryCheck.result.code == "MATCHED") {
+      const response = await api.AddBeneficiary(
+        authContext.userID,
+        phoneNumber,
+        accountName,
+        accNum,
+        sortCode
+      );
+      navigation.navigate("SendMoney");
+      console.log(response);
+    }
   };
 
   const generateBoxShadowStyle = (
