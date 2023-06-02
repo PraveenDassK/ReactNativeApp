@@ -50,12 +50,8 @@ const MyCards = ({ navigation }) => {
   const [cardIndex, setCardIndex] = useState(0);
   const [cardData, setCardData] = useState(null);
   const authContext = useContext(AuthContext);
-  const { 
-    settings,
-    cardID,
-    customerDetails,
-    cardDetails 
-  } = useContext(AuthContext);
+  const { settings, cardID, customerDetails, cardDetails } =
+    useContext(AuthContext);
 
   useEffect(() => {
     loadData();
@@ -81,12 +77,11 @@ const MyCards = ({ navigation }) => {
     setType(currentCard.productCode);
 
     setcardnumber(cardDetails.number);
-    setfirstname("CVV " + cardDetails.cvv)
-    setlastname(cardDetails.name)
-    console.log(cardDetails)
+    setfirstname("CVV " + cardDetails.cvv);
+    setlastname(cardDetails.name);
+    console.log(cardDetails);
   };
 
-  
   let transactionList = [];
   const showTransaction = (Id) => {
     setModalVisible(true);
@@ -253,15 +248,14 @@ const MyCards = ({ navigation }) => {
         cardData[cardIndex].id,
         "CARD_BLOCKED"
       );
-      console.log(request)
-
+      console.log(request);
     } else {
       console.log("unfreeze");
       const request = await apiCall2.FreezeCard(
         cardData[cardIndex].id,
         "CARD_OK"
       );
-      console.log(request)
+      console.log(request);
     }
     loadData();
   };
@@ -308,7 +302,7 @@ const MyCards = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} color="blue" />
+        <ActivityIndicator size={"large"} color="black" />
       </View>
     );
   }

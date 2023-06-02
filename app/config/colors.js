@@ -10,5 +10,7 @@ export default {
   blue: "#0000FF",
   none: "#f3f5f5",
   babyBlue: "#D8EBF9",
-  darkBlue: '#1B2356'
+  darkBlue: '#1B2356',
+  red: 'red'
+
 };

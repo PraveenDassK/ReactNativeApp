@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { StyleSheet, View, Text, Image, Pressable, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import ReactNativePinView from "react-native-pin-view";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -41,14 +48,14 @@ const Pin = ({ route, navigation }) => {
    */
   const checkPin = async () => {
     console.log(route);
-    if ('"' + enteredPin + '"' != await authStorage.getPasscode()) {
+    if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
       alert("Pin is incorrect");
       pinView.current.clearAll();
       return;
     }
 
     setLoading(true);
-    console.log(route.params.beneficiaryData)
+    console.log(route.params.beneficiaryData);
     const response = await api.SendFunds(
       route.params.amount,
       accountID,
@@ -70,7 +77,7 @@ const Pin = ({ route, navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} color="blue" />
+        <ActivityIndicator size={"large"} color="black" />
       </View>
     );
   }
