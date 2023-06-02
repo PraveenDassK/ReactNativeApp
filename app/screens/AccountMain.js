@@ -100,7 +100,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const handleCardPress = (card) => {
     setSelectedCard(card);
-    console.log(card);
   };
 
   const TotalAmount = numTrees;
@@ -123,7 +122,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   }, []);
 
   const checkForInitalPasscode = async () => {
-    console.log(await authStorage.getPasscode());
     if ((await authStorage.getPasscode()) == null) {
       navigation.navigate("PinSetApp");
     }
@@ -138,6 +136,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     if (!accountID) return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
+    console.log("Assets",resposeData)
     const transactionCall = await apiCall.GetTransactions(accountID);
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
@@ -147,7 +146,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //If the card data is not there get the card details
     if (!cardDetails) {
       const cardObject = await api.GetCardFromID("714613712");
-      console.log(cardObject);
       setCardDetails(cardObject);
       setSortCode("00-00-00");
 
