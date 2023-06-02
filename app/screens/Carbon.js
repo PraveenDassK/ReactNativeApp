@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
+  Vibration
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
@@ -23,12 +24,15 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import FadeInView from "../components/fadeInview";
 import AppText from "../components/Text";
 import AuthContext from "../auth/context";
+import * as Clipboard from "expo-clipboard";
 
 const Carbon = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { userID, accountID, cart, setCart } = useContext(AuthContext);
+
+
 
   useEffect(() => {
     loadData();
@@ -73,6 +77,14 @@ const Carbon = ({ route, navigation }) => {
         })
       );
     }
+  };
+
+
+  const copyToClipboard = async (copy) => {
+    console.log("Copied", copy);
+    Vibration.vibrate();
+    alert(`${copy} copied`);
+    await Clipboard.setStringAsync(copy);
   };
 
   const goToBasket = () => {
@@ -356,7 +368,10 @@ const Carbon = ({ route, navigation }) => {
                           ]
                     }
                   >
+                    <Pressable onPress={() =>copyToClipboard(tag)}>
+
                     <AppText style={styles.tags}>{tag}</AppText>
+                    </Pressable>
                   </View>
                 ))}
               </View>
