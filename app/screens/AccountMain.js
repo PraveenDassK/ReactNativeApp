@@ -4,6 +4,7 @@ import React, {
   useContext,
   useCallback,
   useRef,
+  Fragment,
 } from "react";
 import {
   RefreshControl,
@@ -158,6 +159,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
 
+    console.log("Assets", resposeData.assets);
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
@@ -731,182 +733,28 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             </View>
           </View>
+
           <View style={styles.subTextRow}>
-            <AppText style={styles.subTextAssets}>Assets</AppText>
-            <AppText style={styles.subTextDescriptor}>
-              (1 Tonne = 1 CO2 Token)
-            </AppText>
-            <AppText style={styles.subTextToken}>Token</AppText>
+            {projects && (
+              <>
+                <AppText style={styles.subTextAssets}>Assets</AppText>
+                <AppText style={styles.subTextDescriptor}>
+                  (1 Tonne = 1 CO2 Token)
+                </AppText>
+                <AppText style={styles.subTextToken}>Token</AppText>
+              </>
+            )}
           </View>
+
           <View style={{ marginTop: "2.5%" }} />
-          <TouchableOpacity
-            style={{
-              width: GlobalStyles.DivContainer.width,
-              marginLeft: GlobalStyles.DivContainer.marginLeft,
-              height: verticalScale(80),
-              marginTop: "2.5%",
-              backgroundColor: "white",
-              borderRadius: 15,
-            }}
-            onPress={() => navigation.navigate("VirtualEcoSystem")}
-          >
-            <View style={{ height: "100%", flexDirection: "row" }}>
-              <View
-                style={{
-                  width: horizontalScale(50),
-                  height: verticalScale(50),
-                  borderRadius: moderateScale(25),
-                  backgroundColor: "#F6F5F8",
-                  borderColor: "black",
-                  alignSelf: "center",
-                  marginLeft: "2.5%",
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <AppText
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      fontWeight: "700",
-                    }}
-                  >
-                    {projects[0]?.name?.charAt(0)}
-                  </AppText>
-                </View>
-              </View>
-              <View
-                style={{
-                  flex: 5.5,
-                  alignSelf: "center",
-                  justifyContent: "space-evenly",
-                  marginLeft: "5%",
-                }}
-              >
-                <AppText
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "700",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  <AppText style={{ fontWeight: "400" }}>
-                    {projects[0]?.name}
-                  </AppText>{" "}
-                  £{projects[0]?.displayAssetPrice} / {projects[0]?.type}
-                </AppText>
-                <AppText style={{ opacity: 0.4 }}>
-                  {moment(projects[0]?.lastUpdated).format("MMMM D, YYYY")}
-                </AppText>
-              </View>
-              <View
-                style={{
-                  flex: 3,
-                  justifyContent: "space-evenly",
-                  alignItems: "flex-end",
-                  marginRight: "2.5%",
-                }}
-              >
-                <AppText
-                  style={{
-                    marginRight: "2.5%",
-                    fontWeight: "500",
-                    fontSize: 18,
-                  }}
-                >
-                  1
-                </AppText>
-              </View>
-            </View>
-          </TouchableOpacity>
+          {/* // AssetsAssets */}
 
-          <TouchableOpacity
-            style={{
-              width: GlobalStyles.DivContainer.width,
-              marginLeft: GlobalStyles.DivContainer.marginLeft,
-              height: verticalScale(80),
-              marginTop: "2.5%",
-              backgroundColor: "white",
-              borderRadius: 15,
-            }}
-            onPress={() => navigation.navigate("VirtualEcoSystem")}
-          >
-            <View style={{ height: "100%", flexDirection: "row" }}>
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 25,
-                  backgroundColor: "#F6F5F8",
-                  borderColor: "black",
-                  alignSelf: "center",
-                  marginLeft: "2.5%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <AppText
-                  style={{
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlignVertical: "center",
-
-                    fontWeight: "700",
-                  }}
-                >
-                  {projects[1]?.name?.charAt(0)}
-                </AppText>
-              </View>
-              <View
-                style={{
-                  flex: 5.5,
-                  alignSelf: "center",
-                  justifyContent: "space-evenly",
-                  marginLeft: "5%",
-                }}
-              >
-                <AppText
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "700",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  <AppText style={{ fontWeight: "400" }}>
-                    {projects[1]?.name}{" "}
-                  </AppText>
-                  £{projects[1]?.displayAssetPrice} / {projects[1]?.type}
-                </AppText>
-                <AppText style={{ opacity: 0.4 }}>
-                  {moment(projects[1]?.lastUpdated).format("MMMM D, YYYY")}
-                </AppText>
-              </View>
-              <View
-                style={{
-                  flex: 3,
-                  justifyContent: "space-evenly",
-                  alignItems: "flex-end",
-                  marginRight: "2.5%",
-                }}
-              >
-                <AppText
-                  style={{
-                    marginRight: "2.5%",
-                    fontWeight: "500",
-                    fontSize: 18,
-                  }}
-                >
-                  1
-                </AppText>
-              </View>
-            </View>
-          </TouchableOpacity>
+          {projects &&
+            projects.map((project, index) => (
+              <Fragment key={`${index}-${project.name}`}>
+                <CarbonAssets project={project} navigation={navigation} />
+              </Fragment>
+            ))}
         </View>
 
         {/**
@@ -931,7 +779,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             Recent Transactions
           </AppText>
         </View>
-        <View style={styles.transactionsContainer}>{transactionTable}</View>
+        {transactionTable && (
+          <View style={styles.transactionsContainer}>{transactionTable}</View>
+        )}
 
         {nftimg && (
           <View style={[styles.NFTContainer, styles.boxShadow]}>
@@ -1032,9 +882,93 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   );
 };
 
-
-
-
+const CarbonAssets = ({ project, navigation }) => {
+  return (
+    <TouchableOpacity
+      style={{
+        width: GlobalStyles.DivContainer.width,
+        marginLeft: GlobalStyles.DivContainer.marginLeft,
+        height: verticalScale(80),
+        marginTop: "2.5%",
+        backgroundColor: "white",
+        borderRadius: 15,
+      }}
+      onPress={() => navigation.navigate("VirtualEcoSystem")}
+    >
+      <View style={{ height: "100%", flexDirection: "row" }}>
+        <View
+          style={{
+            width: horizontalScale(50),
+            height: verticalScale(50),
+            borderRadius: moderateScale(25),
+            backgroundColor: "#F6F5F8",
+            borderColor: "black",
+            alignSelf: "center",
+            marginLeft: "2.5%",
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <AppText
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "700",
+              }}
+            >
+              {project?.name?.charAt(0)}
+            </AppText>
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 5.5,
+            alignSelf: "center",
+            justifyContent: "space-evenly",
+            marginLeft: "5%",
+          }}
+        >
+          <AppText
+            style={{
+              fontSize: 14,
+              fontWeight: "700",
+              textTransform: "capitalize",
+            }}
+          >
+            <AppText style={{ fontWeight: "400" }}>{project?.name}</AppText> £
+            {project?.displayAssetPrice} / {project?.type}
+          </AppText>
+          <AppText style={{ opacity: 0.4 }}>
+            {moment(project?.lastUpdated).format("MMMM D, YYYY")}
+          </AppText>
+        </View>
+        <View
+          style={{
+            flex: 3,
+            justifyContent: "space-evenly",
+            alignItems: "flex-end",
+            marginRight: "2.5%",
+          }}
+        >
+          <AppText
+            style={{
+              marginRight: "2.5%",
+              fontWeight: "500",
+              fontSize: 18,
+            }}
+          >
+            1
+          </AppText>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const Card = ({ name, number, image, selected, onPress }) => {
   return (
@@ -1371,7 +1305,7 @@ const styles = StyleSheet.create({
   navBarTopText: {
     fontSize: GlobalStyles.NavBar.fontSize,
     fontWeight: GlobalStyles.NavBar.fontWeight,
-    Color: GlobalStyles.NavBar.fontColor,
+    color: GlobalStyles.NavBar.fontColor,
   },
 
   lineSeparatorDiv: {
@@ -1411,7 +1345,7 @@ const styles = StyleSheet.create({
   NavBarBottomText: {
     fontSize: GlobalStyles.NavBarBottomText.fontSize,
     fontWeight: GlobalStyles.NavBarBottomText.fontWeight,
-    Color: GlobalStyles.NavBarBottomText.fontColor,
+    color: GlobalStyles.NavBarBottomText.fontColor,
   },
 
   DivContainer: {
