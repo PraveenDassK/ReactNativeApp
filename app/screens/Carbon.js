@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
     fontFamily: "Helvetica",
-    color: "#1B2356",
+    color: "black",
   },
   description: {
     color: "grey",
@@ -432,12 +432,12 @@ const styles = StyleSheet.create({
   AppText: {
     fontWeight: "bold",
     textAlign: "center",
-    color: "#1B2356",
+    color: "black",
   },
   textSub: {
     fontWeight: "bold",
     textAlign: "left",
-    color: "#1B2356",
+    color: "black",
   },
   title: {
     fontSize: moderateScale(30),
