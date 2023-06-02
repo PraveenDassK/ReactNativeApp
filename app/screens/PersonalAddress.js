@@ -1,151 +1,176 @@
 import React, { useContext } from "react";
-import { Text, StyleSheet, View,  TextInput, ScrollView} from "react-native";
-import { Formik } from "formik"
-import * as Yup from 'yup'
+import { Text, StyleSheet, View, TextInput, ScrollView } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import AuthContext from "../auth/context";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
 
-
 const validationSchema = Yup.object().shape({
-  buildOrHouseNo: Yup.string().required().label("Building name or house number"),
+  buildOrHouseNo: Yup.string()
+    .required()
+    .label("Building name or house number"),
   addressLine1: Yup.string().required().label("Address line 1"),
   addressLine2: Yup.string().label("Address line 2"),
   townOrCity: Yup.string().required().label("Town or city"),
-})
+});
 
-const PersonalAddress = ({navigation}) => {
+const PersonalAddress = ({ navigation }) => {
+  const authContext = useContext(AuthContext);
 
-  const authContext = useContext(AuthContext)
-
-  const handleSubmit = ({buildOrHouseNo, addressLine1, addressLine2, townOrCity}) => {
-
-    const address = `${buildOrHouseNo},${addressLine1},${addressLine2},${townOrCity}`
-    authContext.setUser(prev => ({...prev, address}))
-    console.log(authContext.user)
-    navigation.navigate("DOB")
-  }
+  const handleSubmit = ({
+    buildOrHouseNo,
+    addressLine1,
+    addressLine2,
+    townOrCity,
+  }) => {
+    const address = `${buildOrHouseNo},${addressLine1},${addressLine2},${townOrCity}`;
+    authContext.setUser((prev) => ({ ...prev, address }));
+    console.log(authContext.user);
+    navigation.navigate("DOB");
+  };
 
   return (
     <ScrollView>
-    <Screen>
-    <View style={styles.personalAddress}>
-      <View style={styles.buildingNameOrNumberParent}>
-        <Text
-          style={[
-            styles.buildingNameOrNumber,
-            styles.helloTypo,
-            styles.enterPostcode1Typo,
-          ]}
-        >
-          Building name or number
-        </Text>
-        <Text style={[styles.addressLine1, styles.addressTypo]}>
-          Address line 1
-        </Text>
-        
-        <Text style={[styles.addressLine2Optional, styles.addressTypo]}>
-          <Text style={styles.addressLine2}>{`Address line 2 `}</Text>
-          <Text style={styles.optional}>(optional)</Text>
-        </Text>
-        <Text style={[styles.townOrCity, styles.addressTypo]}>
-          Town or city
-        </Text>
-
-         <Formik
-          initialValues={{buildOrHouseNo:"", addressLine1:"", addressLine2:"",townOrCity:""}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-          >
-              {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-            <>
-        <TextInput
-        keyboardType="default" 
-        onBlur={() => setFieldTouched("buildOrHouseNo")}
-        onChangeText={handleChange("buildOrHouseNo")}
-          style={[
-            styles.groupChild,
-            styles.groupChildLayout,
-            styles.groupChildBorder,
-            {paddingLeft:10}
-          ]}
-        />
-          <View style={{ position: "absolute", top:190}}>
-                <ErrorMessage error={errors.buildOrHouseNo} visible={touched.buildOrHouseNo}/>
-          </View>
-
-        <View
-          style={[styles.parentPosition, styles.groupChildLayout]}
-          
-        >
-          <Button title="continue"  onPress={handleSubmit}/>
-        </View>
-        <TextInput
-          keyboardType="default" 
-          onBlur={() => setFieldTouched("addressLine1")}
-          onChangeText={handleChange("addressLine1")}
-          style={[
-            styles.groupInner,
-            styles.groupChildLayout,
-            styles.groupChildBorder,
-            {paddingLeft:10}
-          ]}
-        
-        />
-         <View style={{ position: "absolute", top:313}}>
-                <ErrorMessage error={errors.addressLine1} visible={touched.addressLine1}/>
-            </View>
-        <TextInput
-           keyboardType="default" 
-           onBlur={() => setFieldTouched("addressLine2")}
-           onChangeText={handleChange("addressLine2")}
-          style={[
-            styles.groupView,
-            styles.groupChildLayout,
-            styles.groupChildBorder,
-            {paddingLeft:10}
-          ]}
-        />
-        <View style={{ position: "absolute", top:403}}>
-          <ErrorMessage error={errors.addressLine2} visible={touched.addressLine2}/>
-        </View>
-        <TextInput
-          keyboardType="default" 
-          onBlur={() => setFieldTouched("townOrCity")}
-          onChangeText={handleChange("townOrCity")}
-          style={[
-            styles.groupChild1,
-            styles.groupChildLayout,
-            styles.groupChildBorder,
-            {paddingLeft:10}
-          ]}
-          
-        />
-         <View style={{ position: "absolute", top:554}}>
-            <ErrorMessage error={errors.townOrCity} visible={touched.townOrCity}/>
-        </View>
-
-      
-        <View style={[styles.helloParent, styles.helloParentPosition]}>
-          <Text style={[styles.hello1, styles.helloParentPosition]}>
-            Your Address
-          </Text>
-          <Text style={[styles.hello2, styles.addressTypo]}>
-            <Text style={styles.byLawWe}>
-              By law we need your home address to open your
+      <Screen>
+        <View style={styles.personalAddress}>
+          <View style={styles.buildingNameOrNumberParent}>
+            <Text
+              style={[
+                styles.buildingNameOrNumber,
+                styles.helloTypo,
+                styles.enterPostcode1Typo,
+              ]}
+            >
+              Building name or number
             </Text>
-            <Text style={styles.byLawWe}> account</Text>
-          </Text>
+            <Text style={[styles.addressLine1, styles.addressTypo]}>
+              Address line 1
+            </Text>
+
+            <Text style={[styles.addressLine2Optional, styles.addressTypo]}>
+              <Text style={styles.addressLine2}>{`Address line 2 `}</Text>
+              <Text style={styles.optional}>(optional)</Text>
+            </Text>
+            <Text style={[styles.townOrCity, styles.addressTypo]}>
+              Town or city
+            </Text>
+
+            <Formik
+              initialValues={{
+                buildOrHouseNo: "",
+                addressLine1: "",
+                addressLine2: "",
+                townOrCity: "",
+              }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({
+                handleChange,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                touched,
+              }) => (
+                <>
+                  <TextInput
+                    keyboardType="default"
+                    onBlur={() => setFieldTouched("buildOrHouseNo")}
+                    onChangeText={handleChange("buildOrHouseNo")}
+                    style={[
+                      styles.groupChild,
+                      styles.groupChildLayout,
+                      styles.groupChildBorder,
+                      { paddingLeft: 10 },
+                    ]}
+                  />
+                  <View style={{ position: "absolute", top: 190 }}>
+                    <ErrorMessage
+                      error={errors.buildOrHouseNo}
+                      visible={touched.buildOrHouseNo}
+                    />
+                  </View>
+
+                  <View
+                    style={[styles.parentPosition, styles.groupChildLayout]}
+                  >
+                    <Button title="continue" onPress={handleSubmit} />
+                  </View>
+                  <TextInput
+                    keyboardType="default"
+                    onBlur={() => setFieldTouched("addressLine1")}
+                    onChangeText={handleChange("addressLine1")}
+                    style={[
+                      styles.groupInner,
+                      styles.groupChildLayout,
+                      styles.groupChildBorder,
+                      { paddingLeft: 10 },
+                    ]}
+                  />
+                  <View style={{ position: "absolute", top: 313 }}>
+                    <ErrorMessage
+                      error={errors.addressLine1}
+                      visible={touched.addressLine1}
+                    />
+                  </View>
+                  <TextInput
+                    keyboardType="default"
+                    onBlur={() => setFieldTouched("addressLine2")}
+                    onChangeText={handleChange("addressLine2")}
+                    style={[
+                      styles.groupView,
+                      styles.groupChildLayout,
+                      styles.groupChildBorder,
+                      { paddingLeft: 10 },
+                    ]}
+                  />
+                  <View style={{ position: "absolute", top: 403 }}>
+                    <ErrorMessage
+                      error={errors.addressLine2}
+                      visible={touched.addressLine2}
+                    />
+                  </View>
+                  <TextInput
+                    keyboardType="default"
+                    onBlur={() => setFieldTouched("townOrCity")}
+                    onChangeText={handleChange("townOrCity")}
+                    style={[
+                      styles.groupChild1,
+                      styles.groupChildLayout,
+                      styles.groupChildBorder,
+                      { paddingLeft: 10 },
+                    ]}
+                  />
+                  <View style={{ position: "absolute", top: 554 }}>
+                    <ErrorMessage
+                      error={errors.townOrCity}
+                      visible={touched.townOrCity}
+                    />
+                  </View>
+
+                  <View
+                    style={[styles.helloParent, styles.helloParentPosition]}
+                  >
+                    <Text style={[styles.hello1, styles.helloParentPosition]}>
+                      Your Address
+                    </Text>
+                    <Text style={[styles.hello2, styles.addressTypo]}>
+                      <Text style={styles.byLawWe}>
+                        By law we need your home address to open your
+                      </Text>
+                      <Text style={styles.byLawWe}> account</Text>
+                    </Text>
+                  </View>
+                </>
+              )}
+            </Formik>
+          </View>
         </View>
-        </>
-          )}
-          </Formik>
-      </View>
-    </View>
-    </Screen>
+      </Screen>
     </ScrollView>
   );
 };

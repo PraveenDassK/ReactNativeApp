@@ -180,8 +180,6 @@ const OTPVerificationPersonal = () => {
     }, [])
   );
 
-
-
   return (
     <Screen style={{ backgroundColor: "white" }}>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>

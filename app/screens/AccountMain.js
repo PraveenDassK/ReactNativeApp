@@ -77,7 +77,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     customerDetails,
     cardDetails,
     setCardDetails,
-    missingAccountSetup
+    missingAccountSetup,
   } = useContext(AuthContext);
 
   const todaydate = moment().format("MMMM D, YYYY");
@@ -119,18 +119,18 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   // }, [missingAccountSetup]);
 
   useEffect(() => {
-    checkForInitalPasscode()
-  }, [])
+    checkForInitalPasscode();
+  }, []);
 
   const checkForInitalPasscode = async () => {
-    console.log(await authStorage.getPasscode())
-    if (await authStorage.getPasscode() == null) {
-      navigation.navigate("PinSetApp")
+    console.log(await authStorage.getPasscode());
+    if ((await authStorage.getPasscode()) == null) {
+      navigation.navigate("PinSetApp");
     }
-  }
+  };
 
   /**
-   * @dev 
+   * @dev
    * @returns Stops load if the account ID is not present
    */
   const loadData = async () => {
@@ -147,14 +147,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //If the card data is not there get the card details
     if (!cardDetails) {
       const cardObject = await api.GetCardFromID("714613712");
-      console.log(cardObject)
+      console.log(cardObject);
       setCardDetails(cardObject);
       setSortCode("00-00-00");
 
       CARD_DATA.push(cardObject);
       CARD_DATA.push(cardObject);
     }
-
 
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
@@ -295,7 +294,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
@@ -1033,66 +1032,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   );
 };
 
-const CardContainer = ({ color }) => {
-  const style = useAnimatedStyle(() => {
-    return {
-      position: "absolute",
-      height: 200,
-      width: 325,
-      backgroundColor: color,
-      bottom: 30,
-      borderRadius: 8,
-    };
-  });
-  return (
-    // <View>
-    //   <Text>here</Text>
-    // </View>
-    <GestureDetector>
-      <Card color={color} style={{ style }} />
-    </GestureDetector>
-  );
-};
 
-// const Card = ({color, style}) => (
-//   <Animated.View
-//     style={[styles.totalWalletBalanceContainer11, {backgroundColor: color}, style]}>
-//             <AppText style={[styles.totalWalletBalanceText11, {fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",position: "absolute", top: verticalScale(10), right:horizontalScale(15) , fontSize: moderateScale(20), textTransform: "lowercase"}]}>
-//                 Carbonyte
-//             </AppText>
 
-//               <Image
-//               resizeMode="contain"
-//                 style={{position: "absolute", left: horizontalScale(70),height: verticalScale(30), width: horizontalScale(20),  top: verticalScale(55), transform: [{
-//                   rotate: "180deg"
-//                 }]}}
-//                 source={require("../assets/group-31767.png")}
-//               />
 
-//               <Image
-//                 resizeMode="contain"
-//                 style={{ position: "absolute", left: horizontalScale(30), height: verticalScale(20), width: horizontalScale(30), top: verticalScale(60), transform: [{
-//                   rotate: "90deg"
-//                 }]}}
-//                 source={require("../assets/group-31764.png")}
-//               />
-
-//               <AppText style={[styles.totalWalletBalanceText11, {top:verticalScale(20), fontSize: moderateScale(18) ,fontWeight:'400'}]}>
-//                 number
-//               </AppText>
-
-//               <Image
-//               resizeMode="contain"
-//               style={{position: "absolute", bottom:verticalScale(10), right: horizontalScale(20),height: verticalScale(45), width: horizontalScale(45), }}
-//                 source={require("../assets/group-31766.png")}
-//               />
-
-//               <AppText style={[styles.totalWalletBalanceText11, {position: "absolute",bottom: verticalScale(10), left:horizontalScale(20) , fontSize: moderateScale(11), wordSpacing: 20}]}>
-//               name
-//               </AppText>
-
-//         </Animated.View>
-// )
 
 const Card = ({ name, number, image, selected, onPress }) => {
   return (
@@ -1321,7 +1263,7 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(75),
-    backgroundColor: "#D8EBF9",
+    backgroundColor: "#D3D3D3",
     borderRadius: moderateScale(15),
 
     flexDirection: "row",

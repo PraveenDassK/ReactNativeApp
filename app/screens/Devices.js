@@ -31,7 +31,7 @@ const DEVICES = ["cellphone", "tablet-android"];
 const COLORS = ["orange", "blue", "red"];
 
 const Devices = ({ navigation }) => {
-  const { customerDetails, } = useContext(AuthContext);
+  const { customerDetails } = useContext(AuthContext);
   const [devices, setDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -101,16 +101,17 @@ const Devices = ({ navigation }) => {
 
     // apiSignout if not setDevices to the old devices
 
-    const signedOut = await apiDevices.DeleteDevice(customerDetails, deviceId)
+    const signedOut = await apiDevices.DeleteDevice(customerDetails, deviceId);
     if (!signedOut) {
-      alert("Sign out failed")
-      setDevices(oldDevices)}
+      alert("Sign out failed");
+      setDevices(oldDevices);
+    }
   };
 
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
@@ -127,7 +128,7 @@ const Devices = ({ navigation }) => {
         <View style={styles.headerItem}>
           <MaterialCommunityIcons
             name="security"
-            color={colors.babyBlue}
+            
             size={60}
           />
         </View>
@@ -193,7 +194,6 @@ const Device = ({ name, os, date, index, onSignout }) => {
       <View style={styles.deviceItemContainer}>
         <Button
           title="Sign out"
-          textColor="black"
           onPress={() => onSignout(index)}
         />
       </View>

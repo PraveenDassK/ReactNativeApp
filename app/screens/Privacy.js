@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import moment from "moment";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 
 const TermsAndConditions = ({ route, navigation }) => {
   const [isSelected, setSelection] = useState(false);

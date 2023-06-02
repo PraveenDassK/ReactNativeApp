@@ -96,7 +96,7 @@ const ProofOfFace = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
@@ -113,9 +113,7 @@ const ProofOfFace = ({ navigation }) => {
         handleBack={handleBack}
       >
         <View>
-          <Text>
-            We need to confirm your identity
-          </Text>
+          <Text>We need to confirm your identity</Text>
         </View>
 
         <TouchableOpacity
@@ -132,17 +130,35 @@ const ProofOfFace = ({ navigation }) => {
               <Text style={{ color: "#D3D3D3" }}>Add document</Text>
             </>
           ) : (
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems:"center"}}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               {imageUri && (
-                <View style={{ flex:1, justifyContent:"center", alignItems:"center"}}>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Image
                     source={{ uri: imageUri }}
                     style={{ width: 100, height: 100 }}
                   />
-
                 </View>
               )}
-              <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <MaterialCommunityIcons
                   name="check-circle"
                   color="#D3D3D3"

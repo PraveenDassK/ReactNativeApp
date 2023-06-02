@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, ActivityIndicator, View } from "rea
 
 import colors from "../config/colors";
 
-function AppButton({ title, onPress, color = "babyBlue" ,style, textColor, transform, visible=false, disabled=false} ) {
+function AppButton({ title, onPress, color = "black" ,style, textColor="white", transform, visible=false, disabled=false} ) {
   return (
     <TouchableOpacity
       disabled={disabled}

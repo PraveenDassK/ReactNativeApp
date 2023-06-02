@@ -35,25 +35,27 @@ const Postcode = ({ AddAddress }) => {
   /**
    * @dev This finds the correct postcodes
    */
-    const handleSubmit = async ({ postcode }) => {
-        // const response = await apiLogin.GetAddressByPostCode(postcode)
-        // console.log(response)
-        // setAddressData(response)
+  const handleSubmit = async ({ postcode }) => {
+    // const response = await apiLogin.GetAddressByPostCode(postcode)
+    // console.log(response)
+    // setAddressData(response)
 
-        // Remove this on live
-        const dummyAddress = [{
-            label: "Fake address",
-            value:{
-                address1: "123 street",
-                address2: "456 house",
-                area: "Area 5",
-                city: "City 6",
-                locale:"en_GB",
-                postcode:postcode
-            }
-        }]
-        setAddressData(dummyAddress)
-    }
+    // Remove this on live
+    const dummyAddress = [
+      {
+        label: "Fake address",
+        value: {
+          address1: "123 street",
+          address2: "456 house",
+          area: "Area 5",
+          city: "City 6",
+          locale: "en_GB",
+          postcode: postcode,
+        },
+      },
+    ];
+    setAddressData(dummyAddress);
+  };
 
   const sendData = () => {
     AddAddress(address);
@@ -69,13 +71,7 @@ const Postcode = ({ AddAddress }) => {
         onSubmit={handleSubmit}
       >
         {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-          <View
-            style={[
-              styles.component1981,
-              styles.mt14,
-             
-            ]}
-          >
+          <View style={[styles.component1981, styles.mt14]}>
             <Text>Enter your postcode</Text>
             <TextInput
               autoCapitalize="none"
@@ -92,7 +88,7 @@ const Postcode = ({ AddAddress }) => {
               onPress={handleSubmit}
             />
 
-            {/* <Button title="Search" color="babyBlue" onPress={handleSubmit} /> */}
+            {/* <Button title="Search"   onPress={handleSubmit} /> */}
           </View>
         )}
       </Formik>

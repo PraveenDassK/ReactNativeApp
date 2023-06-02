@@ -15,7 +15,8 @@ import {
   verticalScale,
 } from "../config/metrics";
 import apiCall from "../api/api";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
+import LargeButton from "../components/Button"
 import Screen from "../components/Screen";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
@@ -41,32 +42,36 @@ const Carbon = ({ route, navigation }) => {
   };
 
   let amount = 0;
-  
+
   /**
    * @dev This function adds a project to the cart
    * @param {obj} ID The project object selected
    */
   const addToCart = (item) => {
     //Check here if the project already exists
-    const multipleChecker = cart.findIndex(existingArr => existingArr.projectId === item.id)
+    const multipleChecker = cart.findIndex(
+      (existingArr) => existingArr.projectId === item.id
+    );
 
-    if(multipleChecker === -1){
+    if (multipleChecker === -1) {
       //If it dosen't exist already
-    let arrobj = {
-      projectId: item.id,
-      name: item.displayName,
-      price: item.asset.displayAssetPriceWithMarkup,
-      quantity: 1,
-    };
-    setCart((prevArray) => [...prevArray, arrobj]);
-    }else{
+      let arrobj = {
+        projectId: item.id,
+        name: item.displayName,
+        price: item.asset.displayAssetPriceWithMarkup,
+        quantity: 1,
+      };
+      setCart((prevArray) => [...prevArray, arrobj]);
+    } else {
       //If the item already exists
-      setCart(prevArray => prevArray.map(prev => {
-        if (prev.projectId === item.id) {
-          return { ...prev, quantity: prev.quantity + 1 };
-        }
-        return item;
-      }));
+      setCart((prevArray) =>
+        prevArray.map((prev) => {
+          if (prev.projectId === item.id) {
+            return { ...prev, quantity: prev.quantity + 1 };
+          }
+          return item;
+        })
+      );
     }
   };
 
@@ -111,7 +116,7 @@ const Carbon = ({ route, navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
@@ -172,7 +177,6 @@ const Carbon = ({ route, navigation }) => {
 
             <Button
               title="CALCULATE CARBON FOOTPRINT"
-              color="babyBlue"
               style={styles.boxShadow}
               onPress={() => navigation.navigate("CarbonTonnesRemoved")}
             />
@@ -207,25 +211,23 @@ const Carbon = ({ route, navigation }) => {
             </View>
             <View style={{ marginTop: verticalScale(20) }}>
               <View style={styles.doubleButtonDiv}>
-                <Button
+                <LargeButton
                   style={{
                     width: "49%",
                     borderColor: "#D8EBF9",
                     borderWidth: horizontalScale(1.5),
                   }}
                   title="VISIT YOUR VIRTUAL FOREST"
-                  color="none"
                   fontColor={{ color: "blue" }}
                   onPress={() => navigation.navigate("VirtualEcoSystem")}
                 />
-                <Button
+                <LargeButton
                   style={{
                     width: "49%",
                     borderColor: "#D8EBF9",
                     borderWidth: horizontalScale(1.5),
                   }}
                   title="VISIT YOUR ECO SUMMARY"
-                  color="none"
                   fontColor={{ color: "blue" }}
                   onPress={() => navigation.navigate("ChooseCardsStandard5")}
                 />
@@ -248,14 +250,12 @@ const Carbon = ({ route, navigation }) => {
             {cart && cart.length ? (
               <Button
                 title="Visit Your Cart"
-                color="babyBlue"
                 style={styles.boxShadow}
                 onPress={() => navigation.navigate("CarbonCart", cart)}
               />
             ) : (
               <Button
                 title="Visit Your Cart"
-                color="babyBlue"
                 style={styles.boxShadow}
                 onPress={() =>
                   alert(
@@ -325,13 +325,11 @@ const Carbon = ({ route, navigation }) => {
               <Button
                 style={{ width: "49%" }}
                 title="ADD TO CART"
-                color="babyBlue"
                 onPress={() => addToCart(item)}
               />
               <Button
                 style={{ width: "49%" }}
                 title="Learn More"
-                color="babyBlue"
                 onPress={() =>
                   navigation.navigate("CarbonProject", { Id: item.id })
                 }
