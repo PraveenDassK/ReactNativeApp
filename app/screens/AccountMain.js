@@ -1321,7 +1321,7 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     height: verticalScale(75),
-    backgroundColor: "#D8EBF9",
+    backgroundColor: "#D3D3D3",
     borderRadius: moderateScale(15),
 
     flexDirection: "row",

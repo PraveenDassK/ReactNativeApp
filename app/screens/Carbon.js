@@ -16,6 +16,7 @@ import {
 } from "../config/metrics";
 import apiCall from "../api/api";
 import Button from "../components/AppButton";
+import LargeButton from "../components/Button"
 import Screen from "../components/Screen";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
@@ -210,7 +211,7 @@ const Carbon = ({ route, navigation }) => {
             </View>
             <View style={{ marginTop: verticalScale(20) }}>
               <View style={styles.doubleButtonDiv}>
-                <Button
+                <LargeButton
                   style={{
                     width: "49%",
                     borderColor: "#D8EBF9",
@@ -220,7 +221,7 @@ const Carbon = ({ route, navigation }) => {
                   fontColor={{ color: "blue" }}
                   onPress={() => navigation.navigate("VirtualEcoSystem")}
                 />
-                <Button
+                <LargeButton
                   style={{
                     width: "49%",
                     borderColor: "#D8EBF9",
