@@ -127,7 +127,6 @@ export default function App() {
   }, [currentUser, isAuth]);
 
   useEffect(() => {
-    authStorage.storeToken("");
     restoreToken();
     restoreSignIn();
   }, []);
