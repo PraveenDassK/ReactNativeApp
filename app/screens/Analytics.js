@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState, useCallback, Fragment } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  Fragment,
+} from "react";
 import {
   RefreshControl,
   Text,
@@ -9,17 +15,21 @@ import {
   ScrollView,
   Dimensions,
   Pressable,
-  TouchableWithoutFeedback, 
-  ActivityIndicator, 
-  FlatList
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+  FlatList,
 } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import * as Progress from "react-native-progress";
 import { LineChart } from "react-native-chart-kit";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { horizontalScale, moderateScale, verticalScale } from "../config/metrics";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../config/metrics";
 
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
@@ -27,85 +37,92 @@ import moment from "moment";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 import DoughnutChart from "../components/DoughnutChart";
 import AppText from "../components/Text";
-import apiCarbon from "../api/apiCarbon"
+import apiCarbon from "../api/apiCarbon";
 
 const Analytics = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [active, setActive] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [active, setActive] = useState("");
   const [balance, setBal] = useState(0);
   const [totalSpend, setTotal] = useState(0);
   const [transactions, setTrans] = useState([]);
   const [totalTransactions, setTotalTrans] = useState(0);
-  const [graphData, setGraphData] = useState(null)
-  const [data, setData] = useState([])
-  const [fulldata, setFullData] = useState([])
-  const [loadMore, setLoadMore] = useState(false)
-  const [totalFootprint, setTotalFootprint] = useState(false)
+  const [graphData, setGraphData] = useState(null);
+  const [data, setData] = useState([]);
+  const [fulldata, setFullData] = useState([]);
+  const [loadMore, setLoadMore] = useState(false);
+  const [totalFootprint, setTotalFootprint] = useState(false);
 
   const [monthAverage, setMonthAverage] = useState(0);
-  const [catNames, setCatNames] = useState(["Health", "Food", "House", "Shopping", "Transport"]);
-  const [dataPercentages, setDataPercentages] = useState(["70%", "50%", "40%", "30%", "20%"]);
+  const [catNames, setCatNames] = useState([
+    "Health",
+    "Food",
+    "House",
+    "Shopping",
+    "Transport",
+  ]);
+  const [dataPercentages, setDataPercentages] = useState([
+    "70%",
+    "50%",
+    "40%",
+    "30%",
+    "20%",
+  ]);
 
   const [recentTransactions, setRecent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const authContext = useContext(AuthContext);
   const { userID, accountID } = useContext(AuthContext);
-  const [carbnonSpendData, setCarbonSpendData] = useState([])
-  const [carbonGraphData, setCarbonGraphData] = useState(null)
-
+  const [carbnonSpendData, setCarbonSpendData] = useState([]);
+  const [carbonGraphData, setCarbonGraphData] = useState(null);
 
   useEffect(() => {
- console.log("account",accountID)
+    console.log("account", accountID);
     loadData();
-  }, [accountID,userID]);
+  }, [accountID, userID]);
   /**
    * @dev Loads all of the data on load
    * @todo Change the scheduled payment to the correct account ID
    */
   const loadData = async () => {
-    setIsLoading(true)
-    if(!accountID)return;
+    setIsLoading(true);
+    if (!accountID) return;
     const dataCall = await apiCall.GetAnalysisData(accountID);
-    const response = await apiCall.GetScheduledPayments("CC1")
-    console.log("Scheduled", response)
+    const response = await apiCall.GetScheduledPayments("CC1");
+    console.log("Scheduled", response);
     const graphData = await apiCall.GetTransactionsWeek(accountID);
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
 
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
-    setCarbonGraphData(carbonSpendDataBarGraph)
-    setCatNames(carbonSpendDataBarGraph.labels)
-    setDataPercentages(carbonSpendDataBarGraph.percentages)
+    setCarbonGraphData(carbonSpendDataBarGraph);
+    setCatNames(carbonSpendDataBarGraph.labels);
+    setDataPercentages(carbonSpendDataBarGraph.percentages);
 
-
-    setCarbonSpendData(carbonSpendData.chartData)
-    setTotalFootprint(carbonSpendData.total)
+    setCarbonSpendData(carbonSpendData.chartData);
+    setTotalFootprint(carbonSpendData.total);
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
-    setRecent([
-      dataCall.transactions[0],
-      dataCall.transactions[1],
-      dataCall.transactions[2],
-    ]);
+
+   
+    const recentTrans = transactions.filter((r, index) => index < 3)
+    //can't remove
+    console.log('trans', recentTrans)
+    setRecent(recentTrans);
     setTrans(dataCall.transactions);
     setBal(dataCall.balance);
-    setMonthAverage(dataCall.average)
-    setData([
-      response[0],
-      response[1],
-      response[2]
-    ])
-    setFullData(response)
+    setMonthAverage(dataCall.average);
+    const upcomingSpendings = response.filter((r, index) => index < 3);
+    setData(upcomingSpendings);
+    setFullData(response);
 
-    setGraphData(graphData)
-    setActive("Week")
-    setIsLoading(false)
-
+    setGraphData(graphData);
+    setActive("Week");
+    setIsLoading(false);
   };
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      loadData()
+      loadData();
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
@@ -115,32 +132,32 @@ const Analytics = ({ navigation }) => {
    * @dev All the data procesasing is done on apiCall
    * @param {str} time The time period to change
    */
-  const changeGraphData = async(time) => {
-    setActive(time)
-    
-    switch(time){
+  const changeGraphData = async (time) => {
+    setActive(time);
+
+    switch (time) {
       case "Year":
-          const graphDataYear = await apiCall.GetTransactionsYear(accountID);
-          setGraphData(graphDataYear)
+        const graphDataYear = await apiCall.GetTransactionsYear(accountID);
+        setGraphData(graphDataYear);
         break;
       case "Month":
-          const graphDataMonth = await apiCall.GetTransactionsMonth(accountID);
-          setGraphData(graphDataMonth)
+        const graphDataMonth = await apiCall.GetTransactionsMonth(accountID);
+        setGraphData(graphDataMonth);
         break;
       case "Week":
-          const graphDataWeek = await apiCall.GetTransactionsWeek(accountID);
-          setGraphData(graphDataWeek)
+        const graphDataWeek = await apiCall.GetTransactionsWeek(accountID);
+        setGraphData(graphDataWeek);
         break;
     }
-  }
+  };
 
-  const colors = ["tomato", "orange", "gold", "cyan", "green"]
+  const colors = ["tomato", "orange", "gold", "cyan", "green"];
 
   const graphTabs = [
-    {id: 1, title: "Week"},
-    {id: 2, title: "Month"},
-    {id: 3, title: "Year"}
-  ]
+    { id: 1, title: "Week" },
+    { id: 2, title: "Month" },
+    { id: 3, title: "Year" },
+  ];
 
   const generateBoxShadowStyle = (
     xOffset,
@@ -149,16 +166,16 @@ const Analytics = ({ navigation }) => {
     shadowOpacity,
     shadowRadius,
     elevation,
-    shadowColorAndroid,
+    shadowColorAndroid
   ) => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       styles.boxShadow = {
         shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
+        shadowOffset: { width: xOffset, height: yOffset },
         shadowOpacity,
         shadowRadius,
       };
-    } else if (Platform.OS === 'android') {
+    } else if (Platform.OS === "android") {
       styles.boxShadow = {
         elevation,
         shadowColor: shadowColorAndroid,
@@ -166,15 +183,15 @@ const Analytics = ({ navigation }) => {
     }
   };
 
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+  generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
-  if(isLoading) {
+  if (isLoading) {
     return (
-         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-             <ActivityIndicator size={'large'} color="black" />
-         </View>
-    )
-   }
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color="black" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -183,27 +200,72 @@ const Analytics = ({ navigation }) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-
       <View style={styles.mainContainer}>
         <View style={styles.titleTextRow}>
           {/* <AppText style={[styles.titleText, ]}>Analysis</AppText> */}
         </View>
 
-        <View style={{flex:1, justifyContent: "center", alignItems: "center", marginTop: 28,}}>
-          <AppText style={{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica", fontSize: 24,  width: 250, textAlign: "center"}}>Your average monthly Carbon Footprint is</AppText>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 28,
+          }}
+        >
+          <AppText
+            style={{
+              fontWeight: Platform.OS === "android" ? "normal" : "700",
+              fontFamily: "Helvetica",
+              fontSize: 24,
+              width: 250,
+              textAlign: "center",
+            }}
+          >
+            Your average monthly Carbon Footprint is
+          </AppText>
         </View>
 
-       <View>
-       
-        <View style={{position: "absolute", flex:1, justifyContent: "center", alignItems: "center", marginTop: 28, bottom:"40%", left: "20%"}}>
-          <AppText style={{fontSize:  50, fontWeight: "700",  width: 250, textAlign: "center"}}>{totalFootprint}</AppText>
-          <AppText style={{fontSize: 20, fontWeight: "700",  width: 250, textAlign: "center"}}>kg CO2</AppText>
-        </View>
+        <View>
+          <View
+            style={{
+              position: "absolute",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 28,
+              bottom: "40%",
+              left: "20%",
+            }}
+          >
+            <AppText
+              style={{
+                fontSize: 50,
+                fontWeight: "700",
+                width: 250,
+                textAlign: "center",
+              }}
+            >
+              {totalFootprint}
+            </AppText>
+            <AppText
+              style={{
+                fontSize: 20,
+                fontWeight: "700",
+                width: 250,
+                textAlign: "center",
+              }}
+            >
+              kg CO2
+            </AppText>
+          </View>
 
           <DoughnutChart data={carbnonSpendData} />
         </View>
         <View style={[styles.balanceContainer, styles.boxShadow]}>
-          <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16}}>Balance</AppText>
+          <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16 }}>
+            Balance
+          </AppText>
           <AppText
             style={{
               flex: 2,
@@ -215,11 +277,15 @@ const Analytics = ({ navigation }) => {
               color: "#0101FD",
             }}
           >
-            <AppText style={{
-              fontWeight: "800",
-              fontSize: 30, 
-              color: "blue"
-            }}>£ {balance}</AppText>
+            <AppText
+              style={{
+                fontWeight: "800",
+                fontSize: 30,
+                color: "blue",
+              }}
+            >
+              £ {balance}
+            </AppText>
           </AppText>
         </View>
 
@@ -236,138 +302,179 @@ const Analytics = ({ navigation }) => {
           }}
         >
           <View
-            style={[{
-              height: "100%",
-              backgroundColor: "white",
-              width: "47.5%",
-              borderRadius: 15,
-              padding: "5%",
-              alignSelf: "center",
-            }, styles.boxShadow]}
+            style={[
+              {
+                height: "100%",
+                backgroundColor: "white",
+                width: "47.5%",
+                borderRadius: 15,
+                padding: "5%",
+                alignSelf: "center",
+              },
+              styles.boxShadow,
+            ]}
           >
-            <AppText style={{fontWeight: "500"}}>Total Spend</AppText>
+            <AppText style={{ fontWeight: "500" }}>Total Spend</AppText>
             <AppText style={styles.money}>£ {totalSpend.toFixed(2)}</AppText>
             <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{
-                  flex:1,
+              <View
+                style={{
+                  flex: 1,
                   marginTop: verticalScale(5),
                   alignItems: "flex-start",
-                  width: horizontalScale(75)
-                }} >
-              <AppText
-              style={{color: "#999", fontSize: 14,}}
+                  width: horizontalScale(75),
+                }}
               >
-                No. of Payments
-              </AppText>
+                <AppText style={{ color: "#999", fontSize: 14 }}>
+                  No. of Payments
+                </AppText>
               </View>
 
-
-              <View style={{  flex:1, alignItems: "flex-end", justifyContent:"flex-end"}}>
-              <AppText style={{color: "#999",fontSize: 22}}>
-                {totalTransactions}
-              </AppText>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "flex-end",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <AppText style={{ color: "#999", fontSize: 22 }}>
+                  {totalTransactions}
+                </AppText>
               </View>
             </View>
           </View>
           <View
-            style={[{
-              height: "100%",
-              backgroundColor: "white",
-              width: "47.5%",
-              borderRadius: 15,
-              padding: "5%",
-            }, styles.boxShadow]}
+            style={[
+              {
+                height: "100%",
+                backgroundColor: "white",
+                width: "47.5%",
+                borderRadius: 15,
+                padding: "5%",
+              },
+              styles.boxShadow,
+            ]}
           >
-            <AppText style={{fontWeight: "700"}}>Average Transaction spend</AppText>
-            <View style={{marginTop: verticalScale(5), flex: 1, justifyContent: "flex-end"}}>
-              <AppText style={styles.money}>£ {monthAverage.toFixed(2)}</AppText>
+            <AppText style={{ fontWeight: "700" }}>
+              Average Transaction spend
+            </AppText>
+            <View
+              style={{
+                marginTop: verticalScale(5),
+                flex: 1,
+                justifyContent: "flex-end",
+              }}
+            >
+              <AppText style={styles.money}>
+                £ {monthAverage.toFixed(2)}
+              </AppText>
             </View>
           </View>
         </View>
 
         <View style={styles.titleTextRow}>
-          <Image 
-            source={require("../assets/icon-featherpiechart.png")} 
+          <Image
+            source={require("../assets/icon-featherpiechart.png")}
             resizeMode="contain"
-            style={{ width: horizontalScale(25), height: verticalScale(25)}} />
-          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",fontSize: 24}]}>Spendings</AppText>
+            style={{ width: horizontalScale(25), height: verticalScale(25) }}
+          />
+          <AppText
+            style={[
+              styles.titleText,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Helvetica",
+                fontSize: 24,
+              },
+            ]}
+          >
+            Spendings
+          </AppText>
         </View>
 
         <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-        {catNames.map((name, index) => {
-          return(
-            <Fragment key={`${name+index}`}>
-            <AppText style={styles.subtitleText}>{name}</AppText>
-            <View
-              style={[styles.carbonSpendingAnalysysBarBackground, styles.rounded]}
-            >
-              <View
-                style={[styles.carbonSpendingAnalysysBarProgress, styles.rounded]}
-                width={dataPercentages[index]}
-                backgroundColor={colors[index % colors.length]}
-              >
-                <AppText style={styles.barText}>{dataPercentages[index]}</AppText>
-              </View>
-            </View>
-            </Fragment>
+          {catNames.map((name, index) => {
+            return (
+              <Fragment key={`${name + index}`}>
+                <AppText style={styles.subtitleText}>{name}</AppText>
+                <View
+                  style={[
+                    styles.carbonSpendingAnalysysBarBackground,
+                    styles.rounded,
+                  ]}
+                >
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarProgress,
+                      styles.rounded,
+                    ]}
+                    width={dataPercentages[index]}
+                    backgroundColor={colors[index % colors.length]}
+                  >
+                    <AppText style={styles.barText}>
+                      {dataPercentages[index]}
+                    </AppText>
+                  </View>
+                </View>
+              </Fragment>
+            );
+          })}
 
-          )
-        })}
-
-      
-          {graphData && <View style={
-            {
-              flexDirection: "row",
-              flex:1,
-              justifyContent: "space-evenly",
-              alignItems: "center",
-              marginTop: verticalScale(30),
-              paddingBottom: verticalScale(5),
-              opacity: 0.5,
-              
-            
-              borderBottomWidth: 1.5
-              
-
-
-            }
-          }>
           {graphData && (
-            
-            graphTabs.map((tab, index) => (
-              <TouchableWithoutFeedback
-                key={index}
-                onPress={() => changeGraphData(tab.title)}
-              >
-                <AppText style={{
-                  fontSize: 15,
-                  fontWeight: "800",
-                  color: active === tab.title ? "blue" : "grey"
-                }}>{tab.title}</AppText>
-              </TouchableWithoutFeedback>
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 1,
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                marginTop: verticalScale(30),
+                paddingBottom: verticalScale(5),
+                opacity: 0.5,
 
-              ))
-            )}
-          </View>}
+                borderBottomWidth: 1.5,
+              }}
+            >
+              {graphData &&
+                graphTabs.map((tab, index) => (
+                  <TouchableWithoutFeedback
+                    key={index}
+                    onPress={() => changeGraphData(tab.title)}
+                  >
+                    <AppText
+                      style={{
+                        fontSize: 15,
+                        fontWeight: "800",
+                        color: active === tab.title ? "blue" : "grey",
+                      }}
+                    >
+                      {tab.title}
+                    </AppText>
+                  </TouchableWithoutFeedback>
+                ))}
+            </View>
+          )}
 
-          
-         
-            {graphData && <Bazier
-              graphData={graphData}
-            />}
-         
-          
-         
-        
-         
+          {graphData && <Bazier graphData={graphData} />}
         </View>
 
         <View style={styles.titleTextRow}>
-        <Image 
-          resizeMode="contain"
-          source={require("../assets/icon-withdraw.png")} 
-          style={{ width: horizontalScale(25), height: verticalScale(25)}}/>
-          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",fontSize: 24}]}>Recent transactions</AppText>
+          <Image
+            resizeMode="contain"
+            source={require("../assets/icon-withdraw.png")}
+            style={{ width: horizontalScale(25), height: verticalScale(25) }}
+          />
+          <AppText
+            style={[
+              styles.titleText,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Helvetica",
+                fontSize: 24,
+              },
+            ]}
+          >
+            Recent transactions
+          </AppText>
         </View>
 
         {recentTransactions.map((transaction, index) => (
@@ -387,15 +494,15 @@ const Analytics = ({ navigation }) => {
                     alignSelf: "center",
                     marginLeft: "2.5%",
                     justifyContent: "center",
-                      alignItems: "center",
+                    alignItems: "center",
                   }}
                 >
                   <AppText
                     style={{
                       alignSelf: "center",
-                      
+
                       textAlignVertical: "center",
-                     
+
                       fontWeight: "700",
                     }}
                   >
@@ -434,154 +541,193 @@ const Analytics = ({ navigation }) => {
           </View>
         ))}
 
-        {fulldata && <View style={styles.titleTextRow}>
-        <Image 
-          resizeMode="contain"
-          source={require("../assets/icon-featherpiechart.png")} 
-          style={{ width: horizontalScale(25), height: verticalScale(25)}}
-          />
-          <AppText style={[styles.titleText,{fontWeight: Platform.OS === "android" ? "normal" : "700",fontFamily: "Helvetica",fontSize: 24}]}>Upcoming Spendings</AppText>
-        </View>}
-
-        
-
-        {fulldata && !loadMore && data.map((transaction, index) => (
-          <View key={index}>
-            <TouchableOpacity
-              style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
-             // onPress={() => navigation.navigate("Transactions")}
+        {fulldata && (
+          <View style={styles.titleTextRow}>
+            <Image
+              resizeMode="contain"
+              source={require("../assets/icon-featherpiechart.png")}
+              style={{ width: horizontalScale(25), height: verticalScale(25) }}
+            />
+            <AppText
+              style={[
+                styles.titleText,
+                {
+                  fontWeight: Platform.OS === "android" ? "normal" : "700",
+                  fontFamily: "Helvetica",
+                  fontSize: 24,
+                },
+              ]}
             >
-              <View style={{ height: "100%", flexDirection: "row" }}>
-                <View
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                    backgroundColor: "#F6F5F8",
-                    borderColor: "black",
-                    alignSelf: "center",
-                    marginLeft: "2.5%",
-                    justifyContent: "center",
-                      alignItems: "center",
-                  }}
-                >
-                  <AppText
+              Upcoming Spendings
+            </AppText>
+          </View>
+        )}
+
+        {fulldata &&
+          !loadMore &&
+          data.map((transaction, index) => (
+            <View key={index}>
+              <TouchableOpacity
+                style={[
+                  styles.transactionBox,
+                  styles.rounded,
+                  styles.boxShadow,
+                ]}
+                // onPress={() => navigation.navigate("Transactions")}
+              >
+                <View style={{ height: "100%", flexDirection: "row" }}>
+                  <View
                     style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      backgroundColor: "#F6F5F8",
+                      borderColor: "black",
                       alignSelf: "center",
+                      marginLeft: "2.5%",
                       justifyContent: "center",
                       alignItems: "center",
-                      textAlignVertical: "center",
-                      fontWeight: "700",
                     }}
                   >
-                     {transaction?.scheduleID[0]}
-                  </AppText>
-                </View>
-                <View
-                  style={{
-                    flex: 3.5,
-                    alignSelf: "center",
-                    justifyContent: "space-evenly",
-                    marginLeft: "5%",
-                  }}
-                >
-                  <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                    {transaction?.scheduleID}
-                  </AppText>
-                  <AppText style={{}}>
-                    {moment(transaction?.date).format("LL")}
-                  </AppText>
-                </View>
-                <View
-                  style={{
-                    flex: 5,
-                    justifyContent: "space-evenly",
-                    alignItems: "flex-end",
-                    marginRight: "2.5%",
-                  }}
-                >
-                  <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                    £{transaction?.amount.toFixed(2)}
-                  </AppText>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
-        {loadMore && fulldata.map((transaction, index) => (
-          <View key={index}>
-            <TouchableOpacity
-              style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
-              //onPress={() => navigation.navigate("Transactions")}
-            >
-              <View style={{ height: "100%", flexDirection: "row" }}>
-                <View
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                    backgroundColor: "#F6F5F8",
-                    borderColor: "black",
-                    alignSelf: "center",
-                    marginLeft: "2.5%",
-                    justifyContent: "center",
-                      alignItems: "center",
-                  }}
-                >
-                  <AppText
+                    <AppText
+                      style={{
+                        alignSelf: "center",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlignVertical: "center",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {transaction?.scheduleID[0]}
+                    </AppText>
+                  </View>
+                  <View
                     style={{
+                      flex: 3.5,
                       alignSelf: "center",
+                      justifyContent: "space-evenly",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                      {transaction?.scheduleID}
+                    </AppText>
+                    <AppText style={{}}>
+                      {moment(transaction?.date).format("LL")}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 5,
+                      justifyContent: "space-evenly",
+                      alignItems: "flex-end",
+                      marginRight: "2.5%",
+                    }}
+                  >
+                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                      £{transaction?.amount.toFixed(2)}
+                    </AppText>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+        {loadMore &&
+          fulldata.map((transaction, index) => (
+            <View key={index}>
+              <TouchableOpacity
+                style={[
+                  styles.transactionBox,
+                  styles.rounded,
+                  styles.boxShadow,
+                ]}
+                //onPress={() => navigation.navigate("Transactions")}
+              >
+                <View style={{ height: "100%", flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      backgroundColor: "#F6F5F8",
+                      borderColor: "black",
+                      alignSelf: "center",
+                      marginLeft: "2.5%",
                       justifyContent: "center",
                       alignItems: "center",
-                      textAlignVertical: "center",
-                      fontWeight: "700",
                     }}
                   >
-                     {transaction.scheduleID[0]}
-                  </AppText>
+                    <AppText
+                      style={{
+                        alignSelf: "center",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlignVertical: "center",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {transaction.scheduleID[0]}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 3.5,
+                      alignSelf: "center",
+                      justifyContent: "space-evenly",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                      {transaction.scheduleID}
+                    </AppText>
+                    <AppText style={{}}>
+                      {moment(transaction.date).format("LL")}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 5,
+                      justifyContent: "space-evenly",
+                      alignItems: "flex-end",
+                      marginRight: "2.5%",
+                    }}
+                  >
+                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                      £{transaction.amount.toFixed(2)}
+                    </AppText>
+                  </View>
                 </View>
-                <View
-                  style={{
-                    flex: 3.5,
-                    alignSelf: "center",
-                    justifyContent: "space-evenly",
-                    marginLeft: "5%",
-                  }}
-                >
-                  <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                    {transaction.scheduleID}
-                  </AppText>
-                  <AppText style={{}}>
-                    {moment(transaction.date).format("LL")}
-                  </AppText>
-                </View>
-                <View
-                  style={{
-                    flex: 5,
-                    justifyContent: "space-evenly",
-                    alignItems: "flex-end",
-                    marginRight: "2.5%",
-                  }}
-                >
-                  <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                    £{transaction.amount.toFixed(2)}
-                  </AppText>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
+              </TouchableOpacity>
+            </View>
+          ))}
 
-        {fulldata && <TouchableOpacity onPress={()=>setLoadMore(prev => !prev)} >
-          <View style={{flex:1, height: 70, justifyContent: "center", alignItems: "center"}}>
-          {!loadMore ? (
-            <MaterialCommunityIcons name="chevron-down" size={40} color="grey" />
-            ) : (
-              <MaterialCommunityIcons name="chevron-up" size={40} color="grey" />
-            )}
-          </View>
-        </TouchableOpacity>}
-          <View style={{height: 20, width: "100%"}}/>
+        {fulldata && (
+          <TouchableOpacity onPress={() => setLoadMore((prev) => !prev)}>
+            <View
+              style={{
+                flex: 1,
+                height: 70,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {!loadMore ? (
+                <MaterialCommunityIcons
+                  name="chevron-down"
+                  size={40}
+                  color="grey"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={40}
+                  color="grey"
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+        )}
+        <View style={{ height: 20, width: "100%" }} />
       </View>
     </ScrollView>
   );
@@ -595,8 +741,7 @@ const Bazier = ({ graphData }) => {
     value: 0,
   });
 
-  const { total, xAxis, yAxis } = graphData
-
+  const { total, xAxis, yAxis } = graphData;
 
   return (
     <View
@@ -682,14 +827,12 @@ const Bazier = ({ graphData }) => {
                 visible: true,
               });
         }}
-
-
       />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  boxShadow:{},
+  boxShadow: {},
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: GlobalStyles.DivContainer.height,
@@ -703,14 +846,12 @@ const styles = StyleSheet.create({
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     alignItems: "center",
-
   },
 
   titleText: {
-
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
-    marginLeft: horizontalScale(10)
+    marginLeft: horizontalScale(10),
   },
 
   subText: {
@@ -731,17 +872,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     borderRadius: 15,
-    
+
     alignItems: "center",
     padding: "5%",
-   
+
     marginTop: "5%",
   },
 
   money: {
     color: "blue",
     fontWeight: "700",
-    fontSize: 16
+    fontSize: 16,
   },
   carbonSpendingAnalysysBarBackground: {
     width: "100%",
@@ -754,7 +895,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "orange",
     borderRadius: 15,
-    maxWidth: "100%"
+    maxWidth: "100%",
   },
   carbonSpendingAnalysysDiv: {
     width: "90%",
