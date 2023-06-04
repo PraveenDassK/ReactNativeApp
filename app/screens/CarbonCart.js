@@ -14,7 +14,6 @@ import AuthContext from "../auth/context";
 const CarbonCart = ({ route, navigation }) => {
   const { customerDetails, accountID, cart, setCart } = useContext(AuthContext);
   const [data, setData] = useState();
-
   const [totalUnits, setTotalUnits] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 

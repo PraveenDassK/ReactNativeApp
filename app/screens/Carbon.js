@@ -21,7 +21,7 @@ import {
 import apiCall from "../api/api";
 import Button from "../components/AppButton";
 import LargeButton from "../components/Button";
-import Screen from "../components/Screen";
+
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 import FadeInView from "../components/fadeInview";
