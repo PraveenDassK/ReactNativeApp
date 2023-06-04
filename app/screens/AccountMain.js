@@ -544,7 +544,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               <View style={{ flex: 2.5 }}>
                 <AppText>Estimated</AppText>
                 <AppText style={{ fontWeight: "700", paddingRight: "5%" }}>
-                  Tonnes of CO2
+                  Tonnes of CO{'\u2082'}
                 </AppText>
               </View>
               <View style={{ flex: 5, justifyContent: "flex-end" }}>
@@ -737,7 +737,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               <>
                 <AppText style={styles.subTextAssets}>Assets</AppText>
                 <AppText style={styles.subTextDescriptor}>
-                  (1 Tonne = 1 CO2 Token)
+                  (1 Tonne = 1 CO{'\u2082'} Token)
                 </AppText>
                 <AppText style={styles.subTextToken}>Token</AppText>
               </>

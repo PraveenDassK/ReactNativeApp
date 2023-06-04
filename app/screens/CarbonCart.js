@@ -3,63 +3,42 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  ScrollView,
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import GlobalStyles from "../../GlobalStyles";
-import apiCall from "../api/apiCall";
 import Button from "../components/AppButton";
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from "../config/scaling";
+import { verticalScale } from "../config/scaling";
 import AuthContext from "../auth/context";
 
 const CarbonCart = ({ route, navigation }) => {
-  const [data, setData] = useState([]);
-  const [display, setshow] = useState([]);
-  const [amount, setAmount] = useState("0");
-  const [price, setPrice] = useState("0");
   const { customerDetails, accountID, cart, setCart } = useContext(AuthContext);
+  const [data, setData] = useState();
+
+  const [totalUnits, setTotalUnits] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    loadData();
-  }, []);
-  console.log(cart);
+    const projects = [];
+    let names = new Set(cart.map((item) => item.displayName));
 
-  const loadData = async () => {
-    let projects = [];
-
-    let totalPrice = 0;
-    let totalItems = 0;
-    console.log(cart);
-    for (let i = 0; i < cart.length; i++) {
-      let name = cart[i].name;
-      totalPrice += +cart[i].price * cart[i].quantity;
-      console.log(cart[i].price);
-      let price = {
-        price: (cart[i].price * cart[i].quantity).toFixed(2),
-        item: cart[i].name,
-        amount: cart[i].quantity,
-      };
-      projects.push({ price, name });
-      setData(projects);
+    for (const name of names.entries()) {
+      const displayName = name[0];
+      const filteredEntries = cart.filter(
+        (item) => item.displayName == displayName
+      );
+      const price = filteredEntries.reduce((a, b) => a + b.price, 0).toFixed(2);
+      const totalUnits = filteredEntries.length;
+      projects.push({ displayName, totalUnits, price });
     }
-    console.log(data);
-    let show = [];
+    setData(projects);
+    setTotalPrice(
+      projects.reduce((a, b) => a + parseFloat(b.price), 0).toFixed(2)
+    );
+    setTotalUnits(projects.reduce((a, b) => a + b.totalUnits, 0));
+  }, []);
 
-    setshow(show);
-    setAmount(cart.length);
-    setPrice(totalPrice.toFixed(2));
-  };
-
-  const buy = async () => {
-    //setData("")
-    const projectToBuy = route.params;
+  const buy = () => {
     const purchaseObj = {
       carbonyteUserId: customerDetails,
       projectLists: cart,
@@ -88,9 +67,9 @@ const CarbonCart = ({ route, navigation }) => {
           data={data}
           renderItem={({ item }) => (
             <View style={styles.list}>
-              <Text style={styles.col1}>{item?.name}</Text>
-              <Text style={styles.col2}>{item.price.amount}</Text>
-              <Text style={styles.col3}>£{item?.price.price}</Text>
+              <Text style={styles.col1}>{item.displayName}</Text>
+              <Text style={styles.col2}>{item.totalUnits}</Text>
+              <Text style={styles.col3}>£{item.price}</Text>
             </View>
           )}
         />
@@ -114,8 +93,8 @@ const CarbonCart = ({ route, navigation }) => {
         >
           <View style={styles.cartTitle}>
             <Text style={styles.heading1}>Total</Text>
-            <Text style={styles.heading2}>{amount}</Text>
-            <Text style={styles.heading3}>£{price}</Text>
+            <Text style={styles.heading2}>{totalUnits}</Text>
+            <Text style={styles.heading3}>£{totalPrice}</Text>
           </View>
         </View>
       </View>

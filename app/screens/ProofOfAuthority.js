@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   label: {
-    color: "#1B2356",
+    color: "black",
     fontSize: 16,
   },
   dropdown: {

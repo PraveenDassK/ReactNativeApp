@@ -256,7 +256,7 @@ const Analytics = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              kg CO2
+              kg CO{'\u2082'}
             </AppText>
           </View>
 
@@ -893,7 +893,6 @@ const styles = StyleSheet.create({
 
   carbonSpendingAnalysysBarProgress: {
     height: "100%",
-    backgroundColor: "orange",
     borderRadius: 15,
     maxWidth: "100%",
   },

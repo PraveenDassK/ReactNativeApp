@@ -50,7 +50,7 @@ const TraceAndOffset = () => {
       <ScrollView>
         <View style={styles.subTextRow}>
           <Text style={styles.subTextAssets}>Assets</Text>
-          <Text style={styles.subTextDescriptor}>(1 Tonne = 1 CO2 Token)</Text>
+          <Text style={styles.subTextDescriptor}>(1 Tonne = 1 CO{'\u2082'} Token)</Text>
           <Text style={styles.subTextToken}>Token</Text>
         </View>
 

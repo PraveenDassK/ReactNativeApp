@@ -110,7 +110,7 @@ const ChooseCardsStandard5 = ({navigation}) => {
         <Text style={[styles.hello4, styles.helloTypo1]}>Assets</Text>
         <Text style={[styles.hello5, styles.helloTypo1]}>Token</Text>
         <Text style={[styles.hello6, styles.helloFlexBox]}>
-          (1 Tonne = 1 CO2 Token)
+          (1 Tonne = 1 CO{'\u2082'} Token)
         </Text>
         <Text
           style={[styles.drylandsProtectionKasigauW, styles.drylandsPosition]}

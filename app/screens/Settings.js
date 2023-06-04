@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
     fontFamily: "Helvetica",
-    color: "#1B2356",
+    color: "black",
   },
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,

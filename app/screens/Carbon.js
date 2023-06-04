@@ -6,8 +6,11 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
-  Vibration
+  Vibration,
+  Alert,
 } from "react-native";
+import { format as prettyFormat } from "pretty-format"; //development only
+
 import GlobalStyles from "../../GlobalStyles";
 
 import {
@@ -17,7 +20,7 @@ import {
 } from "../config/metrics";
 import apiCall from "../api/api";
 import Button from "../components/AppButton";
-import LargeButton from "../components/Button"
+import LargeButton from "../components/Button";
 import Screen from "../components/Screen";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
@@ -25,14 +28,18 @@ import FadeInView from "../components/fadeInview";
 import AppText from "../components/Text";
 import AuthContext from "../auth/context";
 import * as Clipboard from "expo-clipboard";
+import colors from "../config/colors";
 
 const Carbon = ({ route, navigation }) => {
+  const { userID, accountID, cart, setCart } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const { userID, accountID, cart, setCart } = useContext(AuthContext);
+  const [count, setCount] = useState(cart.length);
 
+  const [projects, setProjects] = useState([]);
 
+  console.log("cart length", cart, cart.length);
 
   useEffect(() => {
     loadData();
@@ -41,17 +48,50 @@ const Carbon = ({ route, navigation }) => {
   const loadData = async () => {
     setIsLoading(true);
     const response = await apiCall.GetProjectList();
+    console.log("pretty\n", prettyFormat(response[0]));
+    const responseProjects = response;
+    setProjects(
+      responseProjects.map((project) => {
+        return {
+          id: project.id,
+          displayName: project.displayName,
+          price: project.asset.displayAssetPriceWithMarkup,
+        };
+      })
+    );
     setData(response);
     setIsLoading(false);
   };
 
-  let amount = 0;
+  const incrementCart = (item) => {
+    setCount((prevcount) => (prevcount += 1));
+    const incrementProject = projects.find((project) => project.id == item.id);
+    setCart([...cart, incrementProject]);
+  };
+
+  const decrementCart = (item) => {
+    if (!cart.length) return Alert.alert("Add to Cart");
+
+    const filteredProjects = cart.filter((project) => project.id !== item.id);
+    const decrementedProjects = cart.filter((project) => project.id == item.id);
+
+    if (decrementedProjects.length > 0) {
+      setCount((prevcount) => (prevcount -= 1));
+      decrementedProjects.pop();
+      setCart([...filteredProjects, ...decrementedProjects]);
+    } else {
+      Alert.alert(`Add Project`);
+    }
+  };
 
   /**
    * @dev This function adds a project to the cart
    * @param {obj} ID The project object selected
+   *
+   *
    */
   const addToCart = (item) => {
+    setCount((prevcount) => (prevcount += 1));
     //Check here if the project already exists
     const multipleChecker = cart.findIndex(
       (existingArr) => existingArr.projectId === item.id
@@ -79,6 +119,10 @@ const Carbon = ({ route, navigation }) => {
     }
   };
 
+  const deleteToCart = (item) => {
+    console.log("deleteItem", item);
+    if (count > 0) setCount((prevcount) => (prevcount -= 1));
+  };
 
   const copyToClipboard = async (copy) => {
     console.log("Copied", copy);
@@ -88,6 +132,7 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const goToBasket = () => {
+    
     navigation.navigate("CarbonCart", cart);
   };
 
@@ -138,8 +183,11 @@ const Carbon = ({ route, navigation }) => {
       {cart && cart.length ? (
         <Pressable
           style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }}
-          onPress={() => goToBasket()}
+          onPress={goToBasket}
         >
+          <View style={styles.badgeContainer}>
+            <AppText>{count}</AppText>
+          </View>
           <Image
             resizeMode="contain"
             style={{ width: horizontalScale(120), height: verticalScale(120) }}
@@ -189,12 +237,15 @@ const Carbon = ({ route, navigation }) => {
 
             <Button
               title="CALCULATE CARBON FOOTPRINT"
+              color="white"
+              textColor="black"
               style={styles.boxShadow}
               onPress={() => navigation.navigate("CarbonTonnesRemoved")}
             />
             <View style={styles.subContainer}>
               <AppText numberOflines={3} style={styles.AppText}>
-                At Carbonyte we help you track, reduce and calculate your C02
+                At Carbonyte we help you track, reduce and calculate your C0
+                {"\u2082"}
                 emission from your daily transaction
               </AppText>
             </View>
@@ -261,6 +312,8 @@ const Carbon = ({ route, navigation }) => {
 
             {cart && cart.length ? (
               <Button
+                color="white"
+                textColor="black"
                 title="Visit Your Cart"
                 style={styles.boxShadow}
                 onPress={() => navigation.navigate("CarbonCart", cart)}
@@ -283,7 +336,7 @@ const Carbon = ({ route, navigation }) => {
         }
         data={data}
         keyExtractor={(data) => data.id.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={[styles.listItems, styles.boxShadow]}>
             <Image
               resizeMode={item.image !== "" ? "contain" : "contain"}
@@ -320,7 +373,7 @@ const Carbon = ({ route, navigation }) => {
                     },
                   ]}
                 >
-                  /{item.asset.type == "LAND" ? "tCO2e" : item.asset.type}
+                  /{item.asset.type == "LAND" ? "tCO\u2082e" : item.asset.type}
                 </AppText>
               </View>
             </View>
@@ -335,9 +388,13 @@ const Carbon = ({ route, navigation }) => {
             </View>
             <View style={styles.doubleButtonDiv}>
               <Button
+                disabled={true}
+                counter={true}
                 style={{ width: "49%" }}
                 title="ADD TO CART"
-                onPress={() => addToCart(item)}
+                // onPress={() => addToCart(item)}
+                onDelete={() => decrementCart(item, index)}
+                onAdd={() => incrementCart(item, index)}
               />
               <Button
                 style={{ width: "49%" }}
@@ -368,9 +425,8 @@ const Carbon = ({ route, navigation }) => {
                           ]
                     }
                   >
-                    <Pressable onPress={() =>copyToClipboard(tag)}>
-
-                    <AppText style={styles.tags}>{tag}</AppText>
+                    <Pressable onPress={() => copyToClipboard(tag)}>
+                      <AppText style={styles.tags}>{tag}</AppText>
                     </Pressable>
                   </View>
                 ))}
@@ -513,6 +569,18 @@ const styles = StyleSheet.create({
     width: "100%",
 
     justifyContent: "space-between",
+  },
+  badgeContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: horizontalScale(20),
+    height: verticalScale(20),
+    borderRadius: moderateScale(10),
+    backgroundColor: colors.danger,
+    position: "absolute",
+    zIndex: 5,
+    top: 25,
+    right: 30,
   },
 });
 
