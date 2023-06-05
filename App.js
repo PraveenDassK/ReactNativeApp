@@ -52,7 +52,7 @@ export default function App() {
 
   const [user, setUser] = useState();
   const [currentUser, setCurrentUser] = useState();
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
 
   /**
    * @dev IDs used though the app
@@ -119,8 +119,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // console.log('auth storage', currentUser === true, signedAuth.signedIn)
-    if (isAuth) {
+   
+    if (isAuth && currentUser) {
       authenticate();
     }
     console.log("currentUser & isAuth on load", currentUser, isAuth);
@@ -148,11 +148,13 @@ export default function App() {
       // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
       console.log("turn off authenticator", result.success);
       setIsAuth(false);
+     
     }
     // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
     if (!result.success) {
-      console.log("not authenticated", result.success);
+     
       alert("not authenticated");
+      authenticate()
     }
   };
 
