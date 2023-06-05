@@ -9,8 +9,6 @@ import {
   Vibration,
   Alert,
 } from "react-native";
-import { format as prettyFormat } from "pretty-format"; //development only
-
 import GlobalStyles from "../../GlobalStyles";
 
 import {
@@ -31,15 +29,13 @@ import * as Clipboard from "expo-clipboard";
 import colors from "../config/colors";
 
 const Carbon = ({ route, navigation }) => {
-  const { userID, accountID, cart, setCart } = useContext(AuthContext);
+  const { accountID, cart, setCart } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [count, setCount] = useState(cart.length);
 
   const [projects, setProjects] = useState([]);
-
-  console.log("cart length", cart, cart.length);
 
   useEffect(() => {
     loadData();
@@ -48,7 +44,6 @@ const Carbon = ({ route, navigation }) => {
   const loadData = async () => {
     setIsLoading(true);
     const response = await apiCall.GetProjectList();
-    console.log("pretty\n", prettyFormat(response[0]));
     const responseProjects = response;
     setProjects(
       responseProjects.map((project) => {
@@ -84,46 +79,6 @@ const Carbon = ({ route, navigation }) => {
     }
   };
 
-  /**
-   * @dev This function adds a project to the cart
-   * @param {obj} ID The project object selected
-   *
-   *
-   */
-  const addToCart = (item) => {
-    setCount((prevcount) => (prevcount += 1));
-    //Check here if the project already exists
-    const multipleChecker = cart.findIndex(
-      (existingArr) => existingArr.projectId === item.id
-    );
-
-    if (multipleChecker === -1) {
-      //If it dosen't exist already
-      let arrobj = {
-        projectId: item.id,
-        name: item.displayName,
-        price: item.asset.displayAssetPriceWithMarkup,
-        quantity: 1,
-      };
-      setCart((prevArray) => [...prevArray, arrobj]);
-    } else {
-      //If the item already exists
-      setCart((prevArray) =>
-        prevArray.map((prev) => {
-          if (prev.projectId === item.id) {
-            return { ...prev, quantity: prev.quantity + 1 };
-          }
-          return item;
-        })
-      );
-    }
-  };
-
-  const deleteToCart = (item) => {
-    console.log("deleteItem", item);
-    if (count > 0) setCount((prevcount) => (prevcount -= 1));
-  };
-
   const copyToClipboard = async (copy) => {
     console.log("Copied", copy);
     Vibration.vibrate();
@@ -132,7 +87,6 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const goToBasket = () => {
-    
     navigation.navigate("CarbonCart", cart);
   };
 

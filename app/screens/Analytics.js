@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import {
   RefreshControl,
-  Text,
   StyleSheet,
   Image,
   View,
@@ -21,13 +20,11 @@ import {
 } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
-import * as Progress from "react-native-progress";
 import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import {
   horizontalScale,
-  moderateScale,
   verticalScale,
 } from "../config/metrics";
 
@@ -38,6 +35,7 @@ import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 import DoughnutChart from "../components/DoughnutChart";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Analytics = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +58,7 @@ const Analytics = ({ navigation }) => {
     "Shopping",
     "Transport",
   ]);
+
   const [dataPercentages, setDataPercentages] = useState([
     "70%",
     "50%",
@@ -104,7 +103,7 @@ const Analytics = ({ navigation }) => {
 
    
     const recentTrans = transactions.filter((r, index) => index < 3)
-    //can't remove
+   
     console.log('trans', recentTrans)
     setRecent(recentTrans);
     setTrans(dataCall.transactions);
@@ -477,7 +476,7 @@ const Analytics = ({ navigation }) => {
           </AppText>
         </View>
 
-        {recentTransactions.map((transaction, index) => (
+        {recentTransactions && recentTransactions.map((transaction, index) => (
           <View key={index}>
             <TouchableOpacity
               style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
