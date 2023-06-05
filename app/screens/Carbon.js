@@ -59,7 +59,8 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const incrementCart = (item) => {
-    setCount((prevcount) => (prevcount += 1));
+let incCount = cart.length
+    setCount(incCount += 1);
     const incrementProject = projects.find((project) => project.id == item.id);
     setCart([...cart, incrementProject]);
   };
@@ -71,7 +72,8 @@ const Carbon = ({ route, navigation }) => {
     const decrementedProjects = cart.filter((project) => project.id == item.id);
 
     if (decrementedProjects.length > 0) {
-      setCount((prevcount) => (prevcount -= 1));
+      let decCount = cart.length
+      setCount(decCount -= 1);
       decrementedProjects.pop();
       setCart([...filteredProjects, ...decrementedProjects]);
     } else {
