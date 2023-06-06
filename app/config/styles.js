@@ -5,7 +5,7 @@ import colors from "./colors";
 export default {
   colors,
   text: {
-    color: colors.darkBlue,
+    color: colors.black,
     fontSize: 14,
     fontFamily: "Helvetica",
   },

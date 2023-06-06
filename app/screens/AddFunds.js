@@ -117,7 +117,7 @@ const AddFunds = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} color="blue" />
+        <ActivityIndicator size={"large"} color="black" />
       </View>
     );
   }
@@ -253,8 +253,7 @@ const AddFunds = ({ navigation }) => {
             placeholder={"£" + amount}
             keyboardType="numeric"
             placeholderTextColor={"blue"}
-            value = {
-              amount}
+            value={amount}
             onChangeText={(e) => setAmount(e)}
           />
           <View
@@ -452,7 +451,7 @@ const styles = StyleSheet.create({
     bottom: verticalScale(-1),
   },
   helloParent2: {},
-         rectangleView: {
+  rectangleView: {
     height: "100%",
     top: "-20%",
     left: "5%",

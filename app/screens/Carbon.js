@@ -6,6 +6,8 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
+  Vibration,
+  Alert,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
@@ -16,19 +18,24 @@ import {
 } from "../config/metrics";
 import apiCall from "../api/api";
 import Button from "../components/AppButton";
-import LargeButton from "../components/Button"
-import Screen from "../components/Screen";
+import LargeButton from "../components/Button";
+
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 import FadeInView from "../components/fadeInview";
 import AppText from "../components/Text";
 import AuthContext from "../auth/context";
+import * as Clipboard from "expo-clipboard";
+import colors from "../config/colors";
 
 const Carbon = ({ route, navigation }) => {
+  const { accountID, cart, setCart } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const { userID, accountID, cart, setCart } = useContext(AuthContext);
+  const [count, setCount] = useState(cart.length);
+
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     loadData();
@@ -37,42 +44,48 @@ const Carbon = ({ route, navigation }) => {
   const loadData = async () => {
     setIsLoading(true);
     const response = await apiCall.GetProjectList();
+    const responseProjects = response;
+    setProjects(
+      responseProjects.map((project) => {
+        return {
+          id: project.id,
+          displayName: project.displayName,
+          price: project.asset.displayAssetPriceWithMarkup,
+        };
+      })
+    );
     setData(response);
     setIsLoading(false);
   };
 
-  let amount = 0;
+  const incrementCart = (item) => {
+let incCount = cart.length
+    setCount(incCount += 1);
+    const incrementProject = projects.find((project) => project.id == item.id);
+    setCart([...cart, incrementProject]);
+  };
 
-  /**
-   * @dev This function adds a project to the cart
-   * @param {obj} ID The project object selected
-   */
-  const addToCart = (item) => {
-    //Check here if the project already exists
-    const multipleChecker = cart.findIndex(
-      (existingArr) => existingArr.projectId === item.id
-    );
+  const decrementCart = (item) => {
+    if (!cart.length) return Alert.alert("Add to Cart");
 
-    if (multipleChecker === -1) {
-      //If it dosen't exist already
-      let arrobj = {
-        projectId: item.id,
-        name: item.displayName,
-        price: item.asset.displayAssetPriceWithMarkup,
-        quantity: 1,
-      };
-      setCart((prevArray) => [...prevArray, arrobj]);
+    const filteredProjects = cart.filter((project) => project.id !== item.id);
+    const decrementedProjects = cart.filter((project) => project.id == item.id);
+
+    if (decrementedProjects.length > 0) {
+      let decCount = cart.length
+      setCount(decCount -= 1);
+      decrementedProjects.pop();
+      setCart([...filteredProjects, ...decrementedProjects]);
     } else {
-      //If the item already exists
-      setCart((prevArray) =>
-        prevArray.map((prev) => {
-          if (prev.projectId === item.id) {
-            return { ...prev, quantity: prev.quantity + 1 };
-          }
-          return item;
-        })
-      );
+      Alert.alert(`Add Project`);
     }
+  };
+
+  const copyToClipboard = async (copy) => {
+    console.log("Copied", copy);
+    Vibration.vibrate();
+    alert(`${copy} copied`);
+    await Clipboard.setStringAsync(copy);
   };
 
   const goToBasket = () => {
@@ -126,8 +139,11 @@ const Carbon = ({ route, navigation }) => {
       {cart && cart.length ? (
         <Pressable
           style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }}
-          onPress={() => goToBasket()}
+          onPress={goToBasket}
         >
+          <View style={styles.badgeContainer}>
+            <AppText>{count}</AppText>
+          </View>
           <Image
             resizeMode="contain"
             style={{ width: horizontalScale(120), height: verticalScale(120) }}
@@ -177,12 +193,15 @@ const Carbon = ({ route, navigation }) => {
 
             <Button
               title="CALCULATE CARBON FOOTPRINT"
+              color="white"
+              textColor="black"
               style={styles.boxShadow}
               onPress={() => navigation.navigate("CarbonTonnesRemoved")}
             />
             <View style={styles.subContainer}>
               <AppText numberOflines={3} style={styles.AppText}>
-                At Carbonyte we help you track, reduce and calculate your C02
+                At Carbonyte we help you track, reduce and calculate your C0
+                {"\u2082"}
                 emission from your daily transaction
               </AppText>
             </View>
@@ -249,6 +268,8 @@ const Carbon = ({ route, navigation }) => {
 
             {cart && cart.length ? (
               <Button
+                color="white"
+                textColor="black"
                 title="Visit Your Cart"
                 style={styles.boxShadow}
                 onPress={() => navigation.navigate("CarbonCart", cart)}
@@ -271,7 +292,7 @@ const Carbon = ({ route, navigation }) => {
         }
         data={data}
         keyExtractor={(data) => data.id.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={[styles.listItems, styles.boxShadow]}>
             <Image
               resizeMode={item.image !== "" ? "contain" : "contain"}
@@ -308,7 +329,7 @@ const Carbon = ({ route, navigation }) => {
                     },
                   ]}
                 >
-                  /{item.asset.type == "LAND" ? "tCO2e" : item.asset.type}
+                  /{item.asset.type == "LAND" ? "tCO\u2082e" : item.asset.type}
                 </AppText>
               </View>
             </View>
@@ -323,9 +344,13 @@ const Carbon = ({ route, navigation }) => {
             </View>
             <View style={styles.doubleButtonDiv}>
               <Button
+                disabled={true}
+                counter={true}
                 style={{ width: "49%" }}
                 title="ADD TO CART"
-                onPress={() => addToCart(item)}
+                // onPress={() => addToCart(item)}
+                onDelete={() => decrementCart(item, index)}
+                onAdd={() => incrementCart(item, index)}
               />
               <Button
                 style={{ width: "49%" }}
@@ -356,7 +381,9 @@ const Carbon = ({ route, navigation }) => {
                           ]
                     }
                   >
-                    <AppText style={styles.tags}>{tag}</AppText>
+                    <Pressable onPress={() => copyToClipboard(tag)}>
+                      <AppText style={styles.tags}>{tag}</AppText>
+                    </Pressable>
                   </View>
                 ))}
               </View>
@@ -384,7 +411,7 @@ const styles = StyleSheet.create({
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
     fontFamily: "Helvetica",
-    color: "#1B2356",
+    color: "black",
   },
   description: {
     color: "grey",
@@ -432,12 +459,12 @@ const styles = StyleSheet.create({
   AppText: {
     fontWeight: "bold",
     textAlign: "center",
-    color: "#1B2356",
+    color: "black",
   },
   textSub: {
     fontWeight: "bold",
     textAlign: "left",
-    color: "#1B2356",
+    color: "black",
   },
   title: {
     fontSize: moderateScale(30),
@@ -498,6 +525,18 @@ const styles = StyleSheet.create({
     width: "100%",
 
     justifyContent: "space-between",
+  },
+  badgeContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: horizontalScale(20),
+    height: verticalScale(20),
+    borderRadius: moderateScale(10),
+    backgroundColor: colors.danger,
+    position: "absolute",
+    zIndex: 5,
+    top: 25,
+    right: 30,
   },
 });
 

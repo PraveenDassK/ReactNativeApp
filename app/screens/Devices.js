@@ -128,7 +128,7 @@ const Devices = ({ navigation }) => {
         <View style={styles.headerItem}>
           <MaterialCommunityIcons
             name="security"
-            
+            color="blue"
             size={60}
           />
         </View>

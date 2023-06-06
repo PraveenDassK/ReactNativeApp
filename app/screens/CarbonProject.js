@@ -6,6 +6,7 @@ import {
   View,
   Pressable,
   ScrollView,
+  ActivityIndicator
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
@@ -19,18 +20,29 @@ import {
 } from "../config/metrics";
 
 const CarbonProject = ({ navigation, route }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
+    setIsLoading(true);
     const response = await apiCall.GetSingleProject(route.params.Id);
+    setIsLoading(false);
     setData(response);
     console.log(route.params.Id);
   };
 
   let projects = [];
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
 
   const formatData = () => {
     if (data != null) {
@@ -64,7 +76,6 @@ const CarbonProject = ({ navigation, route }) => {
   return (
     <View style={styles.mainPage}>
       <ScrollView style={styles.page}>{projects}</ScrollView>
-      <View style={{ width: "100%", backgroundColor: "red", height: 100 }} />
     </View>
   );
 };

@@ -32,7 +32,8 @@ import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 import { hide } from "expo-splash-screen";
 import Animated from "react-native-reanimated";
-import { Button } from "react-native-elements";
+import Button from "../components/AppButton";
+import colors from "../config/colors";
 
 const ITEM_SIZE = 50 + 15 * 3;
 const Transactions = ({ navigation, route }) => {
@@ -116,7 +117,7 @@ const Transactions = ({ navigation, route }) => {
     return (
       <View
         style={{
-          backgroundColor: "#ff5252",
+          backgroundColor: colors.danger,
           width: horizontalScale(70),
           height: verticalScale | 76,
           marginTop: verticalScale(15),
@@ -172,7 +173,7 @@ const Transactions = ({ navigation, route }) => {
         }}
       >
         <TouchableWithoutFeedback
-          style={{ flex: 1,backgroundColor:"red" }}
+          style={{ flex: 1, backgroundColor: "red" }}
           onPress={() => {
             setModalVisible(false);
           }}
@@ -199,12 +200,22 @@ const Transactions = ({ navigation, route }) => {
                 Currency: {transaction.currency}
               </Text>
 
-              <Pressable
+              {/* <Pressable
                 style={[styles.button, styles.buttonReport]}
                 onPress={() => reportTransaction()}
               >
                 <Text style={styles.textStyle}>Report</Text>
-              </Pressable>
+              
+              </Pressable> */}
+              <View style={{ width: 250 }}>
+                <Button
+                  textColor="black"
+                  color="danger"
+                  onPress={() => reportTransaction()}
+                  title="Report"
+                />
+              </View>
+
               {settings.transactionSharing ? (
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
@@ -214,13 +225,20 @@ const Transactions = ({ navigation, route }) => {
                 </Pressable>
               ) : null}
 
-              <Pressable
+              {/* <Pressable
                 style={[styles.button, styles.buttonClose, { marginTop: 10 }]}
                 backgroundColor="red"
                 onPress={() => setModalVisible(!modalVisible)}
               >
                 <Text style={styles.textStyle}>Dismiss</Text>
-              </Pressable>
+              </Pressable> */}
+              <View style={{ width: 250 }}>
+                <Button
+                  
+                  onPress={() => setModalVisible(!modalVisible)}
+                  title="Dismiss"
+                />
+              </View>
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -277,7 +295,7 @@ const Transactions = ({ navigation, route }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator color="blue" size="large" />
+        <ActivityIndicator color="black" size="large" />
       </View>
     );
   }
@@ -306,8 +324,6 @@ const Transactions = ({ navigation, route }) => {
                 <Button
                   onPress={() => loadData()}
                   title="Unhide Transactions"
-                  color="#841584"
-                  style={{ borderRadius: 15 }}
                 />
               )}
             </View>
@@ -362,7 +378,7 @@ const Transactions = ({ navigation, route }) => {
                           marginLeft: "2.5%",
                         }}
                       >
-                        <Text style={{ fontWeight: "700" }}>{initials}</Text>
+                        <Text style={{ fontWeight: "700" }}>{item.account.customerName[0]}</Text>
                       </View>
                       <View
                         style={{
