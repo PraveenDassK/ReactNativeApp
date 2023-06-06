@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 //import * as React from "react";
-import {StyleSheet,View,Text,TextInput,Alert} from "react-native";
+import { StyleSheet, View, Text, TextInput, Alert } from "react-native";
 import apiLoginRegister from "../api/apiLogin";
 
 import Button from "./AppButton";
@@ -19,9 +19,14 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
    * @returns alert if the company cannot be found
    */
   const searchCompany = async () => {
-    if (regName == "") return Alert.alert("Invalid company address");
+    if (regName == "") return Alert.alert("Nothing entered");
     setLoading(true)
     const regNumber = await apiLoginRegister.getCompanyRegNoByName(regName)
+    console.log(regNumber)
+    if (regNumber == null) {
+      setLoading(false)
+      return Alert.alert("The companay could not be found");
+    }
 
     const request = await apiLoginRegister.GetCompanyByRegNo(regNumber);
     setLoading(false)
@@ -30,7 +35,7 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
     const sicCode = SICCodes.filter(SICCodes => +request.sic_codes[0].includes(SICCodes.sic_code))[0].section;
     console.log(sicCode)
     setSicCode(sicCode)
-    
+
     setCompanyDetails(request);
   };
 

@@ -20,15 +20,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "carbonyte.banking",
-      "buildNumber": "1.1.10"
+      "buildNumber": "1.1.15"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 23,
-      "package": "com.carbonyte.bankin",
+      "versionCode": 25,
+      "package": "carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },
     "description": "Carbonyte Banking App",

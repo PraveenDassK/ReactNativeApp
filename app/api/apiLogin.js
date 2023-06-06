@@ -1,6 +1,15 @@
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import client from "./client";
 import jwt_decode from "jwt-decode";
 import * as Device from 'expo-device';
+import AuthContext from "../auth/context";
+
 
 /**
  * @dev Used to get a login request
@@ -79,24 +88,33 @@ const GetCustomerDetails = async (Id) => {
  *          If the company number is correct then return the details
  */
 const GetCompanyByRegNo = async (Reg) => {
-  const response = await client.get(
-    `https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`
-  );
-  console.log(response.data)
-  if (!response.data.result) {
-    return null;
+  try {
+    const response = await client.get(
+      `https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`
+    );
+    console.log(response.data)
+    if (!response.data.result) {
+      return null;
+    }
+    const returnData = response.data.details;
+    return returnData;
+  } catch {
+    return null
   }
-  const returnData = response.data.details;
-  return returnData;
 };
 
 const getCompanyRegNoByName = async (name) => {
-  const response = await client.get(
-    `https://api.carbonyte.io/authverifymodule/AdvanceCompanySearch?company_name_includes=${name}`
-  );
-  console.log(response.data)
-  const returnData = response.data.details.top_hit.company_number;
-  return returnData;
+  try {
+    const response = await client.get(
+      `https://api.carbonyte.io/authverifymodule/AdvanceCompanySearch?company_name_includes=${name}`
+    );
+    console.log(response.data)
+    const returnData = response?.data?.details?.top_hit.company_number;
+    return returnData;
+  } catch {
+    return null
+  }
+
 }
 
 /**
@@ -139,8 +157,10 @@ const RegisterPersonalAccount = async (regData) => {
 };
 
 const RegisterBusinessAccount = async (regData) => {
+  const {expoPushToken} = useContext(AuthContext);
+
   const response = await client.post(
-    "https://api.carbonyte.io/regmodule/SaveCompanyDetails",
+    `https://api.carbonyte.io/regmodule/SaveCompanyDetails?tokenId=${expoPushToken}`,
     regData
   );
   return response
@@ -211,6 +231,13 @@ const VerifyDocument = async () => {
   return response
 }
 
+const RegisterBusinessDirectors = async ({businessId, obj}) => {
+  const businessDirectorRegistrationCall = await client.post(`https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=Business&businessId=${businessId}`
+    , obj
+  )
+  return businessDirectorRegistrationCall
+}
+
 export default {
   Login,
   VerifyLogin,
@@ -223,5 +250,6 @@ export default {
   GetIDs,
   VerifyDocument,
   getCompanyRegNoByName,
-  RegisterBusinessUsers
+  RegisterBusinessUsers,
+  RegisterBusinessDirectors
 };

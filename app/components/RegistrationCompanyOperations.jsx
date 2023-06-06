@@ -30,30 +30,23 @@ import { CheckBox } from "@rneui/themed";
 import AuthScreen from "./AuthScreen";
 
 const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
-  const [isNewOwnership, setIsNewOwnership] = useState(false);
-  const [isResumingTrading, setIsResumingTrading] = useState(false);
-  const [isZeroToSixMonths, setIsZeroToSixMonths] = useState(false);
-  const [isSixMonthsToOneYear, setIsSixMonthsToOneYear] = useState(false);
-  const [isOneToTwoYears, setIsOneToTwoYears] = useState(false);
-  const [isTwoToFiveYears, setIsTwoToFiveYears] = useState(false);
-  const [isFiveToTenYears, setIsFiveToTenYears] = useState(false);
-  const [isTenPlusYears, setIsTenPlusYears] = useState(false);
 
   const [operationTime, setOperationTime] = useState("");
   const timeOptions = [
-    { label: "New ownership" },
-    { label: "0 - 6 Months" },
-    { label: "6 Months - 1 Year" },
-    { label: "1 - 2 Years" },
-    { label: "2 - 5 Years" },
-    { label: "5 - 10 Years" },
-    { label: "10+ Years" },
+    { label: "New ownership", value: "New ownership" },
+    { label: "0 - 6 Months", value: "0 - 6 Months" },
+    { label: "6 Months - 1 Year", value: "6 Months - 1 Year" },
+    { label: "1 - 2 Years", value: "1 - 2 Years" },
+    { label: "2 - 5 Years", value: "2 - 5 Years" },
+    { label: "5 - 10 Years", value: "5 - 10 Years" },
+    { label: "10+ Years", value: "10+ Years" },
   ];
 
   /**
    * @dev This sends the String of the item back
    */
   const sendDetails = () => {
+    if(!operationTime) return;
     SaveDetails(operationTime, "CompanyOperations");
   };
 
@@ -61,6 +54,7 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
     console.log("!");
     setScreenToShow("CompanyIncome");
   };
+  console.log(operationTime)
 
   return (
     <AuthScreen
@@ -81,7 +75,7 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
               labelField="label"
               valueField="label"
               placeholder={"Select an option"}
-              value={timeOptions}
+              value={operationTime}
               onChange={(item) => {
                 setOperationTime(item.value);
               }}

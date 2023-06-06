@@ -34,7 +34,8 @@ const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number"),
 });
 
-const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
+const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
+  console.log(companyAddresses)
   const [addresses, setAddresses] = useState([]);
   const [isAdding, setAdding] = useState(false);
   const [add, setAdd] = useState(null);
@@ -42,13 +43,29 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
 
 
   useEffect(() => {
-    if (addresses.length > 0) setAdd(addresses.address1);
+    if (addresses?.length > 0) setAdd(addresses.address1);
   }, [addresses, isAdding]);
 
   const handleSubmit = async () => {
     SaveDetails(addresses, "CompanyAddress");
   };
 
+  //Do this if box is checked
+  useEffect(() => {
+    if (isChecked) {
+      setAddresses([
+        {
+          "address1": "123 street",
+          "address2": "456 house",
+          "area": "Area 5",
+          "city": "City 6",
+          "locale": "en_GB",
+          "postcode": "WD25 9XX"
+        }
+      ]);
+    }
+  }, [isChecked]);
+  console.log(add)
   /**
    * @dev This sets the is adding to false which will show the past addresses page when used
    * @notice This does not validate data, validate the data on entry
@@ -70,7 +87,7 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
       width="70%"
       handleBack={handleBack}
     >
-      {addresses.length > 0 ? (
+      {addresses?.length > 0 ? (
         <>
           <Text>{`${addresses[0].address1}`}</Text>
           <Text>{`${addresses[0].address2} `}</Text>
@@ -84,14 +101,14 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow }) => {
       ) : (
 
         <View>
-          {/* <CheckBox
+          <CheckBox
             title="Is the trading address the same as the registred address?"
             checkedIcon="check-square-o"
             uncheckedIcon="square-o"
             checkedColor="black"
             checked={isChecked}
             onPress={() => setChecked(!isChecked)}
-          /> */}
+          />
           <Button
             title="Add"
             textColor="white"

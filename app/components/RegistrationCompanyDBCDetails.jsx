@@ -6,8 +6,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import React, { useState, useContext, Fragment, } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import AuthContext from "../auth/context";
 
 import ErrorMessage from "./forms/ErrorMessage";
 import Button from "./AppButton";
@@ -21,10 +23,58 @@ const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number"),
 });
 
-const RegistrationCompanyDBCDetails = ({navigation}) => {
+const RegistrationCompanyDBCDetails = ({setIsAdding, userType, setDirectors,setOwners,setIntrests}) => {
+  const [id, setID] = useState(0)
+
   const handleSubmit = ({ firstName, lastName }) => {
     console.log(firstName, lastName);
-    navigation.navigate('RegistrationDBC2')
+    setID(prevCount => prevCount + 1);
+
+    const obj =   {
+      id: id,
+      "email": "jack.h@carbonyte.io",
+      "phoneNumber": "7927201649",
+      "address": {
+        address1: "123 street",
+        address2: "456 house",
+        area: "Area 5",
+        city: "City 6",
+        locale: "en_GB",
+        postcode: "WD40 1UB"
+      },
+      firstName: firstName,
+      lastName: lastName,
+      "dob": "01-01-1970",
+      "nationalID": "2",
+      "country": "UK",
+      "gender": "Male",
+      "ownershipPercentage": "50",
+      "role": "Director"
+    }
+
+    switch (userType) {
+      case "Dir":
+        // Code to execute for case "Dir"
+        console.log("Processing as 'Dir'");
+        setDirectors(prevData => [...prevData, obj]);
+        break;
+      case "Con":
+        // Code to execute for case "Con"
+        console.log("Processing as 'Con'");
+        setIntrests(prevData => [...prevData, obj]);
+        break;
+      case "Ben":
+        // Code to execute for case "Ben"
+        console.log("Processing as 'Ben'");
+        setOwners(prevData => [...prevData, obj]);
+        break;
+      default:
+        // Code to execute for any other case
+        console.log("Unknown keyword");
+        break;
+    }
+
+    setIsAdding("")
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

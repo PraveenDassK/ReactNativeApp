@@ -35,7 +35,7 @@ const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number"),
 });
 
-const ConfirmDetailsBusiness = ({ SaveDetails, setScreenToShow }) => {
+const ConfirmDetailsBusiness = ({ SaveDetails, setScreenToShow, data}) => {
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
@@ -48,9 +48,12 @@ const ConfirmDetailsBusiness = ({ SaveDetails, setScreenToShow }) => {
     console.log("!");
     setScreenToShow("CompanyUsage");
   };
-  console.log(loading)
+  console.log(data)
   return (
     <AuthScreen title="Confirm Business details" img="turtleCard" handleBack={handleBack}>
+      <Text>
+        {data.company_name}
+      </Text>
       {loading ?
         <Button
           title="Submission in progress"
