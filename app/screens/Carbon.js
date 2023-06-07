@@ -128,7 +128,18 @@ const Carbon = ({ route, navigation }) => {
           style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }}
           onPress={goToBasket}
         >
-          <View style={styles.badgeContainer}>
+          <View style={{
+    justifyContent: "center",
+    alignItems: "center",
+    width: device == 1 ? 20 : 30,
+    height: device == 1 ? 20 : 30,
+    borderRadius: device == 1 ? 10 : 15,
+    backgroundColor: colors.danger,
+    position: "absolute",
+    zIndex: 5,
+    top: 25,
+    right: device == 1 ? 30 : 85,
+  }}>
             <AppText>{count}</AppText>
           </View>
           <Image
@@ -182,7 +193,7 @@ const Carbon = ({ route, navigation }) => {
               title="CALCULATE CARBON FOOTPRINT"
               color="white"
               textColor="black"
-              style={styles.boxShadow}
+              style={[styles.boxShadow,  {height: device == 1 ? 50 : 55 }]}
               onPress={() => navigation.navigate("CarbonTonnesRemoved")}
             />
             <View style={styles.subContainer}>
@@ -258,7 +269,7 @@ const Carbon = ({ route, navigation }) => {
                 color="white"
                 textColor="black"
                 title="Visit Your Cart"
-                style={styles.boxShadow}
+                style={[styles.boxShadow, {height: device == 1 ? 50 : 55 }]}
                 onPress={() => navigation.navigate("CarbonCart", cart)}
               />
             ) : (
@@ -584,18 +595,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-  },
-  badgeContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: horizontalScale(20),
-    height: verticalScale(20),
-    borderRadius: moderateScale(10),
-    backgroundColor: colors.danger,
-    position: "absolute",
-    zIndex: 5,
-    top: 25,
-    right: 30,
   },
 });
 
