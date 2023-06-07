@@ -24,6 +24,7 @@ import Button from "../components/AppButton";
 import AuthContext from "../auth/context";
 
 import apiCall from "../api/apiCall";
+import { Alert } from "react-native";
 const Tab = createMaterialTopTabNavigator();
 
 const BUSINESS_CARDS = [
@@ -38,6 +39,7 @@ const ChooseCardsElite = ({ navigation }) => {
 
   const [data, setData] = useState([]);
   const [currentSubscruption, setCurrentSubscription] = useState(null);
+  const [change, setChange] = useState(false);
 
   const { customerDetails } = useContext(AuthContext);
   const account = customerDetails;
@@ -46,20 +48,39 @@ const ChooseCardsElite = ({ navigation }) => {
     loadData();
   }, []);
 
+  useEffect(() => {}, [change]);
+
   const loadData = async () => {
     setIsLoading(true);
     const response = await apiCall.GetSubscriptions();
     setData(response);
     console.log("benefits", response[2]["benefits"][0]);
     const currentSub = await apiCall.GetUsersSubscriptions("CC1");
-    setCurrentSubscription(currentSub.subID)
+    setCurrentSubscription(currentSub.subID);
     setIsLoading(false);
     console.log(currentSub.subID);
     console.log(response[0].id);
   };
   const changePlan = async (Id) => {
-    await apiCall.ChangeUsersSubscription("CC1", Id);
-    loadData()
+    const response = Alert.alert("", "Do you want to purchase this plan?", [
+      {
+        text: "No",
+        onPress: () => setChange(false),
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: async () => {
+          setIsLoading(true)
+          await apiCall.ChangeUsersSubscription("CC1", Id);
+          loadData();
+          setIsLoading(false)
+        },
+      },
+    ]);
+    console.log(change);
+    if (change) {
+    }
   };
 
   if (isLoading) {
@@ -120,17 +141,19 @@ const ChooseCardsElite = ({ navigation }) => {
                             </React.Fragment>
                           );
                         })}
-                        {currentSubscruption == item.id ?
+                        {currentSubscruption == item.id ? (
                           <Button
                             title="Current plan"
+                            disabled={true}
+                            color="white"
+                            textColor="black"
                           />
-                          :
+                        ) : (
                           <Button
                             title="Swap to this plan"
                             onPress={() => changePlan(item.id)}
                           />
-                        }
-
+                        )}
                       </View>
                     </View>
                   </ScrollView>

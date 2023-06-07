@@ -180,9 +180,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={{ height: "100%", flexDirection: "row" }}>
             <View
               style={{
-                width: horizontalScale(50),
-                height: verticalScale(50),
-                borderRadius: moderateScale(25),
+                width: 50,
+                height: 50,
+                borderRadius: 25,
                 backgroundColor: "#F6F5F8",
                 borderColor: "black",
                 alignSelf: "center",
@@ -413,13 +413,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 <View
                   style={{
                     width: "100%",
-                    height: horizontalScale(30),
+                    height: 30,
                     shadowOpacity: 1,
                     shadowColor: "blue",
                     shadowOffset: { width: 0, height: 0 },
-                    shadowRadius: moderateScale(5),
+                    shadowRadius:5,
                     elevation: 5,
-                    borderRadius: moderateScale(10),
+                    borderRadius:10,
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                     marginBottom: verticalScale(10),
                   }}
@@ -881,9 +881,9 @@ const CarbonAssets = ({ project, navigation }) => {
       <View style={{ height: "100%", flexDirection: "row" }}>
         <View
           style={{
-            width: horizontalScale(50),
-            height: verticalScale(50),
-            borderRadius: moderateScale(25),
+            width: 50,
+            height: 50,
+            borderRadius: 25,
             backgroundColor: "#F6F5F8",
             borderColor: "black",
             alignSelf: "center",
