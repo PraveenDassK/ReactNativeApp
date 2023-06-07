@@ -29,7 +29,7 @@ import Screen from "../components/Screen";
 const SendMoney = ({ navigation }) => {
   const [benList, setBen] = useState([]);
   const [groupList, setGroup] = useState([]);
-  const { userID, customerDetails } = useContext(AuthContext);
+  const { userID, customerDetails, accountID } = useContext(AuthContext);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -50,17 +50,33 @@ const SendMoney = ({ navigation }) => {
     console.log("group", groupBeneficiaries);
     setGroup(groupBeneficiaries);
   };
-  //Sending
+
+
+  /**
+   * 
+   * @param {Str} Id The beneficary ID
+   */
   const sendDetails = (Id) => {
     const details = benList[Id];
-    navigation.navigate("BankTransferAmount", {
-      bankName: "FakeName",
-      accountName: details.name,
-      accountNumber: details.destinationIdentifier.accountNumber,
-      iban: details.destinationIdentifier.iban,
-      sortCode: details.destinationIdentifier.sortCode,
-      phoneNumber: details.phoneNumber,
-    });
+
+
+    console.log()
+    const requestObj = {
+      "sourceAccountId": accountID,
+      "destination": {
+        "type": "SCAN",
+        "id": "A1226WEM",
+        "accountNumber": details.destinationIdentifier.accountNumber,
+        "sortCode": details.destinationIdentifier.sortCode,
+        "name": details.name,
+        "phoneNumber": details.phoneNumber
+      },
+      "currency": "GBP",
+      "amount": 0,
+      "reference": "Transfer"
+    }
+
+    navigation.navigate("BankTransferAmount", requestObj);
   };
 
   const deleteDetails = async (Id) => {
