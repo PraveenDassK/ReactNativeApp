@@ -20,14 +20,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "carbonyte.banking",
-      "buildNumber": "1.1.15"
+      "buildNumber": "1.1.16"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 25,
+      "versionCode": 26,
       "package": "carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },

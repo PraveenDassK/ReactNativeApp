@@ -49,7 +49,7 @@ const Analytics = ({ navigation }) => {
   const [fulldata, setFullData] = useState([]);
   const [loadMore, setLoadMore] = useState(false);
   const [totalFootprint, setTotalFootprint] = useState(false);
-
+  console.log(recentTransactions)
   const [monthAverage, setMonthAverage] = useState(0);
   const [catNames, setCatNames] = useState([
     "Health",
@@ -100,12 +100,8 @@ const Analytics = ({ navigation }) => {
     setTotalFootprint(carbonSpendData.total);
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
-
    
-    const recentTrans = transactions.filter((r, index) => index < 3)
-   
-    console.log('trans', recentTrans)
-    setRecent(recentTrans);
+    setRecent(dataCall.transactions.slice(0,3));
     setTrans(dataCall.transactions);
     setBal(dataCall.balance);
     setMonthAverage(dataCall.average);
