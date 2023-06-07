@@ -19,6 +19,8 @@ import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
+import versionChecker from "./app/utility/versionChecker";
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -78,6 +80,8 @@ export default function App() {
   //Carbonyte ID CC1
   const [customerDetails, setCustomerDetails] = useState("");
 
+  const [version, setVersion] = useState("0.0.7");
+
   const [missingAccountSetup, setMissingAccountSetup] = useState(false);
 
   //App Pin
@@ -132,6 +136,8 @@ export default function App() {
   useEffect(() => {
     restoreToken();
     restoreSignIn();
+    versionChecker.compareVersion(version)
+    console.log(version)
   }, []);
 
   useEffect(() => {
@@ -243,6 +249,7 @@ export default function App() {
         directors, setDirectors,
         beneficialOwners, setOwners,
         controllingInterests, setIntrests,
+        version, setVersion
       }}
     >
       <NavigationContainer>

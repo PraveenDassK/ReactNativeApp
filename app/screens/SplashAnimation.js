@@ -1,15 +1,18 @@
-import * as React from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Image, StyleSheet, Text, View, Pressable, Animated } from "react-native";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 import GlobalStyles from "../../GlobalStyles";
 
-
 import FadeInView from "../components/fadeInview";
 import Button from "../components/AppButton"
 import colors from "../config/colors";
 
+import AuthContext from "../auth/context";
+
 const SplashAnimation = ({navigation}) => {
+  const { version } = useContext(AuthContext);
+
   return (
    
       
@@ -30,7 +33,7 @@ const SplashAnimation = ({navigation}) => {
 
         </View> 
        
-        <Text>Version 0.0.6 hotfix 2</Text>
+        <Text>Version {version}</Text>
         <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 25,
           borderTopRightRadius: 25,}}>
           <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />

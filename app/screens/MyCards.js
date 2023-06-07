@@ -66,6 +66,7 @@ const MyCards = ({ navigation }) => {
 
     const cards = await apiCall.GetCardByAccount("686283112");
     setCardData(cards);
+    console.log(cards)
     const currentCard = cards[cardIndex];
     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
 
@@ -240,6 +241,8 @@ const MyCards = ({ navigation }) => {
 
   //CardFreezing
   const [cardFrozen, setFrozen] = useState(false);
+        
+  console.log(cardData[cardIndex].id,)
   const toggleCard = async () => {
     setFrozen(!cardFrozen);
     console.log(cardData[cardIndex].status);
