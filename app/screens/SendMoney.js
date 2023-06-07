@@ -121,16 +121,9 @@ const SendMoney = ({ navigation }) => {
   return (
     <View>
       <ScrollView>
-        <View style={styles.searchBoxDiv}>
-          <Image
-            style={styles.image}
-            source={require("../assets/icon-awesomesearch.png")}
-          />
-          <TextInput style={styles.textInput} />
-        </View>
 
         <View style={styles.subTextDiv}>
-          <AppText style={styles.subText}>Recent</AppText>
+          <AppText style={styles.subText}>Add beneficary</AppText>
         </View>
 
         <View style={styles.peopleIconDiv}>

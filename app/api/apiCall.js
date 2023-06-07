@@ -449,7 +449,8 @@ const GetUserImpact = async (Id) => {
     const request = await client.get(
       `https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/${Id}`
     );
-    const returnData = request?.data?.details;
+    console.log(request)
+    const returnData = request.data.details;
     return {
       totalOffset: returnData.data.totalOffsetInTonnes.toFixed(1),
       totalAssets: returnData.data.totalNumAssets,

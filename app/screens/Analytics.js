@@ -48,7 +48,6 @@ const Analytics = ({ navigation }) => {
   const [fulldata, setFullData] = useState([]);
   const [loadMore, setLoadMore] = useState(false);
   const [totalFootprint, setTotalFootprint] = useState(false);
-  console.log(recentTransactions)
   const [monthAverage, setMonthAverage] = useState(0);
   const [catNames, setCatNames] = useState([
     "Health",
@@ -74,7 +73,6 @@ const Analytics = ({ navigation }) => {
   const [carbonGraphData, setCarbonGraphData] = useState(null);
 
   useEffect(() => {
-    console.log("account", accountID);
     loadData();
   }, [accountID, userID]);
   /**
@@ -86,7 +84,6 @@ const Analytics = ({ navigation }) => {
     if (!accountID) return;
     const dataCall = await apiCall.GetAnalysisData(accountID);
     const response = await apiCall.GetScheduledPayments("CC1");
-    console.log("Scheduled", response);
     const graphData = await apiCall.GetTransactionsWeek(accountID);
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
 
@@ -94,7 +91,6 @@ const Analytics = ({ navigation }) => {
     setCarbonGraphData(carbonSpendDataBarGraph);
     setCatNames(carbonSpendDataBarGraph.labels);
     setDataPercentages(carbonSpendDataBarGraph.percentages);
-    console.log("carbonDAta", carbonSpendData.chartData);
     setCarbonSpendData(carbonSpendData.chartData);
     setTotalFootprint(carbonSpendData.total);
     setTotalTrans(dataCall.totalTransactions);
