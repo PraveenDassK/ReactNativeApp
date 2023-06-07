@@ -303,7 +303,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
-    textAlignVertical: "center",
     alignContent: "center",
   },
 
@@ -340,7 +339,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
-    textAlignVertical: "center",
     alignContent: "center",
   },
 
@@ -356,7 +354,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
-    textAlignVertical: "center",
     alignContent: "center",
   },
 
