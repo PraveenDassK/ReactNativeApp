@@ -17,6 +17,7 @@ function AppButton({
   style,
   textColor = "white",
   transform,
+  textTransform,
   visible = false,
   disabled = false,
   counter = false,
@@ -48,8 +49,9 @@ function AppButton({
           <Text
             style={[
               styles.text,
-              { color: textColor, flex: counter ? 3 : 0 },
+              { color: textColor, flex: counter ? 3 : 0 , textTransform: textTransform},
               transform,
+              
             ]}
           >
             {title}

@@ -387,7 +387,7 @@ const Carbon = ({ route, navigation }) => {
                     <AppText>
                       {item.description
                         .replace(/<[^>]*>/g, "")
-                        .substring(0, 200)
+                        .substring(0, 650)
                         .trim()}
                       ...
                     </AppText>

@@ -32,9 +32,11 @@ import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 import DoughnutChart from "../components/DoughnutChart";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
-import { useFocusEffect } from "@react-navigation/native";
+import useDevice from "../hooks/useDevice";
+
 
 const Analytics = ({ navigation }) => {
+  const { device } = useDevice()
   const [isLoading, setIsLoading] = useState(false);
   const [active, setActive] = useState("");
   const [balance, setBal] = useState(0);
@@ -209,8 +211,8 @@ const Analytics = ({ navigation }) => {
             style={{
               fontWeight: Platform.OS === "android" ? "normal" : "700",
               fontFamily: "Helvetica",
-              fontSize: 24,
-              width: 250,
+              fontSize:  device == 1 ? 24: 40,
+              width: device == 1 ? 250: 350,
               textAlign: "center",
             }}
           >

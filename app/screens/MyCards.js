@@ -242,10 +242,10 @@ const MyCards = ({ navigation }) => {
   //CardFreezing
   const [cardFrozen, setFrozen] = useState(false);
         
-  console.log(cardData[cardIndex].id,)
+ 
   const toggleCard = async () => {
     setFrozen(!cardFrozen);
-    console.log(cardData[cardIndex].status);
+   
     if (cardData[cardIndex].status == "CARD_OK") {
       const request = await apiCall2.FreezeCard(
         cardData[cardIndex].id,
