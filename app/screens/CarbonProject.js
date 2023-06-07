@@ -54,11 +54,11 @@ const CarbonProject = ({ navigation, route }) => {
             </View>
           </View>
           <Image
-            style={styles.image}
+            style={[styles.image, { borderRadius: data.image ? 15: 0,}]}
             source={
               data.image != ""
                 ? { uri: data.image }
-                : require("../assets/icon-bluecheck.png")
+                : require("../assets/BearWithUs.png")
             }
           />
           <View style={{ backgroundColor: "white" }}>
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 200,
-    borderRadius: 15,
     marginBottom: "5%",
     marginTop: "5%",
     resizeMode: "contain",
