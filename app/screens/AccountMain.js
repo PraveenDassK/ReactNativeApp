@@ -19,7 +19,14 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Vibration,
+  useWindowDimensions
+  
 } from "react-native";
+
+import * as Device from 'expo-device';
+
+
+
 import Swiper from "react-native-swiper";
 import {
   GestureDetector,
@@ -51,6 +58,8 @@ import authStorage from "../auth/storage";
 const CARD_DATA = [];
 
 const HomeScreenPersonal = ({ navigation, route }) => {
+  const {height, width} = useWindowDimensions();
+
   const [isLoading, setIsLoading] = useState(false);
   const [cardResponse, setCardResponse] = useState(null);
   const [balance, setBalance] = useState(null);
@@ -81,6 +90,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     missingAccountSetup,
   } = useContext(AuthContext);
 
+  const [device, setDevice] = useState('')
+
   const todaydate = moment().format("MMMM D, YYYY");
   const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
 
@@ -107,10 +118,22 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const TokenAmount = numTrees;
   const carbonAmount = numCarbon;
 
+  useEffect(() => {
+    const deviceType = async () => {
+      const deviceSize= await Device.getDeviceTypeAsync();
+      console.log('DeviceSize', deviceSize)
+      setDevice(deviceSize)
+    }
+    deviceType()
+
+  }, [height, width])
+
   //Calls the API once during load
   useEffect(() => {
     loadData();
   }, [accountID]);
+
+ 
 
   // useEffect(() => {
   //   if(missingAccountSetup){
@@ -118,15 +141,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //   }
   // }, [missingAccountSetup]);
 
-  useEffect(() => {
-    checkForInitalPasscode();
-  }, []);
-
   const checkForInitalPasscode = async () => {
     if ((await authStorage.getPasscode()) == null) {
       navigation.navigate("PinSetApp");
     }
   };
+
+  
 
   /**
    * @dev
@@ -137,7 +158,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     if (!accountID) return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
-    console.log("Assets",resposeData)
+    console.log("Assets", resposeData);
     const transactionCall = await apiCall.GetTransactions(accountID);
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
@@ -326,12 +347,19 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           >
             {sortCode} | {accountnumber}
           </AppText>
+          {device == 1 && <>
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+           
+            }}
           >
             <FadeInView>
               <Swiper
                 height={verticalScale(270)}
+
                 style={{ paddingLeft: "30%" }}
                 showsPagination={false}
                 loop={false}
@@ -384,6 +412,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               />
             </TouchableOpacity>
           </View>
+          </>
+          }
 
           {status && (
             <AppText
@@ -441,7 +471,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
                 <AppText
-                  style={[styles.blueTitle, { fontSize: moderateScale(26) }]}
+                  style={[styles.blueTitle,]}
                 >
                   £
                 </AppText>
@@ -544,7 +574,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               <View style={{ flex: 2.5 }}>
                 <AppText>Estimated</AppText>
                 <AppText style={{ fontWeight: "700", paddingRight: "5%" }}>
-                  Tonnes of CO{'\u2082'}
+                  Tonnes of CO{"\u2082"}
                 </AppText>
               </View>
               <View style={{ flex: 5, justifyContent: "flex-end" }}>
@@ -737,7 +767,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               <>
                 <AppText style={styles.subTextAssets}>Assets</AppText>
                 <AppText style={styles.subTextDescriptor}>
-                  (1 Tonne = 1 CO{'\u2082'} Token)
+                  (1 Tonne = 1 CO{"\u2082"} Token)
                 </AppText>
                 <AppText style={styles.subTextToken}>Token</AppText>
               </>
@@ -816,7 +846,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               resizeMode="contain"
               source={require("../assets/image-tree.png")}
             />
-            <View
+            {device ==1 && <View
               style={{
                 position: "absolute",
                 height: 350,
@@ -830,7 +860,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 source={require("../assets/group-32017.png")}
                 style={{ height: 375, width: 380 }}
               />
-            </View>
+            </View>}
           </View>
           <View style={{ flex: 1 }}>
             <AppText
@@ -860,12 +890,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             >
               <AppText
                 style={{
-                  marginTop: verticalScale(0),
+                  // marginTop: verticalScale(0),
                   textAlign: "center",
                   fontSize: 22,
                   fontWeight: "700",
                   color: "blue",
-                  marginBottom: "10%",
+                  marginBottom: device ==1 ?"10%": "0%",
                 }}
               >
                 View more
@@ -1119,15 +1149,6 @@ const Card = ({ name, number, image, selected, onPress }) => {
             source={require("../assets/group-31766.png")}
           />
         </View>
-        {/* <View style={styles.cardHeader}>
-          <Icon name="credit-card" size={30} color="#fff" />
-          <Text style={styles.cardHeaderText}>{name}</Text>
-        </View>
-        <View style={styles.cardBody}>
-          <Text style={styles.cardBodyText}>{number}</Text>
-          <Image source={image} style={styles.cardImage} />
-          
-        </View> */}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -1135,7 +1156,7 @@ const Card = ({ name, number, image, selected, onPress }) => {
 
 const styles = StyleSheet.create({
   boxShadow: {},
-  divContainer: {},
+  divContainer: { flex: 1 },
   congratulationsText: {
     textAlign: "center",
     width: "100%",

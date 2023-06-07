@@ -8,7 +8,9 @@ import {
   ActivityIndicator,
   Vibration,
   Alert,
+  useWindowDimensions,
 } from "react-native";
+import * as Device from "expo-device";
 import GlobalStyles from "../../GlobalStyles";
 
 import {
@@ -29,6 +31,8 @@ import * as Clipboard from "expo-clipboard";
 import colors from "../config/colors";
 
 const Carbon = ({ route, navigation }) => {
+  const { height, width } = useWindowDimensions();
+  const [device, setDevice] = useState("");
   const { accountID, cart, setCart } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
@@ -36,6 +40,15 @@ const Carbon = ({ route, navigation }) => {
   const [count, setCount] = useState(cart.length);
 
   const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const deviceType = async () => {
+      const deviceSize = await Device.getDeviceTypeAsync();
+      console.log("DeviceSize", deviceSize);
+      setDevice(deviceSize);
+    };
+    deviceType();
+  }, [height, width]);
 
   useEffect(() => {
     loadData();
@@ -59,8 +72,8 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const incrementCart = (item) => {
-let incCount = cart.length
-    setCount(incCount += 1);
+    let incCount = cart.length;
+    setCount((incCount += 1));
     const incrementProject = projects.find((project) => project.id == item.id);
     setCart([...cart, incrementProject]);
   };
@@ -72,8 +85,8 @@ let incCount = cart.length
     const decrementedProjects = cart.filter((project) => project.id == item.id);
 
     if (decrementedProjects.length > 0) {
-      let decCount = cart.length
-      setCount(decCount -= 1);
+      let decCount = cart.length;
+      setCount((decCount -= 1));
       decrementedProjects.pop();
       setCart([...filteredProjects, ...decrementedProjects]);
     } else {
@@ -146,7 +159,7 @@ let incCount = cart.length
           </View>
           <Image
             resizeMode="contain"
-            style={{ width: horizontalScale(120), height: verticalScale(120) }}
+            style={{  width: horizontalScale(120), height: verticalScale(120) }}
             source={require("../assets/ShoppingIcon.png")}
           />
         </Pressable>
@@ -294,54 +307,118 @@ let incCount = cart.length
         keyExtractor={(data) => data.id.toString()}
         renderItem={({ item, index }) => (
           <View style={[styles.listItems, styles.boxShadow]}>
-            <Image
-              resizeMode={item.image !== "" ? "contain" : "contain"}
-              style={[
-                styles.listImage,
-                {
-                  width: horizontalScale(300),
-                  height: verticalScale(180),
-                  resizeMode: "stretch",
-                },
-              ]}
-              source={
-                item.image != ""
-                  ? { uri: item.image }
-                  : require("../assets/BearWithUs.png")
-              }
-            />
-
-            <View style={styles.subTitle}>
-              <View style={styles.subTitleText}>
-                <AppText style={styles.textSub}>{item.displayName}</AppText>
-              </View>
-              <View style={styles.subTitlePrice}>
-                <AppText style={[styles.priceSub, { color: "black" }]}>
-                  £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
-                </AppText>
-                <AppText
+            {device == 1 ? (
+              <>
+                <Image
+                  resizeMode={item.image !== "" ? "contain" : "contain"}
                   style={[
-                    styles.tree,
+                    styles.listImage,
                     {
-                      color: "black",
-                      textTransform:
-                        item.asset.type == "LAND" ? "none" : "capitalize",
+                      width: horizontalScale(300),
+                      height: verticalScale(180),
+                      resizeMode: "stretch",
                     },
                   ]}
-                >
-                  /{item.asset.type == "LAND" ? "tCO\u2082e" : item.asset.type}
-                </AppText>
-              </View>
-            </View>
-            <View style={{ width: "100%", alignItems: "flex-start" }}>
-              <AppText style={styles.description}>
-                {item.description
-                  .replace(/<[^>]*>/g, "")
-                  .substring(0, 200)
-                  .trim()}
-                ...
-              </AppText>
-            </View>
+                  source={
+                    item.image != ""
+                      ? { uri: item.image }
+                      : require("../assets/BearWithUs.png")
+                  }
+                />
+
+                <View style={styles.subTitle}>
+                  <View style={styles.subTitleText}>
+                    <AppText style={styles.textSub}>{item.displayName}</AppText>
+                  </View>
+                  <View style={styles.subTitlePrice}>
+                    <AppText style={[styles.priceSub, { color: "black" }]}>
+                      £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
+                    </AppText>
+                    <AppText
+                      style={[
+                        styles.tree,
+                        {
+                          color: "black",
+                          textTransform:
+                            item.asset.type == "LAND" ? "none" : "capitalize",
+                        },
+                      ]}
+                    >
+                      /
+                      {item.asset.type == "LAND"
+                        ? "tCO\u2082e"
+                        : item.asset.type}
+                    </AppText>
+                  </View>
+                </View>
+                <View style={{ width: "100%", alignItems: "flex-start" }}>
+                  <AppText style={styles.description}>
+                    {item.description
+                      .replace(/<[^>]*>/g, "")
+                      .substring(0, 200)
+                      .trim()}
+                    ...
+                  </AppText>
+                </View>
+              </>
+            ) : (
+              <>
+                <View style={styles.tabletImageTextContainer}>
+                  <Image
+                    resizeMode={item.image !== "" ? "contain" : "contain"}
+                    style={[
+                      styles.listImage,
+                      {
+                        width: horizontalScale(300),
+                        height: verticalScale(180),
+                        resizeMode: "stretch",
+                      },
+                    ]}
+                    source={
+                      item.image != ""
+                        ? { uri: item.image }
+                        : require("../assets/BearWithUs.png")
+                    }
+                  />
+                  <View style={{ alignItems: "flex-start" }}>
+                    {/* <AppText>
+                      {item.description
+                        .replace(/<[^>]*>/g, "")
+                        .substring(0, 200)
+                        .trim()}
+                      ...
+                    </AppText> */}
+                  </View>
+                </View>
+
+                <View style={styles.subTitle}>
+                  <View style={styles.subTitleText}>
+                    <AppText style={styles.textSub}>{item.displayName}</AppText>
+                  </View>
+                  <View style={styles.subTitlePrice}>
+                    <AppText style={[styles.priceSub, { color: "black" }]}>
+                      £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
+                    </AppText>
+                    <AppText
+                      style={[
+                        styles.tree,
+                        {
+                          color: "black",
+                          textTransform:
+                            item.asset.type == "LAND" ? "none" : "capitalize",
+                        },
+                      ]}
+                    >
+                      /
+                      {item.asset.type == "LAND"
+                        ? "tCO\u2082e"
+                        : item.asset.type}
+                    </AppText>
+                  </View>
+                </View>
+              </>
+            )}
+
             <View style={styles.doubleButtonDiv}>
               <Button
                 disabled={true}
@@ -360,6 +437,7 @@ let incCount = cart.length
                 }
               />
             </View>
+
             <View style={styles.benifitsContainer}>
               {item.tags.length ? (
                 <View>
@@ -444,6 +522,15 @@ const styles = StyleSheet.create({
   priceSub: {
     fontSize: moderateScale(30),
     fontWeight: "bold",
+  },
+  tabletImageTextContainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexShrink: 0,
+    justifyContent: "space-evenly",
+    
+  
+    
   },
   tags: {
     color: "grey",

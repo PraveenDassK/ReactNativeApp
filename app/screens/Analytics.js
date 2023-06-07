@@ -23,10 +23,7 @@ import GlobalStyles from "../../GlobalStyles";
 import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import {
-  horizontalScale,
-  verticalScale,
-} from "../config/metrics";
+import { horizontalScale, verticalScale } from "../config/metrics";
 
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
@@ -95,16 +92,15 @@ const Analytics = ({ navigation }) => {
     setCarbonGraphData(carbonSpendDataBarGraph);
     setCatNames(carbonSpendDataBarGraph.labels);
     setDataPercentages(carbonSpendDataBarGraph.percentages);
-
+    console.log("carbonDAta", carbonSpendData.chartData);
     setCarbonSpendData(carbonSpendData.chartData);
     setTotalFootprint(carbonSpendData.total);
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
 
-   
-    const recentTrans = transactions.filter((r, index) => index < 3)
-   
-    console.log('trans', recentTrans)
+    const recentTrans = transactions.filter((r, index) => index < 3);
+
+    console.log("trans", recentTrans);
     setRecent(recentTrans);
     setTrans(dataCall.transactions);
     setBal(dataCall.balance);
@@ -226,40 +222,35 @@ const Analytics = ({ navigation }) => {
         </View>
 
         <View>
-          <View
-            style={{
-              position: "absolute",
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 28,
-              bottom: "40%",
-              left: "20%",
-            }}
-          >
-            <AppText
-              style={{
-                fontSize: 50,
-                fontWeight: "700",
-                width: 250,
-                textAlign: "center",
-              }}
-            >
-              {totalFootprint}
-            </AppText>
-            <AppText
-              style={{
-                fontSize: 20,
-                fontWeight: "700",
-                width: 250,
-                textAlign: "center",
-              }}
-            >
-              kg CO{'\u2082'}
-            </AppText>
-          </View>
-
-          <DoughnutChart data={carbnonSpendData} />
+          <DoughnutChart
+            data={carbnonSpendData}
+            children={
+              <View
+               
+              >
+                <AppText
+                  style={{
+                    fontSize: 50,
+                    fontWeight: "700",
+                    width: 250,
+                    textAlign: "center",
+                  }}
+                >
+                  {totalFootprint}
+                </AppText>
+                <AppText
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "700",
+                    width: 250,
+                    textAlign: "center",
+                  }}
+                >
+                  kg CO{"\u2082"}
+                </AppText>
+              </View>
+            }
+          />
         </View>
         <View style={[styles.balanceContainer, styles.boxShadow]}>
           <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16 }}>
@@ -476,69 +467,74 @@ const Analytics = ({ navigation }) => {
           </AppText>
         </View>
 
-        {recentTransactions && recentTransactions.map((transaction, index) => (
-          <View key={index}>
-            <TouchableOpacity
-              style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
-              onPress={() => navigation.navigate("Transactions")}
-            >
-              <View style={{ height: "100%", flexDirection: "row" }}>
-                <View
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                    backgroundColor: "#F6F5F8",
-                    borderColor: "black",
-                    alignSelf: "center",
-                    marginLeft: "2.5%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <AppText
+        {recentTransactions &&
+          recentTransactions.map((transaction, index) => (
+            <View key={index}>
+              <TouchableOpacity
+                style={[
+                  styles.transactionBox,
+                  styles.rounded,
+                  styles.boxShadow,
+                ]}
+                onPress={() => navigation.navigate("Transactions")}
+              >
+                <View style={{ height: "100%", flexDirection: "row" }}>
+                  <View
                     style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      backgroundColor: "#F6F5F8",
+                      borderColor: "black",
                       alignSelf: "center",
-
-                      textAlignVertical: "center",
-
-                      fontWeight: "700",
+                      marginLeft: "2.5%",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    {transaction?.sourceId[0]}
-                  </AppText>
+                    <AppText
+                      style={{
+                        alignSelf: "center",
+
+                        textAlignVertical: "center",
+
+                        fontWeight: "700",
+                      }}
+                    >
+                      {transaction?.sourceId[0]}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 3.5,
+                      alignSelf: "center",
+                      justifyContent: "space-evenly",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                      {transaction?.sourceId}
+                    </AppText>
+                    <AppText style={{}}>
+                      {moment(transaction?.transactionDate).format("LL")}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 5,
+                      justifyContent: "space-evenly",
+                      alignItems: "flex-end",
+                      marginRight: "2.5%",
+                    }}
+                  >
+                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                      £{transaction?.amount.toFixed(2)}
+                    </AppText>
+                  </View>
                 </View>
-                <View
-                  style={{
-                    flex: 3.5,
-                    alignSelf: "center",
-                    justifyContent: "space-evenly",
-                    marginLeft: "5%",
-                  }}
-                >
-                  <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                    {transaction?.sourceId}
-                  </AppText>
-                  <AppText style={{}}>
-                    {moment(transaction?.transactionDate).format("LL")}
-                  </AppText>
-                </View>
-                <View
-                  style={{
-                    flex: 5,
-                    justifyContent: "space-evenly",
-                    alignItems: "flex-end",
-                    marginRight: "2.5%",
-                  }}
-                >
-                  <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                    £{transaction?.amount.toFixed(2)}
-                  </AppText>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
+              </TouchableOpacity>
+            </View>
+          ))}
 
         {fulldata && (
           <View style={styles.titleTextRow}>

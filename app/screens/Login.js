@@ -34,14 +34,14 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = ({ navigation }) => {
-  const prefix = "44";
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const { setUser } = useContext(AuthContext);
 
   const handleSubmit = async ({ email, phoneNumber }) => {
     setIsLoading(true);
-    phoneNumber = prefix + phoneNumber;
+    phoneNumber =  phoneNumber;
     const request = await loginApi.Login({ email, phoneNumber });
     setIsLoading(false);
     setUser({ email, phoneNumber });
