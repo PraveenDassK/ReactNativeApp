@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import AuthContext from "../auth/context";
 import api from "../api/apiCall";
+import apiTransaction from "../api/apiTransaction";
 import authStorage from "../auth/storage";
 
 const Pin = ({ route, navigation }) => {
@@ -41,6 +42,7 @@ const Pin = ({ route, navigation }) => {
     }
   }, [enteredPin]);
   console.log(enteredPin);
+  console.log(route.params.beneficiaryData)
 
   /**
    * @
@@ -56,17 +58,14 @@ const Pin = ({ route, navigation }) => {
 
     setLoading(true);
     console.log(route.params.beneficiaryData);
-    const response = await api.SendFunds(
-      route.params.amount,
-      accountID,
-      route.params.beneficiaryData.accountName,
-      route.params.beneficiaryData.accountNumber,
-      route.params.beneficiaryData.sortCode,
-      route.params.beneficiaryData.address
-    );
+
+    const transferRequest = await apiTransaction.sendMoney(route.params.beneficiaryData)
+    console.log(transferRequest)
+
     setLoading(false);
-    console.log(response);
-    if (!response.data.result) {
+
+    console.log(transferRequest);
+    if (!transferRequest.data.result) {
       alert("Transaction unsuccessful");
       pinView.current.clearAll();
       return;

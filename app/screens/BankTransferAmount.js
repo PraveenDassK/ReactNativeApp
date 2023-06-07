@@ -25,7 +25,7 @@ const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
   const [paymentType,setPaymentType] = useState("")
-  const { accountName, phoneNumber } = route.params;
+  const { destination } = route.params;
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
 
@@ -66,16 +66,18 @@ const BankTransferAmount = ({ route, navigation }) => {
 
 
   const requestContact = (amount) => {
+    route.params.amount = amount
+    route.params.reference = "Transfer"
     console.log(
-      "Transfer to " + accountName + " of £" + amount + " successful"
+      "Transfer to " + destination.accountName + " of £" + amount + " successful"
     );
     navigation.navigate("Pin", {
       amount: amount,
-      refrence:reference,
-      name: accountName,
+      refrence: reference,
+      name: destination.accountName,
       successScreen: "Success",
       successText:
-        "Transfer to " + accountName + " of £" + amount + " successful",
+        "Transfer to " + destination.accountName + " of £" + amount + " successful",
       beneficiaryData: route.params,
     });
   };
@@ -101,7 +103,7 @@ const BankTransferAmount = ({ route, navigation }) => {
               marginBottom: "10%",
             }}
           >
-            <AppText style={{ fontSize: 28 }}>{accountName[0]}</AppText>
+            <AppText style={{ fontSize: 28 }}>{destination.name}</AppText>
           </View>
           <AppText
             style={{
@@ -111,11 +113,11 @@ const BankTransferAmount = ({ route, navigation }) => {
               fontWeight: "bold",
             }}
           >
-            {accountName}
+            {destination.name}
           </AppText>
           <AppText
             style={{ marginBottom: "2.5%", fontSize: 25, fontWeight: "400" }}
-          >{`+44 ${phoneNumber}`}</AppText>
+          >{`+44 ${destination.phoneNumber}`}</AppText>
         </View>
         <View>
           <TextInput
