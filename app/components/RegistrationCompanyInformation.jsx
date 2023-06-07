@@ -32,7 +32,7 @@ import AuthScreen from "./AuthScreen";
 const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
 
   const handleSubmit = ({ details }) => {
-    if(details.length < 250){
+    if(details.length < 1){
       return;
     }
     console.log(details)

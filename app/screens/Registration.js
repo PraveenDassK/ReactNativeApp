@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 //import * as React from "react";
-import {StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import Screen from "../components/Screen";
 import apiLogin from "../api/apiLogin";
 
@@ -25,7 +25,6 @@ import CompanyUsage from "../components/RegistrationCompanyUsage.jsx";
 import CompanyDirectors from "../components/RegistrationDirectorsPartners.jsx";
 import CompanyConfirm from "../components/RegistrationCompanySendDetails";
 
-import RegistrationDirectorsPartners from "../components/RegistrationDirectorsPartners.jsx";
 import colors from "../config/colors";
 
 const Registration = ({ navigation }) => {
@@ -54,6 +53,7 @@ const Registration = ({ navigation }) => {
   const [companyHouse, setRegistrationNumberDetails] = useState(null);
   const [companyDetails, setCompanyDetails] = useState(null);
   const [companyInformation, setCompanyInformation] = useState(null);
+  const [companyOperations, setcompanyOperations] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
 
   useEffect(() => {
@@ -153,23 +153,23 @@ const Registration = ({ navigation }) => {
         setScreenToShow("CompanyOperations");
         return;
       case "CompanyOperations":
-        setPersonalDetails(details);
+        setcompanyOperations(details);
         setScreenToShow("CompanyUsage");
         return;
       case "CompanyUsage":
         setPersonalDetails(details);
-        setScreenToShow("CompanyDirectors");
+        setScreenToShow("CompanyConfirm");
         return;
       case "CompanyDirectors":
         setScreenToShow("CompanyConfirm");
         break;
       case "CompanyConfirm":
         //Confirms and sends the data
-        //const callResult = await sendDetails("Business") 
-        const callResult = true
+        const callResult = await sendDetails("Business")
+        // const callResult = true
         if (callResult === true) {
           //If successful
-          setScreenToShow("Success");
+          setScreenToShow("CompanyDirectors");
         } else {
           //If unsuccessful
           alert(callResult);
@@ -272,6 +272,7 @@ const Registration = ({ navigation }) => {
           <CompanyAddress
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
+            companyAddresses = {companyHouse}
           />
         );
       case "CompanyInformation":
@@ -305,20 +306,20 @@ const Registration = ({ navigation }) => {
       case "CompanyDirectors":
         return (
           <CompanyDirectors
-            navigation= {navigation}
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
-            // companyType = {companyHouse.type}
-            // companyNumber={companyHouse.company_number}
+          // companyType = {companyHouse.type}
+          // companyNumber={companyHouse.company_number}
           />
         );
-        case "CompanyConfirm":
-          return (
-            <CompanyConfirm
-              SaveDetails={detailsSaver}
-              setScreenToShow={setScreenToShow}
-            />
-          );
+      case "CompanyConfirm":
+        return (
+          <CompanyConfirm
+            data = {companyHouse}
+            SaveDetails={detailsSaver}
+            setScreenToShow={setScreenToShow}
+          />
+        );
       default:
         return (
           <PersonalOrBusiness
@@ -392,7 +393,7 @@ const Registration = ({ navigation }) => {
         etag: companyHouse.etag,
         aboutBusiness: companyInformation,
         incomeSources: ["Sales revenue"],
-        operationTime: "New ownership",
+        operationTime: companyOperations,
         targetCustomer: "People",
         customerOutOfUk: "True",
         sic_codes: companyHouse.sic_codes,

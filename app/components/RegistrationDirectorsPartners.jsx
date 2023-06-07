@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState, useContext, Fragment, } from "react";
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   ScrollView,
 
 } from "react-native";
+import AuthContext from "../auth/context";
 
 import Screen from "./Screen";
 import Button from "./AppButton";
@@ -14,44 +15,15 @@ import Button from "./AppButton";
 import RegistrationCompanyDBCDetails from "./RegistrationCompanyDBCDetails";
 import RegistrationCompanyDBCDetails2 from "./RegistrationCompanyDBCDetails2";
 
-const DIRECTORS = [
-  {
-    id: 1,
-    "email": "jack.h@carbonyte.io",
-    "phoneNumber": "7927201649",
-    "address": {
-      address1: "123 street",
-      address2: "456 house",
-      area: "Area 5",
-      city: "City 6",
-      locale: "en_GB",
-      postcode: "WD40 1UB"
-    },
-    firstName: "Jack",
-    lastName: "Huang",
-    "dob": "01-01-1970",
-    "nationalID": "2",
-    "country": "UK",
-    "gender": "Male",
-    "ownershipPercentage": "50",
-    "role": "Director"
-  }
-];
-const BENEFITS = [
+import apiLogin from "../api/apiLogin";
 
-];
+const RegistrationDirectorsPartners = ({ SaveDetails}) => {
 
-const INTRESTS = [
-
-];
-
-const RegistrationDirectorsPartners = ({navigation}) => {
-
-  const [directors, setDirectors] = useState(DIRECTORS);
-  const [beneficialOwners, setOwners] = useState(BENEFITS);
-  const [controllingInterests, setIntrests] = useState(INTRESTS);
-
-  const [screen, setScreen] = useState("")
+  const [isAdding, setIsAdding] = useState("")
+  const [userType, setType] = useState("")
+  const [directors, setDirectors] = useState([])
+  const [beneficalOwners, setIntrests] = useState([])
+  const [controlingIntrests, setOwners] = useState([])
 
   const handleDelete = (id, items, setItems) => {
     const originalPeople = [...items];
@@ -59,64 +31,132 @@ const RegistrationDirectorsPartners = ({navigation}) => {
     setItems(filteredPeople);
   };
 
+  const handleAdd = (name) => {
+    console.log("!")
+    setIsAdding(true)
+  }
+  const handleNext = () => {
+    console.log("!")
+    SaveDetails(null, "CompanyDirectors");
+  }
+
+  const register = async () => {
+    const obj = [
+      {
+        "id": 0,
+        "customerId": "",
+        "emails": [
+          {
+            "emailId": "jack.h@carbonyte.io"
+          }
+        ],
+        "phoneNumbers": [
+          {
+            "phoneNo": "7927201649"
+          }
+        ],
+        "customerDetails": {
+          "documentNo": "",
+          "documentType": "",
+          "address": "40 South way",
+          "firstName": "Jack",
+          "dob": "01-01-1970",
+          "nationalId": "2",
+          "lastName": "Huang",
+          "postCode": "HA9 0SQ",
+          "postTown": "London",
+          "country": "England",
+          "locale": "en_GB",
+          "salutation": "MR",
+          "gender": "Male",
+          "maritalStatus": "Single",
+          "employmentDetails": "Employed"
+        },
+        "income": {
+          "totalIncome": "",
+          "savings": "",
+          "taxResidency": "",
+          "incomeSources": [
+            "string"
+          ]
+        },
+        "key": "",
+        "role": "Director",
+        "ownershipPercentage": 51,
+        "marketingChoices": "string"
+      }
+    ]
+
+    const registration = await apiLogin.RegisterBusinessDirectors("12870376",obj)
+    console.log(registration)
+
+    //handleNext()
+  }
+
   return (
     <Screen>
-      <View
-        style={styles.mainContainer}
-      >
+      {isAdding ? <RegistrationCompanyDBCDetails userType={userType} setIsAdding={setIsAdding}
+        setDirectors={setDirectors}
+        setIntrests={setIntrests}
+        setOwners={setOwners}
+      /> :
+        <View
+          style={styles.mainContainer}
+        ><Text>Please enter the relevent people</Text>
 
-        <ScrollView
-          style={{ flex: 1 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View onStartShouldSetResponder={() => true}>
-            <View style={styles.directorPartnerContainer}>
-              <DirectorPartnerItems
-                navigation={navigation}
-                title={"Directors"}
-                items={directors}
-                onDelete={(item) => handleDelete(item, directors, setDirectors)}
-              />
+          <ScrollView
+            style={{ flex: 1 }}
+            showsVerticalScrollIndicator={false}
+          >
+            <View onStartShouldSetResponder={() => true}>
+              <View style={styles.directorPartnerContainer}>
+                <DirectorPartnerItems
+                  title={"Directors"}
+                  items={directors}
+                  onDelete={(item) => handleDelete(item, directors, setDirectors)}
+                  setIsAdding={() => { handleAdd(); setType("Dir") }}
+                />
+              </View>
+              <View style={styles.directorPartnerContainer}>
+                <DirectorPartnerItems
+                  title={"Beneficial owners"}
+                  items={beneficalOwners}
+                  onDelete={(item) =>
+                    handleDelete(item, beneficalOwners, setOwners)
+                  }
+                  setIsAdding={() => { handleAdd(); setType("Ben") }}
+                />
+              </View>
+              <View style={styles.directorPartnerContainer}>
+                <DirectorPartnerItems
+                  title={"Controlling intrests"}
+                  items={controlingIntrests}
+                  onDelete={(item) =>
+                    handleDelete(item, controlingIntrests, setIntrests)
+                  }
+                  setIsAdding={() => { handleAdd(); setType("Con") }}
+                />
+              </View>
             </View>
-            <View style={styles.directorPartnerContainer}>
-              <DirectorPartnerItems
-                navigation={navigation}
-                title={"Beneficial owners"}
-                items={beneficialOwners}
-                onDelete={(item) =>
-                  handleDelete(item, beneficialOwners, setOwners)
-                }
-              />
-            </View>
-            <View style={styles.directorPartnerContainer}>
-              <DirectorPartnerItems
-                navigation={navigation}
-                title={"Controlling intrests"}
-                items={controllingInterests}
-                onDelete={(item) =>
-                  handleDelete(item, controllingInterests, setIntrests)
-                }
-              />
-            </View>
-          </View>
 
-        </ScrollView>
-        <Button title={"confirm"} textColor={"white"} color={"black"} />
+          </ScrollView>
+          <Button title={"confirm"} textColor={"white"} color={"black"} onPress={register} />
 
-      </View>
+        </View>
+      }
     </Screen>
   );
 };
 
-const DirectorPartnerItems = ({ navigation, items, onDelete, title }) => {
+const DirectorPartnerItems = ({ items, onDelete, title, setIsAdding, }) => {
+  console.log(setIsAdding)
   return (
     <View>
       <RegistrationInputSelect
         name={title}
-        onAdd={() => {
-          console.log("onAdd pressed ")
-          navigation.navigate('RegistrationDBC')
-        }}
+        onAdd={
+          setIsAdding
+        }
       />
 
       {items.map((item) => (
@@ -125,7 +165,6 @@ const DirectorPartnerItems = ({ navigation, items, onDelete, title }) => {
             firstName={item.firstName}
             onPress={() => onDelete(item.id)}
           />
-          {console.log(item)}
         </Fragment>
       ))}
     </View>
@@ -133,12 +172,13 @@ const DirectorPartnerItems = ({ navigation, items, onDelete, title }) => {
 };
 
 const RegistrationInputSelect = ({ name, onAdd }) => {
+  console.log(onAdd)
   return (
     <View style={styles.inputContainer}>
       <View style={styles.inputTextContainer}>
         <Text>{name}</Text>
       </View>
-      <TouchableOpacity onPress={onAdd} style={styles.inputIconContainer}>
+      <TouchableOpacity onPress={() => { onAdd(name); console.log("!") }} style={styles.inputIconContainer}>
         <Text>+</Text>
       </TouchableOpacity>
     </View>

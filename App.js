@@ -54,6 +54,10 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState();
   const [isAuth, setIsAuth] = useState(true);
 
+  const [directors, setDirectors] = useState([]);
+  const [beneficialOwners, setOwners] = useState([]);
+  const [controllingInterests, setIntrests] = useState([]);
+
   /**
    * @dev IDs used though the app
    */
@@ -235,6 +239,10 @@ export default function App() {
         expoPushToken,
         missingAccountSetup,
         setMissingAccountSetup,
+
+        directors, setDirectors,
+        beneficialOwners, setOwners,
+        controllingInterests, setIntrests,
       }}
     >
       <NavigationContainer>

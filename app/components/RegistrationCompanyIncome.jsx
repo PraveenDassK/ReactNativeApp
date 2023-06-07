@@ -54,8 +54,31 @@ const CompanyIncome = ({ SaveDetails, setScreenToShow }) => {
       grantsSubsidiesIncome: grantsSubsidiesIncome,
       crowdfundingIncome: crowdfundingIncome,
     };
-    SaveDetails(details, "CompanyIncome");
+    
+    SaveDetails(getTrueItems(details), "CompanyIncome");
   };
+
+  function getTrueItems(obj) {
+    const trueItems = [];
+  
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key) && obj[key] === true) {
+        trueItems.push(key);
+      }
+    }
+  
+    return trueItems;
+  }
+  
+
+  function areAllItemsFalse(obj) {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key) && obj[key] !== false) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   const handleBack = () => {
     console.log("!");

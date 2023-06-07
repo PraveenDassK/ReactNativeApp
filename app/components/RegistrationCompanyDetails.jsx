@@ -34,7 +34,31 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
 
   const handleSubmit = ({ incomeDetails }) => {
-    SaveDetails(type, "CompanyDetails");
+    console.log(incomeDetails)
+    console.log(type)
+    const currencyPattern = /^\$?\d+(,\d{3})*(\.\d{2})?$/;
+
+    //If currency isn't correct
+    console.log(currencyPattern.test(incomeDetails))
+    console.log(!type)
+
+    if(!currencyPattern.test(incomeDetails)){
+      return alert("Please enter a valid amount")
+    }
+
+    if(type == null){
+      return alert("Please put in a company type")
+    }
+
+    if(!privacyPolicy){
+      return alert("Please accept the privacy policy")
+    }
+
+    SaveDetails({
+      income: incomeDetails,
+      companyType: type
+  }, "CompanyDetails"
+  );
   };
   const handleBack = () => {
     console.log("!");
