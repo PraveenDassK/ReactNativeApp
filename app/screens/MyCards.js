@@ -242,7 +242,6 @@ const MyCards = ({ navigation }) => {
   //CardFreezing
   const [cardFrozen, setFrozen] = useState(false);
         
-  console.log(cardData[cardIndex].id,)
   const toggleCard = async () => {
     setFrozen(!cardFrozen);
     console.log(cardData[cardIndex].status);

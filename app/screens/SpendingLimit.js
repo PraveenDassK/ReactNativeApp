@@ -32,13 +32,8 @@ const SpendingLimit = ({ navigation, route }) => {
   const [spend, setSpend] = useState(0);
   const [percent, setPercent] = useState();
 
-  //Calls the API once during load
   useEffect(() => {
-    loadData();
-  }, []);
 
-  useEffect(() => {
-    restoreLimit();
   }, []);
 
   //Calls the API once during load
@@ -62,6 +57,8 @@ const SpendingLimit = ({ navigation, route }) => {
     const response = await apiCall.GetLimits(authContext.accountID);
     const spendTotal = response === null ? 0 : response.spend;
     const monthlyAmount = response === null ? 0 : response.monthlyAmount;
+
+    console.log(response)
     setMonLim(monthlyAmount);
     setSpend(spendTotal);
     setPercent(spendTotal / monthlyAmount);
@@ -74,13 +71,12 @@ const SpendingLimit = ({ navigation, route }) => {
    */
   const spendingToggle = async () => {
     if (isEnabled) {
-      const amount = "0.00001";
+      const amount = "3000";
       const response = await api.SetLimit(authContext.accountID, amount);
       console.log("setLimit", response);
       setIsEnabled(false);
-      storage.storeLimits(false);
-      setPercent(0);
-      setMonLim(0);
+
+      loadData()
     } else {
       setIsEnabled(true);
       storage.storeLimits(true);
