@@ -79,7 +79,7 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const decrementCart = (item) => {
-    if (!cart.length) return Alert.alert("Add to Cart");
+    if (!cart.length) return Alert.alert(`Add ${item.displayName} project to cart`);
 
     const filteredProjects = cart.filter((project) => project.id !== item.id);
     const decrementedProjects = cart.filter((project) => project.id == item.id);
