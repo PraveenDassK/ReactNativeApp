@@ -113,8 +113,6 @@ const Carbon = ({ route, navigation }) => {
     }, 2000);
   }, [refreshing]);
 
-
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -135,7 +133,7 @@ const Carbon = ({ route, navigation }) => {
           </View>
           <Image
             resizeMode="contain"
-            style={{  width: horizontalScale(120), height: verticalScale(120) }}
+            style={{ width: horizontalScale(120), height: verticalScale(120) }}
             source={require("../assets/ShoppingIcon.png")}
           />
         </Pressable>
@@ -340,26 +338,25 @@ const Carbon = ({ route, navigation }) => {
             ) : (
               <>
                 <View style={styles.tabletImageTextContainer}>
-                  <View style={{flex:1}}>
-                  <Image
-                    resizeMode={item.image !== "" ? "contain" : "contain"}
-                    style={[
-                      styles.listImage,
-                      {
-                        width: horizontalScale(140),
-                        height: verticalScale(180),
-                        resizeMode: "stretch",
-                      },
-                    ]}
-                    source={
-                      item.image != ""
-                        ? { uri: item.image }
-                        : require("../assets/BearWithUs.png")
-                    }
-                  />
-
+                  <View style={{ flex: 1 }}>
+                    <Image
+                      resizeMode={item.image !== "" ? "contain" : "contain"}
+                      style={[
+                        styles.listImage,
+                        {
+                          width: horizontalScale(140),
+                          height: verticalScale(180),
+                          resizeMode: "stretch",
+                        },
+                      ]}
+                      source={
+                        item.image != ""
+                          ? { uri: item.image }
+                          : require("../assets/BearWithUs.png")
+                      }
+                    />
                   </View>
-                  <View style={{ flex: 1,alignItems: "flex-start" }}>
+                  <View style={{ flex: 1, alignItems: "flex-start" }}>
                     <AppText>
                       {item.description
                         .replace(/<[^>]*>/g, "")
@@ -402,14 +399,14 @@ const Carbon = ({ route, navigation }) => {
               <Button
                 disabled={true}
                 counter={true}
-                style={{ width: "49%" }}
+                style={{ width: "49%", height: device == 1 ? 50 : 55 }}
                 title="ADD TO CART"
                 // onPress={() => addToCart(item)}
                 onDelete={() => decrementCart(item, index)}
                 onAdd={() => incrementCart(item, index)}
               />
               <Button
-                style={{ width: "49%" }}
+                style={{ width: "49%", height: device == 1 ? 50 : 55 }}
                 title="Learn More"
                 onPress={() =>
                   navigation.navigate("CarbonProject", { Id: item.id })
@@ -505,11 +502,8 @@ const styles = StyleSheet.create({
   tabletImageTextContainer: {
     flex: 1,
     flexDirection: "row",
-   
+
     justifyContent: "space-evenly",
-    
-  
-    
   },
   tags: {
     color: "grey",
@@ -589,7 +583,6 @@ const styles = StyleSheet.create({
   doubleButtonDiv: {
     flexDirection: "row",
     width: "100%",
-
     justifyContent: "space-between",
   },
   badgeContainer: {
