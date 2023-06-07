@@ -364,12 +364,13 @@ const Carbon = ({ route, navigation }) => {
             ) : (
               <>
                 <View style={styles.tabletImageTextContainer}>
+                  <View style={{flex:1}}>
                   <Image
                     resizeMode={item.image !== "" ? "contain" : "contain"}
                     style={[
                       styles.listImage,
                       {
-                        width: horizontalScale(300),
+                        width: horizontalScale(140),
                         height: verticalScale(180),
                         resizeMode: "stretch",
                       },
@@ -380,14 +381,16 @@ const Carbon = ({ route, navigation }) => {
                         : require("../assets/BearWithUs.png")
                     }
                   />
-                  <View style={{ alignItems: "flex-start" }}>
-                    {/* <AppText>
+
+                  </View>
+                  <View style={{ flex: 1,alignItems: "flex-start" }}>
+                    <AppText>
                       {item.description
                         .replace(/<[^>]*>/g, "")
                         .substring(0, 200)
                         .trim()}
                       ...
-                    </AppText> */}
+                    </AppText>
                   </View>
                 </View>
 
@@ -526,7 +529,7 @@ const styles = StyleSheet.create({
   tabletImageTextContainer: {
     flex: 1,
     flexDirection: "row",
-    flexShrink: 0,
+   
     justifyContent: "space-evenly",
     
   
