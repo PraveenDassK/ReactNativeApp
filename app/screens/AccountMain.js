@@ -121,7 +121,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   useEffect(() => {
     const deviceType = async () => {
       const deviceSize= await Device.getDeviceTypeAsync();
-      console.log('DeviceSize', deviceSize)
       setDevice(deviceSize)
     }
     deviceType()
@@ -131,15 +130,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Calls the API once during load
   useEffect(() => {
     loadData();
-  }, [accountID]);
-
- 
-
-  // useEffect(() => {
-  //   if(missingAccountSetup){
-  //     navigation.navigate("FirstTimeSetup");
-  //   }
-  // }, [missingAccountSetup]);
+  }, [accountID,customerDetails]);
 
   const checkForInitalPasscode = async () => {
     if ((await authStorage.getPasscode()) == null) {
@@ -156,9 +147,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     setIsLoading(true);
     if (!accountID) return;
+    if(!customerDetails)return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
-    console.log("Assets", resposeData);
     const transactionCall = await apiCall.GetTransactions(accountID);
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
@@ -178,7 +169,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
 
-    console.log("Assets", resposeData.assets);
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
