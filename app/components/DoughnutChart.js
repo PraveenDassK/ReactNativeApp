@@ -3,9 +3,13 @@ import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { VictoryPie, VictoryChart, VictoryTheme } from "victory-native";
 import * as Device from 'expo-device';
 
+
+
+
 const DoughnutChart = ({ data, children }) => {
   const {height, width} = useWindowDimensions();
   const [device, setDevice] = useState('')
+
 
   useEffect(() => {
     const deviceType = async () => {
@@ -23,10 +27,12 @@ const DoughnutChart = ({ data, children }) => {
     <VictoryPie
       style={{ labels: { fill: "black" } }}
       colorScale={["tomato", "orange", "gold", "cyan", "green"]}
+      
       innerRadius={device == 1 ? 110 : 300}
       
       labelRadius={device == 1 ? 130: 320}
       padAngle={1}
+      // labels={({ datum }) => `${datum.x[0]}`}
       labels={({ datum }) => `${datum.x[0]}`}
       cornerRadius={80}
       data={data}

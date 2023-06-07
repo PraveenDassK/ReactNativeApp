@@ -19,13 +19,10 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Vibration,
-  useWindowDimensions
-  
+  useWindowDimensions,
 } from "react-native";
 
-import * as Device from 'expo-device';
-
-
+import * as Device from "expo-device";
 
 import Swiper from "react-native-swiper";
 import {
@@ -58,7 +55,7 @@ import authStorage from "../auth/storage";
 const CARD_DATA = [];
 
 const HomeScreenPersonal = ({ navigation, route }) => {
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
 
   const [isLoading, setIsLoading] = useState(false);
   const [cardResponse, setCardResponse] = useState(null);
@@ -90,7 +87,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     missingAccountSetup,
   } = useContext(AuthContext);
 
-  const [device, setDevice] = useState('')
+  const [device, setDevice] = useState("");
 
   const todaydate = moment().format("MMMM D, YYYY");
   const [selectedCard, setSelectedCard] = useState(CARD_DATA[0]);
@@ -120,12 +117,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   useEffect(() => {
     const deviceType = async () => {
-      const deviceSize= await Device.getDeviceTypeAsync();
-      setDevice(deviceSize)
-    }
-    deviceType()
-
-  }, [height, width])
+      const deviceSize = await Device.getDeviceTypeAsync();
+      setDevice(deviceSize);
+    };
+    deviceType();
+  }, [height, width]);
 
   //Calls the API once during load
   useEffect(() => {
@@ -137,8 +133,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       navigation.navigate("PinSetApp");
     }
   };
-
-  
 
   /**
    * @dev
@@ -186,9 +180,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={{ height: "100%", flexDirection: "row" }}>
             <View
               style={{
-                width: horizontalScale(50),
-                height: verticalScale(50),
-                borderRadius: moderateScale(25),
+                width: 50,
+                height: 50,
+                borderRadius: 25,
                 backgroundColor: "#F6F5F8",
                 borderColor: "black",
                 alignSelf: "center",
@@ -217,9 +211,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 marginLeft: "5%",
               }}
             >
-              <AppText
-                style={{ fontSize: moderateScale(14), fontWeight: "700" }}
-              >
+              <AppText style={{ fontSize: 14, fontWeight: "700" }}>
                 {dataHold?.description.replace("Payment to ", "")}
               </AppText>
               <AppText style={{ opacity: 0.4 }}>
@@ -237,7 +229,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               <AppText
                 style={{
                   marginRight: "2.5%",
-                  fontSize: moderateScale(18),
+                  fontSize: 18,
                   fontWeight: "700",
                   color: !dataHold?.credit ? "red" : "green",
                 }}
@@ -276,31 +268,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     }, 2000);
   }, [refreshing]);
 
-  const generateBoxShadowStyle = (
-    xOffset,
-    yOffset,
-    shadowColorIos,
-    shadowOpacity,
-    shadowRadius,
-    elevation,
-    shadowColorAndroid
-  ) => {
-    if (Platform.OS === "ios") {
-      styles.boxShadow = {
-        shadowColor: shadowColorIos,
-        shadowOffset: { width: xOffset, height: yOffset },
-        shadowOpacity,
-        shadowRadius,
-      };
-    } else if (Platform.OS === "android") {
-      styles.boxShadow = {
-        elevation,
-        shadowColor: shadowColorAndroid,
-      };
-    }
-  };
 
-  generateBoxShadowStyle(-2, 4, "#171717", 0.2, 3, 4, "#171717");
 
   if (isLoading) {
     return (
@@ -337,73 +305,72 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           >
             {sortCode} | {accountnumber}
           </AppText>
-          {device == 1 && <>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-           
-            }}
-          >
-            <FadeInView>
-              <Swiper
-                height={verticalScale(270)}
-
-                style={{ paddingLeft: "30%" }}
-                showsPagination={false}
-                loop={false}
-                index={0}
-              >
-                {CARD_DATA.map((card) => (
-                  <Card
-                    key={card.name}
-                    {...card}
-                    selected={selectedCard?.name === card.name}
-                    onPress={() => handleCardPress(card)}
-                  />
-                ))}
-              </Swiper>
-            </FadeInView>
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                setHideBalance((prev) => !prev);
-                Vibration.vibrate();
-              }}
-              style={[
-                {
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "white",
-                  width: horizontalScale(40),
-                  height: verticalScale(40),
-                  borderRadius: moderateScale(20),
-                  padding: 10,
-                },
-              ]}
-            >
-              <Image
-                resizeMode="contain"
-                source={require("../assets/icon-view.png")}
+          {device == 1 && (
+            <>
+              <View
                 style={{
-                  height: verticalScale(25),
-                  width: horizontalScale(25),
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              />
-            </TouchableOpacity>
-          </View>
-          </>
-          }
+              >
+                <FadeInView>
+                  <Swiper
+                    height={verticalScale(270)}
+                    style={{ paddingLeft: "30%" }}
+                    showsPagination={false}
+                    loop={false}
+                    index={0}
+                  >
+                    {CARD_DATA.map((card) => (
+                      <Card
+                        key={card.name}
+                        {...card}
+                        selected={selectedCard?.name === card.name}
+                        onPress={() => handleCardPress(card)}
+                      />
+                    ))}
+                  </Swiper>
+                </FadeInView>
+              </View>
+
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => {
+                    setHideBalance((prev) => !prev);
+                    Vibration.vibrate();
+                  }}
+                  style={[
+                    {
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "white",
+                      width: horizontalScale(40),
+                      height: verticalScale(40),
+                      borderRadius: moderateScale(20),
+                      padding: 10,
+                    },
+                  ]}
+                >
+                  <Image
+                    resizeMode="contain"
+                    source={require("../assets/icon-view.png")}
+                    style={{
+                      height: verticalScale(25),
+                      width: horizontalScale(25),
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
 
           {status && (
             <AppText
@@ -446,13 +413,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 <View
                   style={{
                     width: "100%",
-                    height: horizontalScale(30),
+                    height: 30,
                     shadowOpacity: 1,
                     shadowColor: "blue",
                     shadowOffset: { width: 0, height: 0 },
-                    shadowRadius: moderateScale(5),
+                    shadowRadius:5,
                     elevation: 5,
-                    borderRadius: moderateScale(10),
+                    borderRadius:10,
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                     marginBottom: verticalScale(10),
                   }}
@@ -460,11 +427,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             ) : (
               <AppText style={[styles.BalanceText, styles.blueTitle]}>
-                <AppText
-                  style={[styles.blueTitle,]}
-                >
-                  £
-                </AppText>
+                <AppText style={[styles.blueTitle]}>£</AppText>
                 {balance}
               </AppText>
             )}
@@ -836,21 +799,23 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               resizeMode="contain"
               source={require("../assets/image-tree.png")}
             />
-            {device ==1 && <View
-              style={{
-                position: "absolute",
-                height: 350,
-                width: 350,
-                top: 130,
-                left: 5,
-              }}
-            >
-              <Image
-                resizeMode="contain"
-                source={require("../assets/group-32017.png")}
-                style={{ height: 375, width: 380 }}
-              />
-            </View>}
+            {device == 1 && (
+              <View
+                style={{
+                  position: "absolute",
+                  height: 350,
+                  width: 350,
+                  top: 130,
+                  left: 5,
+                }}
+              >
+                <Image
+                  resizeMode="contain"
+                  source={require("../assets/group-32017.png")}
+                  style={{ height: 375, width: 380 }}
+                />
+              </View>
+            )}
           </View>
           <View style={{ flex: 1 }}>
             <AppText
@@ -885,7 +850,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   fontSize: 22,
                   fontWeight: "700",
                   color: "blue",
-                  marginBottom: device ==1 ?"10%": "0%",
+                  marginBottom: device == 1 ? "10%" : "0%",
                 }}
               >
                 View more
@@ -916,9 +881,9 @@ const CarbonAssets = ({ project, navigation }) => {
       <View style={{ height: "100%", flexDirection: "row" }}>
         <View
           style={{
-            width: horizontalScale(50),
-            height: verticalScale(50),
-            borderRadius: moderateScale(25),
+            width: 50,
+            height: 50,
+            borderRadius: 25,
             backgroundColor: "#F6F5F8",
             borderColor: "black",
             alignSelf: "center",
