@@ -54,7 +54,7 @@ const AccountSettings = ({ navigation }) => {
   const loadData = async () => {
     setIsLoading(true);
     const customer = await api.GetAccount(accountID);
-    const userData = await apiCall.GetUsersSubscriptions(accountID);
+    const userData = await apiCall.GetUsersSubscriptions("CC1");
 
     const data = customer.data.details;
     setSubscriptions(userData.subName);
@@ -92,7 +92,7 @@ const AccountSettings = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.accountTypeContainer}>
-        <AppText style={{ opacity: 0.3 }}>{subscriptions}</AppText>
+        <AppText style={{ opacity: 0.3 }}>{subscriptions} subscription</AppText>
       </View>
 
       <View style={styles.managementContainer}>

@@ -2,7 +2,7 @@
   "expo": {
     "name": "carbonyte",
     "slug": "carbonyte",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "orientation": "portrait",
     "icon": "./app/assets/logo-carbonyte.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "carbonyte.banking",
+      "bundleIdentifier": "com.carbonyte.bankin",
       "buildNumber": "1.1.16"
     },
     "android": {
@@ -28,7 +28,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "versionCode": 26,
-      "package": "carbonyte.bankin",
+      "package": "com.carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },
     "description": "Carbonyte Banking App",

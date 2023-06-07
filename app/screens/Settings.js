@@ -191,7 +191,7 @@ const Settings = ({ navigation }) => {
                 { marginTop: verticalScale(1), opacity: 0.4 },
               ]}
             >
-              {plan}
+              {plan} Subscription
             </AppText>
           </View>
           <View

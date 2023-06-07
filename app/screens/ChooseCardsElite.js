@@ -51,14 +51,15 @@ const ChooseCardsElite = ({ navigation }) => {
     const response = await apiCall.GetSubscriptions();
     setData(response);
     console.log("benefits", response[2]["benefits"][0]);
-
-    const currentSub = await apiCall.GetUsersSubscriptions(account);
+    const currentSub = await apiCall.GetUsersSubscriptions("CC1");
+    setCurrentSubscription(currentSub.subID)
     setIsLoading(false);
     console.log(currentSub.subID);
     console.log(response[0].id);
   };
   const changePlan = async (Id) => {
-    await apiCall.ChangeUsersSubscription(account, Id);
+    await apiCall.ChangeUsersSubscription("CC1", Id);
+    loadData()
   };
 
   if (isLoading) {
@@ -119,10 +120,17 @@ const ChooseCardsElite = ({ navigation }) => {
                             </React.Fragment>
                           );
                         })}
-                        <Button
-                          title="Purchase"
-                          onPress={() => changePlan(item.id)}
-                        />
+                        {currentSubscruption == item.id ?
+                          <Button
+                            title="Current plan"
+                          />
+                          :
+                          <Button
+                            title="Swap to this plan"
+                            onPress={() => changePlan(item.id)}
+                          />
+                        }
+
                       </View>
                     </View>
                   </ScrollView>

@@ -628,8 +628,10 @@ const GetLimits = async (Id) => {
   if (
     request.data.resultMessage == "No budget found for the specified Account Id"
   ) {
-    return null;
-  }
+    return {
+      spend: spend,
+      monthlyAmount: 0,
+    };  }
 
   console.log("request data", request.data);
   const requestData = request?.data?.details;
