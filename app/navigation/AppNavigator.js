@@ -96,6 +96,7 @@ const Stack = createStackNavigator();
 
 import { Animated, View, TouchableOpacity, Platform } from 'react-native';
 import GlobalStyles from "../../GlobalStyles";
+import colors from "../config/colors";
 
 
 function MyTabBar({ state, descriptors, navigation, position }) {
@@ -177,7 +178,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                         opacity,
                         textAlign: "center",
                         fontFamily: "Helvetica",
-                        fontWeight: isFocused ? "bold" : "normal",
+                        fontWeight: isFocused ? "900" : "200",
+                        color: isFocused ? colors.blue : colors.black
 
 
 
