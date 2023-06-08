@@ -385,7 +385,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="About us"
+            title="Contact us"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AboutUs")}

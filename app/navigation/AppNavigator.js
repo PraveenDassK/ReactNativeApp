@@ -264,7 +264,7 @@ const StackNavigator = () => {
         name="AboutUs"
         component={gestureHandlerRootHOC(AboutUs)}
         options={{
-          title: "About Us",
+          title: "Contact Us",
         }}
       />
 
