@@ -351,7 +351,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={[styles.button]}>
           <Button
-            title="My Plan"
+            title="My plan"
             style={[styles.boxShadow]}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ChooseCardsElite")}
@@ -367,7 +367,7 @@ const Settings = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Security & Privacy"
+            title="Security & privacy"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
@@ -394,16 +394,16 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Faq"
+            title="FAQs"
             style={styles.boxShadow}
-            textTransform="uppercase"
+            textTransform="none"
             onPress={() => navigation.navigate("Faq")}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Reset app passcode"
+            title="Reset passcode"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("PinSetApp")}
@@ -412,7 +412,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Delete Account"
+            title="Delete account"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("DeleteAccount")}
