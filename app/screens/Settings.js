@@ -137,7 +137,6 @@ const Settings = ({ navigation }) => {
     }, 2000);
   }, [refreshing]);
 
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -172,7 +171,6 @@ const Settings = ({ navigation }) => {
           <View
             style={[
               { flex: 1, justifyContent: "center", alignItems: "flex-end" },
-              styles.boxShadow,
             ]}
           >
             <View
@@ -204,7 +202,7 @@ const Settings = ({ navigation }) => {
           </AppText>
         </View>
 
-        <View style={[styles.accountDetailsDiv, styles.boxShadow]}>
+        <View style={[styles.accountDetailsDiv]}>
           <View style={styles.accountDetailsRow}>
             <View style={{ flex: 1 }}>
               <AppText style={[styles.divStart, styles.customTitle]}>

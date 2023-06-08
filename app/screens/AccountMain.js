@@ -126,7 +126,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Calls the API once during load
   useEffect(() => {
     loadData();
-  }, [accountID,customerDetails]);
+  }, [accountID, customerDetails]);
 
   const checkForInitalPasscode = async () => {
     if ((await authStorage.getPasscode()) == null) {
@@ -141,7 +141,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     setIsLoading(true);
     if (!accountID) return;
-    if(!customerDetails)return;
+    if (!customerDetails) return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
     const transactionCall = await apiCall.GetTransactions(accountID);
@@ -173,7 +173,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       let dataHold = transactionCall.transactions[i];
       pageShow.push(
         <TouchableOpacity
-          style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
+          style={[styles.transactionBox, styles.rounded]}
           key={i}
           onPress={() => navigation.navigate("Transactions")}
         >
@@ -267,8 +267,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
-
-
 
   if (isLoading) {
     return (
@@ -390,7 +388,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View
             style={[
               styles.totalWalletBalanceContainer,
-              styles.boxShadow,
+
               { fontFamily: "Helvetica" },
             ]}
           >
@@ -417,9 +415,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                     shadowOpacity: 1,
                     shadowColor: "blue",
                     shadowOffset: { width: 0, height: 0 },
-                    shadowRadius:5,
+                    shadowRadius: 5,
                     elevation: 5,
-                    borderRadius:10,
+                    borderRadius: 10,
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                     marginBottom: verticalScale(10),
                   }}
@@ -437,7 +435,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("AddFunds")}
-              style={[styles.inputBox, styles.boxShadow]}
+              style={[styles.inputBox]}
             >
               <View style={styles.inputBoxDiv}>
                 <Image
@@ -451,7 +449,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate("SendMoney")}
-              style={[styles.inputBox, styles.boxShadow]}
+              style={[styles.inputBox]}
             >
               <View style={styles.inputBoxDiv}>
                 <Image
@@ -465,7 +463,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate("MyCards")}
-              style={[styles.inputBox, styles.boxShadow]}
+              style={[styles.inputBox]}
             >
               <View style={styles.inputBoxDiv}>
                 <Image
@@ -479,7 +477,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate("SwitchAccounts")}
-              style={[styles.inputBox, styles.boxShadow]}
+              style={[styles.inputBox]}
             >
               <View style={styles.inputBoxDiv}>
                 <Image
@@ -515,12 +513,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         {/**
          * @dev Carbon spending section
          */}
-        <View style={[styles.carbonSpendingDiv, styles.boxShadow]}>
+        <View style={[styles.carbonSpendingDiv]}>
           {/**
            * @notice The start of the carbon holder
            */}
           <View style={styles.carbonItemDiv}>
-            <View style={[styles.estimatedCarbonDiv, styles.boxShadow]}>
+            <View style={[styles.estimatedCarbonDiv]}>
               <View style={{ flex: 3.5 }}>
                 <AppText style={styles.blueTitle}>{carbonAmount}</AppText>
               </View>
@@ -742,7 +740,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
          * @dev Transactions section
          */}
 
-        <View style={[styles.carbonSpendingTitleDiv, styles.boxShadow]}>
+        <View style={[styles.carbonSpendingTitleDiv]}>
           <Image
             resizeMode="contain"
             source={require("../assets/icon-withdraw.png")}
@@ -765,7 +763,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         )}
 
         {nftimg && (
-          <View style={[styles.NFTContainer, styles.boxShadow]}>
+          <View style={[styles.NFTContainer]}>
             <AppText
               style={[
                 styles.titleText,
@@ -790,9 +788,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           </View>
         )}
 
-        <View
-          style={[styles.carbonContainer, styles.rounded, styles.boxShadow]}
-        >
+        <View style={[styles.carbonContainer, styles.rounded]}>
           <View style={styles.treeContainer}>
             <Image
               style={styles.treeImage}
@@ -1197,17 +1193,6 @@ const styles = StyleSheet.create({
 
   rounded: {
     borderRadius: moderateScale(15),
-  },
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 1,
-
-    elevation: 1,
   },
   carbonSpendingAnalysysDiv: {
     backgroundColor: "white",

@@ -34,9 +34,8 @@ import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import useDevice from "../hooks/useDevice";
 
-
 const Analytics = ({ navigation }) => {
-  const { device } = useDevice()
+  const { device } = useDevice();
   const [isLoading, setIsLoading] = useState(false);
   const [active, setActive] = useState("");
   const [balance, setBal] = useState(0);
@@ -95,8 +94,8 @@ const Analytics = ({ navigation }) => {
     setTotalFootprint(carbonSpendData.total);
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
-   
-    setRecent(dataCall.transactions.slice(0,3));
+
+    setRecent(dataCall.transactions.slice(0, 3));
     setTrans(dataCall.transactions);
     setBal(dataCall.balance);
     setMonthAverage(dataCall.average);
@@ -149,8 +148,6 @@ const Analytics = ({ navigation }) => {
     { id: 3, title: "Year" },
   ];
 
-
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -183,8 +180,8 @@ const Analytics = ({ navigation }) => {
             style={{
               fontWeight: Platform.OS === "android" ? "normal" : "700",
               fontFamily: "Helvetica",
-              fontSize:  device == 1 ? 24: 40,
-              width: device == 1 ? 250: 350,
+              fontSize: device == 1 ? 24 : 40,
+              width: device == 1 ? 250 : 350,
               textAlign: "center",
             }}
           >
@@ -196,9 +193,7 @@ const Analytics = ({ navigation }) => {
           <DoughnutChart
             data={carbnonSpendData}
             children={
-              <View
-               
-              >
+              <View>
                 <AppText
                   style={{
                     fontSize: 50,
@@ -223,7 +218,7 @@ const Analytics = ({ navigation }) => {
             }
           />
         </View>
-        <View style={[styles.balanceContainer, styles.boxShadow]}>
+        <View style={[styles.balanceContainer]}>
           <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16 }}>
             Balance
           </AppText>
@@ -272,7 +267,7 @@ const Analytics = ({ navigation }) => {
                 padding: "5%",
                 alignSelf: "center",
               },
-              styles.boxShadow,
+              ,
             ]}
           >
             <AppText style={{ fontWeight: "500" }}>Total Spend</AppText>
@@ -313,7 +308,7 @@ const Analytics = ({ navigation }) => {
                 borderRadius: 15,
                 padding: "5%",
               },
-              styles.boxShadow,
+              ,
             ]}
           >
             <AppText style={{ fontWeight: "700" }}>
@@ -442,11 +437,7 @@ const Analytics = ({ navigation }) => {
           recentTransactions.map((transaction, index) => (
             <View key={index}>
               <TouchableOpacity
-                style={[
-                  styles.transactionBox,
-                  styles.rounded,
-                  styles.boxShadow,
-                ]}
+                style={[styles.transactionBox, styles.rounded]}
                 onPress={() => navigation.navigate("Transactions")}
               >
                 <View style={{ height: "100%", flexDirection: "row" }}>
@@ -534,11 +525,7 @@ const Analytics = ({ navigation }) => {
           data.map((transaction, index) => (
             <View key={index}>
               <TouchableOpacity
-                style={[
-                  styles.transactionBox,
-                  styles.rounded,
-                  styles.boxShadow,
-                ]}
+                style={[styles.transactionBox, styles.rounded]}
                 // onPress={() => navigation.navigate("Transactions")}
               >
                 <View style={{ height: "100%", flexDirection: "row" }}>
@@ -602,11 +589,7 @@ const Analytics = ({ navigation }) => {
           fulldata.map((transaction, index) => (
             <View key={index}>
               <TouchableOpacity
-                style={[
-                  styles.transactionBox,
-                  styles.rounded,
-                  styles.boxShadow,
-                ]}
+                style={[styles.transactionBox, styles.rounded]}
                 //onPress={() => navigation.navigate("Transactions")}
               >
                 <View style={{ height: "100%", flexDirection: "row" }}>

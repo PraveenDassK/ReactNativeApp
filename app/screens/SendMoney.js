@@ -51,30 +51,28 @@ const SendMoney = ({ navigation }) => {
     setGroup(groupBeneficiaries);
   };
 
-
   /**
-   * 
+   *
    * @param {Str} Id The beneficary ID
    */
   const sendDetails = (Id) => {
     const details = benList[Id];
 
-
-    console.log()
+    console.log();
     const requestObj = {
-      "sourceAccountId": accountID,
-      "destination": {
-        "type": "SCAN",
-        "id": "A1226WEM",
-        "accountNumber": details.destinationIdentifier.accountNumber,
-        "sortCode": details.destinationIdentifier.sortCode,
-        "name": details.name,
-        "phoneNumber": details.phoneNumber
+      sourceAccountId: accountID,
+      destination: {
+        type: "SCAN",
+        id: "A1226WEM",
+        accountNumber: details.destinationIdentifier.accountNumber,
+        sortCode: details.destinationIdentifier.sortCode,
+        name: details.name,
+        phoneNumber: details.phoneNumber,
       },
-      "currency": "GBP",
-      "amount": 0,
-      "reference": "Transfer"
-    }
+      currency: "GBP",
+      amount: 0,
+      reference: "Transfer",
+    };
 
     navigation.navigate("BankTransferAmount", requestObj);
   };
@@ -137,7 +135,6 @@ const SendMoney = ({ navigation }) => {
   return (
     <View>
       <ScrollView>
-
         <View style={styles.subTextDiv}>
           <AppText style={styles.subText}>Add beneficary</AppText>
         </View>
@@ -188,7 +185,7 @@ const SendMoney = ({ navigation }) => {
         <TouchableOpacity style={styles.buttonContainer}>
           <Button
             title="Schedule payment"
-            style={[styles.boxShadow, { width: "90%" }]}
+            style={[{ width: "90%" }]}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ScheduledPayment")}
           />

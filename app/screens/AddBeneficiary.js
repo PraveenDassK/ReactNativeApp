@@ -161,8 +161,7 @@ const AddBeneficiary = ({ navigation }) => {
                 </View>
                 <View
                   style={[
-                    { flex: 1, justifyContent: "flex-end" },
-                    styles.boxShadow,
+                    { flex: 1, justifyContent: "flex-end" }
                   ]}
                 >
                   <TouchableOpacity style={styles.button}>

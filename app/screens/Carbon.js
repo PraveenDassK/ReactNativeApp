@@ -79,7 +79,8 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const decrementCart = (item) => {
-    if (!cart.length) return Alert.alert(`Add ${item.displayName} project to cart`);
+    if (!cart.length)
+      return Alert.alert(`Add ${item.displayName} project to cart`);
 
     const filteredProjects = cart.filter((project) => project.id !== item.id);
     const decrementedProjects = cart.filter((project) => project.id == item.id);
@@ -128,18 +129,20 @@ const Carbon = ({ route, navigation }) => {
           style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }}
           onPress={goToBasket}
         >
-          <View style={{
-    justifyContent: "center",
-    alignItems: "center",
-    width: device == 1 ? 20 : 30,
-    height: device == 1 ? 20 : 30,
-    borderRadius: device == 1 ? 10 : 15,
-    backgroundColor: colors.danger,
-    position: "absolute",
-    zIndex: 5,
-    top: 25,
-    right: device == 1 ? 30 : 85,
-  }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: device == 1 ? 20 : 30,
+              height: device == 1 ? 20 : 30,
+              borderRadius: device == 1 ? 10 : 15,
+              backgroundColor: colors.danger,
+              position: "absolute",
+              zIndex: 5,
+              top: 25,
+              right: device == 1 ? 30 : 85,
+            }}
+          >
             <AppText>{count}</AppText>
           </View>
           <Image
@@ -193,7 +196,7 @@ const Carbon = ({ route, navigation }) => {
               title="CALCULATE CARBON FOOTPRINT"
               color="white"
               textColor="black"
-              style={[styles.boxShadow,  {height: device == 1 ? 50 : 55 }]}
+              style={[{ height: device == 1 ? 50 : 55 }]}
               onPress={() => navigation.navigate("CarbonTonnesRemoved")}
             />
             <View style={styles.subContainer}>
@@ -269,7 +272,7 @@ const Carbon = ({ route, navigation }) => {
                 color="white"
                 textColor="black"
                 title="Visit Your Cart"
-                style={[styles.boxShadow, {height: device == 1 ? 50 : 55 }]}
+                style={[{ height: device == 1 ? 50 : 55 }]}
                 onPress={() => navigation.navigate("CarbonCart", cart)}
               />
             ) : (
@@ -291,7 +294,7 @@ const Carbon = ({ route, navigation }) => {
         data={data}
         keyExtractor={(data) => data.id.toString()}
         renderItem={({ item, index }) => (
-          <View style={[styles.listItems, styles.boxShadow]}>
+          <View style={[styles.listItems]}>
             {device == 1 ? (
               <>
                 <Image
