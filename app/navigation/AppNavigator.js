@@ -537,7 +537,7 @@ const StackNavigator = () => {
         name="AccountSettings"
         component={gestureHandlerRootHOC(AccountSettings)}
         options={{
-          title: "Settings",
+          title: "Account Settings",
 
         }}
       />
@@ -569,7 +569,7 @@ const StackNavigator = () => {
         name="AccountLetter"
         component={gestureHandlerRootHOC(AccountLetter)}
         options={{
-          title: "AccountLetter",
+          title: "Account Verification",
 
         }}
       />
