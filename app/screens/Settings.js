@@ -21,6 +21,7 @@ import authStorage from "../auth/storage";
 import Button from "../components/AppButton";
 import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
+import colors from "../config/colors";
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +33,7 @@ const Settings = ({ navigation }) => {
   const [currency, setCurrency] = useState(null);
   const [initials, setInitals] = useState(null);
   const [iban, setIban] = useState(null);
+  const [bic, setBIC] = useState(null)
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -66,8 +68,12 @@ const Settings = ({ navigation }) => {
     const userDetails = await api.GetAllAccounts(userID);
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
+
+    console.log('hello',userDetails, accountDetails, subscriptionDetails)
     const data = userDetails;
     const accountdata = accountDetails;
+
+    
 
     setPlan(subscriptionDetails.subName);
     setName(accountdata.customerName);
@@ -75,13 +81,18 @@ const Settings = ({ navigation }) => {
     setSortCode(accountdata.identifiers[0].sortCode);
     setAccNum(accountdata.identifiers[0].accountNumber);
     setCurrency(data.currency ? data.currency : "GBP");
-
     setStatus(accountdata.status);
 
     if (accountdata.identifiers[0].iban === null) {
       setIban("Unavailable");
     } else {
       setIban(accountdata.identifiers[0].iban);
+    }
+
+    if (accountdata.identifiers[0].bic === null) {
+      setBIC("Unavailable");
+    } else {
+      setBIC(accountdata.identifiers[0].bic);
     }
 
     let name = accountdata.customerName;
@@ -93,6 +104,8 @@ const Settings = ({ navigation }) => {
     }
     setInitals(initialsHold);
     setIsLoading(false);
+
+   
   };
 
   /**
@@ -120,6 +133,13 @@ const Settings = ({ navigation }) => {
     await Clipboard.setStringAsync(iban);
   };
 
+  const copyBIC = async () => {
+    console.log("Copied");
+    Vibration.vibrate();
+    alert("BIC copied");
+    await Clipboard.setStringAsync(bic);
+  };
+
   React.useEffect(() => {
     const swipeRight = navigation.addListener("state", (event) => {});
 
@@ -136,7 +156,6 @@ const Settings = ({ navigation }) => {
       setRefreshing(false);
     }, 2000);
   }, [refreshing]);
-
 
   if (isLoading) {
     return (
@@ -172,7 +191,6 @@ const Settings = ({ navigation }) => {
           <View
             style={[
               { flex: 1, justifyContent: "center", alignItems: "flex-end" },
-              styles.boxShadow,
             ]}
           >
             <View
@@ -204,7 +222,7 @@ const Settings = ({ navigation }) => {
           </AppText>
         </View>
 
-        <View style={[styles.accountDetailsDiv, styles.boxShadow]}>
+        <View style={[styles.accountDetailsDiv]}>
           <View style={styles.accountDetailsRow}>
             <View style={{ flex: 1 }}>
               <AppText style={[styles.divStart, styles.customTitle]}>
@@ -332,6 +350,39 @@ const Settings = ({ navigation }) => {
           <View style={styles.accountDetailsRow}>
             <View style={{ flex: 1 }}>
               <AppText style={[styles.divStart, styles.customTitle]}>
+                BIC
+              </AppText>
+            </View>
+
+            <View style={styles.splitDiv}>
+              <Pressable style={styles.helloParent} onPress={copyBIC}>
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    height: "50%",
+                    width: 30,
+                    marginRight: "5%",
+                  }}
+                  source={require("../assets/icon-materialcontentcopy.png")}
+                />
+              </Pressable>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <AppText style={[styles.divEnd, styles.customTitle]}>
+                {bic}
+              </AppText>
+            </View>
+          </View>
+
+          <View style={styles.accountDetailsRow}>
+            <View style={{ flex: 1 }}>
+              <AppText style={[styles.divStart, styles.customTitle]}>
                 Status
               </AppText>
             </View>
@@ -353,7 +404,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={[styles.button]}>
           <Button
-            title="My Plan"
+            title="My plan"
             style={[styles.boxShadow]}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ChooseCardsElite")}
@@ -396,7 +447,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="About us"
+            title="Contact us"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AboutUs")}
@@ -407,13 +458,14 @@ const Settings = ({ navigation }) => {
           <Button
             title="FAQs"
             style={styles.boxShadow}
+            textTransform="none"
             onPress={() => navigation.navigate("Faq")}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Reset app passcode"
+            title="Reset passcode"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("PinSetApp")}
@@ -423,8 +475,9 @@ const Settings = ({ navigation }) => {
         <TouchableOpacity style={styles.button}>
           <Button
             title="Close account"
+            textColor="black"
+            color="danger"
             style={styles.boxShadow}
-            color = "red"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("DeleteAccount")}
           />

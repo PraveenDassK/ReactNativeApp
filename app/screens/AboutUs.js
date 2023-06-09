@@ -98,9 +98,7 @@ const AboutUs = ({ navigation }) => {
 
   return (
     <View style={styles.mainContainer}>
-      {/* <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>About Us</Text>
-      </View> */}
+     
 
       <View
         style={{

@@ -57,8 +57,6 @@ const Devices = ({ navigation }) => {
     setIsLoading(false);
   };
 
-
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -102,11 +100,7 @@ const Devices = ({ navigation }) => {
     >
       <View style={styles.headerContainer}>
         <View style={styles.headerItem}>
-          <MaterialCommunityIcons
-            name="security"
-            color="blue"
-            size={60}
-          />
+          <MaterialCommunityIcons name="security" color="blue" size={60} />
         </View>
         <View style={styles.headerItem}>
           <Text style={[styles.headerText, styles.headerTitle]}>
@@ -143,7 +137,7 @@ const Devices = ({ navigation }) => {
 
 const Device = ({ name, os, date, index, onSignout }) => {
   return (
-    <View style={[styles.deviceContainer, styles.boxShadow]}>
+    <View style={[styles.deviceContainer]}>
       <View style={styles.deviceItemContainer}>
         <MaterialCommunityIcons name={DEVICES[0]} size={18} />
         <View style={styles.deviceTextContainer}>
@@ -168,10 +162,7 @@ const Device = ({ name, os, date, index, onSignout }) => {
         </View>
       </View>
       <View style={styles.deviceItemContainer}>
-        <Button
-          title="Sign out"
-          onPress={() => onSignout(index)}
-        />
+        <Button title="Sign out" onPress={() => onSignout(index)} />
       </View>
     </View>
   );

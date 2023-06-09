@@ -66,7 +66,7 @@ const MyCards = ({ navigation }) => {
 
     const cards = await apiCall.GetCardByAccount("686283112");
     setCardData(cards);
-    console.log(cards)
+    console.log(cards);
     const currentCard = cards[cardIndex];
     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
 
@@ -181,7 +181,7 @@ const MyCards = ({ navigation }) => {
     transactionData.forEach((transaction, i) => {
       transactionList.push(
         <TouchableOpacity
-          style={[styles.transactionBox, styles.rounded, styles.boxShadow]}
+          style={[styles.transactionBox, styles.rounded]}
           key={i}
           onPress={() => showTransaction(i)}
         >
@@ -241,10 +241,10 @@ const MyCards = ({ navigation }) => {
 
   //CardFreezing
   const [cardFrozen, setFrozen] = useState(false);
-        
+
   const toggleCard = async () => {
     setFrozen(!cardFrozen);
-   
+
     if (cardData[cardIndex].status == "CARD_OK") {
       const request = await apiCall2.FreezeCard(
         cardData[cardIndex].id,
@@ -274,8 +274,6 @@ const MyCards = ({ navigation }) => {
         return "carbonyte";
     }
   };
-
-
 
   if (isLoading) {
     return (

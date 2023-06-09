@@ -97,6 +97,7 @@ const Stack = createStackNavigator();
 
 import { Animated, View, TouchableOpacity, Platform } from 'react-native';
 import GlobalStyles from "../../GlobalStyles";
+import colors from "../config/colors";
 
 
 function MyTabBar({ state, descriptors, navigation, position }) {
@@ -178,7 +179,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                         opacity,
                         textAlign: "center",
                         fontFamily: "Helvetica",
-                        fontWeight: isFocused ? "bold" : "normal",
+                        fontWeight: isFocused ? "900" : "200",
+                        color: isFocused ? colors.blue : colors.black
 
 
 
@@ -272,7 +274,7 @@ const StackNavigator = () => {
         name="AboutUs"
         component={gestureHandlerRootHOC(AboutUs)}
         options={{
-          title: "About Us",
+          title: "Contact Us",
         }}
       />
 
@@ -281,7 +283,7 @@ const StackNavigator = () => {
         name="Faq"
         component={gestureHandlerRootHOC(Faq)}
         options={{
-          title: "FAQ",
+          title: "FAQs",
 
         }}
       />
@@ -545,7 +547,7 @@ const StackNavigator = () => {
         name="AccountSettings"
         component={gestureHandlerRootHOC(AccountSettings)}
         options={{
-          title: "Settings",
+          title: "Account Settings",
 
         }}
       />
@@ -577,7 +579,7 @@ const StackNavigator = () => {
         name="AccountLetter"
         component={gestureHandlerRootHOC(AccountLetter)}
         options={{
-          title: "AccountLetter",
+          title: "Account Verification",
 
         }}
       />

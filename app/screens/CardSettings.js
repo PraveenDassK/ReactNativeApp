@@ -77,8 +77,6 @@ const CardSettings = ({ navigation }) => {
     setIsLoading(false);
   };
 
-
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -111,7 +109,6 @@ const CardSettings = ({ navigation }) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
               },
-              styles.boxShadow,
             ]}
           >
             <Image
@@ -157,7 +154,6 @@ const CardSettings = ({ navigation }) => {
               height: "auto",
               paddingRight: "2.5%",
             },
-            styles.boxShadow,
           ]}
         >
           <View
@@ -341,7 +337,6 @@ const CardSettings = ({ navigation }) => {
               backgroundColor: "white",
               height: "auto",
             },
-            styles.boxShadow,
           ]}
         >
           <Pressable onPress={() => navigation.navigate("ReplaceCard")}>
@@ -431,7 +426,6 @@ const CardSettings = ({ navigation }) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
               },
-              styles.boxShadow,
             ]}
           >
             <Image

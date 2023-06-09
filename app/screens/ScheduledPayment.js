@@ -106,8 +106,6 @@ const ScheduledPayment = () => {
 
   const loadData = async () => {};
 
-
-
   const handleSubmit = async ({
     title,
     amount,
@@ -198,12 +196,7 @@ const ScheduledPayment = () => {
                     />
                   </View>
                 </View>
-                <View
-                  style={[
-                    { flex: 1, justifyContent: "flex-end" },
-                    styles.boxShadow,
-                  ]}
-                >
+                <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
                   <TouchableOpacity style={styles.button}>
                     <Button title="Confirm" onPress={handleSubmit} />
                   </TouchableOpacity>
