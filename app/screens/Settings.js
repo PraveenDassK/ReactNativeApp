@@ -142,7 +142,6 @@ const Settings = ({ navigation }) => {
 
   React.useEffect(() => {
     const swipeRight = navigation.addListener("state", (event) => {});
-
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return swipeRight;
   }, [navigation]);
@@ -438,6 +437,16 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
+            title="Notifications"
+            style={styles.boxShadow}
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("Notifications")}
+          />
+
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Button
             title="Contact us"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
@@ -514,7 +523,7 @@ const Settings = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  boxShadow: {},
+
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: GlobalStyles.DivContainer.height,

@@ -19,6 +19,7 @@ import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
 
+
 import AccountDummy from "../screens/AccountDummy";
 import AccountDummy2 from "../screens/AccountDummy2";
 
@@ -88,6 +89,7 @@ import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
+import Notifications from "../screens/Notifications";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -427,6 +429,15 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Devices)}
         options={{
           title: "Devices",
+
+        }}
+      />
+      
+      <Stack.Screen
+        name="Notifications"
+        component={gestureHandlerRootHOC(Notifications)}
+        options={{
+          title: "Notifications",
 
         }}
       />
