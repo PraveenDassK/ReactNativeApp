@@ -90,7 +90,7 @@ import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
-import Notifications from "../screens/Notifications";
+
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -443,14 +443,7 @@ const StackNavigator = () => {
         }}
       />
       
-      <Stack.Screen
-        name="Notifications"
-        component={gestureHandlerRootHOC(Notifications)}
-        options={{
-          title: "Notifications",
-
-        }}
-      />
+    
 
       <Stack.Screen
         name="SetLimit"

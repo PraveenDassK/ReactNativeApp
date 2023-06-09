@@ -444,15 +444,7 @@ const Settings = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
-          <Button
-            title="Notifications"
-            style={styles.boxShadow}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("Notifications")}
-          />
-
-        </TouchableOpacity>
+       
 
         <TouchableOpacity style={styles.button}>
           <Button

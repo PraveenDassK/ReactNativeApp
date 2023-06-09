@@ -7,22 +7,16 @@ import React, {
 } from "react";
 import {
   RefreshControl,
-  FlatList,
   Text,
   StyleSheet,
-  Image,
   View,
-  Pressable,
   ScrollView,
-  Platform,
   ActivityIndicator,
+  Switch,
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
-import GlobalStyles from "../../GlobalStyles";
-
 import Button from "../components/AppButton";
-import colors from "../config/colors";
 
 import apiDevices from "../api/apiDevices";
 import AuthContext from "../auth/context";
@@ -35,6 +29,8 @@ const Devices = ({ navigation }) => {
   const [devices, setDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   useEffect(() => {
     loadData();
@@ -115,6 +111,9 @@ const Devices = ({ navigation }) => {
           </Text>
         </View>
       </View>
+      <View style={styles.containerHeader}>
+        <Text>Signed-in devices</Text>
+      </View>
       <View style={styles.mainContainer}>
         {devices &&
           devices.map((device, index) => {
@@ -130,6 +129,22 @@ const Devices = ({ navigation }) => {
               </Fragment>
             );
           })}
+      </View>
+      <View style={styles.footerContainer}>
+      <View style={styles.containerHeader}>
+        <Text>Notifications</Text>
+      </View>
+        <View style={styles.deviceContainer}>
+          <View style={styles.notoficationRowContainer}>
+            <Text>Push Notifications</Text>
+            <Switch
+              trackColor={{ false: "black", true: "blue" }}
+              thumbColor={isEnabled ? "white" : "black"}
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
@@ -169,10 +184,18 @@ const Device = ({ name, os, date, index, onSignout }) => {
 };
 
 const styles = StyleSheet.create({
-  boxShadow: {},
+  notoficationRowContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  
   container: {
     flex: 1,
     padding: "5%",
+  },
+  containerHeader :{
+    marginBottom: "2%"
   },
   deviceContainer: {
     borderRadius: 10,
@@ -192,6 +215,9 @@ const styles = StyleSheet.create({
   },
   deviceTextContainer: {
     marginLeft: "2%",
+  },
+  footerContainer: {
+    marginBottom: "15%"
   },
   headerContainer: {
     alignItems: "center",
