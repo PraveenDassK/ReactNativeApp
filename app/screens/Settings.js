@@ -21,6 +21,7 @@ import authStorage from "../auth/storage";
 import Button from "../components/AppButton";
 import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
+import colors from "../config/colors";
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -412,7 +413,9 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Delete account"
+            title="Close account"
+            textColor="black"
+            color="danger"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("DeleteAccount")}

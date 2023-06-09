@@ -473,7 +473,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   container: {
-    backgroundColor: "#f3f5f5",
     flex: 1,
   },
   customTitle: {
