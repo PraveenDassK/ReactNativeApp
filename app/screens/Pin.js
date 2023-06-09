@@ -26,6 +26,13 @@ const Pin = ({ route, navigation }) => {
   const [showCompletedButton, setShowCompletedButton] = useState(false);
   const authContext = useContext(AuthContext);
   const { userID, accountID } = useContext(AuthContext);
+
+  const singleBeneficary = () => {
+    if (route.params.beneficiaryData.groupId != null) {
+      return false
+    }
+    return true
+  }
   /**
    * Pin display controlers
    */
@@ -45,8 +52,8 @@ const Pin = ({ route, navigation }) => {
   console.log(route.params.beneficiaryData)
 
   /**
-   * @
-   * @returns If pin is incorrect
+   * @dev Checks the pin and sends money when necissary
+   * @returns 
    */
   const checkPin = async () => {
     console.log(route);
@@ -56,21 +63,47 @@ const Pin = ({ route, navigation }) => {
       return;
     }
 
-    setLoading(true);
-    console.log(route.params.beneficiaryData);
+    //Check if it is a group send
+    if (!singleBeneficary()) {
+      //If it is a group send and
+      //If pin is correct then atempt to send 
+      setLoading(true);
+      console.log(route.params.beneficiaryData);
 
-    const transferRequest = await apiTransaction.sendMoney(route.params.beneficiaryData)
-    console.log(transferRequest)
+      const transferRequest = await apiTransaction.sendToGroup(route.params.beneficiaryData)
+      console.log(transferRequest)
 
-    setLoading(false);
+      setLoading(false);
 
-    console.log(transferRequest);
-    if (!transferRequest.data.result) {
-      alert("Transaction unsuccessful");
-      pinView.current.clearAll();
-      return;
+      //Check if the sending was successful
+      console.log(transferRequest);
+      if (!transferRequest.data.result) {
+        alert("Transaction unsuccessful");
+        pinView.current.clearAll();
+        return;
+      }
+      navigation.navigate(route.params.successScreen, { params: route.params });
+
+    } else {
+      //If pin is correct then atempt to send 
+      setLoading(true);
+      console.log(route.params.beneficiaryData);
+
+      const transferRequest = await apiTransaction.sendMoney(route.params.beneficiaryData)
+      console.log(transferRequest)
+
+      setLoading(false);
+
+      //Check if the sending was successful
+      console.log(transferRequest);
+      if (!transferRequest.data.result) {
+        alert("Transaction unsuccessful");
+        pinView.current.clearAll();
+        return;
+      }
+      navigation.navigate(route.params.successScreen, { params: route.params });
     }
-    navigation.navigate(route.params.successScreen, { params: route.params });
+
   };
 
   if (isLoading) {

@@ -64,6 +64,7 @@ import PinCart from "../screens/PinCart"
 import PinSetApp from "../screens/PinSetApp"
 import PinSet from "../screens/PinSet"
 
+import CarbonyteLabs from "../screens/CarbonyteLabs";
 /**
  * @notice Screens on the settings page to navigate to
  */
@@ -208,7 +209,7 @@ const StackNavigator = () => {
           fontFamily: "Helvetica",
           fontWeight: "normal",
           fontSize: 28,
-          
+
         },
         headerBackTitleVisible: false,
         headerStyle: { backgroundColor: "transparent" }
@@ -230,7 +231,16 @@ const StackNavigator = () => {
           headerShown: false,
         }}
       />
-      
+
+      <Stack.Screen
+        name="CarbonyteLabs"
+        component={CarbonyteLabs}
+        options={{
+          title: "Carbonyte labs",
+          headerShown: false,
+        }}
+      />
+
       <Stack.Screen
         name="AddFunds"
         component={gestureHandlerRootHOC(AddFunds)}
@@ -239,7 +249,7 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" }
         }}
@@ -252,7 +262,7 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
         }}
@@ -292,7 +302,7 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
         }}
@@ -306,7 +316,7 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
         }}
@@ -365,7 +375,7 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
 
         }}
@@ -380,7 +390,7 @@ const StackNavigator = () => {
           headerShown: false,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.DivContainer.backgroundColor }
 
@@ -396,7 +406,7 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" }
         }}
@@ -588,7 +598,7 @@ const StackNavigator = () => {
           presentation: 'modal',
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40}  />),
+          headerBackImage: () => (<MaterialCommunityIcons name="chevron-down" size={40} />),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
         }}

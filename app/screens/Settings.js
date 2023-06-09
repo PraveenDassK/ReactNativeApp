@@ -116,7 +116,7 @@ const Settings = ({ navigation }) => {
   const copyIban = async () => {
     console.log("Copied");
     Vibration.vibrate();
-    alert("Iban copied");
+    alert("IBAN copied");
     await Clipboard.setStringAsync(iban);
   };
 
@@ -299,7 +299,7 @@ const Settings = ({ navigation }) => {
           <View style={styles.accountDetailsRow}>
             <View style={{ flex: 1 }}>
               <AppText style={[styles.divStart, styles.customTitle]}>
-                Iban
+                IBAN
               </AppText>
             </View>
 
@@ -369,10 +369,19 @@ const Settings = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Security & Privacy"
+            title="Settings"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Button
+            title="Carbonyte labs"
+            style={styles.boxShadow}
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("CarbonyteLabs")}
           />
         </TouchableOpacity>
 
@@ -396,9 +405,8 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Faq"
+            title="FAQs"
             style={styles.boxShadow}
-            textTransform="uppercase"
             onPress={() => navigation.navigate("Faq")}
           />
         </TouchableOpacity>
@@ -414,8 +422,9 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Delete Account"
+            title="Close account"
             style={styles.boxShadow}
+            color = "red"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("DeleteAccount")}
           />

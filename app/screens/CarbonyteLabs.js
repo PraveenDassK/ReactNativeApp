@@ -14,7 +14,7 @@ import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import Button from "../components/AppButton";
 
-const SecurityAndPrivacy = ({ navigation }) => {
+const CarbonyteLabs = ({ navigation }) => {
   const [assets, error] = useAssets([
     require("../assets/icon-faceid.png"),
     require("../assets/icon-view.png"),
@@ -82,7 +82,7 @@ const SecurityAndPrivacy = ({ navigation }) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>Security And Privacy</Text>
+        <Text style={styles.titleText}>Carbonyte labs</Text>
       </View>
 
       <View style={styles.divRow}>
@@ -91,7 +91,7 @@ const SecurityAndPrivacy = ({ navigation }) => {
           source={require("../assets/icon-faceid.png")}
         />
 
-        <Text style={styles.divText}>Sign in with Face ID</Text>
+        <Text style={styles.divText}>Allow your face to be removed</Text>
 
         <Switch
           style={[styles.groupChildPosition]}
@@ -111,7 +111,7 @@ const SecurityAndPrivacy = ({ navigation }) => {
           source={require("../assets/icon-view.png")}
         />
 
-        <Text style={styles.divText}>Hide Balances</Text>
+        <Text style={styles.divText}>Constant monitoring of you</Text>
 
         <Switch
           style={[styles.groupChildPosition]}
@@ -131,7 +131,7 @@ const SecurityAndPrivacy = ({ navigation }) => {
           source={require("../assets/blueMessage.png")}
         />
 
-        <Text style={styles.divText}>Allow transaction sharing</Text>
+        <Text style={styles.divText}>Live subtitles</Text>
 
         <Switch
           style={[styles.groupChildPosition]}
@@ -144,14 +144,6 @@ const SecurityAndPrivacy = ({ navigation }) => {
           value={isEnabled2}
         />
       </View>
-      <TouchableOpacity style={styles.button}>
-          <Button
-            title="Reset app passcode"
-            style={styles.boxShadow}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("PinSetApp")}
-          />
-        </TouchableOpacity>
     </View>
   );
 };
@@ -210,4 +202,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SecurityAndPrivacy;
+export default CarbonyteLabs;
