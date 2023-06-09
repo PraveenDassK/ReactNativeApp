@@ -33,6 +33,7 @@ const Settings = ({ navigation }) => {
   const [currency, setCurrency] = useState(null);
   const [initials, setInitals] = useState(null);
   const [iban, setIban] = useState(null);
+  const [bic, setBIC] = useState(null)
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -67,8 +68,12 @@ const Settings = ({ navigation }) => {
     const userDetails = await api.GetAllAccounts(userID);
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
+
+    console.log('hello',userDetails, accountDetails, subscriptionDetails)
     const data = userDetails;
     const accountdata = accountDetails;
+
+    
 
     setPlan(subscriptionDetails.subName);
     setName(accountdata.customerName);
@@ -76,13 +81,18 @@ const Settings = ({ navigation }) => {
     setSortCode(accountdata.identifiers[0].sortCode);
     setAccNum(accountdata.identifiers[0].accountNumber);
     setCurrency(data.currency ? data.currency : "GBP");
-
     setStatus(accountdata.status);
 
     if (accountdata.identifiers[0].iban === null) {
       setIban("Unavailable");
     } else {
       setIban(accountdata.identifiers[0].iban);
+    }
+
+    if (accountdata.identifiers[0].bic === null) {
+      setBIC("Unavailable");
+    } else {
+      setBIC(accountdata.identifiers[0].bic);
     }
 
     let name = accountdata.customerName;
@@ -94,6 +104,8 @@ const Settings = ({ navigation }) => {
     }
     setInitals(initialsHold);
     setIsLoading(false);
+
+   
   };
 
   /**
@@ -117,8 +129,15 @@ const Settings = ({ navigation }) => {
   const copyIban = async () => {
     console.log("Copied");
     Vibration.vibrate();
-    alert("Iban copied");
+    alert("IBAN copied");
     await Clipboard.setStringAsync(iban);
+  };
+
+  const copyBIC = async () => {
+    console.log("Copied");
+    Vibration.vibrate();
+    alert("BIC copied");
+    await Clipboard.setStringAsync(bic);
   };
 
   React.useEffect(() => {
@@ -298,7 +317,7 @@ const Settings = ({ navigation }) => {
           <View style={styles.accountDetailsRow}>
             <View style={{ flex: 1 }}>
               <AppText style={[styles.divStart, styles.customTitle]}>
-                Iban
+                IBAN
               </AppText>
             </View>
 
@@ -324,6 +343,39 @@ const Settings = ({ navigation }) => {
             >
               <AppText style={[styles.divEnd, styles.customTitle]}>
                 {iban}
+              </AppText>
+            </View>
+          </View>
+
+          <View style={styles.accountDetailsRow}>
+            <View style={{ flex: 1 }}>
+              <AppText style={[styles.divStart, styles.customTitle]}>
+                BIC
+              </AppText>
+            </View>
+
+            <View style={styles.splitDiv}>
+              <Pressable style={styles.helloParent} onPress={copyBIC}>
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    height: "50%",
+                    width: 30,
+                    marginRight: "5%",
+                  }}
+                  source={require("../assets/icon-materialcontentcopy.png")}
+                />
+              </Pressable>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <AppText style={[styles.divEnd, styles.customTitle]}>
+                {bic}
               </AppText>
             </View>
           </View>
