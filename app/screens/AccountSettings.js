@@ -45,7 +45,7 @@ const AccountSettings = ({ navigation }) => {
   const [balance, setBalance] = useState(0);
   const [subscriptions, setSubscriptions] = useState(null);
 
-  const { settings, accountID } = useContext(AuthContext);
+  const { settings, accountID, version } = useContext(AuthContext);
 
   const insets = useSafeAreaInsets();
 
@@ -96,8 +96,12 @@ const AccountSettings = ({ navigation }) => {
           <AppText style={{ fontSize: 20, color: "blue" }}>£{balance}</AppText>
         </View>
       </View>
+      
       <View style={styles.accountTypeContainer}>
         <AppText style={{ opacity: 0.3 }}>{subscriptions} subscription</AppText>
+        <AppText style={{ fontSize: 10, color: "black" }}>
+          App version {version}
+        </AppText>
       </View>
 
       <View style={styles.managementContainer}>

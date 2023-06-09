@@ -58,21 +58,21 @@ const SendMoney = ({ navigation }) => {
   const sendDetails = (Id) => {
     const details = benList[Id];
 
-    console.log();
+    console.log()
     const requestObj = {
-      sourceAccountId: accountID,
-      destination: {
-        type: "SCAN",
-        id: "A1226WEM",
-        accountNumber: details.destinationIdentifier.accountNumber,
-        sortCode: details.destinationIdentifier.sortCode,
-        name: details.name,
-        phoneNumber: details.phoneNumber,
+      "sourceAccountId": accountID,
+      "destination": {
+        "type": "SCAN",
+        "id": "A1226WEM",
+        "accountNumber": details.destinationIdentifier.accountNumber,
+        "sortCode": details.destinationIdentifier.sortCode,
+        "name": details.name,
+        "phoneNumber": details.phoneNumber
       },
-      currency: "GBP",
-      amount: 0,
-      reference: "Transfer",
-    };
+      "currency": "GBP",
+      "amount": 0,
+      "reference": "Transfer"
+    }
 
     navigation.navigate("BankTransferAmount", requestObj);
   };
@@ -175,6 +175,8 @@ const SendMoney = ({ navigation }) => {
           {groupList.map(({ groupId, groupName, beneficiariesDetails }) => (
             <Fragment key={groupId}>
               <GroupBeneficiary
+                navigation={navigation}
+                groupId={groupId}
                 groupName={groupName}
                 beneficiaries={beneficiariesDetails}
               />
@@ -195,9 +197,35 @@ const SendMoney = ({ navigation }) => {
   );
 };
 
-const GroupBeneficiary = ({ groupName, beneficiaries }) => {
+const GroupBeneficiary = ({ groupName, beneficiaries, groupId, navigation }) => {
+
+  const sendGroupDetails = (groupId,groupName) => {
+    const requestObj = {
+      "sourceAccountId": "A122HTHM",
+      "groupId": groupId,
+      "currency": "GBP",
+      "amount": 0,
+      "reference": "Transfer",
+    };
+
+    const payeeDetails = {
+      "name": groupName
+    }
+    navigation.navigate("BankTransferAmount", {payeeDetails, requestObj});
+  }
+
+  const deleteGroupBeneficiary = async (groupId) => {
+    console.log(groupId);
+    const response = await apiBeneficiaries.DeleteGroupBenificiary(groupId);
+
+    console.log("Group Id ==>", groupId);
+
+    console.log("response ==>", response);
+  };
+
+
   return (
-    <Pressable onPress={() => console.log("send money to beneficiaries")}>
+    <Pressable onPress={() => sendGroupDetails(groupId,groupName)}>
       <View style={styles.benBoxCon}>
         <View style={styles.accountImage}>
           <AppText style={styles.accountName}>{groupName[0]}</AppText>
@@ -215,7 +243,7 @@ const GroupBeneficiary = ({ groupName, beneficiaries }) => {
         </View>
 
         <Pressable
-          onPress={() => console.log("delete beneficiary")}
+          onPress={() => deleteGroupBeneficiary(groupId)}
           style={styles.deleteButton}
         >
           <AppText style={{ color: "tomato" }}>Delete</AppText>

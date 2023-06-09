@@ -5,7 +5,7 @@ import {
 async function compareVersion(currentVersion) {
     const latestVersion = await apiVersion.GetVersion()
     if (currentVersion == latestVersion) return;
-    const url = 'https://play.google.com/'
+    const url = 'https://play.google.com/apps/internaltest/4699808328535823531'
     Alert.alert("Update", "New version avalible, please update your app", [
         {
             text: "Cancel",

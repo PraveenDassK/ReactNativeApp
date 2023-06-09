@@ -20,18 +20,26 @@ import AppText from "../components/Text";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 
 import AppDropdown from "../components/AppDropdown";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { CheckBox } from "@rneui/themed";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
-  const [paymentType,setPaymentType] = useState("")
-  const { destination } = route.params;
+  
+  const [date, setDate] = useState(new Date());
+  const showPicker = false
+
+  const payeeDetails = route.params.payeeDetails;
+  const destination = {}
+  console.log(payeeDetails)
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
 
   // let amount = (amount ? amount : 1).toString();
 
   const [reference, setReference] = useState('');
+  const [paymentType, setPaymentType] = useState("")
 
   const paymentTypes = [
     {
@@ -51,7 +59,7 @@ const BankTransferAmount = ({ route, navigation }) => {
       value: "Internal"
     }
   ];
-  
+
 
   const handleTextChange = (text) => {
     setReference(text);
@@ -63,22 +71,39 @@ const BankTransferAmount = ({ route, navigation }) => {
     // ...
   };
 
+  /**
+   * 
+   * @returns True if sending money to just one person
+   */
+  const singleBeneficary = () => {
+    if (route.params.groupId != null) {
+      return false
+    }
+    return true
+  }
 
 
+  /**
+   * @dev a payment type must be entered
+   * @param {int} amount The amount entered to send
+   */
   const requestContact = (amount) => {
-    route.params.amount = amount
-    route.params.reference = "Transfer"
+    //Payment type checker7
+    if (!paymentType) return;
+    route.params.requestObj.amount = amount
+    route.params.requestObj.reference = "Transfer"
     console.log(
-      "Transfer to " + destination.accountName + " of £" + amount + " successful"
+      "Transfer to " + payeeDetails.name + " of £" + amount + " successful"
     );
+
     navigation.navigate("Pin", {
       amount: amount,
       refrence: reference,
-      name: destination.accountName,
+      name: payeeDetails.name,
       successScreen: "Success",
       successText:
-        "Transfer to " + destination.accountName + " of £" + amount + " successful",
-      beneficiaryData: route.params,
+        "Transfer to " + payeeDetails.name + " of £" + amount + " successful",
+      beneficiaryData: route.params.requestObj,
     });
   };
 
@@ -92,19 +117,8 @@ const BankTransferAmount = ({ route, navigation }) => {
             marginTop: "15%",
           }}
         >
-          <View
-            style={{
-              height: verticalScale(60),
-              width: horizontalScale(60),
-              borderRadius: moderateScale(30),
-              backgroundColor: "#F6F5F8",
-              justifyContent: "center",
-              alignItems: "center",
-              marginBottom: "10%",
-            }}
-          >
-            <AppText style={{ fontSize: 28 }}>{destination.name}</AppText>
-          </View>
+
+          <AppText style={{ fontSize: 28 }}>Sending money to</AppText>
           <AppText
             style={{
               marginBottom: "2.5%",
@@ -113,11 +127,8 @@ const BankTransferAmount = ({ route, navigation }) => {
               fontWeight: "bold",
             }}
           >
-            {destination.name}
+            {payeeDetails?.name}
           </AppText>
-          <AppText
-            style={{ marginBottom: "2.5%", fontSize: 25, fontWeight: "400" }}
-          >{`+44 ${destination.phoneNumber}`}</AppText>
         </View>
         <View>
           <TextInput
@@ -127,7 +138,30 @@ const BankTransferAmount = ({ route, navigation }) => {
           />
         </View>
 
-        <AppDropdown data = {paymentTypes} onChange = {setPaymentType} value = {paymentType} placeholder = "Payment type"/>
+        {singleBeneficary() ?
+          <View>
+            <CheckBox
+              title="Schedule this payment?"
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+              checkedColor="black"
+              checked={true}
+              onPress={() => console.log("!")}
+            />
+            {/* <Text>Schedulde date & time</Text>
+            {showPicker ? null : null}
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode="datetime"
+              is24Hour={true}
+              display="spinner"
+              onChange={console.log("onChange")}
+            /> */}
+          </View>
+          : null}
+
+        <AppDropdown data={paymentTypes} onChange={setPaymentType} value={paymentType} placeholder="Payment type" />
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.hello4, styles.groupViewPosition]}>
             <TouchableOpacity
@@ -217,7 +251,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             style={[styles.hello8, styles.helloTypo1]}
             placeholder={"£" + amount}
             keyboardType="numeric"
-            value = {amount}
+            value={amount}
             placeholderTextColor={"blue"}
             onChangeText={(newText) => setAmount(newText)}
           />

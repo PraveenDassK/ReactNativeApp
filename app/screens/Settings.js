@@ -419,10 +419,19 @@ const Settings = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Security & privacy"
+            title="Settings"
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Button
+            title="Carbonyte labs"
+            style={styles.boxShadow}
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("CarbonyteLabs")}
           />
         </TouchableOpacity>
 
