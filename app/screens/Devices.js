@@ -20,12 +20,12 @@ import Button from "../components/AppButton";
 
 import apiDevices from "../api/apiDevices";
 import AuthContext from "../auth/context";
+import AppSwitch from "../components/AppSwitch";
 
 const DEVICES = ["cellphone", "tablet-android"];
 const COLORS = ["orange", "blue", "red"];
 
 const Devices = ({ navigation }) => {
-
   const { customerDetails } = useContext(AuthContext);
   const [devices, setDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -166,11 +166,9 @@ const Devices = ({ navigation }) => {
         </View>
         <View style={styles.deviceContainer}>
           {NOTIFICATIONS.map((notification) => (
-            <View style={styles.notoficationRowContainer}>
-              <Text>{notification.title}</Text>
-              <Switch
-                trackColor={{ false: "black", true: "blue" }}
-                thumbColor={notification.value ? "white" : "black"}
+            <View key={notification.id} style={{ marginBottom: "2%"}}>
+              <AppSwitch
+                title={notification.title}
                 onValueChange={notification.toggleSwitch}
                 value={notification.value}
               />
@@ -216,13 +214,6 @@ const Device = ({ name, os, date, index, onSignout }) => {
 };
 
 const styles = StyleSheet.create({
-  notoficationRowContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: "2%",
-  },
-
   container: {
     flex: 1,
     padding: "5%",
