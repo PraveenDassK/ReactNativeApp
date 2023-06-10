@@ -25,12 +25,42 @@ const DEVICES = ["cellphone", "tablet-android"];
 const COLORS = ["orange", "blue", "red"];
 
 const Devices = ({ navigation }) => {
+
   const { customerDetails } = useContext(AuthContext);
   const [devices, setDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [isPushEnabled, setIsPushEnabled] = useState(false);
+  const [isEmailEnabled, setIsEmailEnabled] = useState(false);
+  const [isTextEnabled, setIsTextEnabled] = useState(false);
+  const [isSocialMediaEnabled, setIsSocialEnabled] = useState(false);
+
+  const NOTIFICATIONS = [
+    {
+      id: 1,
+      title: "Push Notifications",
+      value: isPushEnabled,
+      toggleSwitch: () => setIsPushEnabled((previousState) => !previousState),
+    },
+    {
+      id: 2,
+      title: "Email",
+      value: isEmailEnabled,
+      toggleSwitch: () => setIsEmailEnabled((previousState) => !previousState),
+    },
+    {
+      id: 3,
+      title: "Text",
+      value: isTextEnabled,
+      toggleSwitch: () => setIsTextEnabled((previousState) => !previousState),
+    },
+    {
+      id: 4,
+      title: "Social media",
+      value: isSocialMediaEnabled,
+      toggleSwitch: () => setIsSocialEnabled((previousState) => !previousState),
+    },
+  ];
 
   useEffect(() => {
     loadData();
@@ -131,19 +161,21 @@ const Devices = ({ navigation }) => {
           })}
       </View>
       <View style={styles.footerContainer}>
-      <View style={styles.containerHeader}>
-        <Text>Notifications</Text>
-      </View>
+        <View style={styles.containerHeader}>
+          <Text>Notifications</Text>
+        </View>
         <View style={styles.deviceContainer}>
-          <View style={styles.notoficationRowContainer}>
-            <Text>Push Notifications</Text>
-            <Switch
-              trackColor={{ false: "black", true: "blue" }}
-              thumbColor={isEnabled ? "white" : "black"}
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
-          </View>
+          {NOTIFICATIONS.map((notification) => (
+            <View style={styles.notoficationRowContainer}>
+              <Text>{notification.title}</Text>
+              <Switch
+                trackColor={{ false: "black", true: "blue" }}
+                thumbColor={notification.value ? "white" : "black"}
+                onValueChange={notification.toggleSwitch}
+                value={notification.value}
+              />
+            </View>
+          ))}
         </View>
       </View>
     </ScrollView>
@@ -187,15 +219,16 @@ const styles = StyleSheet.create({
   notoficationRowContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: "2%",
   },
-  
+
   container: {
     flex: 1,
     padding: "5%",
   },
-  containerHeader :{
-    marginBottom: "2%"
+  containerHeader: {
+    marginBottom: "2%",
   },
   deviceContainer: {
     borderRadius: 10,
@@ -217,7 +250,7 @@ const styles = StyleSheet.create({
     marginLeft: "2%",
   },
   footerContainer: {
-    marginBottom: "15%"
+    marginBottom: "15%",
   },
   headerContainer: {
     alignItems: "center",
