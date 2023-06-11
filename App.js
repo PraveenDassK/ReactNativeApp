@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import "expo-dev-menu";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Text, View, Button, Platform, ActivityIndicator } from "react-native";
 import { AppState } from "react-native";
 import { useFonts } from "expo-font";
@@ -59,6 +59,7 @@ export default function App() {
   const [directors, setDirectors] = useState([]);
   const [beneficialOwners, setOwners] = useState([]);
   const [controllingInterests, setIntrests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   /**
    * @dev IDs used though the app
@@ -126,9 +127,10 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isAuth && currentUser) {
-      if (Device.isDevice) authenticate();
+      // if (Device.isDevice)
+       authenticate();
     }
     console.log("currentUser & isAuth on load", currentUser, isAuth);
   }, [currentUser, isAuth]);
@@ -157,6 +159,7 @@ export default function App() {
       // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
       console.log("turn off authenticator", result.success);
       setIsAuth(false);
+      setIsLoading(false)
     }
     // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
     if (!result.success) {
@@ -215,6 +218,14 @@ export default function App() {
     );
   } else {
     SplashScreen.hideAsync();
+  }
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
   }
 
   return (
