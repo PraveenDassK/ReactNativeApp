@@ -53,13 +53,13 @@ export default function App() {
   const [notification, setNotification] = useState(false);
 
   const [user, setUser] = useState();
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
   const [isAuth, setIsAuth] = useState(true);
 
   const [directors, setDirectors] = useState([]);
   const [beneficialOwners, setOwners] = useState([]);
   const [controllingInterests, setIntrests] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   /**
    * @dev IDs used though the app
@@ -129,17 +129,17 @@ export default function App() {
 
   useLayoutEffect(() => {
     if (isAuth && currentUser) {
-      // if (Device.isDevice)
-       authenticate();
+      if (Device.isDevice || Platform.OS == "ios" ) authenticate();
     }
+
     console.log("currentUser & isAuth on load", currentUser, isAuth);
   }, [currentUser, isAuth]);
 
   useEffect(() => {
     restoreToken();
     restoreSignIn();
-    versionChecker.compareVersion(version)
-    console.log(version)
+    versionChecker.compareVersion(version);
+    console.log(version);
   }, []);
 
   useEffect(() => {
@@ -159,7 +159,7 @@ export default function App() {
       // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
       console.log("turn off authenticator", result.success);
       setIsAuth(false);
-      setIsLoading(false)
+      setIsLoading(false);
     }
     // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
     if (!result.success) {
@@ -185,7 +185,10 @@ export default function App() {
     console.log("trying for restore token");
     //Get the token from storage
     const token = await authStorage.getToken();
-    if (!token) return;
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
     console.log("token", token);
 
     //Get the IDs here
@@ -257,10 +260,14 @@ export default function App() {
         missingAccountSetup,
         setMissingAccountSetup,
 
-        directors, setDirectors,
-        beneficialOwners, setOwners,
-        controllingInterests, setIntrests,
-        version, setVersion
+        directors,
+        setDirectors,
+        beneficialOwners,
+        setOwners,
+        controllingInterests,
+        setIntrests,
+        version,
+        setVersion,
       }}
     >
       <NavigationContainer>
