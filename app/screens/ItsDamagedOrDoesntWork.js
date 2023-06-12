@@ -3,6 +3,8 @@ import { Text, StyleSheet, View, Image, ScrollView, Pressable } from "react-nati
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
+import terminateCardAlert from "../utility/terminateCardAlert";
+
 const ItsDamagedOrDoesntWork = ({navigation}) => {
   return (
     <ScrollView>
@@ -19,7 +21,7 @@ const ItsDamagedOrDoesntWork = ({navigation}) => {
             styles.groupParentPosition,
             styles.parentPosition,
           ]}
-          onPress={() => navigation.navigate("Terminate")}
+          onPress={terminateCardAlert}
         >
           <View
             style={[

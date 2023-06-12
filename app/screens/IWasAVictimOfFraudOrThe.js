@@ -2,6 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
+import terminateCardAlert from "../utility/terminateCardAlert";
 
 const IWasAVictimOfFraudOrThe = ({navigation}) => {
   return (
@@ -26,7 +27,7 @@ const IWasAVictimOfFraudOrThe = ({navigation}) => {
               styles.groupParentPosition,
               styles.parentPosition,
             ]}
-            onPress={() => navigation.navigate("Terminate")}
+            onPress={terminateCardAlert}
           >
             <View style={styles.groupChild} />
             <View style={[styles.maskGroup236, styles.groupParentPosition]} />

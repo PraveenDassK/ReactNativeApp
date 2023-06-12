@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  Text,
   StyleSheet,
   View,
   Image,
@@ -15,6 +14,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import apiSettings from "../api/apiSettings";
 import AppText from "../components/Text";
+import terminateCardAlert from "../utility/terminateCardAlert";
 
 const CardSettings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -373,7 +373,7 @@ const CardSettings = ({ navigation }) => {
               </View>
             </View>
           </Pressable>
-          <Pressable onPress={() => navigation.navigate("Terminate")}>
+          <Pressable onPress={terminateCardAlert}>
             <View
               style={{
                 width: "100%",

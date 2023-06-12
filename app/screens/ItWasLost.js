@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Image,ScrollView, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import terminateCardAlert from "../utility/terminateCardAlert";
 
 const ItWasLost = ({navigation}) => {
   return (
@@ -152,7 +153,7 @@ const ItWasLost = ({navigation}) => {
           </View>
         </View>
         <Pressable style={[styles.groupParent, styles.groupPosition]}
-        onPress={() => navigation.navigate("Terminate")}>
+        onPress={terminateCardAlert}>
           <View style={[styles.groupView, styles.groupPosition]}>
             <View style={styles.groupChild2} />
             <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
