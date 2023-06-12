@@ -356,9 +356,10 @@ const StackNavigator = () => {
         name="DeleteAccount"
         component={gestureHandlerRootHOC(DeleteAccount)}
         options={{
-          title: "DeleteAccount",
+          title: "",
 
         }}
+
       />
 
       <Stack.Screen
