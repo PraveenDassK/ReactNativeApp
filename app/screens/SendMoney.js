@@ -51,8 +51,9 @@ const SendMoney = ({ navigation }) => {
     setGroup(groupBeneficiaries);
   };
 
+
   /**
-   *
+   * 
    * @param {Str} Id The beneficary ID
    */
   const sendDetails = (Id) => {
@@ -74,7 +75,11 @@ const SendMoney = ({ navigation }) => {
       "reference": "Transfer"
     }
 
-    navigation.navigate("BankTransferAmount", requestObj);
+    const payeeDetails = {
+      "name": details.name
+    }
+
+    navigation.navigate("BankTransferAmount", {payeeDetails, requestObj});
   };
 
   const deleteDetails = async (Id) => {
@@ -135,6 +140,7 @@ const SendMoney = ({ navigation }) => {
   return (
     <View>
       <ScrollView>
+
         <View style={styles.subTextDiv}>
           <AppText style={styles.subText}>Add beneficary</AppText>
         </View>
@@ -187,7 +193,7 @@ const SendMoney = ({ navigation }) => {
         <TouchableOpacity style={styles.buttonContainer}>
           <Button
             title="Schedule payment"
-            style={[{ width: "90%" }]}
+            style={[styles.boxShadow, { width: "90%" }]}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("ScheduledPayment")}
           />
