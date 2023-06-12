@@ -7,25 +7,20 @@ import React, {
 } from "react";
 import {
   RefreshControl,
-  FlatList,
   Text,
   StyleSheet,
-  Image,
   View,
-  Pressable,
   ScrollView,
-  Platform,
   ActivityIndicator,
+  Switch,
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
-import GlobalStyles from "../../GlobalStyles";
-
 import Button from "../components/AppButton";
-import colors from "../config/colors";
 
 import apiDevices from "../api/apiDevices";
 import AuthContext from "../auth/context";
+import AppSwitch from "../components/AppSwitch";
 
 const DEVICES = ["cellphone", "tablet-android"];
 const COLORS = ["orange", "blue", "red"];
@@ -35,6 +30,37 @@ const Devices = ({ navigation }) => {
   const [devices, setDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [isPushEnabled, setIsPushEnabled] = useState(false);
+  const [isEmailEnabled, setIsEmailEnabled] = useState(false);
+  const [isTextEnabled, setIsTextEnabled] = useState(false);
+  const [isSocialMediaEnabled, setIsSocialEnabled] = useState(false);
+
+  const NOTIFICATIONS = [
+    {
+      id: 1,
+      title: "Push Notifications",
+      value: isPushEnabled,
+      toggleSwitch: () => setIsPushEnabled((previousState) => !previousState),
+    },
+    {
+      id: 2,
+      title: "Email",
+      value: isEmailEnabled,
+      toggleSwitch: () => setIsEmailEnabled((previousState) => !previousState),
+    },
+    {
+      id: 3,
+      title: "Text",
+      value: isTextEnabled,
+      toggleSwitch: () => setIsTextEnabled((previousState) => !previousState),
+    },
+    {
+      id: 4,
+      title: "Social media",
+      value: isSocialMediaEnabled,
+      toggleSwitch: () => setIsSocialEnabled((previousState) => !previousState),
+    },
+  ];
 
   useEffect(() => {
     loadData();
@@ -115,6 +141,9 @@ const Devices = ({ navigation }) => {
           </Text>
         </View>
       </View>
+      <View style={styles.containerHeader}>
+        <Text>Signed-in devices</Text>
+      </View>
       <View style={styles.mainContainer}>
         {devices &&
           devices.map((device, index) => {
@@ -130,6 +159,22 @@ const Devices = ({ navigation }) => {
               </Fragment>
             );
           })}
+      </View>
+      <View style={styles.footerContainer}>
+        <View style={styles.containerHeader}>
+          <Text>Notifications</Text>
+        </View>
+        <View style={styles.deviceContainer}>
+          {NOTIFICATIONS.map((notification) => (
+            <View key={notification.id} style={{ marginBottom: "2%"}}>
+              <AppSwitch
+                title={notification.title}
+                onValueChange={notification.toggleSwitch}
+                value={notification.value}
+              />
+            </View>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -169,10 +214,12 @@ const Device = ({ name, os, date, index, onSignout }) => {
 };
 
 const styles = StyleSheet.create({
-  boxShadow: {},
   container: {
     flex: 1,
     padding: "5%",
+  },
+  containerHeader: {
+    marginBottom: "2%",
   },
   deviceContainer: {
     borderRadius: 10,
@@ -192,6 +239,9 @@ const styles = StyleSheet.create({
   },
   deviceTextContainer: {
     marginLeft: "2%",
+  },
+  footerContainer: {
+    marginBottom: "15%",
   },
   headerContainer: {
     alignItems: "center",

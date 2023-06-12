@@ -75,6 +75,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [name, setName] = useState(null);
   const [price, setPrice] = useState(null);
   const [nftimg, setNftimg] = useState(null);
+  const [showCardDetails, setShowCardDetails] = useState(false)
 
   const {
     carbonyteID,
@@ -254,6 +255,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     // loadCardDetails()
   }, [cardResponse]);
 
+
+
   /**
    * @dev Data needed for this page
    *      Verification status
@@ -324,6 +327,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                       <Card
                         key={card.name}
                         {...card}
+                        isVisible={showCardDetails}
                         selected={selectedCard?.name === card.name}
                         onPress={() => handleCardPress(card)}
                       />
@@ -342,7 +346,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               >
                 <TouchableOpacity
                   onPress={() => {
-                    setHideBalance((prev) => !prev);
+                    setShowCardDetails((prev) => !prev);
                     Vibration.vibrate();
                   }}
                   style={[
@@ -949,7 +953,7 @@ const CarbonAssets = ({ project, navigation }) => {
   );
 };
 
-const Card = ({ name, number, image, selected, onPress }) => {
+const Card = ({ name, number, selected, onPress, isVisible = false }) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={[styles.card]}>
@@ -1048,29 +1052,33 @@ const Card = ({ name, number, image, selected, onPress }) => {
             source={require("../assets/tiger.png")}
           />
 
-          <AppText
-            style={[
-              styles.totalWalletBalanceText11,
-              {
-                top: verticalScale(40),
-                fontSize: moderateScale(14),
-                fontWeight: "400",
-              },
-            ]}
-          >
-            {number}
-          </AppText>
-          <AppText
-            style={[
-              styles.totalWalletBalanceText11,
-              {
-                top: verticalScale(41.5),
-                fontSize: moderateScale(10),
-              },
-            ]}
-          >
-            {name}
-          </AppText>
+          {isVisible && (
+            <AppText
+              style={[
+                styles.totalWalletBalanceText11,
+                {
+                  top: verticalScale(40),
+                  fontSize: moderateScale(14),
+                  fontWeight: "400",
+                },
+              ]}
+            >
+              {number}
+            </AppText>
+          )}
+          {isVisible && (
+            <AppText
+              style={[
+                styles.totalWalletBalanceText11,
+                {
+                  top: verticalScale(41.5),
+                  fontSize: moderateScale(10),
+                },
+              ]}
+            >
+              {name}
+            </AppText>
+          )}
 
           <AppText
             style={[

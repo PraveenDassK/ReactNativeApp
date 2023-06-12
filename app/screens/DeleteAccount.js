@@ -3,6 +3,9 @@ import { Text, View, StyleSheet } from "react-native";
 import Button from "../components/AppButton";
 import apiAccount from "../api/apiAccount";
 import AuthContext from "../auth/context";
+import terminateCardAlert from "../utility/terminateCardAlert";
+import colors from "../config/colors";
+
 
 const DeleteAccount = ({navigation}) => {
 
@@ -21,18 +24,18 @@ const DeleteAccount = ({navigation}) => {
   
   return (
     <View style={styles.container}>
-      <Text>Do you want to delete your account?</Text>
+      <Text>Do you wish to terminate your account?</Text>
+      <Button
+        title="no"
+        textColor="black"
+        color="white"
+        onPress={() => navigation.navigate("Account")}
+      />
       <Button
         title="yes"
         textColor="black"
-        color="white"
-        onPress={() => handleDelete()}
-      />
-      <Button
-        title="no"
-        textColor="white"
-        color="black"
-        onPress={() => navigation.navigate("Account")}
+        color="danger"
+        onPress={() => terminateCardAlert(handleDelete)}
       />
     </View>
   );

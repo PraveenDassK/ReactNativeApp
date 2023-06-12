@@ -33,7 +33,7 @@ const Settings = ({ navigation }) => {
   const [currency, setCurrency] = useState(null);
   const [initials, setInitals] = useState(null);
   const [iban, setIban] = useState(null);
-  const [bic, setBIC] = useState(null)
+  const [bic, setBIC] = useState(null);
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -69,11 +69,9 @@ const Settings = ({ navigation }) => {
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
 
-    console.log('hello',userDetails, accountDetails, subscriptionDetails)
+    console.log("hello", userDetails, accountDetails, subscriptionDetails);
     const data = userDetails;
     const accountdata = accountDetails;
-
-    
 
     setPlan(subscriptionDetails.subName);
     setName(accountdata.customerName);
@@ -104,8 +102,6 @@ const Settings = ({ navigation }) => {
     }
     setInitals(initialsHold);
     setIsLoading(false);
-
-   
   };
 
   /**
@@ -142,7 +138,6 @@ const Settings = ({ navigation }) => {
 
   React.useEffect(() => {
     const swipeRight = navigation.addListener("state", (event) => {});
-
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return swipeRight;
   }, [navigation]);
@@ -465,15 +460,6 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <Button
-            title="Reset passcode"
-            style={styles.boxShadow}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("PinSetApp")}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}>
-          <Button
             title="Close account"
             textColor="black"
             color="danger"
@@ -523,7 +509,6 @@ const Settings = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  boxShadow: {},
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     height: GlobalStyles.DivContainer.height,

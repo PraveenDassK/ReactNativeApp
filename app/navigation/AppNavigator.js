@@ -19,6 +19,7 @@ import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import Settings from "../screens/Settings";
 
+
 import AccountDummy from "../screens/AccountDummy";
 import AccountDummy2 from "../screens/AccountDummy2";
 
@@ -89,6 +90,7 @@ import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
+
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -354,9 +356,10 @@ const StackNavigator = () => {
         name="DeleteAccount"
         component={gestureHandlerRootHOC(DeleteAccount)}
         options={{
-          title: "DeleteAccount",
+          title: "",
 
         }}
+
       />
 
       <Stack.Screen
@@ -440,6 +443,8 @@ const StackNavigator = () => {
 
         }}
       />
+      
+    
 
       <Stack.Screen
         name="SetLimit"
@@ -463,7 +468,7 @@ const StackNavigator = () => {
         name="ItsDamagedOrDoesntWork"
         component={gestureHandlerRootHOC(ItsDamagedOrDoesntWork)}
         options={{
-          title: "ItsDamagedOrDoesntWork",
+          title: "",
 
         }}
       />
@@ -563,7 +568,7 @@ const StackNavigator = () => {
         name="Transactions"
         component={gestureHandlerRootHOC(Transactions)}
         options={{
-          title: "Transactions",
+          title: "",
 
         }}
       />
