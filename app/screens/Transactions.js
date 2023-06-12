@@ -18,7 +18,6 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import { Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import FadeInView from "../components/fadeInview";
 
 import {
   horizontalScale,
@@ -30,7 +29,7 @@ import moment from "moment";
 import api from "../api/api_list";
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
-import { hide } from "expo-splash-screen";
+
 import Animated from "react-native-reanimated";
 import Button from "../components/AppButton";
 import colors from "../config/colors";
@@ -45,6 +44,7 @@ const Transactions = ({ navigation, route }) => {
   const [initials, setInitals] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [hide, setHide] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
@@ -79,16 +79,18 @@ const Transactions = ({ navigation, route }) => {
 
   const reportTransaction = async (Id) => {
     console.log("Reported");
+   
     Alert.alert("Alert", "Report This Transaction", [
       {
         text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
+        onPress: () => console.log("Cancel Pressed", Id),
         style: "cancel",
       },
       {
         text: "Send",
         onPress: async () => {
           console.log("OK Pressed");
+          setSelectedId(Id)
           const response = await apiCall.ReportTransaction(accountID, Id.id);
           response.result
             ? alert("Report successsful")
@@ -118,13 +120,12 @@ const Transactions = ({ navigation, route }) => {
       <View
         style={{
           backgroundColor: colors.danger,
-          width: horizontalScale(70),
-          height: verticalScale | 76,
-          marginTop: verticalScale(15),
+          width: 70,
+          height: 76,    
           justifyContent: "center",
           alignItems: "center",
           marginLeft: "2.5%",
-          borderRadius: 15,
+          borderRadius: 10,
         }}
       >
         <TouchableOpacity onPress={() => hideTransaction(i)}>
@@ -134,21 +135,20 @@ const Transactions = ({ navigation, route }) => {
     );
   };
 
-  const renderLeftActions = (i) => {
+  const renderLeftActions = (id) => {
     return (
       <View
         style={{
           backgroundColor: "grey",
-          width: horizontalScale(70),
-          height: verticalScale | 76,
-          marginTop: verticalScale(15),
+          width:70,
+          height: 76,
           justifyContent: "center",
           alignItems: "center",
           marginLeft: "2.5%",
-          borderRadius: 15,
+          borderRadius: 10,
         }}
       >
-        <TouchableOpacity onPress={() => reportTransaction(i)}>
+        <TouchableOpacity onPress={() => reportTransaction(id)}>
           <MaterialCommunityIcons
             name="progress-alert"
             size={35}
@@ -234,7 +234,6 @@ const Transactions = ({ navigation, route }) => {
               </Pressable> */}
               <View style={{ width: 250 }}>
                 <Button
-                  
                   onPress={() => setModalVisible(!modalVisible)}
                   title="Dismiss"
                 />
@@ -266,8 +265,6 @@ const Transactions = ({ navigation, route }) => {
     },
   };
 
-
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -294,6 +291,36 @@ const Transactions = ({ navigation, route }) => {
       <View style={styles.page}>
         <FlatList
           showsVerticalScrollIndicator={false}
+          ListHeaderComponent={
+            <View
+              style={{
+                backgroundColor: "white",
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                paddingTop: 10,
+                marginBottom: "1%",
+                paddingBottom: "2.5%"
+              }}
+            >
+              <View style={{ marginLeft: "2.5%" }}>
+                <View></View>
+                <Text style={{ fontWeight: "700", fontSize: 20, marginBottom: "5%"}}>
+                  Recent transactions
+                </Text>
+                <View style={{ flexDirection: "row", flex: 1 }}>
+                  <View style={{ flex: 3.8 }}>
+                    <Text style={{opacity: 0.4}}>Transaction name</Text>
+                  </View>
+                  <View style={{flex:2}}>
+                    <Text style={{opacity: 0.4}}>Date</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{opacity: 0.4}}>Amount</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          }
           ListFooterComponent={
             <View style={{ marginBottom: verticalScale(50) }}>
               {hide && (
@@ -313,7 +340,7 @@ const Transactions = ({ navigation, route }) => {
           //   {useNativeDriver: true }
           // )}
           keyExtractor={(item) => item.sourceId.toString()}
-          renderItem={({ item, index }) => {
+          renderItem={({ item, index, separators }) => {
             console.log("is", item.sourceId.toString());
             const inputRange = [
               -1,
@@ -326,18 +353,20 @@ const Transactions = ({ navigation, route }) => {
               inputRange,
               outputRange: [1, 1, 1, 0],
             });
+           
+
+            
+            const display = item.id === selectedId ? "flex" : "none"
+
             return (
+              <>
               <Animated.View key={index} style={{ transform: [{ scale }] }}>
                 <Swipeable
-                  renderLeftActions={() => renderLeftActions(item)}
+                  renderLeftActions={() => renderLeftActions(item.id)}
                   renderRightActions={() => renderRightActions(index)}
                 >
                   <Pressable
-                    style={[
-                      styles.transactionBox,
-                      styles.rounded,
-                      
-                    ]}
+                    style={[styles.transactionBox]}
                     onPress={() => showTransaction(index)}
                   >
                     <View style={{ height: "100%", flexDirection: "row" }}>
@@ -347,14 +376,16 @@ const Transactions = ({ navigation, route }) => {
                           alignItems: "center",
                           width: 50,
                           height: 50,
-                          borderRadius: 25,
+                          borderRadius: 10,
                           backgroundColor: "#F6F5F8",
                           borderColor: "black",
                           alignSelf: "center",
                           marginLeft: "2.5%",
                         }}
                       >
-                        <Text style={{ fontWeight: "700" }}>{item.account.customerName[0]}</Text>
+                        <Text style={{ fontWeight: "700" }}>
+                          {item.account.customerName[0]}
+                        </Text>
                       </View>
                       <View
                         style={{
@@ -367,13 +398,20 @@ const Transactions = ({ navigation, route }) => {
                         <Text style={{ fontSize: 14, fontWeight: "700" }}>
                           {item.account.customerName}
                         </Text>
-                        <Text style={{}}>
-                          {moment(item.transactionDate).format("MMM Do YY")}
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text style={{ fontWeight: "700" }}>
+                          {moment(item.transactionDate).format(" DD MMM YY")}
                         </Text>
                       </View>
                       <View
                         style={{
-                          flex: 5,
+                          flex: 2,
                           justifyContent: "space-evenly",
                           alignItems: "flex-end",
                           marginRight: "2.5%",
@@ -389,25 +427,20 @@ const Transactions = ({ navigation, route }) => {
                   </Pressable>
                 </Swipeable>
               </Animated.View>
+              {<View style={{display, alignItems: "flex-end"}}>
+                <Text style={{color: "red"}}>Transaction reported</Text>
+              </View>}
+              </>
             );
           }}
         />
-        {/* <ScrollView 
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                }
-                style={{height: "90%"}}
-                showsVerticalScrollIndicator={false}
-              >
-              
-                {showData()}
-                
-            </ScrollView> */}
+    
         {modalVisible ? modal() : null}
       </View>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   boxShadow: {},
@@ -480,20 +513,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  rounded: {
-    borderRadius: 15,
-  },
-  
 
   transactionBox: {
     width: "100%",
     height: 80,
-    marginVertical: 15,
 
     backgroundColor: "white",
   },
   modalText: {
-    marginBottom: 15,
     textAlign: "center",
   },
   swipeDown: {
