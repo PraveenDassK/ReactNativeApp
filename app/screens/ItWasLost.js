@@ -1,167 +1,189 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image,ScrollView, Pressable } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import terminateCardAlert from "../utility/terminateCardAlert";
+import terminateCardAlert, {handleTerminate} from "../utility/terminateCardAlert";
+import Button from "../components/AppButton";
 
-const ItWasLost = ({navigation}) => {
+const ItWasLost = ({ navigation }) => {
+
+  
   return (
     <ScrollView>
-    <View style={styles.itWasLost}>
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>It was lost</Text>
-        <View
-          style={[
-            styles.rectangleParent,
-            styles.groupLayout,
-            styles.maskGroup236Position,
-          ]}
-        >
+      <View style={styles.itWasLost}>
+        <View style={styles.helloParent}>
+          <Text style={styles.hello}>It was lost</Text>
           <View
             style={[
-              styles.groupChild,
+              styles.rectangleParent,
+              styles.groupLayout,
+              styles.maskGroup236Position,
+            ]}
+          >
+            <View
+              style={[
+                styles.groupChild,
+                styles.groupPosition1,
+                styles.groupLayout,
+              ]}
+            />
+            <View
+              style={[
+                styles.yourCurrentCardWillBeTermWrapper,
+                styles.yourCardPosition1,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.yourCurrentCardWillBeTerm,
+                  styles.yourCardPosition,
+                ]}
+              >
+                <Text style={styles.yourCurrentCardWillBeTerm1}>
+                  <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
+                    Your current card will be terminated
+                  </Text>
+                </Text>
+                <Text style={styles.yourCurrentCardWillBeTerm1}>
+                  <Text style={styles.toKeepYour}>
+                    {"\n"}To keep your account safe
+                  </Text>
+                </Text>
+              </Text>
+            </View>
+            <Image
+              style={styles.groupItem}
+              resizeMode="cover"
+              source={require("../assets/ellipse-3260.png")}
+            />
+            <View style={[styles.wrapper, styles.wrapperLayout]}>
+              <Text
+                style={[
+                  styles.text,
+                  styles.yourCardTypo,
+                  styles.groupPosition1,
+                ]}
+              >
+                1
+              </Text>
+            </View>
+          </View>
+          <View
+            style={[
+              styles.rectangleGroup,
               styles.groupPosition1,
               styles.groupLayout,
             ]}
-          />
-          <View
-            style={[
-              styles.yourCurrentCardWillBeTermWrapper,
-              styles.yourCardPosition1,
-            ]}
           >
-            <Text
+            <View
               style={[
-                styles.yourCurrentCardWillBeTerm,
-                styles.yourCardPosition,
+                styles.groupChild,
+                styles.groupPosition1,
+                styles.groupLayout,
+              ]}
+            />
+            <View
+              style={[
+                styles.yourCurrentCardWillBeTermWrapper,
+                styles.yourCardPosition1,
               ]}
             >
-              <Text style={styles.yourCurrentCardWillBeTerm1}>
-                <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
-                  Your current card will be terminated
+              <Text
+                style={[
+                  styles.yourCurrentCardWillBeTerm,
+                  styles.yourCardPosition,
+                ]}
+              >
+                <Text style={styles.yourCurrentCardWillBeTerm1}>
+                  <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
+                    Order a replacement card below
+                  </Text>
+                </Text>
+                <Text style={styles.yourCurrentCardWillBeTerm1}>
+                  <Text style={styles.toKeepYour}>
+                    {"\n"}You may be charged for the new card
+                  </Text>
                 </Text>
               </Text>
-              <Text style={styles.yourCurrentCardWillBeTerm1}>
-                <Text style={styles.toKeepYour}>{"\n"}To keep your account safe</Text>
+            </View>
+            <Image
+              style={styles.groupItem}
+              resizeMode="cover"
+              source={require("../assets/ellipse-3260.png")}
+            />
+            <View style={[styles.container, styles.wrapperLayout]}>
+              <Text
+                style={[
+                  styles.text,
+                  styles.yourCardTypo,
+                  styles.groupPosition1,
+                ]}
+              >
+                2
               </Text>
-            </Text>
+            </View>
           </View>
-          <Image
-            style={styles.groupItem}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.wrapper, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition1]}
-            >
-              1
-            </Text>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.rectangleGroup,
-            styles.groupPosition1,
-            styles.groupLayout,
-          ]}
-        >
           <View
             style={[
-              styles.groupChild,
+              styles.rectangleContainer,
               styles.groupPosition1,
               styles.groupLayout,
             ]}
-          />
-          <View
-            style={[
-              styles.yourCurrentCardWillBeTermWrapper,
-              styles.yourCardPosition1,
-            ]}
           >
-            <Text
+            <View
               style={[
-                styles.yourCurrentCardWillBeTerm,
-                styles.yourCardPosition,
+                styles.groupChild,
+                styles.groupPosition1,
+                styles.groupLayout,
+              ]}
+            />
+            <View
+              style={[
+                styles.startUsingYourNewCardRighWrapper,
+                styles.yourCardPosition1,
               ]}
             >
-              <Text style={styles.yourCurrentCardWillBeTerm1}>
-                <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
-                  Order a replacement card below
-                </Text>
+              <Text
+                style={[
+                  styles.startUsingYourNewCardRigh,
+                  styles.yourCardTypo,
+                  styles.yourCardPosition,
+                ]}
+              >
+                Start using your new card right away with Apple Pay
               </Text>
-              <Text style={styles.yourCurrentCardWillBeTerm1}>
-                <Text style={styles.toKeepYour}>
-                  {"\n"}You may be charged for the new card
-                </Text>
+            </View>
+            <Image
+              style={styles.groupItem}
+              resizeMode="cover"
+              source={require("../assets/ellipse-3260.png")}
+            />
+            <View style={[styles.container, styles.wrapperLayout]}>
+              <Text
+                style={[
+                  styles.text,
+                  styles.yourCardTypo,
+                  styles.groupPosition1,
+                ]}
+              >
+                3
               </Text>
-            </Text>
+            </View>
           </View>
-          <Image
-            style={styles.groupItem}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.container, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition1]}
-            >
-              2
-            </Text>
+          <View style={[styles.groupParent, styles.groupPosition]}>
+            <Button
+              title={`Terminate & Order card`}
+              onPress={() => terminateCardAlert(handleTerminate)}
+            />
           </View>
         </View>
-        <View
-          style={[
-            styles.rectangleContainer,
-            styles.groupPosition1,
-            styles.groupLayout,
-          ]}
-        >
-          <View
-            style={[
-              styles.groupChild,
-              styles.groupPosition1,
-              styles.groupLayout,
-            ]}
-          />
-          <View
-            style={[
-              styles.startUsingYourNewCardRighWrapper,
-              styles.yourCardPosition1,
-            ]}
-          >
-            <Text
-              style={[
-                styles.startUsingYourNewCardRigh,
-                styles.yourCardTypo,
-                styles.yourCardPosition,
-              ]}
-            >
-              Start using your new card right away with Apple Pay
-            </Text>
-          </View>
-          <Image
-            style={styles.groupItem}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.container, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition1]}
-            >
-              3
-            </Text>
-          </View>
-        </View>
-        <Pressable style={[styles.groupParent, styles.groupPosition]}
-        onPress={terminateCardAlert}>
-          <View style={[styles.groupView, styles.groupPosition]}>
-            <View style={styles.groupChild2} />
-            <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
-          </View>
-          <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
-        </Pressable>
       </View>
-    </View>
     </ScrollView>
   );
 };
@@ -301,7 +323,7 @@ const styles = StyleSheet.create({
   hello1: {
     top: "38.33%",
     left: "50%",
-    marginLeft:-100,
+    marginLeft: -100,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -312,7 +334,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   helloParent: {
-    width:"100%",
+    width: "100%",
     height: 669,
   },
   arrowPosition: {

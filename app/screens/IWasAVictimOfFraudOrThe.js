@@ -2,7 +2,8 @@ import * as React from "react";
 import { Text, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
-import terminateCardAlert from "../utility/terminateCardAlert";
+import terminateCardAlert, {handleTerminate} from "../utility/terminateCardAlert";
+import Button from "../components/AppButton";
 
 const IWasAVictimOfFraudOrThe = ({navigation}) => {
   return (
@@ -14,7 +15,18 @@ const IWasAVictimOfFraudOrThe = ({navigation}) => {
           <Text style={styles.iWasA}>I was a victim of fraud or</Text>
           <Text style={styles.iWasA}>{"\n"}theft</Text>
         </Text>
-        <Pressable
+        <View style={[
+            styles.groupParent,
+            styles.groupParentPosition,
+            styles.parentPosition,
+          ]}>
+            <Button
+              title={`Terminate & Order card`}
+              onPress={() => terminateCardAlert(handleTerminate)}
+            />
+          </View>
+
+        {/* <Pressable
           style={[
             styles.groupParent,
             styles.groupParentPosition,
@@ -27,13 +39,13 @@ const IWasAVictimOfFraudOrThe = ({navigation}) => {
               styles.groupParentPosition,
               styles.parentPosition,
             ]}
-            onPress={terminateCardAlert}
+            onPress={() => terminateCardAlert(handleTerminate)}
           >
             <View style={styles.groupChild} />
             <View style={[styles.maskGroup236, styles.groupParentPosition]} />
           </View>
           <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
-        </Pressable>
+        </Pressable> */}
         <View
           style={[
             styles.rectangleGroup,

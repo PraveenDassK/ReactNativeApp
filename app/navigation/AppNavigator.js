@@ -468,7 +468,7 @@ const StackNavigator = () => {
         name="ItsDamagedOrDoesntWork"
         component={gestureHandlerRootHOC(ItsDamagedOrDoesntWork)}
         options={{
-          title: "ItsDamagedOrDoesntWork",
+          title: "",
 
         }}
       />
