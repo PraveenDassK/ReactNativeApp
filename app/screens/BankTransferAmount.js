@@ -20,16 +20,10 @@ import AppText from "../components/Text";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 
 import AppDropdown from "../components/AppDropdown";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { CheckBox } from "@rneui/themed";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
-  
-  const [date, setDate] = useState(new Date());
-  const showPicker = false
-
   const payeeDetails = route.params.payeeDetails;
   const destination = {}
   console.log(payeeDetails)
@@ -73,15 +67,15 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   /**
    * 
-   * @returns True if sending money to just one person
+   * @returns True if sending money to just one
    */
   const singleBeneficary = () => {
-    if (route.params.groupId != null) {
+    if (route.params.beneficiaryData?.groupId != null) {
       return false
     }
     return true
   }
-
+  
 
   /**
    * @dev a payment type must be entered
@@ -90,6 +84,14 @@ const BankTransferAmount = ({ route, navigation }) => {
   const requestContact = (amount) => {
     //Payment type checker7
     if (!paymentType) return;
+
+    //Checks if sending to a single person
+    if(singleBeneficary()){
+
+    }else{
+
+    }
+    console.log(route.params)
     route.params.requestObj.amount = amount
     route.params.requestObj.reference = "Transfer"
     console.log(
@@ -137,29 +139,6 @@ const BankTransferAmount = ({ route, navigation }) => {
             placeholder="Enter a reference"
           />
         </View>
-
-        {singleBeneficary() ?
-          <View>
-            <CheckBox
-              title="Schedule this payment?"
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checkedColor="black"
-              checked={true}
-              onPress={() => console.log("!")}
-            />
-            {/* <Text>Schedulde date & time</Text>
-            {showPicker ? null : null}
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode="datetime"
-              is24Hour={true}
-              display="spinner"
-              onChange={console.log("onChange")}
-            /> */}
-          </View>
-          : null}
 
         <AppDropdown data={paymentTypes} onChange={setPaymentType} value={paymentType} placeholder="Payment type" />
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
