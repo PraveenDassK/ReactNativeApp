@@ -1,8 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, {useEffect} from 'react'
+import { StyleSheet, Text, View, FlatList} from 'react-native'
 import { moderateScale } from '../config/scaling'
 
+import itemObj from '../api/apiMarket'
+
+
+
+
+
+
 const Marketplace = () => {
+
+  useEffect(() => {
+console.log('object', itemObj.id)
+  },[])
+  
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.comingSoonText}>coming</Text>

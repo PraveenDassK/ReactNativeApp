@@ -151,7 +151,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
         return (
           <React.Fragment key={route.name.toString()}>
-            {index == 6 ? null : index == 0 ? null : (
+            {index == 6  ? null : index == 0 ? null : (
               <TouchableOpacity
                 key={route.name.toString()}
                 accessibilityRole="button"
