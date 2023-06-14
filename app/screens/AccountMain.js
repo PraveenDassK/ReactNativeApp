@@ -51,6 +51,11 @@ import moment from "moment";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import authStorage from "../auth/storage";
+import {
+  TransactionBody,
+  TransactionHead,
+  TransactionFooter,
+} from "../components/transactions";
 
 const CARD_DATA = [];
 
@@ -75,7 +80,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [name, setName] = useState(null);
   const [price, setPrice] = useState(null);
   const [nftimg, setNftimg] = useState(null);
-  const [showCardDetails, setShowCardDetails] = useState(false)
+  const [showCardDetails, setShowCardDetails] = useState(false);
+  const [transactions, setTransactions] = useState([]);
 
   const {
     carbonyteID,
@@ -168,6 +174,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
 
+    setTransactions(transactionCall.transactions);
+
     //Load the data for transactions
     let pageShow = [];
     for (let i = 0; i < 5; i++) {
@@ -235,7 +243,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   color: !dataHold?.credit ? "red" : "green",
                 }}
               >
-                {!dataHold?.credit ? "-" : "+"} £{dataHold?.amount.toFixed(2)}
+                {!dataHold?.credit ? "-" : "+"}£{dataHold?.amount.toFixed(2)}
               </AppText>
             </View>
           </View>
@@ -254,8 +262,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     // loadCardDetails()
   }, [cardResponse]);
-
-
 
   /**
    * @dev Data needed for this page
@@ -732,19 +738,31 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={{ marginTop: "2.5%" }} />
           {/* // AssetsAssets */}
 
-          {projects &&
+          {/* {projects &&
             projects.map((project, index) => (
               <Fragment key={`${index}-${project.name}`}>
                 <CarbonAssets project={project} navigation={navigation} />
               </Fragment>
+            ))} */}
+
+          {projects && <View style={styles.containerSpacing}>
+              <TransactionHead headerTitle="Carbon transactions"/>
+            {projects.map(({ name, lastUpdated, displayAssetPrice, type }) => (
+              <TransactionBody
+                name={`${name} £${displayAssetPrice}/${type}`}
+                date={lastUpdated}
+                token={1}
+              />
             ))}
+            <TransactionFooter number={projects.length} onSee={() =>navigation.navigate("VirtualEcoSystem")}/>
+          </View>}
         </View>
 
         {/**
          * @dev Transactions section
          */}
 
-        <View style={[styles.carbonSpendingTitleDiv]}>
+        {/* <View style={[styles.carbonSpendingTitleDiv]}>
           <Image
             resizeMode="contain"
             source={require("../assets/icon-withdraw.png")}
@@ -764,6 +782,25 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         </View>
         {transactionTable && (
           <View style={styles.transactionsContainer}>{transactionTable}</View>
+        )} */}
+
+        {transactions && (
+          <View style={{ paddingHorizontal: "5%", marginVertical: 40 }}>
+            <TransactionHead />
+            {transactions.map((transaction, index) => (
+              <TransactionBody
+                key={index}
+                name={transaction.description}
+                date={transaction.transactionDate}
+                amount={transaction.amount}
+                credit={transaction.credit}
+              />
+            ))}
+            <TransactionFooter
+              number={transactions.length}
+              onSee={() => navigation.navigate("Transactions")}
+            />
+          </View>
         )}
 
         {nftimg && (
@@ -1122,6 +1159,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     height: "10%",
   },
+  containerSpacing: { paddingHorizontal: "5%"},
   titleText: {
     top: verticalScale(2),
     left: horizontalScale(10),
