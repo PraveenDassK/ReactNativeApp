@@ -36,10 +36,7 @@ const MyCards = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
   const toggleChecked = () => setChecked((value) => !value);
 
-  //Transactions
-  const [transactionData, setTransactionData] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalId, setModalId] = useState(false);
+  //Remove
   const [initials, setInitals] = useState(null);
   const [cardnumber, setcardnumber] = useState(null);
   const [firstname, setfirstname] = useState(null);
@@ -48,7 +45,13 @@ const MyCards = ({ navigation }) => {
   const [type, setType] = useState(null);
   const [cardId, setCardID] = useState(null);
   const [cardIndex, setCardIndex] = useState(0);
+
+  //Keep
   const [cardData, setCardData] = useState(null);
+  const [currentCardDataShow, setCurrentCardDataShow] = useState(null);
+  const [transactionData, setTransactionData] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalId, setModalId] = useState(false);
   const authContext = useContext(AuthContext);
 
   const { settings, cardID, customerDetails, cardDetails } = useContext(AuthContext);
@@ -57,31 +60,56 @@ const MyCards = ({ navigation }) => {
     loadData();
   }, []);
 
+
+  const getFullCardData = async () => {
+    const cardObject = await api.GetCardFromID("714613712");
+
+  }
+
+  
   const loadData = async () => {
     setIsLoading(true);
     //Get the transaction data
     const response = await api.GetTransactions(authContext.accountID, 5);
-    const cards = await apiCall.GetCardByAccount("686283112");
-
     const transactions = response.data.details.content;
     setTransactionData(transactions);
 
-    setCardData(cards);
-    console.log(cards);
-    const currentCard = cards[cardIndex];
-    currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
+    const cards = await apiCall.GetCardByAccount("686283112");
 
-    setRole(currentCard.cardRole);
-    setInitals(
-      currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
-    );
+    const cardDetails = []
+    cards.forEach(cardDetail => {
+      console.log(cardDetail)
+      const obj = {
+        "cardName": cardDetail.embossing.firstName + " " +cardDetail.embossing.lastName,
+        "cardNumber": cardDetail.maskedCardNumber,
+        "cvv": "000",
+        "expiary": "00/00",
+        "isFrozen": cardDetail.status != "CARD_OK",
+        "isVirtual": cardDetail.template == "MC_VIRTUAL"
+      }
+      cardDetails.push(obj)
+    })
+    console.log(cardDetails)
+    setCardData(cardDetails)
+
+
+    // setCardData(cards);
+    // console.log(cards);
+    // const currentCard = cards[cardIndex];
+    // currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
+
+    // setRole(currentCard.cardRole);
+    // setInitals(
+    //   currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
+    // );
+    // setType(currentCard.productCode);
+
+    // setcardnumber(cardDetails.number);
+    // setfirstname("CVV " + cardDetails.cvv);
+    // setlastname(cardDetails.name);
+    // console.log(cardDetails);
+
     setIsLoading(false);
-    setType(currentCard.productCode);
-
-    setcardnumber(cardDetails.number);
-    setfirstname("CVV " + cardDetails.cvv);
-    setlastname(cardDetails.name);
-    console.log(cardDetails);
   };
 
   let transactionList = [];
