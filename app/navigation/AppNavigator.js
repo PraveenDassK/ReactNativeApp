@@ -117,8 +117,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -151,7 +151,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
         return (
           <React.Fragment key={route.name.toString()}>
-            {index == 6  ? null : index == 0 ? null : (
+            {index == 6 ? null : index == 0 ? null : (
               <TouchableOpacity
                 key={route.name.toString()}
                 accessibilityRole="button"
@@ -224,12 +224,20 @@ const StackNavigator = () => {
 
       <Stack.Screen
         name="CarbonyteLabs"
-        component={CarbonyteLabs}
+        component={gestureHandlerRootHOC(CarbonyteLabs)}
         options={{
-          title: "Carbonyte labs",
-          headerShown: false,
+          title: "Carbonyte Labs",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
         }}
       />
+
 
       <Stack.Screen
         name="AddFunds"
@@ -671,13 +679,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-        // listeners={({ navigation, route }) => ({
-        //   focus: () => {
+      // listeners={({ navigation, route }) => ({
+      //   focus: () => {
 
-        //     // Do something with the `navigation` object
-        //     navigation.navigate('AccountTab');
-        //   },
-        // })}
+      //     // Do something with the `navigation` object
+      //     navigation.navigate('AccountTab');
+      //   },
+      // })}
       />
     </Tab.Navigator>
   );

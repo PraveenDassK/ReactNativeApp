@@ -91,7 +91,7 @@ const CarbonyteLabs = ({ navigation }) => {
           source={require("../assets/icon-faceid.png")}
         />
 
-        <Text style={styles.divText}>Allow your face to be removed</Text>
+        <Text style={styles.divText}>Show Joint Business Accounts</Text>
 
         <Switch
           style={[styles.groupChildPosition]}
@@ -111,7 +111,7 @@ const CarbonyteLabs = ({ navigation }) => {
           source={require("../assets/icon-view.png")}
         />
 
-        <Text style={styles.divText}>Constant monitoring of you</Text>
+        <Text style={styles.divText}>Tag each TX</Text>
 
         <Switch
           style={[styles.groupChildPosition]}
@@ -131,7 +131,7 @@ const CarbonyteLabs = ({ navigation }) => {
           source={require("../assets/blueMessage.png")}
         />
 
-        <Text style={styles.divText}>Live subtitles</Text>
+        <Text style={styles.divText}>Auto Tree Populate</Text>
 
         <Switch
           style={[styles.groupChildPosition]}
