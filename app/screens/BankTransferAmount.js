@@ -82,8 +82,8 @@ const BankTransferAmount = ({ route, navigation }) => {
    * @param {int} amount The amount entered to send
    */
   const requestContact = (amount) => {
-    //Payment type checker7
-    if (!paymentType) return;
+    //Payment type checker
+    // if (!paymentType) return;
 
     //Checks if sending to a single person
     if(singleBeneficary()){
@@ -140,7 +140,7 @@ const BankTransferAmount = ({ route, navigation }) => {
           />
         </View>
 
-        <AppDropdown data={paymentTypes} onChange={setPaymentType} value={paymentType} placeholder="Payment type" />
+        {/* <AppDropdown data={paymentTypes} onChange={setPaymentType} value={paymentType} placeholder="Payment type" /> */}
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.hello4, styles.groupViewPosition]}>
             <TouchableOpacity

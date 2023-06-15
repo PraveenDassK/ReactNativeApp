@@ -28,7 +28,6 @@ import {
   moderateScale,
 } from "../config/scaling";
 import authStorage from "../auth/storage";
-import * as Device from "expo-device";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -77,16 +76,6 @@ const Login = ({ navigation }) => {
     setAccountID(IDs.accountID);
     setCardID(IDs.cardID);
     setCustomerDetails(IDs.customerDetails);
-
-    const pushNotification = await loginApi.SendPushNotificationToken({
-      tokenID: expoPushToken,
-      customerID: IDs.customerDetails,
-      deviceID: Device.osInternalBuildId,
-      deviceName: Device.deviceName,
-      macAddress: "",
-      operatingSystem: Device.osName,
-    });
-    console.log(pushNotification);
 
     //Turns off the loading
     setIsLoading(false);

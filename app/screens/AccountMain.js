@@ -133,6 +133,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Calls the API once during load
   useEffect(() => {
     loadData();
+    checkForInitalPasscode()
   }, [accountID, customerDetails]);
 
   const checkForInitalPasscode = async () => {
@@ -163,7 +164,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       setCardDetails(cardObject);
       setSortCode("00-00-00");
 
-      CARD_DATA.push(cardObject);
       CARD_DATA.push(cardObject);
     }
 
@@ -335,7 +335,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                         {...card}
                         isVisible={showCardDetails}
                         selected={selectedCard?.name === card.name}
-                        onPress={() => handleCardPress(card)}
+                        onPress={() => setShowCardDetails((prev) => !prev)}
                       />
                     ))}
                   </Swiper>
@@ -746,7 +746,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             ))} */}
 
           {projects && <View style={styles.containerSpacing}>
-              <TransactionHead headerTitle="Carbon transactions"/>
+            <TransactionHead headerTitle="Carbon transactions" />
             {projects.map(({ name, lastUpdated, displayAssetPrice, type }) => (
               <TransactionBody
                 name={`${name} £${displayAssetPrice}/${type}`}
@@ -754,7 +754,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 token={1}
               />
             ))}
-            <TransactionFooter number={projects.length} onSee={() =>navigation.navigate("VirtualEcoSystem")}/>
+            <TransactionFooter number={projects.length} onSee={() => navigation.navigate("VirtualEcoSystem")} />
           </View>}
         </View>
 
@@ -1159,7 +1159,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     height: "10%",
   },
-  containerSpacing: { paddingHorizontal: "5%"},
+  containerSpacing: { paddingHorizontal: "5%" },
   titleText: {
     top: verticalScale(2),
     left: horizontalScale(10),

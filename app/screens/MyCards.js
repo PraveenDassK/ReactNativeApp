@@ -50,8 +50,8 @@ const MyCards = ({ navigation }) => {
   const [cardIndex, setCardIndex] = useState(0);
   const [cardData, setCardData] = useState(null);
   const authContext = useContext(AuthContext);
-  const { settings, cardID, customerDetails, cardDetails } =
-    useContext(AuthContext);
+
+  const { settings, cardID, customerDetails, cardDetails } = useContext(AuthContext);
 
   useEffect(() => {
     loadData();
@@ -61,10 +61,11 @@ const MyCards = ({ navigation }) => {
     setIsLoading(true);
     //Get the transaction data
     const response = await api.GetTransactions(authContext.accountID, 5);
+    const cards = await apiCall.GetCardByAccount("686283112");
+
     const transactions = response.data.details.content;
     setTransactionData(transactions);
 
-    const cards = await apiCall.GetCardByAccount("686283112");
     setCardData(cards);
     console.log(cards);
     const currentCard = cards[cardIndex];
