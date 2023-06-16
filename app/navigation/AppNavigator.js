@@ -95,6 +95,8 @@ import { Animated, View, TouchableOpacity, Platform } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
+import MarketPlaceItem from "../screens/MarketPlaceItem";
+
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
@@ -582,6 +584,13 @@ const StackNavigator = () => {
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
+        }}
+      />
+      <Stack.Screen
+        name="MarketPlaceItem"
+        component={MarketPlaceItem}
+        options={{
+          title: null,
         }}
       />
 
