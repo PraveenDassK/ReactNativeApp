@@ -51,6 +51,7 @@ import moment from "moment";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import authStorage from "../auth/storage";
+import apiTransaction from "../api/apiTransaction";
 import {
   TransactionBody,
   TransactionHead,
@@ -82,6 +83,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [nftimg, setNftimg] = useState(null);
   const [showCardDetails, setShowCardDetails] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [transactionTotal, setTransactionTotal] = useState(1);
 
   const {
     carbonyteID,
@@ -154,6 +156,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     const resposeData = await apiCall.GetUserImpact(customerDetails);
     const transactionCall = await apiCall.GetTransactions(accountID);
 
+    console.log(resposeData)
     const carbonSpendData = await apiCarbon.GetBarGraphData();
     setCatNames(carbonSpendData.labels);
     setDataPercentages(carbonSpendData.percentages);
@@ -175,7 +178,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setCarbon(resposeData.totalOffset);
 
     setTransactions(transactionCall.transactions);
-
+    setTransactionTotal(transactionCall.total)
     //Load the data for transactions
     let pageShow = [];
     for (let i = 0; i < 5; i++) {
@@ -453,7 +456,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   resizeMode="contain"
                   source={require("../assets/add.png")}
                 />
-                <AppText style={styles.inputBoxText}>Add Funds</AppText>
+                <AppText style={styles.inputBoxText}>Move Money</AppText>
               </View>
             </TouchableOpacity>
 
@@ -495,7 +498,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   resizeMode="contain"
                   source={require("../assets/transfer-1.png")}
                 />
-                <AppText style={styles.inputBoxText}>SwitchAccount</AppText>
+                <AppText style={styles.inputBoxText}>Account switch</AppText>
               </View>
             </TouchableOpacity>
           </View>
@@ -738,13 +741,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={{ marginTop: "2.5%" }} />
           {/* // AssetsAssets */}
 
-          {/* {projects &&
-            projects.map((project, index) => (
-              <Fragment key={`${index}-${project.name}`}>
-                <CarbonAssets project={project} navigation={navigation} />
-              </Fragment>
-            ))} */}
-
           {projects && <View style={styles.containerSpacing}>
             <TransactionHead headerTitle="Carbon transactions" />
             {projects.map(({ name, lastUpdated, displayAssetPrice, type }) => (
@@ -754,35 +750,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 token={1}
               />
             ))}
-            <TransactionFooter number={projects.length} onSee={() => navigation.navigate("VirtualEcoSystem")} />
+            <TransactionFooter
+              number={projects.length}
+              total={numTrees}
+              onSee={() => navigation.navigate("VirtualEcoSystem")} />
           </View>}
         </View>
 
-        {/**
-         * @dev Transactions section
-         */}
-
-        {/* <View style={[styles.carbonSpendingTitleDiv]}>
-          <Image
-            resizeMode="contain"
-            source={require("../assets/icon-withdraw.png")}
-            style={{ width: horizontalScale(25), height: verticalScale(25) }}
-          />
-          <AppText
-            style={[
-              styles.titleText,
-              {
-                fontWeight: Platform.OS === "android" ? "normal" : "700",
-                fontFamily: "Helvetica",
-              },
-            ]}
-          >
-            Recent Transactions
-          </AppText>
-        </View>
-        {transactionTable && (
-          <View style={styles.transactionsContainer}>{transactionTable}</View>
-        )} */}
 
         {transactions && (
           <View style={{ paddingHorizontal: "5%", marginVertical: 40 }}>
@@ -798,6 +772,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             ))}
             <TransactionFooter
               number={transactions.length}
+              total={transactionTotal}
               onSee={() => navigation.navigate("Transactions")}
             />
           </View>

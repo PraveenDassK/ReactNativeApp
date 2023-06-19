@@ -1,3 +1,12 @@
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+  useRef,
+  Fragment,
+} from "react";
+
 import {
   StyleSheet,
   Text,
@@ -6,10 +15,10 @@ import {
   Vibration,
 } from "react-native";
 import Dropdown from "../components/AppDropdown";
-import { useState } from "react";
 import Icon from "../components/Icon";
 
 import * as Clipboard from "expo-clipboard";
+import apiTransaction from "../api/apiTransaction";
 
 const ACCOUNT = [
   { label: "account1", value: 1 },
@@ -34,15 +43,29 @@ const PaymentLink = () => {
     await Clipboard.setStringAsync(link);
   };
 
+  //Calls the API once during load
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+
+    const paymentRequestURL = await apiTransaction.getPaymentLink()
+    console.log(paymentRequestURL)
+    setLink(paymentRequestURL)
+  }
+
   const handleChange = (item) => console.log(item)
 
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.dropdownContainer}>
-        <Dropdown data={accounts} placeholder="Accounts" onChange={handleChange}/>
-      </View>
       <View style={styles.balanceContainer}>
-        <Text style={styles.balance}>Balance: £{balance.toFixed(2)}</Text>
+        <Text style={styles.balance}>Copy this payment link to allow someone to send money to you</Text>
+      </View>
+      <View>
+        <Text>
+          {link.slice(0,100)}...
+        </Text>
       </View>
       <TouchableOpacity
         style={styles.paymentContainer}

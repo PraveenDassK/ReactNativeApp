@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
+  Alert,
   Text,
   StyleSheet,
   Image,
@@ -47,8 +48,8 @@ const MyCards = ({ navigation }) => {
   const [cardIndex, setCardIndex] = useState(0);
 
   //Keep
-  const [cardData, setCardData] = useState(null);
-  const [currentCardDataShow, setCurrentCardDataShow] = useState(null);
+  const [cardData, setCardData] = useState([]);
+  const [currentCardDataShow, setCurrentCardDataShow] = useState({});
   const [transactionData, setTransactionData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalId, setModalId] = useState(false);
@@ -63,10 +64,19 @@ const MyCards = ({ navigation }) => {
 
   const getFullCardData = async () => {
     const cardObject = await api.GetCardFromID("714613712");
-
+    const cards = await apiCall.GetCardByAccount("686283112");
+    const obj = {
+      "cardName": cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
+      "cardNumber": cardDetail.maskedCardNumber,
+      "cvv": "000",
+      "expiary": "00/00",
+      "isFrozen": cardDetail.status != "CARD_OK",
+      "isVirtual": cardDetail.template == "MC_VIRTUAL"
+    }
+    setCurrentCardDataShow(obj)
   }
 
-  
+
   const loadData = async () => {
     setIsLoading(true);
     //Get the transaction data
@@ -80,7 +90,7 @@ const MyCards = ({ navigation }) => {
     cards.forEach(cardDetail => {
       console.log(cardDetail)
       const obj = {
-        "cardName": cardDetail.embossing.firstName + " " +cardDetail.embossing.lastName,
+        "cardName": cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
         "cardNumber": cardDetail.maskedCardNumber,
         "cvv": "000",
         "expiary": "00/00",
@@ -360,12 +370,12 @@ const MyCards = ({ navigation }) => {
                   styles.totalWalletBalanceText11,
                 ]}
               >
-                {cardnumber}
+                {cardData[1]?.cardNumber}
               </AppText>
               <AppText
                 style={[{ color: "white" }, styles.totalWalletBalanceText11]}
               >
-                {firstname} {lastname}
+                {cardData[1]?.cardName}
               </AppText>
             </View>
           </View>

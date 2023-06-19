@@ -33,6 +33,7 @@ import AuthContext from "../auth/context";
 import Animated from "react-native-reanimated";
 import Button from "../components/AppButton";
 import colors from "../config/colors";
+import { TransactionBody, TransactionHead } from "../components/transactions";
 
 const ITEM_SIZE = 50 + 15 * 3;
 const Transactions = ({ navigation, route }) => {
@@ -292,37 +293,39 @@ const Transactions = ({ navigation, route }) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={
-            <View
-              style={{
-                backgroundColor: "white",
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                paddingTop: 10,
-                marginBottom: "1%",
-                paddingBottom: "2.5%"
-              }}
-            >
-              <View style={{ marginLeft: "2.5%" }}>
-                <View></View>
-                <Text style={{ fontWeight: "700", fontSize: 20, marginBottom: "5%"}}>
-                  Recent transactions
-                </Text>
-                <View style={{ flexDirection: "row", flex: 1 }}>
-                  <View style={{ flex: 3.8 }}>
-                    <Text style={{opacity: 0.4}}>Transaction name</Text>
-                  </View>
-                  <View style={{flex:2}}>
-                    <Text style={{opacity: 0.4}}>Date</Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{opacity: 0.4}}>Amount</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
+            // <View
+            //   style={{
+            //     backgroundColor: "white",
+            //     borderTopLeftRadius: 10,
+            //     borderTopRightRadius: 10,
+            //     paddingTop: 10,
+            //     marginBottom: "1%",
+            //     paddingBottom: "2.5%"
+            //   }}
+            // >
+            //   <View style={{ marginLeft: "2.5%" }}>
+            //     <View></View>
+            //     <Text style={{ fontWeight: "700", fontSize: 20, marginBottom: "5%"}}>
+            //       Recent transactions
+            //     </Text>
+            //     <View style={{ flexDirection: "row", flex: 1 }}>
+            //       <View style={{ flex: 3.8 }}>
+            //         <Text style={{opacity: 0.4}}>Transaction name</Text>
+            //       </View>
+            //       <View style={{flex:2}}>
+            //         <Text style={{opacity: 0.4}}>Date</Text>
+            //       </View>
+            //       <View style={{ flex: 1 }}>
+            //         <Text style={{opacity: 0.4}}>Amount</Text>
+            //       </View>
+            //     </View>
+            //   </View>
+            // </View>
+            <TransactionHead />
           }
           ListFooterComponent={
             <View style={{ marginBottom: verticalScale(50) }}>
+
               {hide && (
                 <Button
                   onPress={() => loadData()}
@@ -341,7 +344,7 @@ const Transactions = ({ navigation, route }) => {
           // )}
           keyExtractor={(item) => item.sourceId.toString()}
           renderItem={({ item, index, separators }) => {
-            console.log("is", item.sourceId.toString());
+           
             const inputRange = [
               -1,
               0,
@@ -369,7 +372,7 @@ const Transactions = ({ navigation, route }) => {
                     style={[styles.transactionBox]}
                     onPress={() => showTransaction(index)}
                   >
-                    <View style={{ height: "100%", flexDirection: "row" }}>
+                    {/* <View style={{ height: "100%", flexDirection: "row" }}>
                       <View
                         style={{
                           justifyContent: "center",
@@ -423,7 +426,16 @@ const Transactions = ({ navigation, route }) => {
                           £{item.amount.toFixed(2)}
                         </Text>
                       </View>
-                    </View>
+                    </View> */}
+
+                    <TransactionBody 
+                    name={item.description}
+                    date={item.transactionDate}
+                    amount={item.amount}
+                    credit={item.credit}
+                    />
+
+
                   </Pressable>
                 </Swipeable>
               </Animated.View>

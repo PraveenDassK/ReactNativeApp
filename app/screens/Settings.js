@@ -23,6 +23,7 @@ import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
 import colors from "../config/colors";
 
+
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [account, setAccNum] = useState(null);
@@ -43,8 +44,12 @@ const Settings = ({ navigation }) => {
    * @dev Loads the data once
    */
   useEffect(() => {
-    loadData();
-  }, [accountID]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadData()
+    });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   /**
    * @dev Thislogs the user out
@@ -437,6 +442,15 @@ const Settings = ({ navigation }) => {
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("Devices")}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Button
+            title="Payment Link"
+            style={styles.boxShadow}
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("PaymentLink")}
           />
         </TouchableOpacity>
 

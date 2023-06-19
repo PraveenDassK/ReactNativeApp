@@ -73,13 +73,12 @@ const styles = StyleSheet.create({
 
   transactionMainContainer: {
     backgroundColor: "white",
-    padding: "0.5%",
+    padding: "3%",
     height: moderateScale(50),
     justifyContent: "center",
   },
   transactionContainer: {
     flexDirection: "row",
-    paddingHorizontal: "0.5%",
     height: 40,
   },
   icon: {

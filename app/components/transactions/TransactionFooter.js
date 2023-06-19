@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     paddingTop: 10,
     marginTop: "1%",
-    paddingHorizontal: "0.5%",
+    paddingHorizontal: "3%",
   },
   headerTitleContainer: {
     flex: 1,
