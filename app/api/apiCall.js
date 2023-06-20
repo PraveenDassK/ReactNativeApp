@@ -513,9 +513,11 @@ const GetTransactionsYear = async (Id) => {
   console.log(endOfMonth);
 
   requestData?.content?.forEach((element) => {
-    total += element.amount;
-    let category = endOfMonth.diff(element.transactionDate, "months");
-    data[category] += element.amount;
+    if(element.credit == true){
+      total += element.amount;
+      let category = endOfMonth.diff(element.transactionDate, "months");
+      data[category] += element.amount;
+    }
   });
   let xAxis = [];
   for (let i = 0; i < 10; i++) {

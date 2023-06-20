@@ -20,6 +20,9 @@ import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
 import versionChecker from "./app/utility/versionChecker";
+import { usePreventScreenCapture } from 'expo-screen-capture';
+
+
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -129,7 +132,7 @@ export default function App() {
 
   useLayoutEffect(() => {
     if (isAuth && currentUser) {
-      if (Device.isDevice || Platform.OS == "ios" ) authenticate();
+      if (Device.isDevice || Platform.OS == "ios") authenticate();
     }
 
     console.log("currentUser & isAuth on load", currentUser, isAuth);
@@ -141,6 +144,7 @@ export default function App() {
     versionChecker.compareVersion(version);
     console.log(version);
   }, []);
+  usePreventScreenCapture();
 
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChange);
