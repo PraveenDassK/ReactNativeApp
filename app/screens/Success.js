@@ -1,73 +1,85 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View, Pressable } from "react-native";
-//import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-
-const Success = ({navigation}) => {
-
+const Success = ({route, navigation}) => {
+  console.log(route?.params?.params?.successText)
+  const text = route?.params?.params?.successText
+  const path = route?.params?.params?.finishScreen ? route.params.finishScreen : "AccountTab"
+  console.log(path)
   return (
     <Pressable
-      style={styles.success}
-      onPress={() => navigation.navigate("AccountMain")}
+      style={styles.requested}
+      onPress={() => navigation.navigate(path, {reload: true})}
     >
-      <View style={styles.helloParent}>
-        <Text style={[styles.hello, styles.helloTypo]}>All set</Text>
-        <Text style={[styles.hello1, styles.helloTypo]}>
-          <Text style={styles.yourFaceId}>Your face ID, pin and biometric authentication has been setup successfully</Text>
-        </Text>
+     <View style={styles.mainContainer}>
+         <View style={styles.titleTextRow}>
+             <Text style={styles.titleText}>Success</Text>
+         </View>
+
+         <View style={styles.subTextRow}>
+             <Text style={styles.subText}>Transaction has completed successfully</Text>
+         </View>
+
         <Image
-          style={styles.groupChild}
-          resizeMode="cover"
-          source={require("../assets/icon-bluecheck.png")}
-        />
-      </View>
+                  style={styles.image}
+                  source={require("../assets/babyblueCircle.png")}
+                />
+
+                  <Text style={{fontSize: 20, width: "100%",fontWeight: "700", textAlign: "center", marginTop: "15%"}}>{text}{'\n'}</Text>
+
+                 <Text style={{bottom: 0, textAlign: "center", position: "absolute", width: "100%", marginBottom: "5%"}}>Tap anywhere to continue</Text>
+    </View>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  helloTypo: {
-    textAlign: "center",
-    position: "absolute",
-  },
-  hello: {
-    top: "50%",
-    fontSize: 38,
-    fontWeight: "700",
-    width:"100%",
-    color: GlobalStyles.Color.gray_1300,
-  },
-  yourFaceId: {
-  },
-  hello1: {
-    top: "70%",
-    //left: horizontalScale(10),
-    width: "100%",
-    textAlign:"center",
-    fontSize: GlobalStyles.FontSize.size_2xl,
-    lineHeight: verticalScale(25),
-    color: GlobalStyles.Color.indigo_100,
-  },
-  groupChild: {
-    width: horizontalScale(150),
-    height: verticalScale(250),
+mainContainer: {
+        backgroundColor:  GlobalStyles.DivContainer.backgroundColor,
+        height: GlobalStyles.DivContainer.height,
+        width: "100%",
+        flex: GlobalStyles.DivContainer.flex,
+    },
 
-    top:"15%",
-    left:"30%",
-    resizeMode:"contain"
-  },
-  helloParent: {
+    titleTextRow: {
+        marginTop: GlobalStyles.Title.marginTop,
+        width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
+    },
+
+    titleText: {
+        fontSize: GlobalStyles.Title.fontSize,
+        fontWeight: GlobalStyles.Title.fontWeight,
+    },
+
+    subText: {
+        fontSize: GlobalStyles.RowText.fontSize,
+        fontWeight: GlobalStyles.RowText.fontWeight,
+    },
+
+    subTextRow: {
+        marginTop: GlobalStyles.RowText.marginTop,
+        width: GlobalStyles.DivContainer.width,
+            marginLeft: GlobalStyles.DivContainer.marginLeft,
+        fontColor: GlobalStyles.RowText.fontColor,
+    },
+    requested: {
     width: "100%",
-    height: "100%",
-  },
-  success: {
-    backgroundColor: GlobalStyles.Color.gray_400,
-    flex: 1,
-    width: "100%",
-  },
+    height: "100%"
+    },
+
+    image: {
+    width: "90%",
+    resizeMode: "contain",
+    marginLeft: "5%",
+    height: "25%",
+    marginTop: "50%"
+
+
+    }
+
 });
-
 
 export default Success;

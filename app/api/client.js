@@ -8,25 +8,12 @@ const apiClient = create({
   headers: { Accept: 'application/vnd.github.v3+json' },
 });
 
+const environment = "demo"
+const realm = "test"
 
-
-// apiClient.addAsyncRequestTransform(async (request) => {
-//   const authToken = await authStorage.getToken();
-//   if (!authToken) return;
-//   request.headers["x-auth-token"] = authToken;
-// });
-
-// const get = apiClient.get;
-// apiClient.get = async (url, params, axiosConfig) => {
-//   const response = await get(url, params, axiosConfig);
-
-//   if (response.ok) {
-//     cache.store(url, response.data);
-//     return response;
-//   }
-
-//   const data = await cache.get(url);
-//   return data ? { ok: true, data } : response;
-// };
+export const enfuceClient = create({
+  baseURL: `https://integration-api-cat2.${environment}.ext.${realm}.cia.enfuce.com/`,
+ 
+})
 
 export default apiClient;

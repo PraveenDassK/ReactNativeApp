@@ -1,245 +1,324 @@
-import React, {useCallback, useState} from "react";
-import { View,Text, Image, SafeAreaView, Pressable, StyleSheet, ScrollView } from "react-native";
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import 'expo-dev-menu';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import "react-native-gesture-handler";
+import "expo-dev-menu";
+
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { Text, View, Button, Platform, ActivityIndicator } from "react-native";
+import { AppState } from "react-native";
+import { useFonts } from "expo-font";
+
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 
-import SplashAnimation from "./app/screens/SplashAnimation";
-
-import Onboarding1 from "./app/screens/Onboarding1"
-import Onboarding2 from "./app/screens/Onboarding2"
-import Onboarding3 from "./app/screens/Onboarding3"
-
-import GlobalStyles from "./GlobalStyles";
-
-import Account from "./app/screens/Account"
+import * as SplashScreen from "expo-splash-screen";
+import * as LocalAuthentication from "expo-local-authentication";
+import { decode, encode } from "base-64";
 import AuthContext from "./app/auth/context";
-import BusinessAddress2 from "./app/screens/BusinessAddress2"
-import CountryOfResidence from "./app/screens/CountryOfResidence"
-import Carbon22 from "./app/screens/Carbon22"
-import Carbon from "./app/screens/Carbon";
-import CarbonProject from "./app/screens/CarbonProject"
-import ChooseCardsStandard5 from "./app/screens/ChooseCardsStandard5"
+import AppNavigator from "./app/navigation/AppNavigator";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import authStorage from "./app/auth/storage";
+import apiLogin from "./app/api/apiLogin";
 
-import DOB from "./app/screens/DOB"
-import OTPVerificationPersonal from "./app/screens/OTPVerificationPersonal";
-import SignUpPersonalScreen from "./app/screens/SignUpPersonalScreen";
+import versionChecker from "./app/utility/versionChecker";
 
-
-import OTPVerificationPersonal2 from "./app/screens/OTPVerificationPersonal2";
-import PersonalOrBusiness from "./app/screens/PersonalOrBusiness";
-import ProofOfResidencyListA1 from "./app/screens/ProofOfResidencyListA1";
-
-import ProofOfResidency from "./app/screens/ProofOfResidency";
-
-import SignUpPersonal from "./app/screens/SignUpPersonal"
-import FaceScan from "./app/screens/FaceScan"
-import BiometrixComplete from "./app/screens/BiometrixComplete"
-import Pin from "./app/screens/Pin"
-import Success from "./app/screens/Success"
-import Name from "./app/screens/Name"
-import Login from "./app/screens/Login";
-import BusinessChooseAddress from "./app/screens/BusinessChooseAddress";
-import ChooseCardsPremium from "./app/screens/ChooseCardsPremium";
-import ChooseCardsElite from "./app/screens/ChooseCardsElite";
-import ProofOfResidencyList from "./app/screens/ProofOfResidencyList"
-import SendMoney from "./app/screens/SendMoney"
-import BankTransfer from "./app/screens/BankTransfer"
-import Analytics from "./app/screens/Analytics"
-import SecurityAndPrivacy from "./app/screens/SecurityAndPrivacy"
-import FindFriends from "./app/screens/FindFriends"
-import PersonalAddress from "./app/screens/PersonalAddress"
-import ReviewAndConfirm from "./app/screens/ReviewAndConfirm"
-import SendAccountSelection from "./app/screens/SendAccountSelection"
-import MyCards from "./app/screens/MyCards"
-import ProofVerified from "./app/screens/ProofVerified"
-
-import AddFunds from "./app/screens/AddFunds"
-//import SendEnterPIN1 from "./app/screens/SendEnterPIN1";
-import FreezeCard from "./app/screens/FreezeCard";
-import CardSettings from "./app/screens/CardSettings";
-import SetLimit from "./app/screens/SetLimit";
-import SpendingLimit from "./app/screens/SpendingLimit";
-import CarbonSpending from "./app/screens/CarbonSpending";
-
-import ItsDamagedOrDoesntWork from "./app/screens/ItsDamagedOrDoesntWork";
-import IWasAVictimOfFraudOrThe from "./app/screens/IWasAVictimOfFraudOrThe";
-import Terminate from "./app/screens/Terminate";
-import TerminatedCard from "./app/screens/TerminatedCard";
-import ItWasLost from "./app/screens/ItWasLost";
-import ReplaceCard from "./app/screens/ReplaceCard";
-// import AddBeneficiarySuccess from "./app/screens/AddBeneficiarySuccess";
-import BankTransferAmount from "./app/screens/BankTransferAmount";
-import VerifyCode1 from "./app/screens/VerifyCode1";
-import VerifyCode from "./app/screens/VerifyCode";
-// import AddBeneficiary from "./app/screens/AddBeneficiary";
-import Address1 from "./app/screens/Address1";
-import ConfirmDirectors from "./app/screens/ConfirmDirectors";
-import DirectorsOrPartners from "./app/screens/DirectorsOrPartners";
-import PushNotification from "./app/screens/PushNotifications";
-
-import RequestContact from "./app/screens/RequestContact"
-import Requested from "./app/screens/Requested"
-import Settings from "./app/screens/Settings";
-import BusinessType from "./app/screens/BusinessType";
-import CarbonCart1 from "./app/screens/CarbonCart";
-import SentMoney from "./app/screens/SentMoney";
-import SelectBank from "./app/screens/SelectBank";
-import SelectBank1 from "./app/screens/SelectBank1";
-import VerifyYourIdentity from "./app/screens/VerifyYourIdentity";
-import AddFundsSuccess from "./app/screens/AddFundsSuccess";
-import AddBeneficiarySchedulePay1 from "./app/screens/AddBeneficiarySchedulePay1";
-
-
-import SendContact from "./app/screens/SendContact";
-import CarbonCart from "./app/screens/CarbonCart";
-
-
-const Stack = createNativeStackNavigator();
-const StackNavigator = () => (
-  
-
-  <Stack.Navigator initialRouteName="AddFunds">
-
-    <Stack.Screen  name="SplashAnimation" component={SplashAnimation}/>
-
-    <Stack.Screen  name="Onboarding1" component={Onboarding1}/>
-    <Stack.Screen  name="Onboarding2" component={Onboarding2}/>
-    <Stack.Screen  name="Onboarding3" component={Onboarding3}/>
-    
-    
-    
-    
-    <Stack.Screen  name="AddBeneficiarySchedulePay1" component={AddBeneficiarySchedulePay1}/>
-    <Stack.Screen  name="SignUpPersonalScreen" component={SignUpPersonalScreen}/>
-    <Stack.Screen  name="Login" component={Login}/>
-
-    <Stack.Screen  name="OTPVerificationPersonal" component={OTPVerificationPersonal2}/>
-    <Stack.Screen  name="BiometrixComplete" component={BiometrixComplete}/>
-
-    <Stack.Screen  name="Pin" component={Pin}/>
-    <Stack.Screen  name="Success" component={Success}/>
-
-    <Stack.Screen  name="PersonalOrBusiness" component={PersonalOrBusiness}/>
-    <Stack.Screen  name="Name" component={Name}/>
-
-    <Stack.Screen  name="ProofOfResidencyList" component={ProofOfResidency}/>
-    <Stack.Screen name="ProofVerified" component={ProofVerified}/>
-
-    <Stack.Screen  name="BusinessAddress2" component={BusinessAddress2}/>
-
-    <Stack.Screen  name="Account" component={Account}/>
-
-    <Stack.Screen  name="AddFunds" component={AddFunds}/>
-    <Stack.Screen  name="AddFundsSuccess" component={AddFundsSuccess}/>
-    <Stack.Screen  name="SendMoney" component={SendMoney}/>
-    <Stack.Screen  name="RequestContact" component={RequestContact}/>
-
-    <Stack.Screen  name="BankTransfer" component={BankTransfer}/>
-    <Stack.Screen  name="BankTransferAmount" component={BankTransferAmount}/>
-
-    <Stack.Screen  name="Requested" component={Requested}/>
-
-    <Stack.Screen  name="Settings" component={Settings}/>
-    <Stack.Screen  name="SecurityAndPrivacy" component={SecurityAndPrivacy}/>
-    
-    <Stack.Screen  name="Analytics" component={Analytics}/>
-    <Stack.Screen  name="DOB" component={DOB}/>
-    <Stack.Screen  name="PushNotification" component={PushNotification}/>
-
-    <Stack.Screen  name="FindFriends" component={FindFriends}/>
-    <Stack.Screen  name="PersonalAddress" component={PersonalAddress}/>
-    <Stack.Screen  name="ReviewAndConfirm" component={ReviewAndConfirm}/>
-
-    <Stack.Screen  name="SendAccountSelection" component={SendAccountSelection}/>
-    
-    <Stack.Screen  name="BusinessChooseAddress" component={BusinessChooseAddress}/>
-    <Stack.Screen  name="CountryOfResidence" component={CountryOfResidence}/>
-    <Stack.Screen  name="Address1" component={Address1}/>
-    <Stack.Screen  name="BusinessType" component={BusinessType}/>
-    <Stack.Screen  name="DirectorsOrPartners" component={DirectorsOrPartners}/>
-    <Stack.Screen  name="ConfirmDirectors" component={ConfirmDirectors}/>
-
-    <Stack.Screen name="ChooseCardsElite" component={ChooseCardsElite}/>
-
-    <Stack.Screen name="CarbonCart1" component={CarbonCart1}/>
-    <Stack.Screen name="SentMoney" component={SentMoney}/>
-
-    <Stack.Screen name="SelectBank" component={SelectBank}/>
-    <Stack.Screen name="SelectBank1" component={SelectBank1}/>
-    <Stack.Screen name="ChooseCardsStandard5" component={ChooseCardsStandard5}/>
-    
-    <Stack.Screen name="VerifyYourIdentity" component={VerifyYourIdentity}/>
-
-    <Stack.Screen  name="VerifyCode1" component={VerifyCode1}/>
-    <Stack.Screen  name="VerifyCode" component={VerifyCode}/>
-
-    {/* <Stack.Screen  name="AddBeneficiary" component={AddBeneficiary}/>
-    <Stack.Screen  name="AddBeneficiarySuccess" component={AddBeneficiarySuccess}/> */}
-
-    <Stack.Screen  name="ReplaceCard" component={ReplaceCard}/>
-    <Stack.Screen  name="ItWasLost" component={ItWasLost}/>
-    <Stack.Screen  name="TerminatedCard" component={TerminatedCard}/>
-    <Stack.Screen  name="Terminate" component={Terminate}/>
-    <Stack.Screen  name="IWasAVictimOfFraudOrThe" component={IWasAVictimOfFraudOrThe}/>
-    <Stack.Screen  name="ItsDamagedOrDoesntWork" component={ItsDamagedOrDoesntWork}/>
-    <Stack.Screen name="MyCards" component={MyCards}/>
-    <Stack.Screen name="FreezeCard" component={FreezeCard}/>
-    <Stack.Screen name="CardSettings" component={CardSettings}/>
-    <Stack.Screen name="SpendingLimit" component={SpendingLimit}/> 
-    <Stack.Screen name="SetLimit" component={SetLimit}/>
-
-    <Stack.Screen name="Carbon" component={Carbon}/>
-    <Stack.Screen name="Carbon22" component={Carbon22}/>
-    <Stack.Screen name="CarbonSpending" component={CarbonSpending}/>
-    <Stack.Screen name="CarbonCart" component={CarbonCart}/>
-
-    <Stack.Screen  name="OTPVerificationPersonal2" component={OTPVerificationPersonal2}/>
-
-    <Stack.Screen name="ChooseCardsPremium" component={ChooseCardsPremium}/>
-
-
-    <Stack.Screen  name="FaceScan" component={FaceScan}/>
-
-    <Stack.Screen  name="CarbonProject" component={CarbonProject}/>    
-    <Stack.Screen  name="SendContact" component={SendContact}/>    
-  </Stack.Navigator>
-)
-
-export default function App() {
-
-  const [user, setUser] = useState()
-  
-  // const [fontsLoaded] = useFonts({
-
-  //   Roboto: require("./app/assets/fonts/Roboto.ttf")
-  // });
-
-  // const onLayoutRootView = useCallback(async () => {
-  //   console.log(fontsLoaded)
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
-
-  // if (!fontsLoaded) {
-    
-  //   return null;
-  // }
-
-  return (
-    <AuthContext.Provider value={{user, setUser}}>
-      <NavigationContainer>
-        <StackNavigator />
-      </NavigationContainer>
-    </AuthContext.Provider>
-    
-  )
-
- 
+if (!global.btoa) {
+  global.btoa = encode;
 }
 
+if (!global.atob) {
+}
 
+if (!global.atob) {
+  global.atob = decode;
+}
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+export default function App() {
+  const [loaded] = useFonts({
+    Helvetica: require("./app/assets/fonts/Helvetica.ttf"),
+    Typo: require("./app/assets/fonts/typo-grotesk.regular.otf"),
+  });
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  //Push token
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+
+  const [user, setUser] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAuth, setIsAuth] = useState(true);
+
+  const [directors, setDirectors] = useState([]);
+  const [beneficialOwners, setOwners] = useState([]);
+  const [controllingInterests, setIntrests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  /**
+   * @dev IDs used though the app
+   */
+  /**
+   * @dev IDs used though the app
+   */
+
+  //Enfuse customer ID A122HTHM
+  const [accountID, setAccountID] = useState("");
+
+  //Modulr ID C122BMS7
+  const [userID, setUserID] = useState("");
+
+  //Card ID and Enfuse card details A122HTHM
+  const [cardDetails, setCardDetails] = useState(null);
+  const [cardID, setCardID] = useState("");
+
+  //Carbonyte ID CC1
+  const [customerDetails, setCustomerDetails] = useState("");
+
+  const [version, setVersion] = useState("0.0.8");
+
+  const [missingAccountSetup, setMissingAccountSetup] = useState(false);
+
+  //App Pin
+  const [pin, setPin] = useState("0000");
+
+  //Shopping card Details
+  const [cart, setCart] = useState([]);
+
+  const [settings, setSettings] = useState({
+    faceId: false,
+    hideBalance: false,
+    transactionSharing: false,
+  });
+
+  useEffect(() => {
+    const prepare = async () => {
+      await SplashScreen.preventAutoHideAsync();
+    };
+    prepare();
+  }, []);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+    console.log(expoPushToken);
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (isAuth && currentUser) {
+      if (Device.isDevice || Platform.OS == "ios" ) authenticate();
+    }
+
+    console.log("currentUser & isAuth on load", currentUser, isAuth);
+  }, [currentUser, isAuth]);
+
+  useEffect(() => {
+    restoreToken();
+    restoreSignIn();
+    versionChecker.compareVersion(version);
+    console.log(version);
+  }, []);
+
+  useEffect(() => {
+    AppState.addEventListener("change", handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  }, []);
+
+  const authenticate = async () => {
+    "starting authentication";
+    const result = await LocalAuthentication.authenticateAsync();
+    const device =
+      await LocalAuthentication.supportedAuthenticationTypesAsync();
+    if (result.success) {
+      // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
+      console.log("turn off authenticator", result.success);
+      setIsAuth(false);
+      setIsLoading(false);
+    }
+    // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
+    if (!result.success) {
+      alert("not authenticated");
+      authenticate();
+    }
+  };
+
+  const handleAppStateChange = (nextAppState) => {
+    if (nextAppState === "inactive") {
+      console.log("the app is closed");
+      console.log(currentUser);
+      // setCurrent9User(null)
+    }
+  };
+
+  /**
+   * @dev This pgets the token from storage and gets the user's details from it
+   * @dev ID hooks are set here
+   * @returns null if there is no token
+   */
+  const restoreToken = async () => {
+    console.log("trying for restore token");
+    //Get the token from storage
+    const token = await authStorage.getToken();
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+    console.log("token", token);
+
+    //Get the IDs here
+    const IDs = await apiLogin.GetIDs(token);
+    setCurrentUser(token);
+    if (IDs == "Missing Setup") {
+      setMissingAccountSetup(true);
+    }
+    setUserID(IDs.userID);
+    setAccountID(IDs.accountID);
+    setCardID(IDs.cardID);
+    setCustomerDetails(IDs.customerDetails);
+  };
+
+  const restoreSignIn = async () => {
+    const token = await authStorage.getSignInSettings();
+    if (!token) return;
+    setIsAuth(token.includes("true"));
+  };
+
+  if (!AppState.currentState) {
+    setIsAuth(null);
+  }
+
+  if (!loaded) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  } else {
+    SplashScreen.hideAsync();
+  }
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        currentUser,
+        setCurrentUser,
+        isAuth,
+        setIsAuth,
+        accountID,
+        setAccountID,
+        userID,
+        setUserID,
+        settings,
+        setSettings,
+        pin,
+        setPin,
+        cardID,
+        setCardID,
+        customerDetails,
+        setCustomerDetails,
+        cardDetails,
+        setCardDetails,
+        cart,
+        setCart,
+        expoPushToken,
+        missingAccountSetup,
+        setMissingAccountSetup,
+
+        directors,
+        setDirectors,
+        beneficialOwners,
+        setOwners,
+        controllingInterests,
+        setIntrests,
+        version,
+        setVersion,
+      }}
+    >
+      <NavigationContainer>
+        {!currentUser ? (
+          <AuthNavigator />
+        ) : currentUser ? (
+          <AppNavigator />
+        ) : (
+          <AuthNavigator />
+        )}
+
+        {/**
+         *  @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
+            or <AuthNavigator />
+        */}
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
+}
+
+export async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert(
+        "Failed to get push token for push notification! Please update permissions to continue use the App."
+      );
+      return;
+    }
+    token = (await Notifications.getDevicePushTokenAsync()).data;
+  } else {
+    alert("Must use physical device for Push Notifications");
+  }
+  console.log("pushToken", token);
+
+  return token;
+}

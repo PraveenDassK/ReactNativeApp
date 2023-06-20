@@ -1,50 +1,96 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Pressable,TextInput,Image } from "react-native";
+import { Text, StyleSheet, View, Pressable, TextInput, Image, Keyboard } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SetLimit = ({navigation}) => {
- // const amountSpent="£22.33";
-  //const [amount, setAmount] = useState("")
-  const navigate = () => {
-    console.log("Function")
-    navigation.navigate("SpendingLimit")
-  }
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+import Button from "../components/AppButton";
+
+const SetLimit = ({ navigation }) => {
+
+
   const [amountspent, setAmountspent] = useState(null)
-  const [amount, setAmount] = useState(0)
-  const [currency, setcurrency] = useState(null)
+  const [amount, setAmount] = useState("0")
+  const [currency, setcurrency] = useState("GBP")
+  const [validCheck, setValidator] = useState(false)
+  const authContext = useContext(AuthContext)
+
+  /**
+   * @notice Text checker
+   */
+  const checkText = (text) => {
+    setAmount(text)
+    //First check if there is a value
+    if (
+      //First check if there is a value
+      text == " " &&
+      //Then check if it is above a limit
+      text > 1000
+      //Any other checks for the text add it here
+    ) {
+      setValidator(false)
+    } else {
+      //If all the checks pass then set the validator to true
+      setValidator(true)
+    }
+  }
+
+  /*
+   * @dev Sent call when navigating awayc
+   * @dev Check the validation before navigating off the page
+   */
+  const navigate = async () => {
+    //Check if the text is valid from the validator
+    if (validCheck) {
+      //If it is do this
+      const response = await api.SetLimit(authContext.accountID, amount)
+      console.log(response)
+      console.log(authContext.accountID)
+      navigation.navigate("SpendingLimit")
+    } else {
+      //If it isn't show an error message here
+      console.log("Invalid")
+    }
+  }
+
   return (
     <View style={styles.setLimit}>
-       
-      <View style={styles.helloParent}>
-        <Text style={[styles.hello, styles.helloColor1]}>
-          Set a monthly limit
-        </Text>
-        <View style={styles.rectangleWrapper}>
-          <View style={styles.groupChild} />
-        </View>
-        
-        <TextInput style={[styles.hello1, styles.helloColor, styles.helloTypo]}
-          placeholder = {"£"+amount}
-          keyboardType="numeric"
-          onChangeText={newText => setAmount(newText)}
-        />
-        <Text style={[styles.hello3, styles.helloPosition, styles.helloColor1]}>
-          {currency}
-        </Text>
-        <Text
-          style={[styles.hello4, styles.helloPosition, styles.helloColor]}
-        >{`Spent this month : `}{amountspent}</Text>
-        <Pressable
-          style={[styles.groupParent, styles.parentPosition]}
-          onPress={() => navigate()}
-        >
-          <View style={[styles.rectangleParent, styles.parentPosition]}>
-            <View style={styles.groupItem} />
-            <View style={styles.maskGroup236} />
+      <Pressable
+        style={styles.groupParent}
+        onPress={Keyboard.dismiss}
+      >
+        <View style={styles.helloParent}>
+          <Text style={[styles.hello, styles.helloColor1]}>
+            Set a monthly limit
+          </Text>
+          <View style={styles.rectangleWrapper}>
+            <View style={styles.groupChild} />
           </View>
-          <Text style={[styles.hello5, styles.helloTypo]}>Set limit</Text>
-        </Pressable>
-      </View>
+
+          <TextInput style={[styles.hello1, styles.helloColor, styles.helloTypo]}
+            placeholder={"£"}
+            keyboardType="numeric"
+            onChangeText={newText => checkText(newText)}
+          />
+          <Text style={[styles.hello3, styles.helloPosition, styles.helloColor1]}>
+            {currency}
+          </Text>
+          <Text
+            style={[styles.hello4, styles.helloPosition, styles.helloColor]}
+          >{`Spent this month : `}{amountspent}</Text>
+          <Pressable
+            style={[styles.groupParent, styles.parentPosition]}
+          >
+            <Button
+              title="Set Limit"
+              style={[styles.boxShadow]}
+              transform={{ textTransform: "none" }}
+              onPress={() => navigate()}
+            />
+          </Pressable>
+        </View>
+      </Pressable>
+
     </View>
   );
 };
@@ -148,10 +194,10 @@ const styles = StyleSheet.create({
   hello5: {
     top: "38.33%",
     left: "50.00%",
-    marginLeft:-20,
+    marginLeft: -40,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "center",
   },
   groupParent: {

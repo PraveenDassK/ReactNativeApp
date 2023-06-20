@@ -1,369 +1,405 @@
-import * as React from "react";
-import { Image, StyleSheet, View, Text, Pressable } from "react-native";
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  Switch,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list";
+import AuthContext from "../auth/context";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 
-const SendMoney = ({navigation}) => {
+import AppText from "../components/Text";
+import apiBeneficiaries from "../api/apiBeneficiaries";
+import Button from "../components/AppButton";
+import Screen from "../components/Screen";
+
+const SendMoney = ({ navigation }) => {
+  const [benList, setBen] = useState([]);
+  const [groupList, setGroup] = useState([]);
+  const { userID, customerDetails, accountID } = useContext(AuthContext);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    getSettings();
+  }, [isFocused]);
+
+  //API
+  const getSettings = async () => {
+    //Gets single beneficiaries
+    const response = await api.RetriveBenificiaries(userID);
+    const data = response.data.details.content;
+    setBen(data);
+
+    //Gets group beneficiaries
+    const groupBeneficiaries = await apiBeneficiaries.GetGroupBeneficiaries(
+      customerDetails
+    );
+    console.log("group", groupBeneficiaries);
+    setGroup(groupBeneficiaries);
+  };
+
+
+  /**
+   * 
+   * @param {Str} Id The beneficary ID
+   */
+  const sendDetails = (Id) => {
+    const details = benList[Id];
+
+    console.log()
+    const requestObj = {
+      "sourceAccountId": accountID,
+      "destination": {
+        "type": "SCAN",
+        "id": "A1226WEM",
+        "accountNumber": details.destinationIdentifier.accountNumber,
+        "sortCode": details.destinationIdentifier.sortCode,
+        "name": details.name,
+        "phoneNumber": details.phoneNumber
+      },
+      "currency": "GBP",
+      "amount": 0,
+      "reference": "Transfer"
+    }
+
+    const payeeDetails = {
+      "name": details.name
+    }
+
+    navigation.navigate("BankTransferAmount", {payeeDetails, requestObj});
+  };
+
+  const deleteDetails = async (Id) => {
+    console.log(userID);
+    const details = benList[Id].id;
+    console.log(details);
+    const response = await api.DeleteBenificiary(userID, details);
+    console.log(response);
+    getSettings();
+  };
+  //Rendering
+  let benText = "";
+  if (benList.length != 0) {
+    let beniter = [];
+
+    benList.forEach((item, i) => {
+      beniter.push(
+        <Pressable
+          onPress={(details) => {
+            sendDetails(i);
+          }}
+          key={i}
+        >
+          <View style={styles.benBoxCon}>
+            <View style={styles.accountImage}>
+              <AppText style={styles.accountName}>{item.name[0]}</AppText>
+            </View>
+
+            <View style={styles.accountTextDiv}>
+              <AppText style={styles.accountName}>{item.name}</AppText>
+              <AppText style={styles.accountPhoneNum}>
+                +{item.phoneNumber}
+              </AppText>
+              <AppText style={styles.accountPhoneNum}>
+                {item.destinationIdentifier.accountNumber}
+              </AppText>
+            </View>
+
+            <Pressable
+              style={styles.deleteButton}
+              onPress={(details) => deleteDetails(i)}
+            >
+              <AppText style={{ color: "tomato" }}>Delete</AppText>
+            </Pressable>
+          </View>
+        </Pressable>
+      );
+    });
+    benText = <View style={styles.listBoxContainer}>{beniter}</View>;
+  } else {
+    benText = (
+      <View style={styles.failToFind}>
+        <AppText style={{ fontSize: 18 }}> No Accounts Found</AppText>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.sendMoney}>
-      <Pressable
-        style={styles.sendMoneyInner}
-        onPress={() => navigation.navigate("SendContact")}
-      >
-        <View
-          style={[
-            styles.groupParent,
-            styles.groupPosition,
-            styles.groupParentPosition,
-          ]}
-        >
-          <View style={styles.iconIonicIosArrowForwardWrapper}>
-            <Image
-              style={[styles.iconIonicIosArrowForward, styles.hello9Position]}
-              resizeMode="cover"
-              source={require("../assets/icon-carbonytearrowforward.png")}
-            />
-          </View>
-          <Text style={styles.sendMoney1}>Send Money</Text>
+    <View>
+      <ScrollView>
+
+        <View style={styles.subTextDiv}>
+          <AppText style={styles.subText}>Add beneficary</AppText>
         </View>
-      </Pressable>
-      <Text style={[styles.helloTypo2, styles.mt26_5, styles.ml25]}>
-        Recent
-      </Text>
-      <Text style={[styles.helloTypo2, styles.mt26_5, styles.ml25]}>
-        Contacts
-      </Text>
-      <View
-        style={[
-          styles.iconAwesomeSearchParent,
-          styles.mt59_5,
-          styles.iconLayout,
-        ]}
-      >
-        <Image
-          style={[styles.iconAwesomeSearch, styles.iconPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-awesomesearch.png")}
-        />
-        <Image
-          style={[styles.iconMaterialKeyboardVoice, styles.iconPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-materialkeyboardvoice.png")}
-        />
-      </View>
-      <View style={[styles.rectangle, styles.mt12_5, styles.ml25]} />
-      <View style={[styles.helloParent, styles.mt_53_5, styles.ml36]}>
-        <Text style={[styles.hello2, styles.helloTypo1]}>
-          Konopelski Mitchel
-        </Text>
-        <Text style={[styles.hello3, styles.helloTypo]}>+440123456789</Text>
-        <Image
-          style={[styles.groupChild, styles.groupLayout, styles.groupPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-profileplaceholder.png")}
-        />
-      </View>
-      <View style={[styles.rectangle, styles.mt21_5, styles.ml25]} />
-      <View style={[styles.helloGroup, styles.mt_53_5, styles.ml36]}>
-        <Text style={[styles.hello4, styles.helloTypo1]}>Bogan Hubert</Text>
-        <Text style={[styles.hello5, styles.helloTypo]}>+440123456789</Text>
-        <Image
-          style={[styles.groupChild, styles.groupLayout, styles.groupPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-profileplaceholder.png")}
-        />
-      </View>
-      <View style={[styles.rectangle, styles.mt21_5, styles.ml25]} />
-      <View style={[styles.helloGroup, styles.mt_53_5, styles.ml36]}>
-        <Text style={[styles.hello6, styles.helloTypo1]}>Fisher Judy</Text>
-        <Text style={[styles.hello5, styles.helloTypo]}>+440123456789</Text>
-        <Image
-          style={[styles.groupChild, styles.groupLayout, styles.groupPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-profileplaceholder.png")}
-        />
-      </View>
-      <View
-        style={[
-          styles.iconAwesomeSearchGroup,
-          styles.mt_41_5,
-          styles.iconLayout,
-        ]}
-      >
-        <Image
-          style={[styles.iconAwesomeSearch, styles.iconPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-awesomesearch.png")}
-        />
-        <Image
-          style={[styles.iconMaterialKeyboardVoice, styles.iconPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-materialkeyboardvoice.png")}
-        />
-      </View>
-      <View style={[styles.sendMoneyChild, styles.mt_739_5, styles.ml161]} />
-      <Image
-        style={[styles.sendMoneyItem, styles.mt12_5, styles.ml25]}
-        resizeMode="cover"
-        source={require("../assets/group-30456.png")}
-      />
-      <View style={[styles.rectangle, styles.mt12_5, styles.ml25]}>
-        <Pressable
-          style={[styles.groupWrapper, styles.helloFramePosition]}
-          onPress={() => navigation.navigate("SendContact")}
-        >
-          <View
-            style={[
-              styles.helloWrapper,
-              styles.groupPosition,
-              styles.groupParentPosition,
-            ]}
+
+        <View style={styles.peopleIconDiv}>
+          <TouchableOpacity
+            style={styles.plusImage}
+            onPress={() => navigation.navigate("AddBeneficiary")}
           >
-            <Text style={styles.hello8}>Pay</Text>
-          </View>
-        </Pressable>
-        <Pressable
-          style={[styles.helloFrame, styles.helloFramePosition]}
-          onPress={() => navigation.navigate("RequestContact")}
-        >
-          <Text
-            style={[styles.hello9, styles.helloTypo2, styles.hello9Position]}
+            <Image
+              style={styles.plusImage}
+              source={require("../assets/greyAdd.png")}
+            />
+          </TouchableOpacity>
+          <View style={styles.iconImage}></View>
+        </View>
+
+        <View style={styles.subTextDiv}>
+          <AppText style={styles.subText}>Contacts</AppText>
+        </View>
+
+        {benText}
+
+        <View style={styles.peopleIconDiv}>
+          <TouchableOpacity
+            style={styles.plusImage}
+            onPress={() => navigation.navigate("GroupBeneficiary")}
           >
-            Request
-          </Text>
-        </Pressable>
-      </View>
+            <Image
+              style={styles.plusImage}
+              source={require("../assets/greyAdd.png")}
+            />
+          </TouchableOpacity>
+          <View style={styles.iconImage}></View>
+        </View>
+
+        <View>
+          {groupList.map(({ groupId, groupName, beneficiariesDetails }) => (
+            <Fragment key={groupId}>
+              <GroupBeneficiary
+                navigation={navigation}
+                groupId={groupId}
+                groupName={groupName}
+                beneficiaries={beneficiariesDetails}
+              />
+            </Fragment>
+          ))}
+        </View>
+
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Button
+            title="Schedule payment"
+            style={[styles.boxShadow, { width: "90%" }]}
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("ScheduledPayment")}
+          />
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
 
+const GroupBeneficiary = ({ groupName, beneficiaries, groupId, navigation }) => {
+
+  const sendGroupDetails = (groupId,groupName) => {
+    const requestObj = {
+      "sourceAccountId": "A122HTHM",
+      "groupId": groupId,
+      "currency": "GBP",
+      "amount": 0,
+      "reference": "Transfer",
+    };
+
+    const payeeDetails = {
+      "name": groupName
+    }
+    navigation.navigate("BankTransferAmount", {payeeDetails, requestObj});
+  }
+
+  const deleteGroupBeneficiary = async (groupId) => {
+    console.log(groupId);
+    const response = await apiBeneficiaries.DeleteGroupBenificiary(groupId);
+
+    console.log("Group Id ==>", groupId);
+
+    console.log("response ==>", response);
+  };
+
+
+  return (
+    <Pressable onPress={() => sendGroupDetails(groupId,groupName)}>
+      <View style={styles.benBoxCon}>
+        <View style={styles.accountImage}>
+          <AppText style={styles.accountName}>{groupName[0]}</AppText>
+        </View>
+
+        <View style={styles.accountTextDiv}>
+          <AppText style={styles.accountName}>{groupName}</AppText>
+          {beneficiaries.map(({ beneficiariesId, beneficiariesName }) => (
+            <Fragment key={beneficiariesId}>
+              <AppText style={styles.accountPhoneNum}>
+                {beneficiariesName}
+              </AppText>
+            </Fragment>
+          ))}
+        </View>
+
+        <Pressable
+          onPress={() => deleteGroupBeneficiary(groupId)}
+          style={styles.deleteButton}
+        >
+          <AppText style={{ color: "tomato" }}>Delete</AppText>
+        </Pressable>
+      </View>
+    </Pressable>
+  );
+};
+
 const styles = StyleSheet.create({
-  mt26_5: {
-    marginTop: GlobalStyles.Margin.margin_xs,
-  },
-  ml25: {
-    marginLeft: GlobalStyles.Margin.margin_2xs,
-  },
-  mt59_5: {
-    marginTop: 59.5,
-  },
-  mt12_5: {
-    marginTop: GlobalStyles.Margin.margin_6xs,
-  },
-  mt_53_5: {
-    marginTop: GlobalStyles.Margin.margin_14xs,
-  },
-  ml36: {
-    marginLeft: GlobalStyles.Margin.margin_lg,
-  },
-  mt21_5: {
-    marginTop: GlobalStyles.Margin.margin_4xs,
-  },
-  mt_41_5: {
-    marginTop: -41.5,
-  },
-  mt_739_5: {
-    marginTop: -739.5,
-  },
-  ml161: {
-    marginLeft: 161,
-  },
-  groupPosition: {
-    left: 0,
-    bottom: 0,
-    top: 0,
-  },
-  groupParentPosition: {
-    right: 0,
-    bottom: 0,
-    top: 0,
-    position: "absolute",
-  },
-  hello9Position: {
-    left: 1,
-    top: "50%",
-    position: "absolute",
-  },
-  iconLayout: {
-    alignSelf: "center",
-    height: 42,
-    width: 327,
-    borderRadius: GlobalStyles.Border.br_5xl,
-  },
-  iconPosition: {
-    height: 19,
-    marginTop: -9.35,
-    top: "50%",
-    position: "absolute",
-  },
-  helloTypo1: {
-    top: 5,
-    fontSize: GlobalStyles.FontSize.size_base,
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    position: "absolute",
-  },
-  helloTypo: {
-    bottom: 6,
-    color: GlobalStyles.Color.gray_700,
-    fontSize: GlobalStyles.FontSize.size_base,
-    textAlign: "left",
-    position: "absolute",
-  },
-  groupLayout: {
-    width: 45,
-    position: "absolute",
-  },
-  helloFramePosition: {
-    top: 2,
-    position: "absolute",
-  },
-  helloTypo2: {
-    color: GlobalStyles.Color.gray_700,
-    fontSize: GlobalStyles.FontSize.size_base,
-    textAlign: "left",
-  },
-  iconIonicIosArrowForward: {
-    marginTop: -3.73,
-    width: 11,
-    height: 6,
-  },
-  iconIonicIosArrowForwardWrapper: {
-    top: 11,
-    right: 18,
-    left: 24,
-    height: 27,
-    position: "absolute",
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  sendMoney1: {
-    marginLeft: -58.5,
-    top: 37,
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    left: "50%",
-    position: "absolute",
-  },
-  groupParent: {
-    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
-    borderBottomLeftRadius: GlobalStyles.Border.br_4xl,
-    shadowColor: "rgba(1, 1, 253, 0.1)",
-    shadowOffset: {
-      width: 0,
-      height: -3,
-    },
-    shadowRadius: 20,
-    elevation: 20,
-    shadowOpacity: 1,
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  sendMoneyInner: {
-    width: 375,
-    height: 750,
-  },
-  iconAwesomeSearch: {
-    left: 14,
-    width: 19,
-  },
-  iconMaterialKeyboardVoice: {
-    right: 16,
-    width: 14,
-  },
-  iconAwesomeSearchParent: {
-    backgroundColor: GlobalStyles.Color.gray_100,
-  },
-  rectangle: {
-    borderRadius: GlobalStyles.Border.br_4xl,
-    width: "100%",
-    height: 64,
-    backgroundColor: GlobalStyles.Color.gray_200,
-  },
-  hello2: {
-    right: -1,
-  },
-  hello3: {
-    right: 25,
-  },
-  groupChild: {
-    maxHeight: "100%",
-    width: 45,
-    bottom: 0,
-    top: 0,
-  },
-  helloParent: {
-    width: 187,
-    height: 45,
-  },
-  hello4: {
-    right: 8,
-  },
-  hello5: {
-    right: -1,
-  },
-  helloGroup: {
-    width: 161,
-    height: 45,
-  },
-  hello6: {
-    right: 22,
-  },
-  iconAwesomeSearchGroup: {
-    backgroundColor: GlobalStyles.Color.gray_200,
-  },
-  sendMoneyChild: {
-    borderStyle: "solid",
-    borderColor: "#707070",
-    borderTopWidth: 3,
-    width: 52,
-    height: 6,
-  },
-  sendMoneyItem: {
-    width: 385,
-    height: 45,
-  },
-  groupIcon: {
-    marginLeft: -22,
-    bottom: 9,
-    height: 45,
-    left: "50%",
-    width: 45,
-  },
-  hello8: {
-    marginTop: -4,
-    marginLeft: 18.5,
-    fontSize: GlobalStyles.FontSize.size_base,
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    left: "50%",
-    top: "50%",
-    position: "absolute",
-  },
-  helloWrapper: {
-    borderRadius: GlobalStyles.Border.br_md,
-    backgroundColor: GlobalStyles.Color.gray_200,
-  },
-  groupWrapper: {
-    right: 10,
-    bottom: 4,
-    width: 127,
-  },
-  hello9: {
-    marginTop: "-5%",
-  },
-  helloFrame: {
-    bottom: "5%",
-    left: "7%",
-    width: "23%",
-    backgroundColor: GlobalStyles.Color.gray_200,
-  },
-  sendMoney: {
+  mainDiv: {
     flex: 1,
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: "#FFFFFF",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: "10%",
+  },
+
+  accountPhoneNum: {
+    opacity: 0.3,
+  },
+
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    marginLeft: GlobalStyles.Title.marginLeft,
+    width: GlobalStyles.Title.width,
+  },
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
+  },
+
+  searchBoxDiv: {
+    width: "80%",
+    height: verticalScale(45),
+    backgroundColor: "red",
+    marginLeft: "10%",
+    marginTop: "5%",
+    backgroundColor: "#F6F5F8",
+    borderRadius: 15,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingLeft: "1%",
+  },
+  failToFind: {
+    flex: 1,
+
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  image: {
+    flex: 1,
+    height: verticalScale(25),
+    width: horizontalScale(25),
+    resizeMode: "contain",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+
+  textInput: {
+    flex: 9,
+    width: "100%",
+  },
+
+  subTextDiv: {
+    width: "80%",
+    marginLeft: "10%",
+    marginTop: "2.5%",
+  },
+
+  subText: {
+    fontSize: 14,
+    color: "rgba(153, 153, 153, 0.75)",
+  },
+
+  plusImage: {
+    flex: 1,
+    height: verticalScale(40),
+    width: horizontalScale(40),
+    resizeMode: "contain",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+
+  peopleIconDiv: {
+    width: "80%",
+    marginLeft: "10%",
+    flexDirection: "row",
+    marginTop: "2.5%",
+  },
+
+  iconImage: {
+    flex: 9,
+    width: "100%",
+  },
+
+  benBoxCon: {
+    marginTop: "2.5%",
+    width: "80%",
+    marginLeft: "10%",
+    backgroundColor: "#F6F5F8",
+    borderRadius: 15,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    height: verticalScale(65),
+  },
+
+  accountImage: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: "white",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+
+  accountTextDiv: {
+    flex: 6,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  deleteButton: {
+    flex: 2,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+
+  accountName: {
+    fontSize: 16,
+    fontWeight: "700",
   },
 });
 

@@ -1,733 +1,477 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  Switch,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
+import { useFocusEffect } from "@react-navigation/native";
 
-import api from "../api/api_list"
+import apiSettings from "../api/apiSettings";
+import AppText from "../components/Text";
+import terminateCardAlert from "../utility/terminateCardAlert";
 
-const CardSettings = ({navigation}) => {
+const CardSettings = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
-  const toggleSwitch2= () => setIsEnabled2(previousState => !previousState);
-  const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
-  const authContext=useContext(AuthContext)
+  const toggleSwitch = () => {
+    setIsEnabled((previousState) => !previousState);
+    sendRequest();
+  };
 
+  const toggleSwitch1 = () => {
+    setIsEnabled1((previousState) => !previousState);
+    sendRequest();
+  };
+  const toggleSwitch2 = () => {
+    setIsEnabled2((previousState) => !previousState);
+    sendRequest();
+  };
+  const toggleSwitch3 = () => {
+    setIsEnabled3((previousState) => !previousState);
+    sendRequest();
+  };
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    getSettings()
-  },[])
-  
+    getSettings();
+  }, []);
+
+  //Calls the API once during load
+  useFocusEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getSettings();
+    });
+  });
+
   const getSettings = async () => {
-    const response = await api.GetToggles()
-    const data = response.data.details
-    console.log(data)
-    data.onlineTransactions ? setIsEnabled(true): null
-    data.swipePayments ? setIsEnabled1(true): null
-    data.atmWithdrawals ? setIsEnabled2(true): null
-    data.contactlessPayments ? setIsEnabled3(true): null
-  }
+    setIsLoading(true);
+    const cardSettings = await apiSettings.GetSettings(authContext.accountID);
+    const data = cardSettings;
+    console.log(data);
+    data.onlineTransactions ? setIsEnabled(true) : null;
+    data.swipePayments ? setIsEnabled1(true) : null;
+    data.atmWithdrawals ? setIsEnabled2(true) : null;
+    data.contactlessPayments ? setIsEnabled3(true) : null;
+    setIsLoading(false);
+  };
 
   const sendRequest = async () => {
-    const response = await api.SetToggles(
+    setIsLoading(true);
+    console.log("!");
+    const response = await apiSettings.SetToggles(
+      authContext.accountID,
       isEnabled,
       isEnabled1,
       isEnabled2,
       isEnabled3
     );
-    console.log(response)
+    setIsLoading(false);
+  };
 
-
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
   }
-  //sendRequest()
 
   return (
-    <View style={styles.cardSettings}>
-     
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>Settings</Text>
-        <Text style={styles.hello1}>Security</Text>
+    <ScrollView>
+      <View style={styles.mainContainer}>
+        {/* <View style={styles.titleTextRow}>
+          <AppText style={styles.titleText}>Settings</AppText>
+        </View> */}
+
         <Pressable
-          style={styles.rectangleParent}
+          style={[styles.boxShadow]}
           onPress={() => navigation.navigate("SpendingLimit")}
         >
-          <View style={styles.groupChild} />
           <View
             style={[
-              styles.spendingLimitSetMonthlySpeParent,
-              styles.parentPosition,
+              {
+                width: "90%",
+                marginLeft: "5%",
+                borderRadius: 15,
+                marginTop: "5%",
+                backgroundColor: "white",
+                height: 60,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
             ]}
           >
-            <Text
-              style={[
-                styles.spendingLimitSetMonthlySpe,
-                styles.cardLayout,
-                styles.replaceCardLostStolenNotPosition,
-              ]}
-            >
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[styles.spendingLimit1, styles.spendingLimit1Typo]}
-                >
-                  Spending limit
-                </Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >
-                  {"\n"}Set monthly spending amount
-                </Text>
-              </Text>
-            </Text>
             <Image
-              style={[styles.meter1Icon, styles.iconPosition]}
-              resizeMode="cover"
+              style={{
+                height: "70%",
+                resizeMode: "contain",
+                flex: 1,
+                alignSelf: "center",
+                marginLeft: "5%",
+              }}
               source={require("../assets/meter-1.png")}
             />
+            <View
+              style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
+            >
+              <AppText style={{ fontWeight: "700" }}>Spending Limit</AppText>
+              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                Set you monthly spending limit
+              </AppText>
+            </View>
           </View>
         </Pressable>
-        <View style={styles.rectangleGroup}>
-          <Pressable
-            style={styles.groupChild}
-            onPress={() => navigation.navigate("ChooseCardsElite")}
-          >
+
+        <AppText
+          style={{
+            marginLeft: "10%",
+            marginTop: "5%",
+            fontSize: 12,
+            fontWeight: "700",
+          }}
+        >
+          Security
+        </AppText>
+
+        <View
+          style={[
+            {
+              width: "90%",
+              marginLeft: "5%",
+              borderRadius: 15,
+              marginTop: "5%",
+              backgroundColor: "white",
+              height: "auto",
+              paddingRight: "2.5%",
+            },
+          ]}
+        >
           <View
-            style={[
-              styles.spendingLimitSetMonthlySpeParent,
-              styles.parentPosition,
-            ]}
+            style={{
+              width: "100%",
+              height: 85,
+              borderRadius: 15,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
           >
-            <Text
-              style={[
-                styles.spendingLimitSetMonthlySpe,
-                styles.cardLayout,
-                styles.replaceCardLostStolenNotPosition,
-              ]}
-            >
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[styles.spendingLimit1, styles.spendingLimit1Typo]}
-                >
-                  Upgrade Card
-                </Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >{`\nUpgrade my card plan `}</Text>
-              </Text>
-              <Text
-                style={[
-                  styles.setMonthlySpending,
-                  styles.setMonthlySpendingTypo,
-                ]}
-              />
-            </Text>
             <Image
-              style={[styles.meter1Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/meter-1.png")}
-            />
-          </View>
-          </Pressable>
-        </View>
-        <View style={[styles.rectangleContainer, styles.groupInnerPosition]}>
-          <View
-            style={[
-              styles.groupInner,
-              styles.groupInnerLayout,
-              styles.groupInnerPosition,
-            ]}
-          />
-          <Pressable
-            style={[
-              styles.replaceCardLostStolenNotParent,
-              styles.parentPosition,
-            ]}
-            onPress={() => navigation.navigate("ReplaceCard")}
-          >
-            <Text
-              style={[
-                styles.replaceCardLostStolenNot,
-                styles.cardLayout,
-                styles.replaceCardLostStolenNotPosition,
-              ]}
-            >
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[styles.spendingLimit1, styles.spendingLimit1Typo]}
-                >
-                  Replace card
-                </Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >
-                  {"\n"}Lost, stolen, not delivered
-                </Text>
-              </Text>
-              <Text
-                style={[
-                  styles.setMonthlySpending,
-                  styles.setMonthlySpendingTypo,
-                ]}
-              />
-            </Text>
-            <Image
-              style={[styles.resetIcon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/reset.png")}
-            />
-          </Pressable>
-          <Pressable
-            style={[
-              styles.terminateCardTheCardWillBParent,
-              styles.terminateCardPosition,
-            ]}
-            onPress={() => navigation.navigate("Terminate")}
-          >
-            <Text
-              style={[
-                styles.terminateCardTheCardWillB,
-                styles.terminateCardPosition,
-                styles.cardLayout,
-              ]}
-            >
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[styles.spendingLimit1, styles.spendingLimit1Typo]}
-                >
-                  Terminate card
-                </Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >
-                  {"\n"}The card will be permanently terminated
-                </Text>
-              </Text>
-            </Text>
-            <Image
-              style={[styles.meter1Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/delete-redbin.png")}
-            />
-          </Pressable>
-        </View>
-        <View style={[styles.groupView, styles.viewPosition]}>
-          <View
-            style={[
-              styles.rectangleView,
-              styles.viewPosition,
-              styles.groupInnerLayout,
-            ]}
-          />
-          <View style={styles.onlineTransactionsParent}>
-            <Text
-              style={[
-                styles.onlineTransactions,
-                styles.transactionsPosition,
-                styles.spendingLimit1Typo,
-                styles.cardLayout,
-              ]}
-            >
-              Online transactions
-            </Text>
-            <Text
-              style={[
-                styles.internetBasedTransactionsAr,
-                styles.transactionsPosition,
-                styles.setMonthlySpendingTypo,
-              ]}
-            >
-              <Text style={styles.spendingLimit}>
-              {"\n"}Internet based transactions are generally
-              </Text>
-              <Text style={styles.spendingLimit}>
-              {"\n"}high-risk. You can switch them off for extra
-              </Text>
-              <Text style={styles.spendingLimit}>
-              {"\n"}security. Payments you make using mobile
-              </Text>
-              <Text style={styles.spendingLimit}>
-              {"\n"}wallets like Apple Pay won’t be affected.
-              </Text>
-            </Text>
-            <Image
-              style={[styles.globeIcon, styles.iconPosition]}
-              resizeMode="cover"
+              style={{
+                height: "70%",
+                resizeMode: "contain",
+                flex: 1,
+                alignSelf: "center",
+                marginLeft: "5%",
+              }}
               source={require("../assets/globe.png")}
             />
+            <View
+              style={{ flex: 5, justifyContent: "center", marginLeft: "2.5%" }}
+            >
+              <AppText style={{ fontWeight: "700" }}>
+                Online Transactions
+              </AppText>
+              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                Internet based transactions are generally high-risk. You can
+                switch them off for extra security. Payments you make using
+                mobile wallets like Apple Pay won’t be affected.
+              </AppText>
+            </View>
+            <Switch
+              trackColor={{
+                false: GlobalStyles.Color.gray_600,
+                true: GlobalStyles.Color.blue_100,
+              }}
+              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
           </View>
+
           <View
             style={[
-              styles.swipePaymentsSometimesCardsParent,
-              styles.paymentsParentLayout,
+              {
+                width: "100%",
+                height: 85,
+                borderRadius: 15,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
             ]}
           >
-            <Text
-              style={[
-                styles.swipePaymentsSometimesCards,
-                styles.paymentsPosition,
-              ]}
-            >
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[styles.spendingLimit1, styles.spendingLimit1Typo]}
-                >
-                  Swipe payments
-                </Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >
-                 {"\n"}Sometimes cards can be cloned. Switch 
-                 {"\n"}off the magnetic stripe for extra security.
-                </Text>
-              </Text>
-            </Text>
             <Image
-              style={[styles.swipeCardIcon, styles.iconPosition]}
-              resizeMode="cover"
+              style={{
+                height: "70%",
+                resizeMode: "contain",
+                flex: 1,
+                alignSelf: "center",
+                marginLeft: "5%",
+              }}
               source={require("../assets/swipecard.png")}
             />
+            <View
+              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
+            >
+              <AppText style={{ fontWeight: "700" }}>Swipe Payments</AppText>
+              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                Sometimes cards can be cloned, you can turn of the magnetic
+                stripe here
+              </AppText>
+            </View>
+            <Switch
+              trackColor={{
+                false: GlobalStyles.Color.gray_600,
+                true: GlobalStyles.Color.blue_100,
+              }}
+              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+              onValueChange={toggleSwitch1}
+              value={isEnabled1}
+            />
           </View>
+
           <View
             style={[
-              styles.atmWithdrawalsSometimesCardParent,
-              styles.paymentsParentLayout,
+              {
+                width: "100%",
+                height: 85,
+                borderRadius: 15,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
             ]}
           >
-            <Text
-              style={[
-                styles.atmWithdrawalsSometimesCard,
-                styles.paymentsPosition,
-              ]}
-            >
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[styles.spendingLimit1, styles.spendingLimit1Typo]}
-                >
-                  ATM withdrawals
-                </Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >
-                  {"\n"}Sometimes cards can be cloned. Switch 
-                  {"\n"}off the magnetic stripe
-                  for extra security.
-                </Text>
-              </Text>
-            </Text>
             <Image
-              style={[styles.atmIcon, styles.iconPosition]}
-              resizeMode="cover"
+              style={{
+                height: "70%",
+                resizeMode: "contain",
+                flex: 1,
+                alignSelf: "center",
+                marginLeft: "5%",
+              }}
               source={require("../assets/atm.png")}
             />
-          </View>
-          <View
-            style={[
-              styles.contactlessPaymentsSometimesParent,
-              styles.paymentsParentLayout,
-            ]}
-          >
-            <Text
-              style={[
-                styles.contactlessPaymentsSometimes,
-                styles.paymentsPosition,
-              ]}
+            <View
+              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
             >
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[styles.spendingLimit1, styles.spendingLimit1Typo]}
-                >
-                  Contactless payments
-                </Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >{`\nSometimes cards can be cloned. Switch `}</Text>
-              </Text>
-              <Text style={styles.spendingLimit}>
-                <Text
-                  style={[
-                    styles.setMonthlySpending,
-                    styles.setMonthlySpendingTypo,
-                  ]}
-                >
-                  {"\n"}off the magnetic stripe for extra security
-                </Text>
-                .
-              </Text>
-            </Text>
-            <Image
-              style={[styles.swipeCardIcon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/contactlesspayment-1.png")}
+              <AppText style={{ fontWeight: "700" }}>ATM Withdrawals</AppText>
+              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                Turn off ATM Withdrawals here
+              </AppText>
+            </View>
+            <Switch
+              trackColor={{
+                false: GlobalStyles.Color.gray_600,
+                true: GlobalStyles.Color.blue_100,
+              }}
+              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+              onValueChange={toggleSwitch2}
+              value={isEnabled2}
             />
           </View>
-          <View style={[styles.rectangleParent1, styles.rectangleParentLayout]}>
-          <Switch  
-            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
-            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
-            onValueChange={toggleSwitch}
-            value={isEnabled} />
-          </View>
-          <View style={[styles.rectangleParent2, styles.rectangleParentLayout]}>
-            <Switch  
-            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
-            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
-            onValueChange={toggleSwitch1}
-            value={isEnabled1} />
-            
-          </View>
-          <View style={[styles.rectangleParent3, styles.rectangleParentLayout]}>
-          <Switch  
-            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
-            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
-            onValueChange={toggleSwitch2}
-            value={isEnabled2} />
-          </View>
-          <View style={[styles.rectangleParent4, styles.rectangleParentLayout]}>
-          <Switch  
-            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
-            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
-            onValueChange={toggleSwitch3}
-            value={isEnabled3} />
+
+          <View
+            style={[
+              {
+                width: "100%",
+                height: 85,
+                borderRadius: 15,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                height: "70%",
+                resizeMode: "contain",
+                flex: 1,
+                alignSelf: "center",
+                marginLeft: "5%",
+              }}
+              source={require("../assets/contactlesspayment-1.png")}
+            />
+            <View
+              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
+            >
+              <AppText style={{ fontWeight: "700" }}>
+                Contactless Payments
+              </AppText>
+              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                Turn off contactless functionality
+              </AppText>
+            </View>
+            <Switch
+              trackColor={{
+                false: GlobalStyles.Color.gray_600,
+                true: GlobalStyles.Color.blue_100,
+              }}
+              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+              onValueChange={toggleSwitch3}
+              value={isEnabled3}
+            />
           </View>
         </View>
+
+        <View
+          style={[
+            {
+              width: "90%",
+              marginLeft: "5%",
+              borderRadius: 15,
+              marginTop: "5%",
+              backgroundColor: "white",
+              height: "auto",
+            },
+          ]}
+        >
+          <Pressable onPress={() => navigation.navigate("ReplaceCard")}>
+            <View
+              style={{
+                width: "100%",
+                height: 60,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Image
+                style={{
+                  height: "70%",
+                  resizeMode: "contain",
+                  flex: 1,
+                  alignSelf: "center",
+                  marginLeft: "5%",
+                }}
+                source={require("../assets/reset.png")}
+              />
+              <View
+                style={{
+                  flex: 9,
+                  justifyContent: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <AppText style={{ fontWeight: "700" }}>Replace Card</AppText>
+                <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                  Lost, Stolen, Not Delivered
+                </AppText>
+              </View>
+            </View>
+          </Pressable>
+          <Pressable onPress={terminateCardAlert}>
+            <View
+              style={{
+                width: "100%",
+                height: 60,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Image
+                style={{
+                  height: "70%",
+                  resizeMode: "contain",
+                  flex: 1,
+                  alignSelf: "center",
+                  marginLeft: "5%",
+                }}
+                source={require("../assets/delete-redbin.png")}
+              />
+              <View
+                style={{
+                  flex: 9,
+                  justifyContent: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <AppText style={{ fontWeight: "700" }}>Terminate Card</AppText>
+                <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                  This card will be permanently terminated
+                </AppText>
+              </View>
+            </View>
+          </Pressable>
+        </View>
+
+        <Pressable
+          style={[styles.groupChild]}
+          onPress={() => navigation.navigate("ChooseCardsElite")}
+        >
+          <View
+            style={[
+              {
+                width: "90%",
+                marginLeft: "5%",
+                borderRadius: 15,
+                marginTop: "5%",
+                backgroundColor: "white",
+                height: 60,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                height: "70%",
+                resizeMode: "contain",
+                flex: 1,
+                alignSelf: "center",
+                marginLeft: "5%",
+              }}
+              source={require("../assets/meter-1.png")}
+            />
+            <View
+              style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
+            >
+              <AppText style={{ fontWeight: "700" }}>Upgrade Card</AppText>
+              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                Upgrade your card plan
+              </AppText>
+            </View>
+          </View>
+        </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  parentPosition: {
-    height: "12%",
-    right: "12%",
-    top: "50%",
-    position: "absolute",
-  },
-  cardLayout: {
-    lineHeight: 14,
-    width: "43%",
-  },
-  replaceCardLostStolenNotPosition: {
-    marginTop: -13.5,
-    lineHeight: 14,
-    top: "50%",
-    textAlign: "left",
-    position: "absolute",
-  },
-  spendingLimit1Typo: {
-    color: GlobalStyles.Color.gray_1400,
-    fontSize: GlobalStyles.FontSize.size_base,
-    fontWeight: "700",
-  },
-  setMonthlySpendingTypo: {
-    fontSize: GlobalStyles.FontSize.size_3xs,
-    color: GlobalStyles.Color.gray_800,
-  },
-  iconPosition: {
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
-  groupInnerPosition: {
-    height: 119,
-    right: 0,
-    position: "absolute",
-  },
-  groupInnerLayout: {
-    borderRadius: GlobalStyles.Border.br_7xl,
-    backgroundColor: GlobalStyles.Color.white,
-    left: 0,
-  },
-  terminateCardPosition: {
-    left: 24,
-    top: "50%",
-    position: "absolute",
-  },
-  viewPosition: {
-    height: 341,
-    right: 0,
-    top: "50%",
-    position: "absolute",
-  },
-  transactionsPosition: {
-    left: 28,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    position: "absolute",
-    top: "-5%"
-  },
-  paymentsParentLayout: {
-    height: 41,
-    position: "absolute",
-  },
-  paymentsPosition: {
-    marginTop: -20.5,
-    lineHeight: 14,
-    top: "50%",
-    textAlign: "left",
-    position: "absolute",
-  },
-  rectangleParentLayout: {
-    height: 26,
-    width: 46,
-    right: 22,
-    position: "absolute",
-  },
-  hello: {
-    fontSize: GlobalStyles.FontSize.size_8xl,
-    color: GlobalStyles.Color.indigo_100,
-    textAlign: "left",
-    fontWeight: "700",
-    top: 0,
-    left: 3,
-    position: "absolute",
-  },
-  hello1: {
-    top: 118,
-    fontSize: GlobalStyles.FontSize.size_xs,
-    color: GlobalStyles.Color.gray_800,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    fontWeight: "700",
-    left: 3,
-    position: "absolute",
-  },
-  groupChild: {
-    marginTop: -31.5,
-    borderRadius: GlobalStyles.Border.br_2xl,
-    backgroundColor: GlobalStyles.Color.white,
-    right: 0,
-    top: "50%",
-    height: 63,
-    left: 0,
-    position: "absolute",
-  },
-  spendingLimit1: {
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-  },
-  spendingLimit: {
-    margin: GlobalStyles.Margin.margin_xs,
-    top: "25%"
-  },
-  setMonthlySpending: {
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-  },
-  spendingLimitSetMonthlySpe: {
-    width: 257,
-    left: 27,
-  },
-  meter1Icon: {
-    width: 17,
-    height: 17,
-  },
-  spendingLimitSetMonthlySpeParent: {
-    marginTop: -11.5,
-    left: 21,
-  },
-  rectangleParent: {
-    right: 3,
-    height: 63,
-    left: 0,
-    top: 36,
-    position: "absolute",
-  },
-  rectangleGroup: {
-    bottom: 0,
-    right: 0,
-    height: 63,
-    left: 3,
-    position: "absolute",
-  },
-  groupInner: {
-    marginTop: -59.5,
-    top: "50%",
-  },
-  replaceCardLostStolenNot: {
-    left: 23,
-    width: 257,
-  },
-  resetIcon: {
-    width: 13,
-    height: 14,
-  },
-  replaceCardLostStolenNotParent: {
-    marginTop: -38.5,
-    left: 25,
-  },
-  terminateCardTheCardWillB: {
-    marginTop: -12.58,
-    width: 257,
-    textAlign: "left",
-  },
-  terminateCardTheCardWillBParent: {
-    marginTop: 12.65,
-    height: 29,
-    right: 22,
-  },
-  rectangleContainer: {
-    bottom: 75,
-    left: 3,
-  },
-  rectangleView: {
-    marginTop: -170.5,
-  },
-  onlineTransactions: {
-    top: 1,
-    width: 257,
-  },
-  internetBasedTransactionsAr: {
-    lineHeight: 12,
-    width: 192,
-    bottom: 0,
-   
-  },
-  globeIcon: {
-    width: 18,
-    height: 18,
-  },
-  onlineTransactionsParent: {
-    top: 19,
-    left: 20,
-    height: 65,
-    right: 22,
-    position: "absolute",
-  },
-  swipePaymentsSometimesCards: {
-    width: 183,
-    left: 25,
-  },
-  swipeCardIcon: {
-    width: 15,
-    height: 15,
-  },
-  swipePaymentsSometimesCardsParent: {
-    marginTop: -51.5,
-    width: 207,
-    left: 23,
-    top: "50%",
-  },
-  atmWithdrawalsSometimesCard: {
-    width: 182,
-    left: 27,
-  },
-  atmIcon: {
-    width: 16,
-    height: 16,
-  },
-  atmWithdrawalsSometimesCardParent: {
-    marginTop: 23.5,
-    width: 208,
-    left: 21,
-    top: "50%",
-  },
-  contactlessPaymentsSometimes: {
-    left: 25,
-    width: 257,
-  },
-  contactlessPaymentsSometimesParent: {
-    bottom: 31,
-    left: 23,
-    right: 22,
-  },
-  groupChild1: {
-    height: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    borderRadius: GlobalStyles.Border.br_sm,
-    backgroundColor: GlobalStyles.Color.gray_600,
-    position: "absolute",
+  boxShadow: {},
+  mainContainer: {
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    height: "auto",
     width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
+    minHeight: 812,
   },
-  ellipseIcon: {
-    height: "76.92%",
-    width: "43.48%",
-    top: "11.54%",
-    right: "50%",
-    bottom: "11.54%",
-    left: "6.52%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
-    position: "absolute",
+
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    marginLeft: "5%",
+    width: "90%",
   },
-  rectangleParent1: {
-    top: 36,
-    height: 26,
-    width: 46,
-  },
-  rectangleParent2: {
-    marginTop: -48.5,
-    top: "50%",
-  },
-  rectangleParent3: {
-    marginTop: 26.5,
-    top: "50%",
-  },
-  rectangleParent4: {
-    bottom: 43,
-  },
-  groupView: {
-    marginTop: -202.5,
-    left: 3,
-  },
-  helloParent: {
-    width: "100%",
-    height: 730,
-  },
-  arrowPosition: {
-    top: "6%",
-    position: "absolute",
-  },
-  arrowCircle: {
-    marginTop: "100%",
-    width: "100%",
-    height: 15,
-  },                                
-  cardSettings: {
-    backgroundColor: GlobalStyles.Color.gray_100,
-    flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_8xs,
-    paddingRight: "6%",
-    width: "100%",
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
   },
 });
 

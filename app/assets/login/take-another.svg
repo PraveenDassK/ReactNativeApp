@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66">
+  <g id="Group_34889" data-name="Group 34889" transform="translate(14715 8717)">
+    <circle id="Ellipse_3381" data-name="Ellipse 3381" cx="33" cy="33" r="33" transform="translate(-14715 -8717)" fill="#ff7b7b"/>
+    <g id="camera_1_" data-name="camera (1)" transform="translate(-14699.88 -8701.068)">
+      <circle id="Ellipse_3377" data-name="Ellipse 3377" cx="4.147" cy="4.147" r="4.147" transform="translate(13.733 15.783)" fill="#fff"/>
+      <path id="Path_51794" data-name="Path 51794" d="M31.219,8.811H27.054a1.271,1.271,0,0,1-1.206-.869l-.4-1.205A2.541,2.541,0,0,0,23.035,5H12.723a2.541,2.541,0,0,0-2.41,1.738l-.4,1.2a1.27,1.27,0,0,1-1.206.869H4.541A2.541,2.541,0,0,0,2,11.352V26.6a2.541,2.541,0,0,0,2.541,2.541H31.219A2.541,2.541,0,0,0,33.76,26.6V11.352A2.541,2.541,0,0,0,31.219,8.811ZM17.88,26.6a6.987,6.987,0,1,1,6.987-6.987A7,7,0,0,1,17.88,26.6Zm7.622-12.7a1.27,1.27,0,1,1,1.27-1.27A1.27,1.27,0,0,1,25.5,13.893Z" transform="translate(0 0)" fill="#fff"/>
+      <path id="Path_51795" data-name="Path 51795" d="M6.176,7.27H3.635a.635.635,0,1,1,0-1.27H6.176a.635.635,0,1,1,0,1.27Z" transform="translate(0.27 0.27)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

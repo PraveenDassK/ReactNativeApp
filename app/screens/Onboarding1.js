@@ -17,7 +17,7 @@ const Onboarding1 = ({navigation}) => {
       </Text>
       <Image
             style = {styles.image}
-          source={require("../assets/image-cardyellow.png")}
+          source={require("../assets/login/LoginAnimal7.png")}
         />
       <Image
             style = {styles.ProgressBar}

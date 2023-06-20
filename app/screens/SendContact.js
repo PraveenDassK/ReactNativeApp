@@ -23,18 +23,19 @@ const SendContact = ({navigation}) => {
   },[])
   
   const loadData = async () => {
-    const response = await api.GetAccountByCustomer();
-    const accountresponse = await api.GetCustomerDetails();
+    const response = await api.GetAccountByCustomer(authContext.userID);
+    const accountresponse = await api.GetCustomerDetails(authContext.accountID);
     const data = response.data.details.content[0]
-    const accountdata = accountresponse.data.details.accountDetails[0]
+    // const accountdata = accountresponse.data.details.accountDetails[0]
     const phonedata = accountresponse.data.details.phoneNumbers[0]
     console.log(data)
+    console.log(accountresponse.data.details)
     setSortCode(data.identifiers[0].sortCode)
     setAccNum(data.identifiers[0].accountNumber)
     setName(data.name)
     setBal(data.balance)
     setnumber(phonedata.phoneNo)
-    setPlan(accountdata.accountType)
+    // setPlan(accountdata.accountType)
     setCurrency(data.currency)
   } 
   let payment = (amount ? amount : 1).toString()
@@ -220,9 +221,10 @@ const styles = StyleSheet.create({
     top: 148,
   },
   groupChild: {
-    left:"25%",
-    height:"40%",
-    width:"50%",
+    left:"50%",
+    marginLeft:-35,
+    height:80,
+    width:80,
     top: 0,
     resizeMode:"contain",
     position: "absolute",
@@ -306,10 +308,11 @@ const styles = StyleSheet.create({
     top: 0,
   },
   hello8: {
-    top: 28,
+    top: "15%",
+    marginTop:20,
     width:"100%",
     fontSize: GlobalStyles.FontSize.size_13xl,
-    lineHeight: 27,
+    lineHeight: 65,
     color: GlobalStyles.Color.blue_100,
   },
   lineView: {
@@ -346,7 +349,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "center",
     top:"10%"
   },

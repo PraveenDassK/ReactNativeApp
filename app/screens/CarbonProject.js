@@ -1,70 +1,139 @@
-import React,{ useEffect, useState,useContext } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Pressable,
+  ScrollView,
+  ActivityIndicator
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-import carbonApi from "../api/carbonSingle"
+import apiCall from "../api/api";
 import AuthContext from "../auth/context";
-import Button from "../components/Button"
+import Button from "../components/AppButton";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../config/metrics";
 
-
-const CarbonProject = ({navigation}) => {
-
-  const [data, setData] = useState(null)
-  const authContext = useContext(AuthContext)
-  const { user } = useContext(AuthContext)
-
+const CarbonProject = ({ navigation, route }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
   useEffect(() => {
-    authContext.setUser({ID : "5f96f967a3a85800118be4d1"})
-    loadData()
-  },[])
-  
+    loadData();
+  }, []);
+
   const loadData = async () => {
-    const response = await carbonApi.getListingsSingle(user.ID);
-    setData(response.data.details)
+    setIsLoading(true);
+    const response = await apiCall.GetSingleProject(route.params.Id);
+    setIsLoading(false);
+    setData(response);
+    console.log(route.params.Id);
+  };
+
+  let projects = [];
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
   }
-  
-  var projects = [];
 
   const formatData = () => {
-    if(data != null){        
-        projects.push(
-          <View key = {data.id} style={styles.rectanglePressable}>
-            <Text> 
-              {data.displayName} 
-            </Text>
-            
-            <Image 
-              style={{height: 100, width:200}}
-              source={
-                data.image != "" ? {uri:data.image} : require("../assets/icon-bluecheck.png")
-              }
-            />
-
-            <Text>
-              {data.description.replace(/<[^>]*>/g, "").trim()}... 
+    if (data != null) {
+      projects.push(
+        <View key={data.id} style={styles.rectanglePressable}>
+          <View style={styles.mainContainer}>
+            <View style={styles.titleTextRow}>
+              <Text style={styles.titleText}>{data.displayName}</Text>
+            </View>
+          </View>
+          <Image
+            style={[styles.image, { borderRadius: data.image ? 15: 0,}]}
+            source={
+              data.image != ""
+                ? { uri: data.image }
+                : require("../assets/BearWithUs.png")
+            }
+          />
+          <View style={{ backgroundColor: "white" }}>
+            <Text style={{ textAlign: "center" }}>
+              {data.description.replace(/<[^>]*>/g, "\n")}
             </Text>
           </View>
-        )
+        </View>
+      );
     }
-  }
+  };
 
-  formatData()
-
+  formatData();
 
   return (
-    <View>
-      <ScrollView>
-        {projects}
-      </ScrollView>
+    <View style={styles.mainPage}>
+      <ScrollView style={styles.page}>{projects}</ScrollView>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
-    rectanglePressable: {
-        borderRadius: GlobalStyles.Border.br_lg,
-        backgroundColor: GlobalStyles.Color.gray_500,
-      }
+  rectanglePressable: {
+    marginTop: verticalScale(20),
+    borderRadius: moderateScale(15),
+    paddingVertical: verticalScale(20),
+    paddingHorizontal: horizontalScale(14),
+    backgroundColor: "white",
+    width: "100%",
+    alignItems: "center",
+  },
+  titleText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 30,
+  },
+  page: {
+    width: "90%",
+    left: "5%",
+    color: "black",
+    height: "auto",
+    borderWidth: 0,
+    borderColor: "black",
+    borderRadius: 25,
+  },
+  image: {
+    flex: 1,
+    width: "100%",
+    height: 200,
+    marginBottom: "5%",
+    marginTop: "5%",
+    resizeMode: "contain",
+  },
+  textBox: {
+    backgroundColor: "red",
+  },
+  mainPage: {
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    width: "100%",
+  },
+  mainContainer: {
+    height: GlobalStyles.DivContainer.height,
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
+  },
+
+  titleTextRow: {
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+  },
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
+  },
 });
 
 export default CarbonProject;

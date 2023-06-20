@@ -1,38 +1,47 @@
-import * as React from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Image, StyleSheet, Text, View, Pressable, Animated } from "react-native";
 import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
 import GlobalStyles from "../../GlobalStyles";
 
 import FadeInView from "../components/fadeInview";
+import Button from "../components/AppButton"
+import colors from "../config/colors";
 
-const LogoAnimation3 = ({navigation}) => {
+import AuthContext from "../auth/context";
+
+const SplashAnimation = ({navigation}) => {
+  const { version } = useContext(AuthContext);
+
   return (
-    <Pressable
-      style={styles.logoAnimation3}
-      onPress={() => navigation.navigate("Onboarding1")}
-    >
-    <FadeInView>
-      <View style={styles.maskGroup261Parent}>
-
-        <Image
-          style={styles.layer12Icon}
+   
+      
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center", }}>
+      <FadeInView style={{width:"100%"}}>
+         <Image
+          style={{width: "100%"}} 
           resizeMode="contain"
-          source={require("../assets/logo-carbonyte.png")}
-        />
-        <Text style={[styles.hello, styles.helloFlexBox]}>Welcome to</Text>
-        <Text
-          style={[styles.quickSecuredBanking, styles.helloFlexBox]}
-        >{`Quick & Secured Banking`}</Text>
-        <Image
-          style={[styles.maskGroup259, styles.maskGroupLayout]}
-          resizeMode="contain"
-          source={require("../assets/image-carbonytetext.png")}
-        />
+          source={require("../assets/login/LoginAnimal0.png")}
+         />
+      </FadeInView>
       </View>
-          </FadeInView>
+      
+      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 25,borderTopRightRadius: 25,}}>
+        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
+            <Text style={{fontSize: 30}}>Welcome to Carbonyte</Text>
 
-    </Pressable>
+        </View> 
+       
+        <Text>Version {version}</Text>
+        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,}}>
+          <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />
+          <Button title="Login" textColor="black" color="white" onPress={() => navigation.navigate("Login")} />
+        </View> 
+        </View> 
+      </View>
+
   );
 };
 
@@ -54,7 +63,7 @@ const styles = StyleSheet.create({
     height: verticalScale(132),
   },
   layer12Icon: {
-    marginTop: verticalScale(-165.5),
+    marginTop: verticalScale(-135.5),
     marginLeft: horizontalScale(-63.5),
     left: "50%",
     width: horizontalScale(128),
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
   quickSecuredBanking: {
     fontSize: GlobalStyles.FontSize.size_2xl,
     fontWeight: "700",
-    color: GlobalStyles.Color.blue_100,
+    color: GlobalStyles.Color.black,
     width: "100%",
     top: "75%",
     textAlign: "center",
@@ -87,10 +96,10 @@ const styles = StyleSheet.create({
   },
   maskGroup261Parent: {
     width: "100%",
-    height: verticalScale(605),
+    height: verticalScale(505),
   },
   logoAnimation3: {
-    backgroundColor: GlobalStyles.Color.gray_300,
+    backgroundColor: colors.white,
     flex: 1,
     width: "100%",
     height: "100%",
@@ -98,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogoAnimation3;
+export default SplashAnimation;

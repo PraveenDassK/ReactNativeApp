@@ -1,1503 +1,879 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, View, Pressable, ScrollView } from "react-native";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  Fragment,
+} from "react";
+import {
+  RefreshControl,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+  Pressable,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
+
 import GlobalStyles from "../../GlobalStyles";
+import { LineChart } from "react-native-chart-kit";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import api from "../api/api_list"
+import { horizontalScale, verticalScale } from "../config/metrics";
+
+import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
-import moment from 'moment';
+import moment from "moment";
+import { Rect, Text as TextSVG, Svg } from "react-native-svg";
+import DoughnutChart from "../components/DoughnutChart";
+import AppText from "../components/Text";
+import apiCarbon from "../api/apiCarbon";
+import useDevice from "../hooks/useDevice";
 
+const Analytics = ({ navigation }) => {
+  const { device } = useDevice();
+  const [isLoading, setIsLoading] = useState(false);
+  const [active, setActive] = useState("");
+  const [balance, setBal] = useState(0);
+  const [totalSpend, setTotal] = useState(0);
+  const [transactions, setTrans] = useState([]);
+  const [totalTransactions, setTotalTrans] = useState(0);
+  const [graphData, setGraphData] = useState(null);
+  const [data, setData] = useState([]);
+  const [fulldata, setFullData] = useState([]);
+  const [loadMore, setLoadMore] = useState(false);
+  const [totalFootprint, setTotalFootprint] = useState(false);
+  const [monthAverage, setMonthAverage] = useState(0);
+  const [catNames, setCatNames] = useState([
+    "Health",
+    "Food",
+    "House",
+    "Shopping",
+    "Transport",
+  ]);
 
-const Analytics = ({navigation}) => {
+  const [dataPercentages, setDataPercentages] = useState([
+    "70%",
+    "50%",
+    "40%",
+    "30%",
+    "20%",
+  ]);
 
-  const [balance, setBal] = useState(0)
-  const [transactions, setTrans] = useState([])
-  const [totalSpend, setTotal] = useState(0)
-  const [totalTransactions, setTotalTrans] = useState(0)
-
-  const [recentTransactions, setRecent] = useState([])
-  const [transactionCategories, setCat] = useState()
-  
-
-  const authContext = useContext(AuthContext)
+  const [recentTransactions, setRecent] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const authContext = useContext(AuthContext);
+  const { userID, accountID } = useContext(AuthContext);
+  const [carbnonSpendData, setCarbonSpendData] = useState([]);
+  const [carbonGraphData, setCarbonGraphData] = useState(null);
 
   useEffect(() => {
-    loadData()
-  },[])
-  
+    loadData();
+  }, [accountID, userID]);
+  /**
+   * @dev Loads all of the data on load
+   * @todo Change the scheduled payment to the correct account ID
+   */
   const loadData = async () => {
-    const response = await api.GetAccount();
-    const data = response.data.details.balance
-    setBal(data)
+    setIsLoading(true);
+    if (!accountID) return;
+    const dataCall = await apiCall.GetAnalysisData(accountID);
+    const response = await apiCall.GetScheduledPayments("CC1");
+    const graphData = await apiCall.GetTransactionsWeek(accountID);
+    const carbonSpendData = await apiCarbon.GetCarbonSpending();
 
-    const transactionCall = await api.GetTransactions()
-    const transData = transactionCall.data.details
-    let total = 0
-    let transCat = {}
+    const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
+    setCarbonGraphData(carbonSpendDataBarGraph);
+    setCatNames(carbonSpendDataBarGraph.labels);
+    setDataPercentages(carbonSpendDataBarGraph.percentages);
+    setCarbonSpendData(carbonSpendData.chartData);
+    setTotalFootprint(carbonSpendData.total);
+    setTotalTrans(dataCall.totalTransactions);
+    setTotal(dataCall.totalSpend);
 
-    transData.content.forEach(transaction => {
-      total += transaction.amount
-      transCat[transaction.type] = transCat[transaction.type] ? transCat[transaction.type] + transaction.amount : transaction.amount;
-    })
+    setRecent(dataCall.transactions.slice(0, 3));
+    setTrans(dataCall.transactions);
+    setBal(dataCall.balance);
+    setMonthAverage(dataCall.average);
+    const upcomingSpendings = response.filter((r, index) => index < 3);
+    setData(upcomingSpendings);
+    setFullData(response);
 
-    setTotalTrans(transData.totalSize)
-    setTotal(total)
-    setRecent([transData.content[1],transData.content[1],transData.content[2]])
-    setCat(transCat)
+    setGraphData(graphData);
+    setActive("Week");
+    setIsLoading(false);
+  };
 
-    const acc= await api.GetAccount()
-    const det = acc.data.details.associates
-    console.log(det)
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      loadData();
+      setRefreshing(false);
+    }, 2000);
+  }, [refreshing]);
+
+  /**
+   * @dev This changes the data that is used for the graph
+   * @dev All the data procesasing is done on apiCall
+   * @param {str} time The time period to change
+   */
+  const changeGraphData = async (time) => {
+    setActive(time);
+
+    switch (time) {
+      case "Year":
+        const graphDataYear = await apiCall.GetTransactionsYear(accountID);
+        setGraphData(graphDataYear);
+        break;
+      case "Month":
+        const graphDataMonth = await apiCall.GetTransactionsMonth(accountID);
+        setGraphData(graphDataMonth);
+        break;
+      case "Week":
+        const graphDataWeek = await apiCall.GetTransactionsWeek(accountID);
+        setGraphData(graphDataWeek);
+        break;
+    }
+  };
+
+  const colors = ["tomato", "orange", "gold", "cyan", "green"];
+
+  const graphTabs = [
+    { id: 1, title: "Week" },
+    { id: 2, title: "Month" },
+    { id: 3, title: "Year" },
+  ];
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color="black" />
+      </View>
+    );
   }
 
   return (
-    <ScrollView>
-    <View style={styles.analytics}>
-      <View style={styles.groupParent}>
-        <View style={[styles.groupContainer, styles.groupShadowBox]}>
-          <View style={[styles.helloParent, styles.helloPosition]}>
-            <Text style={[styles.hello, styles.helloTypo3]}>Total Spend</Text>
-            <Text style={[styles.hello1, styles.helloColor, styles.helloTypo2]}>
-              £ {totalSpend}
-            </Text>
-          </View>
-          <Text style={[styles.hello2, styles.helloPosition]}>
-            <Text style={styles.noOf}>Payments {totalTransactions}</Text>
-          </Text>
-          <Text style={[styles.hello3, styles.helloTypo2]}>1000</Text>
-          <Image
-            style={[styles.groupChild, styles.iconLayout]}
-            resizeMode="cover"
-            source={require("../assets/rectangle-6058.png")}
-          />
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <View style={styles.mainContainer}>
+        <View style={styles.titleTextRow}>
+          {/* <AppText style={[styles.titleText, ]}>Analysis</AppText> */}
         </View>
+
         <View
-          style={[
-            styles.groupView,
-            styles.groupParentPosition2,
-            styles.groupShadowBox,
-          ]}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 28,
+          }}
         >
-          <View style={[styles.helloGroup, styles.helloGroupPosition]}>
-            <Text style={[styles.hello4, styles.helloTypo1, styles.helloTypo3]}>
-              <Text style={styles.noOf}>Average Monthly{" "}</Text>
-              <Text style={styles.noOf}>Spendings</Text>
-            </Text>
-            <Text style={[styles.hello5, styles.helloColor, styles.helloTypo2]}>
+          <AppText
+            style={{
+              fontWeight: Platform.OS === "android" ? "normal" : "700",
+              fontFamily: "Helvetica",
+              fontSize: device == 1 ? 24 : 40,
+              width: device == 1 ? 250 : 350,
+              textAlign: "center",
+            }}
+          >
+            Your average monthly Carbon Footprint is
+          </AppText>
+        </View>
+
+        <View>
+          <DoughnutChart
+            data={carbnonSpendData}
+            children={
+              <View>
+                <AppText
+                  style={{
+                    fontSize: 50,
+                    fontWeight: "700",
+                    width: 250,
+                    textAlign: "center",
+                  }}
+                >
+                  {totalFootprint}
+                </AppText>
+                <AppText
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "700",
+                    width: 250,
+                    textAlign: "center",
+                  }}
+                >
+                  kg CO{"\u2082"}
+                </AppText>
+              </View>
+            }
+          />
+        </View>
+        <View style={[styles.balanceContainer]}>
+          <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16 }}>
+            Balance
+          </AppText>
+          <AppText
+            style={{
+              flex: 2,
+              alignItems: "center",
+              justifyContent: "flex-end",
+              textAlign: "right",
+              width: "100%",
+              fontWeight: "700",
+              color: "#0101FD",
+            }}
+          >
+            <AppText
+              style={{
+                fontWeight: "800",
+                fontSize: 30,
+                color: "blue",
+              }}
+            >
               £ {balance}
-            </Text>
-          </View>
-          <Image
-            style={[styles.groupChild, styles.iconLayout]}
-            resizeMode="cover"
-            source={require("../assets/rectangle-6058.png")}
-          />
+            </AppText>
+          </AppText>
         </View>
-        <View style={[styles.groupParent1, styles.groupParentPosition1]}>
-          <View style={[styles.helloContainer, styles.helloGroupPosition]}>
-            <Text style={[styles.hello6, styles.helloTypo3]}>Balance</Text>
-            <Text style={[styles.hello7, styles.helloColor]}>£ {balance}</Text>
-          </View>
-          <Image
-            style={[styles.groupChild, styles.iconLayout]}
-            resizeMode="cover"
-            source={require("../assets/rectangle-60582.png")}
-          />
-        </View>
-        <Text style={[styles.hello8, styles.hello8Typo]}>Analytics</Text>
-        <View style={[styles.groupParent2, styles.groupParentPosition2]}>
+
+        <View
+          style={{
+            flex: 1,
+            width: "90%",
+            height: "auto",
+            marginTop: "5%",
+            borderRadius: 15,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginLeft: "5%",
+          }}
+        >
           <View
-            style={[styles.rectangleParent, styles.rectangleParentPosition]}
+            style={[
+              {
+                height: "100%",
+                backgroundColor: "white",
+                width: "47.5%",
+                borderRadius: 15,
+                padding: "5%",
+                alignSelf: "center",
+              },
+              ,
+            ]}
           >
-            <View style={[styles.rectangle, styles.rectangleShadowBox]} />
-            <View style={[styles.rectangle1, styles.rectanglePosition]} />
-            <View
-              style={[
-                styles.lanceBogrolWrapper,
-                styles.lanceWrapperLayout,
-                styles.lanceWrapperPosition,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.lanceBogrol,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
+            <AppText style={{ fontWeight: "500" }}>Total Spend</AppText>
+            <AppText style={styles.money}>£ {totalSpend.toFixed(2)}</AppText>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: verticalScale(5),
+                  alignItems: "flex-start",
+                  width: horizontalScale(75),
+                }}
               >
-                Shopping
-              </Text>
-            </View>
-            <Text style={[styles.text, styles.textTypo3, styles.textPosition]}>
-              £1458
-            </Text>
-            <Image
-              style={styles.groupIcon}
-              resizeMode="cover"
-              source={require("../assets/bagshoppingsolid.png")}
-            />
-            <Text style={[styles.text1, styles.textTypo2]}>
-              <Text style={styles.kgCo}>7.2 kg CO</Text>
-              <Text style={styles.text2}>2</Text>
-            </Text>
-          </View>
-          <View style={[styles.groupPosition, styles.rectangleParentPosition]}>
-            <View style={[styles.rectangle, styles.rectangleShadowBox]} />
-            <View style={[styles.rectangle3, styles.rectanglePosition]} />
-            <View
-              style={[
-                styles.lanceBogrolContainer,
-                styles.lanceWrapperLayout,
-                styles.lanceWrapperPosition,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.lanceBogrol,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
-              >{`Food & Beverages`}</Text>
-            </View>
-            <Image
-              style={styles.groupIcon}
-              resizeMode="cover"
-              source={require("../assets/group-1804.png")}
-            />
-            <Text style={[styles.text3, styles.textTypo3, styles.textPosition]}>
-              £1458
-            </Text>
-            <Text style={[styles.text4, styles.textTypo2]}>
-              <Text style={styles.kgCo}>7.2 kg CO</Text>
-              <Text style={styles.text2}>2</Text>
-            </Text>
-          </View>
-          <View
-            style={[styles.rectangleContainer, styles.rectangleParentPosition]}
-          >
-            <View style={[styles.rectangle, styles.rectangleShadowBox]} />
-            <View style={[styles.rectangle5, styles.rectanglePosition]} />
-            <View
-              style={[
-                styles.lanceBogrolFrame,
-                styles.lanceWrapperLayout,
-                styles.lanceWrapperPosition,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.lanceBogrol,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
+                <AppText style={{ color: "#999", fontSize: 14 }}>
+                  No. of Payments
+                </AppText>
+              </View>
+
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "flex-end",
+                  justifyContent: "flex-end",
+                }}
               >
-                Transport
-              </Text>
+                <AppText style={{ color: "#999", fontSize: 22 }}>
+                  {totalTransactions}
+                </AppText>
+              </View>
             </View>
-            <Image
-              style={styles.iconAwesomeCar}
-              resizeMode="cover"
-              source={require("../assets/icon-awesomecar1.png")}
-            />
-            <Text style={[styles.text3, styles.textTypo3, styles.textPosition]}>
-              £1458
-            </Text>
-            <Text style={[styles.text4, styles.textTypo2]}>
-              <Text style={styles.kgCo}>7.2 kg CO</Text>
-              <Text style={styles.text2}>2</Text>
-            </Text>
-          </View>
-          <View
-            style={[styles.rectangleParent1, styles.rectangleParentPosition]}
-          >
-            <View style={[styles.rectangle, styles.rectangleShadowBox]} />
-            <View style={[styles.rectangle7, styles.rectanglePosition]} />
-            <View
-              style={[
-                styles.lanceBogrolWrapper1,
-                styles.lanceWrapperLayout,
-                styles.lanceWrapperPosition,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.lanceBogrol,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
-              >
-                Health
-              </Text>
-            </View>
-            <Image
-              style={[styles.groupChild1, styles.helloGroupPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-30299.png")}
-            />
-            <Text style={[styles.text3, styles.textTypo3, styles.textPosition]}>
-              £1458
-            </Text>
-            <Text style={[styles.text4, styles.textTypo2]}>
-              <Text style={styles.kgCo}>7.2 kg CO</Text>
-              <Text style={styles.text2}>2</Text>
-            </Text>
-          </View>
-          <View style={[styles.lanceBogrolParent, styles.lanceParentLayout]}>
-            <Text style={[styles.lanceBogrol4, styles.lanceTypo]}>
-              Spendings
-            </Text>
-            <Image
-              style={[styles.iconFeatherPieChart, styles.iconPosition1]}
-              resizeMode="cover"
-              source={require("../assets/icon-featherpiechart.png")}
-            />
-          </View>
-        </View>
-        <View style={styles.groupWrapper}>
-          <View style={styles.path23773Parent}>
-            <Image
-              style={[styles.path23773Icon, styles.iconLayout]}
-              resizeMode="cover"
-              source={require("../assets/path-23773.png")}
-            />
-            <Image
-              style={[styles.path23772Icon, styles.path23772IconPosition]}
-              resizeMode="cover"
-              source={require("../assets/path-23772.png")}
-            />
-            <Image
-              style={[styles.path33379Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/image-linebreak.png")}
-            />
-            <Image
-              style={[styles.path33375Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/image-linebreak.png")}
-            />
-            <Image
-              style={[styles.path33377Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/image-linebreak.png")}
-            />
-            <Image
-              style={[styles.path33373Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/image-linebreak.png")}
-            />
-            <Image
-              style={[styles.path33378Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/image-linebreak.png")}
-            />
-            <Image
-              style={[styles.path33374Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/image-linebreak.png")}
-            />
-            <Image
-              style={[styles.path33376Icon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require("../assets/image-linebreak.png")}
-            />
-            <Image
-              style={styles.path33371Icon}
-              resizeMode="cover"
-              source={require("../assets/path-33371.png")}
-            />
-            <ScrollView
-              style={[styles.scrollGroup16, styles.path23772IconPosition]}
-              contentContainerStyle={styles.scrollGroup16Content}
-            >
-              <Text style={styles.hello9}>Mar</Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml129]}>
-                Jun
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml43]}>
-                Apr
-              </Text>
-              <Text
-                style={[
-                  styles.hello12,
-                  styles.mt_12,
-                  styles.ml172,
-                  styles.helloColor,
-                ]}
-              >
-                Jul
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml84]}>
-                May
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml213]}>
-                Aug
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml256]}>
-                Sept
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml303]}>
-                Oct
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml344]}>
-                Nov
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml391]}>
-                Dec
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml434]}>
-                Jan
-              </Text>
-              <Text style={[styles.hello9, styles.mt_12, styles.ml479]}>
-                Feb
-              </Text>
-            </ScrollView>
-            <View style={styles.lineView} />
-            <Image
-              style={styles.ellipseIcon}
-              resizeMode="cover"
-              source={require("../assets/ellipse-3200.png")}
-            />
-            <Image
-              style={[styles.groupChild2, styles.groupChild2Layout]}
-              resizeMode="cover"
-              source={require("../assets/ellipse-3199.png")}
-            />
-            <View style={styles.union23Parent}>
-              <Image
-                style={[styles.union23Icon, styles.iconLayout]}
-                resizeMode="cover"
-                source={require("../assets/icon-speechbubble.png")}
-              />
-              <Text style={styles.hello21}>£ 20.00</Text>
-            </View>
-          </View>
-        </View>
-        <View style={[styles.groupParent3, styles.groupParentPosition1]}>
-          <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
-            <View style={[styles.lanceLayout, styles.groupPosition]}>
-              <Text
-                style={[
-                  styles.lanceBogrol5,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
-              >
-                Wallmart
-              </Text>
-              <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
-              </Text>
-            </View>
-            <Image
-              style={[styles.walmartIconLayout, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/walmarticon.png")}
-            />
-            <Text style={[styles.text12, styles.textTypo1]}>£1458</Text>
-            <Text style={[styles.text13, styles.textTypo]}>
-              <Text style={styles.kgCo4}>7.2 kg CO</Text>
-              <Text style={styles.text14}>2</Text>
-            </Text>
-          </View>
-          <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
-            <View style={[styles.lanceLayout, styles.groupPosition]}>
-              <Text
-                style={[
-                  styles.lanceBogrol5,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
-              >
-                Adidas
-              </Text>
-              <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
-              </Text>
-            </View>
-            <Image
-              style={[styles.walmartIconLayout, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/logo-addidas.png")}
-            />
           </View>
           <View
             style={[
-              styles.groupParent6,
-              styles.parentLayout,
-              styles.rectangleShadowBox,
+              {
+                height: "100%",
+                backgroundColor: "white",
+                width: "47.5%",
+                borderRadius: 15,
+                padding: "5%",
+              },
+              ,
             ]}
           >
-            <View style={[styles.maskGroup14Position, styles.lanceLayout]}>
-              <Text
-                style={[
-                  styles.lanceBogrol5,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
-              >
-                Grocery Market
-              </Text>
-              <Text style={[styles.moneyTransfer, styles.moneyTypo]}>
-                <Text style={styles.noOf}>September 22, 2022{"\n"}</Text>
-                <Text style={styles.noOf}>12:06 PM</Text>
-              </Text>
+            <AppText style={{ fontWeight: "700" }}>
+              Average Transaction spend
+            </AppText>
+            <View
+              style={{
+                marginTop: verticalScale(5),
+                flex: 1,
+                justifyContent: "flex-end",
+              }}
+            >
+              <AppText style={styles.money}>
+                £ {monthAverage.toFixed(2)}
+              </AppText>
             </View>
-            <Image
-              style={[styles.maskGroup14Position, styles.walmartIconLayout]}
-              resizeMode="cover"
-              source={require("../assets/logo-addidas.png")}
-            />
-            <Image
-              style={[styles.groupChild3, styles.groupChildPosition]}
-              resizeMode="cover"
-              source={require("../assets/group-30454.png")}
-            />
-            <Text style={[styles.text15, styles.textTypo1]}>£1458</Text>
-            <Text style={[styles.text16, styles.textTypo]}>
-              <Text style={styles.kgCo4}>7.2 kg CO</Text>
-              <Text style={styles.text14}>2</Text>
-            </Text>
           </View>
-          <Text
-            style={[styles.history, styles.historyFlexBox, styles.hello8Typo]}
+        </View>
+
+        <View style={styles.titleTextRow}>
+          <Image
+            source={require("../assets/icon-featherpiechart.png")}
+            resizeMode="contain"
+            style={{ width: horizontalScale(25), height: verticalScale(25) }}
+          />
+          <AppText
+            style={[
+              styles.titleText,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Helvetica",
+                fontSize: 24,
+              },
+            ]}
           >
-            Recent Transactions
-          </Text>
+            Spendings
+          </AppText>
+        </View>
+
+        <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
+          {catNames.map((name, index) => {
+            return (
+              <Fragment key={`${name + index}`}>
+                <AppText style={styles.subtitleText}>{name}</AppText>
+                <View
+                  style={[
+                    styles.carbonSpendingAnalysysBarBackground,
+                    styles.rounded,
+                  ]}
+                >
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarProgress,
+                      styles.rounded,
+                    ]}
+                    width={dataPercentages[index]}
+                    backgroundColor={colors[index % colors.length]}
+                  >
+                    <AppText style={styles.barText}>
+                      {dataPercentages[index]}
+                    </AppText>
+                  </View>
+                </View>
+              </Fragment>
+            );
+          })}
+
+          {graphData && (
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 1,
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                marginTop: verticalScale(30),
+                paddingBottom: verticalScale(5),
+                opacity: 0.5,
+
+                borderBottomWidth: 1.5,
+              }}
+            >
+              {graphData &&
+                graphTabs.map((tab, index) => (
+                  <TouchableWithoutFeedback
+                    key={index}
+                    onPress={() => changeGraphData(tab.title)}
+                  >
+                    <AppText
+                      style={{
+                        fontSize: 15,
+                        fontWeight: "800",
+                        color: active === tab.title ? "blue" : "grey",
+                      }}
+                    >
+                      {tab.title}
+                    </AppText>
+                  </TouchableWithoutFeedback>
+                ))}
+            </View>
+          )}
+
+          {graphData && <Bazier graphData={graphData} />}
+        </View>
+
+        <View style={styles.titleTextRow}>
           <Image
-            style={[styles.transationsIcon, styles.lanceParentLayout]}
-            resizeMode="cover"
+            resizeMode="contain"
             source={require("../assets/icon-withdraw.png")}
+            style={{ width: horizontalScale(25), height: verticalScale(25) }}
           />
-          <Text style={[styles.text18, styles.textTypo1]}>£1458</Text>
-          <Text style={[styles.text19, styles.textTypo]}>
-            <Text style={styles.kgCo4}>7.2 kg CO</Text>
-            <Text style={styles.text14}>2</Text>
-          </Text>
+          <AppText
+            style={[
+              styles.titleText,
+              {
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Helvetica",
+                fontSize: 24,
+              },
+            ]}
+          >
+            Recent transactions
+          </AppText>
         </View>
-        <View style={[styles.groupParent7, styles.groupParentPosition2]}>
-          <View style={[styles.groupParent8, styles.groupParentShadowBox]}>
-            <View
-              style={[
-                styles.lanceBogrolParent3,
-                styles.groupParentPosition,
-                styles.groupFrameSpaceBlock,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.lanceBogrol8,
-                  styles.historyFlexBox,
-                  styles.lancePosition,
-                ]}
+
+        {recentTransactions &&
+          recentTransactions.map((transaction, index) => (
+            <View key={index}>
+              <TouchableOpacity
+                style={[styles.transactionBox, styles.rounded]}
+                onPress={() => navigation.navigate("Transactions")}
               >
-                House Rent
-              </Text>
-              <Text style={[styles.moneyTransfer3, styles.moneyTypo]}>
-                Due Tomorrow
-              </Text>
+                <View style={{ height: "100%", flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      backgroundColor: "#F6F5F8",
+                      borderColor: "black",
+                      alignSelf: "center",
+                      marginLeft: "2.5%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AppText
+                      style={{
+                        alignSelf: "center",
+
+                        textAlignVertical: "center",
+
+                        fontWeight: "700",
+                      }}
+                    >
+                      {transaction?.sourceId[0]}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 3.5,
+                      alignSelf: "center",
+                      justifyContent: "space-evenly",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                      {transaction?.sourceId}
+                    </AppText>
+                    <AppText style={{}}>
+                      {moment(transaction?.transactionDate).format("LL")}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 5,
+                      justifyContent: "space-evenly",
+                      alignItems: "flex-end",
+                      marginRight: "2.5%",
+                    }}
+                  >
+                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                      £{transaction?.amount.toFixed(2)}
+                    </AppText>
+                  </View>
+                </View>
+              </TouchableOpacity>
             </View>
-            <Text style={[styles.text21, styles.textTypo3]}>£350.00</Text>
+          ))}
+
+        {fulldata && (
+          <View style={styles.titleTextRow}>
             <Image
-              style={[styles.walmartIconLayout, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/walmarticon1.png")}
-            />
-          </View>
-          <View style={[styles.groupParent9, styles.groupParentShadowBox]}>
-            <View
-              style={[
-                styles.groupFrame,
-                styles.groupParentPosition,
-                styles.groupFrameSpaceBlock,
-              ]}
-            >
-              <View style={styles.path23773Parent}>
-                <Text
-                  style={[
-                    styles.lanceBogrol8,
-                    styles.historyFlexBox,
-                    styles.lancePosition,
-                  ]}
-                >
-                  Amazon Prime
-                </Text>
-                <Text style={[styles.moneyTransfer3, styles.moneyTypo]}>
-                  in 5 Days
-                </Text>
-              </View>
-            </View>
-            <Text style={[styles.text22, styles.textTypo3]}>£50.00</Text>
-            <Image
-              style={[styles.walmartIconLayout, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/logo-addidas.png")}
-            />
-          </View>
-          <View style={[styles.groupParent10, styles.groupParentShadowBox]}>
-            <View style={[styles.groupParent11, styles.groupParentPosition]}>
-              <View
-                style={[styles.lanceBogrolWrapper2, styles.lanceWrapperLayout]}
-              >
-                <Text
-                  style={[
-                    styles.lanceBogrol10,
-                    styles.historyFlexBox,
-                    styles.lancePosition,
-                  ]}
-                >
-                  Netflix
-                </Text>
-              </View>
-              <View
-                style={[styles.moneyTransferWrapper, styles.groupChild2Layout]}
-              >
-                <Text style={[styles.moneyTransfer5, styles.moneyTypo]}>
-                  in a week
-                </Text>
-              </View>
-            </View>
-            <Text style={[styles.text22, styles.textTypo3]}>£70.00</Text>
-            <Image
-              style={[styles.walmartIconLayout, styles.groupPosition]}
-              resizeMode="cover"
-              source={require("../assets/logo-addidas.png")}
-            />
-          </View>
-          <View style={[styles.lanceBogrolParent5, styles.lanceParentLayout]}>
-            <Text style={[styles.lanceBogrol11, styles.lanceTypo]}>
-              Upcoming Spendings
-            </Text>
-            <Image
-              style={[styles.iconFeatherPieChart1, styles.iconPosition1]}
-              resizeMode="cover"
+              resizeMode="contain"
               source={require("../assets/icon-featherpiechart.png")}
+              style={{ width: horizontalScale(25), height: verticalScale(25) }}
             />
+            <AppText
+              style={[
+                styles.titleText,
+                {
+                  fontWeight: Platform.OS === "android" ? "normal" : "700",
+                  fontFamily: "Helvetica",
+                  fontSize: 24,
+                },
+              ]}
+            >
+              Upcoming Spendings
+            </AppText>
           </View>
-          <Image
-            style={[styles.groupChild4, styles.groupChildPosition]}
-            resizeMode="cover"
-            source={require("../assets/group-30454.png")}
-          />
-        </View>
-        <View style={styles.historyParent}>
-        <Pressable
-          onPress={() => navigation.navigate("AccountMain")}
-        >
-          <Text style={[styles.history1, styles.historyTypo]}>Account</Text>
-        </Pressable>
-          <Text style={[styles.history2, styles.historyFlexBox]}>Analysis</Text>
-        <Pressable
-          onPress={() => navigation.navigate("Carbon")}
-        >
-          <Text style={[styles.history3, styles.historyTypo]}>Carbon</Text>
-        </Pressable>
-          <Pressable
-          onPress={() => navigation.navigate("Settings")}
-        >
-          <Text style={[styles.history4, styles.historyTypo]}>Profile</Text>
-        </Pressable>
-          </View>
-        <View style={[styles.helloParent1, styles.parentLayout]}>
-          <Text style={[styles.hello22, styles.helloTypo1]}>Day</Text>
-          <Text style={[styles.hello23, styles.helloTypo]}>Week</Text>
-          <Text style={[styles.hello24, styles.helloTypo1, styles.helloColor]}>
-            Month
-          </Text>
-          <Text style={[styles.hello25, styles.helloTypo]}>Year</Text>
-        </View>
+        )}
+
+        {fulldata &&
+          !loadMore &&
+          data.map((transaction, index) => (
+            <View key={index}>
+              <TouchableOpacity
+                style={[styles.transactionBox, styles.rounded]}
+                // onPress={() => navigation.navigate("Transactions")}
+              >
+                <View style={{ height: "100%", flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      backgroundColor: "#F6F5F8",
+                      borderColor: "black",
+                      alignSelf: "center",
+                      marginLeft: "2.5%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AppText
+                      style={{
+                        alignSelf: "center",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlignVertical: "center",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {transaction?.scheduleID[0]}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 3.5,
+                      alignSelf: "center",
+                      justifyContent: "space-evenly",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                      {transaction?.scheduleID}
+                    </AppText>
+                    <AppText style={{}}>
+                      {moment(transaction?.date).format("LL")}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 5,
+                      justifyContent: "space-evenly",
+                      alignItems: "flex-end",
+                      marginRight: "2.5%",
+                    }}
+                  >
+                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                      £{transaction?.amount.toFixed(2)}
+                    </AppText>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+        {loadMore &&
+          fulldata.map((transaction, index) => (
+            <View key={index}>
+              <TouchableOpacity
+                style={[styles.transactionBox, styles.rounded]}
+                //onPress={() => navigation.navigate("Transactions")}
+              >
+                <View style={{ height: "100%", flexDirection: "row" }}>
+                  <View
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      backgroundColor: "#F6F5F8",
+                      borderColor: "black",
+                      alignSelf: "center",
+                      marginLeft: "2.5%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AppText
+                      style={{
+                        alignSelf: "center",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlignVertical: "center",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {transaction.scheduleID[0]}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 3.5,
+                      alignSelf: "center",
+                      justifyContent: "space-evenly",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                      {transaction.scheduleID}
+                    </AppText>
+                    <AppText style={{}}>
+                      {moment(transaction.date).format("LL")}
+                    </AppText>
+                  </View>
+                  <View
+                    style={{
+                      flex: 5,
+                      justifyContent: "space-evenly",
+                      alignItems: "flex-end",
+                      marginRight: "2.5%",
+                    }}
+                  >
+                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                      £{transaction.amount.toFixed(2)}
+                    </AppText>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+
+        {fulldata && (
+          <TouchableOpacity onPress={() => setLoadMore((prev) => !prev)}>
+            <View
+              style={{
+                flex: 1,
+                height: 70,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {!loadMore ? (
+                <MaterialCommunityIcons
+                  name="chevron-down"
+                  size={40}
+                  color="grey"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="chevron-up"
+                  size={40}
+                  color="grey"
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+        )}
+        <View style={{ height: 20, width: "100%" }} />
       </View>
-    </View>
     </ScrollView>
   );
 };
 
+const Bazier = ({ graphData }) => {
+  let [tooltipPos, setTooltipPos] = useState({
+    x: 0,
+    y: 0,
+    visible: false,
+    value: 0,
+  });
+
+  const { total, xAxis, yAxis } = graphData;
+
+  return (
+    <View
+      style={{
+        width: "90%",
+        marginLeft: "5%",
+      }}
+    >
+      {/* <AppText>Bezier Line Chart</AppText> */}
+
+      <LineChart
+        data={{
+          labels: xAxis,
+          datasets: [{ data: yAxis }],
+        }}
+        width={Dimensions.get("window").width * 0.8125} // from react-native
+        height={220}
+        yAxisLabel="£"
+        yAxisSuffix=""
+        yAxisInterval={1} // optional, defaults to 1
+        withHorizontalLines={false}
+        withVerticalLines={false}
+        withHorizontalLabels={false}
+        chartConfig={{
+          backgroundGradientFrom: "#F6F5F8",
+          backgroundGradientTo: "#F6F5F8",
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
+          labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
+          fillShadowGradientFrom: "black",
+          fillShadowGradientTo: "#F6F5F8",
+          strokeWidth: 5,
+          style: { borderRadius: 16 },
+          propsForDots: {
+            r: "3",
+            strokeWidth: "8",
+            stroke: `rgba(30, 81, 123, 0.3)`,
+          },
+        }}
+        bezier
+        style={{ marginVertical: 8, borderRadius: 0 }}
+        decorator={() => {
+          return tooltipPos.visible ? (
+            <View>
+              <Svg>
+                <Rect
+                  x={tooltipPos.x - 15}
+                  y={tooltipPos.y + 10}
+                  width="60"
+                  height="30"
+                  fill="white"
+                  rx={0.5}
+                  ry={0.5}
+                />
+                <TextSVG
+                  x={tooltipPos.x + 15}
+                  y={tooltipPos.y + 30}
+                  fill="black"
+                  fontSize="10"
+                  fontWeight="bold"
+                  textAnchor="middle"
+                >
+                  {`£ ${tooltipPos.value.toFixed(2)}`}
+                </TextSVG>
+              </Svg>
+            </View>
+          ) : null;
+        }}
+        onDataPointClick={(data) => {
+          let isSamePoint = tooltipPos.x === data.x && tooltipPos.y === data.y;
+          isSamePoint
+            ? setTooltipPos((previousState) => {
+                return {
+                  ...previousState,
+                  value: data.value,
+                  visible: !previousState.visible,
+                };
+              })
+            : setTooltipPos({
+                x: data.x,
+                value: data.value,
+                y: data.y,
+                visible: true,
+              });
+        }}
+      />
+    </View>
+  );
+};
 const styles = StyleSheet.create({
-  mt_12: {
-    marginTop: GlobalStyles.Margin.margin_11xs,
+  boxShadow: {},
+  mainContainer: {
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    height: GlobalStyles.DivContainer.height,
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
   },
-  ml129: {
-    marginLeft: GlobalStyles.Margin.margin_4xl,
+
+  titleTextRow: {
+    flexDirection: "row",
+    marginTop: GlobalStyles.Title.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+    alignItems: "center",
   },
-  ml43: {
-    marginLeft: GlobalStyles.Margin.margin_xl,
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
+    marginLeft: horizontalScale(10),
   },
-  ml172: {
-    marginLeft: GlobalStyles.Margin.margin_5xl,
+
+  subText: {
+    fontSize: GlobalStyles.RowText.fontSize,
+    fontWeight: GlobalStyles.RowText.fontWeight,
   },
-  ml84: {
-    marginLeft: GlobalStyles.Margin.margin_3xl,
+
+  subTextRow: {
+    marginTop: GlobalStyles.RowText.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+    fontColor: GlobalStyles.RowText.fontColor,
   },
-  ml213: {
-    marginLeft: GlobalStyles.Margin.margin_6xl,
+
+  balanceContainer: {
+    width: "90%",
+    marginLeft: "5%",
+    flexDirection: "row",
+    backgroundColor: "white",
+    borderRadius: 15,
+
+    alignItems: "center",
+    padding: "5%",
+
+    marginTop: "5%",
   },
-  ml256: {
-    marginLeft: GlobalStyles.Margin.margin_7xl,
-  },
-  ml303: {
-    marginLeft: GlobalStyles.Margin.margin_10xl,
-  },
-  ml344: {
-    marginLeft: GlobalStyles.Margin.margin_11xl,
-  },
-  ml391: {
-    marginLeft: GlobalStyles.Margin.margin_12xl,
-  },
-  ml434: {
-    marginLeft: GlobalStyles.Margin.margin_13xl,
-  },
-  ml479: {
-    marginLeft: GlobalStyles.Margin.margin_14xl,
-  },
-  scrollGroup16Content: {
-    flexDirection: "column",
-    paddingTop: 2,
-  },
-  groupShadowBox: {
-    height: 88,
-    width: "50%",
-    top: 177,
-    shadowOpacity: 1,
-    elevation: 6,
-    shadowRadius: 6,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowColor: "rgba(1, 1, 253, 0.05)",
-    borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  helloPosition: {
-    left: 11,
-    position: "absolute",
-  },
-  helloTypo3: {
-    fontSize: GlobalStyles.FontSize.size_base,
-    color: GlobalStyles.Color.indigo_100,
-    left: 0,
-  },
-  helloColor: {
-    color: GlobalStyles.Color.blue_100,
+
+  money: {
+    color: "blue",
     fontWeight: "700",
+    fontSize: 16,
   },
-  helloTypo2: {
-    lineHeight: 24,
-    textAlign: "center",
-    position: "absolute",
+  carbonSpendingAnalysysBarBackground: {
+    width: "100%",
+    height: verticalScale(35),
+    marginTop: "2.5%",
+    backgroundColor: "white",
   },
-  iconLayout: {
-    maxHeight: "100%",
-    overflow: "hidden",
+
+  carbonSpendingAnalysysBarProgress: {
+    height: "100%",
+    borderRadius: 15,
     maxWidth: "100%",
-    left: 0,
-    position: "absolute",
   },
-  groupParentPosition2: {
-    right: 30,
-    position: "absolute",
-  },
-  helloGroupPosition: {
-    left: 15,
-    position: "absolute",
-  },
-  helloTypo1: {
-    lineHeight: 16,
-    textAlign: "left",
-    position: "absolute",
-  },
-  groupParentPosition1: {
-    right: 29,
-    position: "absolute",
-  },
-  hello8Typo: {
-    fontWeight: "700",
-    color: GlobalStyles.Color.indigo_100,
-  },
-  rectangleParentPosition: {
-    height: 33,
-    right: 0,
-    left: 0,
-  },
-  rectangleShadowBox: {
-    elevation: 20,
-    shadowRadius: 20,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowColor: "rgba(1, 1, 253, 0.05)",
-  },
-  rectanglePosition: {
-    borderBottomLeftRadius: GlobalStyles.Border.br_3xl,
-    borderTopLeftRadius: GlobalStyles.Border.br_3xl,
-    bottom: 0,
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
-  lanceWrapperLayout: {
-    height: 12,
-    position: "absolute",
-  },
-  lanceWrapperPosition: {
-    left: "10%",
-    marginTop: -5.5,
-    height: 12,
-    top: "50%",
-  },
-  historyFlexBox: {
-    letterSpacing: 1,
-    textAlign: "left",
-    position: "absolute",
-  },
-  lancePosition: {
-    left: "0%",
-    letterSpacing: 1,
-    top: "50%",
-    fontSize: GlobalStyles.FontSize.size_xs,
-    color: GlobalStyles.Color.indigo_100,
-  },
-  textTypo3: {
-    textAlign: "right",
-    letterSpacing: 1,
-    top: "50%",
-    fontWeight: "700",
-    fontSize: GlobalStyles.FontSize.size_base,
-    position: "absolute",
-  },
-  textPosition: {
-    right: "4%",
-    textAlign: "right",
-    color: GlobalStyles.Color.blue_100,
-  },
-  textTypo2: {
-    letterSpacing: 0,
-    right: "5%",
-    textAlign: "right",
-    color: GlobalStyles.Color.gray_700,
-    fontWeight: "700",
-    position: "absolute",
-  },
-  lanceParentLayout: {
-    height: 20,
-    position: "absolute",
-  },
-  lanceTypo: {
-    marginTop: -8.5,
-    letterSpacing: 1,
-    top: "50%",
-    fontWeight: "700",
-    fontSize: GlobalStyles.FontSize.size_2xl,
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    position: "absolute",
-  },
-  iconPosition1: {
-    bottom: "-5.03%",
-    top: "0%",
-    height: "105.03%",
-    left: "0%",
-    maxHeight: "100%",
-    overflow: "hidden",
-    maxWidth: "100%",
-    position: "absolute",
-  },
-  path23772IconPosition: {
-    left: 21,
-    position: "absolute",
-  },
-  iconPosition: {
-    opacity: 0.03,
-    height: 1,
-    right: 9,
-    left: 21,
-    overflow: "hidden",
-    maxWidth: "100%",
-    position: "absolute",
-  },
-  groupChild2Layout: {
-    height: 10,
-    position: "absolute",
-  },
-  groupParentShadowBox: {
-    height: 64,
-    borderRadius: GlobalStyles.Border.br_4xl,
-    elevation: 20,
-    shadowRadius: 20,
-    right: 0,
-    left: 0,
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowColor: "rgba(1, 1, 253, 0.05)",
-    position: "absolute",
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  groupPosition: {
-    marginTop: -16,
-    top: "50%",
-    position: "absolute",
-  },
-  moneyTypo: {
-    color: GlobalStyles.Color.gray_900,
-    fontSize: GlobalStyles.FontSize.size_3xs,
-    letterSpacing: 1,
-    left: "0%",
-    top: "50%",
-    textAlign: "left",
-    position: "absolute",
-  },
-  textTypo1: {
-    fontSize: GlobalStyles.FontSize.size_5xl,
-    right: "6%",
-    textAlign: "right",
-    letterSpacing: 1,
-    top: "50%",
-    color: GlobalStyles.Color.blue_100,
-    fontWeight: "700",
-    position: "absolute",
-  },
-  textTypo: {
-    right: "6%",
-    textAlign: "right",
-    letterSpacing: 1,
-    color: GlobalStyles.Color.gray_700,
-    fontWeight: "700",
-    position: "absolute",
-  },
-  parentLayout: {
-    borderRadius: GlobalStyles.Border.br_4xl,
-    position: "absolute",
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  lanceLayout: {
-    height: 36,
-    width: "100%",
-    marginLeft: -97.08,
-    left: "50%",
-  },
-  walmartIconLayout: {
-    width: 34,
-    height: 34,
-    left: 14,
-  },
-  groupChildPosition: {
-    height: 17,
-    width: 18,
-    left: "50%",
-    bottom: -40,
-    position: "absolute",
-  },
-  groupParentPosition: {
-    height: 24,
-    marginTop: -10,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
-  },
-  groupFrameSpaceBlock: {
-    marginLeft: -97,
-    height: 24,
-    marginTop: -10,
-  },
-  historyTypo: {
-    opacity: 0.3,
-    letterSpacing: 1,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    color: GlobalStyles.Color.gray_700,
-    textAlign: "left",
-    top: 0,
-    position: "absolute",
-  },
-  helloTypo: {
-    color: GlobalStyles.Color.gray_800,
-    lineHeight: 16,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    textAlign: "left",
-    position: "absolute",
-  },
-  hello: {
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    top: 0,
-    position: "absolute",
-  },
-  hello1: {
-    fontSize: GlobalStyles.FontSize.size_2xl,
-    width:100,
-    bottom: -10,
-    left: 0,
-  },
-  helloParent: {
-    width: 80,
-    height: 35,
-    top: 12,
-  },
-  noOf: {
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
-  hello2: {
-    bottom: 6,
-    lineHeight: 12,
-    color: GlobalStyles.Color.gray_700,
-    fontSize: GlobalStyles.FontSize.size_xs,
-    textAlign: "left",
-  },
-  hello3: {
-    right: 14,
-    bottom: 5,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    color: GlobalStyles.Color.gray_700,
-  },
-  groupChild: {
-    opacity: 0.2,
-    right: 0,
-    bottom: 0,
-    top: 0,
-  },
-  groupContainer: {
-    left: 37,
-    width: 142,
-    top: 177,
-    position: "absolute",
-  },
-  hello4: {
-    fontWeight: "700",
-    color: GlobalStyles.Color.indigo_100,
-    top: 0,
-  },
-  hello5: {
-    left: 6,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    bottom: 0,
-  },
-  helloGroup: {
-    right: 15,
-    height: 61,
-    bottom: 13,
-    left: 15,
-  },
-  groupView: {
-    width: 142,
-    top: 177,
-    right: 30,
-  },
-  hello6: {
-    marginTop: -8,
-    top: "50%",
-    fontWeight: "700",
-    textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    position: "absolute",
-  },
-  hello7: {
-    fontSize: 28,
-    lineHeight: 30,
-    right: -1,
-    textAlign: "left",
-    top: 0,
-    position: "absolute",
-  },
-  helloContainer: {
-    marginTop: -13.5,
-    right: 19,
-    height: 28,
-    top: "50%",
-  },
-  groupParent1: {
-    top: 90,
-    height: 65,
-    shadowOpacity: 1,
-    elevation: 6,
-    shadowRadius: 6,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowColor: "rgba(1, 1, 253, 0.05)",
-    borderRadius: GlobalStyles.Border.br_lg,
-    right: 29,
-    left: 37,
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  hello8: {
-    top: 51,
-    fontSize: GlobalStyles.FontSize.size_8xl,
-    left: 27,
-    textAlign: "left",
-    position: "absolute",
-  },
-  rectangle: {
-    borderRadius: GlobalStyles.Border.br_3xl,
-    top: 0,
-    position: "absolute",
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  rectangle1: {
-    right: 255,
-    backgroundColor: GlobalStyles.Color.violet_200,
-  },
-  lanceBogrol: {
-    marginTop: -6,
-  },
-  lanceBogrolWrapper: {
-    width: "100%",
-  },
-  text: {
-    marginTop: -11.25,
-  },
-  bagShoppingSolidIcon: {
-    marginTop: -8.01,
-    marginLeft: -345.26,
-    width: 13,
-    height: 15,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
-  },
-  kgCo: {
-    fontSize: GlobalStyles.FontSize.size_4xs,
-  },
-  text2: {
-    fontSize: GlobalStyles.FontSize.size_9xs,
-    verticalAlign: "sub",
-  },
-  text1: {
-    bottom: 2,
-  },
-  rectangleParent: {
-    marginTop: -58,
-    top: "50%",
-    position: "absolute",
-  },
-  rectangle3: {
-    right: 124,
-    backgroundColor: GlobalStyles.Color.orange_100,
-  },
-  lanceBogrolContainer: {
-    width: "100%",
-  },
-  groupIcon: {
-    top: 10,
-    left: 13,
-    width: 13,
-    height: 13,
-    position: "absolute",
-  },
-  text3: {
-    marginTop: -12.25,
-  },
-  text4: {
-    bottom: 3,
-  },
-  rectangle5: {
-    right: 155,
-    backgroundColor: GlobalStyles.Color.green_100,
-  },
-  lanceBogrolFrame: {
-    width: "100%",
-  },
-  iconAwesomeCar: {
-    right: 290,
-    bottom: 10,
-    left: 14,
-    maxHeight: "100%",
-    overflow: "hidden",
-    maxWidth: "100%",
-    top: 12,
-    position: "absolute",
-  },
-  rectangleContainer: {
-    marginTop: 26,
-    top: "50%",
-    position: "absolute",
-  },
-  rectangle7: {
-    right: 196,
-    backgroundColor: GlobalStyles.Color.orange_200,
-  },
-  lanceBogrolWrapper1: {
-    width: "100%",
-  },
-  groupChild1: {
-    marginTop: -3.53,
-    width: 12,
-    height: 11,
-    top: "50%",
-  },
-  rectangleParent1: {
-    bottom: 0,
-    position: "absolute",
-  },
-  lanceBogrol4: {
-    left: "21.54%",
-  },
-  iconFeatherPieChart: {
-    width: "16.16%",
-    right: "83.84%",
-  },
-  lanceBogrolParent: {
-    width: 130,
-    left: 0,
-    top: 0,
-  },
-  groupParent2: {
-    marginTop: -421.24,
-    height: 202,
-    left: 27,
-    top: "50%",
-  },
-  path23773Icon: {
-    top: 16,
-    bottom: 20,
-    right: 0,
-  },
-  path23772Icon: {
-    top: 8,
-    height: 130,
-    opacity: 0.4,
-    right: 7,
-    overflow: "hidden",
-    maxWidth: "100%",
-    left: 21,
-  },
-  path33379Icon: {
-    marginTop: -12.33,
-    top: "50%",
-  },
-  path33375Icon: {
-    marginTop: -55.92,
-    top: "50%",
-  },
-  path33377Icon: {
-    marginTop: 31.25,
-    top: "50%",
-  },
-  path33373Icon: {
-    top: 15,
-  },
-  path33378Icon: {
-    marginTop: 8.5,
-    top: "50%",
-  },
-  path33374Icon: {
-    marginTop: -35.08,
-    top: "50%",
-  },
-  path33376Icon: {
-    marginTop: 52.08,
-    top: "50%",
-  },
-  path33371Icon: {
-    bottom: 24,
-    opacity: 0.27,
-    height: 1,
-    right: 9,
-    left: 21,
-    overflow: "hidden",
-    maxWidth: "100%",
-    position: "absolute",
-  },
-  hello9: {
-    color: GlobalStyles.Color.gray_700,
-    fontSize: GlobalStyles.FontSize.size_xs,
-    textAlign: "left",
-  },
-  hello12: {
-    fontSize: GlobalStyles.FontSize.size_xs,
-    textAlign: "left",
-  },
-  scrollGroup16: {
-    right: 21,
-    height: 50,
-    bottom: 10,
-  },
-  lineView: {
-    marginTop: -50,
-    marginLeft: 42.94,
-    borderStyle: "dashed",
-    borderColor: "#707070",
-    borderRadius: 0.001,
-    borderRightWidth: 1,
-    width: 2,
-    height: 115,
-    opacity: 0.51,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
-  },
-  ellipseIcon: {
-    marginTop: -51,
-    marginLeft: 32.94,
-    width: 22,
-    height: 22,
-    opacity: 0.45,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
-  },
-  groupChild2: {
-    marginTop: -45,
-    marginLeft: 38.94,
-    width: 10,
-    left: "50%",
-    top: "50%",
-  },
-  union23Icon: {
-    right: -18,
-    bottom: -18,
-    top: 0,
-  },
-  hello21: {
-    fontSize: GlobalStyles.FontSize.size_3xs,
-    left: 15,
-    bottom: 13,
-    color: GlobalStyles.Color.blue_100,
-    fontWeight: "700",
-    textAlign: "left",
-    position: "absolute",
-  },
-  union23Parent: {
-    marginLeft: 12.94,
-    width: 63,
-    height: 34,
-    left: "50%",
-    top: 0,
-    position: "absolute",
-  },
-  path23773Parent: {
-    right: 0,
-    bottom: 0,
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
-  groupWrapper: {
-    marginTop: -117.24,
-    height: 188,
-    top: "50%",
-    right: 0,
-    left: 0,
-    position: "absolute",
-  },
-  lanceBogrol5: {
-    marginTop: -18,
+  carbonSpendingAnalysysDiv: {
+    width: "90%",
+    marginLeft: "5%",
+    height: "auto",
+  },
+  barText: {
+    left: 20,
+    top: "25%",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  rounded: {
+    borderRadius: 15,
+  },
+
+  subtitleText: {
+    marginLeft: "5%",
+    marginTop: "2.5%",
+    fontSize: 15,
     fontWeight: "700",
   },
-  moneyTransfer: {
-    marginTop: -4,
-  },
-  text12: {
-    marginTop: -15,
-  },
-  kgCo4: {
-    fontSize: GlobalStyles.FontSize.size_xs,
-  },
-  text14: {
-    fontSize: GlobalStyles.FontSize.size_6xs,
-    verticalAlign: "sub",
-  },
-  text13: {
-    bottom: 8,
-  },
-  groupParent4: {
-    top: 39,
-  },
-  groupParent5: {
-    marginTop: -23.99,
-    top: "50%",
-  },
-  maskGroup14Position: {
-    marginTop: -27.49,
-    top: "50%",
-    position: "absolute",
-  },
-  groupChild3: {
-    marginLeft: -8.2,
-  },
-  text15: {
-    marginTop: -28.49,
-  },
-  text16: {
-    marginTop: -4.02,
-    top: "50%",
-  },
-  groupParent6: {
-    height: 87,
-  },
-  history: {
-    marginTop: -138.99,
-    left: "11.29%",
-    top: "50%",
-    fontSize: GlobalStyles.FontSize.size_2xl,
-  },
-  transationsIcon: {
-    top: 1,
-    left: 5,
-    width: 19,
-  },
-  text18: {
-    marginTop: -9.99,
-  },
-  text19: {
-    marginTop: 14.48,
-    top: "50%",
-  },
-  groupParent3: {
-    marginTop: 108.26,
-    height: 278,
-    left: 27,
-    top: "50%",
-  },
-  lanceBogrol8: {
-    marginTop: -12,
-    fontWeight: "700",
-  },
-  moneyTransfer3: {
-    marginTop: 2,
-  },
-  lanceBogrolParent3: {
-    width: "100%",
-  },
-  text21: {
-    right: "6%",
-    marginTop: -6,
-    color: GlobalStyles.Color.indigo_100,
-  },
-  groupParent8: {
-    marginTop: -99.24,
-    top: "50%",
-  },
-  groupFrame: {
-    width: "100%",
-  },
-  text22: {
-    right: "6%",
-    marginTop: -6,
-    color: GlobalStyles.Color.indigo_100,
-  },
-  groupParent9: {
-    marginTop: -23.24,
-    top: "50%",
-  },
-  lanceBogrol10: {
-    marginTop: -6,
-    fontWeight: "700",
-  },
-  lanceBogrolWrapper2: {
-    right: 7,
-    left: 0,
-    top: 0,
-  },
-  moneyTransfer5: {
-    marginTop: -5,
-  },
-  moneyTransferWrapper: {
-    right: 0,
-    bottom: 0,
-    left: 0,
-  },
-  groupParent11: {
-    marginLeft: -98,
-    width: "100%",
-    height: 24,
-    marginTop: -10,
-  },
-  groupParent10: {
-    bottom: 25,
-  },
-  lanceBogrol11: {
-    left: "11.91%",
-  },
-  iconFeatherPieChart1: {
-    width: "8.94%",
-    right: "91.06%",
-  },
-  lanceBogrolParent5: {
-    width: 235,
-    left: 0,
-    top: 0,
-  },
-  groupChild4: {
-    marginLeft: -8.19,
-  },
-  groupParent7: {
-    height: 284,
-    left: 27,
-    bottom: 0,
-  },
-  history1: {
-    left: 0,
-    marginTop: -4,
-  },
-  history2: {
-    marginLeft: -63.5,
-    left: "50%",
-    fontSize: GlobalStyles.FontSize.size_xl,
-    color: GlobalStyles.Color.gray_700,
-    fontWeight: "700",
-    top: 0,
-  },
-  history3: {
-    marginLeft: 21.5,
-    left: "50%",
-    marginTop:-8,
-  },
-  history4: {
-    right: -1,
-    marginTop: -10,
-  },
-  historyParent: {
-    right: 47,
-    left: 35,
-    height: 16,
-    top: -30,
-    position: "absolute",
-    justifyContent:"space-evenly"
-  },
-  hello22: {
-    left: "10%",
-    top: 11,
-    fontSize: GlobalStyles.FontSize.size_xl,
-    color: GlobalStyles.Color.gray_700,
-  },
-  hello23: {
-    left: "30%",
-    top: 11,
-  },
-  hello24: {
-    left: "55%",
-    top: 11,
-    fontSize: GlobalStyles.FontSize.size_xl,
-  },
-  hello25: {
-    left: "80%",
-    top: 12,
-  },
-  helloParent1: {
-    marginTop: -180.24,
-    right: 27,
-    left: 27,
-    top: "50%",
-    height: 35,
-  },
-  groupParent: {
-    width: "100%",
-    height: 1500,
-  },
-  analytics: {
-    flex: 1,
-    width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_2xs,
-    paddingRight: GlobalStyles.Padding.padding_12xs,
-    backgroundColor: GlobalStyles.Color.gray_100,
+
+  transactionBox: {
+    width: "90%",
+    height: verticalScale(80),
+    marginTop: "5%",
+    marginLeft: "5%",
+    backgroundColor: "white",
+    borderRadius: 15,
   },
 });
 

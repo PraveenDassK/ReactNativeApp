@@ -1,309 +1,504 @@
-import React, { useContext, useEffect, useState, Keyboard } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import {
   Text,
   StyleSheet,
   Image,
   View,
   TextInput,
-  Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
+  TouchableOpacity,
 } from "react-native";
-import * as Yup from 'yup';
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { useFocusEffect } from "@react-navigation/native";
+
+import colors from "../config/colors";
 
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
-import Form from "../components/forms/Form"
+import Button from "../components/AppButton";
+import ErrorMessage from "../components/forms/ErrorMessage";
+import loginApi from "../api/apiLogin";
+import authStorage from "../auth/storage";
+import Screen from "../components/Screen";
+import {} from "react-native-gesture-handler";
 
-const OTPVerificationPersonal = () => {
-
-  const initialValues= {'pVer1': '', 'pVer2':'', 'pVer3':''}
-
-  const [count, setCount] = useState(45)
-
-  const { user } = useContext(AuthContext)
-
-  const countdown = () => {
-    setCount(prev => prev - 1)
-
-  }
-
+import * as Device from "expo-device";
 
 const validationSchema = Yup.object().shape({
-  pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
-  pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
-  pVer3: Yup.number().required().min(0).max(9).label("P Ver3")
-})
+  // pVer1: Yup.number().required().min(0).max(9).label("P Ver1"),
+  // pVer2: Yup.number().required().min(0).max(9).label("P Ver2"),
+  // pVer3: Yup.number().required().min(0).max(9).label("P Ver3"),
+  // pVer4: Yup.number().required().min(0).max(9).label("P Ver4"),
+  // eVer1: Yup.number().required().min(0).max(9).label("E Ver1"),
+  // eVer2: Yup.number().required().min(0).max(9).label("E Ver2"),
+  // eVer3: Yup.number().required().min(0).max(9).label("E Ver3"),
+  // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
+}); // add required if necessary
 
-  useEffect(()=> {
-    if (count === 0) {
-      setCount(45)
-      console.log("send api request")
+const OTPVerificationPersonal = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [resetVisible, setResetVisible] = useState(false);
+  const {
+    user,
+    currentUser,
+    setCurrentUser,
+    setUserID,
+    setAccountID,
+    setUserDetails,
+    setCardID,
+    expoPushToken,
+    setCustomerDetails,
+  } = useContext(AuthContext);
+  const [count, setCount] = useState(59);
+  const [resendOTP, setResendOTP] = useState(null);
+
+  const initialValues = {
+    pVer1: "",
+    pVer2: "",
+    pVer3: "",
+    pVer4: "",
+    eVer1: "",
+    eVer2: "",
+    eVer3: "",
+    eVer4: "",
+  };
+
+  const pVer1Ref = useRef();
+  const pVer2Ref = useRef();
+  const pVer3Ref = useRef();
+  const pVer4Ref = useRef();
+  const eVer1Ref = useRef();
+  const eVer2Ref = useRef();
+  const eVer3Ref = useRef();
+  const eVer4Ref = useRef();
+
+  const countdown = () => {
+    setCount((prev) => prev - 1);
+  };
+
+  /**
+   * @dev This function sends to OTP to the endpoint
+   *      Then we get the JWT back
+   * @param {Obj} param0
+   * @returns False if OTP fails
+   */
+  const handleSubmit = async ({
+    pVer1,
+    pVer2,
+    pVer3,
+    pVer4,
+    eVer1,
+    eVer2,
+    eVer3,
+    eVer4,
+  }) => {
+    //Variable setup for OTP
+    const email = user.email;
+    const phoneNumber = user.phoneNumber;
+    const emailOTP = pVer1 + pVer2 + pVer3 + pVer4;
+    const phoneOTP = eVer1 + eVer2 + eVer3 + eVer4;
+
+    setResendOTP({ email, phoneNumber, emailOTP, phoneOTP });
+
+    //This sets the loading icon and disables the button
+    setIsLoading(true);
+
+    //Sending of the OTP is here
+    const result = await loginApi.VerifyLogin({
+      phoneNumber,
+      email,
+      phoneOTP,
+      emailOTP,
+    });
+    console.log(result);
+    if (!result){
+      setIsLoading(false)
+      return alert("Could not verify otp");
     } 
-  },[count])
+
+    const IDs = await loginApi.GetIDs(result?.token);
+
+    //If the account details cannot be found
+    // console.log(IDs)
+    // if(!IDs){
+    //   alert("Warning your account could not be authenticated")
+    //   return;
+    // }
+
+    authStorage.storeToken(result?.token);
+    setCurrentUser(IDs.token);
+    setUserID(IDs.userID);
+    setAccountID(IDs.accountID);
+    setCardID(IDs.cardID);
+    setCustomerDetails(IDs.customerDetails);
+
+    const pushNotification = await loginApi.SendPushNotificationToken({
+      tokenID: expoPushToken,
+      customerID: IDs.customerDetails,
+      deviceID: Device.osInternalBuildId,
+      deviceName: Device.deviceName,
+      macAddress: "",
+      operatingSystem: Device.osName,
+    });
+    console.log(pushNotification);
+
+    //Turns off the loading
+    setIsLoading(false);
+  };
+
+  const resendCred = async () => {
+    const email = user.email;
+    const phoneNumber = user.phoneNumber;
+
+    const result = await loginApi.Login({ email, phoneNumber });
+    console.log(email, phoneNumber, result);
+    setResetVisible(false);
+    setCount(59);
+  };
 
   useEffect(() => {
-    setInterval(countdown, 1000)
-  
-  },[])
-  return (
-    
-    <View style={styles.otpVerificationPersonal2}>
-      <View style={styles.helloParent}>
-        <Text style={[styles.hello, styles.helloTypo]}>
-          Swipe Up if already have an account
-        </Text>
-        <Image
-          style={styles.iconIonicIosArrowDown}
-          resizeMode="cover"
-          source={require("../assets/icon-carbonytedownarrow.png")}
-        />
-        <Text
-          style={[styles.hello1, styles.helloFlexBox, styles.hello1Position]}
-        >
-          OTP Verfication
-        </Text>
+    if (count === 0) {
+      //setCount(59);
+      setResetVisible(true);
+    }
+  }, [count]);
 
-        <Form initialValues={initialValues} onSubmit={values => console.log(values)} validationSchema={validationSchema}/>
-        <View style={[styles.groupChild, styles.groupLayout]} />
-        <TextInput
-          style={[styles.groupChildPosition, styles.groupLayout]}
-          keyboardType="number-pad"
-        />
-        <TextInput
-          style={[styles.groupInner, styles.groupInnerBorder]}
-          keyboardType="number-pad"
-        />
-        <View style={[styles.groupInnerBorder, styles.groupChildPosition]} />
-        <TextInput
-          style={[styles.rectangleTextinput, styles.groupChild1Border]}
-          keyboardType="default"
-        />
-        <View style={[styles.groupChild1Border, styles.groupChildPosition]} />
-        <View style={[styles.groupChild2, styles.groupChildBorder2]} />
-        <View style={[styles.groupChildBorder2, styles.groupChildPosition]} />
-        <View style={[styles.groupChild4, styles.groupChildBorder1]} />
-        <View style={[styles.groupChildBorder1, styles.groupChildPosition]} />
-        <View style={[styles.groupChild6, styles.groupChildBorder]} />
-        <View style={[styles.groupChildBorder, styles.groupChildPosition]} />
-        <Text
-          style={[
-            styles.pleaseEnterTheCodeSentTo,
-            styles.helloFlexBox,
-            styles.hello1Position,
-            styles.helloTypo,
-          ]}
+  useFocusEffect(
+    useCallback(() => {
+      const countdownId = setInterval(countdown, 1000);
+      return () => {
+        clearInterval(countdownId);
+      };
+    }, [])
+  );
+
+  return (
+    <Screen style={{ backgroundColor: "white" }}>
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <Text
-            style={styles.pleaseEnterThe}
-          >{`Please enter the code sent to `}</Text>
-          <Text style={styles.text}>+44 </Text>
-        </Text>
-        <Text style={[styles.pleaseEnterTheCodeSentTo1, styles.resendPosition]}>
-          <Text
-            style={styles.pleaseEnterThe}
-          >{`Please enter the code sent to `}</Text>
-          <Text style={styles.text}>a</Text>
-        </Text>
-        <Text style={[styles.resendCodeIn0010, styles.resendPosition]}>
-          Resend Code in 00:{count < 10 ? `0${count}` : count}
-        </Text>
-        <Text style={[styles.resendCodeIn00101, styles.resendPosition]}>
-          Resend Code in 00:{count < 10 ? `0${count}` : count}
-        </Text>
-        <Pressable style={styles.rectanglePressable} />
-        <Text style={[styles.hello2, styles.helloFlexBox]}>Verify</Text>
+          <Image
+            style={{ width: "70%" }}
+            resizeMode="contain"
+            source={require("../assets/login/LoginAnimal2.png")}
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: colors.light,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 30,
+            }}
+          >
+            <Text style={{ fontSize: 30 }}>OTP Verification</Text>
+          </View>
+
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            {({
+              handleChange,
+              handleSubmit,
+              errors,
+              setFieldTouched,
+              touched,
+            }) => (
+              <>
+                <View
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 50,
+                    backgroundColor: "white",
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
+                  }}
+                >
+                  <View style={styles.subTextRow}>
+                    <Text style={styles.subText}>
+                      {`Please enter the code sent to ${user.email}`}
+                    </Text>
+                  </View>
+                  <View style={styles.entryBoxContainer}>
+                    <TextInput
+                      autoFocus={true}
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer1")}
+                      onChangeText={(e) => {
+                        handleChange("pVer1")(e);
+                        if (e.length) pVer2Ref.current.focus();
+                      }}
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer1}
+                      visible={touched.pVer1}
+                    />
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer2")}
+                      onChangeText={(e) => {
+                        handleChange("pVer2")(e);
+                        if (e.length) pVer3Ref.current.focus();
+                      }}
+                      ref={pVer2Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer2}
+                      visible={touched.pVer2}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer3")}
+                      onChangeText={(e) => {
+                        handleChange("pVer3")(e);
+                        if (e.length) pVer4Ref.current.focus();
+                      }}
+                      ref={pVer3Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer3}
+                      visible={touched.pVer3}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("pVer4")}
+                      onChangeText={(e) => {
+                        handleChange("pVer4")(e);
+                        if (e.length) eVer1Ref.current.focus();
+                      }}
+                      ref={pVer4Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.pVer4}
+                      visible={touched.pVer4}
+                    />
+                  </View>
+
+                  {!resetVisible ? (
+                    <Text style={styles.countdown}>
+                      Resend Code in 00:{count < 10 ? `0${count}` : count}
+                    </Text>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.resendContainer}
+                      onPress={resendCred}
+                    >
+                      <Text style={styles.resendItem}>Resend</Text>
+                    </TouchableOpacity>
+                  )}
+
+                  <View style={styles.subTextRow}>
+                    <Text style={[styles.subText, { marginTop: "10%" }]}>
+                      {`Please enter the code sent to ${user.phoneNumber}`}
+                    </Text>
+                  </View>
+
+                  <View style={styles.entryBoxContainer}>
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer1")}
+                      onChangeText={(e) => {
+                        handleChange("eVer1")(e);
+                        if (e.length) eVer2Ref.current.focus();
+                      }}
+                      ref={eVer1Ref}
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer1}
+                      visible={touched.eVer1}
+                    />
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer2")}
+                      onChangeText={(e) => {
+                        handleChange("eVer2")(e);
+                        if (e.length) eVer3Ref.current.focus();
+                      }}
+                      ref={eVer2Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer2}
+                      visible={touched.eVer2}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer3")}
+                      onChangeText={(e) => {
+                        handleChange("eVer3")(e);
+                        if (e.length) eVer4Ref.current.focus();
+                      }}
+                      ref={eVer3Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer3}
+                      visible={touched.eVer3}
+                    />
+
+                    <TextInput
+                      maxLength={1}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("eVer4")}
+                      onChangeText={handleChange("eVer4")}
+                      ref={eVer4Ref}
+                      returnKeyType="next"
+                      style={styles.inputBox}
+                    />
+                    <ErrorMessage
+                      error={errors.eVer4}
+                      visible={touched.eVer4}
+                    />
+                  </View>
+                  {!resetVisible ? (
+                    <Text style={[styles.countdown, { marginBottom: "10%" }]}>
+                      Resend Code in 00:{count < 10 ? `0${count}` : count}
+                    </Text>
+                  ) : (
+                    <TouchableOpacity
+                      style={[styles.resendContainer, { marginBottom: "10%" }]}
+                      onPress={resendCred}
+                    >
+                      <Text style={styles.resendItem}>Resend</Text>
+                    </TouchableOpacity>
+                  )}
+                  <View style={styles.button}>
+                    <Button
+                      title="Verify"
+                      textColor="white"
+                      color="black"
+                      onPress={handleSubmit}
+                      visible={isLoading}
+                      disabled={isLoading}
+                    />
+                  </View>
+                </View>
+              </>
+            )}
+          </Formik>
+        </View>
       </View>
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  helloTypo: {
-    fontSize: GlobalStyles.FontSize.size_base,
-    // // fontFamily: GlobalStyles.FontFamily.helvetica,
+  resendContainer: {
+    width: "80%",
+    marginTop: "2.5%",
+    marginLeft: "10%",
   },
-  helloFlexBox: {
-    textAlign: "left",
-    position: "absolute",
+  resendItem: {
+    color: "blue",
+    textDecorationLine: "underline",
   },
-  hello1Position: {
-    left: 2,
-    textAlign: "left",
+  mainContainer: {
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    minHeight: "100%",
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
   },
-  groupLayout: {
-    height: 42,
-    width: 42,
+
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    marginLeft: GlobalStyles.Title.marginLeft,
+    width: GlobalStyles.Title.width,
+  },
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
+  },
+
+  subText: {
+    fontSize: GlobalStyles.RowText.fontSize,
+    fontWeight: GlobalStyles.RowText.fontWeight,
+  },
+
+  subTextRow: {
+    marginTop: GlobalStyles.RowText.marginTop,
+    marginLeft: GlobalStyles.RowText.marginLeft,
+    width: "80%",
+    fontColor: GlobalStyles.RowText.fontColor,
+  },
+
+  entryBoxContainer: {
+    width: "80%",
+    marginLeft: "10%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  inputBox: {
+    height: 40,
+    width: 40,
+    backgroundColor: "white",
+    marginTop: "5%",
+    borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#0101fd",
-    borderStyle: "solid",
-    backgroundColor: GlobalStyles.Color.white,
-    borderRadius: GlobalStyles.Border.br_2xs,
-    left: 6,
-    position: "absolute",
-  },
-  groupInnerBorder: {
-    borderColor: "#ff4b4b",
-    marginLeft: -103,
-    height: 42,
-    width: 42,
-    borderWidth: 1,
-    borderStyle: "solid",
-    backgroundColor: GlobalStyles.Color.white,
-    borderRadius: GlobalStyles.Border.br_2xs,
-    left: "50%",
-    position: "absolute",
-  },
-  groupChildPosition: {
-    marginTop: -104.5,
-    top: "50%",
-  },
-  groupChild1Border: {
-    borderColor: "#e8e8e8",
-    marginLeft: -48,
-    height: 42,
-    width: 42,
-    borderWidth: 1,
-    borderStyle: "solid",
-    backgroundColor: GlobalStyles.Color.white,
-    borderRadius: GlobalStyles.Border.br_2xs,
-    left: "50%",
-    position: "absolute",
-  },
-  groupChildBorder2: {
-    marginLeft: 61,
-    borderColor: "#e8e8e8",
-    height: 42,
-    width: 42,
-    borderWidth: 1,
-    borderStyle: "solid",
-    backgroundColor: GlobalStyles.Color.white,
-    borderRadius: GlobalStyles.Border.br_2xs,
-    left: "50%",
-    position: "absolute",
-  },
-  groupChildBorder1: {
-    marginLeft: 6,
-    borderColor: "#e8e8e8",
-    height: 42,
-    width: 42,
-    borderWidth: 1,
-    borderStyle: "solid",
-    backgroundColor: GlobalStyles.Color.white,
-    borderRadius: GlobalStyles.Border.br_2xs,
-    left: "50%",
-    position: "absolute",
-  },
-  groupChildBorder: {
-    right: 6,
-    borderColor: "#e8e8e8",
-    height: 42,
-    width: 42,
-    borderWidth: 1,
-    borderStyle: "solid",
-    backgroundColor: GlobalStyles.Color.white,
-    borderRadius: GlobalStyles.Border.br_2xs,
-    position: "absolute",
-  },
-  resendPosition: {
-    left: 6,
-    textAlign: "left",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_base,
-    top: "50%",
-    position: "absolute",
-  },
-  hello: {
-    marginTop: 322.5,
-    left: 49,
+    justifyContent: "center",
+    alignItems: "center",
     textAlign: "center",
-    color: GlobalStyles.Color.gray_700,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    top: "50%",
-    fontSize: GlobalStyles.FontSize.size_base,
-    position: "absolute",
   },
-  iconIonicIosArrowDown: {
-    marginTop: 300.34,
-    marginLeft: -4.41,
-    width: 8,
-    height: 5,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
+
+  countdown: {
+    width: "80%",
+    marginTop: "2.5%",
+    marginLeft: "10%",
+    opacity: 0.3,
   },
-  hello1: {
-    top: 0,
-    fontSize: GlobalStyles.FontSize.size_8xl,
-    fontWeight: "700",
-    color: GlobalStyles.Color.indigo_100,
-  },
-  groupChild: {
-    top: 85,
-  },
-  groupInner: {
-    top: 85,
-  },
-  rectangleTextinput: {
-    top: 85,
-  },
-  groupChild2: {
-    top: 85,
-  },
-  groupChild4: {
-    top: 85,
-  },
-  groupChild6: {
-    top: 85,
-  },
-  pleaseEnterThe: {
-    color: GlobalStyles.Color.gray_700,
-  },
-  text: {
-    color: GlobalStyles.Color.gray_1700,
-  },
-  pleaseEnterTheCodeSentTo: {
-    top: 45,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-  },
-  pleaseEnterTheCodeSentTo1: {
-    marginTop: -141.5,
-  },
-  resendCodeIn0010: {
-    marginTop: -193.5,
-    color: GlobalStyles.Color.gray_700,
-  },
-  resendCodeIn00101: {
-    marginTop: -46.5,
-    color: GlobalStyles.Color.gray_700,
-  },
-  rectanglePressable: {
-    height: "8.92%",
-    top: "81.87%",
-    right: "0%",
-    bottom: "9.21%",
-    left: "0%",
-    borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
-    position: "absolute",
-    width: "100%",
-  },
-  hello2: {
-    top: "85.44%",
-    left: "44.17%",
-    fontSize: GlobalStyles.FontSize.size_lg,
-    textTransform: "uppercase",
-    color: GlobalStyles.Color.black,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-  },
-  helloParent: {
-    width: "100%",
-    height: "100%",
-  },
-  otpVerificationPersonal2: {
-    backgroundColor: "#f5f4f7",
+
+  button: {
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_4xs,
-    paddingRight: GlobalStyles.Padding.padding_8xs,
-    width: "100%",
+    flexDirection: "column",
+    width: "80%",
+    marginLeft: "10%",
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+    marginBottom: "20%",
+  },
+
+  swipeUp: {
+    justifyContent: "flex-end",
+    textAlign: "center",
+    textHorizontalAlign: "flex-end",
   },
 });
 

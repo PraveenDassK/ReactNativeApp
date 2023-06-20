@@ -1,618 +1,556 @@
-import * as React from "react";
-import { StyleSheet, View, Image, Text, Pressable, ScrollView } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+} from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 
-const MyCards = ({navigation}) => {
+import api from "../api/api_list";
+import AuthContext from "../auth/context";
+import moment from "moment";
+import apiCall from "../api/api";
+import apiCall2 from "../api/apiCall";
+
+import AppText from "../components/Text";
+import cardYellow from "../assets/image-cardyellow.png";
+import cardYellowFrozen from "../assets/cardFrozen.png";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import apiCard from "../api/cardDetails";
+
+const CARD_DATA = [];
+const MyCards = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const toggleChecked = () => setChecked((value) => !value);
+
+  //Remove
+  const [initials, setInitals] = useState(null);
+  const [cardnumber, setcardnumber] = useState(null);
+  const [firstname, setfirstname] = useState(null);
+  const [lastname, setlastname] = useState(null);
+  const [role, setRole] = useState(null);
+  const [type, setType] = useState(null);
+  const [cardId, setCardID] = useState(null);
+  const [cardIndex, setCardIndex] = useState(0);
+
+  //Keep
+  const [cardData, setCardData] = useState(null);
+  const [currentCardDataShow, setCurrentCardDataShow] = useState(null);
+  const [transactionData, setTransactionData] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalId, setModalId] = useState(false);
+  const authContext = useContext(AuthContext);
+
+  const { settings, cardID, customerDetails, cardDetails } = useContext(AuthContext);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+
+  const getFullCardData = async () => {
+    const cardObject = await api.GetCardFromID("714613712");
+
+  }
+
   
+  const loadData = async () => {
+    setIsLoading(true);
+    //Get the transaction data
+    const response = await api.GetTransactions(authContext.accountID, 5);
+    const transactions = response.data.details.content;
+    setTransactionData(transactions);
+
+    const cards = await apiCall.GetCardByAccount("686283112");
+
+    const cardDetails = []
+    cards.forEach(cardDetail => {
+      console.log(cardDetail)
+      const obj = {
+        "cardName": cardDetail.embossing.firstName + " " +cardDetail.embossing.lastName,
+        "cardNumber": cardDetail.maskedCardNumber,
+        "cvv": "000",
+        "expiary": "00/00",
+        "isFrozen": cardDetail.status != "CARD_OK",
+        "isVirtual": cardDetail.template == "MC_VIRTUAL"
+      }
+      cardDetails.push(obj)
+    })
+    console.log(cardDetails)
+    setCardData(cardDetails)
+
+
+    // setCardData(cards);
+    // console.log(cards);
+    // const currentCard = cards[cardIndex];
+    // currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
+
+    // setRole(currentCard.cardRole);
+    // setInitals(
+    //   currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
+    // );
+    // setType(currentCard.productCode);
+
+    // setcardnumber(cardDetails.number);
+    // setfirstname("CVV " + cardDetails.cvv);
+    // setlastname(cardDetails.name);
+    // console.log(cardDetails);
+
+    setIsLoading(false);
+  };
+
+  let transactionList = [];
+  const showTransaction = (Id) => {
+    setModalVisible(true);
+    setModalId(Id);
+  };
+
+  const reportTransaction = () => {
+    console.log("Reported");
+  };
+  const shareTransaction = () => {
+    console.log("Shared");
+  };
+
+  const modal = (Id) => {
+    let transaction = transactionData[modalId];
+    console.log(transaction);
+
+    return (
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => {
+            setModalVisible(false);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TouchableOpacity
+                style={{ width: "100%", marginBottom: verticalScale(10) }}
+              >
+                <MaterialCommunityIcons
+                  onPress={() => setModalVisible(!modalVisible)}
+                  name="close"
+                  size={25}
+                  color="black"
+                />
+              </TouchableOpacity>
+              <AppText style={styles.modalText}>
+                From: {transaction.account.customerName}
+              </AppText>
+              <AppText style={styles.modalText}>
+                To: {transaction.description}
+              </AppText>
+              <AppText style={styles.modalText}>
+                Amount: £{transaction.amount}
+              </AppText>
+              <AppText style={styles.modalText}>
+                Date: {transaction.transactionDate}
+              </AppText>
+              <AppText style={styles.modalText}>ID: {transaction.id}</AppText>
+              <AppText style={styles.modalText}>
+                Source ID: {transaction.sourceId}
+              </AppText>
+              <AppText style={styles.modalText}>
+                Currency: {transaction.currency}
+              </AppText>
+
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  styles.buttonReport,
+                  { marginTop: verticalScale(20) },
+                ]}
+                onPress={() => reportTransaction()}
+              >
+                <AppText style={styles.textStyle}>Report</AppText>
+              </TouchableOpacity>
+              {settings.transactionSharing ? (
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => shareTransaction()}
+                >
+                  <AppText style={styles.textStyle}>Share</AppText>
+                </TouchableOpacity>
+              ) : null}
+
+              {/* <TouchableOpacity style={[styles.button, styles.buttonClose]} backgroundColor="red" onPress={() => setModalVisible(!modalVisible)}>
+              <AppText style={styles.textStyle}>Dismiss</AppText>
+            </TouchableOpacity> */}
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+    );
+  };
+
+  const showData = () => {
+    transactionData.forEach((transaction, i) => {
+      transactionList.push(
+        <TouchableOpacity
+          style={[styles.transactionBox, styles.rounded]}
+          key={i}
+          onPress={() => showTransaction(i)}
+        >
+          <View style={{ height: "100%", flexDirection: "row" }}>
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+                backgroundColor: "#F6F5F8",
+                borderColor: "black",
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                marginLeft: "2.5%",
+              }}
+            >
+              <AppText
+                style={{ alignSelf: "center", textAlignVertical: "center" }}
+              >
+                {transaction.account.customerName[0]}
+              </AppText>
+            </View>
+            <View
+              style={{
+                flex: 3.5,
+                alignSelf: "center",
+                justifyContent: "space-evenly",
+                marginLeft: "5%",
+              }}
+            >
+              <AppText style={{ fontSize: 14, fontWeight: "700" }}>
+                {transaction.account.customerName}
+              </AppText>
+              <AppText style={{ opacity: 0.4 }}>
+                {moment(transaction.transactionDate).format("MMM Do YY")}
+              </AppText>
+            </View>
+            <View
+              style={{
+                flex: 5,
+                justifyContent: "space-evenly",
+                alignItems: "flex-end",
+                marginRight: "2.5%",
+              }}
+            >
+              <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
+                £{transaction.amount.toFixed(2)}
+              </AppText>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    });
+  };
+  showData();
+
+  //CardFreezing
+  const [cardFrozen, setFrozen] = useState(false);
+
+  const toggleCard = async () => {
+    setFrozen(!cardFrozen);
+
+    if (cardData[cardIndex].status == "CARD_OK") {
+      const request = await apiCall2.FreezeCard(
+        cardData[cardIndex].id,
+        "CARD_BLOCKED"
+      );
+      console.log(request);
+    } else {
+      console.log("unfreeze");
+      const request = await apiCall2.FreezeCard(
+        cardData[cardIndex].id,
+        "CARD_OK"
+      );
+      console.log(request);
+    }
+    loadData();
+  };
+
+  const cardType = (card) => {
+    switch (card) {
+      case "MC_VIRTUAL":
+        return "virtual";
+      case "MC_STANDARD":
+        return "standard";
+      case "MC_PREMIUM":
+        return "premium";
+      default:
+        return "carbonyte";
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color="black" />
+      </View>
+    );
+  }
+
   return (
     <ScrollView>
-    <View style={styles.myCards}>
-      <View style={styles.groupParent}>
-        <Pressable
-          style={[styles.groupContainer, styles.groupShadowBox]}
-          onPress={() => navigation.navigate("Account3")}
-        >
-          <View style={styles.rectangleParent}>
-            <View style={styles.groupChild} />
-            <Image
-              style={styles.iconIonicIosArrowForward}
-              resizeMode="cover"
-              source={require("../assets/icon-carbonytedownarrowlarge.png")}
-            />
-          </View>
-          <Text style={[styles.myCards1, styles.historyTypo]}>My Cards</Text>
-        </Pressable>
-        <View style={styles.historyParent}>
-          <Text style={[styles.history, styles.historyTypo]}>
-            Recent Transactions
-          </Text>
-          <Image
-            style={[styles.path23663Icon, styles.iconLayout]}
-            resizeMode="cover"
-            source={require("../assets/icon-withdraw.png")}
-          />
-          <View style={[styles.groupView, styles.groupPosition1]}>
-            <View style={[styles.groupParent1, styles.groupParentShadowBox1]}>
-              <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  Grocery Market
-                </Text>
-                <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                  <Text style={styles.september222022}>September 22, 2022</Text>
-                  <Text style={styles.september222022}>12:06 PM</Text>
-                </Text>
-              </View>
-              <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
-              <Image
-                style={styles.maskGroup14}
-                resizeMode="cover"
-                source={require("../assets/icon-supermarketplaceholder.png")}
-              />
-            </View>
-            <View style={[styles.groupParent2, styles.groupParentShadowBox]}>
-              <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  Grocery Market
-                </Text>
-                <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                  <Text style={styles.september222022}>September 22, 2022</Text>
-                  <Text style={styles.september222022}>12:06 PM</Text>
-                </Text>
-              </View>
-              <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
-              <Image
-                style={styles.maskGroup14}
-                resizeMode="cover"
-                source={require("../assets/icon-supermarketplaceholder.png")}
-              />
-            </View>
-            <View style={[styles.groupParent3, styles.groupParentShadowBox1]}>
-              <View style={[styles.lanceBogrolContainer, styles.lancePosition]}>
-                <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  Grocery Market
-                </Text>
-                <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                  <Text style={styles.september222022}>September 22, 2022</Text>
-                  <Text style={styles.september222022}>12:06 PM</Text>
-                </Text>
-              </View>
-              <Text style={[styles.text, styles.textTypo]}>- £70.00</Text>
-              <Image
-                style={styles.maskGroup14}
-                resizeMode="cover"
-                source={require("../assets/icon-supermarketplaceholder.png")}
-              />
-            </View>
-            <View style={[styles.groupParent4, styles.groupParentShadowBox]}>
-              <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  Spotify Music
-                </Text>
-                <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                  <Text style={styles.september222022}>September 22, 2022</Text>
-                  <Text style={styles.september222022}>12:06 PM</Text>
-                </Text>
-              </View>
-              <Text style={[styles.text, styles.textTypo]}>- £50.00</Text>
-              <Image
-                style={[styles.maskGroup16, styles.groupPosition]}
-                resizeMode="cover"
-                source={require("../assets/icon-spotifyplaceholder.png")}
-              />
-            </View>
-            <View style={[styles.groupParent5, styles.groupParentShadowBox]}>
-              <View style={[styles.lanceBogrolParent, styles.lancePosition]}>
-                <Text style={[styles.lanceBogrol, styles.bTypo]}>
-                  Lance Bogrol
-                </Text>
-                <Text style={[styles.moneyTransfer, styles.bTypo]}>
-                  <Text style={styles.september222022}>September 22, 2022</Text>
-                  <Text style={styles.september222022}>12:06 PM</Text>
-                </Text>
-              </View>
-              <Text style={[styles.text4, styles.textTypo]}>+ £350.00</Text>
-              <Image
-                style={[styles.groupItem, styles.groupPosition]}
-                resizeMode="cover"
-                source={require("../assets/image-person.png")}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={[styles.maskGroup236Wrapper, styles.maskPosition]}>
-          <View style={[styles.maskGroup236, styles.groupPosition1]} />
-        </View>
-        <View style={[styles.maskGroup236Container, styles.maskPosition]}>
-          <View style={[styles.maskGroup236, styles.groupPosition1]} />
-        </View>
-        <View style={[styles.maskGroup236Frame, styles.maskPosition]}>
-          <View style={[styles.maskGroup236, styles.groupPosition1]} />
-        </View>
-        <Pressable
-          style={styles.wrapper}
-          onPress={() => navigation.navigate("CardSettings")}
-        >
-          <Image
-            style={styles.icon}
-            resizeMode="cover"
-            source={require("../assets/icon-freeze.png")}
-          />
-        </Pressable>
-        <Text style={[styles.hello, styles.helloTypo]}>FREEZE</Text>
-        <Pressable
-          style={styles.rectangleGroup}
-          onPress={() => navigation.navigate("CardSettings")}
-        >
-          <View style={[styles.groupInner, styles.groupShadowBox]} />
-          <Image
-            style={[styles.settingsIcon, styles.iconLayout]}
-            resizeMode="cover"
-            source={require("../assets/icon-settings.png")}
-          />
-        </Pressable>
-        <Text style={[styles.hello1, styles.helloTypo]}>SETTINGS</Text>
-        <View style={styles.card1}>
-          <View style={[styles.maskGroup236, styles.groupPosition1]}>
-            <View style={[styles.maskGroup236, styles.groupPosition1]}>
-              <Image
-                style={[styles.path33118Icon, styles.groupIconLayout]}
-                resizeMode="cover"
-                source={require("../assets/rectangle-yellowbig.png")}
-              />
-              <View style={[styles.maskGroup236, styles.groupPosition1]}>
-                <Image
-                  style={[styles.groupIcon, styles.groupIconLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/logo-carbonytetext.png")}
-                />
-                <Image
-                  style={[styles.groupChild1, styles.groupIconLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/logo-carbonytetextlarge.png")}
-                />
-                <View style={styles.rectangleView} />
+      <View style={styles.mainContainer}>
+        {/* <View style={styles.titleTextRow}>
+          <AppText style={styles.titleText}>My Cards</AppText>
+        </View> */}
 
-                <View style={styles.bWrapper}>
-                  <Text style={[styles.b, styles.bTypo, styles.bTypo1]}>B</Text>
-                </View>
-                <Text style={[styles.business, styles.bTypo, styles.bTypo1]}>
-                  BUSINESS
-                </Text>
-              </View>
+        <View style={{ alignItems: "center", marginTop: "5%", height: "auto" }}>
+          <AppText
+            style={{
+              fontSize: 20,
+              textTransform: "capitalize",
+              marginBottom: horizontalScale(10),
+            }}
+          >
+            {cardType(type) + " card"}
+          </AppText>
+          <Image
+            style={{ width: 200, resizeMode: "contain" }}
+            source={require("../assets/cardLion.png")}
+          />
+          {cardFrozen ? (
+            <Image
+              style={{
+                width: 200,
+                height: 320,
+                bottom: 0,
+                position: "absolute",
+                borderRadius: 15,
+              }}
+              source={require("../assets/cardFrozen.png")}
+            />
+          ) : null}
+          <View
+            style={{
+              position: "absolute",
+              height: "100%",
+              width: 200,
+              justifyContent: "center",
+            }}
+          >
+            <View style={{ marginLeft: "5%", marginTop: "50%" }}>
+              <AppText
+                style={[
+                  { color: "white", marginBottom: "3.5%" },
+                  styles.totalWalletBalanceText11,
+                ]}
+              >
+                {cardnumber}
+              </AppText>
+              <AppText
+                style={[{ color: "white" }, styles.totalWalletBalanceText11]}
+              >
+                {firstname} {lastname}
+              </AppText>
             </View>
-            <Image
-              style={styles.groupChild2}
-              resizeMode="cover"
-              source={require("../assets/image-chip.png")}
-            />
-            <Image
-              style={styles.groupChild3}
-              resizeMode="cover"
-              source={require("../assets/logo-visa.png")}
-            />
-            <Image
-              style={styles.groupChild4}
-              resizeMode="cover"
-              source={require("../assets/icon-contactless.png")}
-            />
           </View>
         </View>
+        <View style={styles.roleConatainer}>
+          <AppText style={[styles.role, { textTransform: "lowercase" }]}>
+            {role}
+          </AppText>
+          <AppText style={styles.role}>{" card"}</AppText>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            width: "90%",
+            height: 75,
+            marginLeft: "5%",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ flex: 3, alignItems: "flex-end" }}>
+            <TouchableOpacity
+              style={styles.boxShadow}
+              onPress={() => toggleCard()}
+            >
+              <Image
+                style={styles.icon}
+                source={
+                  cardFrozen
+                    ? require("../assets/icon-unfreeze.png")
+                    : require("../assets/icon-freeze.png")
+                }
+              />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <TouchableOpacity onPress={() => navigation.navigate("PinSet")}>
+              <MaterialCommunityIcons name="lock" size={35} color="blue" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ flex: 3, alignItems: "flex-start" }}>
+            <TouchableOpacity
+              style={styles.boxShadow}
+              onPress={() => navigation.navigate("CardSettings")}
+            >
+              <Image
+                style={styles.icon}
+                source={require("../assets/icon-settingsbutton.png")}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        {transactionList}
+        {modalVisible ? modal() : null}
+
+        <View style={{ height: 50, width: "100%" }} />
       </View>
-    </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  groupShadowBox: {
-    shadowOpacity: 1,
-    elevation: 20,
-    shadowRadius: 20,
-    shadowOffset: {
-      width: 0,
-      height: -3,
-    },
-    shadowColor: "rgba(1, 1, 253, 0.1)",
-    backgroundColor: GlobalStyles.Color.white,
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    top: "0%",
-    height: "100%",
-    position: "absolute",
+  boxShadow: {},
+  mainContainer: {
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    height: GlobalStyles.DivContainer.height,
     width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
   },
-  historyTypo: {
+  roleConatainer: {
+    flexDirection: "row",
+    marginTop: verticalScale(10),
+    marginBottom: verticalScale(5),
+
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  role: {
+    textAlign: "center",
+    fontSize: moderateScale(11.8),
+    fontWeight: "300",
+    color: "red",
+  },
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+  },
+  totalWalletBalanceText11: {
     textAlign: "left",
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    position: "absolute",
-  },
-  iconLayout: {
-    height: 20,
-    position: "absolute",
-  },
-  groupPosition1: {
-    right: 0,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-  groupParentShadowBox1: {
-    height: 66,
-    borderRadius: GlobalStyles.Border.br_4xl,
-    right: 0,
-    left: 0,
-    shadowOpacity: 1,
-    elevation: 20,
-    shadowRadius: 20,
-    shadowOffset: {
-      width: 0,
-      height: -3,
-    },
-    shadowColor: "rgba(1, 1, 253, 0.1)",
-    backgroundColor: GlobalStyles.Color.white,
-    position: "absolute",
-  },
-  lancePosition: {
-    height: 36,
-    width: 105,
-    marginLeft: -96.5,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
-  },
-  bTypo: {
-    //fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "left",
-    position: "absolute",
-  },
-  textTypo: {
-    textAlign: "right",
-    fontSize: GlobalStyles.FontSize.size_base,
-    marginTop: -6,
-    //fontFamily: GlobalStyles.FontFamily.helvetica,
-    letterSpacing: 1,
-    fontWeight: "700",
-    top: "50%",
-    position: "absolute",
-  },
-  groupParentShadowBox: {
-    height: 64,
-    borderRadius: GlobalStyles.Border.br_4xl,
-    right: 0,
-    left: 0,
-    shadowOpacity: 1,
-    elevation: 20,
-    shadowRadius: 20,
-    shadowOffset: {
-      width: 0,
-      height: -3,
-    },
-    shadowColor: "rgba(1, 1, 253, 0.1)",
-    backgroundColor: GlobalStyles.Color.white,
-    position: "absolute",
-  },
-  groupPosition: {
-    left: 14,
-    height: 34,
-    width: 34,
-    top: "50%",
-    position: "absolute",
-  },
-  maskPosition: {
-    height: 47,
-    width: 60,
-    marginTop: -54.5,
-    top: "50%",
-    position: "absolute",
-  },
-  helloTypo: {
-    color: GlobalStyles.Color.gray_1700,
+    fontSize: moderateScale(14),
+    color: "white",
     textTransform: "uppercase",
-    top: "51.47%",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_xs,
-    textAlign: "left",
-    position: "absolute",
-  },
-  groupIconLayout: {
-    maxHeight: "100%",
-    overflow: "hidden",
-    maxWidth: "100%",
-    position: "absolute",
-  },
-  bTypo1: {
-    fontWeight: "700",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-  },
-  groupChild: {
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    top: "0%",
-    height: "100%",
-    position: "absolute",
-    width: "100%",
-  },
-  iconIonicIosArrowForward: {
-    marginTop: 1.03,
-    left: 6,
-    width: 11,
-    height: 6,
-    top: "50%",
-    position: "absolute",
-  },
-  rectangleParent: {
-    height: "2.98%",
-    width: "88.8%",
-    top: "1.19%",
-    right: "5.6%",
-    bottom: "95.84%",
-    left: "5.6%",
-    position: "absolute",
-  },
-  myCards1: {
-    marginLeft: -43.5,
-    top: 36,
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    left: "50%",
-  },
-  groupContainer: {
-    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
-    borderTopRightRadius: GlobalStyles.Border.br_4xl,
-  },
-  history: {
-    marginTop: -191,
-    left: "9.54%",
-    fontSize: GlobalStyles.FontSize.size_2xl,
-    letterSpacing: 1,
-    top: "50%",
-  },
-  path23663Icon: {
-    top: 1,
-    width: 19,
-    left: 0,
-  },
-  lanceBogrol: {
-    fontSize: GlobalStyles.FontSize.size_xs,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    top: 0,
-    left: 0,
-    letterSpacing: 1,
-    color: GlobalStyles.Color.indigo_100,
     fontWeight: "700",
   },
-  september222022: {
-    margin: GlobalStyles.Margin.margin_8xs,
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
   },
-  moneyTransfer: {
-    fontSize: GlobalStyles.FontSize.size_3xs,
-    color: GlobalStyles.Color.gray_900,
-    bottom: -10,
-    left: 0,
-    letterSpacing: 1,
+
+  subText: {
+    fontSize: GlobalStyles.RowText.fontSize,
+    fontWeight: GlobalStyles.RowText.fontWeight,
   },
-  lanceBogrolParent: {
-    marginTop: -16,
+
+  subTextRow: {
+    marginTop: GlobalStyles.RowText.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+    fontColor: GlobalStyles.RowText.fontColor,
   },
-  text: {
-    right: 27,
-    color: GlobalStyles.Color.brown,
-  },
-  maskGroup14: {
-    left: 12,
-    height: 34,
-    width: 34,
-    marginTop: -17,
-    top: "50%",
+  image: {
+    marginTop: 150,
+    resizeMode: "contain",
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "25%",
+    height: 250,
+    justifyContent: "center",
     position: "absolute",
   },
-  groupParent1: {
-    bottom: 0,
-  },
-  groupParent2: {
-    marginTop: 37.5,
-    top: "50%",
-  },
-  lanceBogrolContainer: {
-    marginTop: -17,
-  },
-  groupParent3: {
-    marginTop: -33.5,
-    top: "50%",
-  },
-  maskGroup16: {
-    marginTop: -17,
-  },
-  groupParent4: {
-    marginTop: -103.5,
-    top: "50%",
-  },
-  text4: {
-    right: 29,
-    color: GlobalStyles.Color.turquoise,
-  },
-  groupItem: {
-    borderRadius: GlobalStyles.Border.br_xs,
-    marginTop: -16,
-  },
-  groupParent5: {
-    top: 0,
-  },
-  groupView: {
-    top: 35,
-    bottom: 0,
-  },
-  historyParent: {
-    right: 25,
-    bottom: 43,
-    left: 25,
-    height: 382,
-    position: "absolute",
-  },
-  maskGroup236: {
-    top: 0,
-    bottom: 0,
-  },
-  maskGroup236Wrapper: {
-    left: 47,
-  },
-  maskGroup236Container: {
-    marginLeft: -29.5,
-    left: "50%",
-  },
-  maskGroup236Frame: {
-    right: 37,
-  },
+
   icon: {
-    marginLeft: -114.5,
-    marginTop: -80.5,
-    height: "100%",
-    width: "100%",
+    height: 75,
+    width: 75,
   },
-  wrapper: {
-    width: 110,
-    height: 110,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
+  transactionBox: {
+    width: "90%",
+    marginLeft: "5%",
+    borderRadius: 15,
+    height: 80,
+    marginTop: 10,
+    top: 5,
+    backgroundColor: "white",
   },
-  hello: {
-    left: "50%",
-    marginLeft: -80.5,
+
+  modalView: {
+    top: "40%",
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  groupInner: {
-    borderRadius: GlobalStyles.Border.br_lg,
+
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    width: "90%",
+    backgroundColor: "#D8EBF9",
   },
-  settingsIcon: {
-    marginTop: -10,
-    marginLeft: -10,
-    width: 20,
-    left: "50%",
-    top: "50%",
+  buttonOpen: {
+    backgroundColor: "black",
   },
-  rectangleGroup: {
-    marginLeft: 30.5,
-    width: 50,
-    height: 50,
-    marginTop: -49.5,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
+  buttonClose: {
+    marginBottom: "5%",
   },
-  hello1: {
-    left: "50%",
-    marginLeft: 30,
+  buttonReport: {
+    backgroundColor: "black",
+    marginBottom: "5%",
   },
-  path33118Icon: {
-    right: -60,
-    bottom: -60,
-    top: 0,
-    left: 0,
-    width:"100%",
-    height:"100%",
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
-  groupIcon: {
-    height: "6.35%",
-    width: "49.25%",
-    top: "-62.13%",
-    right: "53.94%",
-    bottom: "155.78%",
-    left: "-3.18%",
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
-  groupChild1: {
-    height: "10.54%",
-    width: "81.73%",
-    top: "34.63%",
-    right: "9.14%",
-    bottom: "54.83%",
-    left: "9.14%",
-  },
-  rectangleView: {
-    height: "31.5%",
-    width: "100%",
-    top: "69.51%",
-    right: "-5%",
-    bottom: "-1%",
-    left: "-0.1%",
-    backgroundColor: GlobalStyles.Color.gray_1700,
-    borderBottomLeftRadius: GlobalStyles.Border.br_2xs,
-    borderBottomRightRadius: GlobalStyles.Border.br_2xs,
-    position: "absolute",
-  },
-  rectangleIcon: {
-    height: "13.04%",
-    width: "21.19%",
-    top: "101.17%",
-    right: "-91.6%",
-    bottom: "-14.22%",
-    left: "170.41%",
-  },
-  b: {
-    top: "-2.67%",
-    left: "-3.7%",
-    fontSize: GlobalStyles.FontSize.size_14xl,
-    letterSpacing: 5,
-    color: GlobalStyles.Color.gray_1900,
-  },
-  bWrapper: {
-    height: "28.67%",
-    width: "31.27%",
-    top: "80.5%",
-    right: "65.31%",
-    bottom: "-9.17%",
-    left: "3.42%",
-    opacity: 0.4,
-    position: "absolute",
-  },
-  business: {
-    top: "88.65%",
-    left: "10.24%",
-    fontSize: GlobalStyles.FontSize.size_2xs,
-    letterSpacing: 0,
-    color: GlobalStyles.Color.white,
-  },
-  groupChild2: {
-    top: 17,
-    right: 15,
-    width: 28,
-    height: 30,
-    position: "absolute",
-  },
-  groupChild3: {
-    right: 16,
-    bottom: 21,
-    width: 48,
-    height: 41,
-    position: "absolute",
-  },
-  groupChild4: {
-    marginLeft: 25.31,
-    top: 21,
-    width: 17,
-    height: 22,
-    left: "50%",
-    position: "absolute",
-  },
-  card1: {
-    marginLeft: -86.5,
-    top: 111,
-    width: 173,
-    height: 262,
-    left: "50%",
-    position: "absolute",
-  },
-  groupParent: {
-    width: "100%",
-    height: 987,
-  },
-  myCards: {
-    backgroundColor: GlobalStyles.Color.gray_1100,
-    flex: 1,
-    paddingTop: GlobalStyles.Padding.padding_md,
-    width: "100%",
+  rounded: {
+    borderRadius: 15,
   },
 });
 

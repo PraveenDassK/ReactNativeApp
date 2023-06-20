@@ -4,10 +4,13 @@ export default {
   black: "#000",
   white: "#fff",
   medium: "#6e6969",
-  light: "#f8f4f4",
+  light: "#ededed",
   dark: "#0c0c0c",
   danger: "#ff5252",
   blue: "#0000FF",
   none: "#f3f5f5",
   babyBlue: "#D8EBF9",
+  darkBlue: '#1B2356',
+  red: 'red'
+
 };

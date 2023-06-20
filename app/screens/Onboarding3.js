@@ -7,7 +7,7 @@ const Onboarding3 = ({navigation}) => {
   return (
     <Pressable
       style={styles.container}
-      onPress={() => navigation.navigate("SignUpPersonalScreen")}
+      onPress={() => navigation.navigate("Privacy")}
     >
       <Text
         style={styles.text}
@@ -16,7 +16,7 @@ const Onboarding3 = ({navigation}) => {
       </Text>
       <Image
           style={styles.image}
-          source={require("../assets/image-cardblue.png")}
+          source={require("../assets/login/LoginAnimal9.png")}
         />
       <Image
           style={styles.ProgressBar}

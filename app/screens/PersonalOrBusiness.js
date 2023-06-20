@@ -2,28 +2,25 @@ import React, { useContext } from "react";
 import { Text, StyleSheet, Image, View, Pressable } from "react-native";
 
 import AuthContext from "../auth/context";
-import Screen from "../components/Screen"
+import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
+import Button from "../components/AppButton";
 
 const PersonalOrBusiness = ({ navigation }) => {
-
-  const { setUser }= useContext(AuthContext)
+  const { setUser } = useContext(AuthContext);
 
   const handlePersonal = () => {
-    setUser(prev => ({...prev, accountType: 'personal'}))
-    navigation.navigate('Name')
-  }
+    setUser((prev) => ({ ...prev, accountType: "personal" }));
+    navigation.navigate("Name");
+  };
 
   const handleBusiness = () => {
-    setUser(prev => ({...prev, accountType: 'business'}))
-    console.log("navigate to business page g")
-  }
-
-
+    setUser((prev) => ({ ...prev, accountType: "business" }));
+    console.log("navigate to business page g");
+    navigation.navigate("Name");
+  };
 
   return (
-
-    
     <Screen>
       <View style={styles.personalOrBusiness}>
         <View style={styles.helloParent}>
@@ -37,19 +34,19 @@ const PersonalOrBusiness = ({ navigation }) => {
             style={[styles.groupParent, styles.groupPosition]}
             onPress={() => navigation.navigate("CountryOfResidence")}
           >
-            <View style={[styles.rectangleParent, styles.maskGroup236Position]}>
+            {/* <View style={[styles.rectangleParent, styles.maskGroup236Position]}>
               <View style={styles.groupItem} />
               <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
             </View>
-            <Text style={[styles.hello1, styles.helloTypo]} onPress={handleBusiness}>Business</Text>
+            <Text style={[styles.hello1, styles.helloTypo]} onPress={handleBusiness}>Business</Text> */}
+            <Button title="business" onPress={handleBusiness} />
           </Pressable>
-          <Pressable style={[styles.rectangleGroup, styles.groupPosition]}
-                      onPress={() => navigation.navigate("Name")}
-                      >
-            <View style={styles.groupItem} />
-            <View style={[styles.maskGroup236, styles.maskGroup236Position]} />
+          <Pressable
+            style={[styles.rectangleGroup, styles.groupPosition]}
+            onPress={() => navigation.navigate("Name")}
+          >
+            <Button title="personal" onPress={handlePersonal} />
           </Pressable>
-          <Text style={[styles.hello2, styles.helloTypo]} onPress={handlePersonal}>Personal</Text>
         </View>
       </View>
     </Screen>
@@ -62,7 +59,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     position: "absolute",
-    width:"100%"
+    width: "100%",
   },
   maskGroup236Position: {
     left: 0,
@@ -72,7 +69,7 @@ const styles = StyleSheet.create({
   },
   helloTypo: {
     textAlign: "center",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textTransform: "uppercase",
     fontSize: GlobalStyles.FontSize.size_lg,
     position: "absolute",
@@ -86,7 +83,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     top: "50%",
     position: "absolute",
-    width: "100%"
+    width: "100%",
   },
   groupChild: {
     marginLeft: -76.42,
@@ -103,7 +100,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
     left: "0%",
     borderRadius: GlobalStyles.Border.br_lg,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    backgroundColor: GlobalStyles.Color.blue_100,
     position: "absolute",
     width: "100%",
   },
@@ -115,7 +112,7 @@ const styles = StyleSheet.create({
   },
   hello1: {
     top: "40%",
-    width:"100%"
+    width: "100%",
   },
   groupParent: {
     bottom: 0,
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "65.72%",
-    width:"100%"
+    width: "100%",
   },
   helloParent: {
     width: "100%",

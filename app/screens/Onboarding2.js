@@ -12,11 +12,11 @@ const Onboarding2 = ({navigation}) => {
       <Text
         style={styles.text}
       >
-        Money Exhange Simple, Safe and Secure
+        Money Exchange Simple, Safe and Secure
       </Text>
       <Image
           style={styles.image}
-          source={require("../assets/image-cardgreen.png")}
+          source={require("../assets/login/LoginAnimal8.png")}
         />
       <Image
           style={styles.ProgressBar}

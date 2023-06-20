@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "BankingApp",
-    "slug": "BankingApp",
-    "version": "1.0.0",
+    "name": "carbonyte",
+    "slug": "carbonyte",
+    "version": "0.0.8",
     "orientation": "portrait",
-    "icon": "./app/assets/tree@3x.png",
+    "icon": "./app/assets/logo-carbonyte.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./app/assets/layer-129@3x.png",
@@ -18,17 +18,37 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.carbonyte.bankin",
+      "buildNumber": "1.1.20"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/tree@3x.png",
+        "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "versionCode": 31,
+      "package": "com.carbonyte.bankin",
+      "googleServicesFile": "./google-services.json"
+    },
+    "description": "Carbonyte Banking App",
+    "web": {
+      "favicon": "./app/assets/logo-carbonyte.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6efebe88-f249-4393-b074-fc9afd067d13"
       }
     },
-    "description":"Carbonyte Banking App",
-    "web": {
-      "favicon": "./app/assets/tree@3x.png"
-    }
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./app/assets/logo-carbonyte.png",
+          "color": "#ffffff"
+         
+        }
+      ]
+    ]
   }
 }

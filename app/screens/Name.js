@@ -1,29 +1,29 @@
 import React, { useContext } from "react";
-import { Text, StyleSheet, View, TextInput, } from "react-native";
+import { Text, StyleSheet, View, TextInput } from "react-native";
 //import { useNavigation } from "@react-navigation/native";
-import { Formik } from "formik"
-import * as Yup from 'yup'
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import AuthContext from "../auth/context";
-import Button from "../components/Button";
+import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().label("First name"),
-  lastName: Yup.string().required().label("Last name")
-})
+  lastName: Yup.string().required().label("Last name"),
+});
 
-const Name = ({navigation}) => {
+const Name = ({ navigation }) => {
   //const navigation = useNavigation();
-  const { user, setUser } = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext);
 
-  const handleSubmit = ({firstName, lastName}) => {
-    setUser(prev => ({...prev, firstName, lastName}))
-    console.log(user)
-    navigation.navigate("ProofOfResidencyList")
-  }
+  const handleSubmit = ({ firstName, lastName }) => {
+    setUser((prev) => ({ ...prev, firstName, lastName }));
+    console.log(user);
+    navigation.navigate("ProofOfResidency");
+  };
 
   return (
     <Screen>
@@ -43,7 +43,7 @@ const Name = ({navigation}) => {
               styles.namePosition,
             ]}
           >
-            First Name 
+            First Name
           </Text>
           <Text
             style={[
@@ -56,49 +56,64 @@ const Name = ({navigation}) => {
             Last Name
           </Text>
           <Formik
-          initialValues={{firstName:"", lastName:""}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+            initialValues={{ firstName: "", lastName: "" }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
           >
-              {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-            <>
-            <TextInput
-              autoCorrect="none" 
-              keyboardType="default" 
-              onBlur={() => setFieldTouched("firstName")}
-              onChangeText={handleChange("firstName")}
-              style={[styles.groupChild, styles.groupBorder,styles.inputText]}
-              
-            />
-              <View style={{ position: "absolute", top:190}}>
-                <ErrorMessage error={errors.firstName} visible={touched.firstName}/>
-            </View>
-            <TextInput 
-                autoCorrect="none" 
-                keyboardType="default" 
-                onBlur={() => setFieldTouched("lastName")}
-                onChangeText={handleChange("lastName")}
-                style={[styles.groupItem, styles.groupBorder, styles.inputText]} 
-               
-            />
-            <View style={{ position: "absolute", top:300}}>
-                <ErrorMessage error={errors.lastName} visible={touched.lastName}/>
-            </View>
-            <View
-              style={[styles.groupContainer, styles.groupContainerPosition]}
-            >
-              {/* <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
+            {({
+              handleChange,
+              handleSubmit,
+              errors,
+              setFieldTouched,
+              touched,
+            }) => (
+              <>
+                <TextInput
+                  keyboardType="default"
+                  onBlur={() => setFieldTouched("firstName")}
+                  onChangeText={handleChange("firstName")}
+                  style={[
+                    styles.groupChild,
+                    styles.groupBorder,
+                    styles.inputText,
+                  ]}
+                />
+                <View style={{ position: "absolute", top: 190 }}>
+                  <ErrorMessage
+                    error={errors.firstName}
+                    visible={touched.firstName}
+                  />
+                </View>
+                <TextInput
+                  keyboardType="default"
+                  onBlur={() => setFieldTouched("lastName")}
+                  onChangeText={handleChange("lastName")}
+                  style={[
+                    styles.groupItem,
+                    styles.groupBorder,
+                    styles.inputText,
+                  ]}
+                />
+                <View style={{ position: "absolute", top: 300 }}>
+                  <ErrorMessage
+                    error={errors.lastName}
+                    visible={touched.lastName}
+                  />
+                </View>
+                <View
+                  style={[styles.groupContainer, styles.groupContainerPosition]}
+                >
+                  {/* <View style={[styles.rectangleParent, styles.groupContainerPosition]}>
                 <View style={styles.groupInner} />
                 <View style={styles.maskGroup236} />
               </View> */}
-              {/* <Text style={[styles.hello2, styles.helloTypo]} onPress={() => navigation.navigate("ProofOfResisendcyListA1")}>Continue</Text> */}
-            </View>
-            <View style={{ top: 350 }}>
-
-              <Button title="Continue" color="blue" onPress={handleSubmit} />
-            </View>
-            </>
-          )}
+                  {/* <Text style={[styles.hello2, styles.helloTypo]} onPress={() => navigation.navigate("ProofOfResisendcyListA1")}>Continue</Text> */}
+                </View>
+                <View style={{ top: 350 }}>
+                  <Button title="Continue" onPress={handleSubmit} />
+                </View>
+              </>
+            )}
           </Formik>
         </View>
       </View>
@@ -109,14 +124,14 @@ const Name = ({navigation}) => {
 const styles = StyleSheet.create({
   helloTypo: {
     //fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "center",
+    textAlign: "left",
     position: "absolute",
-    width:"100%"
+    width: "100%",
   },
   nameTypo: {
     fontSize: GlobalStyles.FontSize.size_base,
     top: "50%",
-   // fontFamily: GlobalStyles.FontFamily.helvetica,
+    // fontFamily: GlobalStyles.FontFamily.helvetica,
   },
   namePosition: {
     color: GlobalStyles.Color.indigo_100,
@@ -144,12 +159,12 @@ const styles = StyleSheet.create({
   hello: {
     fontSize: GlobalStyles.FontSize.size_8xl,
     fontWeight: "700",
-    textAlign: "center",
+    textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
     left: 0,
     top: 0,
     position: "absolute",
-    width:"100%"
+    width: "100%",
   },
   hello1: {
     marginTop: 14.74,
@@ -164,7 +179,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   inputText: {
-    padding: 10
+    padding: 10,
   },
   firstName: {
     marginTop: -104.5,
@@ -211,16 +226,16 @@ const styles = StyleSheet.create({
     height: 60,
   },
   groupParent: {
-    width: 326,
+    width: "100%",
     height: 411,
   },
   name: {
     flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_5xl,
-    paddingRight: GlobalStyles.Padding.padding_8xs,
+    paddingLeft: "10%",
+    paddingTop: GlobalStyles.Padding.padding_7xs,
+    paddingRight: "10%",
     width: "100%",
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.grey,
   },
 });
 

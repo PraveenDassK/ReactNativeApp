@@ -1,194 +1,272 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, Pressable } from "react-native";
-
+import React, { useContext, useEffect, useState } from "react";
+import { Text, StyleSheet, View, Image, Pressable, Switch, TextInput, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../../GlobalStyles";
+import api from "../api/api_list"
+import AuthContext from "../auth/context";
+import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
-const SentMoney = ({route,navigation}) => {
-  console.log(route.params.amount)
-  let amount = route.params.amount
-  let fullname = route.params.fullname
+import AppText from "../components/Text";
+import apiBeneficiaries from "../api/apiBeneficiaries"
 
-  const navigate = () => {
-    console.log("Function")
-    navigation.navigate("AccountMain")
+const SendMoney = ({ navigation }) => {
+  const [data, setData] = useState({})
+  const [benList, setBen] = useState([])
+  const [groupList, setGroup] = useState([])
+  const authContext = useContext(AuthContext)
+  const { userID, customerDetails } = useContext(AuthContext);
+
+  useEffect(() => {
+    getSettings()
+  }, [])
+
+  //API
+  const getSettings = async () => {
+    //Gets single beneficiaries
+    const response = await api.RetriveBenificiaries(userID)
+    const data = response.data.details.content
+    setBen(data)
+
+    //Gets group beneficiaries
+    const groupBeneficiaries = await apiBeneficiaries.GetGroupBeneficiaries(customerDetails)
+    console.log(groupBeneficiaries)
+    setGroup(groupBeneficiaries)
+    
   }
+  //Sending
+  const sendDetails = (Id) => {
+    const details = benList[Id]
+    navigation.navigate("BankTransferAmount",
+      {
+        bankName: "FakeName",
+        accountName: details.name,
+        accountNumber: details.destinationIdentifier.accountNumber,
+        iban: details.destinationIdentifier.iban,
+        sortCode: details.destinationIdentifier.sortCode,
+        phoneNumber: details.phoneNumber
+
+      })
+  }
+  const deleteDetails = async (Id) => {
+    console.log(userID)
+    const details = benList[Id].id
+    console.log(details)
+    const response = await api.DeleteBenificiary(userID, details)
+    console.log(response)
+    getSettings()
+  }
+  //Rendering
+  let benText = ""
+  if (benList.length != 0) {
+    let beniter = []
+
+    benList.forEach((item, i) => {
+      beniter.push(
+        <Pressable onPress={details => { sendDetails(i) }} key={i}>
+          <View style={styles.benBoxCon}>
+
+            <View style={styles.accountImage}>
+              <AppText style={styles.accountName}>{item.name[0]}</AppText>
+            </View>
+
+            <View style={styles.accountTextDiv}>
+              <AppText style={styles.accountName}>{item.name}</AppText>
+              <AppText style={styles.accountPhoneNum}>+{item.phoneNumber}</AppText>
+              <AppText style={styles.accountPhoneNum}>{item.destinationIdentifier.accountNumber}</AppText>
+            </View>
+
+            <Pressable style={styles.deleteButton} onPress={(details) => deleteDetails(i)}>
+              <AppText style={{ color: "tomato" }}>Delete</AppText>
+            </Pressable>
+          </View>
+
+        </Pressable>
+      )
+    })
+    benText = <View style={styles.listBoxContainer}>{beniter}</View>
+  } else { benText = <View style={styles.failToFind}><AppText style={{ fontSize: 18 }}> No Accounts Found</AppText></View> }
 
   return (
-    <Pressable
-      style={styles.sentMoney}
-      onPress={() => navigate()}
-    >
-      <View style={styles.groupParent}>
-        <View style={[styles.helloWrapperPosition, styles.wrapperPosition]}>
-          <View
-            style={[
-              styles.helloWrapper,
-              styles.helloWrapperPosition,
-              styles.wrapperPosition,
-            ]}
-          >
-            <Text style={[styles.hello, styles.helloTypo, styles.helloTypo1]}>
-              Tap anywhere to continue
-            </Text>
-          </View>
-        </View>
-        <Text style={[styles.hello1, styles.helloTypo]}>
-          <Text style={styles.youveSent}>{`You've sent `}</Text>
-          <Text style={styles.text}>{`£`}{amount}</Text>
-          <Text style={styles.youveSent}>{` to `}</Text>
-          <Text style={styles.text}>{fullname}</Text>
-        </Text>
-        <Image
-          style={[styles.iconAwesomeCheckCircle, styles.containerPosition]}
-          resizeMode="cover"
-          source={require("../assets/icon-awesomecheckcircle3.png")}
-        />
-        <View style={[styles.groupContainer, styles.containerPosition]}>
-          <View style={[styles.groupChild, styles.groupPosition]} />
-          <View style={[styles.groupItem, styles.groupPosition]} />
-        </View>
-        <View style={[styles.helloContainer, styles.containerPosition]}>
-          <Text
-            style={[
-              styles.hello2,
-              styles.helloTypo,
-              styles.helloTypo1,
-              styles.helloWrapperPosition,
-            ]}
-          >
-            <Text style={styles.youveUsed1}>
-              You've used 1 of your 100 monthly free local
-            </Text>
-            <Text style={styles.youveUsed1}>{` transfers allowance `}</Text>
-          </Text>
-        </View>
+    <View style={styles.mainDiv}>
+
+      {/* <View style={styles.titleTextRow}>
+        <AppText style={styles.titleText}>Select Beneficiary</AppText>
+    </View> */}
+
+      <View style={styles.searchBoxDiv}>
+        <Image style={styles.image} source={require("../assets/icon-awesomesearch.png")} />
+        <TextInput style={styles.textInput} />
       </View>
-    </Pressable>
+
+      <View style={styles.subTextDiv}>
+        <AppText style={styles.subText}>Recent</AppText>
+      </View>
+
+      <View style={styles.peopleIconDiv}>
+        <TouchableOpacity style={styles.plusImage} onPress={() => navigation.navigate("AddBeneficiary")}>
+          <Image style={styles.plusImage} source={require("../assets/greyAdd.png")} />
+        </TouchableOpacity>
+        <View style={styles.iconImage}></View>
+      </View>
+
+      <View style={styles.subTextDiv}>
+        <AppText style={styles.subText}>Contacts</AppText>
+      </View>
+
+      {benText}
+
+      <View style={styles.peopleIconDiv}>
+        <TouchableOpacity style={styles.plusImage} onPress={() => navigation.navigate("GroupBeneficiary")}>
+          <Image style={styles.plusImage} source={require("../assets/greyAdd.png")} />
+        </TouchableOpacity>
+        <View style={styles.iconImage}></View>
+      </View>
+
+    </View>
+
   );
 };
 
 const styles = StyleSheet.create({
-  wrapperPosition: {
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    width:"100%",
-    position: "absolute",
-  },
-  helloWrapperPosition: {
-    top:"380%",
-    width:"100%",
-
-  },
-  helloTypo: {
-    textAlign: "center",
-    position: "absolute",
-  },
-  helloTypo1: {
-    color: GlobalStyles.Color.gray_700,
-    textAlign: "center",
-  },
-  containerPosition: {
-    position: "absolute",
-    top: "50%",
-  },
-  groupPosition: {
-    borderRadius: GlobalStyles.Border.br_6xs,
-    left: 0,
-    bottom: 0,
-    top: 0,
-    position: "absolute",
-  },
-  hello: {
-   marginStart:"10%",
-  marginBottom:-20,
-    marginTop: 330.5,
-    left: "30%",
-    fontSize: GlobalStyles.FontSize.size_xs,
-    top: "50%",
-  },
-  helloWrapper: {
-    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
-    borderTopRightRadius: GlobalStyles.Border.br_4xl,
-    shadowColor: "rgba(1, 1, 253, 0.05)",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowRadius: 6,
-    elevation: 6,
-    shadowOpacity: 1,
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  youveSent: {
-    color: GlobalStyles.Color.indigo_100,
-  },
-  text: {
-    color: GlobalStyles.Color.blue_100,
-  },
-  hello1: {
-    top: "50%",
-    left: "5%",
-    right: "5%",
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    fontWeight: "700",
-    textAlign: "center",
-    width:"100%",
-
-  },
-  iconAwesomeCheckCircle: {
-    marginTop: -218.62,
-    marginLeft: -93.56,
-    left: "50%",
-    width: 187,
-    height: 187,
-    top: "50%",
-  },
-  groupChild: {
-    backgroundColor: "#bebebe",
-    right: 0,
-    borderRadius: GlobalStyles.Border.br_6xs,
-  },
-  groupItem: {
-    backgroundColor: GlobalStyles.Color.blue_100,
-    width: 17,
-  },
-  groupContainer: {
-    marginTop: 55.5,
-    right: 33,
-    left: 34,
-    height: 5,
-    top: "50%",
-  },
-  youveUsed1: {
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
-  hello2: {
-  marginVertical:-120,
-    fontSize: GlobalStyles.FontSize.size_base,
-    lineHeight: 20,
-    left: 0,
-    top:0,
-    color: GlobalStyles.Color.gray_700,
-  },
-  helloContainer: {
-    marginTop: 80.5,
-    right: 50,
-    left: 51,
-    height: 39,
-    top: "50%",
-  },
-  groupParent: {
-    width: "100%",
-    height: "100%",
-  },
-  sentMoney: {
+  mainDiv: {
     flex: 1,
     width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_xs,
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: "#FFFFFF",
   },
+
+  accountPhoneNum: {
+    opacity: 0.3
+  },
+
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    marginLeft: GlobalStyles.Title.marginLeft,
+    width: GlobalStyles.Title.width,
+  },
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
+  },
+
+  searchBoxDiv: {
+    width: "80%",
+    height: verticalScale(45),
+    backgroundColor: "red",
+    marginLeft: "10%",
+    marginTop: "5%",
+    backgroundColor: "#F6F5F8",
+    borderRadius: 15,
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    paddingLeft: "1%"
+  },
+  failToFind: {
+    flex: 1,
+
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  image: {
+    flex: 1,
+    height: verticalScale(25),
+    width: horizontalScale(25),
+    resizeMode: "contain",
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+
+  textInput: {
+    flex: 9,
+    width: "100%",
+  },
+
+  subTextDiv: {
+    width: "80%",
+    marginLeft: "10%",
+    marginTop: "2.5%",
+
+  },
+
+  subText: {
+    fontSize: 14,
+    color: "rgba(153, 153, 153, 0.75)"
+  },
+
+  plusImage: {
+    flex: 1,
+    height: verticalScale(40),
+    width: horizontalScale(40),
+    resizeMode: "contain",
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
+
+  },
+
+  peopleIconDiv: {
+    width: "80%",
+    marginLeft: "10%",
+    flexDirection: "row",
+    marginTop: "2.5%",
+  },
+
+  iconImage: {
+    flex: 9,
+    width: "100%",
+  },
+
+  benBoxCon: {
+    marginTop: "2.5%",
+    width: "80%",
+    marginLeft: "10%",
+    backgroundColor: "#F6F5F8",
+    borderRadius: 15,
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    height: verticalScale(65)
+  },
+
+  accountImage: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: "white",
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
+  },
+
+  accountTextDiv: {
+    flex: 6,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+
+  deleteButton: {
+    flex: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
+  },
+
+  accountName: {
+    fontSize: 16,
+    fontWeight: "700"
+  }
 });
 
-export default SentMoney;
+export default SendMoney;

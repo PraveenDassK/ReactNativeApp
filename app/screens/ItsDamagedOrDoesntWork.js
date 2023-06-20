@@ -1,166 +1,201 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import Screen from "../components/Screen";
 import GlobalStyles from "../../GlobalStyles";
 
-const ItsDamagedOrDoesntWork = () => {
+import terminateCardAlert, {
+  handleTerminate,
+} from "../utility/terminateCardAlert";
+import Button from "../components/AppButton";
+
+const ItsDamagedOrDoesntWork = ({ navigation }) => {
   return (
-    <Screen>
-    <View style={styles.itsDamagedOrDoesntWork}>
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>
-          <Text style={styles.itsDamagedOr}>It’s damaged or doesn’t</Text>
-          <Text style={styles.itsDamagedOr}>{"\n"}work</Text>
-        </Text>
-        <View
-          style={[
-            styles.groupParent,
-            styles.groupParentPosition,
-            styles.parentPosition,
-          ]}
-        >
-          <View
-            style={[
-              styles.rectangleParent,
-              styles.groupParentPosition,
-              styles.parentPosition,
-            ]}
-          >
-            <View style={styles.groupChild} />
-            <View style={[styles.maskGroup236, styles.groupParentPosition]} />
-          </View>
-          <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
-        </View>
-        <View
-          style={[
-            styles.rectangleGroup,
-            styles.groupLayout,
-            styles.groupParentPosition,
-          ]}
-        >
-          <View
-            style={[styles.groupItem, styles.groupPosition, styles.groupLayout]}
-          />
-          <View
-            style={[
-              styles.yourCurrentCardWillBeTermWrapper,
-              styles.yourCardPosition1,
-            ]}
-          >
-            <Text
+    <ScrollView>
+      <Screen>
+        <View style={styles.itsDamagedOrDoesntWork}>
+          <View style={styles.helloParent}>
+            <Text style={styles.hello}>{"It's damaged or doesn't work"}</Text>
+            <View
               style={[
-                styles.yourCurrentCardWillBeTerm,
-                styles.yourCardPosition,
+                styles.groupParent,
+                styles.groupParentPosition,
+                styles.parentPosition,
               ]}
             >
-              <Text style={styles.itsDamagedOr}>
-                <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
-                  Your current card will be terminated
-                </Text>
-              </Text>
-              <Text style={styles.itsDamagedOr}>
-                <Text style={styles.toKeepYour}>{"\n"}To keep your account safe</Text>
-              </Text>
-            </Text>
-          </View>
-          <Image
-            style={styles.groupInner}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.wrapper, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
-            >
-              1
-            </Text>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.rectangleContainer,
-            styles.groupPosition,
-            styles.groupLayout,
-          ]}
-        >
-          <View
-            style={[styles.groupItem, styles.groupPosition, styles.groupLayout]}
-          />
-          <View
-            style={[
-              styles.yourCurrentCardWillBeTermWrapper,
-              styles.yourCardPosition1,
-            ]}
-          >
-            <Text
+              <Button
+                title={`Terminate & Order card`}
+                onPress={() => terminateCardAlert(handleTerminate)}
+              />
+            </View>
+
+            <View
               style={[
-                styles.yourCurrentCardWillBeTerm,
-                styles.yourCardPosition,
+                styles.rectangleGroup,
+                styles.groupLayout,
+                styles.groupParentPosition,
               ]}
             >
-              <Text style={styles.itsDamagedOr}>
-                <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
-                  Order a replacement card below
+              <View
+                style={[
+                  styles.groupItem,
+                  styles.groupPosition,
+                  styles.groupLayout,
+                ]}
+              />
+              <View
+                style={[
+                  styles.yourCurrentCardWillBeTermWrapper,
+                  styles.yourCardPosition1,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.yourCurrentCardWillBeTerm,
+                    styles.yourCardPosition,
+                  ]}
+                >
+                  <Text style={styles.itsDamagedOr}>
+                    <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
+                      Your current card will be terminated
+                    </Text>
+                  </Text>
+                  <Text style={styles.itsDamagedOr}>
+                    <Text style={styles.toKeepYour}>
+                      {"\n"}To keep your account safe
+                    </Text>
+                  </Text>
                 </Text>
-              </Text>
-              <Text style={styles.itsDamagedOr}>
-                <Text style={styles.toKeepYour}>
-                  {"\n"}You may be charged for the new card
+              </View>
+              <Image
+                style={styles.groupInner}
+                resizeMode="cover"
+                source={require("../assets/ellipse-3260.png")}
+              />
+              <View style={[styles.wrapper, styles.wrapperLayout]}>
+                <Text
+                  style={[
+                    styles.text,
+                    styles.yourCardTypo,
+                    styles.groupPosition,
+                  ]}
+                >
+                  1
                 </Text>
-              </Text>
-            </Text>
-          </View>
-          <Image
-            style={styles.groupInner}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.container, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
-            >
-              2
-            </Text>
-          </View>
-        </View>
-        <View
-          style={[styles.groupView, styles.groupPosition, styles.groupLayout]}
-        >
-          <View
-            style={[styles.groupItem, styles.groupPosition, styles.groupLayout]}
-          />
-          <View
-            style={[
-              styles.startUsingYourNewCardRighWrapper,
-              styles.yourCardPosition1,
-            ]}
-          >
-            <Text
+              </View>
+            </View>
+            <View
               style={[
-                styles.startUsingYourNewCardRigh,
-                styles.yourCardTypo,
-                styles.yourCardPosition,
+                styles.rectangleContainer,
+                styles.groupPosition,
+                styles.groupLayout,
               ]}
             >
-              Start using your new card right away with Apple Pay
-            </Text>
-          </View>
-          <Image
-            style={styles.groupInner}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.container, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
+              <View
+                style={[
+                  styles.groupItem,
+                  styles.groupPosition,
+                  styles.groupLayout,
+                ]}
+              />
+              <View
+                style={[
+                  styles.yourCurrentCardWillBeTermWrapper,
+                  styles.yourCardPosition1,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.yourCurrentCardWillBeTerm,
+                    styles.yourCardPosition,
+                  ]}
+                >
+                  <Text style={styles.itsDamagedOr}>
+                    <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
+                      Order a replacement card below
+                    </Text>
+                  </Text>
+                  <Text style={styles.itsDamagedOr}>
+                    <Text style={styles.toKeepYour}>
+                      {"\n"}You may be charged for the new card
+                    </Text>
+                  </Text>
+                </Text>
+              </View>
+              <Image
+                style={styles.groupInner}
+                resizeMode="cover"
+                source={require("../assets/ellipse-3260.png")}
+              />
+              <View style={[styles.container, styles.wrapperLayout]}>
+                <Text
+                  style={[
+                    styles.text,
+                    styles.yourCardTypo,
+                    styles.groupPosition,
+                  ]}
+                >
+                  2
+                </Text>
+              </View>
+            </View>
+            <View
+              style={[
+                styles.groupView,
+                styles.groupPosition,
+                styles.groupLayout,
+              ]}
             >
-              3
-            </Text>
+              <View
+                style={[
+                  styles.groupItem,
+                  styles.groupPosition,
+                  styles.groupLayout,
+                ]}
+              />
+              <View
+                style={[
+                  styles.startUsingYourNewCardRighWrapper,
+                  styles.yourCardPosition1,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.startUsingYourNewCardRigh,
+                    styles.yourCardTypo,
+                    styles.yourCardPosition,
+                  ]}
+                >
+                  Start using your new card right away with Apple Pay
+                </Text>
+              </View>
+              <Image
+                style={styles.groupInner}
+                resizeMode="cover"
+                source={require("../assets/ellipse-3260.png")}
+              />
+              <View style={[styles.container, styles.wrapperLayout]}>
+                <Text
+                  style={[
+                    styles.text,
+                    styles.yourCardTypo,
+                    styles.groupPosition,
+                  ]}
+                >
+                  3
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-    </View>
-    </Screen>
+      </Screen>
+    </ScrollView>
   );
 };
 
@@ -213,8 +248,7 @@ const styles = StyleSheet.create({
     margin: GlobalStyles.Margin.margin_8xs,
   },
   hello: {
-    left: "30%",
-    marginLeft:-30,
+    marginRight: -30,
     fontSize: GlobalStyles.FontSize.size_7xl,
     lineHeight: 30,
     color: GlobalStyles.Color.indigo_100,
@@ -246,7 +280,7 @@ const styles = StyleSheet.create({
   hello1: {
     top: "38.33%",
     left: "40%",
-    marginLeft:-30,
+    marginLeft: -30,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,

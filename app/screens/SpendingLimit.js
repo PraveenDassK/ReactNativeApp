@@ -1,295 +1,341 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, StyleSheet, View, Image, Pressable, Switch } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  Switch,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
-import Screen from "../components/Screen";
-import api from "../api/api_list"
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
 
+import api from "../api/api_list";
+import apiCall from "../api/apiCall";
 
-const SpendingLimit = ({navigation}) => {
+import { useFocusEffect } from "@react-navigation/native";
+
+import SinglePie from "../components/SinglePie";
+
+import storage from "../auth/storage";
+import KeyboardAvoider from "../components/KeyboardAvoider";
+
+const SpendingLimit = ({ navigation, route }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
-  const authContext=useContext(AuthContext)
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const authContext = useContext(AuthContext);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  const [monthLim, setMonLim] = useState(0);
+  const [spend, setSpend] = useState(0);
+  const [percent, setPercent] = useState();
 
   useEffect(() => {
-    getSpendingLimit()
-  },[])
 
-  const getSpendingLimit = async () => {
-    const response = await api.GetToggles()
-    const data = response.data.details
-    console.log(data)
-    data.onlineTransactions ? setIsEnabled(true): null
-  }
+  }, []);
 
-  const sendRequest = async () => {
-    const response = await api.SetToggles(
-      isEnabled,
-    );
+  //Calls the API once during load
+  useFocusEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      loadData();
+    });
+  });
+
+  const restoreLimit = async () => {
+    const limitToggle = await storage.getLimits();
+    if (!limitToggle) return;
+    const limitBoolean = limitToggle === "true";
+    setIsEnabled(limitBoolean);
+  };
+
+  //Gets the data for the user
+  const loadData = async () => {
+    //Gets the data from the api
+    setIsLoading(true);
+    const response = await apiCall.GetLimits(authContext.accountID);
+    const spendTotal = response === null ? 0 : response.spend;
+    const monthlyAmount = response === null ? 0 : response.monthlyAmount;
+
     console.log(response)
+    setMonLim(monthlyAmount);
+    setSpend(spendTotal);
+    setPercent(spendTotal / monthlyAmount);
+    setIsLoading(false);
+  };
 
+  /**
+   * @todo set spending limit to 0 on trigger
+   * @amount variable is a patch as the server does not accept 0 as an argument
+   */
+  const spendingToggle = async () => {
+    if (isEnabled) {
+      const amount = "3000";
+      const response = await api.SetLimit(authContext.accountID, amount);
+      console.log("setLimit", response);
+      setIsEnabled(false);
 
+      loadData()
+    } else {
+      setIsEnabled(true);
+      storage.storeLimits(true);
+      navigation.navigate("SetLimit");
+      console.log(setIsEnabled);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
   }
 
   return (
-    <Screen>
-    <View style={styles.spendingLimit}>
-     
-      <View style={styles.helloParent}>
-        <Text style={[styles.hello, styles.limitFlexBox]}>Spending limit</Text>
-        <View
-          style={[
-            styles.rectangleParent,
-            styles.groupChildPosition,
-            styles.groupChildPosition1,
-          ]}
-        >
-          <View
-            style={[
-              styles.groupChild,
-              styles.groupChildPosition,
-              styles.groupChildPosition1,
-            ]}
-          />
-          <View
-            style={[
-              styles.cardSpendingLimitTheSpendParent,
-              styles.rectangleGroupPosition,
-            ]}
-          >
-            <Text
-              style={[styles.cardSpendingLimitTheSpend, styles.limitFlexBox]}
-            >
-              <Text style={styles.cardSpendingLimit}>
-                <Text style={styles.cardSpendingLimit1}>
-                  Card spending limit
-                </Text>
-              </Text>
-              <Text style={styles.cardSpendingLimit}>
-                <Text
-                  style={[styles.theSpend, styles.theColor]}
-                >{`\n The spend & withdrawal cap`}</Text>
-              </Text>
-            </Text>
-            <Image
-              style={[styles.meter1Icon, styles.groupChildPosition]}
-              resizeMode="cover"
-              source={require("../assets/meter-1.png")}
-            />
+    <KeyboardAvoider>
+      <ScrollView>
+        <View style={styles.mainContainer}>
+          <View style={styles.titleTextRow}>
+            <Text style={styles.titleText}>Spending Limit</Text>
           </View>
-          <Pressable
-            style={[styles.rectangleGroup, styles.rectangleGroupPosition]}
-            onPress={() => navigation.navigate("SetLimit")}
+
+          <View style={styles.subTextRow}>
+            <Text style={styles.subText}>
+              The limit determines the amount that can be spent or withdrawn
+              using this card per month
+            </Text>
+          </View>
+
+          <View
+            style={{
+              width: "90%",
+              marginLeft: "5%",
+              backgroundColor: "white",
+              borderRadius: 15,
+
+              marginTop: "15%",
+            }}
           >
-            <Switch  
-            trackColor={{false: GlobalStyles.Color.gray_600, true:GlobalStyles.Color.blue_100}}
-            thumbColor={isEnabled ?'#f4f3f4' : '#f4f3f4'}
-            onValueChange={toggleSwitch}
-            value={isEnabled} />
-          </Pressable>
-          <Image
-            style={[styles.groupIcon, styles.groupLayout]}
-            resizeMode="cover"
-            source={require("../assets/group-275793.png")}
-          />
-          <Text style={[styles.hello1, styles.helloPosition]}>£22.33</Text>
-        <Text style={[styles.hello2, styles.helloPosition]}>
-          Spent this {"\n"}month
-        </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                alignItems: "center",
+                height: 60,
+                padding: "5%",
+              }}
+            >
+              <Image
+                style={{ flex: 2, height: 35, width: 35 }}
+                resizeMode="contain"
+                source={require("../assets/meter-1.png")}
+              />
+              <View style={{ flex: 6, marginLeft: "5%" }}>
+                <Text style={{ fontWeight: "700", fontSize: 16 }}>
+                  Card Spending limit
+                </Text>
+                <Text style={{ fontSize: 10 }}>The spend & withdrawal cap</Text>
+              </View>
+              <Pressable
+                style={{ height: 50, width: "auto" }}
+                onPress={() => console.log("?")}
+                title="Set Limit"
+              >
+                <Switch
+                  style={{ flex: 2 }}
+                  trackColor={{
+                    false: GlobalStyles.Color.gray_600,
+                    true: GlobalStyles.Color.blue_100,
+                  }}
+                  thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                  onValueChange={spendingToggle}
+                  value={isEnabled}
+                />
+              </Pressable>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                marginTop: "2.5%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ fontSize: 28, fontWeight: "700" }}>
+                £{spend.toFixed(2)}
+              </Text>
+              <Text style={{ fontSize: 14, marginTop: "1%" }}>
+                Spent this month
+              </Text>
+              <Text
+                style={{ fontSize: 28, marginTop: "5%", fontWeight: "700" }}
+              >
+                £{monthLim.toFixed(2)}
+              </Text>
+              <Text style={{ fontSize: 14, marginTop: "1%" }}>
+                Current spend limit
+              </Text>
+              {monthLim - spend && percent >= 0 ? (
+                <View style={{ marginTop: "5%" }}>
+                  {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="#F6F5F8">
+              <Text style={styles.barText}>test</Text>
+            </View> */}
+
+                  <SinglePie percent={percent} />
+                </View>
+              ) : (
+                <View>
+                  {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="red">
+              <Text style={styles.barText}>£{(monthLim - spend).toFixed(2)}</Text>
+            </View> */}
+                  <SinglePie percent={percent} />
+                </View>
+              )}
+
+              <View
+                style={{
+                  position: "absolute",
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  top: 300,
+                }}
+              >
+                {monthLim - spend >= 0 ? (
+                  <Text
+                    style={{ fontSize: 28, color: "blue", fontWeight: "700" }}
+                  >
+                    {" "}
+                    £{(monthLim - spend).toFixed(2)}
+                  </Text>
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: 28,
+                      marginTop: "2.5%",
+                      color: "red",
+                      fontWeight: "700",
+                    }}
+                  >
+                    {" "}
+                    £{(monthLim - spend).toFixed(2)}
+                  </Text>
+                )}
+                <Text
+                  style={{
+                    fontSize: 14,
+                    marginTop: "1%",
+                    fontWeight: "700",
+                    opacity: 0.3,
+                  }}
+                >
+                  Spendable funds left
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "5%",
+              }}
+            >
+              <Image
+                style={{ height: 35, width: 35 }}
+                resizeMode="contain"
+                source={require("../assets/card.png")}
+              />
+              {monthLim ? (
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "700",
+                      opacity: 0.3,
+                      marginRight: "1%",
+                    }}
+                  >
+                    Limit is £{monthLim.toFixed(2)}
+                  </Text>
+                  <Text
+                    onPress={() => navigation.navigate("SetLimit")}
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "700",
+                      color: "blue",
+                      opacity: 1,
+                    }}
+                  >
+                    Change limit
+                  </Text>
+                </View>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 10,
+                    marginTop: "2.5%",
+                    fontWeight: "700",
+                    opacity: 0.3,
+                  }}
+                >
+                  Limit is toggled off
+                </Text>
+              )}
+            </View>
+          </View>
+          <View style={{ width: "100%", height: 35 }} />
         </View>
-        
-        <Text style={[styles.hello3, styles.helloPosition]}>
-          Limit is toggled off
-        </Text>
-        <Text
-          style={[
-            styles.theLimitDeterminesTheAmoun,
-            styles.theColor,
-            styles.limitFlexBox,
-          ]}
-        >
-          The limit determines the amount that can be spent or withdrawn using
-          this card per month
-        </Text>
-        <Image
-          style={styles.cardIcon}
-          resizeMode="cover"
-          source={require("../assets/card.png")}
-        />
-      </View>
-    </View>
-    </Screen>
+      </ScrollView>
+    </KeyboardAvoider>
   );
 };
 
 const styles = StyleSheet.create({
-  limitFlexBox: {
-    textAlign: "left",
-    position: "absolute",
+  mainContainer: {
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    height: GlobalStyles.DivContainer.height,
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
   },
-  groupChildPosition: {
-    left: 0,
-    position: "absolute",
+
+  titleTextRow: {
+    marginTop: GlobalStyles.Title.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
   },
-  groupChildPosition1: {
-    right: 0,
-    left: 0,
+
+  titleText: {
+    fontSize: GlobalStyles.Title.fontSize,
+    fontWeight: GlobalStyles.Title.fontWeight,
   },
-  rectangleGroupPosition: {
-    right: 22,
-    position: "absolute",
+
+  subText: {
+    fontSize: GlobalStyles.RowText.fontSize,
+    fontWeight: GlobalStyles.RowText.fontWeight,
   },
-  theColor: {
-    color: GlobalStyles.Color.gray_800,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+
+  subTextRow: {
+    marginTop: GlobalStyles.RowText.marginTop,
+    width: GlobalStyles.DivContainer.width,
+    marginLeft: GlobalStyles.DivContainer.marginLeft,
+    fontColor: GlobalStyles.RowText.fontColor,
   },
-  groupLayout: {
-    overflow: "hidden",
-    maxWidth: "100%",
-    position: "absolute",
-  },
-  helloPosition: {
-    color: GlobalStyles.Color.gray_700,
-    left: "50%",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    textAlign: "center",
-    position: "absolute",
-  },
-  hello: {
-    left: 2,
-    fontSize: GlobalStyles.FontSize.size_8xl,
-    color: GlobalStyles.Color.indigo_100,
-    fontWeight: "700",
-    top: 0,
-  },
-  groupChild: {
-    marginTop: -181,
-    borderRadius: GlobalStyles.Border.br_5xl,
-    backgroundColor: GlobalStyles.Color.white,
-    height: 362,
-    top: "50%",
-  },
-  cardSpendingLimit1: {
-    color: GlobalStyles.Color.gray_1400,
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-    fontSize: GlobalStyles.FontSize.size_base,
-    fontWeight: "700",
-  },
-  cardSpendingLimit: {
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
-  theSpend: {
-    fontSize: GlobalStyles.FontSize.size_3xs,
-  },
-  cardSpendingLimitTheSpend: {
-    marginTop: -15.5,
-    left: 27,
-    lineHeight: 18,
-    width: 257,
-    top: "50%",
-  },
-  meter1Icon: {
-    width: 17,
-    height: 17,
-    top: 0,
-  },
-  cardSpendingLimitTheSpendParent: {
-    top: 20,
-    left: 21,
-    height: 31,
-  },
-  groupItem: {
+  carbonSpendingAnalysysBarProgress: {
     height: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    borderRadius: GlobalStyles.Border.br_sm,
-    backgroundColor: GlobalStyles.Color.gray_600,
-    position: "absolute",
-    width: "100%",
+    backgroundColor: "orange",
+    borderRadius: 15,
+    maxWidth: "100%",
   },
-  groupInner: {
-    height: "76.92%",
-    width: "43.48%",
-    top: "11.54%",
-    right: "50%",
-    bottom: "11.54%",
-    left: "6.52%",
-    maxHeight: "100%",
-  },
-  rectangleGroup: {
-    top: 23,
-    width: 46,
-    height: 26,
-  },
-  groupIcon: {
-    marginTop: -30.03,
-    right: "40%",
-    left: "50%",
-    marginLeft: -97,
-    height: 150,
-    width: 290,
-    top: "50%",
-  },
-  rectangleParent: {
-    top: 138,
-    bottom: 0,
-  },
-  hello1: {
-    marginTop: 26,
-    marginLeft: -38,
-    fontSize: GlobalStyles.FontSize.size_7xl,
-    top: "50%",
-    fontWeight: "700",
-  },
-  hello2: {
-    marginTop: 59,
-    marginLeft: -30,
-    fontSize: GlobalStyles.FontSize.size_base,
-    top: "50%",
-    fontWeight: "700",
-  },
-  hello3: {
-    marginLeft: -35,
-    bottom: 16,
-    fontSize: GlobalStyles.FontSize.size_3xs,
-  },
-  theLimitDeterminesTheAmoun: {
-    top: 40,
-    left: 3,
-    lineHeight: 16,
-    width: 316,
-    fontSize: GlobalStyles.FontSize.size_base,
-  },
-  cardIcon: {
-    marginLeft: -6,
-    bottom: 38,
-    width: 12,
-    height: 9,
-    left: "50%",
-    position: "absolute",
-  },
-  helloParent: {
-    width: "100%",
-    height: 500,
-  },
-  arrowPosition: {
-    top: "6%",
-    position: "absolute",
-  },
-  arrowCircle: {
-    marginTop: -10.11,
-    marginRight: 303.54,
-    width: 15,
-    height: 15,
-  },
-  spendingLimit: {
-    flex: 1,
-    paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingRight: GlobalStyles.Padding.padding_8xs,
-    width: "100%",
+  barText: {
+    left: 20,
+    top: "25%",
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
 

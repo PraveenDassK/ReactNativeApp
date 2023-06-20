@@ -195,10 +195,11 @@ const styles = StyleSheet.create({
   },
   hello2: {
     top: "40%",
-    left: "41.41%",
+    left: "50%",
+    marginLeft: -30,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: GlobalStyles.Color.white,
+    color: GlobalStyles.Color.black,
     textAlign: "left",
   },
   groupParent: {
