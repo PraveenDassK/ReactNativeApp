@@ -30,6 +30,7 @@ const DirectororPartner = ({ navigation }) => {
         <RegistrationDirectororPartner onPress={handleOnPress} />
       ) : (
         <RegistartionDirectorForm />
+        // <View><Text>Hello</Text></View>
       )}
     </SafeAreaView>
   );
