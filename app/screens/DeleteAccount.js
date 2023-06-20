@@ -18,8 +18,7 @@ const DeleteAccount = ({navigation}) => {
    */
   const handleDelete = async() =>{
     console.log("Delete")
-    apiAccount.DeleteAccount(userID)
-
+    //apiAccount.DeleteAccount(userID)
   }
   
   return (

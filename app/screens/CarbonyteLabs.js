@@ -84,6 +84,11 @@ const CarbonyteLabs = ({ navigation }) => {
       <View style={styles.titleTextRow}>
         <Text style={styles.titleText}>Carbonyte labs</Text>
       </View>
+      <View>
+        <Text>
+          Warning these are test functions that will be added into a let version
+        </Text>
+      </View>
 
       <View style={styles.divRow}>
         <Image

@@ -86,6 +86,8 @@ import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
 
+import PaymentLink from "../screens/PaymentLink";
+
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 // const Stack = createNativeStackNavigator();
@@ -95,6 +97,8 @@ import { Animated, View, TouchableOpacity, Platform } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
+import MarketPlaceItem from "../screens/MarketPlaceItem";
+
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
@@ -117,8 +121,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-              ? options.title
-              : route.name;
+            ? options.title
+            : route.name;
 
         const isFocused = state.index === index;
 
@@ -151,7 +155,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
         return (
           <React.Fragment key={route.name.toString()}>
-            {index == 6 ? null : index == 0 ? null : (
+            {index == 6  ? null : index == 0 ? null : (
               <TouchableOpacity
                 key={route.name.toString()}
                 accessibilityRole="button"
@@ -170,6 +174,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                   <Animated.Text
                     style={{
                       opacity,
+                      fontSize: 12,
                       textAlign: "center",
                       fontFamily: "Helvetica",
                       fontWeight: isFocused ? "900" : "200",
@@ -224,20 +229,12 @@ const StackNavigator = () => {
 
       <Stack.Screen
         name="CarbonyteLabs"
-        component={gestureHandlerRootHOC(CarbonyteLabs)}
+        component={CarbonyteLabs}
         options={{
-          title: "Carbonyte Labs",
-          presentation: "modal",
-          gestureEnabled: true,
-          ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
-          ),
-          headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          title: "Carbonyte labs",
+          headerShown: false,
         }}
       />
-
 
       <Stack.Screen
         name="AddFunds"
@@ -254,6 +251,22 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: "white" },
         }}
       />
+      <Stack.Screen
+        name="PaymentLink"
+        component={gestureHandlerRootHOC(PaymentLink)}
+        options={{
+          title: "Payment Link",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
       <Stack.Screen
         name="ScheduledPayment"
         component={gestureHandlerRootHOC(ScheduledPayment)}
@@ -515,7 +528,7 @@ const StackNavigator = () => {
         name="ChooseCardsStandard5"
         component={gestureHandlerRootHOC(ChooseCardsStandard5)}
         options={{
-          title: "ChooseCardsStandard5",
+          title: "Eco summary",
         }}
       />
 
@@ -590,6 +603,13 @@ const StackNavigator = () => {
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
+        }}
+      />
+      <Stack.Screen
+        name="MarketPlaceItem"
+        component={MarketPlaceItem}
+        options={{
+          title: null,
         }}
       />
 
@@ -679,13 +699,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-      // listeners={({ navigation, route }) => ({
-      //   focus: () => {
+        // listeners={({ navigation, route }) => ({
+        //   focus: () => {
 
-      //     // Do something with the `navigation` object
-      //     navigation.navigate('AccountTab');
-      //   },
-      // })}
+        //     // Do something with the `navigation` object
+        //     navigation.navigate('AccountTab');
+        //   },
+        // })}
       />
     </Tab.Navigator>
   );
