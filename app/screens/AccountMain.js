@@ -1,41 +1,13 @@
-import React, {
-  useEffect,
-  useState,
-  useContext,
-  useCallback,
-  useRef,
-  Fragment,
-} from "react";
-import {
-  RefreshControl,
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Platform,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Vibration,
-  useWindowDimensions,
-} from "react-native";
+import React, { useEffect, useState, useContext, useCallback, useRef, Fragment, } from "react";
+import { RefreshControl, Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, ActivityIndicator, Platform, Dimensions, TouchableWithoutFeedback, Vibration, useWindowDimensions, } from "react-native";
 
 import * as Device from "expo-device";
 
 import Swiper from "react-native-swiper";
 import {
-  GestureDetector,
-  GestureHandlerRootView,
+  GestureDetector, GestureHandlerRootView,
 } from "react-native-gesture-handler";
-import Animated, {
-  Easing,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming, } from "react-native-reanimated";
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
@@ -57,6 +29,7 @@ import {
   TransactionHead,
   TransactionFooter,
 } from "../components/transactions";
+import SquareIcon from "../components/SquareIcon";
 
 const CARD_DATA = [];
 
@@ -460,6 +433,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
             </TouchableOpacity>
 
+            <SquareIcon></SquareIcon>
+
             <TouchableOpacity
               onPress={() => navigation.navigate("SendMoney")}
               style={[styles.inputBox]}
@@ -501,6 +476,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 <AppText style={styles.inputBoxText}>Account switch</AppText>
               </View>
             </TouchableOpacity>
+
           </View>
         </View>
 
