@@ -22,7 +22,7 @@ import colors from "../config/colors";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Dropdown } from "react-native-element-dropdown";
-
+import AppDropdown from "./AppDropdown";
 // import AppDropdown from "../components/AppDropdown";
 
 // const data = [
@@ -147,6 +147,8 @@ const RegistartionDirectorForm = ({ back = true }) => {
             >
               <View style={{ width: "100%" }}>
                 <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  {/* <AppDropdown/> */}
+
                   <Dropdown
                     data={data}
                     value={title}
@@ -154,6 +156,9 @@ const RegistartionDirectorForm = ({ back = true }) => {
                       console.log(item, "thsis is item selected");
                       setTitle(item.value);
                     }}
+                    labelField="label"
+                    valueField="value"
+                    
                     style={styles.dropdown}
                     placeholderStyle={styles.placeholderStyle}
                     selectedTextStyle={styles.selectedTextStyle}
@@ -199,14 +204,14 @@ const RegistartionDirectorForm = ({ back = true }) => {
                 </View>
                 <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
                   <Text style={styles.textStyle}>Schedulde date & time</Text>
-                  <DateTimePicker
+                  {/* <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
                     mode="datetime"
                     is24Hour={true}
                     display="spinner"
                     //   onChange={onChange}
-                  />
+                  /> */}
                 </View>
               </View>
             </Formik>
