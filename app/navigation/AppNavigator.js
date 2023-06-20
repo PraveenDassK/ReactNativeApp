@@ -66,7 +66,7 @@ import CarbonyteLabs from "../screens/CarbonyteLabs";
  * @notice Screens on the settings page to navigate to
  */
 
-import ChooseCardsElite from "../screens/ChooseCardsElite";
+import Subscriptions from "../screens/Subscriptions";
 import SecurityAndPrivacy from "../screens/SecurityAndPrivacy";
 import AccountSettings from "../screens/AccountSettings";
 import Transactions from "../screens/Transactions";
@@ -541,10 +541,10 @@ const StackNavigator = () => {
       />
 
       <Stack.Screen
-        name="ChooseCardsElite"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
+        name="Subscriptions"
+        component={gestureHandlerRootHOC(Subscriptions)}
         options={{
-          title: "Choose Cards",
+          title: "Subscription",
         }}
       />
       <Stack.Screen

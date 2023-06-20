@@ -407,7 +407,7 @@ const Settings = ({ navigation }) => {
             title="My plan"
             style={[styles.boxShadow]}
             transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("ChooseCardsElite")}
+            onPress={() => navigation.navigate("Subscriptions")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>

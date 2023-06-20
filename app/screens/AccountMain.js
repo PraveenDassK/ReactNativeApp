@@ -30,6 +30,7 @@ import {
   TransactionFooter,
 } from "../components/transactions";
 import SquareIcon from "../components/SquareIcon";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const CARD_DATA = [];
 
@@ -57,6 +58,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [showCardDetails, setShowCardDetails] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [transactionTotal, setTransactionTotal] = useState(1);
+
+  const [iconShow, setIconShow] = useState(false)
 
   const {
     carbonyteID,
@@ -419,65 +422,63 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("AddFunds")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/add.png")}
-                />
-                <AppText style={styles.inputBoxText}>Move Money</AppText>
-              </View>
-            </TouchableOpacity>
 
-            <SquareIcon></SquareIcon>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SendMoney")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/send-1.png")}
-                />
-                <AppText style={styles.inputBoxText}>Send Money</AppText>
-              </View>
-            </TouchableOpacity>
+            <SquareIcon
+              text={"Move money"}
+              image={"bank-transfer"}
+              trigger={() => navigation.navigate("AddFunds")}
+            />
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("MyCards")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/icon-outlinecreditcard.png")}
-                />
-                <AppText style={styles.inputBoxText}>My Cards</AppText>
-              </View>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SwitchAccounts")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/transfer-1.png")}
-                />
-                <AppText style={styles.inputBoxText}>Account switch</AppText>
-              </View>
-            </TouchableOpacity>
+            <SquareIcon
+              text={"Send money"}
+              image={"send"}
+              trigger={() => navigation.navigate("SendMoney")}
+            />
+
+            <SquareIcon
+              text={"Cards"}
+              image={"credit-card"}
+              trigger={() => navigation.navigate("MyCards")}
+            />
+
+            <SquareIcon
+              text={"More"}
+              image={"dots-horizontal"}
+              trigger={() => setIconShow(!iconShow)}
+            />
 
           </View>
+
+          {iconShow ?
+            <View style={styles.buttonContainer}>
+
+              <SquareIcon
+                text={"Payment link"}
+                image={"link-variant"}
+                trigger={() => navigation.navigate("PaymentLink")}
+              />
+
+              <SquareIcon
+                text={"Subscriptions"}
+                image={"newspaper-variant-outline"}
+                trigger={() => navigation.navigate("Subscriptions")}
+              />
+
+              <SquareIcon
+                text={"Set limits"}
+                image={"car-speed-limiter"}
+                trigger={() => navigation.navigate("SetLimit")}
+              />
+
+              <SquareIcon
+                text={"Switch accounts"}
+                image={"account-switch"}
+                trigger={() => navigation.navigate("SwitchAccounts")}
+              />
+
+            </View> : false}
         </View>
 
         <View style={styles.carbonSpendingTitleDiv}>
