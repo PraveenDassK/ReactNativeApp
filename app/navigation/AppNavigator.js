@@ -88,6 +88,11 @@ import Devices from "../screens/Devices";
 
 import PaymentLink from "../screens/PaymentLink";
 
+import Teams from "../screens/Teams";
+import Invoices from "../screens/Invoices";
+import DirectDebits from "../screens/DirectDebits";
+
+
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 // const Stack = createNativeStackNavigator();
@@ -121,8 +126,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -155,7 +160,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
         return (
           <React.Fragment key={route.name.toString()}>
-            {index == 6  ? null : index == 0 ? null : (
+            {index == 6 ? null : index == 0 ? null : (
               <TouchableOpacity
                 key={route.name.toString()}
                 accessibilityRole="button"
@@ -232,7 +237,14 @@ const StackNavigator = () => {
         component={CarbonyteLabs}
         options={{
           title: "Carbonyte labs",
-          headerShown: false,
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
         }}
       />
 
@@ -251,6 +263,55 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: "white" },
         }}
       />
+
+      <Stack.Screen
+        name="Invoices"
+        component={gestureHandlerRootHOC(Invoices)}
+        options={{
+          title: "Invoices",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="Teams"
+        component={gestureHandlerRootHOC(Teams)}
+        options={{
+          title: "Teams",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+<Stack.Screen
+        name="DirectDebits"
+        component={gestureHandlerRootHOC(DirectDebits)}
+        options={{
+          title: "DirectDebits",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
       <Stack.Screen
         name="PaymentLink"
         component={gestureHandlerRootHOC(PaymentLink)}
@@ -699,13 +760,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-        // listeners={({ navigation, route }) => ({
-        //   focus: () => {
+      // listeners={({ navigation, route }) => ({
+      //   focus: () => {
 
-        //     // Do something with the `navigation` object
-        //     navigation.navigate('AccountTab');
-        //   },
-        // })}
+      //     // Do something with the `navigation` object
+      //     navigation.navigate('AccountTab');
+      //   },
+      // })}
       />
     </Tab.Navigator>
   );

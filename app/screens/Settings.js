@@ -404,7 +404,7 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={[styles.button]}>
           <Button
-            title="My plan"
+            title="Subscription"
             style={[styles.boxShadow]}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("Subscriptions")}
