@@ -443,42 +443,84 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               trigger={() => navigation.navigate("MyCards")}
             />
 
-            <SquareIcon
-              text={"More"}
-              image={"dots-horizontal"}
-              trigger={() => setIconShow(!iconShow)}
-            />
-
-          </View>
-
-          {iconShow ?
-            <View style={styles.buttonContainer}>
-
+            {!iconShow ?
               <SquareIcon
-                text={"Payment link"}
-                image={"link-variant"}
-                trigger={() => navigation.navigate("PaymentLink")}
-              />
-
-              <SquareIcon
-                text={"Subscriptions"}
-                image={"newspaper-variant-outline"}
-                trigger={() => navigation.navigate("Subscriptions")}
-              />
-
-              <SquareIcon
-                text={"Set limits"}
-                image={"car-speed-limiter"}
-                trigger={() => navigation.navigate("SetLimit")}
-              />
+                text={"More"}
+                image={"dots-horizontal"}
+                trigger={() => setIconShow(!iconShow)}
+              /> :
 
               <SquareIcon
                 text={"Switch accounts"}
                 image={"account-switch"}
                 trigger={() => navigation.navigate("SwitchAccounts")}
               />
+            }
 
-            </View> : false}
+          </View>
+
+          {iconShow ?
+            <View>
+              <View style={styles.buttonContainer}>
+
+                <SquareIcon
+                  text={"Payment link"}
+                  image={"link-variant"}
+                  trigger={() => navigation.navigate("PaymentLink")}
+                />
+
+                <SquareIcon
+                  text={"Subscriptions"}
+                  image={"newspaper-variant-outline"}
+                  trigger={() => navigation.navigate("Subscriptions")}
+                />
+
+                <SquareIcon
+                  text={"Set limits"}
+                  image={"car-speed-limiter"}
+                  trigger={() => navigation.navigate("SpendingLimit")}
+                />
+
+                <SquareIcon
+                  text={"Transactions"}
+                  image={"bank-outline"}
+                  trigger={() => navigation.navigate("Transactions")}
+                />
+
+              </View>
+
+              <View style={styles.buttonContainer}>
+
+
+                <SquareIcon
+                  text={"Teams"}
+                  image={"account-group"}
+                  trigger={() => navigation.navigate("Teams")}
+                />
+
+
+                <SquareIcon
+                  text={"Invoices"}
+                  image={"file-document-multiple"}
+                  trigger={() => navigation.navigate("Invoices")}
+                />
+
+                <SquareIcon
+                  text={"Direct debits"}
+                  image={"directions"}
+                  trigger={() => navigation.navigate("DirectDebits")}
+                />
+
+                <SquareIcon
+                  text={"Less"}
+                  image={"dots-horizontal"}
+                  trigger={() => setIconShow(!iconShow)}
+                />
+
+              </View>
+            </View>
+
+            : false}
         </View>
 
         <View style={styles.carbonSpendingTitleDiv}>

@@ -19,7 +19,7 @@ const SquareIcon = (
 
                 <MaterialCommunityIcons
                     name={image}
-                    size={40}
+                    size={30}
                 />
                 <AppText style={styles.inputBoxText}>{text}</AppText>
             </View>
