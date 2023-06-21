@@ -17,7 +17,10 @@ import RegistrationDirectororPartner from "../components/RegistartionDirectororP
 import RegistartionDirectorForm from "../components/RegistartionDirectorForm";
 const DirectororPartner = ({ navigation }) => {
   const [formView, setFormView] = useState(0);
-  const handleOnPress = () => {
+  const [role, setRole] = useState("");
+  const handleOnPress = (event) => {
+    console.log(event,"thois is event")
+    setRole(event)
     if (formView === 0) {
       setFormView(1);
     } else {
@@ -27,9 +30,12 @@ const DirectororPartner = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       {formView === 0 ? (
-        <RegistrationDirectororPartner onPress={handleOnPress} />
+        <RegistrationDirectororPartner
+          onPress={handleOnPress}
+          setRole={setRole}
+        />
       ) : (
-        <RegistartionDirectorForm />
+        <RegistartionDirectorForm role={role} />
         // <View><Text>Hello</Text></View>
       )}
     </SafeAreaView>
