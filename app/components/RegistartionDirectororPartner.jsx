@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string().required().min(10).max(10).label("Phone number"),
 });
 
-const RegistrationDirectororPartner = ({ SaveDetails, navigation,onPress }) => {
+const RegistrationDirectororPartner = ({ SaveDetails, navigation,onPress,setRole }) => {
   const handleSubmit = async (type) => {
     console.log(type);
     // SaveDetails(type)
@@ -66,7 +66,7 @@ const RegistrationDirectororPartner = ({ SaveDetails, navigation,onPress }) => {
         />
         <Pressable
           style={styles.plusButton}
-          onPress={onPress}
+          onPress={()=>{ onPress("Director")}}
         >
           <Text style={{fontSize:30,fontWeight:"bold"}}>+</Text> 
         </Pressable>
