@@ -35,7 +35,7 @@ const DirectororPartner = ({ navigation }) => {
           setRole={setRole}
         />
       ) : (
-        <RegistartionDirectorForm role={role} />
+        <RegistartionDirectorForm role={role} setFormView={setFormView} />
         // <View><Text>Hello</Text></View>
       )}
     </SafeAreaView>

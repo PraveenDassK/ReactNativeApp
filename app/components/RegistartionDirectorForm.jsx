@@ -29,7 +29,7 @@ import { CountryPicker } from "react-native-country-codes-picker";
 import PhoneInput from "react-native-phone-number-input";
 import GetPostCode from "../components/RegistrationPostCode";
 import apiLogin from "../api/apiLogin";
-const RegistartionDirectorForm = ({ back = true, role }) => {
+const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
   console.log(role, "this is role");
   const [date, setDate] = useState(new Date());
   const [birthdate, setBirthDate] = useState(new Date());
@@ -53,6 +53,12 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
   const [occupatioinValue, setOccupatioin] = useState("");
   const [genderValue, setGenderValue] = useState("");
   const [martialValue, setMartialValue] = useState("");
+  const [maritalStatusError, setMartialStatus] = useState("");
+  const [genderStatusError, setGenderStatus] = useState("");
+  const [employmentStatus, setEmploymentStatus] = useState("");
+  const [countryStatusError, setCountryStatus] = useState("");
+  const [nationallityStatusError, setNationallityStatus] = useState("");
+  const [occupationStatusError, setOccupatioinStatus] = useState("");
   const [employementValue, setEmployementValue] = useState("");
   const currentTime = new Date().getTime();
   console.log(currentTime, "this is the current time");
@@ -148,22 +154,38 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
   ];
 
   const validationSchema = Yup.object().shape({
-    // firstName: Yup.string()
-    //   .matches(/^[A-Za-z ]*$/, "First name can only contain letters and spaces")
-    //   .required("First name is required"),
-    // lastName: Yup.string()
-    //   .matches(/^[A-Za-z ]*$/, "Last name can only contain letters and spaces")
-    //   .required("Last name is required"),
-    // email: Yup.string()
-    //   .email("Invalid email address")
-    //   .required("Email address is required"),
-    // phone: Yup.string().required("Phone number is required"),
-    // postCode: Yup.string().required("PostCode is required"),
-    // apiAddress: Yup.string().required("Address is required"),
-    // countryCode: Yup.string().required("Country is required"),
-    // nationality: Yup.string().required("Nationality is required"),
-    // dob: Yup.string().required("Dob is required"),
-    // occupation: Yup.string().required("Occupation is required"),
+    firstName: Yup.string()
+      .matches(/^[A-Za-z ]*$/, "First name can only contain letters and spaces")
+      .required("First name is required"),
+    lastName: Yup.string()
+      .matches(/^[A-Za-z ]*$/, "Last name can only contain letters and spaces")
+      .required("Last name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email address is required"),
+    phone: Yup.string()
+      .matches(/^[0-9]*$/, "Phone Number only contains numbers")
+      .required("Phone number is required"),
+    id: Yup.string().required("National Insurance No is required"),
+    postCode: Yup.string().required("Post Code is required"),
+    totalIncome: Yup.string().required("Total Income is required"),
+    savings: Yup.string().required("Savings is required"),
+
+    city: Yup.string().when([], {
+      is: () => manualView === true,
+      then: Yup.string().required('("City is required"'),
+      otherwise: Yup.string().notRequired(),
+    }),
+    street: Yup.string().when([], {
+      is: () => manualView === true,
+      then: Yup.string().required("street is required"),
+      otherwise: Yup.string().notRequired(),
+    }),
+    address: Yup.string().when([], {
+      is: () => manualView === true,
+      then: Yup.string().required("Address is required"),
+      otherwise: Yup.string().notRequired(),
+    }),
   });
 
   const handleSubmit = async ({
@@ -175,81 +197,105 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
     postCode,
     address,
     country,
+    city,
+    street,
     owenershipShares,
     totalIncome,
     savings,
   }) => {
-    console.log(email, phone, totalIncome, savings, "addrees in api call");
-    const dataObj = [
-      {
-        id: 0,
-        customerId: "",
-        emails: [
-          {
-            emailId: email,
+  
+    if (!martialValue) {
+      setMartialStatus("MartialValue is required ");
+    } else if (!genderValue) {
+      setGenderStatus("Gender is required ");
+    } else if (!employementValue) {
+      setEmploymentStatus("Employement is required ");
+    } else if (!countryCode?.name?.en) {
+      setCountryStatus("Country is required ");
+    } else if (!nationallityValue) {
+      setNationallityStatus("Nationality is required ");
+    } else if (!occupatioinValue) {
+      setOccupatioinStatus("Occupation is required ");
+    } else {
+      setEmploymentStatus("");
+      setGenderStatus(" ");
+      setMartialStatus(" ");
+      setOccupatioinStatus("");
+      setNationallityStatus("");
+      setEmploymentStatus("");
+      setCountryStatus("");
+      const dataObj = [
+        {
+          id: 0,
+          customerId: "",
+          emails: [
+            {
+              emailId: email,
+            },
+          ],
+
+          phoneNumbers: [
+            {
+              phoneNo: phone,
+            },
+          ],
+
+          customerDetails: {
+            documentNo: "",
+
+            documentType: "",
+            address: !address ? apiAddress.address1 : `${address} ${street}`,
+
+            firstName: firstName,
+
+            dob: birthdate.toLocaleDateString("en-GB"),
+
+            nationalId: id,
+
+            lastName: lastName,
+
+            postCode: !address ? apiAddress.postcode : postCode,
+
+            postTown: !address ? apiAddress.area : city,
+
+            country: countryCode?.name?.en,
+
+            countryCode: "GBR",
+
+            locale: !address ? apiAddress.locale : "en_GB",
+
+            salutation: title,
+            gender: genderValue,
+            maritalStatus: martialValue,
+            employmentDetails: employementValue,
           },
-        ],
+          income: {
+            totalIncome: totalIncome,
 
-        phoneNumbers: [
-          {
-            phoneNo: phone,
+            savings: savings,
+
+            taxResidency: nationallityValue,
+
+            incomeSources: ["Salary"],
           },
-        ],
 
-        customerDetails: {
-          documentNo: "",
+          key: "",
 
-          documentType: "",
-          address: apiAddress.address1,
+          role: role,
 
-          firstName: firstName,
+          ownershipPercentage: owenershipShares,
 
-          dob: birthdate.toLocaleDateString("en-GB"),
+          marketingChoices: "string",
 
-          nationalId: id,
+          acceptanceDateTime: currentTime,
 
-          lastName: lastName,
-
-          postCode: apiAddress.postcode,
-
-          postTown: apiAddress.area,
-
-          country: countryCode?.name?.en,
-
-          countryCode: "GBR",
-
-          locale: apiAddress.locale,
-
-          salutation: title,
-          gender: genderValue,
-          maritalStatus: martialValue,
-          employmentDetails: employementValue,
+          policyVersion: "1",
         },
-        income: {
-          totalIncome: totalIncome,
-
-          savings: savings,
-
-          taxResidency: nationallityValue,
-
-          incomeSources: ["Salary"],
-        },
-
-        key: "",
-
-        role: role,
-
-        ownershipPercentage: owenershipShares,
-
-        marketingChoices: "string",
-
-        acceptanceDateTime: currentTime,
-
-        policyVersion: "1",
-      },
-    ];
-    const response = await apiLogin.RegisterPersonalAccount(dataObj);
-    console.log(dataObj, response, "this is dataObj");
+      ];
+      const response = await apiLogin.RegisterPersonalAccount(dataObj);
+      console.log(dataObj, response, "this is dataObj");
+      setFormView(0)
+    }
   };
 
   return (
@@ -334,6 +380,9 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                 postCode: "",
                 address: "",
                 country: "",
+                street: "",
+                city: "",
+                id: "",
                 nationality: "",
                 appoinmentDate: "",
                 owenershipShares: "",
@@ -467,14 +516,14 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       placeholder="Please enter the Gender"
                       onChange={(item) => {
                         console.log(item, "thsis is item selected");
-                        setGenderValue(item.value);
+                        setGenderValue(item.value, { shouldValidate: true });
                       }}
                       style={styles.addressDropdown}
                       containerStyle={styles.containerStyle}
                     />
                     <ErrorMessage
-                      error={errors.nationality}
-                      visible={touched.nationality}
+                      error={genderStatusError}
+                      visible={genderStatusError}
                     />
                   </View>
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
@@ -487,15 +536,19 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       placeholder="Please enter the Marital Status"
                       onChange={(item) => {
                         console.log(item, "thsis is item selected");
-                        setMartialValue(item.value);
+                        setMartialValue(item.value, { shouldValidate: true });
+                        handleChange("maritalStatus")(item.value);
                       }}
                       style={styles.addressDropdown}
                       containerStyle={styles.containerStyle}
                     />
                     <ErrorMessage
-                      error={errors.nationality}
-                      visible={touched.nationality}
+                      error={maritalStatusError}
+                      visible={maritalStatusError}
                     />
+                    {/* {maritalStatusError && (
+                      <Text>{errors.maritalStatus}</Text>
+                    )} */}
                   </View>
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
                     <Text style={styles.textStyle}>Employement Details</Text>
@@ -513,8 +566,8 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       containerStyle={styles.containerStyle}
                     />
                     <ErrorMessage
-                      error={errors.nationality}
-                      visible={touched.nationality}
+                      error={employmentStatus}
+                      visible={employmentStatus}
                     />
                   </View>
                   <View
@@ -549,6 +602,11 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                         <TextInput
                           style={styles.textInuput}
                           placeholder="Enter Building Name or Number"
+                          onChangeText={handleChange("address")}
+                        />
+                        <ErrorMessage
+                          error={errors.address}
+                          visible={touched.address}
                         />
                       </View>
                       <View
@@ -562,6 +620,11 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                         <TextInput
                           style={styles.textInuput}
                           placeholder="Enter Name of the street"
+                          onChangeText={handleChange("street")}
+                        />
+                        <ErrorMessage
+                          error={errors.street}
+                          visible={touched.street}
                         />
                       </View>
                       <View
@@ -575,9 +638,14 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                         <TextInput
                           style={styles.textInuput}
                           placeholder="Enter the City"
+                          onChangeText={handleChange("city")}
+                        />
+                        <ErrorMessage
+                          error={errors.city}
+                          visible={touched.city}
                         />
                       </View>
-                      <View
+                      {/* <View
                         style={{
                           width: "100%",
                           paddingHorizontal: 10,
@@ -589,7 +657,7 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                           style={styles.textInuput}
                           placeholder="Enter the Country"
                         />
-                      </View>
+                      </View> */}
                     </View>
                   )}
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
@@ -598,9 +666,8 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       style={styles.textInuput}
                       placeholder="Enter the PostCode"
                       onChangeText={(event) => {
-                        console.log(event, "this ois post");
+                        handleChange("postCode")(event);
                         setPostCode(event);
-                        handleChange("postCode");
                         handleAddress(event);
                       }}
                     />
@@ -612,10 +679,10 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                         Enter Postcode
                       </Text>
                     )}
-                    {/* <ErrorMessage
+                    <ErrorMessage
                       error={errors.postCode}
                       visible={touched.postCode}
-                    /> */}
+                    />
                   </View>
                   {!manualView && (
                     <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
@@ -628,7 +695,6 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                         onChange={(item) => {
                           console.log(item, "thsis is item selected");
                           setAPIAddress(item.value);
-                          handleChange("address");
                         }}
                         style={styles.addressDropdown}
                         containerStyle={styles.containerStyle}
@@ -639,10 +705,6 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       >
                         Enter Manually
                       </Text>
-                      <ErrorMessage
-                        error={errors.address}
-                        visible={touched.address}
-                      />
                     </View>
                   )}
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
@@ -736,8 +798,8 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       }}
                     />
                     <ErrorMessage
-                      error={errors.country}
-                      visible={touched.country}
+                      error={countryStatusError}
+                      visible={countryStatusError}
                     />
                   </View>
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
@@ -756,8 +818,8 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       containerStyle={styles.containerStyle}
                     />
                     <ErrorMessage
-                      error={errors.nationality}
-                      visible={touched.nationality}
+                      error={nationallityStatusError}
+                      visible={nationallityStatusError}
                     />
                   </View>
 
@@ -806,8 +868,8 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       containerStyle={styles.containerStyle}
                     />
                     <ErrorMessage
-                      error={errors.nationality}
-                      visible={touched.nationality}
+                      error={occupationStatusError}
+                      visible={occupationStatusError}
                     />
                   </View>
                   <View
@@ -842,8 +904,8 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       onChangeText={handleChange("savings")}
                     />
                     <ErrorMessage
-                      error={errors.savigs}
-                      visible={touched.savigs}
+                      error={errors.savings}
+                      visible={touched.savings}
                     />
                   </View>
                   <View>
@@ -947,6 +1009,7 @@ const RegistartionDirectorForm = ({ back = true, role }) => {
                       </View>
                     </View>
                   )}
+
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
                     <Button
                       title="Continue"
