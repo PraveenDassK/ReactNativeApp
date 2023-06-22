@@ -69,8 +69,56 @@ const getPaymentLink = async () => {
   return PaymentUrlRequest.data.details.redirectUrl
 }
 
+/**
+ * @dev This gets x amount of transactions for the user
+ * @todo Add in time period and pagination
+ * @param {Account ID} Id
+ * @param {Int} amount The amount of transactions to get
+ * @returns An object of the transaction data
+ * {
+ *      transactions    An array of the items in that transaction
+ *      total           The total spend in all of the transactions
+ *      number          The amount of transactions in the transactions array
+ * }
+ */
+const GetTransactions = async (Id, amount, typeSelection) => {
+  try {
+    let toGet = amount ? amount : 10;
+    const request = await client.get(
+      `https://api.carbonyte.io/walletmodule/GetTransactions/${Id}?size=${toGet}`
+    );
+    const returnData = request?.data?.details;
+
+    //Process the data
+    let total = 0;
+    let transactions = []
+    returnData?.content.forEach((transaction) => {
+      console.log(transaction.credit)
+      total += transaction.amount;
+      
+      if(transaction.credit == false){
+        transactions.push(transaction)
+      }
+    });
+    console.log(transactions)
+  
+    return {
+      transactions: transactions,
+      total: total,
+      number: returnData.size,
+    };
+  } catch {
+    return {
+      transactions: [],
+      total: 0,
+      number: 0,
+    };
+  }
+};
+
 export default {
   sendMoney,
   sendToGroup,
-  getPaymentLink
+  getPaymentLink,
+  GetTransactions
 }

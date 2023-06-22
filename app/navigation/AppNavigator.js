@@ -91,7 +91,7 @@ import PaymentLink from "../screens/PaymentLink";
 import Teams from "../screens/Teams";
 import Invoices from "../screens/Invoices";
 import DirectDebits from "../screens/DirectDebits";
-
+import DirectDebitForm from "../screens/DirectDebitForm";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -103,6 +103,7 @@ import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
+import OrderCard from "../screens/OrderCard";
 
 
 function MyTabBar({ state, descriptors, navigation, position }) {
@@ -265,6 +266,38 @@ const StackNavigator = () => {
       />
 
       <Stack.Screen
+        name="OrderCard"
+        component={gestureHandlerRootHOC(OrderCard)}
+        options={{
+          title: "Order Card",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="DirectDebitForm"
+        component={gestureHandlerRootHOC(DirectDebitForm)}
+        options={{
+          title: "New Direct Debit",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
         name="Invoices"
         component={gestureHandlerRootHOC(Invoices)}
         options={{
@@ -296,7 +329,7 @@ const StackNavigator = () => {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="DirectDebits"
         component={gestureHandlerRootHOC(DirectDebits)}
         options={{

@@ -31,7 +31,7 @@ const TransactionBody = ({
 
         <View style={styles.dateContainer}>
           <Text style={styles.displayText}>
-            {moment(date).format(" DD MMM, YY")}
+            {moment(date).format(" DD MMM, HH:MM")}
             {/* {moment(item.transactionDate).format(" DD MMM YY")} */}
           </Text>
         </View>

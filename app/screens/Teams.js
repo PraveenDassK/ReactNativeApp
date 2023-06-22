@@ -8,18 +8,10 @@ import {
     Pressable,
     FlatList,
 } from "react-native";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { Dropdown } from "react-native-element-dropdown";
-import Button from "../components/AppButton";
-import ErrorMessage from "../components/forms/ErrorMessage";
-import AuthContext from "../auth/context";
-
-import Icon from "../components/Icon";
-
-import apiBeneficiaries from "../api/apiBeneficiaries"
-
 import { moderateScale } from '../config/scaling'
+
+import RecentTransactions from "../components/RecentTransactions";
+import PinModal from "../components/PinModal";
 
 const Teams = ({ navigation }) => {
 
@@ -27,29 +19,37 @@ const Teams = ({ navigation }) => {
         // loadData()
     }, [])
 
+    const onSuccess = () => {
+        console.log("!")
+    }
+
     return (
         <View style={styles.mainContainer}>
-          <Text style={styles.comingSoonText}>coming</Text>
-          <Text style={styles.comingSoonText}>soon</Text>
-    
+            {/* <RecentTransactions
+            amount = {10}
+          /> */}
+            <PinModal
+                title="Enter your pin"
+                success={() => onSuccess()}
+            />
         </View>
-      )
+    )
+}
+
+export default Teams
+
+const styles = StyleSheet.create({
+    comingSoonText: {
+        textTransform: "uppercase",
+        fontSize: moderateScale(80),
+        fontWeight: "bold",
+        textAlign: "center",
+
+    },
+    mainContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignContent: "center",
+
     }
-    
-    export default Teams
-    
-    const styles = StyleSheet.create({
-        comingSoonText: {
-            textTransform: "uppercase",
-            fontSize: moderateScale(80),
-            fontWeight: "bold",
-            textAlign:"center",
-    
-        },
-        mainContainer: {
-            flex:1,
-            justifyContent:"center",
-            alignContent: "center",
-           
-        }
-    })
+})

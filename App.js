@@ -144,7 +144,7 @@ export default function App() {
     versionChecker.compareVersion(version);
     console.log(version);
   }, []);
-  usePreventScreenCapture();
+  //usePreventScreenCapture();
 
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChange);

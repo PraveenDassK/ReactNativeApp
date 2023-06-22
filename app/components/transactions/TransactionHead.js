@@ -11,13 +11,13 @@ const TransactionHead = ({ headerTitle = "Recent transactions" }) => {
 
         <View style={styles.transactionContainer}>
           <View style={styles.transactionContainerTH}>
-            <Text style={styles.transactionText}>Transaction name</Text>
+            <Text style={styles.transactionText}>All</Text>
           </View>
           <View style={styles.dateContainerTH}>
-            <Text style={styles.transactionText}>Date</Text>
+            <Text style={styles.transactionText}>Income</Text>
           </View>
           <View style={styles.amountContainerTH}>
-            <Text style={styles.transactionText}>Amount</Text>
+            <Text style={styles.transactionText}>Expenses</Text>
           </View>
         </View>
       </View>
@@ -28,7 +28,7 @@ const TransactionHead = ({ headerTitle = "Recent transactions" }) => {
 export default TransactionHead
 
 const styles = StyleSheet.create({
-      transactionHeadContainer: {
+  transactionHeadContainer: {
     backgroundColor: "white",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
     marginBottom: "1%",
     paddingHorizontal: "3%"
   },
-  headerTitleContainer: { flex: 1 , },
-   headerText: { fontWeight: "700", fontSize: 20 },
-    transactionContainer: {
+  headerTitleContainer: { flex: 1, },
+  headerText: { fontWeight: "700", fontSize: 20 },
+  transactionContainer: {
     flexDirection: "row",
     paddingHorizontal: "0.5%"
   },
-   transactionContainerTH: { flex: 4 },
-     dateContainerTH: { flex: 2},
-      transactionText: { opacity: 0.4 },
-       amountContainerTH: { flex: 3, alignItems: "flex-end" },
-       spacing: {marginBottom: "5%"}
+  transactionContainerTH: { flex: 4 },
+  dateContainerTH: { flex: 2 },
+  transactionText: { opacity: 0.4 },
+  amountContainerTH: { flex: 3, alignItems: "flex-end" },
+  spacing: { marginBottom: "5%" }
 })
