@@ -24,6 +24,7 @@ import Button from "../components/AppButton";
 import AuthContext from "../auth/context";
 
 import apiCall from "../api/apiCall";
+import PinModal from "../components/PinModal";
 import { Alert } from "react-native";
 const Tab = createMaterialTopTabNavigator();
 
@@ -41,6 +42,8 @@ const ChooseCardsElite = ({ navigation }) => {
   const [currentSubscruption, setCurrentSubscription] = useState(null);
   const [change, setChange] = useState(false);
 
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [subscriptionToChange, setSubscriptionToChange] = useState(null)
   const { customerDetails } = useContext(AuthContext);
   const account = customerDetails;
 
@@ -48,7 +51,7 @@ const ChooseCardsElite = ({ navigation }) => {
     loadData();
   }, []);
 
-  useEffect(() => {}, [change]);
+  useEffect(() => { }, [change]);
 
   const loadData = async () => {
     setIsLoading(true);
@@ -61,8 +64,9 @@ const ChooseCardsElite = ({ navigation }) => {
     console.log(currentSub.subID);
     console.log(response[0].id);
   };
-  const changePlan = async (Id) => {
-    const response = Alert.alert("", "Do you want to purchase this plan?", [
+  const changePlan = async () => {
+    const Id = subscriptionToChange
+    const response = await Alert.alert("", "Do you want to purchase this plan?", [
       {
         text: "No",
         onPress: () => setChange(false),
@@ -75,6 +79,7 @@ const ChooseCardsElite = ({ navigation }) => {
           await apiCall.ChangeUsersSubscription("CC1", Id);
           loadData();
           setIsLoading(false)
+          setShowPinModal(false)
         },
       },
     ]);
@@ -89,6 +94,22 @@ const ChooseCardsElite = ({ navigation }) => {
         <ActivityIndicator size="large" color="black" />
       </View>
     );
+  }
+
+  if (showPinModal) {
+    return (
+      <View style={styles.mainContainer}>
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal
+            title="Enter your PIN"
+            success={() => changePlan()}
+          />
+        ) : null}
+      </View>
+    )
   }
 
   return (
@@ -151,7 +172,12 @@ const ChooseCardsElite = ({ navigation }) => {
                         ) : (
                           <Button
                             title="Swap to this plan"
-                            onPress={() => changePlan(item.id)}
+                            onPress={() => {
+                              setSubscriptionToChange(item.id);
+                              setShowPinModal(true);
+                              //changePlan(item.id);
+                            }
+                            }
                           />
                         )}
                       </View>
@@ -208,12 +234,12 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: "5%",
-    height:300,
-    width:450,
+    height: 300,
+    width: 450,
     resizeMode: "contain",
   },
   cardNameBox: {
-    marginTop:15,
+    marginTop: 15,
     width: "100%",
   },
   cardTitle: {
@@ -223,6 +249,19 @@ const styles = StyleSheet.create({
     color: "#0101FD",
     fontSize: 25,
     fontWeight: "700",
+  },
+  comingSoonText: {
+    textTransform: "uppercase",
+    fontSize: moderateScale(80),
+    fontWeight: "bold",
+    textAlign: "center",
+
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+
   },
   cardPrice: {
     marginTop: 25,

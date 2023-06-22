@@ -14,27 +14,41 @@ import RecentTransactions from "../components/RecentTransactions";
 import PinModal from "../components/PinModal";
 
 const Teams = ({ navigation }) => {
+    const [showPinModal, setShowPinModal] = useState(true);
 
     useEffect(() => {
         // loadData()
-    }, [])
+    }, []);
 
     const onSuccess = () => {
-        console.log("!")
+        console.log("Success!");
+        setShowPinModal(false);
+    };
+
+    if (showPinModal) {
+        return (
+            <View style={styles.mainContainer}>
+                {/* <RecentTransactions
+            amount={10}
+          /> */}
+                {showPinModal ? (
+                    <PinModal
+                        title="Enter your PIN"
+                        success={() => onSuccess()}
+                    />
+                ) : null}
+            </View>
+        )
     }
 
     return (
         <View style={styles.mainContainer}>
-            {/* <RecentTransactions
-            amount = {10}
-          /> */}
-            <PinModal
-                title="Enter your pin"
-                success={() => onSuccess()}
+            <RecentTransactions
+                amount={10}
             />
         </View>
-    )
-}
+    );
+};
 
 export default Teams
 
