@@ -12,6 +12,8 @@ import { moderateScale } from '../config/scaling'
 
 import RecentTransactions from "../components/RecentTransactions";
 import PinModal from "../components/PinModal";
+import UserIcon from "../components/UserIcon";
+import ButtonIcon from "../components/ButtonIcon";
 
 const Teams = ({ navigation }) => {
     const [showPinModal, setShowPinModal] = useState(false);
@@ -30,9 +32,6 @@ const Teams = ({ navigation }) => {
     if (showPinModal) {
         return (
             <View style={styles.mainContainer}>
-                {/* <RecentTransactions
-            amount={10}
-          /> */}
                 {showPinModal ? (
                     <PinModal
                         title="Enter your PIN"
@@ -45,8 +44,12 @@ const Teams = ({ navigation }) => {
 
     return (
         <View style={styles.mainContainer}>
-            <RecentTransactions
+            {/* <RecentTransactions
                 amount={10}
+            /> */}
+            <ButtonIcon
+                name = "My cards"
+                image = "dots-horizontal"
             />
         </View>
     );
