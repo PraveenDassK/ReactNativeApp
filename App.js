@@ -20,7 +20,7 @@ import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
 import versionChecker from "./app/utility/versionChecker";
-import NewCard from "./app/screens/NewCard";
+
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -232,7 +232,7 @@ export default function App() {
     );
   }
 
-  // return <NewCard />
+
 
   return (
     <AuthContext.Provider

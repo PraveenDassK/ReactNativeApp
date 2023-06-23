@@ -87,7 +87,7 @@ import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
-import Tabs from "./tabs";
+
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
