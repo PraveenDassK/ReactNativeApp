@@ -20,13 +20,9 @@ import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
 import versionChecker from "./app/utility/versionChecker";
-<<<<<<< HEAD
-import NewCard from "./app/screens/NewCard";
-=======
 import { usePreventScreenCapture } from 'expo-screen-capture';
 
 
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
 
 if (!global.btoa) {
   global.btoa = encode;

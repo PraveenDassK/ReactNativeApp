@@ -761,13 +761,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           {/* // AssetsAssets */}
 
           {projects && <View style={styles.containerSpacing}>
-<<<<<<< HEAD
               <TransactionHead headerTitle="Carbon transactions"/>
             {projects.map(({ name, lastUpdated, displayAssetPrice, type }, index) => (
-=======
-            <TransactionHead headerTitle="Carbon transactions" />
-            {projects.map(({ name, lastUpdated, displayAssetPrice, type }) => (
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
               <TransactionBody
                 key={index}
                 name={`${name} £${displayAssetPrice}/${type}`}
@@ -1159,11 +1154,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     height: "10%",
   },
-<<<<<<< HEAD
   containerSpacing: { paddingHorizontal: "5%", paddingVertical: "10%"},
-=======
-  containerSpacing: { paddingHorizontal: "5%" },
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
   titleText: {
     top: verticalScale(2),
     left: horizontalScale(10),

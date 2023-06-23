@@ -106,12 +106,9 @@ import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
-<<<<<<< HEAD
-=======
 import OrderCard from "../screens/OrderCard";
 import Dashboard from "../screens/Dashboard";
 
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
