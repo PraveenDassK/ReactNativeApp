@@ -1,30 +1,27 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    Pressable,
-    ActivityIndicator,
-} from "react-native";
-import GlobalStyles from "../../GlobalStyles";
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const ButtonIcon = ({ 
-    name = "Default", 
-    size = 50, 
-    image = "dots-horizontal" 
+const ButtonIcon = ({
+    name = "Default",
+    size = 50,
+    image = "dots-horizontal",
+    onPress
 }) => {
     return (
-        <View style={[styles.container, { width: size, height: size }]}>
-            <View style={styles.icon} backgroundColor={`#D8EBF9`}>
-                <MaterialCommunityIcons
-                    name={image}
-                    size={30}
-                />
+        <TouchableOpacity onPress={onPress}>
+            <View style={[styles.container, { width: size, height: size }]}>
+                <View style={styles.icon} backgroundColor={`#D8EBF9`}>
+                    <MaterialCommunityIcons
+                        name={image}
+                        size={30}
+                    />
+                </View>
+                <Text style={styles.name}>{name}</Text>
             </View>
-            <Text style={styles.name}>{name}</Text>
-        </View>
+        </TouchableOpacity>
+
     );
 };
 

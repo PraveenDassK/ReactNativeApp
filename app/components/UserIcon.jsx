@@ -1,12 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    Pressable,
-    ActivityIndicator,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import GlobalStyles from "../../GlobalStyles";
 import ReactNativePinView from "react-native-pin-view";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -14,8 +7,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 import AuthContext from "../auth/context";
 import api from "../api/apiCall";
 
-const UserIcon = ({ name = "Default", size = 50 }) => {
-
+const UserIcon = ({
+    name = "Default",
+    size = 50,
+    onPress
+}) => {
     const [initals, setInitals] = useState("");
     const [colour, setColour] = useState("");
 
@@ -34,12 +30,15 @@ const UserIcon = ({ name = "Default", size = 50 }) => {
         setColour(iconColour(name));
     };
     return (
-        <View style={[styles.container, { width: size, height: size }]}>
-            <View style={styles.icon} backgroundColor = {colour}>
-                <Text style={styles.initials}>{initals}</Text>
+        <TouchableOpacity onPress={onPress}>
+            <View style={[styles.container, { width: size, height: size }]}>
+                <View style={styles.icon} backgroundColor={colour}>
+                    <Text style={styles.initials}>{initals}</Text>
+                </View>
+                <Text style={styles.name}>{name}</Text>
             </View>
-            <Text style={styles.name}>{name}</Text>
-        </View>
+        </TouchableOpacity>
+
     );
 };
 
@@ -54,7 +53,7 @@ const staticColors = [
     '#FFE4B5', // Moccasin
     '#98FB98', // Pale Green
     '#D8BFD8'  // Thistle
-  ];
+];
 
 // Select a random color based on the given name
 function iconColour(name) {
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     icon: {
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: 'black',
         width: '100%',
         aspectRatio: 1,
