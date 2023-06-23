@@ -14,7 +14,9 @@ import RecentTransactions from "../components/RecentTransactions";
 import PinModal from "../components/PinModal";
 
 const Teams = ({ navigation }) => {
-    const [showPinModal, setShowPinModal] = useState(true);
+    const [showPinModal, setShowPinModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     useEffect(() => {
         // loadData()

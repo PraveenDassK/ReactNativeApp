@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import {
     StyleSheet,
     View,
-    Text
+    Text,
+    ActivityIndicator
 } from "react-native";
 import AuthContext from "../auth/context";
 
@@ -13,8 +14,10 @@ import {
     TransactionHead,
     TransactionFooter,
 } from "../components/transactions";
+
 const RecentTransactions = ({ amount }) => {
     const [transactions, setTransactions] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     //All Income Expense
     const [typeSelection, setTypeSelection] = useState("All")
@@ -28,10 +31,20 @@ const RecentTransactions = ({ amount }) => {
     }, []);
 
     const loadData = async () => {
+        setIsLoading(true)
         const transactionCall = await apiTransaction.GetTransactions(accountID, amount,typeSelection);
         setTransactions(transactionCall.transactions)
+        setIsLoading(false)
     }
-    console.log(transactions)
+
+    if (isLoading) {
+        return (
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <ActivityIndicator size="large" color="black" />
+            </View>
+        );
+    }
+
 
     return (
         <View style={{ paddingHorizontal: "5%", marginVertical: 40 }}>

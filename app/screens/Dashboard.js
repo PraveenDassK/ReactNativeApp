@@ -1,15 +1,42 @@
 
 import React, { useEffect, useState, useContext } from "react";
 import { RefreshControl, Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, ActivityIndicator, Platform, Dimensions, TouchableWithoutFeedback, Vibration, useWindowDimensions, } from "react-native";
-import PinModal from "../components/PinModal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const CARD_DATA = [];
+import AuthContext from "../auth/context";
+import apiCall from "../api/apiCall";
 
 const HomeScreenPersonal = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPinModal, setShowPinModal] = useState(true);
 
+    const [userImpact, setUserImpact] = useState({});
+    const [userData, setuserData] = useState({});
+
+    const { accountID, customerDetails } = useContext(AuthContext);
+
+    useEffect(() => {
+        loadData()
+    }, []);
+
+    /**
+     * @dev This loads the data from the Backend
+     * @notice Loading is set at the start of this function
+     * @dev if any call fails then no data is set and the loading stops
+     */
+    const loadData = async () => {
+        try{
+            setIsLoading(true)
+            const userDataReturn = await apiCall.GetCustomerDetails(accountID);
+            const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
+            setuserData(userDataReturn)
+            setUserImpact(userImpactReturn)
+            setIsLoading(false)
+        }catch{
+            setIsLoading(false)
+            return
+        }
+    }
 
     if (isLoading) {
         return (
@@ -18,26 +45,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             </View>
         );
     }
-
-    const onSuccess = () => {
-        console.log("Success!");
-        setShowPinModal(false);
-    };
-
-    if (showPinModal) {
-        return (
-            <View>
-                {showPinModal ? (
-                    <PinModal
-                        title="Enter your PIN"
-                        success={() => onSuccess()}
-                    />
-                ) : null}
-            </View>
-        )
-    }
-
-    if (pin) { }
 
     return (
         <View>
