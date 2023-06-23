@@ -68,7 +68,7 @@ import CarbonyteLabs from "../screens/CarbonyteLabs";
  * @notice Screens on the settings page to navigate to
  */
 
-import ChooseCardsElite from "../screens/ChooseCardsElite";
+import Subscriptions from "../screens/Subscriptions";
 import SecurityAndPrivacy from "../screens/SecurityAndPrivacy";
 import AccountSettings from "../screens/AccountSettings";
 import Transactions from "../screens/Transactions";
@@ -88,6 +88,13 @@ import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
 
+import PaymentLink from "../screens/PaymentLink";
+
+import Teams from "../screens/Teams";
+import Invoices from "../screens/Invoices";
+import DirectDebits from "../screens/DirectDebits";
+import DirectDebitForm from "../screens/DirectDebitForm";
+
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -99,6 +106,9 @@ import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
+import OrderCard from "../screens/OrderCard";
+import Dashboard from "../screens/Dashboard";
+
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
@@ -140,8 +150,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -251,7 +261,30 @@ const StackNavigator = () => {
         component={CarbonyteLabs}
         options={{
           title: "Carbonyte labs",
-          headerShown: false,
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+<Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          title: "Dashboard",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
         }}
       />
 
@@ -270,6 +303,103 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: "white" },
         }}
       />
+
+      <Stack.Screen
+        name="OrderCard"
+        component={gestureHandlerRootHOC(OrderCard)}
+        options={{
+          title: "Order Card",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="DirectDebitForm"
+        component={gestureHandlerRootHOC(DirectDebitForm)}
+        options={{
+          title: "New Direct Debit",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="Invoices"
+        component={gestureHandlerRootHOC(Invoices)}
+        options={{
+          title: "Invoices",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="Teams"
+        component={gestureHandlerRootHOC(Teams)}
+        options={{
+          title: "Teams",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="DirectDebits"
+        component={gestureHandlerRootHOC(DirectDebits)}
+        options={{
+          title: "DirectDebits",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="PaymentLink"
+        component={gestureHandlerRootHOC(PaymentLink)}
+        options={{
+          title: "Payment Link",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
       <Stack.Screen
         name="ScheduledPayment"
         component={gestureHandlerRootHOC(ScheduledPayment)}
@@ -531,7 +661,7 @@ const StackNavigator = () => {
         name="ChooseCardsStandard5"
         component={gestureHandlerRootHOC(ChooseCardsStandard5)}
         options={{
-          title: "ChooseCardsStandard5",
+          title: "Eco summary",
         }}
       />
 
@@ -544,10 +674,10 @@ const StackNavigator = () => {
       />
 
       <Stack.Screen
-        name="ChooseCardsElite"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
+        name="Subscriptions"
+        component={gestureHandlerRootHOC(Subscriptions)}
         options={{
-          title: "Choose Cards",
+          title: "Subscription",
         }}
       />
       <Stack.Screen
@@ -684,13 +814,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-        // listeners={({ navigation, route }) => ({
-        //   focus: () => {
+      // listeners={({ navigation, route }) => ({
+      //   focus: () => {
 
-        //     // Do something with the `navigation` object
-        //     navigation.navigate('AccountTab');
-        //   },
-        // })}
+      //     // Do something with the `navigation` object
+      //     navigation.navigate('AccountTab');
+      //   },
+      // })}
       />
     </Tab.Navigator>
   );

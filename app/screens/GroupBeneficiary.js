@@ -92,6 +92,7 @@ const GroupBeneficiary = ({ navigation }) => {
     }else{
 
     }
+    alert("Your group has been made")
     navigation.navigate("SendMoney")
   };
 

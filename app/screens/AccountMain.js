@@ -1,41 +1,13 @@
-import React, {
-  useEffect,
-  useState,
-  useContext,
-  useCallback,
-  useRef,
-  Fragment,
-} from "react";
-import {
-  RefreshControl,
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Platform,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Vibration,
-  useWindowDimensions,
-} from "react-native";
+import React, { useEffect, useState, useContext, useCallback, useRef, Fragment, } from "react";
+import { RefreshControl, Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, ActivityIndicator, Platform, Dimensions, TouchableWithoutFeedback, Vibration, useWindowDimensions, } from "react-native";
 
 import * as Device from "expo-device";
 
 import Swiper from "react-native-swiper";
 import {
-  GestureDetector,
-  GestureHandlerRootView,
+  GestureDetector, GestureHandlerRootView,
 } from "react-native-gesture-handler";
-import Animated, {
-  Easing,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming, } from "react-native-reanimated";
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
@@ -51,11 +23,14 @@ import moment from "moment";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import authStorage from "../auth/storage";
+import apiTransaction from "../api/apiTransaction";
 import {
   TransactionBody,
   TransactionHead,
   TransactionFooter,
 } from "../components/transactions";
+import SquareIcon from "../components/SquareIcon";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const CARD_DATA = [];
 
@@ -82,6 +57,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [nftimg, setNftimg] = useState(null);
   const [showCardDetails, setShowCardDetails] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [transactionTotal, setTransactionTotal] = useState(1);
+
+  const [iconShow, setIconShow] = useState(false)
 
   const {
     carbonyteID,
@@ -133,6 +111,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Calls the API once during load
   useEffect(() => {
     loadData();
+    checkForInitalPasscode()
   }, [accountID, customerDetails]);
 
   const checkForInitalPasscode = async () => {
@@ -154,6 +133,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
    
     const transactionCall = await apiCall.GetTransactions(accountID);
 
+    console.log(resposeData)
     const carbonSpendData = await apiCarbon.GetBarGraphData();
     setCatNames(carbonSpendData.labels);
     setDataPercentages(carbonSpendData.percentages);
@@ -165,7 +145,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       setSortCode("00-00-00");
 
       CARD_DATA.push(cardObject);
-      CARD_DATA.push(cardObject);
     }
 
     setBalance(userData.balance);
@@ -175,7 +154,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setCarbon(resposeData.totalOffset);
 
     setTransactions(transactionCall.transactions);
-
+    setTransactionTotal(transactionCall.total)
     //Load the data for transactions
     let pageShow = [];
     for (let i = 0; i < 5; i++) {
@@ -335,7 +314,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                         {...card}
                         isVisible={showCardDetails}
                         selected={selectedCard?.name === card.name}
-                        onPress={() => handleCardPress(card)}
+                        onPress={() => setShowCardDetails((prev) => !prev)}
                       />
                     ))}
                   </Swiper>
@@ -443,62 +422,105 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("AddFunds")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/add.png")}
-                />
-                <AppText style={styles.inputBoxText}>Add Funds</AppText>
-              </View>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SendMoney")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/send-1.png")}
-                />
-                <AppText style={styles.inputBoxText}>Send Money</AppText>
-              </View>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("MyCards")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/icon-outlinecreditcard.png")}
-                />
-                <AppText style={styles.inputBoxText}>My Cards</AppText>
-              </View>
-            </TouchableOpacity>
+            <SquareIcon
+              text={"Move money"}
+              image={"bank-transfer"}
+              trigger={() => navigation.navigate("AddFunds")}
+            />
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SwitchAccounts")}
-              style={[styles.inputBox]}
-            >
-              <View style={styles.inputBoxDiv}>
-                <Image
-                  style={styles.inputIcon}
-                  resizeMode="contain"
-                  source={require("../assets/transfer-1.png")}
-                />
-                <AppText style={styles.inputBoxText}>SwitchAccount</AppText>
-              </View>
-            </TouchableOpacity>
+
+            <SquareIcon
+              text={"Send money"}
+              image={"send"}
+              trigger={() => navigation.navigate("SendMoney")}
+            />
+
+            <SquareIcon
+              text={"Cards"}
+              image={"credit-card"}
+              trigger={() => navigation.navigate("MyCards")}
+            />
+
+            {!iconShow ?
+              <SquareIcon
+                text={"More"}
+                image={"dots-horizontal"}
+                trigger={() => setIconShow(!iconShow)}
+              /> :
+
+              <SquareIcon
+                text={"Switch accounts"}
+                image={"account-switch"}
+                trigger={() => navigation.navigate("SwitchAccounts")}
+              />
+            }
+
           </View>
+
+          {iconShow ?
+            <View>
+              <View style={styles.buttonContainer}>
+
+                <SquareIcon
+                  text={"Payment link"}
+                  image={"link-variant"}
+                  trigger={() => navigation.navigate("PaymentLink")}
+                />
+
+                <SquareIcon
+                  text={"Subscriptions"}
+                  image={"newspaper-variant-outline"}
+                  trigger={() => navigation.navigate("Subscriptions")}
+                />
+
+                <SquareIcon
+                  text={"Set limits"}
+                  image={"car-speed-limiter"}
+                  trigger={() => navigation.navigate("SpendingLimit")}
+                />
+
+                <SquareIcon
+                  text={"Transactions"}
+                  image={"bank-outline"}
+                  trigger={() => navigation.navigate("Transactions")}
+                />
+
+              </View>
+
+              <View style={styles.buttonContainer}>
+
+
+                <SquareIcon
+                  text={"Teams"}
+                  image={"account-group"}
+                  trigger={() => navigation.navigate("Teams")}
+                />
+
+
+                <SquareIcon
+                  text={"Invoices"}
+                  image={"file-document-multiple"}
+                  trigger={() => navigation.navigate("Invoices")}
+                />
+
+                <SquareIcon
+                  text={"Direct debits"}
+                  image={"directions"}
+                  trigger={() => navigation.navigate("DirectDebits")}
+                />
+
+                <SquareIcon
+                  text={"Less"}
+                  image={"dots-horizontal"}
+                  trigger={() => setIconShow(!iconShow)}
+                />
+
+              </View>
+            </View>
+
+            : false}
         </View>
 
         <View style={styles.carbonSpendingTitleDiv}>
@@ -738,13 +760,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={{ marginTop: "2.5%" }} />
           {/* // AssetsAssets */}
 
-          {/* {projects &&
-            projects.map((project, index) => (
-              <Fragment key={`${index}-${project.name}`}>
-                <CarbonAssets project={project} navigation={navigation} />
-              </Fragment>
-            ))} */}
-
           {projects && <View style={styles.containerSpacing}>
               <TransactionHead headerTitle="Carbon transactions"/>
             {projects.map(({ name, lastUpdated, displayAssetPrice, type }, index) => (
@@ -755,35 +770,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 token={1}
               />
             ))}
-            <TransactionFooter number={projects.length} onSee={() =>navigation.navigate("VirtualEcoSystem")}/>
+            <TransactionFooter
+              number={projects.length}
+              total={numTrees}
+              onSee={() => navigation.navigate("VirtualEcoSystem")} />
           </View>}
         </View>
 
-        {/**
-         * @dev Transactions section
-         */}
-
-        {/* <View style={[styles.carbonSpendingTitleDiv]}>
-          <Image
-            resizeMode="contain"
-            source={require("../assets/icon-withdraw.png")}
-            style={{ width: horizontalScale(25), height: verticalScale(25) }}
-          />
-          <AppText
-            style={[
-              styles.titleText,
-              {
-                fontWeight: Platform.OS === "android" ? "normal" : "700",
-                fontFamily: "Helvetica",
-              },
-            ]}
-          >
-            Recent Transactions
-          </AppText>
-        </View>
-        {transactionTable && (
-          <View style={styles.transactionsContainer}>{transactionTable}</View>
-        )} */}
 
         {transactions && (
           <View style={{ paddingHorizontal: "5%", marginVertical: 40 }}>
@@ -799,6 +792,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             ))}
             <TransactionFooter
               number={transactions.length}
+              total={transactionTotal}
               onSee={() => navigation.navigate("Transactions")}
             />
           </View>

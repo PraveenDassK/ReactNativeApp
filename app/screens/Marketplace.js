@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Swiper from "react-native-swiper";
@@ -109,7 +110,7 @@ const Marketplace = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Button title={"go to vendor"} textTransform={"uppercase"} />
+        <Button title={"go to vendor"} textTransform={"uppercase"} onPress={() => navigation.navigate("MarketPlaceItem")}/>
       </View>
     </View>
   );

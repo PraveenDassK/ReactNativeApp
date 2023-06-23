@@ -13,7 +13,6 @@ import colors from "../config/colors";
 import AuthScreen from "./AuthScreen";
 
 
-
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     phoneNumber: Yup.string().required().min(10).max(10).label("Phone number")
@@ -23,7 +22,8 @@ const PersonalOrBusiness = ({SaveDetails,navigation}) => {
 
     const handleSubmit = async (type) => {
         console.log(type)
-        SaveDetails(type)
+        // SaveDetails(type)
+        navigation.navigate("Directororpartner")
     }
     const handleBack = () =>{
         console.log("!")

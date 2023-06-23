@@ -539,12 +539,7 @@ import React, {
   useContext,
 } from "react";
 import {
-  Animated,
-  View,
-  ScrollView,
-  SafeAreaView,
-  ImageBackground,
-  Dimensions,
+  Text,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -589,6 +584,22 @@ export default function MyCards({navigation}) {
   useEffect(() => {
     loadData();
   }, []);
+
+
+  const getFullCardData = async () => {
+    const cardObject = await api.GetCardFromID("714613712");
+    const cards = await apiCall.GetCardByAccount("686283112");
+    const obj = {
+      "cardName": cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
+      "cardNumber": cardDetail.maskedCardNumber,
+      "cvv": "000",
+      "expiary": "00/00",
+      "isFrozen": cardDetail.status != "CARD_OK",
+      "isVirtual": cardDetail.template == "MC_VIRTUAL"
+    }
+    setCurrentCardDataShow(obj)
+  }
+
 
   const loadData = async () => {
     const response = await apiCall.GetTransactions(

@@ -1,0 +1,48 @@
+[
+    {
+      "id": 0,
+      "customerId": "",
+      "emails": [
+        {
+          "emailId": "jack.h@carbonyte.io"
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "phoneNo": "7927201649"
+        }
+      ],
+      "customerDetails": {
+        "documentNo": "",
+        "documentType": "",
+        "address": "123 street",
+        "firstName": "jack",
+        "dob": "01-01-1970",
+        "nationalId": "2",
+        "lastName": "Huang",
+        "postCode": "HA9 0HZ",
+        "postTown": "Area 5",
+        "country": "Uk",
+        "countryCode": "GBR",
+        "locale": "en_GB",
+        "salutation": "Dr",
+        "gender": "Male",
+        "maritalStatus": "Single",
+        "employmentDetails": "Unemployed"
+      },
+      "income": {
+        "totalIncome": "0",
+        "savings": "0",
+        "taxResidency": "Uk",
+        "incomeSources": [
+          "Salary"
+        ]
+      },
+      "key": "",
+      "role": "",
+      "ownershipPercentage": 0,
+      "marketingChoices": "",
+      "acceptanceDateTime": "1",
+      "policyVersion": "1"
+    }
+  ]
