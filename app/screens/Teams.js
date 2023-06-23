@@ -45,7 +45,7 @@ const Teams = ({ navigation }) => {
             {/* <RecentTransactions
                 amount={10}
             /> */}
-            <UserIcon
+            <ButtonIcon
                 name = "My cards"
                 image = "dots-horizontal"
                 onPress={() => console.log("!")}

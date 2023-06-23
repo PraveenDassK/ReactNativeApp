@@ -43,17 +43,27 @@ const UserIcon = ({
 };
 
 const staticColors = [
-    '#FFFACD', // Lemon Chiffon
-    '#E6E6FA', // Lavender
-    '#7FFFD4', // Aquamarine
-    '#FFDAB9', // Peach Puff
-    '#AFEEEE', // Pale Turquoise
-    '#F08080', // Light Coral
-    '#6495ED', // Cornflower Blue
-    '#FFE4B5', // Moccasin
-    '#98FB98', // Pale Green
-    '#D8BFD8'  // Thistle
-];
+    "#FFB4B4", // 255, 180, 180
+    "#FFC3B4", // 255, 195, 180
+    "#FFD2B4", // 255, 210, 180
+    "#FFE1B4", // 255, 225, 180
+    "#FFF0B4", // 255, 240, 180
+    "#FFFFB4", // 255, 255, 180
+    "#F0FFB4", // 240, 255, 180
+    "#E1FFB4", // 225, 255, 180
+    "#D2FFB4", // 210, 255, 180
+    "#C3FFB4", // 195, 255, 180
+    "#B4FFB4", // 180, 255, 180
+    "#B4FFC3", // 180, 255, 195
+    "#B4FFD2", // 180, 255, 210
+    "#B4FFE1", // 180, 255, 225
+    "#B4FFF0", // 180, 255, 240
+    "#B4FFFF", // 180, 255, 255
+    "#B4F0FF", // 180, 240, 255
+    "#B4E1FF", // 180, 225, 255
+    "#B4D2FF", // 180, 210, 255
+    "#B4C3FF", // 180, 195, 255
+  ];
 
 // Select a random color based on the given name
 function iconColour(name) {
