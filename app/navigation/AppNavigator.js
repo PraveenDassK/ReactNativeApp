@@ -104,6 +104,7 @@ import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
 import OrderCard from "../screens/OrderCard";
+import Dashboard from "../screens/Dashboard";
 
 
 function MyTabBar({ state, descriptors, navigation, position }) {
@@ -238,6 +239,22 @@ const StackNavigator = () => {
         component={CarbonyteLabs}
         options={{
           title: "Carbonyte labs",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+<Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          title: "Dashboard",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
