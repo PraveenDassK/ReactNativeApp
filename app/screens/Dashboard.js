@@ -41,7 +41,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     return (
         <View>
-
+        <View>Hello world</View>
         </View>
     );
 };

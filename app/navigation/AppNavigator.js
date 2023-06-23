@@ -18,7 +18,7 @@ import Settings from "../screens/Settings";
 
 import AccountDummy from "../screens/AccountDummy";
 import AccountDummy2 from "../screens/AccountDummy2";
-
+import DashBoard  from "../screens/Dashboard";
 /**
  * @notice Screens on account page to navigate to
  */
@@ -749,7 +749,7 @@ const AppNavigator = () => {
     >
       <Tab.Screen
         name="Loop1"
-        component={gestureHandlerRootHOC(AccountDummy2)}
+        component={gestureHandlerRootHOC(DashBoard)}
         options={{
           tabBarShowLabel: false,
           headerShown: false,
