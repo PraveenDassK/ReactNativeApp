@@ -27,6 +27,7 @@ import {
   verticalScale,
   moderateScale,
 } from "../config/scaling";
+import authStorage from "../auth/storage";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -34,10 +35,20 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = ({ navigation }) => {
-  
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const { setUser } = useContext(AuthContext);
+  const {
+    user,
+    currentUser,
+    setCurrentUser,
+    setUserID,
+    setAccountID,
+    setUser,
+    setCardID,
+    expoPushToken,
+    setCustomerDetails,
+  } = useContext(AuthContext);
 
   const handleSubmit = async ({ email, phoneNumber }) => {
     setIsLoading(true);
@@ -50,6 +61,25 @@ const Login = ({ navigation }) => {
 
     navigation.navigate("OTPVerificationPersonal", { registration: true });
   };
+
+  const dummyLogin = async () => {
+    //This sets the loading icon and disables the button
+    setIsLoading(true);
+
+    const token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJEYXRhIjoie1wiQ3VzdG9tZXJJZFwiOlwiQ0MxXCIsXCJFbWFpbFwiOlwiamFjay5oQGNhcmJvbnl0ZS5pb1wiLFwiUGhvbmVOdW1iZXJcIjpcIjc5MjcyMDE2NDlcIn0iLCJleHAiOjE2ODY5MDY3MzIsImlzcyI6IkNhcmJvbnl0ZSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDMifQ.qAg1FhCF1gyycVP4kXEIbHqLYPpXIkr0iWPfl_2eNcGdKR5-RoADme5jj8_m8oqLtkykpEuzIsQsgmCxOKi_fQ"
+
+    const IDs = await loginApi.GetIDs(token);
+
+    authStorage.storeToken(token);
+    setCurrentUser(IDs.token);
+    setUserID(IDs.userID);
+    setAccountID(IDs.accountID);
+    setCardID(IDs.cardID);
+    setCustomerDetails(IDs.customerDetails);
+
+    //Turns off the loading
+    setIsLoading(false);
+  }
 
   return (
     <Screen style={{ backgroundColor: "white" }}>
@@ -181,6 +211,15 @@ const Login = ({ navigation }) => {
                     textColor="white"
                     color="black"
                     onPress={handleSubmit}
+                    visible={isLoading}
+                    disabled={isLoading}
+                  />
+
+                  <Button
+                    title="Test Login"
+                    textColor="white"
+                    color="black"
+                    onPress={dummyLogin}
                     visible={isLoading}
                     disabled={isLoading}
                   />

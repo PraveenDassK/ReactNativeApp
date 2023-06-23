@@ -30,7 +30,7 @@ import Button from "../components/AppButton";
 import RegistrationPersonalDetails from "../components/RegistrationPersonalDetails.jsx";
 import RegistraionEmailAndPhone from "../components/RegistrationPersonalDetails.jsx";
 import PersonalOrBusiness from "../components/RegistrationPersonalOrBusiness.jsx";
-
+import DirectororPartner from "../components/RegistartionDirectororPartner";
 const Registration = ({ navigation }) => {
   //Personal details
   const [accountType, setPersonalBusiness] = useState(null);

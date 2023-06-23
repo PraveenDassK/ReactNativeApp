@@ -31,7 +31,7 @@ const TransactionBody = ({
 
         <View style={styles.dateContainer}>
           <Text style={styles.displayText}>
-            {moment(date).format(" DD MMM, YY")}
+            {moment(date).format(" DD MMM, HH:MM")}
             {/* {moment(item.transactionDate).format(" DD MMM YY")} */}
           </Text>
         </View>
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   },
   transactionContainer: {
     flexDirection: "row",
-    paddingHorizontal: "0.5%",
     height: 40,
   },
   icon: {

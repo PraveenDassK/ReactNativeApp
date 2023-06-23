@@ -12,7 +12,7 @@ import OTPVerificationPersonal2 from "../screens/OTPVerificationPersonal2";
 import Login from "../screens/Login";
 import PersonalOrBusiness from "../screens/PersonalOrBusiness";
 import Name from "../screens/Name";
-
+import DirectororPartner from "../screens/DirectorsorPartners";
 import ProofOfResidency from "../screens/ProofOfResidency";
 import ProofOfID from "../screens/ProofOfID";
 import ProofOfFace from "../screens/ProofOfFace";
@@ -47,6 +47,10 @@ const AuthNavigator = () => (
     <Stack.Screen
       name="Onboarding3"
       component={gestureHandlerRootHOC(Onboarding3)}
+    />
+    <Stack.Screen
+      name="Directororpartner"
+      component={gestureHandlerRootHOC(DirectororPartner)}
     />
 
     <Stack.Screen

@@ -514,7 +514,12 @@ const Analytics = ({ navigation }) => {
             />
           ))}
           <TransactionFooter
+<<<<<<< HEAD
             number={transactions.length}
+=======
+            number={3}
+            total={transactions.length}
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
             onSee={() => navigation.navigate("Transactions")}
           />
         </View>
@@ -735,7 +740,11 @@ const Bazier = ({ graphData }) => {
       {/* <AppText>Bezier Line Chart</AppText> */}
 
       <LineChart
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
         data={{
           labels: xAxis,
           datasets: [{ data: yAxis }],
@@ -797,18 +806,18 @@ const Bazier = ({ graphData }) => {
           let isSamePoint = tooltipPos.x === data.x && tooltipPos.y === data.y;
           isSamePoint
             ? setTooltipPos((previousState) => {
-                return {
-                  ...previousState,
-                  value: data.value,
-                  visible: !previousState.visible,
-                };
-              })
-            : setTooltipPos({
-                x: data.x,
+              return {
+                ...previousState,
                 value: data.value,
-                y: data.y,
-                visible: true,
-              });
+                visible: !previousState.visible,
+              };
+            })
+            : setTooltipPos({
+              x: data.x,
+              value: data.value,
+              y: data.y,
+              visible: true,
+            });
         }}
       />
     </View>

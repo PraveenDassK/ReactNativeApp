@@ -47,7 +47,7 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
     }
 
     if(type == null){
-      return alert("Please put in a company type")
+      return alert("Please put in a business type")
     }
 
     if(!privacyPolicy){

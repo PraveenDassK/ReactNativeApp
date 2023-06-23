@@ -27,7 +27,8 @@ const ChooseCardsStandard5 = ({ navigation }) => {
   //Gets the data for the user
   const loadData = async () => {
     let response = await apiCall.GetUserImpact(customerDetails);
-    const assets = response.allAssets;
+    console.log(response)
+    const assets = response.assets;
     console.log(assets)
     let trees = 0;
     let carbon = 0;

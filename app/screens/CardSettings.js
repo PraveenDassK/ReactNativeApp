@@ -411,7 +411,7 @@ const CardSettings = ({ navigation }) => {
 
         <Pressable
           style={[styles.groupChild]}
-          onPress={() => navigation.navigate("ChooseCardsElite")}
+          onPress={() => navigation.navigate("Subscriptions")}
         >
           <View
             style={[

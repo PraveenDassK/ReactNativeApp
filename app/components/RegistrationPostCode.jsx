@@ -33,7 +33,8 @@ const Postcode = ({ AddAddress }) => {
   const [address, setAddress] = useState(null);
 
   /**
-   * @dev This finds the correct postcodes
+   * @dev This finds the correct address from the postcode
+   * @param {Str} postcode The postcode entered
    */
   const handleSubmit = async ({ postcode }) => {
     // const response = await apiLogin.GetAddressByPostCode(postcode)

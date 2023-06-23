@@ -103,6 +103,23 @@ const AddFunds = ({ navigation }) => {
       sortCode: chosenAccount.identifiers[0].sortCode,
     };
 
+    const requestObj = {
+      "sourceAccountId": accountID,
+      "destination": {
+        "type": "SCAN",
+        "id": "A1226WEM",
+        "accountNumber": chosenAccount.identifiers[0].accountNumber,
+        "sortCode": chosenAccount.identifiers[0].sortCode,
+        "name": chosenAccount.name,
+        "phoneNumber": ""
+      },
+      "currency": "GBP",
+      "amount": amount,
+      "reference": "Transfer"
+    }
+
+    console.log(requestObj)
+
     console.log(benData);
     navigation.navigate("Pin", {
       amount: amount,
@@ -110,7 +127,7 @@ const AddFunds = ({ navigation }) => {
       successScreen: "Success",
       successText:
         "Transfer to " + benData.accountName + " of £" + amount + " successful",
-      beneficiaryData: benData,
+      beneficiaryData: requestObj,
     });
   };
 

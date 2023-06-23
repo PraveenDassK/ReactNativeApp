@@ -30,7 +30,7 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
 
     const request = await apiLoginRegister.GetCompanyByRegNo(regNumber);
     setLoading(false)
-    if (request === null) return Alert.alert("Invalid company address");
+    if (request === null) return Alert.alert("Invalid business address");
 
     const sicCode = SICCodes.filter(SICCodes => +request.sic_codes[0].includes(SICCodes.sic_code))[0].section;
     console.log(sicCode)
