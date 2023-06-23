@@ -11,6 +11,7 @@ import {
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Swiper from "react-native-swiper";
 import { moderateScale } from "../config/scaling";
+import { Rating } from 'react-native-ratings';
 
 import Button from "../components/AppButton";
 
@@ -26,19 +27,20 @@ const itemArrayWithIds = itemArray.map((item, index) => {
 const imageArray = [
   {
     id: 1,
-    img: "https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
+    img: "https://fastly.picsum.photos/id/20/3670/2462.jpg?hmac=CmQ0ln-k5ZqkdtLvVO23LjVAEabZQx2wOaT4pyeG10I",
     tag: "Fashion shouldn't cost the earth",
   },
   {
     id: 2,
-    img: "https://fastly.picsum.photos/id/116/3504/2336.jpg?hmac=C46vgpj3R407e8pCyy8NhIsNaBZCjb4r5d71keNgMJY",
+    img: "https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
     tag: "Fashion shouldn't cost the earth",
   },
   {
     id: 3,
-    img: "https://fastly.picsum.photos/id/20/3670/2462.jpg?hmac=CmQ0ln-k5ZqkdtLvVO23LjVAEabZQx2wOaT4pyeG10I",
+    img: "https://fastly.picsum.photos/id/116/3504/2336.jpg?hmac=C46vgpj3R407e8pCyy8NhIsNaBZCjb4r5d71keNgMJY",
     tag: "Fashion shouldn't cost the earth",
   },
+ 
 ];
 
 const capitalizeINIKA = (name) => {
@@ -95,15 +97,19 @@ const Marketplace = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.priceFooterContainer}>
+          <View style={{flexDirection: "row"}}>
+               <Rating startingValue={score} imageSize={20}/>
           <Text>
-            {score} ({reviewCount})
+           ({reviewCount})
           </Text>
+          </View>
+     
           <TouchableOpacity>
             <Text style={styles.priceReview}>reviews</Text>
           </TouchableOpacity>
         </View>
 
-        <Button title={"add to cart"} textTransform={"uppercase"} />
+        <Button title={"go to vendor"} textTransform={"uppercase"} />
       </View>
     </View>
   );
@@ -185,7 +191,7 @@ const Marketplace = ({ navigation }) => {
 
       <View style={styles.ethikalContainer}>
         <Text style={styles.ethikalHeader}>
-          Shop <Text style={styles.ethikalBoldHeader}>eThikel!</Text>
+          Shop <Text style={styles.ethikalBoldHeader}>Carbonyte</Text>
         </Text>
         <Text>
           We are here to serve you & give you a better and reliable resource to

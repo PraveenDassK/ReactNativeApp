@@ -151,6 +151,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     if (!customerDetails) return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
+   
     const transactionCall = await apiCall.GetTransactions(accountID);
 
     const carbonSpendData = await apiCarbon.GetBarGraphData();
@@ -169,7 +170,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     setBalance(userData.balance);
     setaccountnumber(userData.accountId);
-
     setProjects(resposeData.assets);
     setTrees(resposeData.totalAssets);
     setCarbon(resposeData.totalOffset);
@@ -747,8 +747,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
           {projects && <View style={styles.containerSpacing}>
               <TransactionHead headerTitle="Carbon transactions"/>
-            {projects.map(({ name, lastUpdated, displayAssetPrice, type }) => (
+            {projects.map(({ name, lastUpdated, displayAssetPrice, type }, index) => (
               <TransactionBody
+                key={index}
                 name={`${name} £${displayAssetPrice}/${type}`}
                 date={lastUpdated}
                 token={1}
@@ -1159,7 +1160,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     height: "10%",
   },
-  containerSpacing: { paddingHorizontal: "5%"},
+  containerSpacing: { paddingHorizontal: "5%", paddingVertical: "10%"},
   titleText: {
     top: verticalScale(2),
     left: horizontalScale(10),

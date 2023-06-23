@@ -69,7 +69,7 @@ const Settings = ({ navigation }) => {
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
 
-    console.log("hello", userDetails, accountDetails, subscriptionDetails);
+    
     const data = userDetails;
     const accountdata = accountDetails;
 

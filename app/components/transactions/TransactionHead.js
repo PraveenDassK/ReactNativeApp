@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     paddingTop: 10,
     marginBottom: "1%",
-    paddingHorizontal: "0.5%"
+    paddingHorizontal: "3%"
   },
   headerTitleContainer: { flex: 1 , },
    headerText: { fontWeight: "700", fontSize: 20 },
     transactionContainer: {
     flexDirection: "row",
-    paddingHorizontal: "0.5%"
+    // paddingHorizontal: "0.5%"
   },
    transactionContainerTH: { flex: 4 },
      dateContainerTH: { flex: 2},

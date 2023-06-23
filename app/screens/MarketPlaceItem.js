@@ -9,6 +9,8 @@ import {
   ScrollView,
 } from "react-native";
 
+import { Rating, AirbnbRating } from "react-native-ratings";
+
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Swiper from "react-native-swiper";
 import { moderateScale } from "../config/scaling";
@@ -17,7 +19,13 @@ import Button from "../components/AppButton";
 
 import itemObj from "../api/apiMarket";
 import colors from "../config/colors";
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+import {
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+  VictoryLabel,
+} from "victory-native";
 
 const sampleData = [
   { x: 1, y: 2 },
@@ -52,10 +60,7 @@ const MarketPlaceItem = () => {
           {itemObj.thumbnailImages.map((image, index) => (
             <TouchableOpacity
               key={index.toString()}
-              style={[
-                styles.thumbnailContainer,
-                { marginLeft: index !== 0 ? "2.5%" : null },
-              ]}
+              style={[styles.thumbnailContainer, { marginRight: "2.5%" }]}
             >
               <Image
                 source={{ uri: image }}
@@ -76,7 +81,11 @@ const MarketPlaceItem = () => {
           </View>
           <Text style={styles.cardHeaderText}>{itemObj.fullName}</Text>
           <View style={styles.priceFooterContainer}>
-            <Text>{itemObj.reviews.score} </Text>
+            <Rating
+              startingValue={itemObj.reviews.score}
+              tintColor="#F6F5F8"
+              imageSize={20}
+            />
             <TouchableOpacity>
               <Text style={styles.priceReview}>
                 ({itemObj.reviews.reviews.length} reviews)
@@ -117,7 +126,7 @@ const MarketPlaceItem = () => {
           </View>
 
           <View>
-            <Button title={"add to cart"} textTransform={"uppercase"} />
+            <Button title={"go to vendor"} textTransform={"uppercase"} />
           </View>
           <View style={styles.wishlistContainer}>
             <Text style={styles.wishlistText}>add to wishlist</Text>
@@ -176,10 +185,10 @@ const MarketPlaceItem = () => {
           </Text>
         </View>
 
-        <View style={styles.reviewImageContainerHeader}>
+        {/* <View style={styles.reviewImageContainerHeader}>
           <Text style={styles.descriptionHeader}>Reviews with images</Text>
           <View></View>
-        </View>
+        </View> */}
 
         {itemObj.similarProducts[0]["reviews"]["reviews"].map(
           (product, index) => (
@@ -192,7 +201,7 @@ const MarketPlaceItem = () => {
                 </View>
                 <View style={styles.reviewRatingContainer}>
                   <Text style={styles.reviewText}>{product.reviewerName}</Text>
-                  <Text>{product.score}</Text>
+                  <Rating startingValue={product.score} imageSize={20} />
                 </View>
               </View>
 
@@ -202,36 +211,71 @@ const MarketPlaceItem = () => {
                   <Text>{product.description}</Text>
                 </View>
               </View>
+
+              <View style={styles.descriptionImageContainer}>
+                {product.images.slice(0, 4).map((image, index) => (
+                  <View
+                    key={index}
+                    style={styles.descriptionThumbnailConatiner}
+                  >
+                    <Image
+                      resizeMode="cover"
+                      style={styles.descriptionThumbnailImage}
+                      source={{ uri: image }}
+                    />
+                  </View>
+                ))}
+              </View>
             </View>
           )
         )}
 
         <View style={styles.reviewImageContainerHeader}>
-          <View>
-            <Text>Customer Reviews</Text>
-          </View>
-          <View>
-            <Text>Ratings</Text>
-          </View>
-            <View style={{justifyContent: "center", alignItems: "center"}}>
-             <VictoryChart theme={VictoryTheme.material} domainPadding={{ x: 50, y: 100}}>
-            <VictoryBar
-              animate={{
-                duration: 2000,
-                onLoad: { duration: 1000 }
-              }}
-              barRatio={0.8}
-              horizontal
-              style={{
-                data: { fill: "gold" },
-              }}
-              cornerRadius={{ top: 4 }}
-              data={sampleData}
-              
-            />
-          </VictoryChart> 
+          <View style={{ justifyContent: "center", alignItems: "flex-start" }}>
+            <View style={{ marginVertical: "2%" }}>
+              <Text style={styles.cardHeaderText}>Customer Reviews</Text>
             </View>
-          
+
+            <Rating startingValue={4} imageSize={26} />
+          </View>
+          {/* <View style={{marginTop: "2%"}}>
+            <Text style={{opacity: 0.9}}>Ratings</Text>
+          </View> */}
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              height: 200,
+            }}
+          >
+            <VictoryChart
+              domain={{ x: [0, 5], y: [0, 5] }}
+              domainPadding={{ x: 50, y: 100 }}
+            >
+              <VictoryBar
+                animate={{
+                  duration: 2000,
+                  onLoad: { duration: 1000 },
+                }}
+                barRatio={0.8}
+                horizontal
+                style={{
+                  data: { fill: "gold" },
+                }}
+                cornerRadius={{ top: 4 }}
+                data={sampleData}
+                labelComponent={<VictoryLabel dy={0} />}
+                labels={({ datum }) => datum.y - 1}
+              />
+              <VictoryAxis
+                style={{
+                  axis: { stroke: "transparent" },
+                  ticks: { stroke: "transparent" },
+                  tickLabels: { fill: "transparent" },
+                }}
+              />
+            </VictoryChart>
+          </View>
         </View>
 
         <View style={styles.customReviewContainer}>
@@ -257,6 +301,34 @@ const MarketPlaceItem = () => {
               />
             ))}
           </Swiper>
+        </View>
+        <View>
+          <Button
+            title={"view more"}
+            textColor={colors.black}
+            color={colors.white}
+          />
+        </View>
+
+        <View style={{ marginVertical: "25%" }}>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Money
+            </Text>
+          </Text>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Planet
+            </Text>
+          </Text>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Choice
+            </Text>
+          </Text>
         </View>
       </ScrollView>
     </View>
@@ -290,7 +362,7 @@ const Card = ({
           resizeMode="cover"
         />
       </TouchableOpacity>
-      <Text>hello</Text>
+
       <View style={styles.cardFooterContainer}>
         <View style={styles.cardHeaderContainer}>
           <View style={styles.cardheaderRow}>
@@ -316,15 +388,16 @@ const Card = ({
           </Text>
         </View>
         <View style={styles.priceFooterContainer}>
-          <Text>
-            {score} ({reviewCount})
-          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Rating startingValue={score} imageSize={20} />
+            <Text>({reviewCount})</Text>
+          </View>
           <TouchableOpacity>
             <Text style={styles.priceReview}>reviews</Text>
           </TouchableOpacity>
         </View>
 
-        <Button title={"add to cart"} textTransform={"uppercase"} />
+        <Button title={"go to vender"} textTransform={"uppercase"} />
       </View>
     </View>
   );
@@ -396,6 +469,18 @@ const styles = StyleSheet.create({
   descriptionContainerfull: {
     marginVertical: "5%",
   },
+  descriptionImageContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  descriptionThumbnailConatiner: {
+    borderRadius: 10,
+    marginRight: "5%",
+    overflow: "hidden",
+    height: 70,
+    width: 70,
+  },
+  descriptionThumbnailImage: { height: 70, width: 70 },
   descriptionHeader: {
     textTransform: "capitalize",
     fontWeight: "700",
@@ -408,6 +493,7 @@ const styles = StyleSheet.create({
     borderColor: colors.grey,
     marginVertical: "5%",
   },
+  footerOpacity: { opacity: 0.3 },
   mainContainer: {
     flex: 1,
     padding: "5%",
@@ -420,6 +506,7 @@ const styles = StyleSheet.create({
   priceFooterContainer: {
     marginTop: "5%",
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   priceItem: {
     flexDirection: "row",
@@ -477,6 +564,15 @@ const styles = StyleSheet.create({
     marginVertical: "2.5%",
     padding: "5%",
   },
+  customerReviewImageContainerHeader: {
+    borderRadius: 10,
+    overflow: "hidden", // Prevent image overflow
+    backgroundColor: "white",
+    width: "100%",
+    height: 300,
+    marginVertical: "2.5%",
+    padding: "%",
+  },
   reviewImageHeader: {
     flexDirection: "row",
   },
@@ -490,7 +586,7 @@ const styles = StyleSheet.create({
   },
   reviewRatingContainer: {
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginLeft: "2.5%",
   },
   reviewText: {

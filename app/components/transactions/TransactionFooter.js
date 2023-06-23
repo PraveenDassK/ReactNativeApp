@@ -10,7 +10,7 @@ const TransactionFooter = ({ number, total = 120, onSee }) => {
         <View style={styles.headerTitleContainer}>
           <Text
             style={[styles.headerText]}
-          >{`Showing ${number} out of ${total}`}</Text>
+          >{`Showing ${number} transactions`}</Text>
           <TouchableOpacity style={styles.navigationContainer} onPress={onSee}>
             <Text style={styles.navigationText}>see all</Text>
             <View style={styles.navaigationIcon}>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     paddingTop: 10,
     marginTop: "1%",
-    paddingHorizontal: "0.5%",
+    paddingHorizontal: "3%",
   },
   headerTitleContainer: {
     flex: 1,

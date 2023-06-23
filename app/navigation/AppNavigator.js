@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   createStackNavigator,
   TransitionPresets,
@@ -85,18 +87,18 @@ import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
+import Tabs from "./tabs";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
-// const Stack = createNativeStackNavigator();
+
 const Stack = createStackNavigator();
 
-import { Animated, View, TouchableOpacity, Platform } from "react-native";
+import { Animated, View, TouchableOpacity, Platform, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
-
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
@@ -106,13 +108,32 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   return (
     <View
       style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 70 + insets.bottom,
         flexDirection: "row",
-        height: 80,
-        alignItems: "flex-end",
-        backgroundColor: "#F6F5F8",
-        marginBottom: "1.5%",
+        alignItems: "center",
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        overflow: "hidden",
       }}
     >
+      <BlurView
+        tint="dark"
+        intensity={40}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 70+ insets.bottom,
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+        }}
+      />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -153,7 +174,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
         return (
           <React.Fragment key={route.name.toString()}>
-            {index == 6  ? null : index == 0 ? null : (
+            {index == 6 ? null : index == 0 ? null : (
               <TouchableOpacity
                 key={route.name.toString()}
                 accessibilityRole="button"
@@ -172,6 +193,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                   <Animated.Text
                     style={{
                       opacity,
+                      fontSize: 12,
                       textAlign: "center",
                       fontFamily: "Helvetica",
                       fontWeight: isFocused ? "900" : "200",
@@ -605,32 +627,10 @@ const StackNavigator = () => {
   );
 };
 
-const ChooseCardsEliteNavigator = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Standard"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-      <Tab.Screen
-        name="Premium"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-      <Tab.Screen
-        name="Elite"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-    </Tab.Navigator>
-  );
-};
-
 const AppNavigator = () => {
-  useEffect(() => {
-    console.log("here");
-  });
-
   return (
     <Tab.Navigator
+      tabBarPosition="bottom"
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="AccountTab"
     >
@@ -669,7 +669,11 @@ const AppNavigator = () => {
           title: "Carbon",
         }}
       />
-      <Tab.Screen name="Marketplace" component={gestureHandlerRootHOC(Marketplace)} options={{}} />
+      <Tab.Screen
+        name="Marketplace"
+        component={gestureHandlerRootHOC(Marketplace)}
+        options={{}}
+      />
       <Tab.Screen name="Profile" component={gestureHandlerRootHOC(Settings)} />
       <Tab.Screen
         name="Loop"

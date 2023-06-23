@@ -208,12 +208,12 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: "5%",
-    height: verticalScale(300),
-    width: horizontalScale(450),
+    height:300,
+    width:450,
     resizeMode: "contain",
   },
   cardNameBox: {
-    marginTop: verticalScale(15),
+    marginTop:15,
     width: "100%",
   },
   cardTitle: {
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   cardPrice: {
-    marginTop: verticalScale(25),
+    marginTop: 25,
     width: "100%",
     textAlign: "center",
   },

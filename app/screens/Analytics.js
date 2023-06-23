@@ -33,6 +33,11 @@ import DoughnutChart from "../components/DoughnutChart";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import useDevice from "../hooks/useDevice";
+import {
+  TransactionBody,
+  TransactionFooter,
+  TransactionHead,
+} from "../components/transactions";
 
 const Analytics = ({ navigation }) => {
   const { device } = useDevice();
@@ -413,7 +418,7 @@ const Analytics = ({ navigation }) => {
           {graphData && <Bazier graphData={graphData} />}
         </View>
 
-        <View style={styles.titleTextRow}>
+        {/* <View style={styles.titleTextRow}>
           <Image
             resizeMode="contain"
             source={require("../assets/icon-withdraw.png")}
@@ -496,9 +501,25 @@ const Analytics = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
             </View>
+          ))} */}
+        <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
+          <TransactionHead />
+          {recentTransactions.map((transaction, index) => (
+            <TransactionBody
+              key={index}
+              name={transaction.description}
+              date={transaction.transactionDate}
+              amount={transaction.amount}
+              credit={transaction.credit}
+            />
           ))}
+          <TransactionFooter
+            number={transactions.length}
+            onSee={() => navigation.navigate("Transactions")}
+          />
+        </View>
 
-        {fulldata && (
+        {/* {fulldata && (
           <View style={styles.titleTextRow}>
             <Image
               resizeMode="contain"
@@ -518,9 +539,21 @@ const Analytics = ({ navigation }) => {
               Upcoming Spendings
             </AppText>
           </View>
-        )}
+        )} */}
+        <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
+          <TransactionHead headerTitle="Upcoming spending" />
+          {data.map((transaction, index) => (
+            <TransactionBody
+              key={index}
+              name={transaction.scheduleID}
+              date={transaction.date}
+              amount={transaction.amount}
+              credit={transaction.credit}
+            />
+          ))}
+        </View>
 
-        {fulldata &&
+        {/* {fulldata &&
           !loadMore &&
           data.map((transaction, index) => (
             <View key={index}>
@@ -675,7 +708,7 @@ const Analytics = ({ navigation }) => {
               )}
             </View>
           </TouchableOpacity>
-        )}
+        )} */}
         <View style={{ height: 20, width: "100%" }} />
       </View>
     </ScrollView>
@@ -702,6 +735,7 @@ const Bazier = ({ graphData }) => {
       {/* <AppText>Bezier Line Chart</AppText> */}
 
       <LineChart
+      
         data={{
           labels: xAxis,
           datasets: [{ data: yAxis }],
@@ -839,7 +873,7 @@ const styles = StyleSheet.create({
     marginTop: "2.5%",
     backgroundColor: "white",
   },
-
+  containerSpacing: { paddingHorizontal: "5%" },
   carbonSpendingAnalysysBarProgress: {
     height: "100%",
     borderRadius: 15,
