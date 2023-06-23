@@ -541,9 +541,13 @@ import React, {
 import {
   Text,
   StyleSheet,
-  Text,
   TouchableOpacity,
   Pressable,
+  Dimensions,
+  SafeAreaView,
+  View,
+  Animated,
+  ScrollView, ImageBackground
 } from "react-native";
 import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
@@ -551,6 +555,8 @@ import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
 import AuthContext from "../auth/context";
 import apiCall from "../api/api";
 import apiCall2 from "../api/apiCall";
+
+
 
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
