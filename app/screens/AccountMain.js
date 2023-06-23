@@ -495,7 +495,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 <SquareIcon
                   text={"Teams"}
                   image={"account-group"}
-                  trigger={() => navigation.navigate("Dashboard")}
+                  trigger={() => navigation.navigate("Teams")}
                 />
 
 
