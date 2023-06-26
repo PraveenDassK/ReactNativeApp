@@ -44,6 +44,7 @@ const SendMoney = ({ navigation }) => {
     }
   };
 
+
   /**
    * @dev This sends a payment to one destination
    * @param {Obj} beneficaryData
@@ -141,10 +142,11 @@ const SendMoney = ({ navigation }) => {
         <Text>Pay an group payee</Text>
         <FlatList
           data={groupBeneficaryList}
-          keyExtractor={(groupBeneficaryList, index) => groupBeneficaryList.id}
+          keyExtractor={(groupBeneficaryList, index) => index}
           numColumns={4}
           contentContainerStyle={styles.flatListContent}
           renderItem={(beneficary) => {
+            console.log(beneficary)
             return (
               <View style={styles.itemContainer}>
                 <UserIcon
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
   },
   button: {
     border: "dashed",
-    borderRadius: "10px",
+    borderRadius: 10,
     borderColor: "#0101FD",
   },
   flatListContent: {
