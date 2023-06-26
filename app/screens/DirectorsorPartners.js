@@ -7,14 +7,10 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
-import GlobalStyles from "../../GlobalStyles";
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from "../config/scaling";
 import RegistrationDirectororPartner from "../components/RegistartionDirectororPartner";
 import RegistartionDirectorForm from "../components/RegistartionDirectorForm";
+import Button from "../components/AppButton";
+
 const DirectororPartner = ({ navigation }) => {
   const [formView, setFormView] = useState(0);
   const [role, setRole] = useState("");
@@ -38,6 +34,9 @@ const DirectororPartner = ({ navigation }) => {
         <RegistartionDirectorForm role={role} setFormView={setFormView} />
         // <View><Text>Hello</Text></View>
       )}
+      <Button
+        title = {"continue"}
+      ></Button>
     </SafeAreaView>
   );
 };

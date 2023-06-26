@@ -235,6 +235,8 @@ export default function App() {
     );
   }
 
+  // return <NewCard />
+
   return (
     <AuthContext.Provider
       value={{

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   createStackNavigator,
   TransitionPresets,
@@ -85,6 +87,7 @@ import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
+import Tabs from "./tabs";
 
 import PaymentLink from "../screens/PaymentLink";
 
@@ -92,13 +95,14 @@ import Teams from "../screens/Teams";
 import Invoices from "../screens/Invoices";
 import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
+import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
-// const Stack = createNativeStackNavigator();
+
 const Stack = createStackNavigator();
 
-import { Animated, View, TouchableOpacity, Platform } from "react-native";
+import { Animated, View, TouchableOpacity, Platform, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
@@ -106,6 +110,9 @@ import MarketPlaceItem from "../screens/MarketPlaceItem";
 import OrderCard from "../screens/OrderCard";
 import Dashboard from "../screens/Dashboard";
 import MoveMoney from "../screens/MoveMoney";
+import MoveMoneyAmount from "../screens/MoveMoneyAmount";
+import MoveMoneyPin from "../screens/MoveMoneyPin";
+import MoveMoneySuccess from "../screens/MoveMoneySuccess";
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
@@ -115,13 +122,32 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   return (
     <View
       style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 70 + insets.bottom,
         flexDirection: "row",
-        height: 80,
-        alignItems: "flex-end",
-        backgroundColor: "#F6F5F8",
-        marginBottom: "1.5%",
+        alignItems: "center",
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        overflow: "hidden",
       }}
     >
+      <BlurView
+        tint="dark"
+        intensity={40}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 70+ insets.bottom,
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+        }}
+      />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -270,7 +296,7 @@ const StackNavigator = () => {
         name="MoveMoney"
         component={MoveMoney}
         options={{
-          title: "MoveMoney",
+          title: "Move Money",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
@@ -282,6 +308,68 @@ const StackNavigator = () => {
         }}
       />
 
+      <Stack.Screen
+        name="MoveMoneyFromAccount"
+        component={MoveMoneyFromAccount}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyAmount"
+        component={MoveMoneyAmount}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyPin"
+        component={MoveMoneyPin}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="MoveMoneySuccess"
+        component={MoveMoneySuccess}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
       <Stack.Screen
         name="AddFunds"
         component={gestureHandlerRootHOC(AddFunds)}
@@ -751,32 +839,10 @@ const StackNavigator = () => {
   );
 };
 
-const ChooseCardsEliteNavigator = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Standard"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-      <Tab.Screen
-        name="Premium"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-      <Tab.Screen
-        name="Elite"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-    </Tab.Navigator>
-  );
-};
-
 const AppNavigator = () => {
-  useEffect(() => {
-    console.log("here");
-  });
-
   return (
     <Tab.Navigator
+      tabBarPosition="bottom"
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="AccountTab"
     >
@@ -815,7 +881,11 @@ const AppNavigator = () => {
           title: "Carbon",
         }}
       />
-      <Tab.Screen name="Marketplace" component={gestureHandlerRootHOC(Marketplace)} options={{}} />
+      <Tab.Screen
+        name="Marketplace"
+        component={gestureHandlerRootHOC(Marketplace)}
+        options={{}}
+      />
       <Tab.Screen name="Profile" component={gestureHandlerRootHOC(Settings)} />
       <Tab.Screen
         name="Loop"

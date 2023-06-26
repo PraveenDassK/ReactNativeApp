@@ -234,12 +234,21 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: "5%",
+<<<<<<< HEAD:app/screens/ChooseCardsElite.js
+    height:300,
+    width:450,
+    resizeMode: "contain",
+  },
+  cardNameBox: {
+    marginTop:15,
+=======
     height: 300,
     width: 450,
     resizeMode: "contain",
   },
   cardNameBox: {
     marginTop: 15,
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f:app/screens/Subscriptions.js
     width: "100%",
   },
   cardTitle: {

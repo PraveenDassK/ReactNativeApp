@@ -7,7 +7,10 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+<<<<<<< HEAD
+=======
   Alert
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
 } from "react-native";
 
 import { Rating, AirbnbRating } from "react-native-ratings";
@@ -25,7 +28,11 @@ import {
   VictoryBar,
   VictoryChart,
   VictoryTheme,
+<<<<<<< HEAD
+  VictoryLabel,
+=======
   VictoryLabel
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
 } from "victory-native";
 
 const sampleData = [
@@ -61,10 +68,14 @@ const MarketPlaceItem = () => {
           {itemObj.thumbnailImages.map((image, index) => (
             <TouchableOpacity
               key={index.toString()}
+<<<<<<< HEAD
+              style={[styles.thumbnailContainer, { marginRight: "2.5%" }]}
+=======
               style={[
                 styles.thumbnailContainer,
                 { marginLeft: index !== 0 ? "2.5%" : null },
               ]}
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
             >
               <Image
                 source={{ uri: image }}
@@ -130,7 +141,11 @@ const MarketPlaceItem = () => {
           </View>
 
           <View>
+<<<<<<< HEAD
+            <Button title={"go to vendor"} textTransform={"uppercase"} />
+=======
             <Button title={"go to vendor"} textTransform={"uppercase"} onPress={() => Alert.alert("Function in progress")}/>
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
           </View>
           <View style={styles.wishlistContainer}>
             <Text style={styles.wishlistText}>add to wishlist</Text>
@@ -215,17 +230,44 @@ const MarketPlaceItem = () => {
                   <Text>{product.description}</Text>
                 </View>
               </View>
+<<<<<<< HEAD
+
+              <View style={styles.descriptionImageContainer}>
+                {product.images.slice(0, 4).map((image, index) => (
+                  <View
+                    key={index}
+                    style={styles.descriptionThumbnailConatiner}
+                  >
+                    <Image
+                      resizeMode="cover"
+                      style={styles.descriptionThumbnailImage}
+                      source={{ uri: image }}
+                    />
+                  </View>
+                ))}
+              </View>
+=======
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
             </View>
           )
         )}
 
         <View style={styles.reviewImageContainerHeader}>
+<<<<<<< HEAD
+          <View style={{ justifyContent: "center", alignItems: "flex-start" }}>
+            <View style={{ marginVertical: "2%" }}>
+              <Text style={styles.cardHeaderText}>Customer Reviews</Text>
+            </View>
+
+            <Rating startingValue={4} imageSize={26} />
+=======
           <View style={{justifyContent: "center", alignItems: "flex-start"}}>
             <View style={{marginVertical: "2%"}}>
               <Text style={styles.cardHeaderText}>Customer Reviews</Text>
             </View>
             
             <Rating startingValue={4} imageSize={26}/>
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
           </View>
           {/* <View style={{marginTop: "2%"}}>
             <Text style={{opacity: 0.9}}>Ratings</Text>
@@ -253,8 +295,13 @@ const MarketPlaceItem = () => {
                 }}
                 cornerRadius={{ top: 4 }}
                 data={sampleData}
+<<<<<<< HEAD
+                labelComponent={<VictoryLabel dy={0} />}
+                labels={({ datum }) => datum.y - 1}
+=======
                 labelComponent={<VictoryLabel dy={0}/>}
                 labels={({ datum }) => datum.y -1}
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
               />
               <VictoryAxis
                 style={{
@@ -291,6 +338,37 @@ const MarketPlaceItem = () => {
             ))}
           </Swiper>
         </View>
+<<<<<<< HEAD
+        <View>
+          <Button
+            title={"view more"}
+            textColor={colors.black}
+            color={colors.white}
+          />
+        </View>
+
+        <View style={{ marginVertical: "25%" }}>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Money
+            </Text>
+          </Text>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Planet
+            </Text>
+          </Text>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Choice
+            </Text>
+          </Text>
+        </View>
+=======
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
       </ScrollView>
     </View>
   );
@@ -358,7 +436,11 @@ const Card = ({
           </TouchableOpacity>
         </View>
 
+<<<<<<< HEAD
+        <Button title={"go to vender"} textTransform={"uppercase"} />
+=======
         <Button title={"go to vender"} textTransform={"uppercase"} onPress={() => Alert.alert("Function in progress")}/>
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
       </View>
     </View>
   );
@@ -430,6 +512,21 @@ const styles = StyleSheet.create({
   descriptionContainerfull: {
     marginVertical: "5%",
   },
+<<<<<<< HEAD
+  descriptionImageContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  descriptionThumbnailConatiner: {
+    borderRadius: 10,
+    marginRight: "5%",
+    overflow: "hidden",
+    height: 70,
+    width: 70,
+  },
+  descriptionThumbnailImage: { height: 70, width: 70 },
+=======
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
   descriptionHeader: {
     textTransform: "capitalize",
     fontWeight: "700",
@@ -442,6 +539,10 @@ const styles = StyleSheet.create({
     borderColor: colors.grey,
     marginVertical: "5%",
   },
+<<<<<<< HEAD
+  footerOpacity: { opacity: 0.3 },
+=======
+>>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
   mainContainer: {
     flex: 1,
     padding: "5%",
