@@ -30,19 +30,27 @@ const SendMoney = ({ navigation }) => {
       setIsLoading(true);
       //Gets single beneficiaries
       const response = await api.RetriveBenificiaries(userID);
-      const data = response.data.details.content;
+      const data = response.data.details.content.map((beneficiary) => ({
+        ...beneficiary,
+        id: beneficiary.id.toString(),
+      }));
       setBeneficary(data);
 
       //Gets group beneficiaries
       const groupBeneficiaries = await apiBeneficiaries.GetGroupBeneficiaries(
         customerDetails
       );
-      setGroupBeneficary(groupBeneficiaries);
+      const groupData = groupBeneficiaries.map((beneficiary) => ({
+        ...beneficiary,
+        id: beneficiary.id.toString(),
+      }));
+      setGroupBeneficary(groupData);
       setIsLoading(false);
     } catch {
       setIsLoading(false);
     }
   };
+
 
   /**
    * @dev This sends a payment to one destination
@@ -167,7 +175,7 @@ const styles = StyleSheet.create({
   },
   button: {
     border: "dashed",
-    borderRadius: "10px",
+    borderRadius: 10,
     borderColor: "#0101FD",
   },
   flatListContent: {
