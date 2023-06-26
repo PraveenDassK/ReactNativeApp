@@ -768,7 +768,7 @@ const TransactionSelector = ({ title, onTransactionFilter }) => {
         backgroundColor: "white",
         paddingVertical: "1%",
         paddingHorizontal: "2%",
-        borderRadius: "7%",
+        borderRadius: 7,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
