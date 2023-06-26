@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
+import formatCurrency from "../utility/formatCurrency";
 
 const AccountDeatils = () => {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("12232312");
 
   const data = [
     { label: "12232312", value: "12232312" },
@@ -34,28 +35,35 @@ const AccountDeatils = () => {
       <View style={styles.bottomCardContainer}>
         <View>
           <Text style={styles.totalTitle}>Total Balance</Text>
-          <Text style={styles.totalAmount}>£46,569.00</Text>
+          <Text style={styles.totalAmount}>
+            {formatCurrency(46569, "GBP", false)}
+          </Text>
         </View>
         <View style={styles.bottomCard}>
           <View>
             <Text style={styles.incometext}>Income</Text>
             <Text style={styles.incomeAmount}>
               <AntDesign name="arrowup" size={20} />
-              1200
+              {formatCurrency(46569, "GBP", false)}
             </Text>
           </View>
           <View>
-            <Text style={styles.incometext}>Income</Text>
+            <Text style={styles.incometext}>Expenses</Text>
             <Text style={styles.incomeAmount}>
               <AntDesign name="arrowdown" size={20} />
-              1200
+              {formatCurrency(46569, "GBP", false)}
             </Text>
           </View>
           <View>
-            <Text style={styles.incometext}>Income</Text>
-            <Text style={styles.incomeAmount}>1200</Text>
+            <Text style={styles.incometext}>CO2 spending</Text>
+            <Text style={styles.incomeAmount}>1200kg</Text>
           </View>
         </View>
+      </View>
+      <View style={styles.buttonContainer} >
+        <Pressable style={styles.sendButton}>
+          <Text style={styles.sendButtonText}><AntDesign name="plus" size={14} />   Add funds</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -70,6 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    position:"relative"
   },
   accountContainer: {
     display: "flex",
@@ -112,6 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
+    gap: 3,
     paddingVertical: 10,
   },
   totalTitle: {
@@ -127,15 +137,37 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
   },
   incometext: {
-    fontSize: 16,
+    fontSize: 14,
     color: "white",
-    fontWeight: "regular",
+    fontWeight: "normal",
     fontFamily: "Montserrat",
   },
   incomeAmount: {
-    fontSize: 18,
+    fontSize: 16,
     color: "white",
     fontWeight: "bold",
     fontFamily: "Montserrat",
+    marginTop: 5,
   },
+  sendButton: {
+    height: 60,
+    width: "50%",
+    backgroundColor: "black",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius:15,
+    gap:4,
+  },
+  sendButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "normal",
+  },
+  buttonContainer:{
+    position:"absolute",
+    width:"100%",
+    bottom:-35,
+    left:100,
+  }
 });
