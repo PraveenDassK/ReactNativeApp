@@ -146,7 +146,6 @@ const SendMoney = ({ navigation }) => {
           numColumns={4}
           contentContainerStyle={styles.flatListContent}
           renderItem={(beneficary) => {
-            console.log(beneficary)
             return (
               <View style={styles.itemContainer}>
                 <UserIcon

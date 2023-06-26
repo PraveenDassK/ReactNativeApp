@@ -2,9 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { Text, StyleSheet, View, ActivityIndicator, TextInput } from "react-native";
 
-import AuthContext from "../auth/context";
-import apiCall from "../api/apiCall";
-import UserIcon from "../components/UserIcon";
+import CountdownBar from "../components/CountdownBar";
 import Button from "../components/AppButton";
 import { Formik, Field, Form } from "formik";
 
@@ -16,7 +14,7 @@ const MoveMoneyAmount = ({ navigation, route }) => {
         console.log(values)
         let requestObj = route.params
         requestObj.amount = values.amountToSend
-        
+
         navigation.navigate("MoveMoneyPin", requestObj)
 
     }
@@ -24,6 +22,10 @@ const MoveMoneyAmount = ({ navigation, route }) => {
     return (
         <View>
             <View>
+                <CountdownBar
+                    pageCount={3}
+                    currentPage={3}
+                />
                 <Text>
                     Send to
                 </Text>

@@ -4,8 +4,7 @@ import { Text, StyleSheet, View, ScrollView, ActivityIndicator, FlatList, Toucha
 
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
-import UserIcon from "../components/UserIcon";
-import Button from "../components/AppButton";
+import CountdownBar from "../components/CountdownBar";
 
 const MoveMoneyFromAccount = ({ navigation, route }) => {
     const [accountList, setAccountList] = useState([]);
@@ -23,6 +22,9 @@ const MoveMoneyFromAccount = ({ navigation, route }) => {
         try {
             setIsLoading(true)
             const accountDataResponse = await apiCall.GetAllAccounts(userID);
+            //Remove the selected "to" account
+            let requestObj = route.params
+
             setAccountList(accountDataResponse)
             setIsLoading(false)
         } catch {
@@ -55,6 +57,10 @@ const MoveMoneyFromAccount = ({ navigation, route }) => {
     return (
         <View>
             <View>
+                <CountdownBar
+                    pageCount={3}
+                    currentPage={2}
+                />
                 <Text>
                     Send From
                 </Text>
