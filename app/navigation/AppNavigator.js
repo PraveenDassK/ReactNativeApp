@@ -87,7 +87,6 @@ import GroupBeneficiary from "../screens/GroupBeneficiary";
 import ScheduledPayment from "../screens/ScheduledPayment";
 import FirstTimeSetup from "../screens/FirstTimeSetup";
 import Devices from "../screens/Devices";
-import Tabs from "./tabs";
 
 import PaymentLink from "../screens/PaymentLink";
 
@@ -97,12 +96,21 @@ import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
 import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
 
+
+
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 
 const Stack = createStackNavigator();
 
-import { Animated, View, TouchableOpacity, Platform, Text } from "react-native";
+import {
+  Animated,
+  View,
+  TouchableOpacity,
+  Platform,
+  Text,
+  Image,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
@@ -115,7 +123,7 @@ import MoveMoneyPin from "../screens/MoveMoneyPin";
 import MoveMoneySuccess from "../screens/MoveMoneySuccess";
 
 function MyTabBar({ state, descriptors, navigation, position }) {
-  const [selectedTabs, setSelectTabs] = useState("");
+  const [selectedTab, setSelectedTab] = useState("");
 
   const insets = useSafeAreaInsets();
 
@@ -129,22 +137,24 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         height: 70 + insets.bottom,
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "center",
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
         overflow: "hidden",
       }}
     >
       <BlurView
-        tint="dark"
+        tint="light"
         intensity={40}
         style={{
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
-          height: 70+ insets.bottom,
+          height: 70 + insets.bottom,
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: "center",
           backgroundColor: "rgba(255, 255, 255, 0.2)",
         }}
       />
@@ -154,13 +164,13 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-              ? options.title
-              : route.name;
+            ? options.title
+            : route.name;
 
         const isFocused = state.index === index;
 
         const onPress = () => {
-          setSelectTabs(route);
+          setSelectedTab(route);
           const event = navigation.emit({
             type: "tabPress",
             target: route.key,
@@ -168,7 +178,6 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           });
 
           if (!isFocused && !event.defaultPrevented) {
-            // The `merge: true` option makes sure that the params inside the tab screen are preserved
             navigation.navigate({ name: route.name, merge: true });
           }
         };
@@ -186,9 +195,36 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
         });
 
+        // Define the image source for each tab
+        let imageSource;
+        switch (index) {
+          case 0:
+            imageSource = "home-variant";
+            break;
+          case 1:
+            imageSource = "home-variant";
+            break;
+          case 2:
+            imageSource = "chart-pie";
+            break;
+          case 3:
+            imageSource = "arrow-top-right";
+            break;
+          case 4:
+            imageSource = "molecule-co2";
+            break;
+          case 5:
+            imageSource = "account";
+            break;
+          // Add cases for other tabs
+          default:
+            imageSource = "home-variant"; // Set a default image source if needed
+            break;
+        }
+
         return (
           <React.Fragment key={route.name.toString()}>
-            {index == 6 ? null : index == 0 ? null : (
+            {index === 6 || index === 0 ? null : (
               <TouchableOpacity
                 key={route.name.toString()}
                 accessibilityRole="button"
@@ -202,20 +238,10 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                 <Animated.View
                   style={{
                     paddingVertical: 0,
+                    marginLeft: "20%",
                   }}
                 >
-                  <Animated.Text
-                    style={{
-                      opacity,
-                      fontSize: 12,
-                      textAlign: "center",
-                      fontFamily: "Helvetica",
-                      fontWeight: isFocused ? "900" : "200",
-                      color: isFocused ? colors.blue : colors.black,
-                    }}
-                  >
-                    {label}
-                  </Animated.Text>
+                  <MaterialCommunityIcons name={imageSource} size={40} color={isFocused ? colors.blue : colors.black}/>
                 </Animated.View>
               </TouchableOpacity>
             )}
@@ -872,8 +898,20 @@ const AppNavigator = () => {
           title: "Account",
         }}
       />
+
+      
       <Tab.Screen name="Analysis" component={Analytics} options={{}} />
 
+      <Tab.Screen
+        name="SendMoneyTab"
+        component={gestureHandlerRootHOC(SendMoney)}
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          animationTypeForReplace: "push",
+          animation: "",
+        }}
+      />
       <Tab.Screen
         name="CarbonTab"
         component={gestureHandlerRootHOC(Carbon)}
@@ -881,11 +919,7 @@ const AppNavigator = () => {
           title: "Carbon",
         }}
       />
-      <Tab.Screen
-        name="Marketplace"
-        component={gestureHandlerRootHOC(Marketplace)}
-        options={{}}
-      />
+    
       <Tab.Screen name="Profile" component={gestureHandlerRootHOC(Settings)} />
       <Tab.Screen
         name="Loop"
@@ -896,13 +930,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-      // listeners={({ navigation, route }) => ({
-      //   focus: () => {
+        // listeners={({ navigation, route }) => ({
+        //   focus: () => {
 
-      //     // Do something with the `navigation` object
-      //     navigation.navigate('AccountTab');
-      //   },
-      // })}
+        //     // Do something with the `navigation` object
+        //     navigation.navigate('AccountTab');
+        //   },
+        // })}
       />
     </Tab.Navigator>
   );
