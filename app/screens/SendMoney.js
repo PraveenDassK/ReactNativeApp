@@ -30,21 +30,14 @@ const SendMoney = ({ navigation }) => {
       setIsLoading(true);
       //Gets single beneficiaries
       const response = await api.RetriveBenificiaries(userID);
-      const data = response.data.details.content.map((beneficiary) => ({
-        ...beneficiary,
-        id: beneficiary.id.toString(),
-      }));
+      const data = response.data.details.content;
       setBeneficary(data);
 
       //Gets group beneficiaries
       const groupBeneficiaries = await apiBeneficiaries.GetGroupBeneficiaries(
         customerDetails
       );
-      const groupData = groupBeneficiaries.map((beneficiary) => ({
-        ...beneficiary,
-        id: beneficiary.id.toString(),
-      }));
-      setGroupBeneficary(groupData);
+      setGroupBeneficary(groupBeneficiaries);
       setIsLoading(false);
     } catch {
       setIsLoading(false);
@@ -149,7 +142,7 @@ const SendMoney = ({ navigation }) => {
         <Text>Pay an group payee</Text>
         <FlatList
           data={groupBeneficaryList}
-          keyExtractor={(groupBeneficaryList, index) => groupBeneficaryList.id}
+          keyExtractor={(groupBeneficaryList, index) => index}
           numColumns={4}
           contentContainerStyle={styles.flatListContent}
           renderItem={(beneficary) => {

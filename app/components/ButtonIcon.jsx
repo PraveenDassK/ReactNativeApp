@@ -7,12 +7,14 @@ const ButtonIcon = ({
     name = "Default",
     size = 50,
     image = "dots-horizontal",
-    onPress
+    onPress,
+    colour = `#D8EBF9`,
+    textColour = ""
 }) => {
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={[styles.container, { width: size, height: size }]}>
-                <View style={styles.icon} backgroundColor={`#D8EBF9`}>
+                <View style={styles.icon} backgroundColor={colour}>
                     <MaterialCommunityIcons
                         name={image}
                         size={30}
@@ -41,7 +43,6 @@ const styles = StyleSheet.create({
     initials: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'black',
     },
     name: {
         fontSize: 12,
