@@ -548,14 +548,10 @@ import {
   ScrollView,
   SafeAreaView,
   ImageBackground,
-  Dimensions,
   TouchableOpacity,
   Pressable,
   Dimensions,
-  SafeAreaView,
-  View,
-  Animated,
-  ScrollView, ImageBackground
+ 
 } from "react-native";
 import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
