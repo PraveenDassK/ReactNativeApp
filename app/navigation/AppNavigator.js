@@ -909,7 +909,7 @@ const AppNavigator = () => {
           headerShown: false,
           presentation: "modal",
           animationTypeForReplace: "push",
-          animation: "",
+         
         }}
       />
       <Tab.Screen
