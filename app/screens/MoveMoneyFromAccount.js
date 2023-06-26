@@ -7,12 +7,11 @@ import apiCall from "../api/apiCall";
 import UserIcon from "../components/UserIcon";
 import Button from "../components/AppButton";
 
-const MoveMoney = ({ navigation }) => {
+const MoveMoneyFromAccount = ({ navigation, route }) => {
     const [accountList, setAccountList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { userID, customerDetails, accountID } = useContext(AuthContext);
     const isFocused = useIsFocused();
-
     useEffect(() => {
         loadData();
     }, [isFocused]);
@@ -24,36 +23,22 @@ const MoveMoney = ({ navigation }) => {
         try {
             setIsLoading(true)
             const accountDataResponse = await apiCall.GetAllAccounts(userID);
-            console.log(accountDataResponse)
             setAccountList(accountDataResponse)
             setIsLoading(false)
         } catch {
             setIsLoading(false)
         }
     }
-    console.log(accountList)
 
     /**
      * @dev This takes the selected destination account data and passes it to another screen
      */
     const selectAccount = (account) => {
-        console.log(account)
-        const requestObj = {
-            "sourceAccountId": "",
-            "destination": {
-                "type": "SCAN",
-                "id": account.id,
-                "accountNumber": account.identifiers[0].accountNumber,
-                "sortCode": account.identifiers[0].sortCode,
-                "name": account.name,
-                "phoneNumber": ""
-            },
-            "currency": "GBP",
-            "amount": 0,
-            "reference": "Transfer"
-        }
-        console.log(requestObj)
-        navigation.navigate("MoveMoneyFromAccount", requestObj)
+        let requestObj = route.params
+        requestObj.sourceAccountId = account.id
+
+        // console.log(requestObj)
+        navigation.navigate("MoveMoneyAmount", requestObj)
     }
 
     /**
@@ -71,7 +56,7 @@ const MoveMoney = ({ navigation }) => {
         <View>
             <View>
                 <Text>
-                    Send to
+                    Send From
                 </Text>
                 <FlatList
                     data={accountList}
@@ -107,4 +92,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MoveMoney;
+export default MoveMoneyFromAccount;
