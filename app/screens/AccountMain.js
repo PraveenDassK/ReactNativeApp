@@ -427,7 +427,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             <SquareIcon
               text={"Move money"}
               image={"bank-transfer"}
-              trigger={() => navigation.navigate("AddFunds")}
+              trigger={() => navigation.navigate("MoveMoney")}
             />
 
 
