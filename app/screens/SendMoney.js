@@ -1,4 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
+import { Feather, Ionicons } from "@expo/vector-icons";
+import { RefreshControl, TouchableOpacity } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
 import {
   Text,
@@ -101,24 +103,46 @@ const SendMoney = ({ navigation }) => {
   }
 
   return (
-    <View>
-      <View>
-        <Button
-          title="Pay someone new"
-          onPress={() => navigation.navigate("AddBeneficiary")}
-          color="#D8EBF9"
-          style={styles.button}
-        />
-        <Button
-          title="Move money"
-          onPress={() => navigation.navigate("MoveMoney")}
-          color="#D8EBF9"
-          style={styles.button}
-        />
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={{ padding: 10 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("AddBeneficiary")}>
+          <View style={styles.button}>
+            <Ionicons name="add-circle-outline" size={24} color="#212529" />
+            <Text style={styles.buttonText}>Pay someone new</Text>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Montserrat",
+              fontSize: 12,
+              color: "#505A63",
+              marginBottom: 10,
+            }}
+          >
+            New payee account name check
+          </Text>
+          <Feather name="info" size={12} color="black" />
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("AddBeneficiary")}>
+          <View style={styles.button}>
+            <Feather name="send" size={20} color="black" />
+            <Text style={styles.buttonText}>To self account</Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
-      <View>
-        <Text>Pay an existing payee</Text>
+      <View style={styles.payContainer}>
+        <View style={styles.payHeaderContainer}>
+          <Text style={styles.payMainHeading}>Pay an existing payee</Text>
+          <Text style={styles.paySideHeading}>Manage Beneficiary</Text>
+        </View>
         <FlatList
           data={beneficaryList}
           keyExtractor={(beneficaryList, index) => beneficaryList.id}
@@ -137,8 +161,24 @@ const SendMoney = ({ navigation }) => {
         />
       </View>
 
-      <View>
-        <Text>Pay an group payee</Text>
+      <View
+        style={{
+          backgroundColor: "#FFFFFF",
+          padding: 20,
+        }}
+      >
+        <View style={styles.payHeaderContainer}>
+          <Text style={styles.payMainHeading}>Pay an group payee</Text>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Ionicons
+              name="add"
+              size={12}
+              color="#0101FD"
+              style={{ marginRight: 3, marginTop: 1 }}
+            />
+            <Text style={styles.paySideHeading}>Create Group</Text>
+          </View>
+        </View>
         <FlatList
           data={groupBeneficaryList}
           keyExtractor={(groupBeneficaryList, index) => groupBeneficaryList.id}
@@ -151,12 +191,20 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.groupName}
                   onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                 />
+                <UserIcon
+                  name={beneficary?.item.groupName}
+                  onPress={() => sendGroupPayeeTrigger(beneficary.item)}
+                />
+                <UserIcon
+                  name={beneficary?.item.groupName}
+                  onPress={() => sendGroupPayeeTrigger(beneficary.item)}
+                />
               </View>
             );
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -166,9 +214,52 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    border: "dashed",
-    borderRadius: "10px",
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderRadius: 10,
     borderColor: "#0101FD",
+    backgroundColor: "#D8EBF9",
+    color: "#212529",
+    height: 55.05,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  buttonText: {
+    color: "#212529",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 14,
+    marginLeft: 6,
+  },
+  payContainer: {
+    backgroundColor: "#FFFFFF",
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    padding: 20,
+    marginTop: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EBEBEB",
+  },
+  payHeaderContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 21,
+  },
+  payMainHeading: {
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    color: "#212529",
+    fontSize: 14,
+  },
+  paySideHeading: {
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    color: "#0101FD",
+    fontSize: 10,
   },
   flatListContent: {
     justifyContent: "space-between",
