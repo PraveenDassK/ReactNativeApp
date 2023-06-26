@@ -76,6 +76,7 @@ const getUsersNFTs = async (address) => {
 };
 
 const GetTransactions = async (Id, amount, fromDate, toDate) => {
+  console.log("running");
   let toGet = amount ? amount : 10;
   const request = await client.get(
     "https://api.carbonyte.io/walletmodule/GetTransactions/" +
@@ -83,7 +84,7 @@ const GetTransactions = async (Id, amount, fromDate, toDate) => {
       "?size=" +
       toGet
   );
-  const requestData = request?.data?.details;
+  const requestData = request?.data?.details
   return requestData;
 };
 

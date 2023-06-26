@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   headerText: { fontWeight: "700", fontSize: 20 },
   transactionContainer: {
     flexDirection: "row",
-    paddingHorizontal: "0.5%"
+    // paddingHorizontal: "0.5%"
   },
   transactionContainerTH: { flex: 4 },
   dateContainerTH: { flex: 2 },

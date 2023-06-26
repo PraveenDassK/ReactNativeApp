@@ -11,6 +11,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
+  Modal
 } from "react-native";
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
@@ -28,10 +29,12 @@ import { Formik, Field, Form } from "formik";
 import { Dropdown } from "react-native-element-dropdown";
 import { CheckBox } from "@rneui/themed";
 import AuthScreen from "./AuthScreen";
+import Privacy from "./PrivacyPolicy";
 
 const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   const [type, setType] = useState(null);
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const handleSubmit = ({ incomeDetails }) => {
     console.log(incomeDetails)
@@ -42,24 +45,25 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
     console.log(currencyPattern.test(incomeDetails))
     console.log(!type)
 
-    if(!currencyPattern.test(incomeDetails)){
+    if (!currencyPattern.test(incomeDetails)) {
       return alert("Please enter a valid amount")
     }
 
-    if(type == null){
+    if (type == null) {
       return alert("Please put in a business type")
     }
 
-    if(!privacyPolicy){
+    if (!privacyPolicy) {
       return alert("Please accept the privacy policy")
     }
 
     SaveDetails({
       income: incomeDetails,
       companyType: type
-  }, "CompanyDetails"
-  );
+    }, "CompanyDetails"
+    );
   };
+
   const handleBack = () => {
     console.log("!");
     setScreenToShow("RegistrationNumber");
@@ -405,6 +409,17 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
 
   return (
     <Screen>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={visible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setVisible(!visible);
+        }}
+      >
+        <Privacy setIsOpen={setVisible} />
+      </Modal>
       <AuthScreen
         title="Your company details"
         img="elephantCard2"
@@ -417,13 +432,14 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
           }}
           onSubmit={handleSubmit}
         >
-          {({ handleChange, handleSubmit, setFieldTouched }) => (
+          {({ handleChange, handleSubmit, setFieldTouched, values }) => (
             <View style={[styles.component1981, styles.mt14]}>
-                            <Text>Annual income</Text>
+              <Text>Annual income</Text>
               <TextInput
+                value={"£" + values.incomeDetails}
                 keyboardType="numeric"
-                onBlur={() => setFieldTouched("incomeDeatils")}
-                onChangeText={handleChange("incomeDetails")}
+                onBlur={() => setFieldTouched("incomeDetails")}
+                onChangeText={(text) => handleChange("incomeDetails")(text.replace(/^£/, ""))}
                 style={[styles.childBorder, { padding: 10 }]}
               />
               <Text>Business type</Text>
@@ -447,6 +463,13 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
                 checkedColor="black"
                 onPress={() => setPrivacyPolicy(!privacyPolicy)}
               />
+              <Button
+                title="View privacy policy"
+                color="black"
+                textColor="white"
+                onPress={() => setVisible(true)}
+              />
+
               <Button
                 title="Continue"
                 color="black"

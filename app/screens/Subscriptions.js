@@ -234,12 +234,12 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: "5%",
-    height: 300,
-    width: 450,
+    height:300,
+    width:450,
     resizeMode: "contain",
   },
   cardNameBox: {
-    marginTop: 15,
+    marginTop:15,
     width: "100%",
   },
   cardTitle: {

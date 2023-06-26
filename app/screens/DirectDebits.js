@@ -29,7 +29,7 @@ import { moderateScale } from '../config/scaling'
 const DirectDebits = ({ navigation }) => {
     const [directDebits, setDirectDebits] = useState([
         {
-            name: "Netflic",
+            name: "Netflix",
             date: "1687339",
             amount: 5,
         }

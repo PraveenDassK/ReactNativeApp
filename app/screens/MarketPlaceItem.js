@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Alert
 } from "react-native";
 
 import { Rating, AirbnbRating } from "react-native-ratings";
@@ -25,7 +24,7 @@ import {
   VictoryBar,
   VictoryChart,
   VictoryTheme,
-  VictoryLabel
+  VictoryLabel,
 } from "victory-native";
 
 const sampleData = [
@@ -61,10 +60,7 @@ const MarketPlaceItem = () => {
           {itemObj.thumbnailImages.map((image, index) => (
             <TouchableOpacity
               key={index.toString()}
-              style={[
-                styles.thumbnailContainer,
-                { marginLeft: index !== 0 ? "2.5%" : null },
-              ]}
+              style={[styles.thumbnailContainer, { marginRight: "2.5%" }]}
             >
               <Image
                 source={{ uri: image }}
@@ -215,17 +211,32 @@ const MarketPlaceItem = () => {
                   <Text>{product.description}</Text>
                 </View>
               </View>
+
+              <View style={styles.descriptionImageContainer}>
+                {product.images.slice(0, 4).map((image, index) => (
+                  <View
+                    key={index}
+                    style={styles.descriptionThumbnailConatiner}
+                  >
+                    <Image
+                      resizeMode="cover"
+                      style={styles.descriptionThumbnailImage}
+                      source={{ uri: image }}
+                    />
+                  </View>
+                ))}
+              </View>
             </View>
           )
         )}
 
         <View style={styles.reviewImageContainerHeader}>
-          <View style={{justifyContent: "center", alignItems: "flex-start"}}>
-            <View style={{marginVertical: "2%"}}>
+          <View style={{ justifyContent: "center", alignItems: "flex-start" }}>
+            <View style={{ marginVertical: "2%" }}>
               <Text style={styles.cardHeaderText}>Customer Reviews</Text>
             </View>
-            
-            <Rating startingValue={4} imageSize={26}/>
+
+            <Rating startingValue={4} imageSize={26} />
           </View>
           {/* <View style={{marginTop: "2%"}}>
             <Text style={{opacity: 0.9}}>Ratings</Text>
@@ -253,8 +264,8 @@ const MarketPlaceItem = () => {
                 }}
                 cornerRadius={{ top: 4 }}
                 data={sampleData}
-                labelComponent={<VictoryLabel dy={0}/>}
-                labels={({ datum }) => datum.y -1}
+                labelComponent={<VictoryLabel dy={0} />}
+                labels={({ datum }) => datum.y - 1}
               />
               <VictoryAxis
                 style={{
@@ -290,6 +301,34 @@ const MarketPlaceItem = () => {
               />
             ))}
           </Swiper>
+        </View>
+        <View>
+          <Button
+            title={"view more"}
+            textColor={colors.black}
+            color={colors.white}
+          />
+        </View>
+
+        <View style={{ marginVertical: "25%" }}>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Money
+            </Text>
+          </Text>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Planet
+            </Text>
+          </Text>
+          <Text style={[styles.customerHeader, styles.footerOpacity]}>
+            Your{" "}
+            <Text style={[styles.customerBoldHeader, styles.footerOpacity]}>
+              Choice
+            </Text>
+          </Text>
         </View>
       </ScrollView>
     </View>
@@ -430,6 +469,18 @@ const styles = StyleSheet.create({
   descriptionContainerfull: {
     marginVertical: "5%",
   },
+  descriptionImageContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  descriptionThumbnailConatiner: {
+    borderRadius: 10,
+    marginRight: "5%",
+    overflow: "hidden",
+    height: 70,
+    width: 70,
+  },
+  descriptionThumbnailImage: { height: 70, width: 70 },
   descriptionHeader: {
     textTransform: "capitalize",
     fontWeight: "700",
@@ -442,6 +493,7 @@ const styles = StyleSheet.create({
     borderColor: colors.grey,
     marginVertical: "5%",
   },
+  footerOpacity: { opacity: 0.3 },
   mainContainer: {
     flex: 1,
     padding: "5%",

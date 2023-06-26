@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   createStackNavigator,
   TransitionPresets,
@@ -92,35 +94,70 @@ import Teams from "../screens/Teams";
 import Invoices from "../screens/Invoices";
 import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
+import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
+
+
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
-// const Stack = createNativeStackNavigator();
+
 const Stack = createStackNavigator();
 
-import { Animated, View, TouchableOpacity, Platform } from "react-native";
+import {
+  Animated,
+  View,
+  TouchableOpacity,
+  Platform,
+  Text,
+  Image,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
 import OrderCard from "../screens/OrderCard";
 import Dashboard from "../screens/Dashboard";
+import MoveMoney from "../screens/MoveMoney";
+import MoveMoneyAmount from "../screens/MoveMoneyAmount";
+import MoveMoneyPin from "../screens/MoveMoneyPin";
+import MoveMoneySuccess from "../screens/MoveMoneySuccess";
 
 function MyTabBar({ state, descriptors, navigation, position }) {
-  const [selectedTabs, setSelectTabs] = useState("");
+  const [selectedTab, setSelectedTab] = useState("");
 
   const insets = useSafeAreaInsets();
 
   return (
     <View
       style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 70 + insets.bottom,
         flexDirection: "row",
-        height: 80,
-        alignItems: "flex-end",
-        backgroundColor: "#F6F5F8",
-        marginBottom: "1.5%",
+        alignItems: "center",
+        justifyContent: "center",
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        overflow: "hidden",
       }}
     >
+      <BlurView
+        tint="light"
+        intensity={40}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 70 + insets.bottom,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+        }}
+      />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -133,7 +170,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         const isFocused = state.index === index;
 
         const onPress = () => {
-          setSelectTabs(route);
+          setSelectedTab(route);
           const event = navigation.emit({
             type: "tabPress",
             target: route.key,
@@ -141,7 +178,6 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           });
 
           if (!isFocused && !event.defaultPrevented) {
-            // The `merge: true` option makes sure that the params inside the tab screen are preserved
             navigation.navigate({ name: route.name, merge: true });
           }
         };
@@ -159,9 +195,36 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
         });
 
+        // Define the image source for each tab
+        let imageSource;
+        switch (index) {
+          case 0:
+            imageSource = "home-variant";
+            break;
+          case 1:
+            imageSource = "home-variant";
+            break;
+          case 2:
+            imageSource = "chart-pie";
+            break;
+          case 3:
+            imageSource = "arrow-top-right";
+            break;
+          case 4:
+            imageSource = "molecule-co2";
+            break;
+          case 5:
+            imageSource = "account";
+            break;
+          // Add cases for other tabs
+          default:
+            imageSource = "home-variant"; // Set a default image source if needed
+            break;
+        }
+
         return (
           <React.Fragment key={route.name.toString()}>
-            {index == 6 ? null : index == 0 ? null : (
+            {index === 6 || index === 0 ? null : (
               <TouchableOpacity
                 key={route.name.toString()}
                 accessibilityRole="button"
@@ -175,20 +238,10 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                 <Animated.View
                   style={{
                     paddingVertical: 0,
+                    marginLeft: "20%",
                   }}
                 >
-                  <Animated.Text
-                    style={{
-                      opacity,
-                      fontSize: 12,
-                      textAlign: "center",
-                      fontFamily: "Helvetica",
-                      fontWeight: isFocused ? "900" : "200",
-                      color: isFocused ? colors.blue : colors.black,
-                    }}
-                  >
-                    {label}
-                  </Animated.Text>
+                  <MaterialCommunityIcons name={imageSource} size={40} color={isFocused ? colors.blue : colors.black}/>
                 </Animated.View>
               </TouchableOpacity>
             )}
@@ -265,6 +318,84 @@ const StackNavigator = () => {
         }}
       />
 
+      <Stack.Screen
+        name="MoveMoney"
+        component={MoveMoney}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyFromAccount"
+        component={MoveMoneyFromAccount}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyAmount"
+        component={MoveMoneyAmount}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyPin"
+        component={MoveMoneyPin}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="MoveMoneySuccess"
+        component={MoveMoneySuccess}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
       <Stack.Screen
         name="AddFunds"
         component={gestureHandlerRootHOC(AddFunds)}
@@ -734,32 +865,10 @@ const StackNavigator = () => {
   );
 };
 
-const ChooseCardsEliteNavigator = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Standard"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-      <Tab.Screen
-        name="Premium"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-      <Tab.Screen
-        name="Elite"
-        component={gestureHandlerRootHOC(ChooseCardsElite)}
-      />
-    </Tab.Navigator>
-  );
-};
-
 const AppNavigator = () => {
-  useEffect(() => {
-    console.log("here");
-  });
-
   return (
     <Tab.Navigator
+      tabBarPosition="bottom"
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="AccountTab"
     >
@@ -791,6 +900,16 @@ const AppNavigator = () => {
       /> */}
       <Tab.Screen name="Analysis" component={Analytics} options={{}} />
 
+      <Tab.Screen
+        name="SendMoneyTab"
+        component={gestureHandlerRootHOC(SendMoney)}
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          animationTypeForReplace: "push",
+          animation: "",
+        }}
+      />
       <Tab.Screen
         name="CarbonTab"
         component={gestureHandlerRootHOC(Carbon)}

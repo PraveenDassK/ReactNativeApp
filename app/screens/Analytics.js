@@ -736,7 +736,6 @@ const Bazier = ({ graphData }) => {
       {/* <AppText>Bezier Line Chart</AppText> */}
 
       <LineChart
-
         data={{
           labels: xAxis,
           datasets: [{ data: yAxis }],
