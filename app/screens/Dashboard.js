@@ -6,6 +6,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 
+import UserIcon from "../components/UserIcon";
+
 const HomeScreenPersonal = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPinModal, setShowPinModal] = useState(true);
@@ -17,12 +19,12 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     useEffect(() => {
         loadData()
-    }, []);
+    }, [accountID, customerDetails]);
 
     /**
      * @dev This loads the data from the Backend
      * @notice Loading is set at the start of this function
-     * @dev if any call fails then no data is set and the loading stops
+     * @dev if any call fails then no data is set and the loading
      */
     const loadData = async () => {
         try{
@@ -48,7 +50,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     return (
         <View>
-        <View>Hello world</View>
+            
         </View>
     );
 };
