@@ -105,7 +105,7 @@ import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
 import OrderCard from "../screens/OrderCard";
 import Dashboard from "../screens/Dashboard";
-
+import MoveMoney from "../screens/MoveMoney";
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
@@ -250,11 +250,27 @@ const StackNavigator = () => {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="Dashboard"
         component={Dashboard}
         options={{
           title: "Dashboard",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoney"
+        component={MoveMoney}
+        options={{
+          title: "MoveMoney",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,

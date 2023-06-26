@@ -74,7 +74,6 @@ const SendMoney = ({ navigation }) => {
    * @param {Obj} beneficaryData 
    */
   const sendGroupPayeeTrigger = async (beneficaryData) => {
-    console.log(beneficaryData)
     const requestObj = {
       "sourceAccountId": "A122HTHM",
       "groupId": beneficaryData.groupId,
@@ -88,8 +87,6 @@ const SendMoney = ({ navigation }) => {
     }
     navigation.navigate("BankTransferAmount", { payeeDetails, requestObj });
   }
-
-  console.log(groupBeneficaryList)
 
   /**
    * @dev If the page is loading show the loading icon
@@ -111,7 +108,7 @@ const SendMoney = ({ navigation }) => {
         />
         <Button
           title="Move money"
-          onPress={() => navigation.navigate("AddFunds")}
+          onPress={() => navigation.navigate("MoveMoney")}
         />
       </View>
 
@@ -147,7 +144,6 @@ const SendMoney = ({ navigation }) => {
           numColumns={4}
           contentContainerStyle={styles.flatListContent}
           renderItem={(beneficary) => {
-            console.log(beneficary.item)
             return (
               <View style={styles.itemContainer}>
                 <UserIcon
