@@ -1,10 +1,15 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import { Text, StyleSheet, View, ScrollView, ActivityIndicator, FlatList } from "react-native";
-
+import {
+  Text,
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import api from "../api/api_list";
 import AuthContext from "../auth/context";
-
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import UserIcon from "../components/UserIcon";
 import Button from "../components/AppButton";
@@ -20,12 +25,9 @@ const SendMoney = ({ navigation }) => {
     loadData();
   }, [isFocused]);
 
-  /**
-   * @dev This loads the beneficary data and group beneficary data for this component
-   */
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       //Gets single beneficiaries
       const response = await api.RetriveBenificiaries(userID);
       const data = response.data.details.content;
@@ -36,57 +38,56 @@ const SendMoney = ({ navigation }) => {
         customerDetails
       );
       setGroupBeneficary(groupBeneficiaries);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   /**
    * @dev This sends a payment to one destination
-   * @param {Obj} beneficaryData 
+   * @param {Obj} beneficaryData
    */
   const sendPayeeTrigger = async (beneficaryData) => {
     const requestObj = {
-      "sourceAccountId": accountID,
-      "destination": {
-        "type": "SCAN",
-        "id": "A1226WEM",
-        "accountNumber": beneficaryData.destinationIdentifier.accountNumber,
-        "sortCode": "000000"//beneficaryData.destinationIdentifier.sortCode
-        ,
-        "name": beneficaryData.name,
-        "phoneNumber": beneficaryData.phoneNumber
+      sourceAccountId: accountID,
+      destination: {
+        type: "SCAN",
+        id: "A1226WEM",
+        accountNumber: beneficaryData.destinationIdentifier.accountNumber,
+        sortCode: "000000", //beneficaryData.destinationIdentifier.sortCode
+        name: beneficaryData.name,
+        phoneNumber: beneficaryData.phoneNumber,
       },
-      "currency": "GBP",
-      "amount": 0,
-      "reference": "Transfer"
-    }
-
-    const payeeDetails = {
-      "name": beneficaryData.name
-    }
-    navigation.navigate("BankTransferAmount", { payeeDetails, requestObj });
-  }
-
-  /**
-   * @dev This sends the money to a group
-   * @param {Obj} beneficaryData 
-   */
-  const sendGroupPayeeTrigger = async (beneficaryData) => {
-    const requestObj = {
-      "sourceAccountId": "A122HTHM",
-      "groupId": beneficaryData.groupId,
-      "currency": "GBP",
-      "amount": 0,
-      "reference": "Transfer",
+      currency: "GBP",
+      amount: 0,
+      reference: "Transfer",
     };
 
     const payeeDetails = {
-      "name": beneficaryData.groupName
-    }
+      name: beneficaryData.name,
+    };
     navigation.navigate("BankTransferAmount", { payeeDetails, requestObj });
-  }
+  };
+
+  /**
+   * @dev This sends the money to a group
+   * @param {Obj} beneficaryData
+   */
+  const sendGroupPayeeTrigger = async (beneficaryData) => {
+    const requestObj = {
+      sourceAccountId: "A122HTHM",
+      groupId: beneficaryData.groupId,
+      currency: "GBP",
+      amount: 0,
+      reference: "Transfer",
+    };
+
+    const payeeDetails = {
+      name: beneficaryData.groupName,
+    };
+    navigation.navigate("BankTransferAmount", { payeeDetails, requestObj });
+  };
 
   /**
    * @dev If the page is loading show the loading icon
@@ -105,39 +106,39 @@ const SendMoney = ({ navigation }) => {
         <Button
           title="Pay someone new"
           onPress={() => navigation.navigate("AddBeneficiary")}
+          color="#D8EBF9"
+          style={styles.button}
         />
         <Button
           title="Move money"
           onPress={() => navigation.navigate("MoveMoney")}
+          color="#D8EBF9"
+          style={styles.button}
         />
       </View>
 
       <View>
-        <Text>
-          Pay an existing payee
-        </Text>
-          <FlatList
-            data={beneficaryList}
-            keyExtractor={(beneficaryList, index) => beneficaryList.id}
-            numColumns={4}
-            contentContainerStyle={styles.flatListContent}
-            renderItem={(beneficary) => {
-              return (
-                <View style={styles.itemContainer}>
-                  <UserIcon
-                    name={beneficary?.item.name}
-                    onPress={() => sendPayeeTrigger(beneficary.item)}
-                  />
-                </View>
-              );
-            }}
-          />
+        <Text>Pay an existing payee</Text>
+        <FlatList
+          data={beneficaryList}
+          keyExtractor={(beneficaryList, index) => beneficaryList.id}
+          numColumns={4}
+          contentContainerStyle={styles.flatListContent}
+          renderItem={(beneficary) => {
+            return (
+              <View style={styles.itemContainer}>
+                <UserIcon
+                  name={beneficary?.item.name}
+                  onPress={() => sendPayeeTrigger(beneficary.item)}
+                />
+              </View>
+            );
+          }}
+        />
       </View>
 
       <View>
-        <Text>
-          Pay an group payee
-        </Text>
+        <Text>Pay an group payee</Text>
         <FlatList
           data={groupBeneficaryList}
           keyExtractor={(groupBeneficaryList, index) => groupBeneficaryList.id}
@@ -155,7 +156,6 @@ const SendMoney = ({ navigation }) => {
           }}
         />
       </View>
-
     </View>
   );
 };
@@ -165,8 +165,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+  button: {
+    border: "dashed",
+    borderRadius: "10px",
+    borderColor: "#0101FD",
+  },
   flatListContent: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   itemContainer: {
     padding: "5%",
