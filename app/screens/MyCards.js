@@ -539,21 +539,16 @@ import React, {
   useContext,
 } from "react";
 import {
-<<<<<<< HEAD
   Animated,
-=======
   Alert,
   Text,
   StyleSheet,
   Image,
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
   View,
   ScrollView,
   SafeAreaView,
   ImageBackground,
   Dimensions,
-  StyleSheet,
-  Text,
   TouchableOpacity,
   Pressable,
 } from "react-native";
@@ -571,7 +566,6 @@ const OFFSET = 40;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
 const ITEM_HEIGHT = 350;
 
-<<<<<<< HEAD
 const cards = [
   { title: "Movie 1", posterUrl: require("../assets/cards/Personal01.png") },
   { title: "Movie 2", posterUrl: require("../assets/cards//Personal02.png") },
@@ -593,27 +587,6 @@ export default function MyCards({navigation}) {
   const [filterTransactions, setFilterTransactions] = useState([
     ...transactions,
   ]);
-=======
-  //Remove
-  const [initials, setInitals] = useState(null);
-  const [cardnumber, setcardnumber] = useState(null);
-  const [firstname, setfirstname] = useState(null);
-  const [lastname, setlastname] = useState(null);
-  const [role, setRole] = useState(null);
-  const [type, setType] = useState(null);
-  const [cardId, setCardID] = useState(null);
-  const [cardIndex, setCardIndex] = useState(0);
-
-  //Keep
-  const [cardData, setCardData] = useState([]);
-  const [currentCardDataShow, setCurrentCardDataShow] = useState({});
-  const [transactionData, setTransactionData] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalId, setModalId] = useState(false);
-  const authContext = useContext(AuthContext);
-
-  const { settings, cardID, customerDetails, cardDetails } = useContext(AuthContext);
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
 
   useEffect(() => {
     loadData();
@@ -636,7 +609,6 @@ export default function MyCards({navigation}) {
 
 
   const loadData = async () => {
-<<<<<<< HEAD
     const response = await apiCall.GetTransactions(
       accountID,
       numOfTransactions
@@ -645,50 +617,6 @@ export default function MyCards({navigation}) {
     console.log(transactionRes);
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
-=======
-    setIsLoading(true);
-    //Get the transaction data
-    const response = await api.GetTransactions(authContext.accountID, 5);
-    const transactions = response.data.details.content;
-    setTransactionData(transactions);
-
-    const cards = await apiCall.GetCardByAccount("686283112");
-
-    const cardDetails = []
-    cards.forEach(cardDetail => {
-      console.log(cardDetail)
-      const obj = {
-        "cardName": cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
-        "cardNumber": cardDetail.maskedCardNumber,
-        "cvv": "000",
-        "expiary": "00/00",
-        "isFrozen": cardDetail.status != "CARD_OK",
-        "isVirtual": cardDetail.template == "MC_VIRTUAL"
-      }
-      cardDetails.push(obj)
-    })
-    console.log(cardDetails)
-    setCardData(cardDetails)
-
-
-    // setCardData(cards);
-    // console.log(cards);
-    // const currentCard = cards[cardIndex];
-    // currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
-
-    // setRole(currentCard.cardRole);
-    // setInitals(
-    //   currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
-    // );
-    // setType(currentCard.productCode);
-
-    // setcardnumber(cardDetails.number);
-    // setfirstname("CVV " + cardDetails.cvv);
-    // setlastname(cardDetails.name);
-    // console.log(cardDetails);
-
-    setIsLoading(false);
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
   };
 
   const handleTransactionFilter = (item) => {
@@ -754,51 +682,6 @@ const TransactionContainer = ({
             title={items.title}
             onTransactionFilter={() => onTransactionFilter(items.title)}
           />
-<<<<<<< HEAD
-=======
-          {cardFrozen ? (
-            <Image
-              style={{
-                width: 200,
-                height: 320,
-                bottom: 0,
-                position: "absolute",
-                borderRadius: 15,
-              }}
-              source={require("../assets/cardFrozen.png")}
-            />
-          ) : null}
-          <View
-            style={{
-              position: "absolute",
-              height: "100%",
-              width: 200,
-              justifyContent: "center",
-            }}
-          >
-            <View style={{ marginLeft: "5%", marginTop: "50%" }}>
-              <AppText
-                style={[
-                  { color: "white", marginBottom: "3.5%" },
-                  styles.totalWalletBalanceText11,
-                ]}
-              >
-                {cardData[1]?.cardNumber}
-              </AppText>
-              <AppText
-                style={[{ color: "white" }, styles.totalWalletBalanceText11]}
-              >
-                {cardData[1]?.cardName}
-              </AppText>
-            </View>
-          </View>
-        </View>
-        <View style={styles.roleConatainer}>
-          <AppText style={[styles.role, { textTransform: "lowercase" }]}>
-            {role}
-          </AppText>
-          <AppText style={styles.role}>{" card"}</AppText>
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
         </View>
       ))}
     </View>

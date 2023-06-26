@@ -514,12 +514,8 @@ const Analytics = ({ navigation }) => {
             />
           ))}
           <TransactionFooter
-<<<<<<< HEAD
-            number={transactions.length}
-=======
             number={3}
             total={transactions.length}
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
             onSee={() => navigation.navigate("Transactions")}
           />
         </View>
@@ -740,11 +736,7 @@ const Bazier = ({ graphData }) => {
       {/* <AppText>Bezier Line Chart</AppText> */}
 
       <LineChart
-<<<<<<< HEAD
       
-=======
-
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
         data={{
           labels: xAxis,
           datasets: [{ data: yAxis }],

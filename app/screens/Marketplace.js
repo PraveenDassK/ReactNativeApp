@@ -110,11 +110,7 @@ const Marketplace = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-<<<<<<< HEAD
-        <Button title={"go to vendor"} textTransform={"uppercase"} />
-=======
         <Button title={"go to vendor"} textTransform={"uppercase"} onPress={() => navigation.navigate("MarketPlaceItem")}/>
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
       </View>
     </View>
   );
