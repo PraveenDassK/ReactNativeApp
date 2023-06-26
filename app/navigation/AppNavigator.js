@@ -18,7 +18,7 @@ import Settings from "../screens/Settings";
 
 import AccountDummy from "../screens/AccountDummy";
 import AccountDummy2 from "../screens/AccountDummy2";
-import DashBoard  from "../screens/Dashboard";
+import DashBoard from "../screens/Dashboard";
 /**
  * @notice Screens on account page to navigate to
  */
@@ -106,7 +106,6 @@ import MarketPlaceItem from "../screens/MarketPlaceItem";
 import OrderCard from "../screens/OrderCard";
 import Dashboard from "../screens/Dashboard";
 
-
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
 
@@ -128,8 +127,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-              ? options.title
-              : route.name;
+            ? options.title
+            : route.name;
 
         const isFocused = state.index === index;
 
@@ -250,7 +249,7 @@ const StackNavigator = () => {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="Dashboard"
         component={Dashboard}
         options={{
@@ -766,7 +765,7 @@ const AppNavigator = () => {
     >
       <Tab.Screen
         name="Loop1"
-        component={gestureHandlerRootHOC(DashBoard)}
+        component={DashBoard}
         options={{
           tabBarShowLabel: false,
           headerShown: false,
@@ -783,13 +782,13 @@ const AppNavigator = () => {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="AccountTab"
         component={gestureHandlerRootHOC(AccountMain)}
         options={{
           title: "Account",
         }}
-      />
+      /> */}
       <Tab.Screen name="Analysis" component={Analytics} options={{}} />
 
       <Tab.Screen
@@ -799,7 +798,11 @@ const AppNavigator = () => {
           title: "Carbon",
         }}
       />
-      <Tab.Screen name="Marketplace" component={gestureHandlerRootHOC(Marketplace)} options={{}} />
+      <Tab.Screen
+        name="Marketplace"
+        component={gestureHandlerRootHOC(Marketplace)}
+        options={{}}
+      />
       <Tab.Screen name="Profile" component={gestureHandlerRootHOC(Settings)} />
       <Tab.Screen
         name="Loop"
@@ -810,13 +813,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-      // listeners={({ navigation, route }) => ({
-      //   focus: () => {
+        // listeners={({ navigation, route }) => ({
+        //   focus: () => {
 
-      //     // Do something with the `navigation` object
-      //     navigation.navigate('AccountTab');
-      //   },
-      // })}
+        //     // Do something with the `navigation` object
+        //     navigation.navigate('AccountTab');
+        //   },
+        // })}
       />
     </Tab.Navigator>
   );
