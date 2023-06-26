@@ -95,6 +95,7 @@ import Teams from "../screens/Teams";
 import Invoices from "../screens/Invoices";
 import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
+import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -108,7 +109,10 @@ import Marketplace from "../screens/Marketplace";
 import MarketPlaceItem from "../screens/MarketPlaceItem";
 import OrderCard from "../screens/OrderCard";
 import Dashboard from "../screens/Dashboard";
-
+import MoveMoney from "../screens/MoveMoney";
+import MoveMoneyAmount from "../screens/MoveMoneyAmount";
+import MoveMoneyPin from "../screens/MoveMoneyPin";
+import MoveMoneySuccess from "../screens/MoveMoneySuccess";
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTabs, setSelectTabs] = useState("");
@@ -272,7 +276,7 @@ const StackNavigator = () => {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="Dashboard"
         component={Dashboard}
         options={{
@@ -288,6 +292,84 @@ const StackNavigator = () => {
         }}
       />
 
+      <Stack.Screen
+        name="MoveMoney"
+        component={MoveMoney}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyFromAccount"
+        component={MoveMoneyFromAccount}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyAmount"
+        component={MoveMoneyAmount}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+
+      <Stack.Screen
+        name="MoveMoneyPin"
+        component={MoveMoneyPin}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="MoveMoneySuccess"
+        component={MoveMoneySuccess}
+        options={{
+          title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
       <Stack.Screen
         name="AddFunds"
         component={gestureHandlerRootHOC(AddFunds)}

@@ -7,10 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-<<<<<<< HEAD
-=======
   Alert
->>>>>>> d49e293b41f9084fe3d44d130855f56ad01bff1f
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Swiper from "react-native-swiper";

@@ -4,9 +4,7 @@ import {
     TextInput,
     StyleSheet,
     View,
-    TouchableOpacity,
-    Pressable,
-    FlatList,
+    ActivityIndicator,
 } from "react-native";
 import { moderateScale } from '../config/scaling'
 
@@ -50,6 +48,7 @@ const Teams = ({ navigation }) => {
             <ButtonIcon
                 name = "My cards"
                 image = "dots-horizontal"
+                onPress={() => console.log("!")}
             />
         </View>
     );
