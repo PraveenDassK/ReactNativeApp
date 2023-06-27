@@ -2,32 +2,32 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import ButtonIcon from './ButtonIcon';
+import { addScreenshotListener } from 'expo-screen-capture';
 
 const CountdownBar = ({ pageCount = 3, currentPage = 1 }) => {
     const renderButtonIcons = () => {
         const buttonIcons = [];
-
         for (let i = 1; i <= pageCount; i++) {
             const isCurrentPage = i === currentPage
             console.log(isCurrentPage)
-            if(isCurrentPage){
+            if (isCurrentPage) {
                 buttonIcons.push(
                     <ButtonIcon
                         key={i}
                         name={""}
                         image={`numeric-${i}-circle`}
                         onPress={() => console.log("!")}
-                        colour = "light-grey"
+                        colour="light-grey"
                     />
                 );
-            }else{
+            } else {
                 buttonIcons.push(
                     <ButtonIcon
                         key={i}
                         name={""}
                         image={`numeric-${i}-circle-outline`}
                         onPress={() => console.log("!")}
-                        colour = "light-grey"
+                        colour="light-grey"
                     />
                 );
             }

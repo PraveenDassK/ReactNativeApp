@@ -104,7 +104,7 @@ const SendMoney = ({ navigation }) => {
   }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <>
       <View style={{ padding: 10 }}>
         <TouchableOpacity onPress={() => navigation.navigate("AddBeneficiary")}>
           <View style={styles.button}>
@@ -205,7 +205,7 @@ const SendMoney = ({ navigation }) => {
           }}
         />
       </View>
-    </ScrollView>
+    </>
   );
 };
 
