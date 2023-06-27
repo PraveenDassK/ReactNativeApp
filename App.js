@@ -22,6 +22,7 @@ import apiLogin from "./app/api/apiLogin";
 
 import versionChecker from "./app/utility/versionChecker";
 import { usePreventScreenCapture } from 'expo-screen-capture';
+import MyCards from "./app/screens/MyCards";
 
 
 
@@ -252,7 +253,7 @@ export default function App() {
     );
   }
 
-
+  return <MyCards />
 
   return (
     <AuthContext.Provider

@@ -146,7 +146,7 @@ const SendMoney = ({ navigation }) => {
         </View>
         <FlatList
           data={beneficaryList}
-          keyExtractor={(beneficaryList, index) => beneficaryList.id}
+          keyExtractor={(beneficaryList, index) => `${beneficaryList.id}-${index}`}
           numColumns={4}
           contentContainerStyle={styles.flatListContent}
           renderItem={(beneficary) => {

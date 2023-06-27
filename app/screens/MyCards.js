@@ -18,29 +18,27 @@ import {
   TouchableOpacity,
   Pressable,
   Dimensions,
- 
 } from "react-native";
 import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
 
-import AuthContext from "../auth/context";
-import apiCall from "../api/api";
-import apiCall2 from "../api/apiCall";
-
-
+// import AuthContext from "../auth/context";
+// import apiCall from "../api/api";
+// import apiCall2 from "../api/apiCall";
 
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
+import formatCurrency from "../utility/formatCurrency";
 
-const OFFSET = 40;
+const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
 const ITEM_HEIGHT = 350;
 
 const cards = [
-  { title: "Movie 1", posterUrl: require("../assets/cards/Personal01.png") },
-  { title: "Movie 2", posterUrl: require("../assets/cards//Personal02.png") },
-  { title: "Movie 3", posterUrl: require("../assets/cards/Personal03.png") },
-  { title: "Movie 4", posterUrl: require("../assets/cards/Business01.png") },
+  { title: "Card 1", cardUrl: require("../assets/cardLion.png") },
+  { title: "Card 2", cardUrl: require("../assets/cardLion.png") },
+  { title: "Card 3", cardUrl: require("../assets/cardLion.png") },
+  { title: "Card 4", cardUrl: require("../assets/cardLion.png") },
 ];
 
 const transactionDisplayItems = [
@@ -49,8 +47,8 @@ const transactionDisplayItems = [
   { id: 3, title: "Expense" },
 ];
 const numOfTransactions = 4;
-export default function MyCards({navigation}) {
-  const { accountID } = useContext(AuthContext);
+export default function MyCards({ navigation }) {
+  // const { accountID } = useContext(AuthContext);
 
   const [isFrozen, setFrozen] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -58,36 +56,35 @@ export default function MyCards({navigation}) {
     ...transactions,
   ]);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
 
   const getFullCardData = async () => {
     const cardObject = await api.GetCardFromID("714613712");
     const cards = await apiCall.GetCardByAccount("686283112");
     const obj = {
-      "cardName": cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
-      "cardNumber": cardDetail.maskedCardNumber,
-      "cvv": "000",
-      "expiary": "00/00",
-      "isFrozen": cardDetail.status != "CARD_OK",
-      "isVirtual": cardDetail.template == "MC_VIRTUAL"
-    }
-    setCurrentCardDataShow(obj)
-  }
-
-
-  const loadData = async () => {
-    const response = await apiCall.GetTransactions(
-      accountID,
-      numOfTransactions
-    );
-    const transactionRes = response.content;
-    console.log(transactionRes);
-    setTransactions(transactionRes);
-    setFilterTransactions(transactionRes);
+      cardName:
+        cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
+      cardNumber: cardDetail.maskedCardNumber,
+      cvv: "000",
+      expiary: "00/00",
+      isFrozen: cardDetail.status != "CARD_OK",
+      isVirtual: cardDetail.template == "MC_VIRTUAL",
+    };
+    setCurrentCardDataShow(obj);
   };
+
+  // const loadData = async () => {
+  //   const response = await apiCall.GetTransactions(
+  //     accountID,
+  //     numOfTransactions
+  //   );
+  //   const transactionRes = response.content;
+  //   console.log(transactionRes);
+  //   setTransactions(transactionRes);
+  //   setFilterTransactions(transactionRes);
+  // };
 
   const handleTransactionFilter = (item) => {
     if (item == "Income") {
@@ -105,12 +102,25 @@ export default function MyCards({navigation}) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <CardSelector />
+      <View style={styles.settingsPositioning}>
+        <Icon
+          title={"settings"}
+          onSettingsPress={() => navigation.navigate("CardSettings")}
+        />
+      </View>
+
       <CardCarousel
         cards={cards}
         onCardPress={() => console.log("card pressed")}
       />
       <TapContainer />
       <View style={styles.settingsContainer}>
+        <View>
+          <Text>Current Balance</Text>
+          <Text>{formatCurrency(46569, "GBP", false)}</Text>
+          <Text>Total 1220 Kg of carbon emissions produced</Text>
+        </View>
         <Icon
           title={"freeze"}
           onSettingsPress={() => {
@@ -119,10 +129,7 @@ export default function MyCards({navigation}) {
           }}
           isFrozen={!isFrozen}
         />
-        <Icon
-          title={"settings"}
-          onSettingsPress={() => navigation.navigate("CardSettings")}
-        />
+       
       </View>
 
       <TransactionContainer
@@ -135,6 +142,17 @@ export default function MyCards({navigation}) {
     </SafeAreaView>
   );
 }
+
+const CardSelector = () => (
+  <View style={[styles.selectorContainer, styles.selectorPositioning]}>
+    <View style={styles.selectorTextContainer}>
+      <Text style={{ textAlign: "center" }}>Virtual</Text>
+    </View>
+    <View style={styles.selectorTextContainer}>
+      <Text style={{ textAlign: "center" }}>Physical</Text>
+    </View>
+  </View>
+);
 
 const TransactionContainer = ({
   title = "Transactions",
@@ -186,7 +204,7 @@ const Transaction = ({
   amount,
   date,
   credit,
-  index
+  index,
 }) => {
   return (
     <Pressable
@@ -197,7 +215,7 @@ const Transaction = ({
         paddingVertical: "2.5%",
         justifyContent: "space-between",
         backgroundColor: "white",
-        borderBottomLeftRadius: index == -1 ? 10 : 0
+        borderBottomLeftRadius: index == -1 ? 10 : 0,
       }}
     >
       <View style={{ flexDirection: "row" }}>
@@ -308,15 +326,16 @@ const CardCarousel = ({ cards, onCardPress }) => {
                 transform: [{ scale: translate }],
               }}
             >
-              <ImageBackground
-                source={item.posterUrl}
+              <Image
+                source={item.cardUrl}
                 style={{
                   flex: 1,
-                  resizeMode: "cover",
-                  justifyContent: "center",
+                  marginLeft: "25%",
+
+                  resizeMode: "contain",
                 }}
                 imageStyle={{ borderRadius: 6 }}
-              ></ImageBackground>
+              ></Image>
             </Animated.View>
           </TouchableOpacity>
         );
@@ -340,7 +359,7 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
     >
       <View
         style={{
-          backgroundColor: isFrozen ? "black" : "white",
+          backgroundColor: isFrozen ? "black" : colors.babyBlue,
           height: 50,
           width: 50,
           justifyContent: "center",
@@ -352,7 +371,7 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
         {title !== "settings" ? (
           <MaterialCommunityIcons
             name={!isFrozen ? "snowflake" : "snowflake-off"}
-            color={isFrozen ? "white" : "black"}
+            color={isFrozen ? colors.babyBlue : "black"}
             size={30}
           />
         ) : (
@@ -395,6 +414,28 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: "5%",
-    paddingBottom: "0%"
+    paddingBottom: "0%",
   },
+  selectorContainer: {
+    width: 200,
+    borderRadius: 15,
+    flexDirection: "row",
+  },
+  selectorPositioning: {
+    zIndex: 1,
+    position: "absolute",
+    top: 150,
+    left: -60,
+    transform: [{ rotate: "-90deg" }],
+  },
+  selectorTextContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alighItems: "center",
+    backgroundColor: colors.babyBlue,
+    borderRadius: 7,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  settingsPositioning: { zIndex: 1, position: "absolute", top: 310, left: 15 },
 });
