@@ -20,6 +20,7 @@ import * as Yup from "yup";
 
 import ErrorMessage from "../components/forms/ErrorMessage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
+import CountdownBar from "../components/CountdownBar";
 
 const validationSchema = Yup.object().shape({
   accountName: Yup.string().required().min(1).max(30).label("Account name"),
@@ -104,6 +105,7 @@ const AddBeneficiary = ({ navigation }) => {
   return (
     <KeyboardAvoider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <CountdownBar/>
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
             initialValues={{

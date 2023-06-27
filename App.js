@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Text, View, Button, Platform, ActivityIndicator } from "react-native";
 import { AppState } from "react-native";
 import { useFonts } from "expo-font";
+import * as Font from "expo-font";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -49,6 +50,21 @@ export default function App() {
     Helvetica: require("./app/assets/fonts/Helvetica.ttf"),
     Typo: require("./app/assets/fonts/typo-grotesk.regular.otf"),
   });
+
+  const [fontLoaded, setFontLoaded] = useState(false);
+  const fetchFonts = () => {
+    return Font.loadAsync({
+      "Montserrat": require("./app/assets/fonts/Montserrat-Bold.ttf"),
+      "Montserrat-Bold": require("./app/assets/fonts/Montserrat-Bold.ttf"),
+      "Montserrat-Medium": require("./app/assets/fonts/Montserrat-Medium.ttf"),
+      "Montserrat-Regular": require("./app/assets/fonts/Montserrat-Regular.ttf"),
+      "Montserrat-SemiBold": require("./app/assets/fonts/Montserrat-SemiBold.ttf"),
+    });
+  };
+
+  if (!fontLoaded) {
+    fetchFonts()
+  }
   const notificationListener = useRef();
   const responseListener = useRef();
 
