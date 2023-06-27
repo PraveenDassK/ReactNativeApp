@@ -1,20 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  RefreshControl,
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Platform,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Vibration,
-  useWindowDimensions,
-  ImageBackground,
-} from "react-native";
+import {RefreshControl,Text,StyleSheet,Image,View,TouchableOpacity,ScrollView,ActivityIndicator,Platform,Dimensions,TouchableWithoutFeedback,Vibration,useWindowDimensions,ImageBackground,} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -54,7 +39,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       return;
     }
   };
-
+  console.log(userData)
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -72,7 +57,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         <View style={styles.header}>
           <View>
             <Text style={styles.welcomText}>Welcome back,</Text>
-            <Text style={styles.nameText}>Nik Vyas !</Text>
+            <Text style={styles.nameText}>{userData.name} !</Text>
           </View>
           <View style={styles.iconContainer}>
             <View style={styles.iconStyle}>

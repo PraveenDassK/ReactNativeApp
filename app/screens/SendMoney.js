@@ -25,7 +25,7 @@ const SendMoney = ({ navigation }) => {
 
   useEffect(() => {
     loadData();
-  }, [isFocused]);
+  }, []);
 
   const loadData = async () => {
     try {
@@ -131,7 +131,7 @@ const SendMoney = ({ navigation }) => {
           </Text>
           <Feather name="info" size={12} color="black" />
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("AddBeneficiary")}>
+        <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
           <View style={styles.button}>
             <Feather name="send" size={20} color="black" />
             <Text style={styles.buttonText}>To self account</Text>
