@@ -30,6 +30,8 @@ import AddFunds from "../screens/AddFunds";
 //Send money
 import SendMoney from "../screens/SendMoney";
 import AddBeneficiary from "../screens/AddBeneficiary";
+import AddBeneficiaryContact from "../screens/AddBeneficiaryContact";
+import AddBeneficiaryRefrence from "../screens/AddBeneficiaryRefrence";
 import BankTransferAmount from "../screens/BankTransferAmount";
 
 //Generic
@@ -164,8 +166,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -241,7 +243,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                     marginLeft: "20%",
                   }}
                 >
-                  <MaterialCommunityIcons name={imageSource} size={40} color={isFocused ? colors.blue : colors.black}/>
+                  <MaterialCommunityIcons name={imageSource} size={40} color={isFocused ? colors.blue : colors.black} />
                 </Animated.View>
               </TouchableOpacity>
             )}
@@ -639,6 +641,37 @@ const StackNavigator = () => {
           headerBackTitleVisible: false,
         }}
       />
+      <Stack.Screen
+        name="AddBeneficiaryContact"
+        component={gestureHandlerRootHOC(AddBeneficiaryContact)}
+        options={{
+          title: "Bank Details",
+          presentation: "modal",
+          headerShown: true,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="AddBeneficiaryRefrence"
+        component={gestureHandlerRootHOC(AddBeneficiaryRefrence)}
+        options={{
+          title: "Bank Details",
+          presentation: "modal",
+          headerShown: true,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+        }}
+      />
 
       <Stack.Screen
         name="BankTransferAmount"
@@ -870,7 +903,7 @@ const AppNavigator = () => {
     <Tab.Navigator
       tabBarPosition="bottom"
       tabBar={(props) => <MyTabBar {...props} />}
-      initialRouteName="DashBoard"
+      initialRouteName="Dashboard"
     >
         <Tab.Screen
         name="Loop1"
@@ -930,13 +963,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-        // listeners={({ navigation, route }) => ({
-        //   focus: () => {
+      // listeners={({ navigation, route }) => ({
+      //   focus: () => {
 
-        //     // Do something with the `navigation` object
-        //     navigation.navigate('AccountTab');
-        //   },
-        // })}
+      //     // Do something with the `navigation` object
+      //     navigation.navigate('AccountTab');
+      //   },
+      // })}
       />
     </Tab.Navigator>
   );

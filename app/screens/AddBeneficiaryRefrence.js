@@ -48,145 +48,91 @@ const validationSchema = Yup.object().shape({
 
 const items = [
   {
+    id: 1,
+    label: "IBAN",
+    placeholder: "",
+    initialValue: "iban",
+  },
+  {
     id: 2,
-    label: "First name",
-    placeholder: "Enter your name",
-    initialValue: "firstName",
+    label: "BIC",
+    placeholder: "",
+    initialValue: "bic",
   },
   {
     id: 3,
-    label: "Last name",
-    placeholder: "Enter your name",
-    initialValue: "lastName",
+    label: "Currency",
+    placeholder: "",
+    initialValue: "currency",
   },
   {
     id: 4,
-    label: "Account Number",
-    placeholder: "Enter Account number",
-    initialValue: "accNum",
-  },
-  {
-    id: 5,
-    label: "Sort Code",
-    placeholder: "Enter sort code",
-    initialValue: "sortCode",
+    label: "Refrence",
+    placeholder: "",
+    initialValue: "refrence",
   },
 ];
 
-const AddBeneficiary = ({ navigation }) => {
-  const [selectedOption, setSelectedOption] = useState("personal");
-
-  const handleCheckboxChange = (value) => {
-    setSelectedOption(value);
-  };
+const AddBeneficiary = ({ navigation, route }) => {
+  const authContext = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async ({
-    firstName,
-    lastName,
-    accNum,
-    sortCode,
+    iban,
+    bic,
+    currency,
+    refrence,
   }) => {
-    console.log(firstName, lastName, accNum, sortCode)
-
-    const requestObj = {
-      "externalReference": "",
-      "name": firstName + " " + lastName,
-      "birthdate": "",
-      "emailAddress": "",
-      "phoneNumber": "",
-      "destinationIdentifier": {
-        "type": "SCAN",
-        "accountNumber": accNum,
-        "sortCode": sortCode,
-        "iban": "",
-        "bic": "",
-        "currency": "",
-        "countrySpecificDetails": {
-          "bankName": "",
-          "bankAddress": "",
-          "bankCity": "",
-          "bankBranchName": "",
-          "bankBranchCode": "",
-          "bankCode": "",
-          "chineseId": "",
-          "province": "",
-          "business": true
-        }
-      },
-      "defaultReference": "Friend",
-      "idToReplace": "",
-      "address": {
-        "addressLine1": "",
-        "addressLine2": "",
-        "postTown": "",
-        "postCode": "",
-        "country": ""
-      },
-      "qualifier": ""
-    }
-
-    const obj = {
-      "externalReference": "",
-      "name": "",
-      "birthdate": "",
-      "emailAddress": "",
-      "phoneNumber": "",
-      "destinationIdentifier": {
-        "type": "",
-        "accountNumber": "",
-        "sortCode": "",
-        "iban": "",
-        "bic": "",
-        "currency": "",
-        "countrySpecificDetails": {
-          "bankName": "",
-          "bankAddress": "",
-          "bankCity": "",
-          "bankBranchName": "",
-          "bankBranchCode": "",
-          "bankCode": "",
-          "chineseId": "",
-          "province": "",
-          "business": true
-        }
-      },
-      "defaultReference": "",
-      "idToReplace": "",
-      "address": {
-        "addressLine1": "",
-        "addressLine2": "",
-        "postTown": "",
-        "postCode": "",
-        "country": ""
-      },
-      "qualifier": ""
-    }
+    let requestObj = route.params
+    requestObj.destinationIdentifier.iban = iban
+    requestObj.destinationIdentifier.bic = bic
+    requestObj.destinationIdentifier.currency = currency
+    requestObj.externalRefrence = refrence
     console.log(requestObj)
 
-    navigation.navigate("AddBeneficiaryContact", requestObj)
+    const checkRequestObj = {
+      "paymentAccountId": "A122HTHM",
+      "sortCode": "000000",
+      "accountNumber": "12345674",
+      "secondaryAccountId": "1",
+      "accountType": "PERSONAL",
+      "name": "a"
+    }
 
-    // const response = await api.AddBeneficiary(
-    //   authContext.userID,
-    //   phoneNumber,
-    //   accountName,
-    //   accNum,
-    //   sortCode
-    // );
+    //API call
+    const beneficaryCall = await apiBeneficiaries.AddBeneficiary(authContext.userID, requestObj);
+
+    //If the payee is a duplicate don't add them
+    if (
+      beneficaryCall.data.resultMessage ==
+      '[{"field":"customer","code":"DUPLICATE","message":"Beneficiary already exists for Customer"}]'
+    ) {
+      alert("You already have this payee");
+      return;
+    }
+    console.log(beneficaryCall)
+    console.log(beneficaryCall.data.details)
   };
 
-
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
 
   return (
     <KeyboardAvoider>
-      <CountdownBar />
+      <CountdownBar currentPage={3} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
             initialValues={{
-              firstName: "Jack",
-              lastName: "Huang",
-              sortCode: "123456",
-              accNum: "12341234",
+              iban: "",
+              bic: "",
+              currency: "GBP",
+              refrence: "Friend"
             }}
             onSubmit={handleSubmit}
           // validationSchema={validationSchema}
@@ -200,25 +146,6 @@ const AddBeneficiary = ({ navigation }) => {
             }) => (
               <>
                 <View>
-
-                  <Text>Select account type</Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <CheckBox
-                      title="Personal"
-                      checked={selectedOption === 'personal'}
-                      checkedColor="black"
-                      onPress={() => handleCheckboxChange('personal')}
-                    />
-                  </View>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <CheckBox
-                      title="Business"
-                      checked={selectedOption === 'business'}
-                      checkedColor="black"
-                      onPress={() => handleCheckboxChange('business')}
-                    />
-                  </View>
-
                   {items.map((item, index) => (
                     <View
                       key={item.id}

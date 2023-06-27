@@ -91,61 +91,23 @@ const GetScheduledPayments = async (ID) => {
   return request.data.details;
 };
 
-const checkBeneficary = async (userAccount) => {
+const checkBeneficary = async (userAccount, requestObj) => {
   const obj = {
-      "paymentAccountId": "A122HTHM",
-      "sortCode": "000000",
-      "accountNumber": "12345674",
-      "secondaryAccountId": "1",
-      "accountType": "PERSONAL",
-      "name": "a"
+    "paymentAccountId": "A122HTHM",
+    "sortCode": "000000",
+    "accountNumber": "12345674",
+    "secondaryAccountId": "1",
+    "accountType": "PERSONAL",
+    "name": "a"
   }
   const beneficaryCheckRequest = await client.post(`https://api.carbonyte.io/walletmodule/AccountNameCheck/${userAccount}`,
-      obj
+    obj
   )
   return beneficaryCheckRequest?.data.details
 }
-const AddBeneficiary = (modulrCustomerId, phonenumber, accountName, accNum, sortCode) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?modulrCustomerId=" + modulrCustomerId,
+const AddBeneficiary = (modulrCustomerId,obj) => client.post("https://api.carbonyte.io/walletmodule/Wallet/CreateNewBeneficiary?modulrCustomerId=" + modulrCustomerId, obj)
 
-  {
-    "externalReference": "",
-    "name": accountName,
-    "birthdate": "",
-    "emailAddress": "",
-    "phoneNumber": phonenumber,
-    "destinationIdentifier": {
-      "type": "SCAN",
-      "accountNumber": accNum,
-      "sortCode": sortCode,
-      "iban": "",
-      "bic": "",
-      "currency": "",
-      "countrySpecificDetails": {
-        "bankName": "",
-        "bankAddress": "",
-        "bankCity": "",
-        "bankBranchName": "",
-        "bankBranchCode": "",
-        "bankCode": "",
-        "chineseId": "",
-        "province": "",
-        "business": false
-      }
-    },
-    "defaultReference": "Friend",
-    "idToReplace": "",
-    "address": {
-      "addressLine1": "",
-      "addressLine2": "",
-      "postTown": "",
-      "postCode": "",
-      "country": ""
-    },
-    "qualifier": ""
-  }
-)
-
-const DeleteBenificiary = async(enfuseId,beneficaryId) => {
+const DeleteBenificiary = async (enfuseId, beneficaryId) => {
   return await client.delete(`https://api.carbonyte.io/walletmodule/Wallet/DeleteBeneficiaries?customerId=${enfuseId}&beneficiaryId=${beneficaryId}`)
 }
 
@@ -154,7 +116,7 @@ const DeleteBenificiary = async(enfuseId,beneficaryId) => {
  * @param {*} Id 
  * @returns 
  */
-const DeleteGroupBenificiary = async(Id) => {
+const DeleteGroupBenificiary = async (Id) => {
   return await client.delete("https://api.carbonyte.io/walletmodule/Wallet/DeleteGroupBeneficiaries?groupId=" + Id)
 }
 

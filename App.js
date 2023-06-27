@@ -26,7 +26,6 @@ import { usePreventScreenCapture } from 'expo-screen-capture';
 
 
 
-
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -252,8 +251,6 @@ export default function App() {
       </View>
     );
   }
-
-
 
   return (
     <AuthContext.Provider
