@@ -21,6 +21,7 @@ import * as Yup from "yup";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 import CountdownBar from "../components/CountdownBar";
+import CheckBox from '@react-native-community/checkbox';
 
 const validationSchema = Yup.object().shape({
   accountName: Yup.string().required().min(1).max(30).label("Account name"),
@@ -48,15 +49,15 @@ const validationSchema = Yup.object().shape({
 const items = [
   {
     id: 2,
-    label: "Phone Number",
-    placeholder: "Enter phone number",
-    initialValue: "phoneNumber",
+    label: "First name",
+    placeholder: "Enter your name",
+    initialValue: "firstName",
   },
   {
     id: 3,
-    label: "Account Owner Name",
-    placeholder: "Enter owner name",
-    initialValue: "accountName",
+    label: "Last name",
+    placeholder: "Enter your name",
+    initialValue: "lastName",
   },
   {
     id: 4,
@@ -77,6 +78,12 @@ const AddBeneficiary = ({ navigation }) => {
   const [phoneNumber, setIban] = useState("");
   const [sortCode, setPhoneNumber] = useState("");
   const [accNum, setAccNum] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleCheckboxChange = (value) => {
+    setSelectedOption(value);
+  };
+
   const authContext = useContext(AuthContext);
 
   const handleSubmit = async ({
@@ -85,32 +92,20 @@ const AddBeneficiary = ({ navigation }) => {
     accNum,
     sortCode,
   }) => {
-    const beneficaryCheck = await apiBeneficiaries.checkBeneficary()
-    console.log(beneficaryCheck.result.code == "MATCHED")
-    if (beneficaryCheck.result.code == "MATCHED") {
-      const response = await api.AddBeneficiary(
-        authContext.userID,
-        phoneNumber,
-        accountName,
-        accNum,
-        sortCode
-      );
-      navigation.navigate("SendMoney");
-      console.log(response);
-    }
+
   };
 
 
 
   return (
     <KeyboardAvoider>
+      <CountdownBar />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <CountdownBar/>
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
             initialValues={{
-              accountName: "",
-              phoneNumber: "",
+              firstName: "",
+              lastName: "",
               sortCode: "",
               accNum: "",
             }}
@@ -126,9 +121,21 @@ const AddBeneficiary = ({ navigation }) => {
             }) => (
               <>
                 <View>
-                  {/* <View style={{ width: "100%", height: "auto", justifyContent: "center", alignItems: "center", height: 50}}>
-                <Text style={{  fontSize: 20 }}>Bank Details</Text>
-              </View> */}
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <CheckBox
+                      value={selectedOption === 'personal'}
+                      onValueChange={() => handleCheckboxChange('personal')}
+                    />
+                    <Text>Personal</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <CheckBox
+                      value={selectedOption === 'business'}
+                      onValueChange={() => handleCheckboxChange('business')}
+                    />
+                    <Text>Business</Text>
+                  </View>
 
                   {items.map((item, index) => (
                     <View
@@ -143,7 +150,6 @@ const AddBeneficiary = ({ navigation }) => {
                       <TextInput
                         onBlur={() => setFieldTouched(item.initialValue)}
                         onChangeText={handleChange(item.initialValue)}
-                        // placeholder={item.placeholder}
                         style={{ fontSize: 24, marginTop: "1%" }}
                       ></TextInput>
                       <View
