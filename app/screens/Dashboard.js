@@ -8,6 +8,8 @@ import apiCall from "../api/apiCall";
 import AccountDeatils from "../components/AccountDeatils";
 import SquareIcon from "../components/SquareIcon";
 import GlobalStyles from "../../GlobalStyles";
+import RecentTransactions from "../components/RecentTransactions";
+import CarbonSpendGraph from "../components/CarbonSpendGraph";
 
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,128 +54,138 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   return (
     <View style={{ position: "relative" }}>
-      <ImageBackground
-        source={require("../assets/backgrounds/River.png")}
-        style={styles.backgroundImage}
-      >
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.welcomText}>Welcome back,</Text>
-            <Text style={styles.nameText}>{userData.name} !</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <View style={styles.iconStyle}>
-              <FontAwesome name="moon-o" size={24} color="white" />
+      <ScrollView>
+        <ImageBackground
+          source={require("../assets/backgrounds/River.png")}
+          style={styles.backgroundImage}
+        >
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.welcomText}>Welcome back,</Text>
+              <Text style={styles.nameText}>{userData.name} !</Text>
             </View>
-            <View style={styles.iconStyle}>
-              <Ionicons name="notifications" size={24} color="white" />
+            <View style={styles.iconContainer}>
+              <View style={styles.iconStyle}>
+                <FontAwesome name="moon-o" size={24} color="white" />
+              </View>
+              <View style={styles.iconStyle}>
+                <Ionicons name="notifications" size={24} color="white" />
+              </View>
             </View>
           </View>
+        </ImageBackground>
+        <View style={styles.AccountDetailsCard}>
+          <AccountDeatils />
         </View>
-      </ImageBackground>
-      <View style={styles.AccountDetailsCard}>
-        <AccountDeatils />
-      </View>
 
-      <View style={styles.buttonContainer}>
-        <SquareIcon
-          text={"Move money"}
-          image={"bank-transfer"}
-          trigger={() => navigation.navigate("MoveMoney")}
-        />
-
-
-        <SquareIcon
-          text={"Send money"}
-          image={"send"}
-          trigger={() => navigation.navigate("SendMoney")}
-        />
-
-        <SquareIcon
-          text={"Cards"}
-          image={"credit-card"}
-          trigger={() => navigation.navigate("MyCards")}
-        />
-
-        {!iconShow ?
+        <View style={styles.buttonContainer}>
           <SquareIcon
-            text={"More"}
-            image={"dots-horizontal"}
-            trigger={() => setIconShow(!iconShow)}
-          /> :
-
-          <SquareIcon
-            text={"Switch accounts"}
-            image={"account-switch"}
-            trigger={() => navigation.navigate("SwitchAccounts")}
+            text={"Move money"}
+            image={"bank-transfer"}
+            trigger={() => navigation.navigate("MoveMoney")}
           />
-        }
 
-      </View>
 
-      {iconShow ?
-        <View>
-          <View style={styles.buttonContainer}>
+          <SquareIcon
+            text={"Send money"}
+            image={"send"}
+            trigger={() => navigation.navigate("SendMoney")}
+          />
 
+          <SquareIcon
+            text={"Cards"}
+            image={"credit-card"}
+            trigger={() => navigation.navigate("MyCards")}
+          />
+
+          {!iconShow ?
             <SquareIcon
-              text={"Payment link"}
-              image={"link-variant"}
-              trigger={() => navigation.navigate("PaymentLink")}
-            />
-
-            <SquareIcon
-              text={"Subscriptions"}
-              image={"newspaper-variant-outline"}
-              trigger={() => navigation.navigate("Subscriptions")}
-            />
-
-            <SquareIcon
-              text={"Set limits"}
-              image={"car-speed-limiter"}
-              trigger={() => navigation.navigate("SpendingLimit")}
-            />
-
-            <SquareIcon
-              text={"Transactions"}
-              image={"bank-outline"}
-              trigger={() => navigation.navigate("Transactions")}
-            />
-
-          </View>
-
-          <View style={styles.buttonContainer}>
-
-
-            <SquareIcon
-              text={"Teams"}
-              image={"account-group"}
-              trigger={() => navigation.navigate("Teams")}
-            />
-
-
-            <SquareIcon
-              text={"Invoices"}
-              image={"file-document-multiple"}
-              trigger={() => navigation.navigate("Invoices")}
-            />
-
-            <SquareIcon
-              text={"Direct debits"}
-              image={"directions"}
-              trigger={() => navigation.navigate("DirectDebits")}
-            />
-
-            <SquareIcon
-              text={"Less"}
+              text={"More"}
               image={"dots-horizontal"}
               trigger={() => setIconShow(!iconShow)}
-            />
+            /> :
 
-          </View>
+            <SquareIcon
+              text={"Switch accounts"}
+              image={"account-switch"}
+              trigger={() => navigation.navigate("SwitchAccounts")}
+            />
+          }
+
         </View>
 
-        : false}
+        {iconShow ?
+          <View>
+            <View style={styles.buttonContainer}>
 
+              <SquareIcon
+                text={"Payment link"}
+                image={"link-variant"}
+                trigger={() => navigation.navigate("PaymentLink")}
+              />
+
+              <SquareIcon
+                text={"Subscriptions"}
+                image={"newspaper-variant-outline"}
+                trigger={() => navigation.navigate("Subscriptions")}
+              />
+
+              <SquareIcon
+                text={"Set limits"}
+                image={"car-speed-limiter"}
+                trigger={() => navigation.navigate("SpendingLimit")}
+              />
+
+              <SquareIcon
+                text={"Transactions"}
+                image={"bank-outline"}
+                trigger={() => navigation.navigate("Transactions")}
+              />
+
+            </View>
+
+            <View style={styles.buttonContainer}>
+
+
+              <SquareIcon
+                text={"Teams"}
+                image={"account-group"}
+                trigger={() => navigation.navigate("Teams")}
+              />
+
+
+              <SquareIcon
+                text={"Invoices"}
+                image={"file-document-multiple"}
+                trigger={() => navigation.navigate("Invoices")}
+              />
+
+              <SquareIcon
+                text={"Direct debits"}
+                image={"directions"}
+                trigger={() => navigation.navigate("DirectDebits")}
+              />
+
+              <SquareIcon
+                text={"Less"}
+                image={"dots-horizontal"}
+                trigger={() => setIconShow(!iconShow)}
+              />
+
+            </View>
+          </View>
+
+          : false}
+
+        <View style={styles.recentTransactionsContainer}>
+          <RecentTransactions />
+        </View>
+
+<View>
+  <CarbonSpendGraph/>
+</View>
+
+      </ScrollView>
     </View >
   );
 };
@@ -225,14 +237,16 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: "2.5%",
-    top:"60%",
+    top: "60%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
   },
-
+  recentTransactionsContainer: {
+    marginTop: "60%",
+  },
 });
 
 export default HomeScreenPersonal;
