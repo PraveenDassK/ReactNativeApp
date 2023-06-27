@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   },
   button: {
     border: "dashed",
-    borderRadius: "10px",
+    borderRadius: 10,
     borderColor: "#0101FD",
     backgroundColor: "#D8EBF9",
     color: "#212529",
