@@ -14,7 +14,6 @@ import api from "../api/api_list";
 import AuthContext from "../auth/context";
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import UserIcon from "../components/UserIcon";
-import Button from "../components/AppButton";
 
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
