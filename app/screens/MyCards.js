@@ -18,19 +18,17 @@ import {
   TouchableOpacity,
   Pressable,
   Dimensions,
- 
 } from "react-native";
 import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
 
-import AuthContext from "../auth/context";
-import apiCall from "../api/api";
+// import AuthContext from "../auth/context";
+// import apiCall from "../api/api";
 import apiCall2 from "../api/apiCall";
-
-
 
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
+import { width } from "cli";
 
 const OFFSET = 40;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -49,8 +47,9 @@ const transactionDisplayItems = [
   { id: 3, title: "Expense" },
 ];
 const numOfTransactions = 4;
-export default function MyCards({navigation}) {
-  const { accountID } = useContext(AuthContext);
+
+export default function MyCards({ navigation }) {
+  // const { accountID } = useContext(AuthContext);
 
   const [isFrozen, setFrozen] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -59,24 +58,23 @@ export default function MyCards({navigation}) {
   ]);
 
   useEffect(() => {
-    loadData();
+    // loadData();
   }, []);
-
 
   const getFullCardData = async () => {
     const cardObject = await api.GetCardFromID("714613712");
     const cards = await apiCall.GetCardByAccount("686283112");
     const obj = {
-      "cardName": cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
-      "cardNumber": cardDetail.maskedCardNumber,
-      "cvv": "000",
-      "expiary": "00/00",
-      "isFrozen": cardDetail.status != "CARD_OK",
-      "isVirtual": cardDetail.template == "MC_VIRTUAL"
-    }
-    setCurrentCardDataShow(obj)
-  }
-
+      cardName:
+        cardDetail.embossing.firstName + " " + cardDetail.embossing.lastName,
+      cardNumber: cardDetail.maskedCardNumber,
+      cvv: "000",
+      expiary: "00/00",
+      isFrozen: cardDetail.status != "CARD_OK",
+      isVirtual: cardDetail.template == "MC_VIRTUAL",
+    };
+    setCurrentCardDataShow(obj);
+  };
 
   const loadData = async () => {
     const response = await apiCall.GetTransactions(
@@ -105,10 +103,12 @@ export default function MyCards({navigation}) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <SelectionButton />
       <CardCarousel
         cards={cards}
         onCardPress={() => console.log("card pressed")}
       />
+
       <TapContainer />
       <View style={styles.settingsContainer}>
         <Icon
@@ -135,6 +135,19 @@ export default function MyCards({navigation}) {
     </SafeAreaView>
   );
 }
+
+const SelectionButton = () => (
+  <View style={styles.virtualPhsysicalContainer}>
+  <View
+    style={styles.selectionButtonContainer}
+  >
+    <Text>Virtual</Text>
+  </View>
+  <View style={styles.selectionButtonContainer}>
+    <Text>Physical</Text>
+  </View>
+</View>
+)
 
 const TransactionContainer = ({
   title = "Transactions",
@@ -186,7 +199,7 @@ const Transaction = ({
   amount,
   date,
   credit,
-  index
+  index,
 }) => {
   return (
     <Pressable
@@ -197,7 +210,7 @@ const Transaction = ({
         paddingVertical: "2.5%",
         justifyContent: "space-between",
         backgroundColor: "white",
-        borderBottomLeftRadius: index == -1 ? 10 : 0
+        borderBottomLeftRadius: index == -1 ? 10 : 0,
       }}
     >
       <View style={{ flexDirection: "row" }}>
@@ -371,6 +384,7 @@ const styles = StyleSheet.create({
   },
   bold: { fontWeight: "700" },
   header: { fontSize: 20 },
+  headerContainer: {},
   settingsContainer: {
     justifyContent: "center",
     flexDirection: "row",
@@ -389,12 +403,26 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: "5%",
   },
+  selectionButtonContainer: {
+    backgroundColor: colors.babyBlue,
+    padding: 15,
+    borderRadius: 10,
+  },
   transactionHeaderContainer: {
     backgroundColor: "white",
     marginTop: "5%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: "5%",
-    paddingBottom: "0%"
+    paddingBottom: "0%",
+  },
+  virtualPhsysicalContainer: {
+    position: "absolute",
+    flexDirection: "row",
+    transform: [{ rotate: "-90deg" }],
+    top: 160,
+    left: -40,
+    backgroundColor: "red",
+    borderRadius: 10,
   },
 });
