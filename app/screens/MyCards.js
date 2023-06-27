@@ -5,6 +5,7 @@ import React, {
   useState,
   useContext,
 } from "react";
+import { BlurView } from "expo-blur";
 import {
   Animated,
   Alert,
@@ -29,6 +30,8 @@ import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
 import formatCurrency from "../utility/formatCurrency";
+import AppScreen from "../components/AppScreen";
+import { color } from "react-native-reanimated";
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -101,7 +104,7 @@ export default function MyCards({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <AppScreen>
       <CardSelector />
       <View style={styles.settingsPositioning}>
         <Icon
@@ -118,7 +121,12 @@ export default function MyCards({ navigation }) {
       <View style={styles.settingsContainer}>
         <View>
           <Text>Current Balance</Text>
-          <Text>{formatCurrency(46569, "GBP", false)}</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ fontWeight: "900", color: "green" }}>£</Text>
+            <Text style={{ fontSize: 30, fontWeight: "900", color: "green" }}>
+              46,569.00
+            </Text>
+          </View>
           <Text>Total 1220 Kg of carbon emissions produced</Text>
         </View>
         <Icon
@@ -129,19 +137,70 @@ export default function MyCards({ navigation }) {
           }}
           isFrozen={!isFrozen}
         />
-       
+      </View>
+      <View
+        style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden" }}
+      >
+        <BlurView
+          tint="light"
+          intensity={40}
+          style={styles.incomeExpenseContainer}
+        >
+          <IncomeExpenseItem />
+          <IncomeExpenseItem isIncome={false} />
+        </BlurView>
       </View>
 
+      <View style={{ flex: 1 }}>
+       
       <TransactionContainer
-        title="Recent Transactions"
+        title="Transactions History"
         transactionDisplayItems={transactionDisplayItems}
         onTransaction={() => console.log("onTransaction")}
         transactions={filterTransactions}
         onTransactionFilter={(item) => handleTransactionFilter(item)}
       />
-    </SafeAreaView>
+      </View>
+      
+
+    </AppScreen>
   );
 }
+
+const IncomeExpenseItem = ({ isIncome = true }) => (
+  <View
+    style={{
+      flex: 1,
+      flexDirection: "row",
+      borderRadius: 20,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+    }}
+  >
+    <View
+      style={{
+        backgroundColor: isIncome ? "green" : "red",
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+      }}
+    >
+      <MaterialCommunityIcons
+        name={isIncome ? "arrow-bottom-left" : "arrow-top-right"}
+        size={40}
+        color={colors.white}
+      />
+    </View>
+
+    <View style={{ marginLeft: "5%" }}>
+      <Text>{isIncome ? "Income" : "Expenses"}</Text>
+      <Text style={{ color: isIncome ? "green" : "red", lineHeight: 18 }}>
+        {isIncome ? "+" : ""}
+        {formatCurrency(3280, "GBP", !isIncome)}
+      </Text>
+    </View>
+  </View>
+);
 
 const CardSelector = () => (
   <View style={[styles.selectorContainer, styles.selectorPositioning]}>
@@ -161,7 +220,7 @@ const TransactionContainer = ({
   transactions,
   onTransactionFilter,
 }) => (
-  <ScrollView style={styles.transactionContainer}>
+  <View style={styles.transactionContainer}>
     <Text style={[styles.bold, styles.header]}>{title}</Text>
     <View style={{ flexDirection: "row" }}>
       {transactionDisplayItems.map((items) => (
@@ -188,7 +247,7 @@ const TransactionContainer = ({
         />
       )
     )}
-  </ScrollView>
+  </View>
 );
 
 const TransactionHeader = ({ date = "Today" }) => (
@@ -347,16 +406,13 @@ const CardCarousel = ({ cards, onCardPress }) => {
 const TapContainer = () => (
   <View style={styles.tapContainer}>
     <MaterialCommunityIcons name="gesture-tap" size={18} />
-    <Text>Tap the card to see card details</Text>
+    <Text style={{ opacity: 0.5 }}>Tap the card to see card details</Text>
   </View>
 );
 
 const Icon = ({ title, isFrozen, onSettingsPress }) => {
   return (
-    <TouchableOpacity
-      onPress={onSettingsPress}
-      style={{ marginHorizontal: "2.5%" }}
-    >
+    <TouchableOpacity onPress={onSettingsPress}>
       <View
         style={{
           backgroundColor: isFrozen ? "black" : colors.babyBlue,
@@ -391,18 +447,25 @@ const styles = StyleSheet.create({
   bold: { fontWeight: "700" },
   header: { fontSize: 20 },
   settingsContainer: {
-    justifyContent: "center",
+    justifyContent: "space-between",
     flexDirection: "row",
+    paddingHorizontal: "5%",
   },
+  incomeExpenseContainer: {
+    flexDirection: "row",
+    paddingVertical: "1.5%",
+  },
+
   subText: { opacity: 0.7, fontSize: 10, lineHeight: 15 },
   tapContainer: {
     justifyContent: "center",
     flexDirection: "row",
-    marginVertical: "2.5%",
+    marginBottom: "5%",
+    
   },
   transactionContainer: {
     flex: 1,
-    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+   
     marginTop: "5%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

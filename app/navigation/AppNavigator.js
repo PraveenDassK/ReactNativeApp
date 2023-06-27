@@ -870,7 +870,7 @@ const AppNavigator = () => {
     <Tab.Navigator
       tabBarPosition="bottom"
       tabBar={(props) => <MyTabBar {...props} />}
-      initialRouteName="AccountTab"
+      initialRouteName="DashBoard"
     >
         <Tab.Screen
         name="Loop1"
