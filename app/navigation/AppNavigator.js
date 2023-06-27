@@ -872,9 +872,9 @@ const AppNavigator = () => {
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="AccountTab"
     >
-      <Tab.Screen
+        <Tab.Screen
         name="Loop1"
-        component={DashBoard}
+        component={gestureHandlerRootHOC(AccountDummy2)}
         options={{
           tabBarShowLabel: false,
           headerShown: false,
@@ -891,13 +891,15 @@ const AppNavigator = () => {
         }}
       />
 
-      {/* <Tab.Screen
-        name="AccountTab"
-        component={gestureHandlerRootHOC(AccountMain)}
+      <Tab.Screen
+        name="Dashboard"
+        component={gestureHandlerRootHOC(DashBoard)}
         options={{
-          title: "Account",
+          title: "Dashboard",
         }}
-      /> */}
+      />
+
+      
       <Tab.Screen name="Analysis" component={Analytics} options={{}} />
 
       <Tab.Screen
@@ -917,11 +919,7 @@ const AppNavigator = () => {
           title: "Carbon",
         }}
       />
-      <Tab.Screen
-        name="Marketplace"
-        component={gestureHandlerRootHOC(Marketplace)}
-        options={{}}
-      />
+    
       <Tab.Screen name="Profile" component={gestureHandlerRootHOC(Settings)} />
       <Tab.Screen
         name="Loop"
