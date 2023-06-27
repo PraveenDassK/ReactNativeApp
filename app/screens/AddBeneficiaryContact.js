@@ -49,147 +49,56 @@ const validationSchema = Yup.object().shape({
 const items = [
   {
     id: 2,
-    label: "First name",
-    placeholder: "Enter your name",
-    initialValue: "firstName",
+    label: "Phone number",
+    placeholder: "",
+    initialValue: "phoneNumber",
   },
   {
     id: 3,
-    label: "Last name",
-    placeholder: "Enter your name",
-    initialValue: "lastName",
+    label: "Email address",
+    placeholder: "",
+    initialValue: "emailAddress",
   },
   {
     id: 4,
-    label: "Account Number",
-    placeholder: "Enter Account number",
-    initialValue: "accNum",
-  },
-  {
-    id: 5,
-    label: "Sort Code",
-    placeholder: "Enter sort code",
-    initialValue: "sortCode",
+    label: "Postcode",
+    placeholder: "",
+    initialValue: "postcode",
   },
 ];
 
-const AddBeneficiary = ({ navigation }) => {
-  const [selectedOption, setSelectedOption] = useState("personal");
-
-  const handleCheckboxChange = (value) => {
-    setSelectedOption(value);
-  };
+const AddBeneficiary = ({ navigation, route }) => {
 
   const handleSubmit = async ({
-    firstName,
-    lastName,
-    accNum,
-    sortCode,
+    phoneNumber,
+    emailAddress,
+    postcode,
   }) => {
-    console.log(firstName, lastName, accNum, sortCode)
-
-    const requestObj = {
-      "externalReference": "",
-      "name": firstName + " " + lastName,
-      "birthdate": "",
-      "emailAddress": "",
-      "phoneNumber": "",
-      "destinationIdentifier": {
-        "type": "SCAN",
-        "accountNumber": accNum,
-        "sortCode": sortCode,
-        "iban": "",
-        "bic": "",
-        "currency": "",
-        "countrySpecificDetails": {
-          "bankName": "",
-          "bankAddress": "",
-          "bankCity": "",
-          "bankBranchName": "",
-          "bankBranchCode": "",
-          "bankCode": "",
-          "chineseId": "",
-          "province": "",
-          "business": true
-        }
-      },
-      "defaultReference": "Friend",
-      "idToReplace": "",
-      "address": {
-        "addressLine1": "",
-        "addressLine2": "",
-        "postTown": "",
-        "postCode": "",
-        "country": ""
-      },
-      "qualifier": ""
-    }
-
-    const obj = {
-      "externalReference": "",
-      "name": "",
-      "birthdate": "",
-      "emailAddress": "",
-      "phoneNumber": "",
-      "destinationIdentifier": {
-        "type": "",
-        "accountNumber": "",
-        "sortCode": "",
-        "iban": "",
-        "bic": "",
-        "currency": "",
-        "countrySpecificDetails": {
-          "bankName": "",
-          "bankAddress": "",
-          "bankCity": "",
-          "bankBranchName": "",
-          "bankBranchCode": "",
-          "bankCode": "",
-          "chineseId": "",
-          "province": "",
-          "business": true
-        }
-      },
-      "defaultReference": "",
-      "idToReplace": "",
-      "address": {
-        "addressLine1": "",
-        "addressLine2": "",
-        "postTown": "",
-        "postCode": "",
-        "country": ""
-      },
-      "qualifier": ""
-    }
+    let requestObj = route.params
+    requestObj.address.postCode = postcode
+    requestObj.emailAddress = emailAddress
+    requestObj.phoneNumber = phoneNumber
     console.log(requestObj)
+    console.log(phoneNumber,emailAddress,postcode)
 
-    navigation.navigate("AddBeneficiaryContact", requestObj)
-
-    // const response = await api.AddBeneficiary(
-    //   authContext.userID,
-    //   phoneNumber,
-    //   accountName,
-    //   accNum,
-    //   sortCode
-    // );
+    navigation.navigate("AddBeneficiaryRefrence",requestObj)
   };
 
 
 
   return (
     <KeyboardAvoider>
-      <CountdownBar />
+      <CountdownBar currentPage={2}/>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
           <Formik
             initialValues={{
-              firstName: "Jack",
-              lastName: "Huang",
-              sortCode: "123456",
-              accNum: "12341234",
+              phoneNumber: "7927201649",
+              emailAddress: "jack.h@carbonyte.io",
+              postcode: "HA9 0HZ",
             }}
             onSubmit={handleSubmit}
-          // validationSchema={validationSchema}
+            // validationSchema={validationSchema}
           >
             {({
               handleChange,
@@ -200,25 +109,6 @@ const AddBeneficiary = ({ navigation }) => {
             }) => (
               <>
                 <View>
-
-                  <Text>Select account type</Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <CheckBox
-                      title="Personal"
-                      checked={selectedOption === 'personal'}
-                      checkedColor="black"
-                      onPress={() => handleCheckboxChange('personal')}
-                    />
-                  </View>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <CheckBox
-                      title="Business"
-                      checked={selectedOption === 'business'}
-                      checkedColor="black"
-                      onPress={() => handleCheckboxChange('business')}
-                    />
-                  </View>
-
                   {items.map((item, index) => (
                     <View
                       key={item.id}
