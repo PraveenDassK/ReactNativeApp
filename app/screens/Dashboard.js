@@ -1,5 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
-import { RefreshControl, Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, ActivityIndicator, Platform, Dimensions, TouchableWithoutFeedback, Vibration, useWindowDimensions, ImageBackground, } from "react-native";
+import {
+  RefreshControl,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Vibration,
+  useWindowDimensions,
+  ImageBackground,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -10,7 +25,8 @@ import SquareIcon from "../components/SquareIcon";
 import GlobalStyles from "../../GlobalStyles";
 import RecentTransactions from "../components/RecentTransactions";
 import CarbonSpendGraph from "../components/CarbonSpendGraph";
-
+import VirtualPlanet from "../components/VirtualPlanet";
+import XeroDashboard from "../components/XeroDashboard";
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);
@@ -19,7 +35,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [userData, setuserData] = useState({});
 
   const { accountID, customerDetails } = useContext(AuthContext);
-  const [iconShow, setIconShow] = useState(false)
+  const [iconShow, setIconShow] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -43,7 +59,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       return;
     }
   };
-  console.log(userData)
+  console.log(userData);
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -85,7 +101,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             trigger={() => navigation.navigate("MoveMoney")}
           />
 
-
           <SquareIcon
             text={"Send money"}
             image={"send"}
@@ -98,26 +113,24 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             trigger={() => navigation.navigate("MyCards")}
           />
 
-          {!iconShow ?
+          {!iconShow ? (
             <SquareIcon
               text={"More"}
               image={"dots-horizontal"}
               trigger={() => setIconShow(!iconShow)}
-            /> :
-
+            />
+          ) : (
             <SquareIcon
               text={"Switch accounts"}
               image={"account-switch"}
               trigger={() => navigation.navigate("SwitchAccounts")}
             />
-          }
-
+          )}
         </View>
 
-        {iconShow ?
+        {iconShow ? (
           <View>
             <View style={styles.buttonContainer}>
-
               <SquareIcon
                 text={"Payment link"}
                 image={"link-variant"}
@@ -141,18 +154,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 image={"bank-outline"}
                 trigger={() => navigation.navigate("Transactions")}
               />
-
             </View>
 
             <View style={styles.buttonContainer}>
-
-
               <SquareIcon
                 text={"Teams"}
                 image={"account-group"}
                 trigger={() => navigation.navigate("Teams")}
               />
-
 
               <SquareIcon
                 text={"Invoices"}
@@ -171,22 +180,40 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 image={"dots-horizontal"}
                 trigger={() => setIconShow(!iconShow)}
               />
-
             </View>
           </View>
-
-          : false}
+        ) : (
+          false
+        )}
 
         <View style={styles.recentTransactionsContainer}>
           <RecentTransactions />
         </View>
 
-<View>
-  <CarbonSpendGraph/>
-</View>
-
+        <View style={{ margin: 25 }}>
+          <Text style={styles.headingText}>Your Carbon Footprints</Text>
+          <CarbonSpendGraph />
+        </View>
+        <View style={{ margin: 25 }}>
+          <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
+          <VirtualPlanet />
+        </View>
+        <View style={{ margin: 25 }}>
+          <Text style={styles.headingText}>Carbonyte + Xero</Text>
+          <XeroDashboard />
+        </View>
+        <View style={{ margin: 25 }}>
+        </View>
+        <View style={{ display: "flex", alignItems: "center" }}>
+          <Text style={styles.bottomText}>
+            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+            <Text style={styles.bottomTextBold}>Choice</Text>
+          </Text>
+        </View>
+        <View style={{ marginTop: 50 }}></View>
       </ScrollView>
-    </View >
+    </View>
   );
 };
 
@@ -246,6 +273,25 @@ const styles = StyleSheet.create({
   },
   recentTransactionsContainer: {
     marginTop: "60%",
+  },
+  headingText: {
+    color: "#212529",
+    fontSize: 18,
+    fontWeight: "bold",
+    fontFamily: "Montserrat",
+    marginBottom: 10,
+  },
+  bottomText: {
+    color: "#212529",
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "Regular",
+  },
+  bottomTextBold: {
+    color: "#212529",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
   },
 });
 

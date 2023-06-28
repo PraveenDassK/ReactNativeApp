@@ -2,10 +2,13 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import colors from "../../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { BlurView } from "expo-blur";
 const TransactionFooter = ({ navigate = true, onSee }) => {
   return (
-    <View style={styles.transactionHeadContainer}>
+    
+
+    
+    <View style={styles.transactionHeadContainer}><BlurView tint="light" intensity={40} style={styles.blurView}>
       <View style={styles.spacing}>
         {navigate && (
           <View style={styles.headerTitleContainer}>
@@ -17,20 +20,25 @@ const TransactionFooter = ({ navigate = true, onSee }) => {
             </TouchableOpacity>
           </View>
         )}
-      </View>
+      </View></BlurView>
     </View>
+    
   );
 };
 
 export default TransactionFooter;
 
 const styles = StyleSheet.create({
-  transactionHeadContainer: {
-    backgroundColor: "white",
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+  blurView: {
     paddingTop: 10,
     paddingHorizontal: "3%",
+  },
+
+  transactionHeadContainer: {
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    overflow: "hidden"
+    
   },
   headerTitleContainer: {
     flexDirection: "row",

@@ -1,0 +1,108 @@
+import { StyleSheet, Text, View, Image } from "react-native";
+import React from "react";
+
+const VirtualPlanetCard = ({ data }) => {
+  return (
+    <>
+      {data.map((eachValue, i) => {
+        return (
+          <View style={styles.container} key={i}>
+            <View style={{ paddingVertical: 10 }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: "#212529",
+                  fontFamily: "Montserrat",
+                  fontWeight: "bold",
+                }}
+              >
+                {eachValue.title}
+              </Text>
+            </View>
+            <View style={styles.insideCard}>
+              <Image
+                source={{
+                  uri: eachValue.image,
+                }}
+                style={{ height: 100, width: 130 }}
+              />
+
+              <View>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: "#179424",
+                    fontFamily: "Montserrat",
+                    fontWeight: "bold",
+                  }}
+                >
+                  200
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "#00003D",
+                    fontFamily: "Montserrat",
+                    fontWeight: "bold",
+                    width:"80%"
+                  }}
+                >
+                  Total Trees Planted
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "#178BFF",
+                    fontFamily: "Montserrat",
+                    fontWeight: "bold",
+                    marginTop: 10,
+                  }}
+                >
+                  View more
+                </Text>
+              </View>
+            </View>
+          </View>
+        );
+      })}
+    </>
+  );
+};
+const VirtualPlanet = () => {
+  const data = [
+    {
+      title: "Virtual Forest",
+      image:
+        "https://images.pexels.com/photos/2138922/pexels-photo-2138922.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+    {
+      title: "Virtual Ocean",
+      image:
+        "https://images.pexels.com/photos/2138922/pexels-photo-2138922.jpeg?auto=compress&cs=tinysrgb&w=600",
+    },
+  ];
+  return (
+    <View>
+      <VirtualPlanetCard data={data} />
+    </View>
+  );
+};
+
+export default VirtualPlanet;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    borderRadius: 15,
+    paddingVertical: 10,
+    paddingLeft: 20,
+    marginTop:10,
+  },
+  insideCard: {
+    display: "flex",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 5,
+  },
+});
