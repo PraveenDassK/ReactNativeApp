@@ -103,7 +103,7 @@ const SendMoney = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View style={{ padding: 10 }}>
+      <View style={{ marginTop: 47 }}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate("AddBeneficiary")}
@@ -170,7 +170,7 @@ const SendMoney = ({ navigation }) => {
       <View
         style={{
           backgroundColor: "#FFFFFF",
-          padding: 20,
+          padding: 24,
         }}
       >
         <View style={styles.payHeaderContainer}>

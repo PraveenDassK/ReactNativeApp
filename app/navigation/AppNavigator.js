@@ -98,8 +98,6 @@ import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
 import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
 
-
-
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 
@@ -166,8 +164,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-              ? options.title
-              : route.name;
+            ? options.title
+            : route.name;
 
         const isFocused = state.index === index;
 
@@ -243,7 +241,11 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                     marginLeft: "20%",
                   }}
                 >
-                  <MaterialCommunityIcons name={imageSource} size={40} color={isFocused ? colors.blue : colors.black} />
+                  <MaterialCommunityIcons
+                    name={imageSource}
+                    size={40}
+                    color={isFocused ? colors.blue : colors.black}
+                  />
                 </Animated.View>
               </TouchableOpacity>
             )}
@@ -630,7 +632,7 @@ const StackNavigator = () => {
         name="AddBeneficiary"
         component={gestureHandlerRootHOC(AddBeneficiary)}
         options={{
-          title: "Bank Details",
+          title: "Add new beneficiary",
           presentation: "modal",
           headerShown: true,
           gestureEnabled: true,
@@ -905,7 +907,7 @@ const AppNavigator = () => {
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="Dashboard"
     >
-        <Tab.Screen
+      <Tab.Screen
         name="Loop1"
         component={gestureHandlerRootHOC(AccountDummy2)}
         options={{
@@ -932,7 +934,6 @@ const AppNavigator = () => {
         }}
       />
 
-      
       <Tab.Screen name="Analysis" component={Analytics} options={{}} />
 
       <Tab.Screen
@@ -942,7 +943,6 @@ const AppNavigator = () => {
           headerShown: false,
           presentation: "modal",
           animationTypeForReplace: "push",
-         
         }}
       />
       <Tab.Screen
@@ -952,7 +952,7 @@ const AppNavigator = () => {
           title: "Carbon",
         }}
       />
-    
+
       <Tab.Screen name="Profile" component={gestureHandlerRootHOC(Settings)} />
       <Tab.Screen
         name="Loop"
@@ -963,13 +963,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-      // listeners={({ navigation, route }) => ({
-      //   focus: () => {
+        // listeners={({ navigation, route }) => ({
+        //   focus: () => {
 
-      //     // Do something with the `navigation` object
-      //     navigation.navigate('AccountTab');
-      //   },
-      // })}
+        //     // Do something with the `navigation` object
+        //     navigation.navigate('AccountTab');
+        //   },
+        // })}
       />
     </Tab.Navigator>
   );
