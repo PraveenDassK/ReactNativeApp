@@ -8,14 +8,12 @@ import React, {
 import { BlurView } from "expo-blur";
 import {
   Animated,
-  Alert,
+
   Text,
   StyleSheet,
   Image,
   View,
   ScrollView,
-  SafeAreaView,
-  ImageBackground,
   TouchableOpacity,
   Pressable,
   Dimensions,
@@ -23,9 +21,9 @@ import {
 import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
 
-// import AuthContext from "../auth/context";
-// import apiCall from "../api/api";
-// import apiCall2 from "../api/apiCall";
+import AuthContext from "../auth/context";
+import apiCall from "../api/api";
+import apiCall2 from "../api/apiCall";
 
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
@@ -51,7 +49,7 @@ const transactionDisplayItems = [
 ];
 const numOfTransactions = 4;
 export default function MyCards({ navigation }) {
-  // const { accountID } = useContext(AuthContext);
+  const { accountID } = useContext(AuthContext);
 
   const [isFrozen, setFrozen] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -59,9 +57,9 @@ export default function MyCards({ navigation }) {
     ...transactions,
   ]);
 
-  // useEffect(() => {
-  //   loadData();
-  // }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const getFullCardData = async () => {
     const cardObject = await api.GetCardFromID("714613712");
@@ -78,16 +76,16 @@ export default function MyCards({ navigation }) {
     setCurrentCardDataShow(obj);
   };
 
-  // const loadData = async () => {
-  //   const response = await apiCall.GetTransactions(
-  //     accountID,
-  //     numOfTransactions
-  //   );
-  //   const transactionRes = response.content;
-  //   console.log(transactionRes);
-  //   setTransactions(transactionRes);
-  //   setFilterTransactions(transactionRes);
-  // };
+  const loadData = async () => {
+    const response = await apiCall.GetTransactions(
+      accountID,
+      numOfTransactions
+    );
+    const transactionRes = response.content;
+    console.log(transactionRes);
+    setTransactions(transactionRes);
+    setFilterTransactions(transactionRes);
+  };
 
   const handleTransactionFilter = (item) => {
     if (item == "Income") {
@@ -105,6 +103,7 @@ export default function MyCards({ navigation }) {
 
   return (
     <AppScreen>
+      <ScrollView>
       <CardSelector />
       <View style={styles.settingsPositioning}>
         <Icon
@@ -117,17 +116,19 @@ export default function MyCards({ navigation }) {
         cards={cards}
         onCardPress={() => console.log("card pressed")}
       />
+
       <TapContainer />
+      
       <View style={styles.settingsContainer}>
         <View>
           <Text>Current Balance</Text>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontWeight: "900", color: "green" }}>£</Text>
-            <Text style={{ fontSize: 30, fontWeight: "900", color: "green" }}>
+            <Text style={{ fontSize: 34, fontWeight: "900", color: "green" }}>
               46,569.00
             </Text>
           </View>
-          <Text>Total 1220 Kg of carbon emissions produced</Text>
+          <Text style={{lineHeight: 40}}>Total 1220 Kg of carbon emissions produced</Text>
         </View>
         <Icon
           title={"freeze"}
@@ -138,7 +139,31 @@ export default function MyCards({ navigation }) {
           isFrozen={!isFrozen}
         />
       </View>
-      <View
+      <View style={{marginTop: "20%"}}>
+        <IncomeExpense />
+      </View>
+      
+
+      <View style={{ flex: 1 }}>
+        <TransactionContainer
+          title="Transactions History"
+          transactionDisplayItems={transactionDisplayItems}
+          onTransaction={() => console.log("onTransaction")}
+          transactions={filterTransactions}
+          onTransactionFilter={(item) => handleTransactionFilter(item)}
+        />
+      </View>
+
+      <View>
+        <Text>Your Money . Your Planet . Your Choice</Text>
+      </View>
+      </ScrollView>
+    </AppScreen>
+  );
+}
+
+const IncomeExpense = () => (
+  <View
         style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden" }}
       >
         <BlurView
@@ -150,22 +175,7 @@ export default function MyCards({ navigation }) {
           <IncomeExpenseItem isIncome={false} />
         </BlurView>
       </View>
-
-      <View style={{ flex: 1 }}>
-       
-      <TransactionContainer
-        title="Transactions History"
-        transactionDisplayItems={transactionDisplayItems}
-        onTransaction={() => console.log("onTransaction")}
-        transactions={filterTransactions}
-        onTransactionFilter={(item) => handleTransactionFilter(item)}
-      />
-      </View>
-      
-
-    </AppScreen>
-  );
-}
+)
 
 const IncomeExpenseItem = ({ isIncome = true }) => (
   <View
@@ -434,7 +444,7 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
           <Ionicons name="settings-sharp" size={30} />
         )}
       </View>
-      <Text style={{ textTransform: "capitalize" }}>{title}</Text>
+      {!isFrozen ? <Text style={{ textTransform: "capitalize" }}>{title}</Text> : <Text style={{ textTransform: "capitalize" }}>{`Un${title}`}</Text>}
     </TouchableOpacity>
   );
 };
@@ -442,7 +452,7 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
 const styles = StyleSheet.create({
   cardsContainer: {
     paddingHorizontal: 0,
-    height: 0,
+    height:380,
   },
   bold: { fontWeight: "700" },
   header: { fontSize: 20 },
@@ -450,6 +460,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     paddingHorizontal: "5%",
+    marginTop: "5%"
+    
   },
   incomeExpenseContainer: {
     flexDirection: "row",
@@ -461,11 +473,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     marginBottom: "5%",
-    
   },
   transactionContainer: {
     flex: 1,
-   
+
     marginTop: "5%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -487,7 +498,7 @@ const styles = StyleSheet.create({
   selectorPositioning: {
     zIndex: 1,
     position: "absolute",
-    top: 150,
+    top: 110,
     left: -60,
     transform: [{ rotate: "-90deg" }],
   },
@@ -500,5 +511,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 15,
   },
-  settingsPositioning: { zIndex: 1, position: "absolute", top: 310, left: 15 },
+  settingsPositioning: { zIndex: 1, position: "absolute", top: 270, left: 15 },
 });
