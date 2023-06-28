@@ -22,6 +22,7 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 import CountdownBar from "../components/CountdownBar";
 import { CheckBox } from "@rneui/themed";
+import { LinearGradient } from "expo-linear-gradient";
 
 const validationSchema = Yup.object().shape({
   accountName: Yup.string().required().min(1).max(30).label("Account name"),
@@ -80,90 +81,85 @@ const AddBeneficiary = ({ navigation }) => {
     setSelectedOption(value);
   };
 
-  const handleSubmit = async ({
-    firstName,
-    lastName,
-    accNum,
-    sortCode,
-  }) => {
-    console.log(firstName, lastName, accNum, sortCode)
+  const handleSubmit = async ({ firstName, lastName, accNum, sortCode }) => {
+    console.log(firstName, lastName, accNum, sortCode);
 
     const requestObj = {
-      "externalReference": "",
-      "name": firstName + " " + lastName,
-      "birthdate": "",
-      "emailAddress": "",
-      "phoneNumber": "",
-      "destinationIdentifier": {
-        "type": "SCAN",
-        "accountNumber": accNum,
-        "sortCode": sortCode,
-        "iban": "",
-        "bic": "",
-        "currency": "",
-        "countrySpecificDetails": {
-          "bankName": "",
-          "bankAddress": "",
-          "bankCity": "",
-          "bankBranchName": "",
-          "bankBranchCode": "",
-          "bankCode": "",
-          "chineseId": "",
-          "province": "",
-          "business": true
-        }
+      externalReference: "",
+      name: firstName + " " + lastName,
+      birthdate: "",
+      emailAddress: "",
+      phoneNumber: "",
+      destinationIdentifier: {
+        type: "SCAN",
+        accountNumber: accNum,
+        sortCode: sortCode,
+        iban: "",
+        bic: "",
+        currency: "",
+        countrySpecificDetails: {
+          bankName: "",
+          bankAddress: "",
+          bankCity: "",
+          bankBranchName: "",
+          bankBranchCode: "",
+          bankCode: "",
+          chineseId: "",
+          province: "",
+          business: true,
+        },
       },
-      "defaultReference": "Friend",
-      "idToReplace": "",
-      "address": {
-        "addressLine1": "",
-        "addressLine2": "",
-        "postTown": "",
-        "postCode": "",
-        "country": ""
+      defaultReference: "Friend",
+      idToReplace: "",
+      address: {
+        addressLine1: "",
+        addressLine2: "",
+        postTown: "",
+        postCode: "",
+        country: "",
       },
-      "qualifier": ""
-    }
+      qualifier: "",
+    };
 
     const obj = {
-      "externalReference": "",
-      "name": "",
-      "birthdate": "",
-      "emailAddress": "",
-      "phoneNumber": "",
-      "destinationIdentifier": {
-        "type": "",
-        "accountNumber": "",
-        "sortCode": "",
-        "iban": "",
-        "bic": "",
-        "currency": "",
-        "countrySpecificDetails": {
-          "bankName": "",
-          "bankAddress": "",
-          "bankCity": "",
-          "bankBranchName": "",
-          "bankBranchCode": "",
-          "bankCode": "",
-          "chineseId": "",
-          "province": "",
-          "business": true
-        }
+      externalReference: "",
+      name: "",
+      birthdate: "",
+      emailAddress: "",
+      phoneNumber: "",
+      destinationIdentifier: {
+        type: "",
+        accountNumber: "",
+        sortCode: "",
+        iban: "",
+        bic: "",
+        currency: "",
+        countrySpecificDetails: {
+          bankName: "",
+          bankAddress: "",
+          bankCity: "",
+          bankBranchName: "",
+          bankBranchCode: "",
+          bankCode: "",
+          chineseId: "",
+          province: "",
+          business: true,
+        },
       },
-      "defaultReference": "",
-      "idToReplace": "",
-      "address": {
-        "addressLine1": "",
-        "addressLine2": "",
-        "postTown": "",
-        "postCode": "",
-        "country": ""
+      defaultReference: "",
+      idToReplace: "",
+      address: {
+        addressLine1: "",
+        addressLine2: "",
+        postTown: "",
+        postCode: "",
+        country: "",
       },
-      "qualifier": ""
-    }
-    console.log(requestObj)
+      qualifier: "",
+    };
+    console.log(requestObj);
 
-    navigation.navigate("AddBeneficiaryContact", requestObj)
+    navigation.navigate("AddBeneficiaryContact", requestObj);
 
     // const response = await api.AddBeneficiary(
     //   authContext.userID,
@@ -174,13 +170,20 @@ const AddBeneficiary = ({ navigation }) => {
     // );
   };
 
-
-
   return (
     <KeyboardAvoider>
       <CountdownBar />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 20,
+            paddingVertical: 24,
+            backgroundColor: "#FFFFFF",
+            marginTop: 27,
+            borderRadius: 20,
+          }}
+        >
           <Formik
             initialValues={{
               firstName: "Jack",
@@ -189,7 +192,7 @@ const AddBeneficiary = ({ navigation }) => {
               accNum: "12341234",
             }}
             onSubmit={handleSubmit}
-          // validationSchema={validationSchema}
+            // validationSchema={validationSchema}
           >
             {({
               handleChange,
@@ -200,22 +203,19 @@ const AddBeneficiary = ({ navigation }) => {
             }) => (
               <>
                 <View>
-
-                  <Text>Select account type</Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={styles.formLabel}>Select account type</Text>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <CheckBox
                       title="Personal"
-                      checked={selectedOption === 'personal'}
+                      checked={selectedOption === "personal"}
                       checkedColor="black"
-                      onPress={() => handleCheckboxChange('personal')}
+                      onPress={() => handleCheckboxChange("personal")}
                     />
-                  </View>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <CheckBox
                       title="Business"
-                      checked={selectedOption === 'business'}
+                      checked={selectedOption === "business"}
                       checkedColor="black"
-                      onPress={() => handleCheckboxChange('business')}
+                      onPress={() => handleCheckboxChange("business")}
                     />
                   </View>
 
@@ -223,24 +223,15 @@ const AddBeneficiary = ({ navigation }) => {
                     <View
                       key={item.id}
                       style={{
-                        width: "90%",
-                        marginLeft: "5%",
-                        marginBottom: "5%",
+                        marginTop: 22,
                       }}
                     >
-                      <Text style={{ fontSize: 14 }}>{item.label}</Text>
+                      {console.log("item", item)}
+                      <Text style={styles.formLabel}>{item.label}</Text>
                       <TextInput
-                        onBlur={() => setFieldTouched(item.initialValue)}
+                        style={styles.inputBox}
                         onChangeText={handleChange(item.initialValue)}
-                        style={{ fontSize: 24, marginTop: "1%" }}
-                      ></TextInput>
-                      <View
-                        style={{
-                          height: 1,
-                          backgroundColor: "black",
-                          marginTop: "1%",
-                          opacity: 0.7,
-                        }}
+                        placeholder={item.placeholder}
                       />
                       <ErrorMessage
                         error={errors[item.initialValue]}
@@ -249,13 +240,16 @@ const AddBeneficiary = ({ navigation }) => {
                     </View>
                   ))}
                 </View>
-                <View
-                  style={[
-                    { flex: 1, justifyContent: "flex-end" }
-                  ]}
-                >
-                  <TouchableOpacity style={styles.button}>
-                    <Button title="Confirm" onPress={handleSubmit} />
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity>
+                    <LinearGradient
+                      colors={["#212529", "#3A3A3A"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.button}
+                    >
+                      <Text style={styles.buttonText}>Continue</Text>
+                    </LinearGradient>
                   </TouchableOpacity>
                 </View>
               </>
@@ -273,15 +267,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
   },
+  formLabel: { fontSize: 14, fontFamily: "Montserrat", marginBottom: 5 },
+  inputBox: {
+    width: 332,
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#EBEBEB",
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: "#999999",
+  },
   bottom: {
     bottom: "5%",
     flex: 1,
     justifyContent: "flex-end",
   },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 50,
+  },
 
   button: {
-    width: "90%",
-    left: "5%",
+    width: 331.08,
+    height: 47,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "Montserrat",
   },
 });
 
