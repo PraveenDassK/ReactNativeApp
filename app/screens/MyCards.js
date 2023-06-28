@@ -8,7 +8,6 @@ import React, {
 import { BlurView } from "expo-blur";
 import {
   Animated,
-
   Text,
   StyleSheet,
   Image,
@@ -30,6 +29,7 @@ import GlobalStyles from "../../GlobalStyles";
 import formatCurrency from "../utility/formatCurrency";
 import AppScreen from "../components/AppScreen";
 import { color } from "react-native-reanimated";
+import { TransactionFooter } from "../components/transactions";
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -88,11 +88,11 @@ export default function MyCards({ navigation }) {
   };
 
   const handleTransactionFilter = (item) => {
-    if (item == "Income") {
+    if (item == "income") {
       setFilterTransactions(
         transactions.filter(({ credit }) => credit !== false)
       );
-    } else if (item == "Expense") {
+    } else if (item == "expenses") {
       setFilterTransactions(
         transactions.filter(({ credit }) => credit === false)
       );
@@ -104,59 +104,60 @@ export default function MyCards({ navigation }) {
   return (
     <AppScreen>
       <ScrollView>
-      <CardSelector />
-      <View style={styles.settingsPositioning}>
-        <Icon
-          title={"settings"}
-          onSettingsPress={() => navigation.navigate("CardSettings")}
+        <CardSelector />
+        <View style={styles.settingsPositioning}>
+          <Icon
+            title={"settings"}
+            onSettingsPress={() => navigation.navigate("CardSettings")}
+          />
+        </View>
+
+        <CardCarousel
+          cards={cards}
+          onCardPress={() => console.log("card pressed")}
         />
-      </View>
 
-      <CardCarousel
-        cards={cards}
-        onCardPress={() => console.log("card pressed")}
-      />
+        <TapContainer />
 
-      <TapContainer />
-      
-      <View style={styles.settingsContainer}>
-        <View>
-          <Text>Current Balance</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontWeight: "900", color: "green" }}>£</Text>
-            <Text style={{ fontSize: 34, fontWeight: "900", color: "green" }}>
-              46,569.00
+        <View style={styles.settingsContainer}>
+          <View>
+            <Text>Current Balance</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontWeight: "900", color: "green" }}>£</Text>
+              <Text style={{ fontSize: 34, fontWeight: "900", color: "green" }}>
+                46,569.00
+              </Text>
+            </View>
+            <Text style={{ lineHeight: 40 }}>
+              Total 1220 Kg of carbon emissions produced
             </Text>
           </View>
-          <Text style={{lineHeight: 40}}>Total 1220 Kg of carbon emissions produced</Text>
+          <Icon
+            title={"freeze"}
+            onSettingsPress={() => {
+              console.log("freeze");
+              setFrozen(!isFrozen);
+            }}
+            isFrozen={!isFrozen}
+          />
         </View>
-        <Icon
-          title={"freeze"}
-          onSettingsPress={() => {
-            console.log("freeze");
-            setFrozen(!isFrozen);
-          }}
-          isFrozen={!isFrozen}
-        />
-      </View>
-      <View style={{marginTop: "20%"}}>
-        <IncomeExpense />
-      </View>
-      
+        <View style={{ marginTop: "5%" }}>
+          <IncomeExpense />
+        </View>
 
-      <View style={{ flex: 1 }}>
-        <TransactionContainer
-          title="Transactions History"
-          transactionDisplayItems={transactionDisplayItems}
-          onTransaction={() => console.log("onTransaction")}
-          transactions={filterTransactions}
-          onTransactionFilter={(item) => handleTransactionFilter(item)}
-        />
-      </View>
+        <View style={{ flex: 1 }}>
+          <TransactionContainer
+            title="Transactions History"
+            transactionDisplayItems={transactionDisplayItems}
+            onTransaction={() => console.log("onTransaction")}
+            transactions={filterTransactions}
+            onTransactionFilter={(item) => handleTransactionFilter(item)}
+          />
+        </View>
 
-      <View>
-        <Text>Your Money . Your Planet . Your Choice</Text>
-      </View>
+        <View style={styles.footerContainer}>
+          <Text>Your <Text style={{fontWeight: "900"}}>Money </Text>&#x2219; Your <Text style={{fontWeight: "900"}}>Planet  </Text>&#x2219; Your <Text style={{fontWeight: "900"}}>Choice</Text></Text>
+        </View>
       </ScrollView>
     </AppScreen>
   );
@@ -164,18 +165,14 @@ export default function MyCards({ navigation }) {
 
 const IncomeExpense = () => (
   <View
-        style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden" }}
-      >
-        <BlurView
-          tint="light"
-          intensity={40}
-          style={styles.incomeExpenseContainer}
-        >
-          <IncomeExpenseItem />
-          <IncomeExpenseItem isIncome={false} />
-        </BlurView>
-      </View>
-)
+    style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden" }}
+  >
+    <BlurView tint="light" intensity={40} style={styles.incomeExpenseContainer}>
+      <IncomeExpenseItem />
+      <IncomeExpenseItem isIncome={false} />
+    </BlurView>
+  </View>
+);
 
 const IncomeExpenseItem = ({ isIncome = true }) => (
   <View
@@ -232,17 +229,8 @@ const TransactionContainer = ({
 }) => (
   <View style={styles.transactionContainer}>
     <Text style={[styles.bold, styles.header]}>{title}</Text>
-    <View style={{ flexDirection: "row" }}>
-      {transactionDisplayItems.map((items) => (
-        <View key={items.id} style={{ marginRight: "2.5%", marginTop: "5%" }}>
-          <TransactionSelector
-            title={items.title}
-            onTransactionFilter={() => onTransactionFilter(items.title)}
-          />
-        </View>
-      ))}
-    </View>
-    <TransactionHeader />
+  
+    <TransactionHeader onTransactionFilter={(item) => onTransactionFilter(item)} />
 
     {transactions.map(
       ({ id, credit, description, transactionDate, amount }, index) => (
@@ -257,14 +245,59 @@ const TransactionContainer = ({
         />
       )
     )}
+    <TransactionFooter navigate={false}/>
   </View>
 );
 
-const TransactionHeader = ({ date = "Today" }) => (
+const TransactionHeader = ({ onTransactionFilter}) =>{ 
+  const [isSelected, setSelected] = useState(false)
+
+  const handleTransaction = (item) => {
+    onTransactionFilter(item)
+  }
+
+  return (
   <View style={styles.transactionHeaderContainer}>
-    <Text>{date}</Text>
+    <TouchableOpacity
+    onPress={()=>handleTransaction('all')}
+      style={{
+        flex: 1,
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderColor: "black",
+        paddingBottom: "2.5%",
+        alignItems: "center",
+      }}
+    >
+      <Text>All</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+    onPress={()=>handleTransaction('income')}
+      style={{
+        flex: 1,
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderColor: "black",
+        paddingBottom: "2.5%",
+        alignItems: "center",
+      }}
+    >
+      <Text>Income</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+    onPress={()=>handleTransaction('expenses')}
+      style={{
+        flex: 1,
+        borderBottomWidth: 1,
+        borderRightWidth: 0,
+        paddingBottom: "2.5%",
+        alignItems: "center",
+      }}
+    >
+      <Text>Expenses</Text>
+    </TouchableOpacity>
   </View>
-);
+)};
 
 const Transaction = ({
   onTransaction,
@@ -295,7 +328,11 @@ const Transaction = ({
             marginRight: "5%",
           }}
         >
-          <MaterialCommunityIcons name="export-variant" size={24} />
+          <MaterialCommunityIcons
+            name={credit ? "arrow-bottom-left" : "arrow-top-right"}
+            size={24}
+            color={credit ? "green" : "red"}
+          />
         </View>
         <View>
           <Text style={styles.bold}>{description}</Text>
@@ -444,7 +481,11 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
           <Ionicons name="settings-sharp" size={30} />
         )}
       </View>
-      {!isFrozen ? <Text style={{ textTransform: "capitalize" }}>{title}</Text> : <Text style={{ textTransform: "capitalize" }}>{`Un${title}`}</Text>}
+      {!isFrozen ? (
+        <Text style={{ textTransform: "capitalize" }}>{title}</Text>
+      ) : (
+        <Text style={{ textTransform: "capitalize" }}>{`Un${title}`}</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -452,16 +493,21 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
 const styles = StyleSheet.create({
   cardsContainer: {
     paddingHorizontal: 0,
-    height:380,
+    height: 380,
   },
   bold: { fontWeight: "700" },
+  footerContainer: {
+    marginTop: "10%",
+    marginBottom: "30%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
   header: { fontSize: 20 },
   settingsContainer: {
     justifyContent: "space-between",
     flexDirection: "row",
     paddingHorizontal: "5%",
-    marginTop: "5%"
-    
+    marginTop: "5%",
   },
   incomeExpenseContainer: {
     flexDirection: "row",
@@ -489,6 +535,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: "5%",
     paddingBottom: "0%",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   selectorContainer: {
     width: 200,

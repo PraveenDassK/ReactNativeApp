@@ -3,25 +3,20 @@ import React from "react";
 import colors from "../../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const TransactionFooter = ({ number, total = 120, onSee }) => {
+const TransactionFooter = ({ navigate = true, onSee }) => {
   return (
     <View style={styles.transactionHeadContainer}>
       <View style={styles.spacing}>
-        <View style={styles.headerTitleContainer}>
-          <Text
-            style={[styles.headerText]}
-          >{`Showing ${number} transactions`}</Text>
-          <TouchableOpacity style={styles.navigationContainer} onPress={onSee}>
-            <Text style={styles.navigationText}>see all</Text>
-            <View style={styles.navaigationIcon}>
-              <MaterialCommunityIcons
-                name="arrow-right"
-                size={18}
-                color={colors.blue}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
+        {navigate && (
+          <View style={styles.headerTitleContainer}>
+            <TouchableOpacity
+              style={styles.navigationContainer}
+              onPress={onSee}
+            >
+              <Text style={styles.navigationText}>View all</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -35,18 +30,15 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     paddingTop: 10,
-    marginTop: "1%",
     paddingHorizontal: "3%",
   },
   headerTitleContainer: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
   },
   headerText: { fontWeight: "600" },
   navigationText: {
-    textTransform: "uppercase",
     fontWeight: "600",
     color: colors.blue,
   },
