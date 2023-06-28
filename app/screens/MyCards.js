@@ -104,7 +104,7 @@ export default function MyCards({ navigation }) {
   return (
     <AppScreen>
       <ScrollView>
-        <CardSelector />
+        <CardSelector onCardSelect={(card) => console.log(card)} />
         <View style={styles.settingsPositioning}>
           <Icon
             title={"settings"}
@@ -213,16 +213,46 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
   </View>
 );
 
-const CardSelector = () => (
-  <View style={[styles.selectorContainer, styles.selectorPositioning]}>
-    <View style={styles.selectorTextContainer}>
-      <Text style={{ textAlign: "center" }}>Virtual</Text>
+const CardSelector = ({ onCardSelect }) => {
+  const cards = [
+    { id: 1, name: "virtual" },
+    { id: 2, name: "physical" },
+  ];
+
+  const [isSelected, setSelected] = useState("physical");
+
+  const handleCardSelect = (card) => {
+    setSelected(card);
+    onCardSelect(card);
+  };
+
+  return (
+    <View style={[styles.selectorContainer, styles.selectorPositioning]}>
+      {cards.map((card) => (
+        <Pressable
+          key={card.id}
+          onPress={() => handleCardSelect(card.name)}
+          style={[
+            styles.selectorTextContainer,
+            {
+              backgroundColor: card.name == isSelected ? colors.babyBlue : null,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              textTransform: "capitalize",
+              opacity: card.name == isSelected ? 1 : 0.5,
+            }}
+          >
+            {card.name}
+          </Text>
+        </Pressable>
+      ))}
     </View>
-    <View style={styles.selectorTextContainer}>
-      <Text style={{ textAlign: "center" }}>Physical</Text>
-    </View>
-  </View>
-);
+  );
+};
 
 const TransactionContainer = ({
   title = "Transactions",
@@ -248,6 +278,7 @@ const TransactionContainer = ({
           amount={amount}
           credit={credit}
           index={index}
+          lastElement={transactions.length - 1}
         />
       )
     )}
@@ -286,7 +317,12 @@ const TransactionHeader = ({ onTransactionFilter }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ textTransform: "capitalize" }}>
+            <Text
+              style={{
+                textTransform: "capitalize",
+                opacity: selection.name == isSelected ? 1 : 0.5,
+              }}
+            >
               {selection.name}
             </Text>
           </TouchableOpacity>
@@ -299,11 +335,11 @@ const TransactionHeader = ({ onTransactionFilter }) => {
 const Transaction = ({
   onTransaction,
   description,
-  recipient,
   amount,
   date,
   credit,
   index,
+  lastElement,
 }) => {
   return (
     <BlurView tint="light" intensity={40}>
@@ -334,7 +370,7 @@ const Transaction = ({
           </View>
           <View>
             <Text style={styles.bold}>{description}</Text>
-            <Text style={styles.subText}>To {recipient}</Text>
+            <Text style={styles.subText}>{moment(date).calendar()}</Text>
           </View>
         </View>
         <View>
@@ -346,43 +382,14 @@ const Transaction = ({
           </Text>
         </View>
       </Pressable>
-      <View style={{ marginHorizontal: "5%",borderBottomColor: "white", borderBottomWidth: index == -1 ? 0 :3,}} />
+      <View
+        style={{
+          marginHorizontal: "5%",
+          borderBottomColor: "white",
+          borderBottomWidth: index == lastElement ? 0 : 3,
+        }}
+      />
     </BlurView>
-  );
-};
-
-const TransactionSelector = ({ title, onTransactionFilter }) => {
-  return (
-    <TouchableOpacity
-      onPress={onTransactionFilter}
-      style={{
-        backgroundColor: "white",
-        paddingVertical: "1%",
-        paddingHorizontal: "2%",
-        borderRadius: 7,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {(title == "Income" || title == "Expense") && (
-        <View
-          style={{
-            backgroundColor: title == "Income" ? "green" : "red",
-            height: 12,
-            width: 12,
-            borderRadius: 6,
-            marginRight: 6,
-          }}
-        >
-          <MaterialCommunityIcons
-            name={title == "Income" ? "arrow-down-thin" : "arrow-up-thin"}
-            color={colors.white}
-          />
-        </View>
-      )}
-      <Text>{title}</Text>
-    </TouchableOpacity>
   );
 };
 
@@ -522,7 +529,7 @@ const styles = StyleSheet.create({
     paddingVertical: "1.5%",
   },
 
-  subText: { opacity: 0.7, fontSize: 10, lineHeight: 15 },
+  subText: { opacity: 0.5, fontSize: 10, lineHeight: 15 },
   tapContainer: {
     justifyContent: "center",
     flexDirection: "row",
@@ -543,6 +550,7 @@ const styles = StyleSheet.create({
     width: 200,
     borderRadius: 15,
     flexDirection: "row",
+    backgroundColor: "lightgrey",
   },
   selectorPositioning: {
     zIndex: 1,
