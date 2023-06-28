@@ -104,7 +104,7 @@ export default function MyCards({ navigation }) {
   return (
     <AppScreen>
       <ScrollView>
-        <CardSelector />
+        <CardSelector onCardSelect={(card) => console.log(card)} />
         <View style={styles.settingsPositioning}>
           <Icon
             title={"settings"}
@@ -156,7 +156,11 @@ export default function MyCards({ navigation }) {
         </View>
 
         <View style={styles.footerContainer}>
-          <Text>Your <Text style={{fontWeight: "900"}}>Money </Text>&#x2219; Your <Text style={{fontWeight: "900"}}>Planet  </Text>&#x2219; Your <Text style={{fontWeight: "900"}}>Choice</Text></Text>
+          <Text>
+            Your <Text style={{ fontWeight: "900" }}>Money </Text>&#x2219; Your{" "}
+            <Text style={{ fontWeight: "900" }}>Planet </Text>&#x2219; Your{" "}
+            <Text style={{ fontWeight: "900" }}>Choice</Text>
+          </Text>
         </View>
       </ScrollView>
     </AppScreen>
@@ -209,16 +213,46 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
   </View>
 );
 
-const CardSelector = () => (
-  <View style={[styles.selectorContainer, styles.selectorPositioning]}>
-    <View style={styles.selectorTextContainer}>
-      <Text style={{ textAlign: "center" }}>Virtual</Text>
+const CardSelector = ({ onCardSelect }) => {
+  const cards = [
+    { id: 1, name: "virtual" },
+    { id: 2, name: "physical" },
+  ];
+
+  const [isSelected, setSelected] = useState("physical");
+
+  const handleCardSelect = (card) => {
+    setSelected(card);
+    onCardSelect(card);
+  };
+
+  return (
+    <View style={[styles.selectorContainer, styles.selectorPositioning]}>
+      {cards.map((card) => (
+        <Pressable
+          key={card.id}
+          onPress={() => handleCardSelect(card.name)}
+          style={[
+            styles.selectorTextContainer,
+            {
+              backgroundColor: card.name == isSelected ? colors.babyBlue : null,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              textTransform: "capitalize",
+              opacity: card.name == isSelected ? 1 : 0.5,
+            }}
+          >
+            {card.name}
+          </Text>
+        </Pressable>
+      ))}
     </View>
-    <View style={styles.selectorTextContainer}>
-      <Text style={{ textAlign: "center" }}>Physical</Text>
-    </View>
-  </View>
-);
+  );
+};
 
 const TransactionContainer = ({
   title = "Transactions",
@@ -229,8 +263,10 @@ const TransactionContainer = ({
 }) => (
   <View style={styles.transactionContainer}>
     <Text style={[styles.bold, styles.header]}>{title}</Text>
-  
-    <TransactionHeader onTransactionFilter={(item) => onTransactionFilter(item)} />
+
+    <TransactionHeader
+      onTransactionFilter={(item) => onTransactionFilter(item)}
+    />
 
     {transactions.map(
       ({ id, credit, description, transactionDate, amount }, index) => (
@@ -242,147 +278,118 @@ const TransactionContainer = ({
           amount={amount}
           credit={credit}
           index={index}
+          lastElement={transactions.length - 1}
         />
       )
     )}
-    <TransactionFooter navigate={false}/>
+    <TransactionFooter navigate={false} />
   </View>
 );
 
-const TransactionHeader = ({ onTransactionFilter}) =>{ 
-  const [isSelected, setSelected] = useState(false)
+const TransactionHeader = ({ onTransactionFilter }) => {
+  const selections = [
+    { id: 1, name: "all" },
+    { id: 2, name: "income" },
+    { id: 3, name: "expenses" },
+  ];
+  const [isSelected, setSelected] = useState("all");
 
   const handleTransaction = (item) => {
-    onTransactionFilter(item)
-  }
+    setSelected(item);
+    onTransactionFilter(item);
+  };
 
   return (
-  <View style={styles.transactionHeaderContainer}>
-    <TouchableOpacity
-    onPress={()=>handleTransaction('all')}
-      style={{
-        flex: 1,
-        borderBottomWidth: 1,
-        borderRightWidth: 1,
-        borderColor: "black",
-        paddingBottom: "2.5%",
-        alignItems: "center",
-      }}
-    >
-      <Text>All</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-    onPress={()=>handleTransaction('income')}
-      style={{
-        flex: 1,
-        borderBottomWidth: 1,
-        borderRightWidth: 1,
-        borderColor: "black",
-        paddingBottom: "2.5%",
-        alignItems: "center",
-      }}
-    >
-      <Text>Income</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-    onPress={()=>handleTransaction('expenses')}
-      style={{
-        flex: 1,
-        borderBottomWidth: 1,
-        borderRightWidth: 0,
-        paddingBottom: "2.5%",
-        alignItems: "center",
-      }}
-    >
-      <Text>Expenses</Text>
-    </TouchableOpacity>
-  </View>
-)};
+    <View style={styles.transactionHeaderContainer}>
+      <BlurView tint="light" intensity={40} style={styles.blurView}>
+        {selections.map((selection) => (
+          <TouchableOpacity
+            key={selection.id}
+            onPress={() => handleTransaction(selection.name)}
+            style={{
+              flex: 1,
+              borderBottomWidth: 3,
+              borderRightColor: "white",
+              borderRightWidth: selection.name !== "expenses" ? 3 : 0,
+              borderBottomColor:
+                selection.name == isSelected ? "blue" : "white",
+              paddingBottom: "2.5%",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                textTransform: "capitalize",
+                opacity: selection.name == isSelected ? 1 : 0.5,
+              }}
+            >
+              {selection.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </BlurView>
+    </View>
+  );
+};
 
 const Transaction = ({
   onTransaction,
   description,
-  recipient,
   amount,
   date,
   credit,
   index,
+  lastElement,
 }) => {
   return (
-    <Pressable
-      onPress={onTransaction}
-      style={{
-        flexDirection: "row",
-        paddingHorizontal: "5%",
-        paddingVertical: "2.5%",
-        justifyContent: "space-between",
-        backgroundColor: "white",
-        borderBottomLeftRadius: index == -1 ? 10 : 0,
-      }}
-    >
-      <View style={{ flexDirection: "row" }}>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginRight: "5%",
-          }}
-        >
-          <MaterialCommunityIcons
-            name={credit ? "arrow-bottom-left" : "arrow-top-right"}
-            size={24}
-            color={credit ? "green" : "red"}
-          />
+    <BlurView tint="light" intensity={40}>
+      <Pressable
+        onPress={onTransaction}
+        style={{
+          flexDirection: "row",
+          paddingHorizontal: "5%",
+          paddingVertical: "2.5%",
+          justifyContent: "space-between",
+
+          borderBottomLeftRadius: index == -1 ? 10 : 0,
+        }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: "5%",
+            }}
+          >
+            <MaterialCommunityIcons
+              name={credit ? "arrow-bottom-left" : "arrow-top-right"}
+              size={24}
+              color={credit ? "green" : "red"}
+            />
+          </View>
+          <View>
+            <Text style={styles.bold}>{description}</Text>
+            <Text style={styles.subText}>{moment(date).calendar()}</Text>
+          </View>
         </View>
         <View>
-          <Text style={styles.bold}>{description}</Text>
-          <Text style={styles.subText}>To {recipient}</Text>
+          <Text style={[styles.bold, { textAlign: "right" }]}>
+            {!credit ? "-" : "+"} £{amount.toFixed(2)}
+          </Text>
+          <Text style={[styles.subText, { textAlign: "right" }]}>
+            {moment(date).format("D MMM")}
+          </Text>
         </View>
-      </View>
-      <View>
-        <Text style={[styles.bold, { textAlign: "right" }]}>
-          {!credit ? "-" : "+"} £{amount.toFixed(2)}
-        </Text>
-        <Text style={[styles.subText, { textAlign: "right" }]}>
-          {moment(date).format("D MMM")}
-        </Text>
-      </View>
-    </Pressable>
-  );
-};
-
-const TransactionSelector = ({ title, onTransactionFilter }) => {
-  return (
-    <TouchableOpacity
-      onPress={onTransactionFilter}
-      style={{
-        backgroundColor: "white",
-        paddingVertical: "1%",
-        paddingHorizontal: "2%",
-        borderRadius: 7,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {(title == "Income" || title == "Expense") && (
-        <View
-          style={{
-            backgroundColor: title == "Income" ? "green" : "red",
-            height: 12,
-            width: 12,
-            borderRadius: 6,
-            marginRight: 6,
-          }}
-        >
-          <MaterialCommunityIcons
-            name={title == "Income" ? "arrow-down-thin" : "arrow-up-thin"}
-            color={colors.white}
-          />
-        </View>
-      )}
-      <Text>{title}</Text>
-    </TouchableOpacity>
+      </Pressable>
+      <View
+        style={{
+          marginHorizontal: "5%",
+          borderBottomColor: "white",
+          borderBottomWidth: index == lastElement ? 0 : 3,
+        }}
+      />
+    </BlurView>
   );
 };
 
@@ -491,6 +498,14 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
 };
 
 const styles = StyleSheet.create({
+  blurView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: "5%",
+    paddingBottom: "0%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
   cardsContainer: {
     paddingHorizontal: 0,
     height: 380,
@@ -500,7 +515,7 @@ const styles = StyleSheet.create({
     marginTop: "10%",
     marginBottom: "30%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   header: { fontSize: 20 },
   settingsContainer: {
@@ -514,7 +529,7 @@ const styles = StyleSheet.create({
     paddingVertical: "1.5%",
   },
 
-  subText: { opacity: 0.7, fontSize: 10, lineHeight: 15 },
+  subText: { opacity: 0.5, fontSize: 10, lineHeight: 15 },
   tapContainer: {
     justifyContent: "center",
     flexDirection: "row",
@@ -522,26 +537,20 @@ const styles = StyleSheet.create({
   },
   transactionContainer: {
     flex: 1,
-
     marginTop: "5%",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     padding: "5%",
   },
   transactionHeaderContainer: {
-    backgroundColor: "white",
     marginTop: "5%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: "5%",
-    paddingBottom: "0%",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    overflow: "hidden",
   },
   selectorContainer: {
     width: 200,
     borderRadius: 15,
     flexDirection: "row",
+    backgroundColor: "lightgrey",
   },
   selectorPositioning: {
     zIndex: 1,

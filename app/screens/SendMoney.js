@@ -1,7 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { Feather, Ionicons } from "@expo/vector-icons";
-import { RefreshControl, TouchableOpacity } from "react-native-gesture-handler";
-import { useIsFocused } from "@react-navigation/native";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -10,9 +7,12 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useIsFocused } from "@react-navigation/native";
 import api from "../api/api_list";
-import AuthContext from "../auth/context";
 import apiBeneficiaries from "../api/apiBeneficiaries";
+import AuthContext from "../auth/context";
 import UserIcon from "../components/UserIcon";
 
 const SendMoney = ({ navigation }) => {
@@ -44,7 +44,6 @@ const SendMoney = ({ navigation }) => {
       setIsLoading(false);
     }
   };
-
 
   /**
    * @dev This sends a payment to one destination
@@ -103,41 +102,46 @@ const SendMoney = ({ navigation }) => {
   }
 
   return (
-    <>
-      <View style={{ padding: 10 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("AddBeneficiary")}>
-          <View style={styles.button}>
-            <Ionicons name="add-circle-outline" size={24} color="#212529" />
-            <Text style={styles.buttonText}>Pay someone new</Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text
+    <ScrollView>
+      <View style={{ marginTop: 47 }}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("AddBeneficiary")}
+          >
+            <View style={styles.buttonPayNew}>
+              <Ionicons name="add-circle-outline" size={20} color="#FFFFFF" />
+              <Text style={styles.buttonPayNewText}>Pay someone new</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View
             style={{
-              fontFamily: "Montserrat",
-              fontSize: 12,
-              color: "#505A63",
-              marginBottom: 10,
+              display: "flex",
+              flexDirection: "row",
+              width: 312.33,
+              justifyContent: "space-between",
             }}
           >
-            New payee account name check
-          </Text>
-          <Feather name="info" size={12} color="black" />
-        </View>
-        <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
-          <View style={styles.button}>
-            <Feather name="send" size={20} color="black" />
-            <Text style={styles.buttonText}>To self account</Text>
+            <Text
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: 12,
+                color: "#505A63",
+                marginBottom: 37,
+              }}
+            >
+              New payee account name check
+            </Text>
+            <Feather name="info" size={12} color="black" />
           </View>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
+            <View style={styles.buttonPaySelf}>
+              <Feather name="send" size={20} color="#212529" />
+              <Text style={styles.buttonPaySelfText}>To self account</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-
       <View style={styles.payContainer}>
         <View style={styles.payHeaderContainer}>
           <Text style={styles.payMainHeading}>Pay an existing payee</Text>
@@ -145,7 +149,9 @@ const SendMoney = ({ navigation }) => {
         </View>
         <FlatList
           data={beneficaryList}
-          keyExtractor={(beneficaryList, index) => `${beneficaryList.id}-${index}`}
+          keyExtractor={(beneficaryList, index) =>
+            `${beneficaryList.id}-${index}`
+          }
           numColumns={4}
           contentContainerStyle={styles.flatListContent}
           renderItem={(beneficary) => {
@@ -164,7 +170,7 @@ const SendMoney = ({ navigation }) => {
       <View
         style={{
           backgroundColor: "#FFFFFF",
-          padding: 20,
+          padding: 24,
         }}
       >
         <View style={styles.payHeaderContainer}>
@@ -191,20 +197,12 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.groupName}
                   onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                 />
-                <UserIcon
-                  name={beneficary?.item.groupName}
-                  onPress={() => sendGroupPayeeTrigger(beneficary.item)}
-                />
-                <UserIcon
-                  name={beneficary?.item.groupName}
-                  onPress={() => sendGroupPayeeTrigger(beneficary.item)}
-                />
               </View>
             );
           }}
         />
       </View>
-    </>
+    </ScrollView>
   );
 };
 
@@ -213,20 +211,44 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  button: {
-    border: "dashed",
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  buttonPayNew: {
     borderRadius: 10,
-    borderColor: "#0101FD",
-    backgroundColor: "#D8EBF9",
-    color: "#212529",
-    height: 55.05,
+    backgroundColor: "#212529",
+    height: 47,
+    width: 312.33,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 8,
   },
-  buttonText: {
+  buttonPayNewText: {
+    color: "#FFFFFF",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 14,
+    marginLeft: 6,
+  },
+  buttonPaySelf: {
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#212529",
+    backgroundColor: "#0101FD05",
+    height: 47,
+    width: 312.33,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  buttonPaySelfText: {
     color: "#212529",
     fontFamily: "Montserrat",
     fontWeight: "bold",
