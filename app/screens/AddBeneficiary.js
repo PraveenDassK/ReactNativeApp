@@ -279,11 +279,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#999999",
   },
-  bottom: {
-    bottom: "5%",
-    flex: 1,
-    justifyContent: "flex-end",
-  },
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
