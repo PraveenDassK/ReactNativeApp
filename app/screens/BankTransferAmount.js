@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Text,
   StyleSheet,
+  ScrollView,
   View,
   TouchableOpacity,
   TextInput,
@@ -11,6 +12,7 @@ import {
   Pressable,
   FlatList,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   horizontalScale,
@@ -24,12 +26,13 @@ import KeyboardAvoider from "../components/KeyboardAvoider";
 
 import AppDropdown from "../components/AppDropdown";
 import apiCall from "../api/apiCall";
+import Button from "../components/AppButton";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
 
-  const payeeDetails = route.params.payeeDetails;
+  const payeeDetails = route.params;
   const destination = {};
   console.log(payeeDetails);
   // const sortCode = route.params.sortCode;
@@ -71,23 +74,10 @@ const BankTransferAmount = ({ route, navigation }) => {
    * @dev This takes the selected destination account data and passes it to another screen
    */
   const selectAccount = (account) => {
-    console.log(account);
-    const requestObj = {
-      sourceAccountId: "",
-      destination: {
-        type: "SCAN",
-        id: account.id,
-        accountNumber: account.identifiers[0].accountNumber,
-        sortCode: account.identifiers[0].sortCode,
-        name: account.name,
-        phoneNumber: "",
-      },
-      currency: "GBP",
-      amount: 0,
-      reference: "Transfer",
-    };
+    const requestObj = payeeDetails.requestObj
+    requestObj.amount = amount
     console.log(requestObj);
-    navigation.navigate("MoveMoneyFromAccount", requestObj);
+    navigation.navigate("Pin", requestObj);
   };
 
   /**
@@ -172,46 +162,37 @@ const BankTransferAmount = ({ route, navigation }) => {
   };
 
   return (
-    <KeyboardAvoider>
-      <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "15%",
-          }}
-        >
-          <AppText style={styles.mainHeading}>Send Money</AppText>
+    <ScrollView nestedScrollEnabled={true}>
+
+      <View style={styles.headerContainer}>
+        <View>
+          <Text style={styles.headerHeading}>Banking name</Text>
+          <Text style={styles.contentText}>Jack Huang</Text>
+        </View>
+        <View>
+          <Text style={styles.headerHeading}>Account number</Text>
+          <Text style={styles.contentText}>123456789123</Text>
+        </View>
+      </View>
+      <View style={styles.paymentContainer}>
+        <View>
+          <Text style={styles.contentText}>
+            Enter the amount you want to send
+          </Text>
+          <TextInput style={styles.inputBox} placeholder="£0" />
         </View>
 
-        <View style={styles.headerContainer}>
+        <View>
+          <Text style={styles.contentText}>Send from</Text>
           <View>
-            <Text style={styles.headerHeading}>Banking name</Text>
-            <Text style={styles.contentText}>Jack Huang</Text>
-          </View>
-          <View>
-            <Text style={styles.headerHeading}>Account number</Text>
-            <Text style={styles.contentText}>123456789123</Text>
-          </View>
-        </View>
-
-        <View style={styles.paymentContainer}>
-          <View>
-            <Text style={styles.contentText}>
-              Enter the amount you want to send
-            </Text>
-            <TextInput style={styles.inputBox} placeholder="£0" />
-          </View>
-
-          <View>
-            <Text style={styles.contentText}>Send from</Text>
-            <View>
+            <ScrollView style={{ flex: 1 }}>
               <FlatList
-                data={accountList}
+                data={accountList.slice(0, 10)} // Show only the first 6 items
                 keyExtractor={(accountList) => accountList.id}
                 numColumns={1}
                 contentContainerStyle={styles.flatListContent}
-                style={styles.accountContainer}
+                style={{ height: 300 }} // Set a fixed height for the FlatList container
+                nestedScrollEnabled={true}
                 ItemSeparatorComponent={() => (
                   <View
                     style={{
@@ -224,150 +205,33 @@ const BankTransferAmount = ({ route, navigation }) => {
                 )}
                 renderItem={(account) => {
                   return (
-                    <TouchableOpacity
-                      onPress={() => selectAccount(account.item)}
-                    >
+                    <TouchableOpacity onPress={() => selectAccount(account.item)}>
                       <View style={styles.itemContainer}>
-                        <Text style={styles.itemContent}>
-                          {account.item.id}
-                        </Text>
-                        <Text style={styles.itemContent}>
-                          {account.item.balance}
-                        </Text>
+                        <Text style={styles.itemContent}>{account.item.id}</Text>
+                        <Text style={styles.itemContent}>{account.item.balance}</Text>
                       </View>
                     </TouchableOpacity>
                   );
                 }}
               />
-            </View>
+            </ScrollView>
           </View>
         </View>
-
-        {/* <AppDropdown
-          data={paymentTypes}
-          onChange={setPaymentType}
-          value={paymentType}
-          placeholder="Payment type"
-        />
-        <View style={[styles.groupContainer, styles.helloParent2Position]}>
-          <View style={[styles.hello4, styles.groupViewPosition]}>
-            <TouchableOpacity
-              onPress={() => {
-                setAmount("20");
-              }}
-            >
-              <Text style={[styles.hello4, styles.helloColor]}>£20</Text>
-              <View
-                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
-              >
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={40}
-                  color="grey"
-                  style={{ opacity: 0.7 }}
-                />
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={30}
-                  color="grey"
-                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={[{ width: "30%", left: "36%" }]}>
-            <TouchableOpacity
-              onPress={() => {
-                setAmount("50");
-              }}
-            >
-              <Text style={[styles.hello4, styles.helloColor]}>£50</Text>
-              <View
-                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
-              >
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={40}
-                  color="grey"
-                  style={{ opacity: 0.7 }}
-                />
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={30}
-                  color="grey"
-                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={[
-              styles.helloParent1,
-              styles.parentPosition,
-              styles.parentPosition1,
-            ]}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                setAmount("100");
-              }}
-            >
-              <Text style={[styles.hello4, styles.helloColor]}>£100</Text>
-              <View
-                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
-              >
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={40}
-                  color="grey"
-                  style={{ opacity: 0.7 }}
-                />
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={30}
-                  color="grey"
-                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={[styles.helloParent2, styles.helloParent2Position]}>
-          <Text style={[styles.hello7, { color: "#999" }]}>Pay{"\n"}</Text>
-          <TextInput
-            style={[styles.hello8, styles.helloTypo1]}
-            placeholder={"£" + amount}
-            keyboardType="numeric"
-            value={amount}
-            placeholderTextColor={"blue"}
-            onChangeText={(newText) => setAmount(newText)}
-          />
-          <View
-            style={[
-              styles.lineView,
-              styles.parentPosition,
-              styles.lineViewBorder,
-            ]}
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.groupTouchableOpacity}
-          onPress={() => requestContact(amount)}
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "15%",
+          }}
         >
-          <View
-            style={[
-              styles.rectangleParent,
-              styles.parentPosition,
-              styles.parentPosition1,
-            ]}
-          >
-            <View style={styles.rectangleView} />
-            <View style={[styles.maskGroup236, styles.parentPosition]} />
-          </View>
-          <Text style={styles.hello9}>Send</Text>
-        </TouchableOpacity> */}
-      </Pressable>
-    </KeyboardAvoider>
+        </View>
+        <Button
+          title="Continue"
+          color="white"
+          textColor="black"
+        />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -434,6 +298,27 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontSize: 14,
     color: "#000000",
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 50,
+  },
+
+  button: {
+    width: 331.08,
+    height: 47,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "Montserrat",
   },
   dropdownStyle: {
     width: "95%",

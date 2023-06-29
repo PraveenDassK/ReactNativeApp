@@ -23,9 +23,6 @@ import apiLogin from "./app/api/apiLogin";
 import versionChecker from "./app/utility/versionChecker";
 import { usePreventScreenCapture } from 'expo-screen-capture';
 
-
-
-
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -160,8 +157,12 @@ export default function App() {
     restoreSignIn();
     versionChecker.compareVersion(version);
     console.log(version);
+    // if (JailMonkey.isJailBroken()) {
+    //   // Alternative behaviour for jail-broken/rooted devices.
+    // }
+    // console.log(JailMonkey.isJailBroken(), "Broken")
   }, []);
-  //usePreventScreenCapture();
+  usePreventScreenCapture();
 
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChange);
@@ -173,6 +174,8 @@ export default function App() {
 
   const authenticate = async () => {
     "starting authentication";
+
+
     const result = await LocalAuthentication.authenticateAsync();
     const device =
       await LocalAuthentication.supportedAuthenticationTypesAsync();

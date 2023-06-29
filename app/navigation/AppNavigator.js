@@ -302,7 +302,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "2.5",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -318,7 +321,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -334,7 +340,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -350,7 +359,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -366,7 +378,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -382,7 +397,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -397,7 +415,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -412,7 +433,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -428,7 +452,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -444,7 +471,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -460,7 +490,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -476,7 +509,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -491,7 +527,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -506,7 +545,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -522,7 +564,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -538,7 +583,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -554,11 +602,14 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+            backgroundColor: "lightgrey",
           },
         }}
       />
@@ -595,11 +646,14 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+            backgroundColor: "lightgrey",
           },
         }}
       />
@@ -613,11 +667,14 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+            backgroundColor: "lightgrey",
           },
         }}
       />
@@ -671,7 +728,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
         }}
@@ -686,7 +746,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
         }}
@@ -702,7 +765,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
         }}
@@ -718,11 +784,14 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+            backgroundColor: "lightgrey",
           },
         }}
       />
@@ -737,7 +806,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
@@ -908,7 +980,10 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <MaterialCommunityIcons name="chevron-down" size={40} />
+            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
+              
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+              </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
