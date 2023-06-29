@@ -92,11 +92,14 @@ import Devices from "../screens/Devices";
 
 import PaymentLink from "../screens/PaymentLink";
 
-import Teams from "../screens/Teams";
 import Invoices from "../screens/Invoices";
 import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
 import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
+
+import Teams from "../screens/Teams";
+import TeamsUser from "../screens/TeamsUser";
+import TeamsUserAdd from "../screens/TeamsUserAdd";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -469,6 +472,36 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Teams)}
         options={{
           title: "Teams",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+            <Stack.Screen
+        name="TeamsUser"
+        component={gestureHandlerRootHOC(TeamsUser)}
+        options={{
+          title: "Teams user",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <MaterialCommunityIcons name="chevron-down" size={40} />
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+            <Stack.Screen
+        name="TeamsUserAdd"
+        component={gestureHandlerRootHOC(TeamsUserAdd)}
+        options={{
+          title: "Teams add",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,

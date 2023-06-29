@@ -54,10 +54,6 @@ const Invoice = ({ navigation }) => {
                             token={amount}
                         />
                     ))}
-                    <TransactionFooter
-                        number={directDebits.length}
-                        total={5}
-                        onSee={() => navigation.navigate("VirtualEcoSystem")} />
                 </View>
             </View>
         </View>

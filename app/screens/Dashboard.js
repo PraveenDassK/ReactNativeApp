@@ -1,25 +1,42 @@
 import React, { useEffect, useState, useContext } from "react";
-import { RefreshControl, Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, ActivityIndicator, Platform, Dimensions, TouchableWithoutFeedback, Vibration, useWindowDimensions, ImageBackground, } from "react-native";
+import {
+  RefreshControl,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Vibration,
+  useWindowDimensions,
+  ImageBackground,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 import AccountDeatils from "../components/AccountDeatils";
-import SquareIcon from "../components/SquareIcon";
+import SquareIcon from "../components/ButtonIcon";
 import GlobalStyles from "../../GlobalStyles";
 import RecentTransactions from "../components/RecentTransactions";
 import CarbonSpendGraph from "../components/CarbonSpendGraph";
+import VirtualPlanet from "../components/VirtualPlanet";
+import XeroDashboard from "../components/XeroDashboard";
 
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);
 
-  const [userImpact, setUserImpact] = useState({});
-  const [userData, setuserData] = useState({});
+  const [userImpact, setUserImpact] = useState([]);
+  const [userData, setuserData] = useState([]);
 
   const { accountID, customerDetails } = useContext(AuthContext);
-  const [iconShow, setIconShow] = useState(false)
+  const [iconShow, setIconShow] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -33,7 +50,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const userDataReturn = await apiCall.GetCustomerDetails(accountID);
+      const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
       const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
       setuserData(userDataReturn);
       setUserImpact(userImpactReturn);
@@ -43,7 +60,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       return;
     }
   };
-  console.log(userData)
+  console.log(userData,"userData");
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -62,7 +79,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={styles.header}>
             <View>
               <Text style={styles.welcomText}>Welcome back,</Text>
-              <Text style={styles.nameText}>{userData.name} !</Text>
+              <Text style={styles.nameText}>{userData?.name} !</Text>
             </View>
             <View style={styles.iconContainer}>
               <View style={styles.iconStyle}>
@@ -75,53 +92,50 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           </View>
         </ImageBackground>
         <View style={styles.AccountDetailsCard}>
-          <AccountDeatils />
+          <AccountDeatils userData={userData} userImpact={userImpact}/>
         </View>
 
         <View style={styles.buttonContainer}>
           <SquareIcon
-            text={"Move money"}
+            name={"Move money"}
             image={"bank-transfer"}
-            trigger={() => navigation.navigate("MoveMoney")}
+            onPress={() => navigation.navigate("MoveMoney")}
           />
 
-
           <SquareIcon
-            text={"Send money"}
+            name={"Send money"}
             image={"send"}
-            trigger={() => navigation.navigate("SendMoney")}
+            onPress={() => navigation.navigate("SendMoney")}
           />
 
           <SquareIcon
-            text={"Cards"}
+            name={"Cards"}
             image={"credit-card"}
-            trigger={() => navigation.navigate("MyCards")}
+            onPress={() => navigation.navigate("MyCards")}
           />
 
-          {!iconShow ?
+          {!iconShow ? (
             <SquareIcon
-              text={"More"}
+              name={"More"}
               image={"dots-horizontal"}
-              trigger={() => setIconShow(!iconShow)}
-            /> :
-
-            <SquareIcon
-              text={"Switch accounts"}
-              image={"account-switch"}
-              trigger={() => navigation.navigate("SwitchAccounts")}
+              onPress={() => setIconShow(!iconShow)}
             />
-          }
-
+          ) : (
+            <SquareIcon
+              name={"Switch accounts"}
+              image={"account-switch"}
+              onPress={() => navigation.navigate("SwitchAccounts")}
+            />
+          )}
         </View>
 
-        {iconShow ?
+        {iconShow ? (
           <View>
             <View style={styles.buttonContainer}>
-
               <SquareIcon
-                text={"Payment link"}
+                name={"Payment link"}
                 image={"link-variant"}
-                trigger={() => navigation.navigate("PaymentLink")}
+                onPress={() => navigation.navigate("PaymentLink")}
               />
 
               <SquareIcon
@@ -131,62 +145,75 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               />
 
               <SquareIcon
-                text={"Set limits"}
+                name={"Set limits"}
                 image={"car-speed-limiter"}
-                trigger={() => navigation.navigate("SpendingLimit")}
+                onPress={() => navigation.navigate("SpendingLimit")}
               />
 
               <SquareIcon
-                text={"Transactions"}
+                name={"Transactions"}
                 image={"bank-outline"}
-                trigger={() => navigation.navigate("Transactions")}
+                onPress={() => navigation.navigate("Transactions")}
               />
-
             </View>
 
             <View style={styles.buttonContainer}>
-
-
               <SquareIcon
-                text={"Teams"}
+                name={"Teams"}
                 image={"account-group"}
-                trigger={() => navigation.navigate("Teams")}
+                onPress={() => navigation.navigate("Teams")}
               />
 
-
               <SquareIcon
-                text={"Invoices"}
+                name={"Invoices"}
                 image={"file-document-multiple"}
-                trigger={() => navigation.navigate("Invoices")}
+                onPress={() => navigation.navigate("Invoices")}
               />
 
               <SquareIcon
-                text={"Direct debits"}
+                name={"Direct debits"}
                 image={"directions"}
-                trigger={() => navigation.navigate("DirectDebits")}
+                onPress={() => navigation.navigate("DirectDebits")}
               />
 
               <SquareIcon
-                text={"Less"}
+                name={"Less"}
                 image={"dots-horizontal"}
-                trigger={() => setIconShow(!iconShow)}
+                onPress={() => setIconShow(!iconShow)}
               />
-
             </View>
           </View>
-
-          : false}
+        ) : (
+          false
+        )}
 
         <View style={styles.recentTransactionsContainer}>
           <RecentTransactions />
         </View>
 
-<View>
-  <CarbonSpendGraph/>
-</View>
-
+        <View style={{ margin: 25 }}>
+          <Text style={styles.headingText}>Your Carbon Footprints</Text>
+          <CarbonSpendGraph />
+        </View>
+        <View style={{ margin: 25 }}>
+          <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
+          <VirtualPlanet treeData={userImpact}/>
+        </View>
+        <View style={{ margin: 25 }}>
+          <Text style={styles.headingText}>Carbonyte + Xero</Text>
+          <XeroDashboard />
+        </View>
+        <View style={{ margin: 25 }}></View>
+        <View style={{ display: "flex", alignItems: "center" }}>
+          <Text style={styles.bottomText}>
+            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+            <Text style={styles.bottomTextBold}>Choice</Text>
+          </Text>
+        </View>
+        <View style={{ marginTop: 50 }}></View>
       </ScrollView>
-    </View >
+    </View>
   );
 };
 
@@ -246,6 +273,25 @@ const styles = StyleSheet.create({
   },
   recentTransactionsContainer: {
     marginTop: "60%",
+  },
+  headingText: {
+    color: "#212529",
+    fontSize: 18,
+    fontWeight: "bold",
+    fontFamily: "Montserrat",
+    marginBottom: 10,
+  },
+  bottomText: {
+    color: "#212529",
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "Regular",
+  },
+  bottomTextBold: {
+    color: "#212529",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
   },
 });
 

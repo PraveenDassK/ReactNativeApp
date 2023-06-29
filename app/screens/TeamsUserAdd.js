@@ -49,7 +49,7 @@ const items = [
       initialValue: "sortCode",
     },
   ];
-const DirectDebitForm = ({ navigation }) => {  const [selectedOption, setSelectedOption] = useState("personal");
+const TeamsUserAdd = ({ navigation }) => {  const [selectedOption, setSelectedOption] = useState("personal");
 
 const handleCheckboxChange = (value) => {
   setSelectedOption(value);
@@ -149,7 +149,7 @@ return (
 );
 };
 
-export default DirectDebitForm
+export default TeamsUserAdd
 
 const styles = StyleSheet.create({
     boxShadow: {},

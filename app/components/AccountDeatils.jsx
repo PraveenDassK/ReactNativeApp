@@ -1,30 +1,43 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
 import formatCurrency from "../utility/formatCurrency";
 
-const AccountDeatils = () => {
-  const [title, setTitle] = useState("12232312");
+const AccountDeatils = ({ userData,userImpact }) => {
+  const [title, setTitle] = useState("");
+  const [accountBalance,setBalance]=useState([])
+  const [dropdownData,setDropdownData]=useState([{label:"",value:""}])
+  useEffect(() =>{
+     let newArray = userData?.map((eachData, i) => {
+      return { label: eachData?.id, value: eachData?.id};
+    });
+    setDropdownData(newArray)
+    console.log(newArray,"this is new array");
+    setTitle(newArray?.[0]?.value)
+    handleBalance(newArray?.[0]?.value)
+  },[userData])
+  
+  
 
-  const data = [
-    { label: "12232312", value: "12232312" },
-    { label: "12232314", value: "12232314" },
-  ];
+  const handleBalance = (balance) => {
+   let newBalance= userData?.filter((eachValue,i)=> eachValue?.id === balance)
+   setBalance(newBalance)
+  }
   return (
     <View style={styles.cardContainer}>
       <View style={styles.accountContainer}>
         <Text style={styles.accountName}>Account</Text>
         <View style={styles.accountNumberStyle}>
           <Dropdown
-            data={data}
+            data={dropdownData}
             value={title}
+            defaultValue={dropdownData?.[0]}
             labelField="label"
             valueField="value"
-            defalutValue="12232312"
             onChange={(item) => {
-              console.log(item, "thsis is item selected");
-              setTitle(item.value);
+              setTitle(item?.value);
+              handleBalance(item?.value);
             }}
             style={styles.dropdown}
             selectedTextStyle={{ color: "white" }}
@@ -36,33 +49,48 @@ const AccountDeatils = () => {
         <View>
           <Text style={styles.totalTitle}>Total Balance</Text>
           <Text style={styles.totalAmount}>
-            {formatCurrency(46569, "GBP", false)}
+            {formatCurrency(accountBalance[0]?.balance, "GBP", false)}
           </Text>
         </View>
         <View style={styles.bottomCard}>
           <View>
             <Text style={styles.incometext}>Income</Text>
-            <Text style={styles.incomeAmount}>
-              <AntDesign name="arrowup" size={20} />
-              {formatCurrency(46569, "GBP", false)}
+            {accountBalance[0]?.income ?(
+              <Text style={styles.incomeAmount}>
+              <AntDesign name="arrowdown" size={20} />
+              {formatCurrency(accountBalance[0]?.income, "GBP", false)}
             </Text>
+            ):(
+              <Text style={styles.incomeAmount}>
+              Coming soon..
+            </Text>
+            )}
           </View>
           <View>
             <Text style={styles.incometext}>Expenses</Text>
-            <Text style={styles.incomeAmount}>
+            {accountBalance[0]?.expenses ?(
+              <Text style={styles.incomeAmount}>
               <AntDesign name="arrowdown" size={20} />
-              {formatCurrency(46569, "GBP", false)}
+              {formatCurrency(accountBalance[0]?.expenses, "GBP", false)}
             </Text>
+            ):(
+              <Text style={styles.incomeAmount}>
+              Coming soon..
+            </Text>
+            )}
+            
           </View>
           <View>
             <Text style={styles.incometext}>CO2 spending</Text>
-            <Text style={styles.incomeAmount}>1200kg</Text>
+            <Text style={styles.incomeAmount}>{userImpact?.totalAssets} kg</Text>
           </View>
         </View>
       </View>
-      <View style={styles.buttonContainer} >
+      <View style={styles.buttonContainer}>
         <Pressable style={styles.sendButton}>
-          <Text style={styles.sendButtonText}><AntDesign name="plus" size={14} />   Add funds</Text>
+          <Text style={styles.sendButtonText}>
+            <AntDesign name="plus" size={14} /> Add funds
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -78,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    position:"relative"
+    position: "relative",
   },
   accountContainer: {
     display: "flex",
@@ -100,8 +128,9 @@ const styles = StyleSheet.create({
   dropdown: {
     // height: 70,
     // width: 100,
-    width: "65%",
+    width: "100%",
     padding: 1,
+    paddingHorizontal:25,
     fontSize: 16,
     borderWidth: 0,
     opacity: 1,
@@ -156,18 +185,18 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius:15,
-    gap:4,
+    borderRadius: 15,
+    gap: 4,
   },
   sendButtonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "normal",
   },
-  buttonContainer:{
-    position:"absolute",
-    width:"100%",
-    bottom:-35,
-    left:100,
-  }
+  buttonContainer: {
+    position: "absolute",
+    width: "100%",
+    bottom: -35,
+    left: 100,
+  },
 });
