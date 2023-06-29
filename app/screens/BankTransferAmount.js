@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Text,
   StyleSheet,
+  ScrollView,
   View,
   TouchableOpacity,
   TextInput,
@@ -11,6 +12,7 @@ import {
   Pressable,
   FlatList,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   horizontalScale,
@@ -24,6 +26,7 @@ import KeyboardAvoider from "../components/KeyboardAvoider";
 
 import AppDropdown from "../components/AppDropdown";
 import apiCall from "../api/apiCall";
+
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
@@ -240,6 +243,18 @@ const BankTransferAmount = ({ route, navigation }) => {
                 }}
               />
             </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity>
+                <LinearGradient
+                  colors={["#212529", "#3A3A3A"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Continue</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
@@ -434,6 +449,27 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontSize: 14,
     color: "#000000",
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 50,
+  },
+
+  button: {
+    width: 331.08,
+    height: 47,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "Montserrat",
   },
   dropdownStyle: {
     width: "95%",
