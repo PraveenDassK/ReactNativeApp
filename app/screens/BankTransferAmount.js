@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Text,
   StyleSheet,
+  ScrollView,
   View,
   TouchableOpacity,
   TextInput,
@@ -11,6 +12,7 @@ import {
   Pressable,
   FlatList,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   horizontalScale,
@@ -172,8 +174,72 @@ const BankTransferAmount = ({ route, navigation }) => {
   };
 
   return (
-    <KeyboardAvoider>
-      <Pressable style={styles.groupParent} onPress={Keyboard.dismiss}>
+    <ScrollView nestedScrollEnabled={true}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => requestContact(amount)}>
+          <LinearGradient
+            colors={["#212529", "#3A3A3A"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Continue</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.headerContainer}>
+        <View>
+          <Text style={styles.headerHeading}>Banking name</Text>
+          <Text style={styles.contentText}>Jack Huang</Text>
+        </View>
+        <View>
+          <Text style={styles.headerHeading}>Account number</Text>
+          <Text style={styles.contentText}>123456789123</Text>
+        </View>
+      </View>
+      <View style={styles.paymentContainer}>
+        <View>
+          <Text style={styles.contentText}>
+            Enter the amount you want to send
+          </Text>
+          <TextInput style={styles.inputBox} placeholder="£0" />
+        </View>
+
+        <View>
+          <Text style={styles.contentText}>Send from</Text>
+          <View>
+            <FlatList
+              data={accountList}
+              keyExtractor={(accountList) => accountList.id}
+              numColumns={1}
+              contentContainerStyle={styles.flatListContent}
+              style={styles.accountContainer}
+              nestedScrollEnabled={true}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{
+                    width: "100%",
+                    height: 1,
+                    backgroundColor: "#EBEBEB",
+                    color: "#EBEBEB",
+                  }}
+                />
+              )}
+              renderItem={(account) => {
+                return (
+                  <TouchableOpacity onPress={() => selectAccount(account.item)}>
+                    <View style={styles.itemContainer}>
+                      <Text style={styles.itemContent}>{account.item.id}</Text>
+                      <Text style={styles.itemContent}>
+                        {account.item.balance}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </View>
+        </View>
         <View
           style={{
             alignItems: "center",
@@ -183,67 +249,9 @@ const BankTransferAmount = ({ route, navigation }) => {
         >
           <AppText style={styles.mainHeading}>Send Money</AppText>
         </View>
+      </View>
 
-        <View style={styles.headerContainer}>
-          <View>
-            <Text style={styles.headerHeading}>Banking name</Text>
-            <Text style={styles.contentText}>Jack Huang</Text>
-          </View>
-          <View>
-            <Text style={styles.headerHeading}>Account number</Text>
-            <Text style={styles.contentText}>123456789123</Text>
-          </View>
-        </View>
-
-        <View style={styles.paymentContainer}>
-          <View>
-            <Text style={styles.contentText}>
-              Enter the amount you want to send
-            </Text>
-            <TextInput style={styles.inputBox} placeholder="£0" />
-          </View>
-
-          <View>
-            <Text style={styles.contentText}>Send from</Text>
-            <View>
-              <FlatList
-                data={accountList}
-                keyExtractor={(accountList) => accountList.id}
-                numColumns={1}
-                contentContainerStyle={styles.flatListContent}
-                style={styles.accountContainer}
-                ItemSeparatorComponent={() => (
-                  <View
-                    style={{
-                      width: "100%",
-                      height: 1,
-                      backgroundColor: "#EBEBEB",
-                      color: "#EBEBEB",
-                    }}
-                  />
-                )}
-                renderItem={(account) => {
-                  return (
-                    <TouchableOpacity
-                      onPress={() => selectAccount(account.item)}
-                    >
-                      <View style={styles.itemContainer}>
-                        <Text style={styles.itemContent}>
-                          {account.item.id}
-                        </Text>
-                        <Text style={styles.itemContent}>
-                          {account.item.balance}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </View>
-          </View>
-        </View>
-
-        {/* <AppDropdown
+      {/* <AppDropdown
           data={paymentTypes}
           onChange={setPaymentType}
           value={paymentType}
@@ -366,8 +374,7 @@ const BankTransferAmount = ({ route, navigation }) => {
           </View>
           <Text style={styles.hello9}>Send</Text>
         </TouchableOpacity> */}
-      </Pressable>
-    </KeyboardAvoider>
+    </ScrollView>
   );
 };
 
@@ -434,6 +441,27 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontSize: 14,
     color: "#000000",
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 50,
+  },
+
+  button: {
+    width: 331.08,
+    height: 47,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "Montserrat",
   },
   dropdownStyle: {
     width: "95%",
