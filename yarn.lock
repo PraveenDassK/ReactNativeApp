@@ -6238,6 +6238,11 @@
   "resolved" "https://registry.npmjs.org/isobject/-/isobject-3.0.1.tgz"
   "version" "3.0.1"
 
+"jail-monkey@^2.8.0":
+  "integrity" "sha512-mz0sldKOEnt7qpqLLYM9Rwq9zGuGtj5nihz87KWBSy6PR9eu0cmyPkW3b+Exw4iVivcb2bFf6uVq0Q9aNgdIhw=="
+  "resolved" "https://registry.npmjs.org/jail-monkey/-/jail-monkey-2.8.0.tgz"
+  "version" "2.8.0"
+
 "jest-environment-node@^29.2.1":
   "integrity" "sha512-ExxuIK/+yQ+6PRGaHkKewYtg6hto2uGCgvKdb2nfJfKXgZ17DfXjvbZ+jA1Qt9A8EQSfPnt5FKIfnOO3u1h9qw=="
   "resolved" "https://registry.npmjs.org/jest-environment-node/-/jest-environment-node-29.5.0.tgz"
@@ -8613,6 +8618,11 @@
   "integrity" "sha512-eUUPM9GcSx3k0vOn/ZvNTZ83L+tzkFmInd8dltDl6KRsGy4KSVYQ5BRx9/2oflfO61KYljtSPF1x8PhXLPsi9w=="
   "resolved" "https://registry.npmjs.org/react-native-hide-keyboard/-/react-native-hide-keyboard-0.2.3.tgz"
   "version" "0.2.3"
+
+"react-native-jailbreak@^0.1.0":
+  "integrity" "sha512-nDeCQKD4Oew2S7w5bFVpv6PA3YeMLVbM+jUf7KbdGkhRh0vUqtpa86inPoh1zl4Gn0aJxo/gyXVDmIMQlibjZA=="
+  "resolved" "https://registry.npmjs.org/react-native-jailbreak/-/react-native-jailbreak-0.1.0.tgz"
+  "version" "0.1.0"
 
 "react-native-keychain@^6.1.1":
   "integrity" "sha512-U6fnOQRJPq+c0Abl+FoYy9v0H3kQU587tMamU/o+MoBSUScFLE3DQpkyT1PW4NF5IObgiGuqQdmjC2KgtBpjGA=="

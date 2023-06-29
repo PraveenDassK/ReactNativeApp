@@ -66,6 +66,7 @@ const transactionDisplayItems = [
   { id: 3, title: "Expense" },
 ];
 const numOfTransactions = 4;
+
 export default function MyCards({ navigation }) {
   const { accountID } = useContext(AuthContext);
 
@@ -477,7 +478,6 @@ const CardCarousel = ({ cards, onCardPress }) => {
                     marginLeft: "25%",
                     resizeMode: "contain",
                   }}
-                 
                 />
                 {/* Back Side */}
                 <Image
@@ -487,7 +487,6 @@ const CardCarousel = ({ cards, onCardPress }) => {
                     marginLeft: "31%",
                     resizeMode: "contain",
                   }}
-               
                 />
               </FlipCard>
             </Animated.View>
@@ -507,7 +506,7 @@ const TapContainer = () => (
 
 const Icon = ({ title, isFrozen, onSettingsPress }) => {
   return (
-    <TouchableOpacity onPress={onSettingsPress}>
+    <TouchableOpacity onPress={onSettingsPress} style={{justifyContent: "center", "alignItems": "center"}}>
       <View
         style={{
           backgroundColor: isFrozen ? "black" : colors.babyBlue,
