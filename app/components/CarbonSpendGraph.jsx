@@ -1,24 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text ,ActivityIndicator} from "react-native";
 import DoughnutChart from "../components/DoughnutChart";
 import AuthContext from "../auth/context";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import * as Progress from "react-native-progress";
 
-const CarbonSpendGraph = ({}) => {
+const CarbonSpendGraph = ({ }) => {
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const { userID, accountID } = useContext(AuthContext);
   const [totalFootprint, setTotalFootprint] = useState(false);
-  const [color, setColor] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     loadData();
   }, [accountID, userID]);
 
   const loadData = async () => {
-    const carbonSpendData = await apiCarbon.GetCarbonSpending();
-    setCarbonSpendData(carbonSpendData.chartData);
-    setTotalFootprint(carbonSpendData.total);
+    try {
+      setIsLoading(true)
+      const carbonSpendData = await apiCarbon.GetCarbonSpending();
+      setCarbonSpendData(carbonSpendData.chartData);
+      setTotalFootprint(carbonSpendData.total);
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+      return;
+    }
   };
   console.log(carbnonSpendData, "this is spend data");
   const colorsArray = ["tomato", "orange", "gold", "cyan", "green"];
@@ -33,6 +41,14 @@ const CarbonSpendGraph = ({}) => {
   }
   console.log();
   let sumofValues = carbnonSpendData.reduce((n, { y }) => n + y, 0);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

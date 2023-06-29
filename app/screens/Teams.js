@@ -5,19 +5,32 @@ import {
     StyleSheet,
     View,
     ActivityIndicator,
+    FlatList
 } from "react-native";
 import { moderateScale } from '../config/scaling'
 
-import RecentTransactions from "../components/RecentTransactions";
 import PinModal from "../components/PinModal";
 import UserIcon from "../components/UserIcon";
-import ButtonIcon from "../components/ButtonIcon";
+import Button from "../components/AppButton";
 
+const PROXY_TEAM_DATA = [{
+    "name": "Ava Bel",
+    "id": "1"
+},
+{
+    "name": "Cal Dio",
+    "id": "2"
+},
+{
+    "name": "Efy Fey",
+    "id": "2"
+},
+]
 const Teams = ({ navigation }) => {
     const [showPinModal, setShowPinModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-
+    const [teamData, setTeamData] = useState(PROXY_TEAM_DATA)
     useEffect(() => {
         // loadData()
     }, []);
@@ -45,11 +58,33 @@ const Teams = ({ navigation }) => {
             {/* <RecentTransactions
                 amount={10}
             /> */}
-            <ButtonIcon
-                name = "My cards"
-                image = "dots-horizontal"
-                onPress={() => console.log("!")}
-            />
+            <View>
+                <Text>
+                    Your current team
+                </Text>
+                {teamData && (
+                    <FlatList
+                        data={teamData}
+                        renderItem={({ item, index }) => (
+                            <View style={styles.itemContainer}>
+                                <UserIcon
+                                    name={item.name}
+                                    onPress={() => navigation.navigate("TeamsUser")}
+                                />
+                            </View>
+                        )}
+                        keyExtractor={(item) => item.id}
+                        showsHorizontalScrollIndicator={false}
+                        numColumns={4}
+                        contentContainerStyle={styles.flatListContent}
+
+                    />
+                )}
+                <Button
+                    title="Add another user"
+                    onPress={() => navigation.navigate("TeamsUserAdd")}
+                />
+            </View>
         </View>
     );
 };
@@ -69,5 +104,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignContent: "center",
 
-    }
+    },
+    flatListContent: {
+        justifyContent: "space-between",
+    },
+    itemContainer: {
+        padding: "5%",
+    },
 })
