@@ -1,62 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-    Text,
+    View,
     TextInput,
     StyleSheet,
-    View,
-    TouchableOpacity,
+    Text,
+    Platform,
     TouchableWithoutFeedback,
     Keyboard,
-} from "react-native";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { Dropdown } from "react-native-element-dropdown";
-import Button from "../components/AppButton";
-import ErrorMessage from "../components/forms/ErrorMessage";
-import AuthContext from "../auth/context";
-
-import { verticalScale } from "../config/scaling";
-
-import KeyboardAvoider from "../components/KeyboardAvoider";
-
+    TouchableOpacity,
+  } from "react-native";
 import { moderateScale } from '../config/scaling'
 
+import PinModal from "../components/PinModal";
+import UserIcon from "../components/UserIcon";
+import Button from "../components/AppButton";
+import GlobalStyles from "../../GlobalStyles";
+import KeyboardAvoider from "../components/KeyboardAvoider";
+import CountdownBar from "../components/CountdownBar";
+import { CheckBox } from "@rneui/themed";
+import { LinearGradient } from "expo-linear-gradient";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import ErrorMessage from "../components/forms/ErrorMessage";
 
-const validationSchema = Yup.object().shape({
-    accountName: Yup.string().required().min(1).max(30).label("Account name"),
-    phoneNumber: Yup.string()
-      .required()
-      .matches(/^[0-9]+$/, "Phone number must be digits")
-      .min(9)
-      .max(11)
-      .label("Phone number"),
-  
-    sortCode: Yup.string()
-      .required()
-      .matches(/^[0-9]+$/, "Sort code must be digits")
-      .min(6, "Must be exactly 6 digits")
-      .max(6, "Must be exactly 6 digits")
-      .label("Sort code"),
-    accNum: Yup.string()
-      .required()
-      .matches(/^[0-9]+$/, "Account number must be digits")
-      .min(8, "Must be exactly 8 digits")
-      .max(8, "Must be exactly 8 digits")
-      .label("Account number"),
-  });
-  
-  const items = [
+const items = [
     {
       id: 2,
-      label: "Phone Number",
-      placeholder: "Enter phone number",
-      initialValue: "phoneNumber",
+      label: "First name",
+      placeholder: "Enter your name",
+      initialValue: "firstName",
     },
     {
       id: 3,
-      label: "Account Owner Name",
-      placeholder: "Enter owner name",
-      initialValue: "accountName",
+      label: "Last name",
+      placeholder: "Enter your name",
+      initialValue: "lastName",
     },
     {
       id: 4,
@@ -71,115 +49,146 @@ const validationSchema = Yup.object().shape({
       initialValue: "sortCode",
     },
   ];
-  
-const DirectDebitForm = ({ navigation }) => {
-    const [directDebits, setDirectDebits] = useState([
-        {
-            name: "Netflic",
-            date: "1687339",
-            amount: 5,
-        }
-    ])
-    useEffect(() => {
-        //loadData()
-    }, [])
+const DirectDebitForm = ({ navigation }) => {  const [selectedOption, setSelectedOption] = useState("personal");
 
-    const handleSubmit = async ({
-        accountName,
-        phoneNumber,
-        accNum,
-        sortCode,
-    }) => {
+const handleCheckboxChange = (value) => {
+  setSelectedOption(value);
+};
 
-    };
+const handleSubmit = async ({ firstName, lastName, accNum, sortCode }) => {
+  console.log(firstName, lastName, accNum, sortCode);
+};
 
-
-    return (
-        <KeyboardAvoider>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
-                    <Formik
-                        initialValues={{
-                            accountName: "",
-                            phoneNumber: "",
-                            sortCode: "",
-                            accNum: "",
-                        }}
-                        onSubmit={handleSubmit}
-                        validationSchema={validationSchema}
-                    >
-                        {({
-                            handleChange,
-                            handleSubmit,
-                            errors,
-                            setFieldTouched,
-                            touched,
-                        }) => (
-                            <>
-                                <View>
-                                    {items.map((item, index) => (
-                                        <View
-                                            key={item.id}
-                                            style={{
-                                                width: "90%",
-                                                marginLeft: "5%",
-                                                marginBottom: "5%",
-                                            }}
-                                        >
-                                            <Text style={{ fontSize: 14 }}>{item.label}</Text>
-                                            <TextInput
-                                                onBlur={() => setFieldTouched(item.initialValue)}
-                                                onChangeText={handleChange(item.initialValue)}
-                                                // placeholder={item.placeholder}
-                                                style={{ fontSize: 24, marginTop: "1%" }}
-                                            ></TextInput>
-                                            <View
-                                                style={{
-                                                    height: 1,
-                                                    backgroundColor: "black",
-                                                    marginTop: "1%",
-                                                    opacity: 0.7,
-                                                }}
-                                            />
-                                            <ErrorMessage
-                                                error={errors[item.initialValue]}
-                                                visible={touched[item.initialValue]}
-                                            />
-                                        </View>
-                                    ))}
-                                </View>
-                                <View
-                                    style={[
-                                        { flex: 1, justifyContent: "flex-end" }
-                                    ]}
-                                >
-                                    <TouchableOpacity style={styles.button}>
-                                        <Button title="Confirm" onPress={handleSubmit} />
-                                    </TouchableOpacity>
-                                </View>
-                            </>
-                        )}
-                    </Formik>
+return (
+  <KeyboardAvoider>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 20,
+          paddingVertical: 24,
+          backgroundColor: "#FFFFFF",
+          marginTop: 27,
+          borderRadius: 20,
+        }}
+      >
+        <Formik
+          initialValues={{
+            firstName: "Jack",
+            lastName: "Huang",
+            sortCode: "123456",
+            accNum: "12341234",
+          }}
+          onSubmit={handleSubmit}
+          // validationSchema={validationSchema}
+        >
+          {({
+            handleChange,
+            handleSubmit,
+            errors,
+            setFieldTouched,
+            touched,
+          }) => (
+            <>
+              <View>
+                <Text style={styles.formLabel}>Select account type</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <CheckBox
+                    title="Personal"
+                    checked={selectedOption === "personal"}
+                    checkedColor="black"
+                    onPress={() => handleCheckboxChange("personal")}
+                  />
+                  <CheckBox
+                    title="Business"
+                    checked={selectedOption === "business"}
+                    checkedColor="black"
+                    onPress={() => handleCheckboxChange("business")}
+                  />
                 </View>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoider>
-    )
-}
+
+                {items.map((item, index) => (
+                  <View
+                    key={item.id}
+                    style={{
+                      marginTop: 22,
+                    }}
+                  >
+                    {console.log("item", item)}
+                    <Text style={styles.formLabel}>{item.label}</Text>
+                    <TextInput
+                      style={styles.inputBox}
+                      onChangeText={handleChange(item.initialValue)}
+                      placeholder={item.placeholder}
+                    />
+                    <ErrorMessage
+                      error={errors[item.initialValue]}
+                      visible={touched[item.initialValue]}
+                    />
+                  </View>
+                ))}
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity>
+                  <LinearGradient
+                    colors={["#212529", "#3A3A3A"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>Continue</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </Formik>
+      </View>
+    </TouchableWithoutFeedback>
+  </KeyboardAvoider>
+);
+};
 
 export default DirectDebitForm
 
 const styles = StyleSheet.create({
-    comingSoonText: {
-        textTransform: "uppercase",
-        fontSize: moderateScale(80),
-        fontWeight: "bold",
-        textAlign: "center",
-
+    boxShadow: {},
+    container: {
+      flex: 1,
+      backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     },
-    mainContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignContent: "center",
-
-    }
-})
+    formLabel: { fontSize: 14, fontFamily: "Montserrat", marginBottom: 5 },
+    inputBox: {
+      width: 332,
+      height: 46,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: "#EBEBEB",
+      paddingHorizontal: 20,
+      paddingVertical: 14,
+      fontSize: 14,
+      color: "#999999",
+    },
+    buttonContainer: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      marginTop: 50,
+    },
+  
+    button: {
+      width: 331.08,
+      height: 47,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 5,
+    },
+    buttonText: {
+      color: "#FFFFFF",
+      fontSize: 14,
+      fontFamily: "Montserrat",
+    },
+  });
+  

@@ -1,18 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-    Text,
+    View,
     TextInput,
     StyleSheet,
-    View,
-    ActivityIndicator,
-    FlatList
-} from "react-native";
+    Text,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard,
+    TouchableOpacity,
+  } from "react-native";
 import { moderateScale } from '../config/scaling'
 
 import PinModal from "../components/PinModal";
 import UserIcon from "../components/UserIcon";
 import Button from "../components/AppButton";
 import GlobalStyles from "../../GlobalStyles";
+import KeyboardAvoider from "../components/KeyboardAvoider";
+import CountdownBar from "../components/CountdownBar";
+import { CheckBox } from "@rneui/themed";
+import { LinearGradient } from "expo-linear-gradient";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import ErrorMessage from "../components/forms/ErrorMessage";
 
 const items = [
     {
@@ -52,7 +61,6 @@ const handleSubmit = async ({ firstName, lastName, accNum, sortCode }) => {
 
 return (
   <KeyboardAvoider>
-    <CountdownBar />
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View
         style={{

@@ -12,21 +12,27 @@ import { moderateScale } from '../config/scaling'
 import PinModal from "../components/PinModal";
 import UserIcon from "../components/UserIcon";
 import Button from "../components/AppButton";
-
-const PROXY_TEAM_DATA = [{
-    "name": "Ava Bel",
-    "id": "1"
-},
-]
-const TeamsUser = ({ navigation }) => {
+import RecentTransactions from "../components/RecentTransactions";
+const TeamsUser = ({ navigation, route }) => {
     const [showPinModal, setShowPinModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const userData = route.params
+    console.log(route.params)
 
-    const [teamData, setTeamData] = useState(PROXY_TEAM_DATA)
+    const deleteUser = () => {
+        navigation.navigate("Teams")
+    }
 
     return (
         <View style={styles.mainContainer}>
-
+            <Text>
+                {userData.name}
+            </Text>
+            <RecentTransactions/>
+            <Button
+                title = {"delete"}
+                onPress={() => deleteUser()}
+            />
         </View>
     );
 };
