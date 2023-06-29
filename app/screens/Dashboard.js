@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     color: "#212529",
     fontSize: 14,
     fontFamily: "Montserrat",
-    fontWeight: "Regular",
+    fontWeight: "regular",
   },
   bottomTextBold: {
     color: "#212529",
