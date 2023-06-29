@@ -27,7 +27,6 @@ import KeyboardAvoider from "../components/KeyboardAvoider";
 import AppDropdown from "../components/AppDropdown";
 import apiCall from "../api/apiCall";
 
-
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
@@ -244,7 +243,7 @@ const BankTransferAmount = ({ route, navigation }) => {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => requestContact(amount)}>
                 <LinearGradient
                   colors={["#212529", "#3A3A3A"]}
                   start={{ x: 0, y: 0 }}
