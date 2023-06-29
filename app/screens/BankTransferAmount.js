@@ -175,18 +175,6 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   return (
     <ScrollView nestedScrollEnabled={true}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => requestContact(amount)}>
-          <LinearGradient
-            colors={["#212529", "#3A3A3A"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Continue</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
       <View style={styles.headerContainer}>
         <View>
           <Text style={styles.headerHeading}>Banking name</Text>
@@ -248,6 +236,18 @@ const BankTransferAmount = ({ route, navigation }) => {
           }}
         >
           <AppText style={styles.mainHeading}>Send Money</AppText>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={() => requestContact(amount)}>
+            <LinearGradient
+              colors={["#212529", "#3A3A3A"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Send</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
       </View>
 
