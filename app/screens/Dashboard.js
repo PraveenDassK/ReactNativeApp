@@ -32,8 +32,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);
 
-  const [userImpact, setUserImpact] = useState({});
-  const [userData, setuserData] = useState({});
+  const [userImpact, setUserImpact] = useState([]);
+  const [userData, setuserData] = useState([]);
 
   const { accountID, customerDetails } = useContext(AuthContext);
   const [iconShow, setIconShow] = useState(false);
@@ -92,7 +92,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           </View>
         </ImageBackground>
         <View style={styles.AccountDetailsCard}>
-          <AccountDeatils userData={userData} />
+          <AccountDeatils userData={userData} userImpact={userImpact}/>
         </View>
 
         <View style={styles.buttonContainer}>

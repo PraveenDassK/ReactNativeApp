@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { treeImages } from "../assets/Forest/AllForest";
-
+import {turtleImages} from "../assets/Turtles/AllTurtles"
 const VirtualPlanetCard = ({ data }) => {
   return (
     <>
@@ -84,8 +84,8 @@ const VirtualPlanet = ({ treeData }) => {
       title: "Virtual Ocean",
       image:
         treeData?.totalAssets > 50
-        ? treeImages[49]?.image
-        :treeImages[treeData?.totalAssets - 1]?.image ,
+        ? turtleImages[49]?.image
+        :turtleImages[treeData?.totalAssets - 1]?.image ,
       total: treeData?.totalAssets,
       subTitle:"Total Turtle Released"
     },

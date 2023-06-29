@@ -1,262 +1,204 @@
-import Turtle1 from "./1.png";
-import Turtle2 from "./2.png";
-import Turtle3 from "./3.png";
-import Turtle4 from "./4.png";
-import Turtle5 from "./5.png";
-import Turtle6 from "./6.png";
-import Turtle7 from "./7.png";
-import Turtle8 from "./8.png";
-import Turtle9 from "./9.png";
-import Turtle10 from "./10.png";
-import Turtle11 from "./11.png";
-import Turtle12 from "./12.png";
-import Turtle13 from "./13.png";
-import Turtle14 from "./14.png";
-import Turtle15 from "./15.png";
-import Turtle16 from "./16.png";
-import Turtle17 from "./17.png";
-import Turtle18 from "./18.png";
-import Turtle19 from "./19.png";
-import Turtle20 from "./20.png";
-import Turtle21 from "./21.png";
-import Turtle22 from "./22.png";
-import Turtle23 from "./23.png";
-import Turtle24 from "./24.png";
-import Turtle25 from "./25.png";
-import Turtle26 from "./26.png";
-import Turtle27 from "./27.png";
-import Turtle28 from "./28.png";
-import Turtle29 from "./29.png";
-import Turtle30 from "./30.png";
-import Turtle31 from "./31.png";
-import Turtle32 from "./32.png";
-import Turtle33 from "./33.png";
-import Turtle34 from "./34.png";
-import Turtle35 from "./35.png";
-import Turtle36 from "./36.png";
-import Turtle37 from "./37.png";
-import Turtle38 from "./38.png";
-import Turtle39 from "./39.png";
-import Turtle40 from "./40.png";
-import Turtle41 from "./41.png";
-import Turtle42 from "./42.png";
-import Turtle43 from "./43.png";
-import Turtle44 from "./44.png";
-import Turtle45 from "./45.png";
-import Turtle46 from "./46.png";
-import Turtle47 from "./47.png";
-import Turtle48 from "./48.png";
-import Turtle49 from "./49.png";
-import Turtle50 from "./50.png";
-import Turtle51 from "./51.png";
-
 export const turtleImages = [
   {
     name: "background1",
-    image: Turtle1,
-  },
-  {
-    name: "background1",
-    image: Turtle1,
+    image:require("./1.png"),
   },
   {
     name: "background2",
-    image: Turtle2,
+    image: require('./2.png'),
   },
   {
     name: "background3",
-    image: Turtle3,
+    image: require("./3.png"),
   },
   {
     name: "background4",
-    image: Turtle4,
+    image: require("./4.png"),
   },
   {
     name: "background5",
-    image: Turtle5,
+    image: require("./5.png"),
   },
   {
     name: "background6",
-    image: Turtle6,
+    image: require("./6.png"),
   },
   {
     name: "background7",
-    image: Turtle7,
+    image: require("./7.png"),
   },
   {
     name: "background8",
-    image: Turtle8,
+    image: require("./8.png"),
   },
   {
     name: "background9",
-    image: Turtle9,
+    image: require("./9.png"),
   },
   {
     name: "background10",
-    image: Turtle10,
+    image: require("./10.png"),
   },
   {
     name: "background11",
-    image: Turtle11,
+    image: require("./11.png"),
   },
   {
     name: "background12",
-    image: Turtle12,
+    image: require("./12.png"),
   },
   {
     name: "background13",
-    image: Turtle13,
+    image: require("./13.png"),
   },
   {
     name: "background14",
-    image: Turtle14,
+    image: require("./14.png"),
   },
   {
     name: "background15",
-    image: Turtle15,
+    image: require("./15.png"),
   },
   {
     name: "background16",
-    image: Turtle16,
+    image: require("./16.png"),
   },
   {
     name: "background17",
-    image: Turtle17,
+    image: require("./17.png"),
   },
   {
     name: "background18",
-    image: Turtle18,
+    image: require("./18.png"),
   },
   {
     name: "background19",
-    image: Turtle19,
+    image: require("./19.png"),
   },
   {
     name: "background20",
-    image: Turtle20,
+    image: require("./20.png"),
   },
   {
     name: "background21",
-    image: Turtle21,
+    image: require("./21.png"),
   },
   {
     name: "background22",
-    image: Turtle22,
+    image: require("./22.png"),
   },
   {
     name: "background23",
-    image: Turtle23,
+    image: require("./23.png"),
   },
   {
     name: "background24",
-    image: Turtle24,
+    image: require("./24.png"),
   },
   {
     name: "background25",
-    image: Turtle25,
+    image: require("./25.png"),
   },
   {
     name: "background26",
-    image: Turtle26,
+    image: require("./26.png"),
   },
   {
     name: "background27",
-    image: Turtle27,
+    image: require("./27.png"),
   },
   {
     name: "background28",
-    image: Turtle28,
+    image: require("./28.png"),
   },
   {
     name: "background29",
-    image: Turtle29,
+    image: require("./29.png"),
   },
   {
     name: "background30",
-    image: Turtle30,
+    image: require("./30.png"),
   },
   {
     name: "background31",
-    image: Turtle31,
+    image: require("./31.png"),
   },
   {
     name: "background32",
-    image: Turtle32,
+    image: require("./32.png"),
   },
   {
     name: "background33",
-    image: Turtle33,
+    image: require("./33.png"),
   },
   {
     name: "background34",
-    image: Turtle34,
+    image: require("./34.png"),
   },
   {
     name: "background35",
-    image: Turtle35,
+    image: require("./35.png"),
   },
   {
     name: "background36",
-    image: Turtle36,
+    image: require("./36.png"),
   },
   {
     name: "background37",
-    image: Turtle37,
+    image: require("./37.png"),
   },
   {
     name: "background38",
-    image: Turtle38,
+    image: require("./38.png"),
   },
   {
     name: "background39",
-    image: Turtle39,
+    image: require("./39.png"),
   },
   {
     name: "background40",
-    image: Turtle40,
+    image: require("./40.png"),
   },
   {
     name: "background41",
-    image: Turtle41,
+    image: require("./41.png"),
   },
   {
     name: "background42",
-    image: Turtle42,
+    image: require("./42.png"),
   },
   {
     name: "background43",
-    image: Turtle43,
+    image: require("./43.png"),
   },
   {
     name: "background44",
-    image: Turtle44,
+    image: require("./44.png"),
   },
   {
     name: "background45",
-    image: Turtle45,
+    image: require("./45.png"),
   },
   {
     name: "background46",
-    image: Turtle46,
+    image: require("./46.png"),
   },
   {
     name: "background47",
-    image: Turtle47,
+    image: require("./47.png"),
   },
   {
     name: "background48",
-    image: Turtle48,
+    image: require("./48.png"),
   },
   {
     name: "background49",
-    image: Turtle49,
+    image: require("./49.png"),
   },
   {
     name: "background50",
-    image: Turtle50,
-  },
-  {
-    name: "background51",
-    image: Turtle51,
+    image: require("./50.png"),
   },
 ];
+
+
