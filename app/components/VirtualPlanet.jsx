@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
+import { treeImages } from "../assets/Forest/AllForest";
 
 const VirtualPlanetCard = ({ data }) => {
   return (
     <>
       {data.map((eachValue, i) => {
+        console.log(eachValue)
         return (
           <View style={styles.container} key={i}>
             <View style={{ paddingVertical: 10 }}>
@@ -21,9 +23,7 @@ const VirtualPlanetCard = ({ data }) => {
             </View>
             <View style={styles.insideCard}>
               <Image
-                source={{
-                  uri: eachValue.image,
-                }}
+                source={eachValue.image}
                 style={{ height: 100, width: 130 }}
               />
 
@@ -36,7 +36,7 @@ const VirtualPlanetCard = ({ data }) => {
                     fontWeight: "bold",
                   }}
                 >
-                  200
+                  {eachValue?.total}
                 </Text>
                 <Text
                   style={{
@@ -44,10 +44,10 @@ const VirtualPlanetCard = ({ data }) => {
                     color: "#00003D",
                     fontFamily: "Montserrat",
                     fontWeight: "bold",
-                    width:"80%"
+                    width: "80%",
                   }}
                 >
-                  Total Trees Planted
+                  {eachValue.subTitle}
                 </Text>
                 <Text
                   style={{
@@ -68,17 +68,26 @@ const VirtualPlanetCard = ({ data }) => {
     </>
   );
 };
-const VirtualPlanet = () => {
+const VirtualPlanet = ({ treeData }) => {
+  console.log(treeData?.totalAssets, "this is a virtual planet");
   const data = [
     {
       title: "Virtual Forest",
       image:
-        "https://images.pexels.com/photos/2138922/pexels-photo-2138922.jpeg?auto=compress&cs=tinysrgb&w=600",
+        treeData?.totalAssets > 50
+          ? treeImages[49]?.image
+          :treeImages[treeData?.totalAssets - 1]?.image ,
+      total: treeData?.totalAssets,
+      subTitle:"Total Trees Planted"
     },
     {
       title: "Virtual Ocean",
       image:
-        "https://images.pexels.com/photos/2138922/pexels-photo-2138922.jpeg?auto=compress&cs=tinysrgb&w=600",
+        treeData?.totalAssets > 50
+        ? treeImages[49]?.image
+        :treeImages[treeData?.totalAssets - 1]?.image ,
+      total: treeData?.totalAssets,
+      subTitle:"Total Turtle Released"
     },
   ];
   return (
@@ -96,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 10,
     paddingLeft: 20,
-    marginTop:10,
+    marginTop: 10,
   },
   insideCard: {
     display: "flex",

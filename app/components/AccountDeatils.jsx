@@ -4,9 +4,9 @@ import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
 import formatCurrency from "../utility/formatCurrency";
 
-const AccountDeatils = () => {
+const AccountDeatils = ({userData}) => {
   const [title, setTitle] = useState("12232312");
-
+   console.log(userData,"this is a new account")
   const data = [
     { label: "12232312", value: "12232312" },
     { label: "12232314", value: "12232314" },
