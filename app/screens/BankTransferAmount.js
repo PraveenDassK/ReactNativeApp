@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import {
+  ActivityIndicator,
   Text,
   StyleSheet,
   View,
@@ -7,6 +9,7 @@ import {
   TextInput,
   Keyboard,
   Pressable,
+  FlatList,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
@@ -14,46 +17,108 @@ import {
   verticalScale,
   moderateScale,
 } from "../config/scaling";
-
+import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import AppText from "../components/Text";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 
 import AppDropdown from "../components/AppDropdown";
+import apiCall from "../api/apiCall";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
+
   const payeeDetails = route.params.payeeDetails;
-  const destination = {}
-  console.log(payeeDetails)
+  const destination = {};
+  console.log(payeeDetails);
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
 
   // let amount = (amount ? amount : 1).toString();
 
-  const [reference, setReference] = useState('');
-  const [paymentType, setPaymentType] = useState("")
+  const [reference, setReference] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+
+  // account list
+
+  const [accountList, setAccountList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { userID, customerDetails, accountID } = useContext(AuthContext);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    loadData();
+  }, [isFocused]);
+
+  /**
+   * @dev This loads the account data
+   */
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      const accountDataResponse = await apiCall.GetAllAccounts(userID);
+      console.log(accountDataResponse);
+      setAccountList(accountDataResponse);
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+    }
+  };
+  console.log(accountList);
+
+  /**
+   * @dev This takes the selected destination account data and passes it to another screen
+   */
+  const selectAccount = (account) => {
+    console.log(account);
+    const requestObj = {
+      sourceAccountId: "",
+      destination: {
+        type: "SCAN",
+        id: account.id,
+        accountNumber: account.identifiers[0].accountNumber,
+        sortCode: account.identifiers[0].sortCode,
+        name: account.name,
+        phoneNumber: "",
+      },
+      currency: "GBP",
+      amount: 0,
+      reference: "Transfer",
+    };
+    console.log(requestObj);
+    navigation.navigate("MoveMoneyFromAccount", requestObj);
+  };
+
+  /**
+   * @dev If the page is loading show the loading icon
+   */
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
 
   const paymentTypes = [
     {
       label: "Bacs",
-      value: "Bacs"
+      value: "Bacs",
     },
     {
       label: "Outbound",
-      value: "Outbound"
+      value: "Outbound",
     },
     {
       label: "Chaps",
-      value: "Chaps"
+      value: "Chaps",
     },
     {
       label: "Internal",
-      value: "Internal"
-    }
+      value: "Internal",
+    },
   ];
-
 
   const handleTextChange = (text) => {
     setReference(text);
@@ -61,21 +126,20 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const handleSave = () => {
     // Do something with the saved reference
-    console.log('Saved reference:', reference);
+    console.log("Saved reference:", reference);
     // ...
   };
 
   /**
-   * 
+   *
    * @returns True if sending money to just one
    */
   const singleBeneficary = () => {
     if (route.params.beneficiaryData?.groupId != null) {
-      return false
+      return false;
     }
-    return true
-  }
-  
+    return true;
+  };
 
   /**
    * @dev a payment type must be entered
@@ -86,14 +150,12 @@ const BankTransferAmount = ({ route, navigation }) => {
     if (!paymentType) return;
 
     //Checks if sending to a single person
-    if(singleBeneficary()){
-
-    }else{
-
+    if (singleBeneficary()) {
+    } else {
     }
-    console.log(route.params)
-    route.params.requestObj.amount = amount
-    route.params.requestObj.reference = "Transfer"
+    console.log(route.params);
+    route.params.requestObj.amount = amount;
+    route.params.requestObj.reference = "Transfer";
     console.log(
       "Transfer to " + payeeDetails.name + " of £" + amount + " successful"
     );
@@ -119,28 +181,74 @@ const BankTransferAmount = ({ route, navigation }) => {
             marginTop: "15%",
           }}
         >
-
-          <AppText style={{ fontSize: 28 }}>Sending money to</AppText>
-          <AppText
-            style={{
-              marginBottom: "2.5%",
-              textTransform: "capitalize",
-              fontSize: 24,
-              fontWeight: "bold",
-            }}
-          >
-            {payeeDetails?.name}
-          </AppText>
-        </View>
-        <View>
-          <TextInput
-            onChangeText={handleTextChange}
-            value={reference}
-            placeholder="Enter a reference"
-          />
+          <AppText style={styles.mainHeading}>Send Money</AppText>
         </View>
 
-        <AppDropdown data={paymentTypes} onChange={setPaymentType} value={paymentType} placeholder="Payment type" />
+        <View style={styles.headerContainer}>
+          <View>
+            <Text style={styles.headerHeading}>Banking name</Text>
+            <Text style={styles.contentText}>Jack Huang</Text>
+          </View>
+          <View>
+            <Text style={styles.headerHeading}>Account number</Text>
+            <Text style={styles.contentText}>123456789123</Text>
+          </View>
+        </View>
+
+        <View style={styles.paymentContainer}>
+          <View>
+            <Text style={styles.contentText}>
+              Enter the amount you want to send
+            </Text>
+            <TextInput style={styles.inputBox} placeholder="£0" />
+          </View>
+
+          <View>
+            <Text style={styles.contentText}>Send from</Text>
+            <View>
+              <FlatList
+                data={accountList}
+                keyExtractor={(accountList) => accountList.id}
+                numColumns={1}
+                contentContainerStyle={styles.flatListContent}
+                style={styles.accountContainer}
+                ItemSeparatorComponent={() => (
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 1,
+                      backgroundColor: "#EBEBEB",
+                      color: "#EBEBEB",
+                    }}
+                  />
+                )}
+                renderItem={(account) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => selectAccount(account.item)}
+                    >
+                      <View style={styles.itemContainer}>
+                        <Text style={styles.itemContent}>
+                          {account.item.id}
+                        </Text>
+                        <Text style={styles.itemContent}>
+                          {account.item.balance}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* <AppDropdown
+          data={paymentTypes}
+          onChange={setPaymentType}
+          value={paymentType}
+          placeholder="Payment type"
+        />
         <View style={[styles.groupContainer, styles.helloParent2Position]}>
           <View style={[styles.hello4, styles.groupViewPosition]}>
             <TouchableOpacity
@@ -257,13 +365,76 @@ const BankTransferAmount = ({ route, navigation }) => {
             <View style={[styles.maskGroup236, styles.parentPosition]} />
           </View>
           <Text style={styles.hello9}>Send</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </Pressable>
     </KeyboardAvoider>
   );
 };
 
 const styles = StyleSheet.create({
+  mainHeading: {
+    fontFamily: "Montserrat",
+    fontSize: 18,
+    color: "#212529",
+  },
+  headerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+    marginVertical: 28,
+  },
+  headerHeading: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#212529",
+    fontWeight: "bold",
+  },
+  contentText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#212529",
+  },
+  paymentContainer: {
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 20,
+    paddingVertical: 34,
+    borderRadius: 20,
+  },
+  inputBox: {
+    width: 334,
+    height: 75,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#EBEBEB",
+    paddingHorizontal: 26,
+    paddingVertical: 16,
+    fontSize: 35,
+    color: "#179424",
+    fontFamily: "Helvetica",
+    fontWeight: "bold",
+    marginVertical: 20,
+  },
+  accountContainer: {
+    marginVertical: 20,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#EBEBEB",
+  },
+  flatListContent: {
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
+  itemContainer: {
+    paddingHorizontal: 22,
+    paddingVertical: 17,
+    width: "100%",
+  },
+  itemContent: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: "#000000",
+  },
   dropdownStyle: {
     width: "95%",
     marginLeft: "2.5%",
