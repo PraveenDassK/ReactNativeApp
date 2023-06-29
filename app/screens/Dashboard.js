@@ -49,7 +49,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const userDataReturn = await apiCall.GetCustomerDetails(accountID);
+      const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
       const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
       setuserData(userDataReturn);
       setUserImpact(userImpactReturn);
@@ -59,7 +59,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       return;
     }
   };
-  console.log(userData);
+  console.log(userData,"userData");
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -78,7 +78,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={styles.header}>
             <View>
               <Text style={styles.welcomText}>Welcome back,</Text>
-              <Text style={styles.nameText}>{userData.name} !</Text>
+              {/* <Text style={styles.nameText}>{userData.name} !</Text> */}
             </View>
             <View style={styles.iconContainer}>
               <View style={styles.iconStyle}>
