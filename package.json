@@ -66,6 +66,7 @@
     "react-native-element-dropdown": "^2.5.3",
     "react-native-elements": "^3.4.3",
     "react-native-expo-pie-chart": "^1.0.0",
+    "react-native-flip-card": "^3.5.7",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-hide-keyboard": "^0.2.3",
     "react-native-pager-view": "6.1.2",
