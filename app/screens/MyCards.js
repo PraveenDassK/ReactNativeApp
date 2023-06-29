@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useState,
   useContext,
+  useRef,
 } from "react";
 import { BlurView } from "expo-blur";
 import {
@@ -19,6 +20,7 @@ import {
 } from "react-native";
 import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
+import FlipCard from "react-native-flip-card";
 
 import AuthContext from "../auth/context";
 import apiCall from "../api/api";
@@ -36,10 +38,26 @@ const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
 const ITEM_HEIGHT = 350;
 
 const cards = [
-  { title: "Card 1", cardUrl: require("../assets/cardLion.png") },
-  { title: "Card 2", cardUrl: require("../assets/cardLion.png") },
-  { title: "Card 3", cardUrl: require("../assets/cardLion.png") },
-  { title: "Card 4", cardUrl: require("../assets/cardLion.png") },
+  {
+    title: "Card 1",
+    cardUrl: require("../assets/cardLion.png"),
+    backCardUrl: require("../assets/cardFrozen.png"),
+  },
+  {
+    title: "Card 2",
+    cardUrl: require("../assets/cardLion.png"),
+    backCardUrl: require("../assets/cardFrozen.png"),
+  },
+  {
+    title: "Card 3",
+    cardUrl: require("../assets/cardLion.png"),
+    backCardUrl: require("../assets/cardFrozen.png"),
+  },
+  {
+    title: "Card 4",
+    cardUrl: require("../assets/cardLion.png"),
+    backCardUrl: require("../assets/cardFrozen.png"),
+  },
 ];
 
 const transactionDisplayItems = [
@@ -114,7 +132,7 @@ export default function MyCards({ navigation }) {
 
         <CardCarousel
           cards={cards}
-          onCardPress={() => console.log("card pressed")}
+          onCardPress={() => console.log("pressed")}
         />
 
         <TapContainer />
@@ -395,6 +413,7 @@ const Transaction = ({
 
 const CardCarousel = ({ cards, onCardPress }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
+
   return (
     <ScrollView
       horizontal={true}
@@ -439,16 +458,38 @@ const CardCarousel = ({ cards, onCardPress }) => {
                 transform: [{ scale: translate }],
               }}
             >
-              <Image
-                source={item.cardUrl}
-                style={{
-                  flex: 1,
-                  marginLeft: "25%",
-
-                  resizeMode: "contain",
+              <FlipCard
+                friction={6}
+                perspective={1000}
+                flipHorizontal={true}
+                flipVertical={false}
+                flip={false}
+                clickable={true}
+                onFlipEnd={(isFlipEnd) => {
+                  console.log("isFlipEnd", isFlipEnd);
                 }}
-                imageStyle={{ borderRadius: 6 }}
-              ></Image>
+              >
+                {/* Face Side */}
+                <Image
+                  source={item.cardUrl}
+                  style={{
+                    flex: 1,
+                    marginLeft: "25%",
+                    resizeMode: "contain",
+                  }}
+                 
+                />
+                {/* Back Side */}
+                <Image
+                  source={item.backCardUrl}
+                  style={{
+                    flex: 1,
+                    marginLeft: "31%",
+                    resizeMode: "contain",
+                  }}
+               
+                />
+              </FlipCard>
             </Animated.View>
           </TouchableOpacity>
         );
