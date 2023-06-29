@@ -69,7 +69,7 @@ const Teams = ({ navigation }) => {
                             <View style={styles.itemContainer}>
                                 <UserIcon
                                     name={item.name}
-                                    onPress={() => navigation.navigate("TeamsUser")}
+                                    onPress={() => navigation.navigate("TeamsUser", item)}
                                 />
                             </View>
                         )}

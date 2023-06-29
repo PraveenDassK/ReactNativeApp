@@ -102,7 +102,7 @@ const SendMoney = ({ navigation }) => {
   }
 
   return (
-    <ScrollView>
+    <>
       <View style={{ marginTop: 47 }}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -202,7 +202,7 @@ const SendMoney = ({ navigation }) => {
           }}
         />
       </View>
-    </ScrollView>
+    </>
   );
 };
 
