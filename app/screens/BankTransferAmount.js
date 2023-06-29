@@ -26,6 +26,7 @@ import KeyboardAvoider from "../components/KeyboardAvoider";
 
 import AppDropdown from "../components/AppDropdown";
 import apiCall from "../api/apiCall";
+import Button from "../components/AppButton";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
@@ -89,7 +90,7 @@ const BankTransferAmount = ({ route, navigation }) => {
       reference: "Transfer",
     };
     console.log(requestObj);
-    navigation.navigate("MoveMoneyFromAccount", requestObj);
+    navigation.navigate("Pin", requestObj);
   };
 
   /**
@@ -175,18 +176,7 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   return (
     <ScrollView nestedScrollEnabled={true}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => requestContact(amount)}>
-          <LinearGradient
-            colors={["#212529", "#3A3A3A"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Continue</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
+
       <View style={styles.headerContainer}>
         <View>
           <Text style={styles.headerHeading}>Banking name</Text>
@@ -208,36 +198,36 @@ const BankTransferAmount = ({ route, navigation }) => {
         <View>
           <Text style={styles.contentText}>Send from</Text>
           <View>
-            <FlatList
-              data={accountList}
-              keyExtractor={(accountList) => accountList.id}
-              numColumns={1}
-              contentContainerStyle={styles.flatListContent}
-              style={styles.accountContainer}
-              nestedScrollEnabled={true}
-              ItemSeparatorComponent={() => (
-                <View
-                  style={{
-                    width: "100%",
-                    height: 1,
-                    backgroundColor: "#EBEBEB",
-                    color: "#EBEBEB",
-                  }}
-                />
-              )}
-              renderItem={(account) => {
-                return (
-                  <TouchableOpacity onPress={() => selectAccount(account.item)}>
-                    <View style={styles.itemContainer}>
-                      <Text style={styles.itemContent}>{account.item.id}</Text>
-                      <Text style={styles.itemContent}>
-                        {account.item.balance}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }}
-            />
+            <ScrollView style={{ flex: 1 }}>
+              <FlatList
+                data={accountList.slice(0, 10)} // Show only the first 6 items
+                keyExtractor={(accountList) => accountList.id}
+                numColumns={1}
+                contentContainerStyle={styles.flatListContent}
+                style={{ height: 300 }} // Set a fixed height for the FlatList container
+                nestedScrollEnabled={true}
+                ItemSeparatorComponent={() => (
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 1,
+                      backgroundColor: "#EBEBEB",
+                      color: "#EBEBEB",
+                    }}
+                  />
+                )}
+                renderItem={(account) => {
+                  return (
+                    <TouchableOpacity onPress={() => selectAccount(account.item)}>
+                      <View style={styles.itemContainer}>
+                        <Text style={styles.itemContent}>{account.item.id}</Text>
+                        <Text style={styles.itemContent}>{account.item.balance}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </ScrollView>
           </View>
         </View>
         <View
@@ -247,133 +237,13 @@ const BankTransferAmount = ({ route, navigation }) => {
             marginTop: "15%",
           }}
         >
-          <AppText style={styles.mainHeading}>Send Money</AppText>
         </View>
-      </View>
-
-      {/* <AppDropdown
-          data={paymentTypes}
-          onChange={setPaymentType}
-          value={paymentType}
-          placeholder="Payment type"
+        <Button
+          title="Continue"
+          color="white"
+          textColor="black"
         />
-        <View style={[styles.groupContainer, styles.helloParent2Position]}>
-          <View style={[styles.hello4, styles.groupViewPosition]}>
-            <TouchableOpacity
-              onPress={() => {
-                setAmount("20");
-              }}
-            >
-              <Text style={[styles.hello4, styles.helloColor]}>£20</Text>
-              <View
-                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
-              >
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={40}
-                  color="grey"
-                  style={{ opacity: 0.7 }}
-                />
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={30}
-                  color="grey"
-                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={[{ width: "30%", left: "36%" }]}>
-            <TouchableOpacity
-              onPress={() => {
-                setAmount("50");
-              }}
-            >
-              <Text style={[styles.hello4, styles.helloColor]}>£50</Text>
-              <View
-                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
-              >
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={40}
-                  color="grey"
-                  style={{ opacity: 0.7 }}
-                />
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={30}
-                  color="grey"
-                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={[
-              styles.helloParent1,
-              styles.parentPosition,
-              styles.parentPosition1,
-            ]}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                setAmount("100");
-              }}
-            >
-              <Text style={[styles.hello4, styles.helloColor]}>£100</Text>
-              <View
-                style={[{ alignItems: "center", justifyContent: "flex-start" }]}
-              >
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={40}
-                  color="grey"
-                  style={{ opacity: 0.7 }}
-                />
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={30}
-                  color="grey"
-                  style={{ position: "absolute", top: "40%", opacity: 0.4 }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={[styles.helloParent2, styles.helloParent2Position]}>
-          <Text style={[styles.hello7, { color: "#999" }]}>Pay{"\n"}</Text>
-          <TextInput
-            style={[styles.hello8, styles.helloTypo1]}
-            placeholder={"£" + amount}
-            keyboardType="numeric"
-            value={amount}
-            placeholderTextColor={"blue"}
-            onChangeText={(newText) => setAmount(newText)}
-          />
-          <View
-            style={[
-              styles.lineView,
-              styles.parentPosition,
-              styles.lineViewBorder,
-            ]}
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.groupTouchableOpacity}
-          onPress={() => requestContact(amount)}
-        >
-          <View
-            style={[
-              styles.rectangleParent,
-              styles.parentPosition,
-              styles.parentPosition1,
-            ]}
-          >
-            <View style={styles.rectangleView} />
-            <View style={[styles.maskGroup236, styles.parentPosition]} />
-          </View>
-          <Text style={styles.hello9}>Send</Text>
-        </TouchableOpacity> */}
+      </View>
     </ScrollView>
   );
 };
