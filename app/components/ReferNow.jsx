@@ -20,7 +20,7 @@ const ReferNow = () => {
               textAlign: "center",
               fontSize: 12,
               fontFamily: "Montserrat",
-              fontWeight: "Regular",
+              fontWeight: "regular",
             }}
           >
             Sync your Carbonyte bank {`\n`}directly into your XERO account and
