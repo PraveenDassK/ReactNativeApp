@@ -27,7 +27,7 @@ import RecentTransactions from "../components/RecentTransactions";
 import CarbonSpendGraph from "../components/CarbonSpendGraph";
 import VirtualPlanet from "../components/VirtualPlanet";
 import XeroDashboard from "../components/XeroDashboard";
-
+import ReferNow from "../components/ReferNow";
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);
@@ -60,7 +60,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       return;
     }
   };
-  console.log(userData,"userData");
+  console.log(userData?.[0]?.customerName, "userData");
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -70,150 +70,167 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   }
 
   return (
-    <View style={{ position: "relative" }}>
-      <ScrollView>
-        <ImageBackground
-          source={require("../assets/backgrounds/River.png")}
-          style={styles.backgroundImage}
-        >
-          <View style={styles.header}>
-            <View>
-              <Text style={styles.welcomText}>Welcome back,</Text>
-              <Text style={styles.nameText}>{userData?.name} !</Text>
-            </View>
-            <View style={styles.iconContainer}>
-              <View style={styles.iconStyle}>
-                <FontAwesome name="moon-o" size={24} color="white" />
+    <ImageBackground
+      source={require("../assets/backgrounds/beach.jpg")}
+      // style={{  width: "100%" }}
+      resizeMode='contain'
+      imageStyle={{
+        bottom: "-85%" // Whatever offset you want from the bottom
+    }}
+      style={{
+        width: "100%",
+      
+      }}
+    >
+      <View style={{ position: "relative",marginBottom:50, }}>
+        <ScrollView>
+          <ImageBackground
+            source={require("../assets/backgrounds/River.png")}
+            style={styles.backgroundImage}
+          >
+            <View style={styles.header}>
+              <View>
+                <Text style={styles.welcomText}>Welcome back,</Text>
+                <Text style={styles.nameText}>
+                  {userData?.[0]?.customerName} !
+                </Text>
               </View>
-              <View style={styles.iconStyle}>
-                <Ionicons name="notifications" size={24} color="white" />
+              <View style={styles.iconContainer}>
+                <View style={styles.iconStyle}>
+                  <FontAwesome name="moon-o" size={24} color="white" />
+                </View>
+                <View style={styles.iconStyle}>
+                  <Ionicons name="notifications" size={24} color="white" />
+                </View>
               </View>
             </View>
+          </ImageBackground>
+          <View style={styles.AccountDetailsCard}>
+            <AccountDeatils userData={userData} userImpact={userImpact} />
           </View>
-        </ImageBackground>
-        <View style={styles.AccountDetailsCard}>
-          <AccountDeatils userData={userData} userImpact={userImpact}/>
-        </View>
 
-        <View style={styles.buttonContainer}>
-          <SquareIcon
-            name={"Move money"}
-            image={"bank-transfer"}
-            onPress={() => navigation.navigate("MoveMoney")}
-          />
-
-          <SquareIcon
-            name={"Send money"}
-            image={"send"}
-            onPress={() => navigation.navigate("SendMoney")}
-          />
-
-          <SquareIcon
-            name={"Cards"}
-            image={"credit-card"}
-            onPress={() => navigation.navigate("MyCards")}
-          />
-
-          {!iconShow ? (
+          <View style={styles.buttonContainer}>
             <SquareIcon
-              name={"More"}
-              image={"dots-horizontal"}
-              onPress={() => setIconShow(!iconShow)}
+              name={"Move money"}
+              image={"bank-transfer"}
+              onPress={() => navigation.navigate("MoveMoney")}
             />
-          ) : (
+
             <SquareIcon
-              name={"Switch accounts"}
-              image={"account-switch"}
-              onPress={() => navigation.navigate("SwitchAccounts")}
+              name={"Send money"}
+              image={"send"}
+              onPress={() => navigation.navigate("SendMoney")}
             />
-          )}
-        </View>
 
-        {iconShow ? (
-          <View>
-            <View style={styles.buttonContainer}>
-              <SquareIcon
-                name={"Payment link"}
-                image={"link-variant"}
-                onPress={() => navigation.navigate("PaymentLink")}
-              />
+            <SquareIcon
+              name={"Cards"}
+              image={"credit-card"}
+              onPress={() => navigation.navigate("MyCards")}
+            />
 
+            {!iconShow ? (
               <SquareIcon
-                text={"Subscriptions"}
-                image={"newspaper-variant-outline"}
-                trigger={() => navigation.navigate("Subscriptions")}
-              />
-
-              <SquareIcon
-                name={"Set limits"}
-                image={"car-speed-limiter"}
-                onPress={() => navigation.navigate("SpendingLimit")}
-              />
-
-              <SquareIcon
-                name={"Transactions"}
-                image={"bank-outline"}
-                onPress={() => navigation.navigate("Transactions")}
-              />
-            </View>
-
-            <View style={styles.buttonContainer}>
-              <SquareIcon
-                name={"Teams"}
-                image={"account-group"}
-                onPress={() => navigation.navigate("Teams")}
-              />
-
-              <SquareIcon
-                name={"Invoices"}
-                image={"file-document-multiple"}
-                onPress={() => navigation.navigate("Invoices")}
-              />
-
-              <SquareIcon
-                name={"Direct debits"}
-                image={"directions"}
-                onPress={() => navigation.navigate("DirectDebits")}
-              />
-
-              <SquareIcon
-                name={"Less"}
+                name={"More"}
                 image={"dots-horizontal"}
                 onPress={() => setIconShow(!iconShow)}
               />
-            </View>
+            ) : (
+              <SquareIcon
+                name={"Switch accounts"}
+                image={"account-switch"}
+                onPress={() => navigation.navigate("SwitchAccounts")}
+              />
+            )}
           </View>
-        ) : (
-          false
-        )}
 
-        <View style={styles.recentTransactionsContainer}>
-          <RecentTransactions />
-        </View>
+          {iconShow ? (
+            <View>
+              <View style={styles.buttonContainer}>
+                <SquareIcon
+                  name={"Payment link"}
+                  image={"link-variant"}
+                  onPress={() => navigation.navigate("PaymentLink")}
+                />
 
-        <View style={{ margin: 25 }}>
-          <Text style={styles.headingText}>Your Carbon Footprints</Text>
-          <CarbonSpendGraph />
-        </View>
-        <View style={{ margin: 25 }}>
-          <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
-          <VirtualPlanet treeData={userImpact}/>
-        </View>
-        <View style={{ margin: 25 }}>
-          <Text style={styles.headingText}>Carbonyte + Xero</Text>
-          <XeroDashboard />
-        </View>
-        <View style={{ margin: 25 }}></View>
-        <View style={{ display: "flex", alignItems: "center" }}>
-          <Text style={styles.bottomText}>
-            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-            <Text style={styles.bottomTextBold}>Choice</Text>
-          </Text>
-        </View>
-        <View style={{ marginTop: 50 }}></View>
-      </ScrollView>
-    </View>
+                <SquareIcon
+                  text={"Subscriptions"}
+                  image={"newspaper-variant-outline"}
+                  trigger={() => navigation.navigate("Subscriptions")}
+                />
+
+                <SquareIcon
+                  name={"Set limits"}
+                  image={"car-speed-limiter"}
+                  onPress={() => navigation.navigate("SpendingLimit")}
+                />
+
+                <SquareIcon
+                  name={"Transactions"}
+                  image={"bank-outline"}
+                  onPress={() => navigation.navigate("Transactions")}
+                />
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <SquareIcon
+                  name={"Teams"}
+                  image={"account-group"}
+                  onPress={() => navigation.navigate("Teams")}
+                />
+
+                <SquareIcon
+                  name={"Invoices"}
+                  image={"file-document-multiple"}
+                  onPress={() => navigation.navigate("Invoices")}
+                />
+
+                <SquareIcon
+                  name={"Direct debits"}
+                  image={"directions"}
+                  onPress={() => navigation.navigate("DirectDebits")}
+                />
+
+                <SquareIcon
+                  name={"Less"}
+                  image={"dots-horizontal"}
+                  onPress={() => setIconShow(!iconShow)}
+                />
+              </View>
+            </View>
+          ) : (
+            false
+          )}
+
+          <View style={styles.recentTransactionsContainer}>
+            <RecentTransactions />
+          </View>
+
+          <View style={{ margin: 25 }}>
+            <Text style={styles.headingText}>Your Carbon Footprints</Text>
+            <CarbonSpendGraph />
+          </View>
+          <View style={{ margin: 25 }}>
+            <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
+            <VirtualPlanet treeData={userImpact} />
+          </View>
+          <View style={{ margin: 25 }}>
+            <Text style={styles.headingText}>Carbonyte + Xero</Text>
+            <XeroDashboard />
+          </View>
+          <View style={{ margin: 25 }}>
+            <ReferNow />
+          </View>
+          <View style={{ display: "flex", alignItems: "center" }}>
+            <Text style={styles.bottomText}>
+              Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+              <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+              <Text style={styles.bottomTextBold}>Choice</Text>
+            </Text>
+          </View>
+          <View style={{ marginTop: 50 }}></View>
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -225,7 +242,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 20,
-    marginTop: 20,
+    marginTop: 30,
   },
   backgroundImage: {
     height: 200,

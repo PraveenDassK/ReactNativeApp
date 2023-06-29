@@ -32,7 +32,7 @@ const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [userData, setCode] = useState("");
 
-  const payeeDetails = route.params.payeeDetails;
+  const payeeDetails = route.params;
   const destination = {};
   console.log("payeee details ==>", payeeDetails);
   // const sortCode = route.params.sortCode;
@@ -74,21 +74,8 @@ const BankTransferAmount = ({ route, navigation }) => {
    * @dev This takes the selected destination account data and passes it to another screen
    */
   const selectAccount = (account) => {
-    console.log(account);
-    const requestObj = {
-      sourceAccountId: "",
-      destination: {
-        type: "SCAN",
-        id: account.id,
-        accountNumber: account.identifiers[0].accountNumber,
-        sortCode: account.identifiers[0].sortCode,
-        name: account.name,
-        phoneNumber: "",
-      },
-      currency: "GBP",
-      amount: 0,
-      reference: "Transfer",
-    };
+    const requestObj = payeeDetails.requestObj
+    requestObj.amount = amount
     console.log(requestObj);
     navigation.navigate("Pin", requestObj);
   };

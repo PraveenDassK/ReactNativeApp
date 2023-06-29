@@ -3,6 +3,7 @@ import React, { useState,useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
 import formatCurrency from "../utility/formatCurrency";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const AccountDeatils = ({ userData,userImpact }) => {
   const [title, setTitle] = useState("");
@@ -25,7 +26,8 @@ const AccountDeatils = ({ userData,userImpact }) => {
    setBalance(newBalance)
   }
   return (
-    <View style={styles.cardContainer}>
+    <View >
+      <LinearGradient colors={["#0101FD","#178BFF"]} style={styles.cardContainer}>
       <View style={styles.accountContainer}>
         <Text style={styles.accountName}>Account</Text>
         <View style={styles.accountNumberStyle}>
@@ -93,6 +95,7 @@ const AccountDeatils = ({ userData,userImpact }) => {
           </Text>
         </Pressable>
       </View>
+      </LinearGradient>
     </View>
   );
 };
@@ -102,7 +105,7 @@ export default AccountDeatils;
 const styles = StyleSheet.create({
   cardContainer: {
     width: "100%",
-    backgroundColor: "blue",
+    // backgroundColor: "blue",
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,

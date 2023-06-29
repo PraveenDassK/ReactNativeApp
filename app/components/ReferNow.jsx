@@ -1,39 +1,58 @@
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
+import { StyleSheet, Text, View, Pressable, Image, } from "react-native";
 import React from "react";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ReferNow = () => {
+
   return (
     <View>
-      <View style={styles.container}>
-        <View>
+      <LinearGradient
+        colors={["#1567A2", "#D8EBF9"]}
+        start={{ x: 0.0, y: 1.0 }}
+        end={{ x: 1.0, y: 1.0 }}
+        style={styles.container}
+      >
+        <View style={{width:"50%"}}>
           <Image
-            source={{
-              uri: "https://images.pexels.com/photos/2138922/pexels-photo-2138922.jpeg?auto=compress&cs=tinysrgb&w=600",
-            }}
-            style={{ height: 100, width: 130 }}
+            source={require("../assets/Dashboard/ReferEarn.png")}
+            resizeMode="cover"
+
+            style={{ height: 150, width: "100%" }}
           />
         </View>
-        <View>
+        <View style={{width:"50%",paddingVertical:5}}>
+          <Text
+            style={{
+              color: "#212529",
+              textAlign: "center",
+              fontSize: 20,
+              fontFamily: "Montserrat",
+              fontWeight: "bold",
+            }}
+          >
+            Refer & Earn
+          </Text>
           <Text
             style={{
               color: "#212529",
               textAlign: "center",
               fontSize: 12,
               fontFamily: "Montserrat",
-              fontWeight: "regular",
+              fontWeight: "Regular",
+              marginVertical:10,
             }}
           >
-            Sync your Carbonyte bank {`\n`}directly into your XERO account and
-            {`\n`}
-            keep a track of all your transactions.
+            Refer a friend & {`\n`}earn rewards
           </Text>
+          <View
+            style={{ width: "100%", display: "flex", alignItems: "center" }}
+          >
+            <Pressable style={styles.sendButton}>
+              <Text style={styles.sendButtonText}>Know more</Text>
+            </Pressable>
+          </View>
         </View>
-        <View style={{ width: "100%", display: "flex", alignItems: "center" }}>
-          <Pressable style={styles.sendButton}>
-            <Text style={styles.sendButtonText}>Know more</Text>
-          </Pressable>
-        </View>
-      </View>{" "}
+      </LinearGradient>
     </View>
   );
 };
@@ -45,14 +64,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 15,
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
     alignItems: "center",
-    gap: 25,
-    paddingVertical: 20,
+    paddingHorizontal: 20,
+    gap:10,
   },
   sendButton: {
     height: 60,
-    width: "50%",
+    width: "100%",
     backgroundColor: "black",
     display: "flex",
     alignItems: "center",

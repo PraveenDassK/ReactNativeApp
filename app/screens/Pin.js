@@ -24,8 +24,6 @@ const Pin = ({ route, navigation }) => {
   const [showRemoveButton, setShowRemoveButton] = useState(false);
   const [enteredPin, setEnteredPin] = useState("");
   const [showCompletedButton, setShowCompletedButton] = useState(false);
-  const authContext = useContext(AuthContext);
-  const { userID, accountID } = useContext(AuthContext);
 
   const singleBeneficary = () => {
     if (route.params.beneficiaryData.groupId != null) {
@@ -63,47 +61,20 @@ const Pin = ({ route, navigation }) => {
       return;
     }
 
-    //Check if it is a group send
-    if (!singleBeneficary()) {
-      //If it is a group send and
-      //If pin is correct then atempt to send 
-      setLoading(true);
-      console.log(route.params.beneficiaryData);
+    //If pin is correct then atempt to send 
+    setLoading(true);
+    const transferObj = route.params
+    const transferRequest = await apiTransaction.sendMoney(transferObj)
+    setLoading(false);
 
-      const transferRequest = await apiTransaction.sendToGroup(route.params.beneficiaryData)
-      console.log(transferRequest)
-
-      setLoading(false);
-
-      //Check if the sending was successful
-      console.log(transferRequest);
-      if (!transferRequest.data.result) {
-        alert("Transaction unsuccessful");
-        pinView.current.clearAll();
-        return;
-      }
-      navigation.navigate(route.params.successScreen, { params: route.params });
-
-    } else {
-      //If pin is correct then atempt to send 
-      setLoading(true);
-      console.log(route.params.beneficiaryData);
-
-      const transferRequest = await apiTransaction.sendMoney(route.params.beneficiaryData)
-      console.log(transferRequest)
-
-      setLoading(false);
-
-      //Check if the sending was successful
-      console.log(transferRequest);
-      if (!transferRequest.data.result) {
-        alert("Transaction unsuccessful");
-        pinView.current.clearAll();
-        return;
-      }
-      navigation.navigate(route.params.successScreen, { params: route.params });
+    // //Check if the sending was successful
+    console.log(transferRequest);
+    if (!transferRequest.data.result) {
+      alert("Transaction unsuccessful");
+      pinView.current.clearAll();
+      return;
     }
-
+    navigation.navigate("Success");
   };
 
   if (isLoading) {
