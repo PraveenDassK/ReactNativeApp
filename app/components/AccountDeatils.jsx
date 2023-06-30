@@ -5,7 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import formatCurrency from "../utility/formatCurrency";
 import { LinearGradient } from 'expo-linear-gradient';
 
-const AccountDeatils = ({ userData,userImpact }) => {
+const AccountDeatils = ({ userData,userImpact,handlePress }) => {
   const [title, setTitle] = useState("");
   const [accountBalance,setBalance]=useState([])
   const [dropdownData,setDropdownData]=useState([{label:"",value:""}])
@@ -44,6 +44,8 @@ const AccountDeatils = ({ userData,userImpact }) => {
             style={styles.dropdown}
             selectedTextStyle={{ color: "white" }}
             iconColor={"white"}
+            containerStyle={{width:"50%", marginHorizontal:"30%",
+          }}
           />
         </View>
       </View>
@@ -89,7 +91,7 @@ const AccountDeatils = ({ userData,userImpact }) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.sendButton}>
+        <Pressable style={styles.sendButton} onPress={handlePress}>
           <Text style={styles.sendButtonText}>
             <AntDesign name="plus" size={14} /> Add funds
           </Text>
@@ -133,16 +135,16 @@ const styles = StyleSheet.create({
     // width: 100,
     width: "100%",
     padding: 1,
-    paddingHorizontal:25,
+    paddingHorizontal:"30%",
     fontSize: 16,
     borderWidth: 0,
     opacity: 1,
     color: "red",
   },
   accountNumberStyle: {
-    width: "50%",
+    width: "100%",
     display: "flex",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     justifyContent: "center",
   },
   bottomCardContainer: {

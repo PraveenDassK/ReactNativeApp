@@ -83,7 +83,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       }}
     >
       <View style={{ position: "relative",marginBottom:50, }}>
-        <ScrollView>
+        <ScrollView nestedScrollEnabled={true} >
           <ImageBackground
             source={require("../assets/backgrounds/River.png")}
             style={styles.backgroundImage}
@@ -106,7 +106,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             </View>
           </ImageBackground>
           <View style={styles.AccountDetailsCard}>
-            <AccountDeatils userData={userData} userImpact={userImpact} />
+            <AccountDeatils userData={userData} userImpact={userImpact} handlePress={() => navigation.navigate("SendMoney")}/>
           </View>
 
           <View style={styles.buttonContainer}>
