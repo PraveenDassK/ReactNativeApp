@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 import {
   ActivityIndicator,
   Text,
@@ -30,11 +31,11 @@ import Button from "../components/AppButton";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
+  const [selectedAccount, setSelectedAccount] = useState({});
   const [userData, setCode] = useState("");
 
   const payeeDetails = route.params;
   const destination = {};
-  console.log("payeee details ==>", payeeDetails);
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
 
@@ -61,22 +62,25 @@ const BankTransferAmount = ({ route, navigation }) => {
     try {
       setIsLoading(true);
       const accountDataResponse = await apiCall.GetAllAccounts(userID);
-      console.log(accountDataResponse);
+
       setAccountList(accountDataResponse);
       setIsLoading(false);
     } catch {
       setIsLoading(false);
     }
   };
-  console.log(accountList);
+
+  const handleSelectAccount = (selectedAccount) => {
+    setSelectedAccount(selectedAccount);
+  };
 
   /**
    * @dev This takes the selected destination account data and passes it to another screen
    */
+
   const selectAccount = (account) => {
-    const requestObj = payeeDetails.requestObj
-    requestObj.amount = amount
-    console.log(requestObj);
+    const requestObj = payeeDetails.requestObj;
+    requestObj.amount = amount;
     navigation.navigate("Pin", requestObj);
   };
 
@@ -143,7 +147,6 @@ const BankTransferAmount = ({ route, navigation }) => {
     if (singleBeneficary()) {
     } else {
     }
-    console.log(route.params);
     route.params.requestObj.amount = amount;
     route.params.requestObj.reference = "Transfer";
     console.log(
@@ -187,7 +190,11 @@ const BankTransferAmount = ({ route, navigation }) => {
           <Text style={styles.contentText}>
             Enter the amount you want to send
           </Text>
-          <TextInput style={styles.inputBox} placeholder="£0" />
+          <TextInput
+            style={styles.inputBox}
+            placeholder="£0"
+            onChangeText={(text) => setAmount(text)}
+          />
         </View>
 
         <View>
@@ -214,15 +221,26 @@ const BankTransferAmount = ({ route, navigation }) => {
                 renderItem={(account) => {
                   return (
                     <TouchableOpacity
-                      onPress={() => selectAccount(account.item)}
+                      onPress={() => handleSelectAccount(account.item)}
                     >
                       <View style={styles.itemContainer}>
-                        <Text style={styles.itemContent}>
-                          {account.item.id}
-                        </Text>
-                        <Text style={styles.itemContent}>
-                          {account.item.balance}
-                        </Text>
+                        <View>
+                          <Text style={styles.itemContent}>
+                            {account.item.id}
+                          </Text>
+                          <Text style={styles.itemContent}>
+                            {account.item.balance}
+                          </Text>
+                        </View>
+                        {selectedAccount === account.item && (
+                          <View>
+                            <AntDesign
+                              name="checkcircle"
+                              size={17}
+                              color="#27AF7C"
+                            />
+                          </View>
+                        )}
                       </View>
                     </TouchableOpacity>
                   );
@@ -231,14 +249,28 @@ const BankTransferAmount = ({ route, navigation }) => {
             </ScrollView>
           </View>
         </View>
-        <View
+        {/* <View
           style={{
             alignItems: "center",
             justifyContent: "center",
             marginTop: "15%",
           }}
         ></View>
-        <Button title="Continue" color="white" textColor="black" />
+        <Button title="Continue" color="white" textColor="black" /> */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={(selectedAccount) => selectAccount(selectedAccount)}
+          >
+            <LinearGradient
+              colors={["#212529", "#3A3A3A"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Send</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -302,6 +334,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 22,
     paddingVertical: 17,
     width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   itemContent: {
     fontFamily: "Montserrat",
