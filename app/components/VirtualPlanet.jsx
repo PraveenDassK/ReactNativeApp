@@ -101,7 +101,7 @@ export default VirtualPlanet;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 15,
     paddingVertical: 10,
     paddingLeft: 20,

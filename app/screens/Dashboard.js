@@ -71,11 +71,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/backgrounds/beach.jpg")}
+      source={require("../assets/backgrounds/Dashboard.jpg")}
       // style={{  width: "100%" }}
       resizeMode='contain'
       imageStyle={{
-        bottom: "-85%" // Whatever offset you want from the bottom
+        bottom: "-70%" // Whatever offset you want from the bottom
     }}
       style={{
         width: "100%",
@@ -153,7 +153,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
 
                 <SquareIcon
-                  text={"Subscriptions"}
+                  name={"Subscriptions"}
                   image={"newspaper-variant-outline"}
                   trigger={() => navigation.navigate("Subscriptions")}
                 />

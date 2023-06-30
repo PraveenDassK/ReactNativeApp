@@ -89,7 +89,7 @@ const AccountDeatils = ({ userData,userImpact }) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.sendButton}>
+        <Pressable style={styles.sendButton} onPress={() => console.log("!")}>
           <Text style={styles.sendButtonText}>
             <AntDesign name="plus" size={14} /> Add funds
           </Text>

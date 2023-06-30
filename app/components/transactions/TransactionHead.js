@@ -29,7 +29,7 @@ export default TransactionHead
 
 const styles = StyleSheet.create({
   transactionHeadContainer: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     paddingTop: 10,
