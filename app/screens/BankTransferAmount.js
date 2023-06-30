@@ -246,7 +246,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             </ScrollView>
           </View>
         </View>
-        {/* <View
+         <View
           style={{
             alignItems: "center",
             justifyContent: "center",
