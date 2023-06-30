@@ -1,16 +1,12 @@
 import React, {
-  Component,
-  Fragment,
   useEffect,
   useState,
   useContext,
-  useRef,
 } from "react";
 
 import { BlurView } from "expo-blur";
 import {
   Animated,
-  Text,
   StyleSheet,
   Image,
   View,
@@ -23,15 +19,13 @@ import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
 import FlipCard from "react-native-flip-card";
 
+import Text from "../components/Text";
 import AuthContext from "../auth/context";
 import apiCall from "../api/api";
-import apiCall2 from "../api/apiCall";
 
 import colors from "../config/colors";
-import GlobalStyles from "../../GlobalStyles";
 import formatCurrency from "../utility/formatCurrency";
 import AppScreen from "../components/AppScreen";
-import { color } from "react-native-reanimated";
 import { TransactionFooter } from "../components/transactions";
 
 const OFFSET = 75;
@@ -189,9 +183,9 @@ export default function MyCards({ navigation }) {
 
 const IncomeExpense = () => (
   <View
-    style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden" }}
+    style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden",backgroundColor: "rgba(255, 255, 255, 0.5)" }}
   >
-    <BlurView tint="light" intensity={60} style={styles.incomeExpenseContainer}>
+    <BlurView tint="light" intensity={20} style={styles.incomeExpenseContainer}>
       <IncomeExpenseItem />
       <IncomeExpenseItem isIncome={false} />
     </BlurView>
@@ -206,6 +200,7 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
       borderRadius: 20,
       paddingHorizontal: 20,
       paddingVertical: 10,
+      
     }}
   >
     <View
@@ -320,7 +315,7 @@ const TransactionHeader = ({ onTransactionFilter }) => {
   };
 
   return (
-    <View style={styles.transactionHeaderContainer}>
+    <View style={[styles.transactionHeaderContainer, {backgroundColor: "rgba(255, 255, 255, 0.5)"}]}>
       <BlurView tint="light" intensity={60} style={styles.blurView}>
         {selections.map((selection) => (
           <TouchableOpacity
@@ -362,7 +357,7 @@ const Transaction = ({
   lastElement,
 }) => {
   return (
-    <BlurView tint="light" intensity={60}>
+    <BlurView tint="light" intensity={60} style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}>
       <Pressable
         onPress={onTransaction}
         style={{
@@ -415,6 +410,7 @@ const Transaction = ({
 
 const CardCarousel = ({ cards, onCardPress }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
+
 
   return (
     <ScrollView
@@ -488,6 +484,7 @@ const CardCarousel = ({ cards, onCardPress }) => {
           </TouchableOpacity>
         );
       })}
+     
     </ScrollView>
   );
 };
