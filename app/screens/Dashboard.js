@@ -79,7 +79,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={styles.header}>
             <View>
               <Text style={styles.welcomText}>Welcome back,</Text>
-              <Text style={styles.nameText}>{userData?.name} !</Text>
+              <Text style={styles.nameText}>{userData[0]?.name} !</Text>
             </View>
             <View style={styles.iconContainer}>
               <View style={styles.iconStyle}>

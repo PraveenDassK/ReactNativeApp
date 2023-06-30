@@ -54,7 +54,7 @@ const SendMoney = ({ navigation }) => {
       sourceAccountId: accountID,
       destination: {
         type: "SCAN",
-        id: "A1226WEM",
+        id: beneficaryData.customerId,//"A1226WEM",
         accountNumber: beneficaryData.destinationIdentifier.accountNumber,
         sortCode: "000000", //beneficaryData.destinationIdentifier.sortCode
         name: beneficaryData.name,
