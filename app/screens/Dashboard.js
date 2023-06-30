@@ -153,7 +153,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
 
                 <SquareIcon
-                  text={"Subscriptions"}
+                  name={"Subscriptions"}
                   image={"newspaper-variant-outline"}
                   trigger={() => navigation.navigate("Subscriptions")}
                 />

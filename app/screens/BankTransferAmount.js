@@ -36,6 +36,11 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const payeeDetails = route.params;
   const destination = {};
+  console.log(payeeDetails);
+
+  const name = payeeDetails.payeeDetails.name
+  const accountNumber = route.params.requestObj.destination?.accountNumber
+
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
 
@@ -166,23 +171,15 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   return (
     <ScrollView nestedScrollEnabled={true}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "15%",
-        }}
-      >
-        <AppText style={styles.mainHeading}>Send Money</AppText>
-      </View>
+
       <View style={styles.headerContainer}>
         <View>
-          <Text style={styles.headerHeading}>Banking name</Text>
-          <Text style={styles.contentText}>{payeeDetails.name}</Text>
+          <Text style={styles.headerHeading}>Payee name</Text>
+          <Text style={styles.contentText}>{name}</Text>
         </View>
         <View>
           <Text style={styles.headerHeading}>Account number</Text>
-          <Text style={styles.contentText}>123456789123</Text>
+          <Text style={styles.contentText}>{accountNumber}</Text>
         </View>
       </View>
       <View style={styles.paymentContainer}>
@@ -249,28 +246,19 @@ const BankTransferAmount = ({ route, navigation }) => {
             </ScrollView>
           </View>
         </View>
-        {/* <View
+         <View
           style={{
             alignItems: "center",
             justifyContent: "center",
             marginTop: "15%",
           }}
-        ></View>
-        <Button title="Continue" color="white" textColor="black" /> */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={(selectedAccount) => selectAccount(selectedAccount)}
-          >
-            <LinearGradient
-              colors={["#212529", "#3A3A3A"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Send</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+        >
         </View>
+        <Button
+          title="Continue"
+          color="white"
+          textColor="black"
+        />
       </View>
     </ScrollView>
   );

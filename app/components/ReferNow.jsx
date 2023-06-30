@@ -38,7 +38,7 @@ const ReferNow = () => {
               textAlign: "center",
               fontSize: 12,
               fontFamily: "Montserrat",
-              fontWeight: "Regular",
+              fontWeight: "regular",
               marginVertical:10,
             }}
           >
