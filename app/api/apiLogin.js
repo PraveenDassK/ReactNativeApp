@@ -156,11 +156,11 @@ const RegisterPersonalAccount = async (regData) => {
   return response;
 };
 
-const RegisterBusinessAccount = async (regData) => {
-  const {expoPushToken} = useContext(AuthContext);
+const RegisterBusinessAccount = async (regData, pushToken) => {
+  
 
   const response = await client.post(
-    `https://api.carbonyte.io/regmodule/SaveCompanyDetails?tokenId=${expoPushToken}`,
+    `https://api.carbonyte.io/regmodule/SaveCompanyDetails?tokenId=${pushToken}`,
     regData
   );
   return response
@@ -231,7 +231,7 @@ const VerifyDocument = async () => {
   return response
 }
 
-const RegisterBusinessDirectors = async ({businessId, obj}) => {
+const RegisterBusinessDirectors = async ({ businessId, obj }) => {
   const businessDirectorRegistrationCall = await client.post(`https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=Business&businessId=${businessId}`
     , obj
   )

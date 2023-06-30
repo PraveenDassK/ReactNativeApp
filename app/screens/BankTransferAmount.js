@@ -36,6 +36,11 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const payeeDetails = route.params;
   const destination = {};
+  console.log(payeeDetails);
+
+  const name = payeeDetails.payeeDetails.name
+  const accountNumber = route.params.requestObj.destination?.accountNumber
+
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
 
@@ -166,23 +171,15 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   return (
     <ScrollView nestedScrollEnabled={true}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "15%",
-        }}
-      >
-        <AppText style={styles.mainHeading}>Send Money</AppText>
-      </View>
+
       <View style={styles.headerContainer}>
         <View>
-          <Text style={styles.headerHeading}>Banking name</Text>
-          <Text style={styles.contentText}>{payeeDetails.name}</Text>
+          <Text style={styles.headerHeading}>Payee name</Text>
+          <Text style={styles.contentText}>{name}</Text>
         </View>
         <View>
           <Text style={styles.headerHeading}>Account number</Text>
-          <Text style={styles.contentText}>123456789123</Text>
+          <Text style={styles.contentText}>{accountNumber}</Text>
         </View>
       </View>
       <View style={styles.paymentContainer}>
@@ -249,12 +246,13 @@ const BankTransferAmount = ({ route, navigation }) => {
             </ScrollView>
           </View>
         </View>
-        {/* <View
+         <View
           style={{
             alignItems: "center",
             justifyContent: "center",
             marginTop: "15%",
           }}
+<<<<<<< HEAD
         ></View>
         <Button title="Continue" color="white" textColor="black" /> */}
         <View style={styles.buttonContainer}>
@@ -273,7 +271,15 @@ const BankTransferAmount = ({ route, navigation }) => {
               <Text style={styles.buttonText}>Send</Text>
             </LinearGradient>
           </TouchableOpacity>
+=======
+        >
+>>>>>>> 59f54f8691040a6ef7fe9507aee336833c7ef325
         </View>
+        <Button
+          title="Continue"
+          color="white"
+          textColor="black"
+        />
       </View>
     </ScrollView>
   );

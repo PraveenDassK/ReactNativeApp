@@ -101,7 +101,7 @@ const checkBeneficary = async (userAccount, requestObj) => {
     "name": "a"
   }
   const beneficaryCheckRequest = await client.post(`https://api.carbonyte.io/walletmodule/AccountNameCheck/${userAccount}`,
-    obj
+    requestObj
   )
   return beneficaryCheckRequest?.data.details
 }

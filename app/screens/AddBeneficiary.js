@@ -240,18 +240,14 @@ const AddBeneficiary = ({ navigation }) => {
                     </View>
                   ))}
                 </View>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity>
-                    <LinearGradient
-                      colors={["#212529", "#3A3A3A"]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}
-                      style={styles.button}
-                    >
-                      <Text style={styles.buttonText}>Continue</Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
+
+                <Button
+                      title="Continue"
+                      textColor="white"
+                      color="black"
+                      style={styles.buttonColor}
+                      onPress={handleSubmit}
+                    />
               </>
             )}
           </Formik>

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { treeImages } from "../assets/Forest/AllForest";
 import {turtleImages} from "../assets/Turtles/AllTurtles"
-const VirtualPlanetCard = ({ data }) => {
+const VirtualPlanetCard = ({ data ,handleVirtual}) => {
   return (
     <>
       {data.map((eachValue, i) => {
@@ -57,6 +57,7 @@ const VirtualPlanetCard = ({ data }) => {
                     fontWeight: "bold",
                     marginTop: 10,
                   }}
+                  onPress={handleVirtual}
                 >
                   View more
                 </Text>
@@ -68,7 +69,7 @@ const VirtualPlanetCard = ({ data }) => {
     </>
   );
 };
-const VirtualPlanet = ({ treeData }) => {
+const VirtualPlanet = ({ treeData,handleVirtual }) => {
   console.log(treeData?.totalAssets, "this is a virtual planet");
   const data = [
     {
@@ -92,7 +93,7 @@ const VirtualPlanet = ({ treeData }) => {
   ];
   return (
     <View>
-      <VirtualPlanetCard data={data} />
+      <VirtualPlanetCard data={data} handleVirtual={handleVirtual}/>
     </View>
   );
 };
@@ -101,7 +102,7 @@ export default VirtualPlanet;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 15,
     paddingVertical: 10,
     paddingLeft: 20,

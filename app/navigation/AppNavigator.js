@@ -113,6 +113,7 @@ import {
   Platform,
   Text,
   Image,
+  StyleSheet
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
@@ -148,7 +149,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
     >
       <BlurView
         tint="light"
-        intensity={40}
+        intensity={60}
         style={{
           position: "absolute",
           bottom: 0,
@@ -302,10 +303,19 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "2.5",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={{
+                marginLeft: "2.5",
+                backgroundColor: "lightgrey",
+                width: 40,
+                height: 40,
+                borderRadius: 20,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -321,10 +331,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -340,10 +351,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -359,10 +371,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -378,10 +391,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -397,10 +411,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -415,10 +430,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -433,10 +449,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -452,10 +469,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -471,10 +489,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -490,10 +509,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -509,16 +529,17 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
         }}
       />
-            <Stack.Screen
+      <Stack.Screen
         name="TeamsUser"
         component={gestureHandlerRootHOC(TeamsUser)}
         options={{
@@ -527,16 +548,17 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
         }}
       />
-            <Stack.Screen
+      <Stack.Screen
         name="TeamsUserAdd"
         component={gestureHandlerRootHOC(TeamsUserAdd)}
         options={{
@@ -545,10 +567,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -564,10 +587,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -583,10 +607,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "white" },
@@ -602,10 +627,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
@@ -646,10 +672,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
@@ -667,10 +694,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
@@ -728,10 +756,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
         }}
@@ -746,10 +775,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
         }}
@@ -765,10 +795,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
         }}
@@ -784,10 +815,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: {
@@ -806,10 +838,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
@@ -980,10 +1013,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={{marginLeft: "10%",backgroundColor: "lightgrey", width: 40, height: 40, borderRadius: 20, justifyContent: "center", alignItems: "center"}}>
-              
+            <View
+              style={styles.iconDropDownContainer}
+            >
               <MaterialCommunityIcons name="arrow-down" size={30} />
-              </View>
+            </View>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: "transparent" },
@@ -1082,5 +1116,17 @@ const AppNavigator = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  iconDropDownContainer: {
+    marginLeft: "10%",
+    backgroundColor: "lightgrey",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  }
+})
 
 export default StackNavigator;

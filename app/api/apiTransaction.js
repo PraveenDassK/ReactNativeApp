@@ -50,7 +50,7 @@ const getPaymentLink = async () => {
       "sortCode": "000000",
       "name": "Jack"
     },
-    "aspspId": "H120000002",
+    "aspspId": "H120000001",
     "paymentContext": {
       "paymentContextCode": "",
       "deliveryAddress": {

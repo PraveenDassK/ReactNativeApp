@@ -34,11 +34,9 @@ const CompanyIncome = ({ SaveDetails, setScreenToShow }) => {
   const [subscriptionRevenue, setSubscriptionRevenue] = useState(false);
   const [advertisingRevenue, setAdvertisingRevenue] = useState(false);
   const [affiliateIncome, setAffiliateIncome] = useState(false);
-  const [licensingFranchisingRevenue, setLicensingFranchisingRevenue] =
-    useState(false);
+  const [licensingFranchisingRevenue, setLicensingFranchisingRevenue] = useState(false);
   const [rentalIncome, setRentalIncome] = useState(false);
-  const [consultancyServicesIncome, setConsultancyServicesIncome] =
-    useState(false);
+  const [consultancyServicesIncome, setConsultancyServicesIncome] = useState(false);
   const [grantsSubsidiesIncome, setGrantsSubsidiesIncome] = useState(false);
   const [crowdfundingIncome, setCrowdfundingIncome] = useState(false);
 
@@ -54,22 +52,25 @@ const CompanyIncome = ({ SaveDetails, setScreenToShow }) => {
       grantsSubsidiesIncome: grantsSubsidiesIncome,
       crowdfundingIncome: crowdfundingIncome,
     };
-    
     SaveDetails(getTrueItems(details), "CompanyIncome");
   };
 
+  const handleSubmit = () => {
+
+  }
+
   function getTrueItems(obj) {
     const trueItems = [];
-  
+
     for (let key in obj) {
       if (obj.hasOwnProperty(key) && obj[key] === true) {
         trueItems.push(key);
       }
     }
-  
+
     return trueItems;
   }
-  
+
 
   function areAllItemsFalse(obj) {
     for (let key in obj) {
