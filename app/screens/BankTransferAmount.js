@@ -267,7 +267,7 @@ const BankTransferAmount = ({ route, navigation }) => {
               end={{ x: 1, y: 0 }}
               style={styles.button}
             >
-              <Text style={styles.buttonText}>Continue</Text>
+              <Text style={styles.buttonText}>Send</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
