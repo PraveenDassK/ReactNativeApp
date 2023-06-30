@@ -8,7 +8,7 @@ const TransactionFooter = ({ navigate = true, onSee }) => {
     
 
     
-    <View style={styles.transactionHeadContainer}><BlurView tint="light" intensity={40} style={styles.blurView}>
+    <View style={styles.transactionHeadContainer}><BlurView tint="light" intensity={60} style={styles.blurView}>
       <View style={styles.spacing}>
         {navigate && (
           <View style={styles.headerTitleContainer}>

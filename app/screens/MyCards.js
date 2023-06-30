@@ -6,6 +6,7 @@ import React, {
   useContext,
   useRef,
 } from "react";
+
 import { BlurView } from "expo-blur";
 import {
   Animated,
@@ -190,7 +191,7 @@ const IncomeExpense = () => (
   <View
     style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden" }}
   >
-    <BlurView tint="light" intensity={40} style={styles.incomeExpenseContainer}>
+    <BlurView tint="light" intensity={60} style={styles.incomeExpenseContainer}>
       <IncomeExpenseItem />
       <IncomeExpenseItem isIncome={false} />
     </BlurView>
@@ -320,7 +321,7 @@ const TransactionHeader = ({ onTransactionFilter }) => {
 
   return (
     <View style={styles.transactionHeaderContainer}>
-      <BlurView tint="light" intensity={40} style={styles.blurView}>
+      <BlurView tint="light" intensity={60} style={styles.blurView}>
         {selections.map((selection) => (
           <TouchableOpacity
             key={selection.id}
@@ -361,7 +362,7 @@ const Transaction = ({
   lastElement,
 }) => {
   return (
-    <BlurView tint="light" intensity={40}>
+    <BlurView tint="light" intensity={60}>
       <Pressable
         onPress={onTransaction}
         style={{
@@ -453,8 +454,8 @@ const CardCarousel = ({ cards, onCardPress }) => {
               style={{
                 width: ITEM_WIDTH,
                 height: ITEM_HEIGHT,
-                marginLeft: idx === 0 ? OFFSET : undefined,
-                marginRight: idx === cards.length - 1 ? OFFSET : undefined,
+                marginLeft: idx === 0 ? OFFSET + 35 : undefined,
+                marginRight: idx === cards.length - 1 ? OFFSET  : undefined,
                 opacity: opacity,
                 transform: [{ scale: translate }],
               }}
@@ -475,19 +476,13 @@ const CardCarousel = ({ cards, onCardPress }) => {
                   source={item.cardUrl}
                   style={{
                     flex: 1,
-                    marginLeft: "25%",
+                    // marginLeft: "25%",
                     resizeMode: "contain",
                   }}
                 />
                 {/* Back Side */}
-                <Image
-                  source={item.backCardUrl}
-                  style={{
-                    flex: 1,
-                    marginLeft: "31%",
-                    resizeMode: "contain",
-                  }}
-                />
+
+                <CardBackSide />
               </FlipCard>
             </Animated.View>
           </TouchableOpacity>
@@ -497,6 +492,61 @@ const CardCarousel = ({ cards, onCardPress }) => {
   );
 };
 
+const CardBackSide = () => {
+  return (
+    <View style={styles.backCardContainer}>
+      <Text style={[styles.backCardText, styles.backCardHeader]}>BOB</Text>
+      <Text style={[styles.backCardText, styles.backCardHeader]}>DYLAN</Text>
+      <Text style={styles.backCardText} />
+      <Text style={styles.backCardText} />
+      <Text style={styles.backCardText}>4234</Text>
+      <Text style={styles.backCardText}>1234</Text>
+      <Text style={styles.backCardText}>1434</Text>
+      <Text style={styles.backCardText}>4567</Text>
+      <Text style={styles.backCardText} />
+      <Text style={styles.backCardText} />
+      <View style={[styles.itemRow,styles.backCardSmallTextContainer, {marginBottom: "2.5%"}]}>
+        <View >
+          <Text style={[styles.backCardText, styles.backCardSmallText]}>
+            EXP
+          </Text>
+          <Text style={[styles.backCardText, styles.backCardSmallText]}>
+            DATE
+          </Text>
+        </View>
+        <Text style={[styles.backCardText, styles.backCardSmallNumber]}>10/25</Text>
+      </View>
+
+      <View style={[styles.itemRow,styles.backCardSmallTextContainer]}>
+        <View >
+          <Text style={[styles.backCardText, styles.backCardSmallText]}>
+            CVC
+          </Text>
+          <Text style={[styles.backCardText, styles.backCardSmallText]}>
+            CODE
+          </Text>
+        </View>
+        <Text style={[styles.backCardText, styles.backCardSmallNumber]}>123</Text>
+      </View>
+      <Text style={styles.backCardText} />
+      <Text style={styles.backCardText} />
+      <View
+        style={{
+          backgroundColor: "white",
+          height: 30,
+          width: "80%",
+        }}
+      />
+      <Text style={styles.backCardText} />
+      <Text style={[styles.backCardText, styles.backCardSmallText]}>
+        24hrs customer service
+      </Text>
+      <Text style={[styles.backCardText, styles.backCardSmallText]}>
+        ********************************************
+      </Text>
+    </View>
+  );
+};
 const TapContainer = () => (
   <View style={styles.tapContainer}>
     <MaterialCommunityIcons name="gesture-tap" size={18} />
@@ -506,7 +556,10 @@ const TapContainer = () => (
 
 const Icon = ({ title, isFrozen, onSettingsPress }) => {
   return (
-    <TouchableOpacity onPress={onSettingsPress} style={{justifyContent: "center", "alignItems": "center"}}>
+    <TouchableOpacity
+      onPress={onSettingsPress}
+      style={{ justifyContent: "center", alignItems: "center" }}
+    >
       <View
         style={{
           backgroundColor: isFrozen ? "black" : colors.babyBlue,
@@ -538,6 +591,34 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
 };
 
 const styles = StyleSheet.create({
+  backCardContainer: {
+    marginTop: "10%",
+    height: 320,
+    width: 201,
+    borderRadius: 10,
+    backgroundColor: "black",
+    // marginLeft: "25%",
+    padding: "10%",
+  },
+  backCardHeader: {
+    fontWeight: "700"
+  },
+  backCardText: {
+    color: "white",
+  },
+  backCardSmallText: {
+    fontSize: 6,
+  },
+  backCardSmallNumber: {
+    fontSize: 8,
+  },
+  backCardSmallTextContainer: {
+   
+    width: "30%",
+    justifyContent: "space-between",
+    alignItems: "center"
+
+  },
   blurView: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -568,6 +649,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: "1.5%",
   },
+  itemRow: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
 
   subText: { opacity: 0.5, fontSize: 10, lineHeight: 15 },
   tapContainer: {
@@ -588,7 +673,7 @@ const styles = StyleSheet.create({
   },
   selectorContainer: {
     width: 200,
-    borderRadius: 15,
+    borderRadius: 7,
     flexDirection: "row",
     backgroundColor: "lightgrey",
   },
