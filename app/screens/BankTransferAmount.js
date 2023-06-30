@@ -259,7 +259,10 @@ const BankTransferAmount = ({ route, navigation }) => {
         <Button title="Continue" color="white" textColor="black" /> */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={(selectedAccount) => selectAccount(selectedAccount)}
+            // onPress={(selectedAccount) => selectAccount(selectedAccount)}
+            onPress={() => {
+              navigation.navigate("Success");
+            }}
           >
             <LinearGradient
               colors={["#212529", "#3A3A3A"]}
