@@ -182,7 +182,9 @@ const SendMoney = ({ navigation }) => {
               color="#0101FD"
               style={{ marginRight: 3, marginTop: 1 }}
             />
-            <Text style={styles.paySideHeading}>Create Group</Text>
+            <TouchableOpacity onPress={() => {navigation.navigate("GroupBeneficiary")}}>
+              <Text style={styles.paySideHeading}>Create Group</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <FlatList

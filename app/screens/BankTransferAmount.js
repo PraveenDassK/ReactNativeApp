@@ -34,7 +34,11 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const payeeDetails = route.params;
   const destination = {};
-  console.log("payeee details ==>", payeeDetails);
+  console.log(payeeDetails);
+
+  const name = payeeDetails.payeeDetails.name
+  const accountNumber = route.params.requestObj.destination?.accountNumber
+
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
 
@@ -163,23 +167,15 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   return (
     <ScrollView nestedScrollEnabled={true}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "15%",
-        }}
-      >
-        <AppText style={styles.mainHeading}>Send Money</AppText>
-      </View>
+
       <View style={styles.headerContainer}>
         <View>
-          <Text style={styles.headerHeading}>Banking name</Text>
-          <Text style={styles.contentText}>{payeeDetails.name}</Text>
+          <Text style={styles.headerHeading}>Payee name</Text>
+          <Text style={styles.contentText}>{name}</Text>
         </View>
         <View>
           <Text style={styles.headerHeading}>Account number</Text>
-          <Text style={styles.contentText}>123456789123</Text>
+          <Text style={styles.contentText}>{accountNumber}</Text>
         </View>
       </View>
       <View style={styles.paymentContainer}>
@@ -213,16 +209,10 @@ const BankTransferAmount = ({ route, navigation }) => {
                 )}
                 renderItem={(account) => {
                   return (
-                    <TouchableOpacity
-                      onPress={() => selectAccount(account.item)}
-                    >
+                    <TouchableOpacity onPress={() => selectAccount(account.item)}>
                       <View style={styles.itemContainer}>
-                        <Text style={styles.itemContent}>
-                          {account.item.id}
-                        </Text>
-                        <Text style={styles.itemContent}>
-                          {account.item.balance}
-                        </Text>
+                        <Text style={styles.itemContent}>{account.item.id}</Text>
+                        <Text style={styles.itemContent}>{account.item.balance}</Text>
                       </View>
                     </TouchableOpacity>
                   );
@@ -237,8 +227,13 @@ const BankTransferAmount = ({ route, navigation }) => {
             justifyContent: "center",
             marginTop: "15%",
           }}
-        ></View>
-        <Button title="Continue" color="white" textColor="black" />
+        >
+        </View>
+        <Button
+          title="Continue"
+          color="white"
+          textColor="black"
+        />
       </View>
     </ScrollView>
   );

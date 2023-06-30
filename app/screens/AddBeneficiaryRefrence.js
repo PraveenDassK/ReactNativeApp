@@ -100,8 +100,15 @@ const AddBeneficiary = ({ navigation, route }) => {
     }
 
     //API call
-    const beneficaryCall = await apiBeneficiaries.AddBeneficiary(authContext.userID, requestObj);
+    const checkCall = await apiBeneficiaries.checkBeneficary(authContext.userId,checkRequestObj);
+    console.log(checkCall)
+    if(checkCall.result.code == "MATCHED"){
 
+    }
+
+    const beneficaryCall = await apiBeneficiaries.AddBeneficiary(authContext.userID, requestObj);
+    console.log(beneficaryCall)
+    console.log(beneficaryCall.data.details)
     //If the payee is a duplicate don't add them
     if (
       beneficaryCall.data.resultMessage ==
@@ -110,8 +117,8 @@ const AddBeneficiary = ({ navigation, route }) => {
       alert("You already have this payee");
       return;
     }
-    console.log(beneficaryCall)
-    console.log(beneficaryCall.data.details)
+
+    navigation.navigate("Account")
   };
 
   if (isLoading) {

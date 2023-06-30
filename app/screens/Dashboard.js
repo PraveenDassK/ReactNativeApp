@@ -71,7 +71,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/backgrounds/beach.jpg")}
+      source={require("../assets/backgrounds/cardsettings.jpg")}
       // style={{  width: "100%" }}
       resizeMode='contain'
       imageStyle={{
@@ -153,7 +153,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
 
                 <SquareIcon
-                  text={"Subscriptions"}
+                  name={"Subscriptions"}
                   image={"newspaper-variant-outline"}
                   trigger={() => navigation.navigate("Subscriptions")}
                 />
