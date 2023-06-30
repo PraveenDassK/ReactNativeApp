@@ -6,7 +6,7 @@ export default {
   colors,
   text: {
     color: colors.black,
-    fontSize: 14,
-    fontFamily: "Helvetica",
+    fontSize: 12,
+    fontFamily: "Montserrat",
   },
 };
