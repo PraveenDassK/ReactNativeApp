@@ -207,11 +207,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Your Carbon Footprints</Text>
-            <CarbonSpendGraph />
+            <CarbonSpendGraph  handleViewMore={()=>navigation.navigate("ChooseCardsStandard5")}/>
           </View>
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
-            <VirtualPlanet treeData={userImpact} />
+            <VirtualPlanet treeData={userImpact} handleVirtual={()=>navigation.navigate("VirtualEcoSystem")} />
           </View>
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Carbonyte + Xero</Text>
