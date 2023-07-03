@@ -252,9 +252,8 @@ const BankTransferAmount = ({ route, navigation }) => {
             justifyContent: "center",
             marginTop: "15%",
           }}
-<<<<<<< HEAD
         ></View>
-        <Button title="Continue" color="white" textColor="black" /> */}
+        <Button title="Continue" color="white" textColor="black" /> 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             // onPress={(selectedAccount) => selectAccount(selectedAccount)}
@@ -271,9 +270,6 @@ const BankTransferAmount = ({ route, navigation }) => {
               <Text style={styles.buttonText}>Send</Text>
             </LinearGradient>
           </TouchableOpacity>
-=======
-        >
->>>>>>> 59f54f8691040a6ef7fe9507aee336833c7ef325
         </View>
         <Button
           title="Continue"
