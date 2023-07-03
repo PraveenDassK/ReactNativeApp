@@ -268,14 +268,31 @@ const StackNavigator = () => {
         gestureResponseDistance: 100,
         gestureDirection: "horizontal",
         initialRouteName: "Account",
+
         headerTitleStyle: {
-          fontFamily: "Helvetica",
+          fontFamily: "Montserrat",
           fontWeight: "normal",
           fontSize: 28,
         },
         headerBackTitleVisible: false,
         headerStyle: { backgroundColor: "transparent" },
+        headerBackImage: () => (
+          <View
+            style={{
+              marginLeft: "10%",
+              backgroundColor: "lightgrey",
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <MaterialCommunityIcons name="arrow-left" size={30} />
+          </View>
+        ),
       }}
+      
     >
       <Stack.Screen
         name="Account"
@@ -304,15 +321,7 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
             <View
-              style={{
-                marginLeft: "2.5",
-                backgroundColor: "lightgrey",
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={styles.headerBackImage}
             >
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
@@ -1119,6 +1128,15 @@ const AppNavigator = () => {
 
 const styles = StyleSheet.create({
   iconDropDownContainer: {
+    marginLeft: "10%",
+    backgroundColor: "lightgrey",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  }, 
+  headerBackImage: {
     marginLeft: "10%",
     backgroundColor: "lightgrey",
     width: 40,
