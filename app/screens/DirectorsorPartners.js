@@ -60,7 +60,7 @@ const DirectororPartner = ({ navigation }) => {
         />
         // <View><Text>Hello</Text></View>
       )}
-      <Button title={"continue"}></Button>
+      <Button title={"continue"} onPress={()=>navigation.navigate("ProofOfID")}></Button>
     </SafeAreaView>
   );
 };
