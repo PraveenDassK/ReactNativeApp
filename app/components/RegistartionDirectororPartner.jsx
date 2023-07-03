@@ -46,7 +46,14 @@ const RegistrationDirectororPartner = ({
   navigation,
   onPress,
   setRole,
-  back=true
+  back=true,
+  directorData,
+  BeneficialownersData,
+  ControllingInterestsData,
+  setDirectorData,
+  setBeneficialownersData,
+  setControllingInterestsData
+
 }) => {
   const handleSubmit = async (type) => {
     console.log(type);
@@ -103,10 +110,29 @@ const RegistrationDirectororPartner = ({
     //   title: "VelanR",
     // },
   ];
-  const Item = ({ title }) => (
+  const handleDelete =(index,name)=>{
+    console.log(index,name,"this is index");
+   
+    switch(name){
+      case "Director":
+        let value =directorData.filter((value,i)=> i !== index);
+        setDirectorData(value);
+        break
+        case "Beneficial owners":
+          let valueBeneficial =BeneficialownersData.filter((value,i)=> i !== index);
+        setBeneficialownersData(valueBeneficial);
+        break
+        case "Controlling Interests":
+          let valueControlling =ControllingInterestsData.filter((value,i)=> i !== index);
+        setControllingInterestsData(valueControlling);
+        break
+    }
+    }
+  
+  const Item = ({ title ,index,name}) => (
     <View style={styles.item}>
-      <Text style={{fontWeight:"bold",fontSize:24}}>{title}</Text>
-      <AntDesign name="delete" size={24} color="red" />
+      <Text style={{fontWeight:"bold",fontSize:24}}>{title} {index}</Text>
+      <AntDesign name="delete" size={24} color="red" onPress={()=>handleDelete(index,name)}/>
     </View>
   );
   return (
@@ -211,8 +237,9 @@ const RegistrationDirectororPartner = ({
               keyExtractor={(item) => item.id}
               nestedScrollEnabled
             /> */}
-                  {DATA.map((item) => {
-                    return <Item title={item.title} />;
+                  {directorData?.map((item,index) => {
+                    
+                    return <Item title={item} index={index} name={"Director"}/>;
                   })}
                 </View>
                 <View style={styles.buttonContainer}>
@@ -237,8 +264,8 @@ const RegistrationDirectororPartner = ({
               keyExtractor={(item) => item.id}
               nestedScrollEnabled
             /> */}
-                  {DATA.map((item) => {
-                    return <Item title={item.title} />;
+                  {BeneficialownersData?.map((item,index) => {
+                    return <Item title={item} index={index} name={"Beneficial owners"}/>;
                   })}
                 </View>
                 <View style={styles.buttonContainer}>
@@ -263,8 +290,8 @@ const RegistrationDirectororPartner = ({
               keyExtractor={(item) => item.id}
               nestedScrollEnabled
             /> */}
-                  {DATA.map((item) => {
-                    return <Item title={item.title} />;
+                  {ControllingInterestsData?.map((item,index) => {
+                    return <Item title={item} index={index} name={"Controlling Interests"}/>;
                   })}
                 </View>
               </View>
