@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 import AccountDeatils from "../components/AccountDeatils";
@@ -28,6 +28,7 @@ import CarbonSpendGraph from "../components/CarbonSpendGraph";
 import VirtualPlanet from "../components/VirtualPlanet";
 import XeroDashboard from "../components/XeroDashboard";
 import ReferNow from "../components/ReferNow";
+import colors from "../config/colors";
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);
@@ -96,10 +97,21 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
               <View style={styles.iconContainer}>
                 <View style={styles.iconStyle}>
-                  <FontAwesome name="moon-o" size={24} color="white" />
+                  <Ionicons name="moon" color="white" size={24} />
                 </View>
                 <View style={styles.iconStyle}>
-                  <Ionicons name="notifications" size={24} color="white" />
+                  <View style={styles.iconBadgeContainer}>
+                    <Text
+                      style={styles.iconBadgeNumber}
+                    >
+                      1
+                    </Text>
+                  </View>
+                  <MaterialCommunityIcons
+                    name="bell-outline"
+                    color="white"
+                    size={24}
+                  />
                 </View>
               </View>
             </View>
@@ -288,14 +300,32 @@ const styles = StyleSheet.create({
     color: "white",
   },
   iconStyle: {
-    height: 38,
-    width: 38,
+    height: 40,
+    width: 40,
     // borderWidth: 1,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    textAlign: "center",
+
     borderRadius: 20,
+    backgroundColor: "rgba(0, 0, 0, .25)",
+  },
+  iconBadgeContainer: {
+    position: "absolute",
+    backgroundColor: "red",
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    right: 8,
+    top: 8,
+    zIndex: 5,
+  },
+  iconBadgeNumber: {
+    fontSize: 6,
+    color: colors.white,
+    fontWeight: "900"
   },
   AccountDetailsCard: {
     position: "absolute",
