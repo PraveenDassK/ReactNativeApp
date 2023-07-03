@@ -1,74 +1,86 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-    StyleSheet,
-    View,
-    Text,
-    ActivityIndicator
-} from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import AuthContext from "../auth/context";
 
 import apiTransaction from "../api/apiTransaction";
 
 import {
-    TransactionBody,
-    TransactionHead,
-    TransactionFooter,
+  TransactionBody,
+  TransactionHead,
+  TransactionFooter,
 } from "../components/transactions";
 
+const transactionDisplayItems = [
+  { id: 1, title: "All" },
+  { id: 2, title: "Income" },
+  { id: 3, title: "Expense" },
+];
+
+import { TransactionContainer } from "./transHistory";
+
 const RecentTransactions = ({ amount }) => {
-    const [transactions, setTransactions] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filterTransactions, setFilterTransactions] = useState([
+    ...transactions,
+  ]);
 
-    //All Income Expense
-    const [typeSelection, setTypeSelection] = useState("All")
+  //All Income Expense
+  const [typeSelection, setTypeSelection] = useState("All");
 
-    const {
-        accountID,
-    } = useContext(AuthContext);
+  const { accountID } = useContext(AuthContext);
 
-    useEffect(() => {
-        loadData()
-    }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
-    const loadData = async () => {
-        setIsLoading(true)
-        const transactionCall = await apiTransaction.GetTransactions(accountID, amount,typeSelection);
-        setTransactions(transactionCall.transactions)
-        setIsLoading(false)
-    }
-
-    if (isLoading) {
-        return (
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <ActivityIndicator size="large" color="black" />
-            </View>
-        );
-    }
-
-
-    return (
-        <View style={{ paddingHorizontal: "5%", marginVertical: 40 }}>
-            <TransactionHead/>
-            {transactions.map((transaction, index) => (
-                <TransactionBody
-                    key={index}
-                    name={transaction.description}
-                    date={transaction.transactionDate}
-                    amount={transaction.amount}
-                    credit={transaction.credit}
-                />
-            ))}
-            <TransactionFooter
-                number={transactions.length}
-                total={5}
-                onSee={() => navigation.navigate("Transactions")}
-            />
-        </View>
+  const loadData = async () => {
+    setIsLoading(true);
+    const transactionCall = await apiTransaction.GetTransactions(
+      accountID,
+      amount,
+      typeSelection
     );
+    setTransactions(transactionCall.transactions);
+    setFilterTransactions(transactionCall.transactions);
+    setIsLoading(false);
+  };
+
+  const handleTransactionFilter = (item) => {
+    if (item == "income") {
+      setFilterTransactions(
+        transactions.filter(({ credit }) => credit !== false)
+      );
+    } else if (item == "expenses") {
+      setFilterTransactions(
+        transactions.filter(({ credit }) => credit === false)
+      );
+    } else {
+      setFilterTransactions(transactions);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
+
+  return (
+    <View>
+      <TransactionContainer
+        title="Transactions History"
+        transactionDisplayItems={transactionDisplayItems}
+        onTransaction={() => console.log("onTransaction")}
+        transactions={filterTransactions}
+        onTransactionFilter={(item) => handleTransactionFilter(item)}
+      />
+    </View>
+  );
+
 };
 
-const styles = StyleSheet.create({
-
-});
 
 export default RecentTransactions;
