@@ -6,10 +6,8 @@ const XeroDashboard = () => {
     <View style={styles.container}>
       <View>
         <Image
-          source={{
-            uri: "https://images.pexels.com/photos/2138922/pexels-photo-2138922.jpeg?auto=compress&cs=tinysrgb&w=600",
-          }}
-          style={{ height: 100, width: 130 }}
+          source={require('../assets/Dashboard/xeroLogo.png')}
+          style={{ height: 100, width: 100 }}
         />
       </View>
       <View>

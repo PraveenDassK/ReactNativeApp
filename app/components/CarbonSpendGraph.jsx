@@ -6,7 +6,7 @@ import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import * as Progress from "react-native-progress";
 
-const CarbonSpendGraph = ({ }) => {
+const CarbonSpendGraph = ({ handleViewMore}) => {
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const { userID, accountID } = useContext(AuthContext);
   const [totalFootprint, setTotalFootprint] = useState(false);
@@ -30,9 +30,9 @@ const CarbonSpendGraph = ({ }) => {
   };
   console.log(carbnonSpendData, "this is spend data");
   const colorsArray = ["tomato", "orange", "gold", "cyan", "green"];
-  function getRandomItem(arr) {
+  function getRandomItem(arr,i) {
     // get random index value
-    const randomIndex = Math.floor(Math.random() * arr.length);
+    const randomIndex = i
 
     // get random item
     const item = arr[randomIndex];
@@ -103,14 +103,14 @@ const CarbonSpendGraph = ({ }) => {
                 borderRadius={15}
                 borderColor={"white"}
                 unfilledColor={"#F7F7F7"}
-                color={getRandomItem(colorsArray)}
+                color={getRandomItem(colorsArray,i)}
               />
             </View>
           );
         })}
       </View>
       <View style={{ marginVertical: 10 }}>
-        <Text style={{ color: "#178BFF", fontSize: 18, fontWeight: "bold" }}>
+        <Text style={{ color: "#178BFF", fontSize: 18, fontWeight: "bold" }} onPress={handleViewMore}>
           View more
         </Text>
       </View>

@@ -83,7 +83,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       }}
     >
       <View style={{ position: "relative",marginBottom:50, }}>
-        <ScrollView>
+        <ScrollView nestedScrollEnabled={true} >
           <ImageBackground
             source={require("../assets/backgrounds/River.png")}
             style={styles.backgroundImage}
@@ -106,7 +106,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             </View>
           </ImageBackground>
           <View style={styles.AccountDetailsCard}>
-            <AccountDeatils userData={userData} userImpact={userImpact} />
+            <AccountDeatils userData={userData} userImpact={userImpact} handlePress={() => navigation.navigate("SendMoney")}/>
           </View>
 
           <View style={styles.buttonContainer}>
@@ -207,11 +207,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Your Carbon Footprints</Text>
-            <CarbonSpendGraph />
+            <CarbonSpendGraph  handleViewMore={()=>navigation.navigate("ChooseCardsStandard5")}/>
           </View>
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
-            <VirtualPlanet treeData={userImpact} />
+            <VirtualPlanet treeData={userImpact} handleVirtual={()=>navigation.navigate("VirtualEcoSystem")} />
           </View>
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Carbonyte + Xero</Text>
