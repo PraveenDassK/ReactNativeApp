@@ -988,7 +988,7 @@ const StackNavigator = () => {
         name="Transactions"
         component={gestureHandlerRootHOC(Transactions)}
         options={{
-          title: "",
+          title: "Transactions",
         }}
       />
       <Stack.Screen
