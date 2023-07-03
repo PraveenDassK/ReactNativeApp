@@ -29,10 +29,20 @@ import { CountryPicker } from "react-native-country-codes-picker";
 import PhoneInput from "react-native-phone-number-input";
 import GetPostCode from "../components/RegistrationPostCode";
 import apiLogin from "../api/apiLogin";
-const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
+import moment from "moment";
+const RegistartionDirectorForm = ({
+  back = true,
+  role,
+  setFormView,
+  setDirectorData,
+  directorData,
+  setBeneficialownersData,
+  setControllingInterestsData,
+}) => {
   console.log(role, "this is role");
   const [date, setDate] = useState(new Date());
   const [birthdate, setBirthDate] = useState(new Date());
+  const [birthError, setBirthError] = useState("");
   const [birthShow, setBirthShow] = useState(false);
   const [title, setTitle] = useState("Mr");
   const [apiAddress, setAPIAddress] = useState();
@@ -60,8 +70,11 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
   const [nationallityStatusError, setNationallityStatus] = useState("");
   const [occupationStatusError, setOccupatioinStatus] = useState("");
   const [employementValue, setEmployementValue] = useState("");
-  const currentTime = new Date().getTime();
-  console.log(currentTime, "this is the current time");
+  const currentTime = new Date();
+  console.log(
+    moment(currentTime).format("MM-DD-YYYY"),
+    "this is the current time"
+  );
   const roleMenu = [{ label: role, value: role }];
   const genderMenu = [
     { label: "Male", value: "Male" },
@@ -132,8 +145,23 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
   const onDobChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setBirthDate(currentDate);
+
     setBirthShow(false);
   };
+  function validateDOB(dob) {
+    var currentDate = moment(); // Get the current date and time
+    var inputDate = moment(dob); // Parse the input DOB
+
+    // Calculate the difference between current date and input DOB
+    var yearsDiff = currentDate.diff(inputDate, "years");
+
+    // Compare the difference with 18 to check if the person is 18 years or older
+    if (yearsDiff >= 18) {
+      return true; // DOB is valid and person is 18 years or older
+    } else {
+      return false; // DOB is not valid or person is under 18 years old
+    }
+  }
   console.log(countryCode, "this is countryCode");
   const data = [
     { label: "Mr", value: "Mr" },
@@ -203,7 +231,6 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
     totalIncome,
     savings,
   }) => {
-  
     if (!martialValue) {
       setMartialStatus("MartialValue is required ");
     } else if (!genderValue) {
@@ -216,6 +243,8 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
       setNationallityStatus("Nationality is required ");
     } else if (!occupatioinValue) {
       setOccupatioinStatus("Occupation is required ");
+    } else if (validateDOB(birthdate) === false) {
+      setBirthError("Age must be above 18yrs");
     } else {
       setEmploymentStatus("");
       setGenderStatus(" ");
@@ -224,6 +253,7 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
       setNationallityStatus("");
       setEmploymentStatus("");
       setCountryStatus("");
+      setBirthError("");
       const dataObj = [
         {
           id: 0,
@@ -248,7 +278,7 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
 
             firstName: firstName,
 
-            dob: birthdate.toLocaleDateString("en-GB"),
+            dob: moment(birthdate).format("MM-DD-YYYY"),
 
             nationalId: id,
 
@@ -282,19 +312,54 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
           key: "",
 
           role: role,
+          isApplicant: false,
 
           ownershipPercentage: owenershipShares,
 
           marketingChoices: "string",
 
-          acceptanceDateTime: currentTime,
+          acceptanceDateTime: moment(currentTime).format("MM-DD-YYYY"),
 
           policyVersion: "1",
         },
       ];
       const response = await apiLogin.RegisterPersonalAccount(dataObj);
-      console.log(dataObj, response, "this is dataObj");
-      setFormView(0)
+      console.log(response, "this is dataObj");
+      const ID = `CC${id}`;
+      console.log(ID, "this is idfield");
+      const getResponse = await apiLogin.GetCustomerDetails(ID);
+      
+      switch (role) {
+        case "Director":
+           setDirectorData((directorData) => [
+            ...directorData,
+            getResponse.customerDetails.firstName +
+              getResponse.customerDetails.lastName,
+          ])
+          break
+        case "Beneficial owners":
+           setBeneficialownersData((directorData) => [
+            ...directorData,
+            getResponse.customerDetails.firstName +
+              getResponse.customerDetails.lastName,
+          ]);
+          break
+        case "Controlling Interests":
+           setControllingInterestsData((directorData) => [
+            ...directorData,
+            getResponse.customerDetails.firstName +
+              getResponse.customerDetails.lastName,
+          ]);
+          break
+          // default:
+          //   return setDirectorData((directorData) => [
+          //     ...directorData,
+          //     getResponse.customerDetails.firstName +
+          //       getResponse.customerDetails.lastName,
+          //   ]);
+          }
+          setFormView(0);
+
     }
   };
 
@@ -751,7 +816,7 @@ const RegistartionDirectorForm = ({ back = true, role,setFormView }) => {
                         onChange={onDobChange}
                       />
                     )}
-                    <ErrorMessage error={errors.dob} visible={touched.dob} />
+                    <ErrorMessage error={birthError} visible={birthError} />
                   </View>
 
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>

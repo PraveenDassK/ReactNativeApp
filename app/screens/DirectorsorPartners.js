@@ -12,31 +12,55 @@ import RegistartionDirectorForm from "../components/RegistartionDirectorForm";
 import Button from "../components/AppButton";
 
 const DirectororPartner = ({ navigation }) => {
+  const [directorData, setDirectorData] = useState([]);
+  const [BeneficialownersData, setBeneficialownersData] = useState([]);
+  const [ControllingInterestsData, setControllingInterestsData] = useState([]);
+
   const [formView, setFormView] = useState(0);
   const [role, setRole] = useState("");
   const handleOnPress = (event) => {
-    console.log(event,"thois is event")
-    setRole(event)
+    console.log(event, "thois is event");
+    setRole(event);
     if (formView === 0) {
       setFormView(1);
     } else {
       setFormView(0);
     }
   };
+  console.log(
+    directorData,
+    BeneficialownersData,
+    ControllingInterestsData,
+    "This is data"
+  );
   return (
     <SafeAreaView style={styles.container}>
       {formView === 0 ? (
         <RegistrationDirectororPartner
           onPress={handleOnPress}
           setRole={setRole}
+          directorData={directorData}
+          BeneficialownersData={BeneficialownersData}
+          ControllingInterestsData={ControllingInterestsData}
+          setDirectorData={setDirectorData}
+          setBeneficialownersData={setBeneficialownersData}
+          setControllingInterestsData={setControllingInterestsData}
+
         />
       ) : (
-        <RegistartionDirectorForm role={role} setFormView={setFormView} />
+        <RegistartionDirectorForm
+          role={role}
+          setFormView={setFormView}
+          setDirectorData={setDirectorData}
+          directorData={directorData}
+          BeneficialownersData={BeneficialownersData}
+          ControllingInterestsData={ControllingInterestsData}
+          setBeneficialownersData={setBeneficialownersData}
+          setControllingInterestsData={setControllingInterestsData}
+        />
         // <View><Text>Hello</Text></View>
       )}
-      <Button
-        title = {"continue"}
-      ></Button>
+      <Button title={"continue"}></Button>
     </SafeAreaView>
   );
 };
