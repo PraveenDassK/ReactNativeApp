@@ -1,10 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet,  View } from "react-native";
 import React, { useState,useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
 import formatCurrency from "../utility/formatCurrency";
 import { LinearGradient } from 'expo-linear-gradient';
-
+import Text from "../components/Text"
 const AccountDeatils = ({ userData,userImpact,handlePress }) => {
   const [title, setTitle] = useState("");
   const [accountBalance,setBalance]=useState([])
