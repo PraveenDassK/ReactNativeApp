@@ -1,8 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useContext,
-} from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import { BlurView } from "expo-blur";
 import {
@@ -15,7 +11,7 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
-import moment from "moment";
+// import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
 import FlipCard from "react-native-flip-card";
 
@@ -26,7 +22,8 @@ import apiCall from "../api/api";
 import colors from "../config/colors";
 import formatCurrency from "../utility/formatCurrency";
 import AppScreen from "../components/AppScreen";
-import { TransactionFooter } from "../components/transactions";
+
+import { TransactionContainer } from "../components/transHistory";
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -183,7 +180,12 @@ export default function MyCards({ navigation }) {
 
 const IncomeExpense = () => (
   <View
-    style={{ marginHorizontal: "5%", borderRadius: 20, overflow: "hidden",backgroundColor: "rgba(255, 255, 255, 0.5)" }}
+    style={{
+      marginHorizontal: "5%",
+      borderRadius: 20,
+      overflow: "hidden",
+      backgroundColor: "rgba(255, 255, 255, 0.5)",
+    }}
   >
     <BlurView tint="light" intensity={20} style={styles.incomeExpenseContainer}>
       <IncomeExpenseItem />
@@ -200,7 +202,6 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
       borderRadius: 20,
       paddingHorizontal: 20,
       paddingVertical: 10,
-      
     }}
   >
     <View
@@ -269,148 +270,146 @@ const CardSelector = ({ onCardSelect }) => {
   );
 };
 
-const TransactionContainer = ({
-  title = "Transactions",
-  transactionDisplayItems,
-  onTransaction,
-  transactions,
-  onTransactionFilter,
-}) => (
-  <View style={styles.transactionContainer}>
-    <Text style={[styles.bold, styles.header]}>{title}</Text>
+// const TransactionContainer = ({
+//   title = "Transactions",
+//   onTransaction,
+//   transactions,
+//   onTransactionFilter,
+// }) => (
+//   <View style={styles.transactionContainer}>
+//     <Text style={[styles.bold, styles.header]}>{title}</Text>
 
-    <TransactionHeader
-      onTransactionFilter={(item) => onTransactionFilter(item)}
-    />
+//     <TransactionHeader
+//       onTransactionFilter={(item) => onTransactionFilter(item)}
+//     />
 
-    {transactions.map(
-      ({ id, credit, description, transactionDate, amount }, index) => (
-        <Transaction
-          key={id}
-          onTransaction={onTransaction}
-          description={description}
-          date={transactionDate}
-          amount={amount}
-          credit={credit}
-          index={index}
-          lastElement={transactions.length - 1}
-        />
-      )
-    )}
-    <TransactionFooter navigate={false} />
-  </View>
-);
+//     {transactions.map(
+//       ({ id, credit, description, transactionDate, amount }, index) => (
+//         <Transaction
+//           key={id}
+//           onTransaction={onTransaction}
+//           description={description}
+//           date={transactionDate}
+//           amount={amount}
+//           credit={credit}
+//           index={index}
+//           lastElement={transactions.length - 1}
+//         />
+//       )
+//     )}
+//     <TransactionFooter navigate={false} />
+//   </View>
+// );
 
-const TransactionHeader = ({ onTransactionFilter }) => {
-  const selections = [
-    { id: 1, name: "all" },
-    { id: 2, name: "income" },
-    { id: 3, name: "expenses" },
-  ];
-  const [isSelected, setSelected] = useState("all");
+// const TransactionHeader = ({ onTransactionFilter }) => {
+//   const selections = [
+//     { id: 1, name: "all" },
+//     { id: 2, name: "income" },
+//     { id: 3, name: "expenses" },
+//   ];
+//   const [isSelected, setSelected] = useState("all");
 
-  const handleTransaction = (item) => {
-    setSelected(item);
-    onTransactionFilter(item);
-  };
+//   const handleTransaction = (item) => {
+//     setSelected(item);
+//     onTransactionFilter(item);
+//   };
 
-  return (
-    <View style={[styles.transactionHeaderContainer, {backgroundColor: "rgba(255, 255, 255, 0.5)"}]}>
-      <BlurView tint="light" intensity={60} style={styles.blurView}>
-        {selections.map((selection) => (
-          <TouchableOpacity
-            key={selection.id}
-            onPress={() => handleTransaction(selection.name)}
-            style={{
-              flex: 1,
-              borderBottomWidth: 3,
-              borderRightColor: "white",
-              borderRightWidth: selection.name !== "expenses" ? 3 : 0,
-              borderBottomColor:
-                selection.name == isSelected ? "blue" : "white",
-              paddingBottom: "2.5%",
-              alignItems: "center",
-            }}
-          >
-            <Text
-              style={{
-                textTransform: "capitalize",
-                opacity: selection.name == isSelected ? 1 : 0.5,
-              }}
-            >
-              {selection.name}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </BlurView>
-    </View>
-  );
-};
+//   return (
+//     <View style={[styles.transactionHeaderContainer, {backgroundColor: "rgba(255, 255, 255, 0.5)"}]}>
+//       <BlurView tint="light" intensity={60} style={styles.blurView}>
+//         {selections.map((selection) => (
+//           <TouchableOpacity
+//             key={selection.id}
+//             onPress={() => handleTransaction(selection.name)}
+//             style={{
+//               flex: 1,
+//               borderBottomWidth: 3,
+//               borderRightColor: "white",
+//               borderRightWidth: selection.name !== "expenses" ? 3 : 0,
+//               borderBottomColor:
+//                 selection.name == isSelected ? "blue" : "white",
+//               paddingBottom: "2.5%",
+//               alignItems: "center",
+//             }}
+//           >
+//             <Text
+//               style={{
+//                 textTransform: "capitalize",
+//                 opacity: selection.name == isSelected ? 1 : 0.5,
+//               }}
+//             >
+//               {selection.name}
+//             </Text>
+//           </TouchableOpacity>
+//         ))}
+//       </BlurView>
+//     </View>
+//   );
+// };
 
-const Transaction = ({
-  onTransaction,
-  description,
-  amount,
-  date,
-  credit,
-  index,
-  lastElement,
-}) => {
-  return (
-    <BlurView tint="light" intensity={60} style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}>
-      <Pressable
-        onPress={onTransaction}
-        style={{
-          flexDirection: "row",
-          paddingHorizontal: "5%",
-          paddingVertical: "2.5%",
-          justifyContent: "space-between",
+// const Transaction = ({
+//   onTransaction,
+//   description,
+//   amount,
+//   date,
+//   credit,
+//   index,
+//   lastElement,
+// }) => {
+//   return (
+//     <BlurView tint="light" intensity={60} style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}>
+//       <Pressable
+//         onPress={onTransaction}
+//         style={{
+//           flexDirection: "row",
+//           paddingHorizontal: "5%",
+//           paddingVertical: "2.5%",
+//           justifyContent: "space-between",
 
-          borderBottomLeftRadius: index == -1 ? 10 : 0,
-        }}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              marginRight: "5%",
-            }}
-          >
-            <MaterialCommunityIcons
-              name={credit ? "arrow-bottom-left" : "arrow-top-right"}
-              size={24}
-              color={credit ? "green" : "red"}
-            />
-          </View>
-          <View>
-            <Text style={styles.bold}>{description}</Text>
-            <Text style={styles.subText}>{moment(date).calendar()}</Text>
-          </View>
-        </View>
-        <View>
-          <Text style={[styles.bold, { textAlign: "right" }]}>
-            {!credit ? "-" : "+"} £{amount.toFixed(2)}
-          </Text>
-          <Text style={[styles.subText, { textAlign: "right" }]}>
-            {moment(date).format("D MMM")}
-          </Text>
-        </View>
-      </Pressable>
-      <View
-        style={{
-          marginHorizontal: "5%",
-          borderBottomColor: "white",
-          borderBottomWidth: index == lastElement ? 0 : 3,
-        }}
-      />
-    </BlurView>
-  );
-};
+//           borderBottomLeftRadius: index == -1 ? 10 : 0,
+//         }}
+//       >
+//         <View style={{ flexDirection: "row" }}>
+//           <View
+//             style={{
+//               justifyContent: "center",
+//               alignItems: "center",
+//               marginRight: "5%",
+//             }}
+//           >
+//             <MaterialCommunityIcons
+//               name={credit ? "arrow-bottom-left" : "arrow-top-right"}
+//               size={24}
+//               color={credit ? "green" : "red"}
+//             />
+//           </View>
+//           <View>
+//             <Text style={styles.bold}>{description}</Text>
+//             <Text style={styles.subText}>{moment(date).calendar()}</Text>
+//           </View>
+//         </View>
+//         <View>
+//           <Text style={[styles.bold, { textAlign: "right" }]}>
+//             {!credit ? "-" : "+"} £{amount.toFixed(2)}
+//           </Text>
+//           <Text style={[styles.subText, { textAlign: "right" }]}>
+//             {moment(date).format("D MMM")}
+//           </Text>
+//         </View>
+//       </Pressable>
+//       <View
+//         style={{
+//           marginHorizontal: "5%",
+//           borderBottomColor: "white",
+//           borderBottomWidth: index == lastElement ? 0 : 3,
+//         }}
+//       />
+//     </BlurView>
+//   );
+// };
 
 const CardCarousel = ({ cards, onCardPress }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
-
 
   return (
     <ScrollView
@@ -451,7 +450,7 @@ const CardCarousel = ({ cards, onCardPress }) => {
                 width: ITEM_WIDTH,
                 height: ITEM_HEIGHT,
                 marginLeft: idx === 0 ? OFFSET + 35 : undefined,
-                marginRight: idx === cards.length - 1 ? OFFSET  : undefined,
+                marginRight: idx === cards.length - 1 ? OFFSET : undefined,
                 opacity: opacity,
                 transform: [{ scale: translate }],
               }}
@@ -484,7 +483,6 @@ const CardCarousel = ({ cards, onCardPress }) => {
           </TouchableOpacity>
         );
       })}
-     
     </ScrollView>
   );
 };
@@ -502,8 +500,14 @@ const CardBackSide = () => {
       <Text style={styles.backCardText}>4567</Text>
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />
-      <View style={[styles.itemRow,styles.backCardSmallTextContainer, {marginBottom: "2.5%"}]}>
-        <View >
+      <View
+        style={[
+          styles.itemRow,
+          styles.backCardSmallTextContainer,
+          { marginBottom: "2.5%" },
+        ]}
+      >
+        <View>
           <Text style={[styles.backCardText, styles.backCardSmallText]}>
             EXP
           </Text>
@@ -511,11 +515,13 @@ const CardBackSide = () => {
             DATE
           </Text>
         </View>
-        <Text style={[styles.backCardText, styles.backCardSmallNumber]}>10/25</Text>
+        <Text style={[styles.backCardText, styles.backCardSmallNumber]}>
+          10/25
+        </Text>
       </View>
 
-      <View style={[styles.itemRow,styles.backCardSmallTextContainer]}>
-        <View >
+      <View style={[styles.itemRow, styles.backCardSmallTextContainer]}>
+        <View>
           <Text style={[styles.backCardText, styles.backCardSmallText]}>
             CVC
           </Text>
@@ -523,7 +529,9 @@ const CardBackSide = () => {
             CODE
           </Text>
         </View>
-        <Text style={[styles.backCardText, styles.backCardSmallNumber]}>123</Text>
+        <Text style={[styles.backCardText, styles.backCardSmallNumber]}>
+          123
+        </Text>
       </View>
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />
@@ -598,7 +606,7 @@ const styles = StyleSheet.create({
     padding: "10%",
   },
   backCardHeader: {
-    fontWeight: "700"
+    fontWeight: "700",
   },
   backCardText: {
     color: "white",
@@ -610,20 +618,18 @@ const styles = StyleSheet.create({
     fontSize: 8,
   },
   backCardSmallTextContainer: {
-   
     width: "30%",
     justifyContent: "space-between",
-    alignItems: "center"
-
+    alignItems: "center",
   },
-  blurView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: "5%",
-    paddingBottom: "0%",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
+  // blurView: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   padding: "5%",
+  //   paddingBottom: "0%",
+  //   borderTopLeftRadius: 20,
+  //   borderTopRightRadius: 20,
+  // },
   cardsContainer: {
     paddingHorizontal: 0,
     height: 380,
@@ -648,7 +654,7 @@ const styles = StyleSheet.create({
   },
   itemRow: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   subText: { opacity: 0.5, fontSize: 10, lineHeight: 15 },
@@ -657,17 +663,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: "5%",
   },
-  transactionContainer: {
-    flex: 1,
-    marginTop: "5%",
-    padding: "5%",
-  },
-  transactionHeaderContainer: {
-    marginTop: "5%",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    overflow: "hidden",
-  },
+  // transactionContainer: {
+  //   flex: 1,
+  //   marginTop: "5%",
+  //   padding: "5%",
+  // },
+  // transactionHeaderContainer: {
+  //   marginTop: "5%",
+  //   borderTopLeftRadius: 20,
+  //   borderTopRightRadius: 20,
+  //   overflow: "hidden",
+  // },
   selectorContainer: {
     width: 200,
     borderRadius: 7,
