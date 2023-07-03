@@ -33,7 +33,9 @@ import AuthContext from "../auth/context";
 import Animated from "react-native-reanimated";
 import Button from "../components/AppButton";
 import colors from "../config/colors";
-import { TransactionBody, TransactionHead } from "../components/transactions";
+
+import { TransactionBody } from "../components/transHistory";
+import AppScreen from "../components/AppScreen";
 
 const ITEM_SIZE = 50 + 15 * 3;
 const Transactions = ({ navigation, route }) => {
@@ -80,7 +82,7 @@ const Transactions = ({ navigation, route }) => {
 
   const reportTransaction = async (Id) => {
     console.log("Reported");
-   
+
     Alert.alert("Alert", "Report This Transaction", [
       {
         text: "Cancel",
@@ -91,7 +93,7 @@ const Transactions = ({ navigation, route }) => {
         text: "Send",
         onPress: async () => {
           console.log("OK Pressed");
-          setSelectedId(Id)
+          setSelectedId(Id);
           const response = await apiCall.ReportTransaction(accountID, Id.id);
           response.result
             ? alert("Report successsful")
@@ -122,7 +124,7 @@ const Transactions = ({ navigation, route }) => {
         style={{
           backgroundColor: colors.danger,
           width: 70,
-          height: 76,    
+          height: 76,
           justifyContent: "center",
           alignItems: "center",
           marginLeft: "2.5%",
@@ -141,7 +143,7 @@ const Transactions = ({ navigation, route }) => {
       <View
         style={{
           backgroundColor: "grey",
-          width:70,
+          width: 70,
           height: 76,
           justifyContent: "center",
           alignItems: "center",
@@ -275,57 +277,13 @@ const Transactions = ({ navigation, route }) => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: GlobalStyles.DivContainer.backgroundColor,
-      }}
-    >
-      {/* <Image 
-            style={StyleSheet.absoluteFillObject}
-            source={require("../assets/group-2951.png")}
-            blurRadius={80}
-            resizeMode="stretch"
-            
-            /> */}
-
+ 
+      <AppScreen>
       <View style={styles.page}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            // <View
-            //   style={{
-            //     backgroundColor: "white",
-            //     borderTopLeftRadius: 10,
-            //     borderTopRightRadius: 10,
-            //     paddingTop: 10,
-            //     marginBottom: "1%",
-            //     paddingBottom: "2.5%"
-            //   }}
-            // >
-            //   <View style={{ marginLeft: "2.5%" }}>
-            //     <View></View>
-            //     <Text style={{ fontWeight: "700", fontSize: 20, marginBottom: "5%"}}>
-            //       Recent transactions
-            //     </Text>
-            //     <View style={{ flexDirection: "row", flex: 1 }}>
-            //       <View style={{ flex: 3.8 }}>
-            //         <Text style={{opacity: 0.4}}>Transaction name</Text>
-            //       </View>
-            //       <View style={{flex:2}}>
-            //         <Text style={{opacity: 0.4}}>Date</Text>
-            //       </View>
-            //       <View style={{ flex: 1 }}>
-            //         <Text style={{opacity: 0.4}}>Amount</Text>
-            //       </View>
-            //     </View>
-            //   </View>
-            // </View>
-            <TransactionHead />
-          }
           ListFooterComponent={
             <View style={{ marginBottom: verticalScale(50) }}>
-
               {hide && (
                 <Button
                   onPress={() => loadData()}
@@ -344,7 +302,6 @@ const Transactions = ({ navigation, route }) => {
           // )}
           keyExtractor={(item) => item.sourceId.toString()}
           renderItem={({ item, index, separators }) => {
-           
             const inputRange = [
               -1,
               0,
@@ -356,103 +313,47 @@ const Transactions = ({ navigation, route }) => {
               inputRange,
               outputRange: [1, 1, 1, 0],
             });
-           
 
-            
-            const display = item.id === selectedId ? "flex" : "none"
+            const display = item.id === selectedId ? "flex" : "none";
 
             return (
               <>
-              <Animated.View key={index} style={{ transform: [{ scale }] }}>
-                <Swipeable
-                  renderLeftActions={() => renderLeftActions(item.id)}
-                  renderRightActions={() => renderRightActions(index)}
-                >
-                  <Pressable
-                    style={[styles.transactionBox]}
-                    onPress={() => showTransaction(index)}
+                <Animated.View key={index} style={{ transform: [{ scale }] }}>
+                  <Swipeable
+                    renderLeftActions={() => renderLeftActions(item.id)}
+                    renderRightActions={() => renderRightActions(index)}
                   >
-                    {/* <View style={{ height: "100%", flexDirection: "row" }}>
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: 50,
-                          height: 50,
-                          borderRadius: 10,
-                          backgroundColor: "#F6F5F8",
-                          borderColor: "black",
-                          alignSelf: "center",
-                          marginLeft: "2.5%",
-                        }}
-                      >
-                        <Text style={{ fontWeight: "700" }}>
-                          {item.account.customerName[0]}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flex: 3.5,
-                          alignSelf: "center",
-                          justifyContent: "space-evenly",
-                          marginLeft: "5%",
-                        }}
-                      >
-                        <Text style={{ fontSize: 14, fontWeight: "700" }}>
-                          {item.account.customerName}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Text style={{ fontWeight: "700" }}>
-                          {moment(item.transactionDate).format(" DD MMM YY")}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flex: 2,
-                          justifyContent: "space-evenly",
-                          alignItems: "flex-end",
-                          marginRight: "2.5%",
-                        }}
-                      >
-                        <Text
-                          style={{ marginRight: "2.5%", fontWeight: "700" }}
-                        >
-                          £{item.amount.toFixed(2)}
-                        </Text>
-                      </View>
-                    </View> */}
-
-                    <TransactionBody 
-                    name={item.description}
-                    date={item.transactionDate}
-                    amount={item.amount}
-                    credit={item.credit}
-                    />
-
-
-                  </Pressable>
-                </Swipeable>
-              </Animated.View>
-              {<View style={{display, alignItems: "flex-end"}}>
-                <Text style={{color: "red"}}>Transaction reported</Text>
-              </View>}
+                    <Pressable
+                      style={[styles.transactionBox]}
+                      onPress={() => showTransaction(index)}
+                    >
+                      <TransactionBody
+                        onTransaction={() => console.log("transaction")}
+                        description={item.description}
+                        date={item.transactionDate}
+                        amount={item.amount}
+                        credit={item.credit}
+                        index={index}
+                        lastElement={transactionData.length - 1}
+                      />
+                    </Pressable>
+                  </Swipeable>
+                </Animated.View>
+                {
+                  <View style={{ display, alignItems: "flex-end" }}>
+                    <Text style={{ color: "red" }}>Transaction reported</Text>
+                  </View>
+                }
               </>
             );
           }}
         />
-    
+
         {modalVisible ? modal() : null}
-      </View>
-    </View>
+      </View></AppScreen>
+    
   );
 };
-
 
 const styles = StyleSheet.create({
   boxShadow: {},
