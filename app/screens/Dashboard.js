@@ -73,17 +73,16 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     <ImageBackground
       source={require("../assets/backgrounds/Dashboard.jpg")}
       // style={{  width: "100%" }}
-      resizeMode='contain'
+      resizeMode="contain"
       imageStyle={{
-        bottom: "-70%" // Whatever offset you want from the bottom
-    }}
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
       style={{
         width: "100%",
-      
       }}
     >
-      <View style={{ position: "relative",marginBottom:50, }}>
-        <ScrollView nestedScrollEnabled={true} >
+      <View style={{ position: "relative", marginBottom: 50 }}>
+        <ScrollView nestedScrollEnabled={true}>
           <ImageBackground
             source={require("../assets/backgrounds/River.png")}
             style={styles.backgroundImage}
@@ -106,45 +105,67 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             </View>
           </ImageBackground>
           <View style={styles.AccountDetailsCard}>
-            <AccountDeatils userData={userData} userImpact={userImpact} handlePress={() => navigation.navigate("SendMoney")}/>
+            <AccountDeatils
+              userData={userData}
+              userImpact={userImpact}
+              handlePress={() => navigation.navigate("SendMoney")}
+            />
           </View>
+          {!iconShow && (
+            <View style={styles.buttonContainer}>
+              <SquareIcon
+                name={"Move money"}
+                image={"bank-transfer"}
+                onPress={() => navigation.navigate("MoveMoney")}
+              />
 
-          <View style={styles.buttonContainer}>
-            <SquareIcon
-              name={"Move money"}
-              image={"bank-transfer"}
-              onPress={() => navigation.navigate("MoveMoney")}
-            />
+              <SquareIcon
+                name={"Send money"}
+                image={"send"}
+                onPress={() => navigation.navigate("SendMoney")}
+              />
 
-            <SquareIcon
-              name={"Send money"}
-              image={"send"}
-              onPress={() => navigation.navigate("SendMoney")}
-            />
+              <SquareIcon
+                name={"Cards"}
+                image={"credit-card"}
+                onPress={() => navigation.navigate("MyCards")}
+              />
 
-            <SquareIcon
-              name={"Cards"}
-              image={"credit-card"}
-              onPress={() => navigation.navigate("MyCards")}
-            />
-
-            {!iconShow ? (
               <SquareIcon
                 name={"More"}
                 image={"dots-horizontal"}
                 onPress={() => setIconShow(!iconShow)}
               />
-            ) : (
-              <SquareIcon
-                name={"Switch accounts"}
-                image={"account-switch"}
-                onPress={() => navigation.navigate("SwitchAccounts")}
-              />
-            )}
-          </View>
+            </View>
+          )}
 
-          {iconShow ? (
+          {iconShow && (
             <View>
+              <View style={styles.buttonContainer}>
+                <SquareIcon
+                  name={"Move money"}
+                  image={"bank-transfer"}
+                  onPress={() => navigation.navigate("MoveMoney")}
+                />
+
+                <SquareIcon
+                  name={"Send money"}
+                  image={"send"}
+                  onPress={() => navigation.navigate("SendMoney")}
+                />
+
+                <SquareIcon
+                  name={"Cards"}
+                  image={"credit-card"}
+                  onPress={() => navigation.navigate("MyCards")}
+                />
+
+                <SquareIcon
+                  name={"Switch accounts"}
+                  image={"account-switch"}
+                  onPress={() => navigation.navigate("SwitchAccounts")}
+                />
+              </View>
               <View style={styles.buttonContainer}>
                 <SquareIcon
                   name={"Payment link"}
@@ -155,7 +176,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 <SquareIcon
                   name={"Subscriptions"}
                   image={"newspaper-variant-outline"}
-                  trigger={() => navigation.navigate("Subscriptions")}
+                  onPress={() => navigation.navigate("Subscriptions")}
                 />
 
                 <SquareIcon
@@ -197,8 +218,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
               </View>
             </View>
-          ) : (
-            false
           )}
 
           <View style={styles.recentTransactionsContainer}>
@@ -207,11 +226,16 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Your Carbon Footprints</Text>
-            <CarbonSpendGraph  handleViewMore={()=>navigation.navigate("ChooseCardsStandard5")}/>
+            <CarbonSpendGraph
+              handleViewMore={() => navigation.navigate("ChooseCardsStandard5")}
+            />
           </View>
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
-            <VirtualPlanet treeData={userImpact} handleVirtual={()=>navigation.navigate("VirtualEcoSystem")} />
+            <VirtualPlanet
+              treeData={userImpact}
+              handleVirtual={() => navigation.navigate("VirtualEcoSystem")}
+            />
           </View>
           <View style={{ margin: 25 }}>
             <Text style={styles.headingText}>Carbonyte + Xero</Text>
