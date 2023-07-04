@@ -44,8 +44,8 @@ const Settings = ({ navigation }) => {
    * @dev Loads the data once
    */
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      loadData()
+    const unsubscribe = navigation.addListener("focus", () => {
+      loadData();
     });
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
@@ -74,7 +74,7 @@ const Settings = ({ navigation }) => {
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
 
-    
+
     const data = userDetails;
     const accountdata = accountDetails;
 
