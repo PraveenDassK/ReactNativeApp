@@ -290,7 +290,7 @@ const StackNavigator = () => {
           <View
             style={{
               marginLeft: "10%",
-              backgroundColor: GlobalStyles.Color.backgroundColor,
+              backgroundColor: GlobalStyles.Color.lightGrey,
               width: 40,
               height: 40,
               borderRadius: 20,

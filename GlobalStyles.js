@@ -39,6 +39,7 @@ const GlobalStyles = {
   },
   /* Colors */
   Color: {
+    lightGrey: 'lightgrey',
     gray_100: "#f6f6f6",
     gray_200: "#f6f5f8",
     gray_300: "#f4f2f6",
