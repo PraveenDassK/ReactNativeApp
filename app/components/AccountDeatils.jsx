@@ -28,7 +28,7 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
     setBalance(newBalance);
   };
   return (
-    <View>
+    <View style={styles.border}>
       <LinearGradient
         colors={["#0101FD", "#178BFF"]}
         style={styles.cardContainer}
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     position: "relative",
+    
   },
   accountContainer: {
     display: "flex",
@@ -161,10 +162,11 @@ const styles = StyleSheet.create({
     gap: 3,
     paddingVertical: 10,
   },
+  border: {  borderColor: "white", borderRadius: 20, borderTopWidth: 0.5, borderLeftWidth: 0.5},
   totalTitle: {
     fontSize: 16,
     color: "white",
-    fontWeight: "regular",
+    fontWeight: "100",
     fontFamily: "Montserrat",
   },
   totalAmount: {
