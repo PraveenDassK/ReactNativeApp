@@ -128,7 +128,7 @@ const Carbon = ({ route, navigation }) => {
       <View style={styles.mainContainer}>
         {cart && cart.length ? (
           <Pressable
-            style={{ position: "absolute", zIndex: 5, bottom: 0, right: 0 }}
+            style={{ position: "absolute", zIndex: 5, bottom: 50, right: 0 }}
             onPress={goToBasket}
           >
             <View
