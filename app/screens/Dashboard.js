@@ -84,7 +84,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       }}
     >
       <View style={{ position: "relative", marginBottom: 50 }}>
-        <ScrollView nestedScrollEnabled={true}>
+        <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
           <ImageBackground
             source={require("../assets/backgrounds/River.png")}
             style={styles.backgroundImage}
