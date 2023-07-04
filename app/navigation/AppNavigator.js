@@ -285,12 +285,12 @@ const StackNavigator = () => {
           fontSize: 28,
         },
         headerBackTitleVisible: false,
-        headerStyle: { backgroundColor: "transparent" },
+        headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         headerBackImage: () => (
           <View
             style={{
               marginLeft: "10%",
-              backgroundColor: "lightgrey",
+              backgroundColor: GlobalStyles.Color.backgroundColor,
               width: 40,
               height: 40,
               borderRadius: 20,
@@ -337,7 +337,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -357,7 +357,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -377,7 +377,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -397,7 +397,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -417,7 +417,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -437,7 +437,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -456,7 +456,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -475,7 +475,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -495,7 +495,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -515,7 +515,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -535,7 +535,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -555,7 +555,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -574,7 +574,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -593,7 +593,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -613,7 +613,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -633,7 +633,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "white" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -654,7 +654,7 @@ const StackNavigator = () => {
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: "lightgrey",
+            backgroundColor: GlobalStyles.Color.backgroundColor,
           },
         }}
       />
@@ -699,7 +699,7 @@ const StackNavigator = () => {
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: "lightgrey",
+            backgroundColor: GlobalStyles.Color.backgroundColor,
           },
         }}
       />
@@ -721,7 +721,7 @@ const StackNavigator = () => {
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: "lightgrey",
+            backgroundColor: GlobalStyles.Color.backgroundColor,
           },
         }}
       />
@@ -842,7 +842,7 @@ const StackNavigator = () => {
           ),
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: "lightgrey",
+            backgroundColor: GlobalStyles.Color.backgroundColor,
           },
         }}
       />
@@ -864,7 +864,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "transparent" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -873,6 +873,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CardSettings)}
         options={{
           title: "Settings",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -881,6 +882,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(SpendingLimit)}
         options={{
           title: "Spending Limit",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -888,6 +890,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Devices)}
         options={{
           title: "Devices",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -896,6 +899,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(SetLimit)}
         options={{
           title: "Set Limit",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -904,6 +908,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(ReplaceCard)}
         options={{
           title: "Replace Card",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -912,6 +917,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(ItsDamagedOrDoesntWork)}
         options={{
           title: "",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -919,6 +925,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(ItWasLost)}
         options={{
           title: "Lost",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -926,6 +933,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(IWasAVictimOfFraudOrThe)}
         options={{
           title: "Report",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -933,6 +941,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Terminate)}
         options={{
           title: "Terminate",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -940,6 +949,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(TerminatedCard)}
         options={{
           title: "Terminated Card",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -948,6 +958,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CarbonCart)}
         options={{
           title: "Cart",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -955,6 +966,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CarbonProject)}
         options={{
           title: "Carbon Project",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -962,6 +974,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(ChooseCardsStandard5)}
         options={{
           title: "Eco summary",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -970,6 +983,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(VirtualEcoSystem)}
         options={{
           title: "Virtual EcoSystem",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -978,6 +992,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Subscriptions)}
         options={{
           title: "Subscription",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -985,6 +1000,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(AccountSettings)}
         options={{
           title: "Account Settings",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -992,6 +1008,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(SecurityAndPrivacy)}
         options={{
           title: "Security & Privacy",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -999,6 +1016,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Transactions)}
         options={{
           title: "Transactions",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -1006,6 +1024,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(PinSetApp)}
         options={{
           title: "Passcode reset",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -1013,6 +1032,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(AccountLetter)}
         options={{
           title: "Account Verification",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -1020,6 +1040,7 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(TermsAndConditions)}
         options={{
           title: "Terms & Conditions",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -1039,7 +1060,7 @@ const StackNavigator = () => {
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: "transparent" },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -1047,6 +1068,7 @@ const StackNavigator = () => {
         component={MarketPlaceItem}
         options={{
           title: null,
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -1055,6 +1077,7 @@ const StackNavigator = () => {
         component={CarbonTonnesRemoved}
         options={{
           title: "Carbon",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
     </Stack.Navigator>
