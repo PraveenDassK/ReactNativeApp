@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   mainContent: {
-    backgroundColor: GlobalStyles.Color.backgroundColor,
+    backgroundColor: GlobalStyles.Color.backgroundColorOg,
     height: 30,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
