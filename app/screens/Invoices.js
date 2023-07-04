@@ -47,8 +47,9 @@ const Invoice = ({ navigation }) => {
                 </Text>
                 <View style={styles.containerSpacing}>
                     <TransactionHead headerTitle="Carbon transactions" />
-                    {directDebits?.map(({ name, date, amount }) => (
+                    {directDebits?.map(({ name, date, amount },index) => (
                         <TransactionBody
+                            key={index}
                             name={`${name}`}
                             date={date}
                             token={amount}
