@@ -377,7 +377,7 @@ const CardBackSide = () => {
   const cardBackOBJ = {
     "firstName": "Jack",
     "lastName": "Huang",
-    "cardNumber": "",
+    "cardNumber": "1234123412341234",
     "expiaryDate":"01/01",
     "cvv": "000"
   }
