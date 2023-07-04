@@ -16,7 +16,6 @@ import {
   ImageBackground,
 } from "react-native";
 
-
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -98,23 +97,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 </Text>
               </View>
               <View style={styles.iconContainer}>
-                <View style={styles.iconStyle}>
-                  <Ionicons name="moon" color="white" size={24} />
-                </View>
-                <View style={styles.iconStyle}>
-                  <View style={styles.iconBadgeContainer}>
-                    <Text
-                      style={styles.iconBadgeNumber}
-                    >
-                      1
-                    </Text>
-                  </View>
-                  <MaterialCommunityIcons
-                    name="bell-outline"
-                    color="white"
-                    size={24}
-                  />
-                </View>
+                <DarkMode />
+                <Notification />
               </View>
             </View>
           </ImageBackground>
@@ -125,152 +109,158 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               handlePress={() => navigation.navigate("SendMoney")}
             />
           </View>
-          {!iconShow && (
-            <View style={styles.buttonContainer}>
-              <SquareIcon
-                name={"Move money"}
-                image={"bank-transfer"}
-                onPress={() => navigation.navigate("MoveMoney")}
-              />
 
-              <SquareIcon
-                name={"Send money"}
-                image={"send"}
-                onPress={() => navigation.navigate("SendMoney")}
-              />
-
-              <SquareIcon
-                name={"Cards"}
-                image={"credit-card"}
-                onPress={() => navigation.navigate("MyCards")}
-              />
-
-              <SquareIcon
-                name={"More"}
-                image={"dots-horizontal"}
-                onPress={() => setIconShow(!iconShow)}
-              />
-            </View>
-          )}
-
-          {iconShow && (
-            <View>
+          <View style={styles.mainContent}>
+            {!iconShow && (
               <View style={styles.buttonContainer}>
                 <SquareIcon
                   name={"Move money"}
                   image={"bank-transfer"}
                   onPress={() => navigation.navigate("MoveMoney")}
                 />
-
                 <SquareIcon
                   name={"Send money"}
                   image={"send"}
                   onPress={() => navigation.navigate("SendMoney")}
                 />
-
                 <SquareIcon
                   name={"Cards"}
                   image={"credit-card"}
                   onPress={() => navigation.navigate("MyCards")}
                 />
-
                 <SquareIcon
-                  name={"Switch accounts"}
-                  image={"account-switch"}
-                  onPress={() => navigation.navigate("SwitchAccounts")}
-                />
-              </View>
-              <View style={styles.buttonContainer}>
-                <SquareIcon
-                  name={"Payment link"}
-                  image={"link-variant"}
-                  onPress={() => navigation.navigate("PaymentLink")}
-                />
-
-                <SquareIcon
-                  name={"Subscriptions"}
-                  image={"newspaper-variant-outline"}
-                  onPress={() => navigation.navigate("Subscriptions")}
-                />
-
-                <SquareIcon
-                  name={"Set limits"}
-                  image={"car-speed-limiter"}
-                  onPress={() => navigation.navigate("SpendingLimit")}
-                />
-
-                <SquareIcon
-                  name={"Transactions"}
-                  image={"bank-outline"}
-                  onPress={() => navigation.navigate("Transactions")}
-                />
-              </View>
-
-              <View style={styles.buttonContainer}>
-                <SquareIcon
-                  name={"Teams"}
-                  image={"account-group"}
-                  onPress={() => navigation.navigate("Teams")}
-                />
-
-                <SquareIcon
-                  name={"Invoices"}
-                  image={"file-document-multiple"}
-                  onPress={() => navigation.navigate("Invoices")}
-                />
-
-                <SquareIcon
-                  name={"Direct debits"}
-                  image={"directions"}
-                  onPress={() => navigation.navigate("DirectDebits")}
-                />
-
-                <SquareIcon
-                  name={"Less"}
+                  name={"More"}
                   image={"dots-horizontal"}
                   onPress={() => setIconShow(!iconShow)}
                 />
               </View>
+            )}
+            {iconShow && (
+              <View>
+                <View style={styles.buttonContainer}>
+                  <SquareIcon
+                    name={"Move money"}
+                    image={"bank-transfer"}
+                    onPress={() => navigation.navigate("MoveMoney")}
+                  />
+                  <SquareIcon
+                    name={"Send money"}
+                    image={"send"}
+                    onPress={() => navigation.navigate("SendMoney")}
+                  />
+                  <SquareIcon
+                    name={"Cards"}
+                    image={"credit-card"}
+                    onPress={() => navigation.navigate("MyCards")}
+                  />
+                  <SquareIcon
+                    name={"Switch accounts"}
+                    image={"account-switch"}
+                    onPress={() => navigation.navigate("SwitchAccounts")}
+                  />
+                </View>
+                <View style={styles.buttonContainer}>
+                  <SquareIcon
+                    name={"Payment link"}
+                    image={"link-variant"}
+                    onPress={() => navigation.navigate("PaymentLink")}
+                  />
+                  <SquareIcon
+                    name={"Subscriptions"}
+                    image={"newspaper-variant-outline"}
+                    onPress={() => navigation.navigate("Subscriptions")}
+                  />
+                  <SquareIcon
+                    name={"Set limits"}
+                    image={"car-speed-limiter"}
+                    onPress={() => navigation.navigate("SpendingLimit")}
+                  />
+                  <SquareIcon
+                    name={"Transactions"}
+                    image={"bank-outline"}
+                    onPress={() => navigation.navigate("Transactions")}
+                  />
+                </View>
+                <View style={styles.buttonContainer}>
+                  <SquareIcon
+                    name={"Teams"}
+                    image={"account-group"}
+                    onPress={() => navigation.navigate("Teams")}
+                  />
+                  <SquareIcon
+                    name={"Invoices"}
+                    image={"file-document-multiple"}
+                    onPress={() => navigation.navigate("Invoices")}
+                  />
+                  <SquareIcon
+                    name={"Direct debits"}
+                    image={"directions"}
+                    onPress={() => navigation.navigate("DirectDebits")}
+                  />
+                  <SquareIcon
+                    name={"Less"}
+                    image={"dots-horizontal"}
+                    onPress={() => setIconShow(!iconShow)}
+                  />
+                </View>
+              </View>
+            )}
+            <View style={styles.recentTransactionsContainer}>
+              <RecentTransactions />
             </View>
-          )}
-
-          <View style={styles.recentTransactionsContainer}>
-            <RecentTransactions />
+            <View style={{ margin: 25 }}>
+              <Text style={styles.headingText}>Your Carbon Footprints</Text>
+              <CarbonSpendGraph
+                handleViewMore={() =>
+                  navigation.navigate("ChooseCardsStandard5")
+                }
+              />
+            </View>
+            <View style={{ margin: 25 }}>
+              <Text style={styles.headingText}>
+                Your Virtual Planet Summary
+              </Text>
+              <VirtualPlanet
+                treeData={userImpact}
+                handleVirtual={() => navigation.navigate("VirtualEcoSystem")}
+              />
+            </View>
+            <View style={{ margin: 25 }}>
+              <Text style={styles.headingText}>Carbonyte + Xero</Text>
+              <XeroDashboard />
+            </View>
+            <View style={{ margin: 25 }}>
+              <ReferNow />
+            </View>
+            <View style={{ display: "flex", alignItems: "center" }}>
+              <Text style={styles.bottomText}>
+                Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+                <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+                <Text style={styles.bottomTextBold}>Choice</Text>
+              </Text>
+            </View>
           </View>
 
-          <View style={{ margin: 25 }}>
-            <Text style={styles.headingText}>Your Carbon Footprints</Text>
-            <CarbonSpendGraph
-              handleViewMore={() => navigation.navigate("ChooseCardsStandard5")}
-            />
-          </View>
-          <View style={{ margin: 25 }}>
-            <Text style={styles.headingText}>Your Virtual Planet Summary</Text>
-            <VirtualPlanet
-              treeData={userImpact}
-              handleVirtual={() => navigation.navigate("VirtualEcoSystem")}
-            />
-          </View>
-          <View style={{ margin: 25 }}>
-            <Text style={styles.headingText}>Carbonyte + Xero</Text>
-            <XeroDashboard />
-          </View>
-          <View style={{ margin: 25 }}>
-            <ReferNow />
-          </View>
-          <View style={{ display: "flex", alignItems: "center" }}>
-            <Text style={styles.bottomText}>
-              Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-              <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-              <Text style={styles.bottomTextBold}>Choice</Text>
-            </Text>
-          </View>
           <View style={{ marginTop: 50 }}></View>
         </ScrollView>
       </View>
     </ImageBackground>
   );
 };
+
+const DarkMode = () => (
+  <View style={styles.iconStyle}>
+    <Ionicons name="moon" color="white" size={24} />
+  </View>
+);
+const Notification = () => (
+  <View style={styles.iconStyle}>
+    <View style={styles.iconBadgeContainer}>
+      <Text style={styles.iconBadgeNumber}>1</Text>
+    </View>
+    <MaterialCommunityIcons name="bell-outline" color="white" size={24} />
+  </View>
+);
 
 const styles = StyleSheet.create({
   header: {
@@ -283,7 +273,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   backgroundImage: {
-    height: 200,
+    height: 270,
     width: "100%",
   },
   iconContainer: {
@@ -300,6 +290,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "white",
+  },
+  mainContent: {
+    backgroundColor: GlobalStyles.Color.backgroundColor,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: -20,
+    zIndex: 1,
   },
   iconStyle: {
     height: 40,
@@ -327,17 +324,18 @@ const styles = StyleSheet.create({
   iconBadgeNumber: {
     fontSize: 6,
     color: colors.white,
-    fontWeight: "900"
+    fontWeight: "900",
   },
   AccountDetailsCard: {
     position: "absolute",
     top: 130,
     width: "100%",
     padding: 20,
+    zIndex: 2,
   },
   buttonContainer: {
     marginTop: "2.5%",
-    top: "60%",
+    top: "40%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     display: "flex",
@@ -345,7 +343,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   recentTransactionsContainer: {
-    marginTop: "60%",
+    marginTop: "50%",
   },
   headingText: {
     color: "#212529",
