@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default terminateCardAlert = (terminateFn) =>
   Alert.alert(
