@@ -250,7 +250,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                 <Animated.View
                   style={{
                     paddingVertical: 0,
-                    marginLeft: index !== 3 ? "30%" : "20%",
+                    marginLeft: index !== 3 ? "33%" : "20%",
                   }}
                 >
                   
