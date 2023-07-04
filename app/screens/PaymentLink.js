@@ -22,11 +22,14 @@ import * as Clipboard from "expo-clipboard";
 import apiTransaction from "../api/apiPaymentLink";
 
 import Tagline from "../components/Tagline";
+import { Dropdown } from "react-native-element-dropdown";
 const LINK = "https://www.google.com";
 
 const PaymentLink = () => {
   const [link, setLink] = useState(LINK);
   const [isLoading, setIsLoading] = useState(false);
+  const [linkSelection, setLinkSelection] = useState([])
+  const [selectedLink, setSelectedLink] = useState("")
 
   const copyToClipboard = async () => {
     console.log("clicked", link);
@@ -40,19 +43,60 @@ const PaymentLink = () => {
     loadData();
   }, []);
 
+  useEffect(() => {
+    getPaymentLink();
+  }, [selectedLink]);
+
   const loadData = async () => {
     try {
       setIsLoading(true)
-      
-      const paymentRequestURL = await apiTransaction.getPaymentLink();
-      console.log(paymentRequestURL);
-      setLink(paymentRequestURL);
+      const paymentLinkSelection = await apiTransaction.getLinkSelection()
+      setLinkSelection(paymentLinkSelection)
       setIsLoading(false);
     } catch {
       setIsLoading(false);
       return;
     }
   };
+
+  const getPaymentLink = async () => {
+    try {
+      setIsLoading(true)
+      const obj = {
+        "paymentAmount": {
+          "currency": "GBP",
+          "value": 10
+        },
+        "paymentReference": "Payment from Jack",
+        "destination": {
+          "type": "ACCOUNT",
+          "id": "A122HTHM",
+          "accountNumber": "03011666",
+          "sortCode": "000000",
+          "name": "Jack"
+        },
+        "aspspId": selectedLink,
+        "paymentContext": {
+          "paymentContextCode": "",
+          "deliveryAddress": {
+            "addressLine1": "",
+            "addressLine2": "",
+            "postTown": "",
+            "postCode": "",
+            "country": ""
+          },
+          "merchantCategoryCode": "",
+          "merchantCustomerIdentification": ""
+        }
+      }
+      const paymentRequestURL = await apiTransaction.getPaymentLink(obj);
+      setLink(paymentRequestURL);
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+      return;
+    }
+  }
 
   if (isLoading) {
     return (
@@ -77,9 +121,25 @@ const PaymentLink = () => {
           <Text style={styles.balance}>
             Copy this payment link to allow someone to send money to you
           </Text>
+
+          <Dropdown
+            style={[styles.dropdown]}
+            containerStyle={styles.dropdownContainer}
+            data={linkSelection}
+            maxHeight={100}
+            labelField="name"
+            valueField="id"
+            placeholder={"Select a bank"}
+            // placeholderStyle={{fontSize: 14, color: "#D3D3D3"}}
+            value={selectedLink}
+            onChange={(item) => {
+              setSelectedLink(item.id);
+            }}
+          />
+
           <View style={styles.linkContainer}>
             <Entypo name="link" size={20} color="black" />
-            <Text>{link.slice(0, 100)}...</Text>
+            <Text>{link?.slice(0, 100)}...</Text>
           </View>
           <TouchableOpacity
             style={styles.paymentContainer}
@@ -147,7 +207,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-  }
+  },
+  dropdown: {
+    borderRadius: 10,
+    borderWidth: 0.5,
+    height: 50,
+    paddingHorizontal: 8,
+    marginBottom: "5%",
+    marginTop: "2.5%",
+    opacity: 1,
+    borderColor: "#D3D3D3",
+  },
+  dropdownContainer: {
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
+  },
 });
 
 export default PaymentLink;

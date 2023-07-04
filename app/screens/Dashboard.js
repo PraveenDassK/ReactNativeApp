@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: "2.5%",
-    top: "60%",
+    top: "50%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     display: "flex",
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   recentTransactionsContainer: {
-    marginTop: "60%",
+    marginTop: "50%",
   },
   headingText: {
     color: "#212529",

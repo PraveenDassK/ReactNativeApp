@@ -14,7 +14,7 @@ import api from "../api/api_list";
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import AuthContext from "../auth/context";
 import UserIcon from "../components/UserIcon";
-
+import Tagline from "../components/Tagline";
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
@@ -203,6 +203,7 @@ const SendMoney = ({ navigation }) => {
             );
           }}
         />
+        <Tagline/>
       </View>
     </>
   );
