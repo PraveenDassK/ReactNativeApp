@@ -24,6 +24,9 @@ import formatCurrency from "../utility/formatCurrency";
 import AppScreen from "../components/AppScreen";
 
 import { TransactionContainer } from "../components/transHistory";
+import apiTransaction from "../api/apiTransaction";
+import Tagline from "../components/Tagline";
+import PinModal from "../components/PinModal";
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -92,8 +95,8 @@ export default function MyCards({ navigation }) {
       accountID,
       numOfTransactions
     );
+    // const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
     const transactionRes = response.content;
-    console.log(transactionRes);
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
   };
@@ -134,9 +137,8 @@ export default function MyCards({ navigation }) {
           <View>
             <Text>Current Balance</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontWeight: "900", color: "green" }}>£</Text>
               <Text style={{ fontSize: 34, fontWeight: "900", color: "green" }}>
-                46,569.00
+                {formatCurrency(transactions[0]?.account?.balance, "GBP", false)}
               </Text>
             </View>
             <Text style={{ lineHeight: 40 }}>
@@ -165,14 +167,7 @@ export default function MyCards({ navigation }) {
             onTransactionFilter={(item) => handleTransactionFilter(item)}
           />
         </View>
-
-        <View style={styles.footerContainer}>
-          <Text>
-            Your <Text style={{ fontWeight: "900" }}>Money </Text>&#x2219; Your{" "}
-            <Text style={{ fontWeight: "900" }}>Planet </Text>&#x2219; Your{" "}
-            <Text style={{ fontWeight: "900" }}>Choice</Text>
-          </Text>
-        </View>
+        <Tagline />
       </ScrollView>
     </AppScreen>
   );
@@ -270,147 +265,30 @@ const CardSelector = ({ onCardSelect }) => {
   );
 };
 
-// const TransactionContainer = ({
-//   title = "Transactions",
-//   onTransaction,
-//   transactions,
-//   onTransactionFilter,
-// }) => (
-//   <View style={styles.transactionContainer}>
-//     <Text style={[styles.bold, styles.header]}>{title}</Text>
-
-//     <TransactionHeader
-//       onTransactionFilter={(item) => onTransactionFilter(item)}
-//     />
-
-//     {transactions.map(
-//       ({ id, credit, description, transactionDate, amount }, index) => (
-//         <Transaction
-//           key={id}
-//           onTransaction={onTransaction}
-//           description={description}
-//           date={transactionDate}
-//           amount={amount}
-//           credit={credit}
-//           index={index}
-//           lastElement={transactions.length - 1}
-//         />
-//       )
-//     )}
-//     <TransactionFooter navigate={false} />
-//   </View>
-// );
-
-// const TransactionHeader = ({ onTransactionFilter }) => {
-//   const selections = [
-//     { id: 1, name: "all" },
-//     { id: 2, name: "income" },
-//     { id: 3, name: "expenses" },
-//   ];
-//   const [isSelected, setSelected] = useState("all");
-
-//   const handleTransaction = (item) => {
-//     setSelected(item);
-//     onTransactionFilter(item);
-//   };
-
-//   return (
-//     <View style={[styles.transactionHeaderContainer, {backgroundColor: "rgba(255, 255, 255, 0.5)"}]}>
-//       <BlurView tint="light" intensity={60} style={styles.blurView}>
-//         {selections.map((selection) => (
-//           <TouchableOpacity
-//             key={selection.id}
-//             onPress={() => handleTransaction(selection.name)}
-//             style={{
-//               flex: 1,
-//               borderBottomWidth: 3,
-//               borderRightColor: "white",
-//               borderRightWidth: selection.name !== "expenses" ? 3 : 0,
-//               borderBottomColor:
-//                 selection.name == isSelected ? "blue" : "white",
-//               paddingBottom: "2.5%",
-//               alignItems: "center",
-//             }}
-//           >
-//             <Text
-//               style={{
-//                 textTransform: "capitalize",
-//                 opacity: selection.name == isSelected ? 1 : 0.5,
-//               }}
-//             >
-//               {selection.name}
-//             </Text>
-//           </TouchableOpacity>
-//         ))}
-//       </BlurView>
-//     </View>
-//   );
-// };
-
-// const Transaction = ({
-//   onTransaction,
-//   description,
-//   amount,
-//   date,
-//   credit,
-//   index,
-//   lastElement,
-// }) => {
-//   return (
-//     <BlurView tint="light" intensity={60} style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}>
-//       <Pressable
-//         onPress={onTransaction}
-//         style={{
-//           flexDirection: "row",
-//           paddingHorizontal: "5%",
-//           paddingVertical: "2.5%",
-//           justifyContent: "space-between",
-
-//           borderBottomLeftRadius: index == -1 ? 10 : 0,
-//         }}
-//       >
-//         <View style={{ flexDirection: "row" }}>
-//           <View
-//             style={{
-//               justifyContent: "center",
-//               alignItems: "center",
-//               marginRight: "5%",
-//             }}
-//           >
-//             <MaterialCommunityIcons
-//               name={credit ? "arrow-bottom-left" : "arrow-top-right"}
-//               size={24}
-//               color={credit ? "green" : "red"}
-//             />
-//           </View>
-//           <View>
-//             <Text style={styles.bold}>{description}</Text>
-//             <Text style={styles.subText}>{moment(date).calendar()}</Text>
-//           </View>
-//         </View>
-//         <View>
-//           <Text style={[styles.bold, { textAlign: "right" }]}>
-//             {!credit ? "-" : "+"} £{amount.toFixed(2)}
-//           </Text>
-//           <Text style={[styles.subText, { textAlign: "right" }]}>
-//             {moment(date).format("D MMM")}
-//           </Text>
-//         </View>
-//       </Pressable>
-//       <View
-//         style={{
-//           marginHorizontal: "5%",
-//           borderBottomColor: "white",
-//           borderBottomWidth: index == lastElement ? 0 : 3,
-//         }}
-//       />
-//     </BlurView>
-//   );
-// };
-
 const CardCarousel = ({ cards, onCardPress }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [flipped, setFlipped] = useState(false);
 
+  if (showPinModal) {
+    return (
+      <View style={styles.mainContainer}>
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal
+            title="Enter your PIN"
+            success={() => {
+              setShowPinModal(false)
+              
+            }
+          }
+          />
+        ) : null}
+      </View>
+    )
+  }
   return (
     <ScrollView
       horizontal={true}
@@ -438,6 +316,7 @@ const CardCarousel = ({ cards, onCardPress }) => {
           outputRange: [0.85, 1, 0.85],
         });
 
+
         const opacity = scrollX.interpolate({
           inputRange,
           outputRange: [0.5, 1, 0.5],
@@ -456,12 +335,17 @@ const CardCarousel = ({ cards, onCardPress }) => {
               }}
             >
               <FlipCard
-                friction={6}
+                friction={2}
                 perspective={1000}
                 flipHorizontal={true}
                 flipVertical={false}
-                flip={false}
+                flip={flipped}
                 clickable={true}
+                onFlipStart={()=>{
+                  //Ask for pin to flip
+                  // setShowPinModal(true)
+                  setFlipped(false)
+                }}
                 onFlipEnd={(isFlipEnd) => {
                   console.log("isFlipEnd", isFlipEnd);
                 }}
@@ -477,7 +361,9 @@ const CardCarousel = ({ cards, onCardPress }) => {
                 />
                 {/* Back Side */}
 
-                <CardBackSide />
+                <CardBackSide
+
+                />
               </FlipCard>
             </Animated.View>
           </TouchableOpacity>
@@ -488,6 +374,15 @@ const CardCarousel = ({ cards, onCardPress }) => {
 };
 
 const CardBackSide = () => {
+  const cardBackOBJ = {
+    "firstName": "Jack",
+    "lastName": "Huang",
+    "cardNumber": "",
+    "expiaryDate":"01/01",
+    "cvv": "000"
+  }
+
+
   return (
     <View style={styles.backCardContainer}>
       <Text style={[styles.backCardText, styles.backCardHeader]}>BOB</Text>

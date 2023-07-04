@@ -43,6 +43,7 @@ const PaymentLink = () => {
   const loadData = async () => {
     try {
       setIsLoading(true)
+      
       const paymentRequestURL = await apiTransaction.getPaymentLink();
       console.log(paymentRequestURL);
       setLink(paymentRequestURL);

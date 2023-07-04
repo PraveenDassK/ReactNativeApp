@@ -1,5 +1,11 @@
 import client from "./client";
 
+const getLinkSelection = async () => {
+  const url = `https://api.carbonyte.io/walletmodule/GetSupportedASPSPs`
+  const links = await client.post(url)
+  return links.data.details
+}
+
 const getPaymentLink = async () => {
   const obj = {
     "paymentAmount": {
@@ -35,4 +41,5 @@ const getPaymentLink = async () => {
 
 export default {
   getPaymentLink,
+  getLinkSelection
 }
