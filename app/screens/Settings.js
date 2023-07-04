@@ -23,7 +23,6 @@ import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
 import colors from "../config/colors";
 
-
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [account, setAccNum] = useState(null);
@@ -44,8 +43,8 @@ const Settings = ({ navigation }) => {
    * @dev Loads the data once
    */
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      loadData()
+    const unsubscribe = navigation.addListener("focus", () => {
+      loadData();
     });
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
@@ -74,7 +73,6 @@ const Settings = ({ navigation }) => {
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
 
-    
     const data = userDetails;
     const accountdata = accountDetails;
 
@@ -402,14 +400,6 @@ const Settings = ({ navigation }) => {
           </View>
         </View>
 
-        <TouchableOpacity style={[styles.button]}>
-          <Button
-            title="Subscription"
-            style={[styles.boxShadow]}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("Subscriptions")}
-          />
-        </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Button
             title="Account"
@@ -442,15 +432,6 @@ const Settings = ({ navigation }) => {
             style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("Devices")}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}>
-          <Button
-            title="Payment Link"
-            style={styles.boxShadow}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("PaymentLink")}
           />
         </TouchableOpacity>
 
