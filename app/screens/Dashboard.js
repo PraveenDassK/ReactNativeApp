@@ -30,7 +30,7 @@ import VirtualPlanet from "../components/VirtualPlanet";
 import XeroDashboard from "../components/XeroDashboard";
 import ReferNow from "../components/ReferNow";
 import colors from "../config/colors";
-import Logo from "../assets/Dashboard/Carbonytelogomark.svg";
+
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);

@@ -6,6 +6,7 @@ import formatCurrency from "../utility/formatCurrency";
 import { LinearGradient } from "expo-linear-gradient";
 import Text from "../components/Text";
 import GlobalStyles from "../../GlobalStyles";
+import Logo from "../assets/Dashboard/Carbonytelogomark.svg";
 const AccountDeatils = ({ userData, userImpact, handlePress }) => {
   const [title, setTitle] = useState("");
   const [accountBalance, setBalance] = useState([]);
@@ -32,6 +33,10 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
         colors={["#0101FD", "#178BFF"]}
         style={styles.cardContainer}
       >
+        <View style={{position: "absolute", right: -40, bottom: -20, opacity: 0.3}}>
+        <Logo width={140} height={160} />
+
+        </View>
         <View style={styles.accountContainer}>
           <Text style={styles.accountName}>Account</Text>
           <View style={styles.accountNumberStyle}>
