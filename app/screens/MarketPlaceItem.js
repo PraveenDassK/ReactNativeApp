@@ -9,11 +9,13 @@ import {
   ScrollView,
 } from "react-native";
 
+
 import { Rating, AirbnbRating } from "react-native-ratings";
 
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Swiper from "react-native-swiper";
 import { moderateScale } from "../config/scaling";
+import GlobalStyles from "../../GlobalStyles";
 
 import Button from "../components/AppButton";
 
@@ -83,7 +85,7 @@ const MarketPlaceItem = () => {
           <View style={styles.priceFooterContainer}>
             <Rating
               startingValue={itemObj.reviews.score}
-              tintColor="#F6F5F8"
+              tintColor={GlobalStyles.Color.backgroundColor}
               imageSize={20}
             />
             <TouchableOpacity>
@@ -126,7 +128,11 @@ const MarketPlaceItem = () => {
           </View>
 
           <View>
-            <Button title={"go to vendor"} textTransform={"uppercase"} onPress={() => Alert.alert("Function in progress")}/>
+            <Button
+              title={"go to vendor"}
+              textTransform={"uppercase"}
+              onPress={() => Alert.alert("Function in progress")}
+            />
           </View>
           <View style={styles.wishlistContainer}>
             <Text style={styles.wishlistText}>add to wishlist</Text>
@@ -397,7 +403,11 @@ const Card = ({
           </TouchableOpacity>
         </View>
 
-        <Button title={"go to vender"} textTransform={"uppercase"} onPress={() => Alert.alert("Function in progress")}/>
+        <Button
+          title={"go to vender"}
+          textTransform={"uppercase"}
+          onPress={() => Alert.alert("Function in progress")}
+        />
       </View>
     </View>
   );
@@ -580,7 +590,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 25,
-    backgroundColor: "#F6F5F8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
     justifyContent: "center",
     alignItems: "center",
   },

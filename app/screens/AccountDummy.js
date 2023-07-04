@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   groupPosition: {
     height: 2,
     borderTopWidth: 1,
-    borderColor: "#f6f5f8",
+    borderColor: GlobalStyles.Color.backgroundColor,
     borderStyle: "solid",
     left: 0,
     right: 0,

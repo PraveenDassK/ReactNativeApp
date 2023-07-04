@@ -104,21 +104,21 @@ const AddFunds = ({ navigation }) => {
     };
 
     const requestObj = {
-      "sourceAccountId": accountID,
-      "destination": {
-        "type": "SCAN",
-        "id": "A1226WEM",
-        "accountNumber": chosenAccount.identifiers[0].accountNumber,
-        "sortCode": chosenAccount.identifiers[0].sortCode,
-        "name": chosenAccount.name,
-        "phoneNumber": ""
+      sourceAccountId: accountID,
+      destination: {
+        type: "SCAN",
+        id: "A1226WEM",
+        accountNumber: chosenAccount.identifiers[0].accountNumber,
+        sortCode: chosenAccount.identifiers[0].sortCode,
+        name: chosenAccount.name,
+        phoneNumber: "",
       },
-      "currency": "GBP",
-      "amount": amount,
-      "reference": "Transfer"
-    }
+      currency: "GBP",
+      amount: amount,
+      reference: "Transfer",
+    };
 
-    console.log(requestObj)
+    console.log(requestObj);
 
     console.log(benData);
     navigation.navigate("Pin", {
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     height: "30%",
     borderRadius: 15,
-    backgroundColor: "#F6F5F8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
   },
   Select_account: {
     top: verticalScale(-5),

@@ -1,21 +1,16 @@
-import React,{ useLayoutEffect} from "react";
+import React, { useLayoutEffect } from "react";
 import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 
-const AccountDummy2 = ({navigation}) => {
-
-
+const AccountDummy2 = ({ navigation }) => {
   useLayoutEffect(() => {
-    unsubscribe = navigation.addListener('focus', () => {
-      navigation.jumpTo("Profile")
+    unsubscribe = navigation.addListener("focus", () => {
+      navigation.jumpTo("Profile");
     });
-  },[])
+  }, []);
 
-  return (
-    <View style={styles.account}>
-    </View>
-  );
+  return <View style={styles.account}></View>;
 };
 
 const styles = StyleSheet.create({
@@ -24,9 +19,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "700",
     position: "absolute",
-    
-   
-    
   },
   groupChildPosition: {
     height: 155,
@@ -37,7 +29,7 @@ const styles = StyleSheet.create({
   groupPosition: {
     height: 2,
     borderTopWidth: 1,
-    borderColor: "#f6f5f8",
+    borderColor: GlobalStyles.Color.backgroundColor,
     borderStyle: "solid",
     left: 0,
     right: 0,
@@ -96,7 +88,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     left: 6,
     position: "absolute",
-    
   },
   hello3: {
     marginTop: -104.25,
@@ -164,8 +155,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: GlobalStyles.Padding.padding_6xl,
     width: "100%",
-    paddingLeft:"10%",
-    paddingRight:"10%",
+    paddingLeft: "10%",
+    paddingRight: "10%",
     backgroundColor: GlobalStyles.Color.gray_100,
   },
 });

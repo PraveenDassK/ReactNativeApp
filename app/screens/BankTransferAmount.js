@@ -38,8 +38,8 @@ const BankTransferAmount = ({ route, navigation }) => {
   const destination = {};
   console.log(payeeDetails);
 
-  const name = payeeDetails.payeeDetails.name
-  const accountNumber = route.params.requestObj.destination?.accountNumber
+  const name = payeeDetails.payeeDetails.name;
+  const accountNumber = route.params.requestObj.destination?.accountNumber;
 
   // const sortCode = route.params.sortCode;
   // const accountCode = route.params.accountNumber;
@@ -171,7 +171,6 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   return (
     <ScrollView nestedScrollEnabled={true}>
-
       <View style={styles.headerContainer}>
         <View>
           <Text style={styles.headerHeading}>Payee name</Text>
@@ -246,14 +245,14 @@ const BankTransferAmount = ({ route, navigation }) => {
             </ScrollView>
           </View>
         </View>
-         <View
+        <View
           style={{
             alignItems: "center",
             justifyContent: "center",
             marginTop: "15%",
           }}
         ></View>
-        <Button title="Continue" color="white" textColor="black" /> 
+        <Button title="Continue" color="white" textColor="black" />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             // onPress={(selectedAccount) => selectAccount(selectedAccount)}
@@ -271,11 +270,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <Button
-          title="Continue"
-          color="white"
-          textColor="black"
-        />
+        <Button title="Continue" color="white" textColor="black" />
       </View>
     </ScrollView>
   );
@@ -387,7 +382,7 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     height: "30%",
     borderRadius: 15,
-    backgroundColor: "#F6F5F8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
   },
   Select_account: {
     top: verticalScale(-5),

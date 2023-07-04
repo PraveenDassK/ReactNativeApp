@@ -18,6 +18,7 @@ import Button from "../components/AppButton";
 
 import itemObj from "../api/apiMarket";
 import colors from "../config/colors";
+import GlobalStyles from "../../GlobalStyles";
 
 const itemArray = [itemObj, itemObj, itemObj, itemObj];
 

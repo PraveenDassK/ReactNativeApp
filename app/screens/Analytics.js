@@ -449,7 +449,7 @@ const Analytics = ({ navigation }) => {
         </View>
         <View style={{ height: 20, width: "100%" }} />
       </View>
-      <Tagline/>
+      <Tagline />
     </ScrollView>
   );
 };
@@ -487,13 +487,13 @@ const Bazier = ({ graphData }) => {
         withVerticalLines={false}
         withHorizontalLabels={false}
         chartConfig={{
-          backgroundGradientFrom: "#F6F5F8",
-          backgroundGradientTo: "#F6F5F8",
+          backgroundGradientFrom: GlobalStyles.Color.backgroundColor,
+          backgroundGradientTo: GlobalStyles.Color.backgroundColor,
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
           fillShadowGradientFrom: "black",
-          fillShadowGradientTo: "#F6F5F8",
+          fillShadowGradientTo: GlobalStyles.Color.backgroundColor,
           strokeWidth: 5,
           style: { borderRadius: 16 },
           propsForDots: {
@@ -535,18 +535,18 @@ const Bazier = ({ graphData }) => {
           let isSamePoint = tooltipPos.x === data.x && tooltipPos.y === data.y;
           isSamePoint
             ? setTooltipPos((previousState) => {
-              return {
-                ...previousState,
-                value: data.value,
-                visible: !previousState.visible,
-              };
-            })
+                return {
+                  ...previousState,
+                  value: data.value,
+                  visible: !previousState.visible,
+                };
+              })
             : setTooltipPos({
-              x: data.x,
-              value: data.value,
-              y: data.y,
-              visible: true,
-            });
+                x: data.x,
+                value: data.value,
+                y: data.y,
+                visible: true,
+              });
         }}
       />
     </View>

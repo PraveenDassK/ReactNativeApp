@@ -96,7 +96,7 @@ const AccountSettings = ({ navigation }) => {
           <AppText style={{ fontSize: 20, color: "blue" }}>£{balance}</AppText>
         </View>
       </View>
-      
+
       <View style={styles.accountTypeContainer}>
         <AppText style={{ opacity: 0.3 }}>{subscriptions} subscription</AppText>
         <AppText style={{ fontSize: 10, color: "black" }}>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
 
-    backgroundColor: "#F6F5F8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
   },
   accountTypeContainer: {
     width: "80%",

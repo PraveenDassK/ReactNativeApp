@@ -1,13 +1,41 @@
-import React, { useEffect, useState, useContext, useCallback, useRef, Fragment, } from "react";
-import { RefreshControl, Text, StyleSheet, Image, View, TouchableOpacity, ScrollView, ActivityIndicator, Platform, Dimensions, TouchableWithoutFeedback, Vibration, useWindowDimensions, } from "react-native";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+  useRef,
+  Fragment,
+} from "react";
+import {
+  RefreshControl,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Vibration,
+  useWindowDimensions,
+} from "react-native";
 
 import * as Device from "expo-device";
 
 import Swiper from "react-native-swiper";
 import {
-  GestureDetector, GestureHandlerRootView,
+  GestureDetector,
+  GestureHandlerRootView,
 } from "react-native-gesture-handler";
-import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming, } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
@@ -59,7 +87,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [transactions, setTransactions] = useState([]);
   const [transactionTotal, setTransactionTotal] = useState(1);
 
-  const [iconShow, setIconShow] = useState(false)
+  const [iconShow, setIconShow] = useState(false);
 
   const {
     carbonyteID,
@@ -111,7 +139,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   //Calls the API once during load
   useEffect(() => {
     loadData();
-    checkForInitalPasscode()
+    checkForInitalPasscode();
   }, [accountID, customerDetails]);
 
   const checkForInitalPasscode = async () => {
@@ -130,10 +158,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     if (!customerDetails) return;
     const userData = await apiCall.GetCustomerDetails(accountID);
     const resposeData = await apiCall.GetUserImpact(customerDetails);
-   
+
     const transactionCall = await apiCall.GetTransactions(accountID);
 
-    console.log(resposeData)
+    console.log(resposeData);
     const carbonSpendData = await apiCarbon.GetBarGraphData();
     setCatNames(carbonSpendData.labels);
     setDataPercentages(carbonSpendData.percentages);
@@ -154,7 +182,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     setCarbon(resposeData.totalOffset);
 
     setTransactions(transactionCall.transactions);
-    setTransactionTotal(transactionCall.total)
+    setTransactionTotal(transactionCall.total);
     //Load the data for transactions
     let pageShow = [];
     for (let i = 0; i < 5; i++) {
@@ -171,7 +199,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 width: 50,
                 height: 50,
                 borderRadius: 25,
-                backgroundColor: "#F6F5F8",
+                backgroundColor: GlobalStyles.Color.backgroundColor,
                 borderColor: "black",
                 alignSelf: "center",
                 marginLeft: "2.5%",
@@ -422,14 +450,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           </View>
 
           <View style={styles.buttonContainer}>
-
-
             <SquareIcon
               text={"Move money"}
               image={"bank-transfer"}
               trigger={() => navigation.navigate("MoveMoney")}
             />
-
 
             <SquareIcon
               text={"Send money"}
@@ -443,26 +468,24 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               trigger={() => navigation.navigate("MyCards")}
             />
 
-            {!iconShow ?
+            {!iconShow ? (
               <SquareIcon
                 text={"More"}
                 image={"dots-horizontal"}
                 trigger={() => setIconShow(!iconShow)}
-              /> :
-
+              />
+            ) : (
               <SquareIcon
                 text={"Switch accounts"}
                 image={"account-switch"}
                 trigger={() => navigation.navigate("SwitchAccounts")}
               />
-            }
-
+            )}
           </View>
 
-          {iconShow ?
+          {iconShow ? (
             <View>
               <View style={styles.buttonContainer}>
-
                 <SquareIcon
                   text={"Payment link"}
                   image={"link-variant"}
@@ -486,18 +509,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   image={"bank-outline"}
                   trigger={() => navigation.navigate("Transactions")}
                 />
-
               </View>
 
               <View style={styles.buttonContainer}>
-
-
                 <SquareIcon
                   text={"Teams"}
                   image={"account-group"}
                   trigger={() => navigation.navigate("Teams")}
                 />
-
 
                 <SquareIcon
                   text={"Invoices"}
@@ -516,11 +535,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   image={"dots-horizontal"}
                   trigger={() => setIconShow(!iconShow)}
                 />
-
               </View>
             </View>
-
-            : false}
+          ) : (
+            false
+          )}
         </View>
 
         <View style={styles.carbonSpendingTitleDiv}>
@@ -760,23 +779,27 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={{ marginTop: "2.5%" }} />
           {/* // AssetsAssets */}
 
-          {projects && <View style={styles.containerSpacing}>
-              <TransactionHead headerTitle="Carbon transactions"/>
-            {projects.map(({ name, lastUpdated, displayAssetPrice, type }, index) => (
-              <TransactionBody
-                key={index}
-                name={`${name} £${displayAssetPrice}/${type}`}
-                date={lastUpdated}
-                token={1}
+          {projects && (
+            <View style={styles.containerSpacing}>
+              <TransactionHead headerTitle="Carbon transactions" />
+              {projects.map(
+                ({ name, lastUpdated, displayAssetPrice, type }, index) => (
+                  <TransactionBody
+                    key={index}
+                    name={`${name} £${displayAssetPrice}/${type}`}
+                    date={lastUpdated}
+                    token={1}
+                  />
+                )
+              )}
+              <TransactionFooter
+                number={projects.length}
+                total={numTrees}
+                onSee={() => navigation.navigate("VirtualEcoSystem")}
               />
-            ))}
-            <TransactionFooter
-              number={projects.length}
-              total={numTrees}
-              onSee={() => navigation.navigate("VirtualEcoSystem")} />
-          </View>}
+            </View>
+          )}
         </View>
-
 
         {transactions && (
           <View style={{ paddingHorizontal: "5%", marginVertical: 40 }}>
@@ -916,7 +939,7 @@ const CarbonAssets = ({ project, navigation }) => {
             width: 50,
             height: 50,
             borderRadius: 25,
-            backgroundColor: "#F6F5F8",
+            backgroundColor: GlobalStyles.Color.backgroundColor,
             borderColor: "black",
             alignSelf: "center",
             marginLeft: "2.5%",
@@ -1154,7 +1177,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     height: "10%",
   },
-  containerSpacing: { paddingHorizontal: "5%", paddingVertical: "10%"},
+  containerSpacing: { paddingHorizontal: "5%", paddingVertical: "10%" },
   titleText: {
     top: verticalScale(2),
     left: horizontalScale(10),
@@ -1223,7 +1246,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: verticalScale(35),
     marginTop: "2.5%",
-    backgroundColor: "#f6f5f8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
   },
 
   carbonSpendingAnalysysBarProgress: {

@@ -52,8 +52,6 @@ const SwitchAccounts = ({ navigation, route }) => {
     return <View>{accounts}</View>;
   };
 
-
-
   const switchAccount = (Id) => {
     console.log("Switch to " + Id);
     setAccountID(Id);
@@ -124,7 +122,7 @@ const styles = StyleSheet.create({
     marginTop: "2.5%",
     width: "80%",
     marginLeft: "10%",
-    backgroundColor: "#F6F5F8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
     borderRadius: 15,
     flexDirection: "row",
     justifyContent: "space-around",

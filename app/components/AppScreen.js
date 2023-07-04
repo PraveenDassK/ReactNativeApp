@@ -1,5 +1,6 @@
 import React from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
+import GlobalStyles from "../../GlobalStyles";
 
 const AppScreen = ({ children }) => {
   return (
@@ -16,7 +17,7 @@ const AppScreen = ({ children }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#F6F5F8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
     position: "absolute",
     left: 0,
     right: 0,

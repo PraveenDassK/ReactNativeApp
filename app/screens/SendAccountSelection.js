@@ -1,35 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
-import api from "../api/api_list"
+import api from "../api/api_list";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 
-
-const SendAccountSelection = ({navigation}) => {
-  const[name,setName]=useState(null)
-  const[number,setnumber]=useState(null)
-  const [plan, setPlan] = useState(null)
-  const [account, setAccNum] = useState(null)
-  const authContext = useContext(AuthContext)
-
+const SendAccountSelection = ({ navigation }) => {
+  const [name, setName] = useState(null);
+  const [number, setnumber] = useState(null);
+  const [plan, setPlan] = useState(null);
+  const [account, setAccNum] = useState(null);
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    loadData()
-  },[])
-  
+    loadData();
+  }, []);
+
   const loadData = async () => {
     const response = await api.GetAccountByCustomer(authContext.userID);
     const accountresponse = await api.GetCustomerDetails(authContext.accountID);
-    const data = response.data.details.content[0]
-    const accountdata = accountresponse.data.details.accountDetails[0]
-    const phonedata = accountresponse.data.details.phoneNumbers[0]
-    console.log(data)
-    setName(data.name)
-    setnumber(phonedata.phoneNo)
-    setAccNum(data.identifiers[0].accountNumber)
-    setPlan(accountdata.accountType)
-  }
-  console.log(authContext.userID)
+    const data = response.data.details.content[0];
+    const accountdata = accountresponse.data.details.accountDetails[0];
+    const phonedata = accountresponse.data.details.phoneNumbers[0];
+    console.log(data);
+    setName(data.name);
+    setnumber(phonedata.phoneNo);
+    setAccNum(data.identifiers[0].accountNumber);
+    setPlan(accountdata.accountType);
+  };
+  console.log(authContext.userID);
   return (
     <View style={styles.sendAccountSelection}>
       <View style={styles.groupParent}>
@@ -166,29 +164,25 @@ const SendAccountSelection = ({navigation}) => {
           <View style={[styles.groupChild3, styles.groupChildPosition]} />
           <View style={[styles.groupChild4, styles.groupChildPosition]} />
           <View style={[styles.helloParent7, styles.helloParentPosition]}>
-            <Text style={[styles.hello11, styles.helloTypo12]}>
-            {account}
-            </Text>
-            <Text style={[styles.hello12, styles.helloTypo1]}>
-              {plan}
-            </Text>
+            <Text style={[styles.hello11, styles.helloTypo12]}>{account}</Text>
+            <Text style={[styles.hello12, styles.helloTypo1]}>{plan}</Text>
             <View style={styles.groupChild2} />
           </View>
           <Pressable
             style={styles.groupWrapper1}
             onPress={() => navigation.navigate("SendEnterPIN")}
           >
-          <View style={[styles.groupParent1, styles.groupParent1Position1]}>
-            <View style={styles.rectangleParent}>
-              <View style={[styles.groupChild6, styles.bank2IconPosition]} />
-              <View style={styles.maskGroup2361} />
+            <View style={[styles.groupParent1, styles.groupParent1Position1]}>
+              <View style={styles.rectangleParent}>
+                <View style={[styles.groupChild6, styles.bank2IconPosition]} />
+                <View style={styles.maskGroup2361} />
+              </View>
+              <Text
+                style={[styles.hello16, styles.helloTypo2, styles.helloTypo4]}
+              >
+                Send
+              </Text>
             </View>
-            <Text
-              style={[styles.hello16, styles.helloTypo2, styles.helloTypo4]}
-            >
-              Send
-            </Text>
-          </View>
           </Pressable>
         </View>
       </View>
@@ -288,7 +282,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupChildPosition: {
-    borderColor: "#f6f5f8",
+    borderColor: GlobalStyles.Color.backgroundColor,
     left: 25,
     right: 24,
     height: 2,
@@ -545,7 +539,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: GlobalStyles.Border.br_7xl,
     borderTopRightRadius: GlobalStyles.Border.br_7xl,
     height: "60%",
-    width:"100%",
+    width: "100%",
     left: 0,
     bottom: 0,
     right: 0,

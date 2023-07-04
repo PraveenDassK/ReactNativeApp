@@ -32,9 +32,7 @@ const SpendingLimit = ({ navigation, route }) => {
   const [spend, setSpend] = useState(0);
   const [percent, setPercent] = useState();
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   //Calls the API once during load
   useFocusEffect(() => {
@@ -58,7 +56,7 @@ const SpendingLimit = ({ navigation, route }) => {
     const spendTotal = response === null ? 0 : response.spend;
     const monthlyAmount = response === null ? 0 : response.monthlyAmount;
 
-    console.log(response)
+    console.log(response);
     setMonLim(monthlyAmount);
     setSpend(spendTotal);
     setPercent(spendTotal / monthlyAmount);
@@ -76,7 +74,7 @@ const SpendingLimit = ({ navigation, route }) => {
       console.log("setLimit", response);
       setIsEnabled(false);
 
-      loadData()
+      loadData();
     } else {
       setIsEnabled(true);
       storage.storeLimits(true);
@@ -180,7 +178,7 @@ const SpendingLimit = ({ navigation, route }) => {
               </Text>
               {monthLim - spend && percent >= 0 ? (
                 <View style={{ marginTop: "5%" }}>
-                  {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="#F6F5F8">
+                  {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor=GlobalStyles.Color.backgroundColor>
               <Text style={styles.barText}>test</Text>
             </View> */}
 

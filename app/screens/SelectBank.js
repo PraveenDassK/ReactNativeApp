@@ -1,192 +1,199 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View, Pressable ,TextInput, ScrollView} from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Pressable,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const SelectBank = ({navigation}) => {
-
+const SelectBank = ({ navigation }) => {
   return (
     <ScrollView>
-    <View style={styles.selectBank}>
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>Select Bank</Text>
-        <View style={[styles.iconAwesomeSearchParent, styles.iconLayout2]}>
+      <View style={styles.selectBank}>
+        <View style={styles.helloParent}>
+          <Text style={styles.hello}>Select Bank</Text>
+          <View style={[styles.iconAwesomeSearchParent, styles.iconLayout2]}>
+            <Image
+              style={[styles.iconAwesomeSearch, styles.iconPosition]}
+              resizeMode="cover"
+              source={require("../assets/icon-awesomesearch.png")}
+            />
+            <Image
+              style={[styles.iconMaterialKeyboardVoice, styles.iconPosition]}
+              resizeMode="cover"
+              source={require("../assets/icon-materialkeyboardvoice.png")}
+            />
+            <TextInput style={styles.hello1} placeholder={"Search"} />
+          </View>
+          <View style={[styles.groupChild, styles.groupShadowBox]} />
+          <View style={[styles.groupPosition, styles.groupShadowBox]} />
+          <Text style={[styles.hello2, styles.helloTypo2]}>Popular Banks</Text>
+          <Text style={[styles.hello3, styles.helloTypo2]}>Other Banks</Text>
+          <Pressable
+            style={[styles.helloWrapper, styles.helloWrapperPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <Text style={styles.hello4}>HSBC</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleParent, styles.rectangleParentPosition1]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupInner, styles.groupLayout]} />
+            <Text style={[styles.hello5, styles.helloTypo1]}>
+              <Text style={styles.standard}>Standard{"\n"}</Text>
+              <Text style={styles.standard}>Chartered</Text>
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleGroup, styles.helloWrapperPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.rectangleView, styles.groupLayout]} />
+            <Text style={styles.hello6}>Barclays</Text>
+          </Pressable>
+          <Pressable
+            style={styles.rectangleContainer}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild1, styles.groupChildPosition]} />
+            <Text style={[styles.hello7, styles.helloTypo1]}>
+              <Text style={styles.standard}>Royal Bank{"\n"}</Text>
+              <Text style={styles.standard}>of Scotland{"\n"}</Text>
+              <Text style={styles.standard}>{`Group `}</Text>
+            </Text>
+          </Pressable>
+          <Pressable
+            style={styles.groupPressable}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild2, styles.groupLayout]} />
+            <Text style={[styles.hello7, styles.helloTypo1]}>
+              <Text style={styles.standard}>Lloyds{"\n"}</Text>
+              <Text style={styles.standard}>Banking{"\n"}</Text>
+              <Text style={styles.standard}>Group</Text>
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleParent1, styles.image145IconPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild3, styles.groupChildPosition]} />
+            <Text style={[styles.hello7, styles.helloTypo1]}>
+              <Text style={styles.standard}>Nationwide{"\n"}</Text>
+              <Text style={styles.standard}>Building{"\n"}</Text>
+              <Text style={styles.standard}>Society</Text>
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleParent2, styles.rectangleParentPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild4, styles.groupPosition]} />
+            <Text style={[styles.hello10, styles.helloTypo]}>Santander UK</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleParent3, styles.rectangleParentPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild4, styles.groupPosition]} />
+            <Text style={[styles.hello11, styles.helloTypo]}>
+              Nationwide Building Society
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleParent4, styles.rectangleParentPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild4, styles.groupPosition]} />
+            <Text style={[styles.hello12, styles.helloTypo]}>Schroders</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleParent5, styles.rectangleParentPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild4, styles.groupPosition]} />
+            <Text style={[styles.hello13, styles.helloTypo]}>
+              Close Brothers Group plc
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.rectangleParent6, styles.rectangleParentPosition]}
+            onPress={() => navigation.navigate("SelectBank1")}
+          >
+            <View style={[styles.groupChild4, styles.groupPosition]} />
+            <Text style={[styles.hello14, styles.helloTypo]}>
+              Coventry Building Society
+            </Text>
+          </Pressable>
+          <View style={[styles.lineView, styles.groupChildLayout]} />
+          <View style={[styles.groupChild9, styles.groupChildLayout]} />
+          <View style={[styles.groupChild10, styles.groupChildLayout]} />
+          <View style={[styles.groupChild11, styles.groupChildLayout]} />
           <Image
-            style={[styles.iconAwesomeSearch, styles.iconPosition]}
+            style={styles.hsbcSymbolIcon}
             resizeMode="cover"
-            source={require("../assets/icon-awesomesearch.png")}
+            source={require("../assets/hsbcsymbol.png")}
           />
           <Image
-            style={[styles.iconMaterialKeyboardVoice, styles.iconPosition]}
+            style={[styles.image145Icon, styles.image145IconPosition]}
             resizeMode="cover"
-            source={require("../assets/icon-materialkeyboardvoice.png")}
+            source={require("../assets/image-145.png")}
           />
-          <TextInput style={styles.hello1} placeholder={"Search"}/>
+          <Image
+            style={[styles.image146Icon, styles.iconLayout1]}
+            resizeMode="cover"
+            source={require("../assets/image-146.png")}
+          />
+          <Image
+            style={styles.image148Icon}
+            resizeMode="cover"
+            source={require("../assets/image-148.png")}
+          />
+          <Image
+            style={[styles.downloadIcon, styles.iconLayout2]}
+            resizeMode="cover"
+            source={require("../assets/download.png")}
+          />
+          <Image
+            style={styles.nationwideLogo20012011Icon}
+            resizeMode="cover"
+            source={require("../assets/nationwidelogo20012011.png")}
+          />
+          <Image
+            style={[styles.nationwideLogo20012011Icon1, styles.iconLayout]}
+            resizeMode="cover"
+            source={require("../assets/nationwidelogo200120111.png")}
+          />
+          <Image
+            style={[styles.image149Icon, styles.iconLayout1]}
+            resizeMode="cover"
+            source={require("../assets/image-149.png")}
+          />
+          <Image
+            style={[
+              styles.schrodersLogoPngTransparentIcon,
+              styles.rectangleParentPosition1,
+            ]}
+            resizeMode="cover"
+            source={require("../assets/schroderslogopngtransparent.png")}
+          />
+          <Image
+            style={[styles.image150Icon, styles.iconLayout]}
+            resizeMode="cover"
+            source={require("../assets/image-150.png")}
+          />
+          <Image
+            style={styles.image151Icon}
+            resizeMode="cover"
+            source={require("../assets/image-151.png")}
+          />
         </View>
-        <View style={[styles.groupChild, styles.groupShadowBox]} />
-        <View style={[styles.groupPosition, styles.groupShadowBox]} />
-        <Text style={[styles.hello2, styles.helloTypo2]}>Popular Banks</Text>
-        <Text style={[styles.hello3, styles.helloTypo2]}>Other Banks</Text>
-        <Pressable
-          style={[styles.helloWrapper, styles.helloWrapperPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <Text style={styles.hello4}>HSBC</Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleParent, styles.rectangleParentPosition1]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupInner, styles.groupLayout]} />
-          <Text style={[styles.hello5, styles.helloTypo1]}>
-            <Text style={styles.standard}>Standard{"\n"}</Text>
-            <Text style={styles.standard}>Chartered</Text>
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleGroup, styles.helloWrapperPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.rectangleView, styles.groupLayout]} />
-          <Text style={styles.hello6}>Barclays</Text>
-        </Pressable>
-        <Pressable
-          style={styles.rectangleContainer}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild1, styles.groupChildPosition]} />
-          <Text style={[styles.hello7, styles.helloTypo1]}>
-            <Text style={styles.standard}>Royal Bank{"\n"}</Text>
-            <Text style={styles.standard}>of Scotland{"\n"}</Text>
-            <Text style={styles.standard}>{`Group `}</Text>
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.groupPressable}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild2, styles.groupLayout]} />
-          <Text style={[styles.hello7, styles.helloTypo1]}>
-            <Text style={styles.standard}>Lloyds{"\n"}</Text>
-            <Text style={styles.standard}>Banking{"\n"}</Text>
-            <Text style={styles.standard}>Group</Text>
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleParent1, styles.image145IconPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild3, styles.groupChildPosition]} />
-          <Text style={[styles.hello7, styles.helloTypo1]}>
-            <Text style={styles.standard}>Nationwide{"\n"}</Text>
-            <Text style={styles.standard}>Building{"\n"}</Text>
-            <Text style={styles.standard}>Society</Text>
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleParent2, styles.rectangleParentPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild4, styles.groupPosition]} />
-          <Text style={[styles.hello10, styles.helloTypo]}>Santander UK</Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleParent3, styles.rectangleParentPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild4, styles.groupPosition]} />
-          <Text style={[styles.hello11, styles.helloTypo]}>
-            Nationwide Building Society
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleParent4, styles.rectangleParentPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild4, styles.groupPosition]} />
-          <Text style={[styles.hello12, styles.helloTypo]}>Schroders</Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleParent5, styles.rectangleParentPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild4, styles.groupPosition]} />
-          <Text style={[styles.hello13, styles.helloTypo]}>
-            Close Brothers Group plc
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleParent6, styles.rectangleParentPosition]}
-          onPress={() => navigation.navigate("SelectBank1")}
-        >
-          <View style={[styles.groupChild4, styles.groupPosition]} />
-          <Text style={[styles.hello14, styles.helloTypo]}>
-            Coventry Building Society
-          </Text>
-        </Pressable>
-        <View style={[styles.lineView, styles.groupChildLayout]} />
-        <View style={[styles.groupChild9, styles.groupChildLayout]} />
-        <View style={[styles.groupChild10, styles.groupChildLayout]} />
-        <View style={[styles.groupChild11, styles.groupChildLayout]} />
-        <Image
-          style={styles.hsbcSymbolIcon}
-          resizeMode="cover"
-          source={require("../assets/hsbcsymbol.png")}
-        />
-        <Image
-          style={[styles.image145Icon, styles.image145IconPosition]}
-          resizeMode="cover"
-          source={require("../assets/image-145.png")}
-        />
-        <Image
-          style={[styles.image146Icon, styles.iconLayout1]}
-          resizeMode="cover"
-          source={require("../assets/image-146.png")}
-        />
-        <Image
-          style={styles.image148Icon}
-          resizeMode="cover"
-          source={require("../assets/image-148.png")}
-        />
-        <Image
-          style={[styles.downloadIcon, styles.iconLayout2]}
-          resizeMode="cover"
-          source={require("../assets/download.png")}
-        />
-        <Image
-          style={styles.nationwideLogo20012011Icon}
-          resizeMode="cover"
-          source={require("../assets/nationwidelogo20012011.png")}
-        />
-        <Image
-          style={[styles.nationwideLogo20012011Icon1, styles.iconLayout]}
-          resizeMode="cover"
-          source={require("../assets/nationwidelogo200120111.png")}
-        />
-        <Image
-          style={[styles.image149Icon, styles.iconLayout1]}
-          resizeMode="cover"
-          source={require("../assets/image-149.png")}
-        />
-        <Image
-          style={[
-            styles.schrodersLogoPngTransparentIcon,
-            styles.rectangleParentPosition1,
-          ]}
-          resizeMode="cover"
-          source={require("../assets/schroderslogopngtransparent.png")}
-        />
-        <Image
-          style={[styles.image150Icon, styles.iconLayout]}
-          resizeMode="cover"
-          source={require("../assets/image-150.png")}
-        />
-        <Image
-          style={styles.image151Icon}
-          resizeMode="cover"
-          source={require("../assets/image-151.png")}
-        />
       </View>
-    </View>
     </ScrollView>
   );
 };
@@ -286,7 +293,7 @@ const styles = StyleSheet.create({
     height: 2,
     width: 244,
     borderTopWidth: 1,
-    borderColor: "#f6f5f8",
+    borderColor: GlobalStyles.Color.backgroundColor,
     borderStyle: "solid",
     right: 16,
     position: "absolute",

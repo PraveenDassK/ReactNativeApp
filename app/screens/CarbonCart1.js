@@ -1,8 +1,8 @@
- import * as React from "react";
+import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const CarbonCart1 = ({navigation}) => {
+const CarbonCart1 = ({ navigation }) => {
   return (
     <View style={styles.carbonCart1}>
       <View style={styles.rectangleParent}>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   groupPosition2: {
     height: 2,
     borderTopWidth: 1,
-    borderColor: "#f6f5f8",
+    borderColor: GlobalStyles.Color.backgroundColor,
     borderStyle: "solid",
     right: 3,
     top: "50%",

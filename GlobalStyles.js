@@ -70,7 +70,8 @@ const GlobalStyles = {
     brown: "#ff4b4b",
     turquoise: "#27af7c",
     beige_100: "#fff1d4",
-    backgroundColor: "#F6F5F8"
+    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColorOg: "#F6F5F8"
   },
   /* Paddings */
   Padding: {

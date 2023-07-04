@@ -60,7 +60,11 @@ const CarbonCart = ({ route, navigation }) => {
           <Text style={styles.heading3}>Price</Text>
         </View>
         <View
-          style={{ width: "100%", backgroundColor: "#F6F5F8", height: 2 }}
+          style={{
+            width: "100%",
+            backgroundColor: GlobalStyles.Color.backgroundColor,
+            height: 2,
+          }}
         ></View>
         <FlatList
           data={data}
@@ -75,7 +79,7 @@ const CarbonCart = ({ route, navigation }) => {
         <View
           style={{
             width: "100%",
-            backgroundColor: "#F6F5F8",
+            backgroundColor: GlobalStyles.Color.backgroundColor,
             height: 2,
             top: 49,
           }}

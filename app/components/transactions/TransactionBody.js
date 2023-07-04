@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import moment from "moment";
 import { moderateScale } from "../../config/scaling";
+import GlobalStyles from "../../../GlobalStyles";
 
 const TransactionBody = ({
   icon = "JZ",
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 10,
-    backgroundColor: "#F6F5F8",
+    backgroundColor: GlobalStyles.Color.backgroundColor,
     borderColor: "black",
     alignSelf: "center",
     flex: 1,
