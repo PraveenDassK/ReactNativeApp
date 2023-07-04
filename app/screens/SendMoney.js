@@ -6,6 +6,7 @@ import {
   ScrollView,
   ActivityIndicator,
   FlatList,
+  SafeAreaView
 } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -14,7 +15,7 @@ import api from "../api/api_list";
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import AuthContext from "../auth/context";
 import UserIcon from "../components/UserIcon";
-
+import Tagline from "../components/Tagline";
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
@@ -102,7 +103,7 @@ const SendMoney = ({ navigation }) => {
   }
 
   return (
-    <>
+    <SafeAreaView>
       <View style={{ marginTop: 47 }}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -203,8 +204,9 @@ const SendMoney = ({ navigation }) => {
             );
           }}
         />
+        <Tagline/>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

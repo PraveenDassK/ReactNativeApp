@@ -31,14 +31,15 @@ const UserIcon = ({
     };
     return (
         <TouchableOpacity onPress={onPress}>
-            <View style={[styles.container, { width: size, height: size }]}>
-                <View style={styles.icon} backgroundColor={colour}>
-                    <Text style={styles.initials}>{initals}</Text>
-                </View>
-                <Text style={styles.name}>{name}</Text>
-            </View>
-        </TouchableOpacity>
-
+        <View style={[styles.container, { width: size, height: size }]}>
+          <View style={styles.icon} backgroundColor={colour}>
+            <Text style={styles.initials}>{initals}</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.name} numberOfLines={2}>{name}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
     );
 };
 
@@ -110,28 +111,33 @@ function getInitials(name) {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
     },
     icon: {
-        borderWidth: 0,
-        borderColor: 'black',
-        width: '100%',
-        aspectRatio: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 5,
+      borderWidth: 0,
+      borderColor: "black",
+      width: "100%",
+      aspectRatio: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 5,
     },
     initials: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'black',
+      fontSize: 15,
+      fontWeight: "bold",
+      color: "black",
+    },
+    textContainer: {
+      height: 30, // Set a fixed height for the text container
+      paddingHorizontal: 10, // Add horizontal padding for text wrapping
+      width:50,
     },
     name: {
-        fontSize: 12,
-        color: 'black',
-        marginTop: 5,
+      fontSize: 12,
+      color: "black",
+      textAlign: "center",
     },
-});
-
+  });
+  
 export default UserIcon;

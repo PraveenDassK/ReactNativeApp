@@ -17,7 +17,9 @@ const ButtonIcon = ({
         <View style={styles.icon} backgroundColor={colour}>
           <MaterialCommunityIcons name={image} size={30} />
         </View>
-        <Text style={styles.name}>{name}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.name}>{name}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -41,10 +43,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  textContainer: {
+    height: 50, // Set a fixed height for the text container
+    width:100,
+  },
   name: {
     fontSize: 12,
     color: "black",
     marginTop: 5,
+    textAlign: "center",
   },
 });
 

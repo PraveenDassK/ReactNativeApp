@@ -24,6 +24,9 @@ import formatCurrency from "../utility/formatCurrency";
 import AppScreen from "../components/AppScreen";
 
 import { TransactionContainer } from "../components/transHistory";
+import apiTransaction from "../api/apiTransaction";
+import Tagline from "../components/Tagline";
+import PinModal from "../components/PinModal";
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -92,8 +95,8 @@ export default function MyCards({ navigation }) {
       accountID,
       numOfTransactions
     );
+    // const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
     const transactionRes = response.content;
-    console.log(transactionRes);
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
   };
@@ -134,9 +137,8 @@ export default function MyCards({ navigation }) {
           <View>
             <Text>Current Balance</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontWeight: "900", color: "green" }}>£</Text>
               <Text style={{ fontSize: 34, fontWeight: "900", color: "green" }}>
-                46,569.00
+                {formatCurrency(transactions[0]?.account?.balance, "GBP", false)}
               </Text>
             </View>
             <Text style={{ lineHeight: 40 }}>
@@ -165,14 +167,7 @@ export default function MyCards({ navigation }) {
             onTransactionFilter={(item) => handleTransactionFilter(item)}
           />
         </View>
-
-        <View style={styles.footerContainer}>
-          <Text>
-            Your <Text style={{ fontWeight: "900" }}>Money </Text>&#x2219; Your{" "}
-            <Text style={{ fontWeight: "900" }}>Planet </Text>&#x2219; Your{" "}
-            <Text style={{ fontWeight: "900" }}>Choice</Text>
-          </Text>
-        </View>
+        <Tagline />
       </ScrollView>
     </AppScreen>
   );
@@ -270,10 +265,30 @@ const CardSelector = ({ onCardSelect }) => {
   );
 };
 
-
 const CardCarousel = ({ cards, onCardPress }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [flipped, setFlipped] = useState(false);
 
+  if (showPinModal) {
+    return (
+      <View style={styles.mainContainer}>
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal
+            title="Enter your PIN"
+            success={() => {
+              setShowPinModal(false)
+              
+            }
+          }
+          />
+        ) : null}
+      </View>
+    )
+  }
   return (
     <ScrollView
       horizontal={true}
@@ -301,6 +316,7 @@ const CardCarousel = ({ cards, onCardPress }) => {
           outputRange: [0.85, 1, 0.85],
         });
 
+
         const opacity = scrollX.interpolate({
           inputRange,
           outputRange: [0.5, 1, 0.5],
@@ -319,12 +335,17 @@ const CardCarousel = ({ cards, onCardPress }) => {
               }}
             >
               <FlipCard
-                friction={6}
+                friction={2}
                 perspective={1000}
                 flipHorizontal={true}
                 flipVertical={false}
-                flip={false}
+                flip={flipped}
                 clickable={true}
+                onFlipStart={()=>{
+                  //Ask for pin to flip
+                  // setShowPinModal(true)
+                  setFlipped(false)
+                }}
                 onFlipEnd={(isFlipEnd) => {
                   console.log("isFlipEnd", isFlipEnd);
                 }}
@@ -340,7 +361,9 @@ const CardCarousel = ({ cards, onCardPress }) => {
                 />
                 {/* Back Side */}
 
-                <CardBackSide />
+                <CardBackSide
+
+                />
               </FlipCard>
             </Animated.View>
           </TouchableOpacity>
@@ -351,6 +374,15 @@ const CardCarousel = ({ cards, onCardPress }) => {
 };
 
 const CardBackSide = () => {
+  const cardBackOBJ = {
+    "firstName": "Jack",
+    "lastName": "Huang",
+    "cardNumber": "",
+    "expiaryDate":"01/01",
+    "cvv": "000"
+  }
+
+
   return (
     <View style={styles.backCardContainer}>
       <Text style={[styles.backCardText, styles.backCardHeader]}>BOB</Text>

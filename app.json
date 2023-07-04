@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.carbonyte.bankin",
-      "buildNumber": "1.1.23"
+      "buildNumber": "1.1.24"
     },
     "android": {
       "adaptiveIcon": {

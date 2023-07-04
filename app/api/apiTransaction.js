@@ -116,9 +116,23 @@ const GetTransactions = async (Id, amount, typeSelection) => {
   }
 };
 
+/**
+ * @dev This is used just to get the balance specificaly
+ * @param {Account ID} Id
+ * @returns Int The current user's balance
+ */
+const GetBalance = async (Id) => {
+  const request = await client.get(
+    `https://api.carbonyte.io/walletmodule/GetAccount/${Id}`
+  );
+  const requestData = request?.data?.details.availableBalance;
+  return requestData;
+};
+
 export default {
   sendMoney,
   sendToGroup,
   getPaymentLink,
-  GetTransactions
+  GetTransactions,
+  GetBalance
 }
