@@ -101,6 +101,14 @@ import Teams from "../screens/Teams";
 import TeamsUser from "../screens/TeamsUser";
 import TeamsUserAdd from "../screens/TeamsUserAdd";
 
+import C02 from '../assets/Dashboard/CO2.svg'
+import Profile from '../assets/Dashboard/Profile.svg'
+import Send from '../assets/Dashboard/SendMoney.svg'
+import Home from '../assets/Dashboard/home.svg'
+import Analysis from '../assets/Dashboard/Analysis.svg'
+
+
+
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 
@@ -203,26 +211,26 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         let imageSource;
         switch (index) {
           case 0:
-            imageSource = "home-variant";
+            imageSource = <C02 width={30} height={30}/> 
             break;
           case 1:
-            imageSource = "home-variant";
+            imageSource = <Home width={30} height={30}/> 
             break;
           case 2:
-            imageSource = "chart-pie";
+            imageSource = <Analysis width={30} height={30}/> 
             break;
           case 3:
-            imageSource = "arrow-top-right";
+            imageSource = <Send width={50} height={50}/> 
             break;
           case 4:
-            imageSource = "molecule-co2";
+            imageSource = <C02 width={40} height={40}/> 
             break;
           case 5:
-            imageSource = "account";
+            imageSource = <Profile width={30} height={30}/> 
             break;
           // Add cases for other tabs
           default:
-            imageSource = "home-variant"; // Set a default image source if needed
+            imageSource = <C02 width={30} height={30}/>  // Set a default image source if needed
             break;
         }
 
@@ -242,14 +250,16 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                 <Animated.View
                   style={{
                     paddingVertical: 0,
-                    marginLeft: "20%",
+                    marginLeft: index !== 3 ? "30%" : "20%",
                   }}
                 >
-                  <MaterialCommunityIcons
+                  
+                  {imageSource}
+                  {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
                     name={imageSource}
                     size={40}
                     color={isFocused ? colors.blue : colors.black}
-                  />
+                  />: <C02 width={40} height={40}/> } */}
                 </Animated.View>
               </TouchableOpacity>
             )}
