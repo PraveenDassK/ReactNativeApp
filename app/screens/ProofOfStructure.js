@@ -8,9 +8,15 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Text,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
+import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
 // import Text from "../components/Text";
 import Screen from "../components/Screen";
@@ -22,6 +28,7 @@ import CategoryPickerItem from "../components/CategoryPickerItem";
 import AuthScreen from "../components/AuthScreen";
 import { Dropdown } from "react-native-element-dropdown";
 import Success from "../components/RegistrationSuccess";
+import * as DocumentPicker from "expo-document-picker";
 
 const data = [
   { label: "Passport (recommended)", value: "passport" },
@@ -30,7 +37,7 @@ const data = [
   { label: "Birth ceritificate", value: "birth_certificate" },
 ];
 
-const ProofOfStructure = ({ navigation }) => {
+const ProofOfStructure = ({ navigation, back = true }) => {
   const { user, setUser } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +75,23 @@ const ProofOfStructure = ({ navigation }) => {
   const handleSubmit = async () => {
     navigation.navigate("W2Success");
   };
-
+  const selectOneFile = async () => {
+    //Opening Document Picker for selection of one file
+    try {
+      const document = await DocumentPicker.getDocumentAsync({
+        type: 'application/pdf',
+      });
+      if (document.type !== 'success') {
+        throw new Error('User did not select a document');
+      }
+      await Print.printAsync({
+        uri: document.uri,
+        printerUrl: selectedPrinter ? selectedPrinter.url : undefined,
+      });
+    } catch (e) {
+      Alert.alert('Something went wrong: ', e.message);
+    }
+  };
   useEffect(() => {
     requestPermission();
   }, []);
@@ -86,78 +109,180 @@ const ProofOfStructure = ({ navigation }) => {
 
   return (
     <Screen>
-      <AuthScreen
-        title="Send us a picture of you"
-        img="elephantCard"
-        width="60%"
-        handleBack={handleBack}
-      >
+      <ScrollView>
         <View>
-          <Text>
-            Please upload a document confirming the structure of the company
-          </Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.uploadContainer}
-          onPress={() => selectImage(documentType)}
-        >
-          {!frontImage ? (
-            <>
-              <MaterialCommunityIcons
-                name="plus-circle-outline"
-                color="#D3D3D3"
-                size={30}
-              />
-              <Text style={{ color: "#D3D3D3" }}>Add document</Text>
-            </>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {imageUri && (
-                <View
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+              {back && (
+                <TouchableOpacity
+                  onPress={() => handleBack()}
                   style={{
-                    flex: 1,
+                    zIndex: 100,
+                    position: "absolute",
+                    top: 20,
+                    left: 10,
+                    backgroundColor: colors.light,
+                    height: 40,
+                    width: 40,
+                    borderRadius: 20,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <Image
-                    source={{ uri: imageUri }}
-                    style={{ width: 100, height: 100 }}
+                  <MaterialCommunityIcons
+                    name="keyboard-backspace"
+                    size={30}
+                    color={colors.black}
                   />
-                </View>
+                </TouchableOpacity>
               )}
               <View
                 style={{
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
+                  height: 100,
+                }}
+              ></View>
+              <View
+                style={{
+                  backgroundColor: colors.light,
+                  borderTopLeftRadius: 25,
+                  borderTopRightRadius: 25,
                 }}
               >
-                <MaterialCommunityIcons
-                  name="check-circle"
-                  color="#D3D3D3"
-                  size={30}
-                />
-                <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginVertical: 30,
+                  }}
+                >
+                  <Text style={{ fontSize: 30 }}>{"Company structure"}</Text>
+                </View>
+                <View
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 50,
+                    backgroundColor: "white",
+                    borderTopLeftRadius: 25,
+                    borderTopRightRadius: 25,
+                  }}
+                >
+                  <View style={{ marginBottom: 20 }}>
+                    <Text style={{ textAlign: "left" }}>
+                      We would like to know about your {"\n"}company structure..
+                    </Text>
+                  </View>
+                  {/* <CountryOfResidence /> */}
+                  <Text style={styles.identifyDocument}>
+                    Upload{" "}
+                    <Text style={{ color: "#FF7700" }}>
+                      {" "}
+                      [name of the document]{" "}
+                    </Text>
+                  </Text>
+
+                  {/* <View>
+            <Dropdown
+              style={[styles.dropdown]}
+              containerStyle={styles.dropdownContainer}
+              data={data}
+              maxHeight={100}
+              labelField="label"
+              valueField="value"
+              placeholder={"Select"}
+              placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
+              value={documentType}
+              onChange={(item) => {
+                setDocumentType(item.value);
+              }}
+            />
+          </View> */}
+
+                  <TouchableOpacity
+                    style={styles.uploadContainer}
+                    onPress={selectOneFile}
+                  >
+                    {!frontImage ? (
+                      <>
+                        <FontAwesome
+                          name="upload"
+                          color="white"
+                          size={25}
+                          style={{
+                            backgroundColor: "#999999",
+                            height: 40,
+                            width: 40,
+                            borderRadius: 20,
+                            textAlign: "center",
+                            paddingTop: 5,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            color: "#212529",
+                            fontSize: 15,
+                            marginTop: 5,
+                          }}
+                        >
+                          Upload
+                        </Text>
+                      </>
+                    ) : (
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {imageUri && (
+                          <View
+                            style={{
+                              flex: 1,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              source={{ uri: imageUri }}
+                              style={{ width: 100, height: 100 }}
+                            />
+                          </View>
+                        )}
+                        <View
+                          style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <MaterialCommunityIcons
+                            name="check-circle"
+                            color="#D3D3D3"
+                            size={30}
+                          />
+
+                          <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
+                        </View>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                  <Button
+                    title="Continue"
+                    textColor="white"
+                    color="black"
+                    onPress={() => handleSubmit()}
+                    style={{ marginTop: "50%" }}
+                  />
+                </View>
               </View>
             </View>
-          )}
-        </TouchableOpacity>
-        <Button
-          title="Continue"
-          textColor="white"
-          color="black"
-          onPress={() => handleSubmit()}
-        />
-      </AuthScreen>
+          </TouchableWithoutFeedback>
+        </View>
+      </ScrollView>
     </Screen>
   );
 };
@@ -359,12 +484,20 @@ const styles = StyleSheet.create({
   uploadContainer: {
     borderColor: "#D3D3D3",
     borderRadius: 10,
-    borderWidth: 2.5,
-    borderStyle: "dashed",
-    height: 200,
+    borderWidth: 1.5,
+    // borderStyle: "dashed",
+    height: 150,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    marginVertical: 20,
+  },
+  identifyDocument: {
+    color: "#212529",
+    fontSize: 16,
+    fontWeight: "bold",
+    fontFamily: "Montserrat",
+    marginBottom: 10,
   },
 });
 

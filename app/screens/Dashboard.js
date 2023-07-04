@@ -79,11 +79,15 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         bottom: "-70%", // Whatever offset you want from the bottom
       }}
       style={{
+        zIndex: 2,
         width: "100%",
       }}
     >
       <View style={{ position: "relative", marginBottom: 50 }}>
-        <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          nestedScrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+        >
           <ImageBackground
             source={require("../assets/backgrounds/River.png")}
             style={styles.backgroundImage}
@@ -108,8 +112,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               handlePress={() => navigation.navigate("SendMoney")}
             />
           </View>
-
-          <View style={styles.mainContent}>
+          <View style={styles.mainContent} />
+          <View>
             {!iconShow && (
               <View style={styles.buttonContainer}>
                 <SquareIcon
@@ -292,6 +296,7 @@ const styles = StyleSheet.create({
   },
   mainContent: {
     backgroundColor: GlobalStyles.Color.backgroundColor,
+    height: 30,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     marginTop: -20,
@@ -334,7 +339,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: "2.5%",
-    top: "40%",
+    top: "35%",
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
     display: "flex",
