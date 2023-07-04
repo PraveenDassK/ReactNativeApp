@@ -28,9 +28,9 @@ const DoughnutChart = ({ data, children }) => {
       style={{ labels: { fill: "black" } }}
       colorScale={["tomato", "orange", "gold", "cyan", "green"]}
       
-      innerRadius={device == 1 ? 110 : 300}
+      innerRadius={device == 1 ? 130 : 300}
       
-      labelRadius={device == 1 ? 130: 320}
+      labelRadius={device == 1 ? 140: 320}
       padAngle={1}
       // labels={({ datum }) => `${datum.x[0]}`}
       labels={({ datum }) => `${datum.x[0]}`}

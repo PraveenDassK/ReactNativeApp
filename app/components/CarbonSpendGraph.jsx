@@ -5,6 +5,7 @@ import AuthContext from "../auth/context";
 import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import * as Progress from "react-native-progress";
+import GlobalStyles from "../../GlobalStyles";
 
 const CarbonSpendGraph = ({ handleViewMore}) => {
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
@@ -102,8 +103,14 @@ const CarbonSpendGraph = ({ handleViewMore}) => {
                 height={30}
                 borderRadius={15}
                 borderColor={"white"}
-                unfilledColor={"#F7F7F7"}
+                unfilledColor={GlobalStyles.Color.backgroundColor}
                 color={getRandomItem(colorsArray,i)}
+                animated={true}
+                indeterminateAnimationDuration={1000}
+                useNativeDriver={true}
+                animationConfig={{ bounciness: 1 }}
+                animationType="spring"
+
               />
             </View>
           );
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
   },
   headingText: {
     color: "#212529",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     fontFamily: "Montserrat",
     marginBottom: 3,

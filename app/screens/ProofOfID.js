@@ -6,10 +6,15 @@ import {
   Image,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   ActivityIndicator,
   Text,
+  ScrollView,
+  Keyboard,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import colors from "../config/colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 import GlobalStyles from "../../GlobalStyles";
 // import Text from "../components/Text";
@@ -30,7 +35,7 @@ const data = [
   { label: "Birth ceritificate", value: "birth_certificate" },
 ];
 
-const ProofOfID = ({ navigation }) => {
+const ProofOfID = ({ navigation, back = true }) => {
   const { user, setUser } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +97,9 @@ const ProofOfID = ({ navigation }) => {
   // };
 
   const handleSubmit = async () => {
-    navigation.navigate("ProofOfFace");
+    // navigation.navigate("ProofOfFace");
+    navigation.navigate("ProofOfResidency");
+
     // setIsLoading(true);
     // const clientReference = phoneNumber;
 
@@ -125,95 +132,244 @@ const ProofOfID = ({ navigation }) => {
     );
   }
   const handleBack = () => {
-    navigation.navigate("ProofOfResidency");
+    navigation.navigate("Directororpartner");
   };
 
   return (
     <Screen>
-      <AuthScreen
-        title="Photo ID"
-        img="elephantCard"
-        width="60%"
-        handleBack={handleBack}
-      >
-        <CountryOfResidence />
+      <ScrollView>
         <View>
-          <Dropdown
-            style={[styles.dropdown]}
-            containerStyle={styles.dropdownContainer}
-            data={data}
-            maxHeight={100}
-            labelField="label"
-            valueField="value"
-            placeholder={"Select"}
-            placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
-            value={documentType}
-            onChange={(item) => {
-              setDocumentType(item.value);
-            }}
-          />
-        </View>
-
-        <TouchableOpacity
-          style={styles.uploadContainer}
-          onPress={() => selectImage(documentType)}
-        >
-          {!frontImage ? (
-            <>
-              <MaterialCommunityIcons
-                name="plus-circle-outline"
-                color="#D3D3D3"
-                size={30}
-              />
-              <Text style={{ color: "#D3D3D3" }}>Add document</Text>
-            </>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {imageUri && (
-                <View
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+              {back && (
+                <TouchableOpacity
+                  onPress={() => handleBack()}
                   style={{
-                    flex: 1,
+                    zIndex: 100,
+                    position: "absolute",
+                    top: 20,
+                    left: 10,
+                    backgroundColor: colors.light,
+                    height: 40,
+                    width: 40,
+                    borderRadius: 20,
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <Image
-                    source={{ uri: imageUri }}
-                    style={{ width: 100, height: 100 }}
+                  <MaterialCommunityIcons
+                    name="keyboard-backspace"
+                    size={30}
+                    color={colors.black}
                   />
-                </View>
+                </TouchableOpacity>
               )}
               <View
                 style={{
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
+                  height: 100,
+                }}
+              ></View>
+              <View
+                style={{
+                  backgroundColor: colors.light,
+                  borderTopLeftRadius: 25,
+                  borderTopRightRadius: 25,
                 }}
               >
-                <MaterialCommunityIcons
-                  name="check-circle"
-                  color="#D3D3D3"
-                  size={30}
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginVertical: 30,
+                  }}
+                >
+                  <Text style={{ fontSize: 30 }}>{"Proof of identity"}</Text>
+                </View>
+                <View
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 50,
+                    backgroundColor: "white",
+                    borderTopLeftRadius: 25,
+                    borderTopRightRadius: 25,
+                  }}
+                >
+                  <View style={{ marginBottom: 20 }}>
+                    <Text style={{ textAlign: "left" }}>
+                      Upload one of the below document type to {"\n"} verify
+                      your identity.
+                    </Text>
+                  </View>
+                  {/* <CountryOfResidence /> */}
+                  <Text style={styles.identifyDocument}>
+                    Type of identity document
+                  </Text>
+
+                  {/* <View>
+                <Dropdown
+                  style={[styles.dropdown]}
+                  containerStyle={styles.dropdownContainer}
+                  data={data}
+                  maxHeight={100}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={"Select"}
+                  placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
+                  value={documentType}
+                  onChange={(item) => {
+                    setDocumentType(item.value);
+                  }}
                 />
-                <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
+              </View> */}
+
+                  <TouchableOpacity
+                    style={styles.uploadContainer}
+                    onPress={() => selectImage(documentType)}
+                  >
+                    {!frontImage ? (
+                      <>
+                        <MaterialCommunityIcons
+                          name="passport"
+                          color="#D3D3D3"
+                          size={35}
+                        />
+                        <Text
+                          style={{
+                            color: "#212529",
+                            fontSize: 15,
+                            marginTop: 2,
+                          }}
+                        >
+                          Add passport
+                        </Text>
+                      </>
+                    ) : (
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {imageUri && (
+                          <View
+                            style={{
+                              flex: 1,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              source={{ uri: imageUri }}
+                              style={{ width: 100, height: 100 }}
+                            />
+                          </View>
+                        )}
+                        <View
+                          style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <MaterialCommunityIcons
+                            name="check-circle"
+                            color="#D3D3D3"
+                            size={30}
+                          />
+                          <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
+                        </View>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: "#212529",
+                      fontSize: 20,
+                      marginTop: 0,
+                      textAlign:"center"
+                    }}
+                  >
+                    or
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.uploadContainer}
+                    onPress={() => selectImage(documentType)}
+                  >
+                    {!frontImage ? (
+                      <>
+                        <FontAwesome
+                          name="drivers-license"
+                          color="#D3D3D3"
+                          size={35}
+                        />
+                        <Text
+                          style={{
+                            color: "#212529",
+                            fontSize: 15,
+                            marginTop: 2,
+                          }}
+                        >
+                          Add driving Licence
+                        </Text>
+                      </>
+                    ) : (
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {imageUri && (
+                          <View
+                            style={{
+                              flex: 1,
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              source={{ uri: imageUri }}
+                              style={{ width: 100, height: 100 }}
+                            />
+                          </View>
+                        )}
+                        <View
+                          style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <MaterialCommunityIcons
+                            name="check-circle"
+                            color="#D3D3D3"
+                            size={30}
+                          />
+
+                          <Text style={{ color: "#D3D3D3" }}>Uploaded</Text>
+                        </View>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                  <Button
+                    title="Continue"
+                    textColor="white"
+                    color="black"
+                    onPress={() => handleSubmit()}
+                  />
+                </View>
               </View>
             </View>
-          )}
-        </TouchableOpacity>
-        <Button
-          title="Continue"
-          textColor="white"
-          color="black"
-          onPress={() => handleSubmit()}
-        />
-      </AuthScreen>
+          </TouchableWithoutFeedback>
+        </View>
+      </ScrollView>
     </Screen>
     // <Screen>
     //   <View style={{ flex: 1, padding: 20 }}>
@@ -286,7 +442,6 @@ const ProofOfID = ({ navigation }) => {
 const CountryOfResidence = () => {
   return (
     <View>
-      <Text>Issuing country</Text>
       <View style={styles.container}>
         <View style={styles.containerImage}>
           <TouchableOpacity>
@@ -449,12 +604,20 @@ const styles = StyleSheet.create({
   uploadContainer: {
     borderColor: "#D3D3D3",
     borderRadius: 10,
-    borderWidth: 2.5,
-    borderStyle: "dashed",
-    height: 200,
+    borderWidth: 1.5,
+    // borderStyle: "dashed",
+    height: 150,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    marginVertical: 20,
+  },
+  identifyDocument: {
+    color: "#212529",
+    fontSize: 16,
+    fontWeight: "bold",
+    fontFamily: "Montserrat",
+    marginBottom: 10,
   },
 });
 
