@@ -22,6 +22,7 @@ import Button from "../components/AppButton";
 import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
 import colors from "../config/colors";
+import Tagline from "../components/Tagline";
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -72,6 +73,7 @@ const Settings = ({ navigation }) => {
     const userDetails = await api.GetAllAccounts(userID);
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
+
 
     const data = userDetails;
     const accountdata = accountDetails;
@@ -399,7 +401,6 @@ const Settings = ({ navigation }) => {
             </View>
           </View>
         </View>
-
         <TouchableOpacity style={styles.button}>
           <Button
             title="Account"
@@ -434,7 +435,6 @@ const Settings = ({ navigation }) => {
             onPress={() => navigation.navigate("Devices")}
           />
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.button}>
           <Button
             title="Contact us"
@@ -499,6 +499,7 @@ const Settings = ({ navigation }) => {
           <AppText style={{ color: "blue" }}>Terms & Conditions</AppText>
         </Pressable>
       </View>
+      <Tagline/>
     </ScrollView>
   );
 };

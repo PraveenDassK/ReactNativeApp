@@ -39,6 +39,7 @@ import {
   TransactionHead,
 } from "../components/transactions";
 
+import Tagline from "../components/Tagline";
 const Analytics = ({ navigation }) => {
   const { device } = useDevice();
   const [isLoading, setIsLoading] = useState(false);
@@ -417,91 +418,6 @@ const Analytics = ({ navigation }) => {
 
           {graphData && <Bazier graphData={graphData} />}
         </View>
-
-        {/* <View style={styles.titleTextRow}>
-          <Image
-            resizeMode="contain"
-            source={require("../assets/icon-withdraw.png")}
-            style={{ width: horizontalScale(25), height: verticalScale(25) }}
-          />
-          <AppText
-            style={[
-              styles.titleText,
-              {
-                fontWeight: Platform.OS === "android" ? "normal" : "700",
-                fontFamily: "Helvetica",
-                fontSize: 24,
-              },
-            ]}
-          >
-            Recent transactions
-          </AppText>
-        </View>
-
-        {recentTransactions &&
-          recentTransactions.map((transaction, index) => (
-            <View key={index}>
-              <TouchableOpacity
-                style={[styles.transactionBox, styles.rounded]}
-                onPress={() => navigation.navigate("Transactions")}
-              >
-                <View style={{ height: "100%", flexDirection: "row" }}>
-                  <View
-                    style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 25,
-                      backgroundColor: "#F6F5F8",
-                      borderColor: "black",
-                      alignSelf: "center",
-                      marginLeft: "2.5%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <AppText
-                      style={{
-                        alignSelf: "center",
-
-                        textAlignVertical: "center",
-
-                        fontWeight: "700",
-                      }}
-                    >
-                      {transaction?.sourceId[0]}
-                    </AppText>
-                  </View>
-                  <View
-                    style={{
-                      flex: 3.5,
-                      alignSelf: "center",
-                      justifyContent: "space-evenly",
-                      marginLeft: "5%",
-                    }}
-                  >
-                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                      {transaction?.sourceId}
-                    </AppText>
-                    <AppText style={{}}>
-                      {moment(transaction?.transactionDate).format("LL")}
-                    </AppText>
-                  </View>
-                  <View
-                    style={{
-                      flex: 5,
-                      justifyContent: "space-evenly",
-                      alignItems: "flex-end",
-                      marginRight: "2.5%",
-                    }}
-                  >
-                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                      £{transaction?.amount.toFixed(2)}
-                    </AppText>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ))} */}
         <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
           <TransactionHead />
           {recentTransactions.map((transaction, index) => (
@@ -519,28 +435,6 @@ const Analytics = ({ navigation }) => {
             onSee={() => navigation.navigate("Transactions")}
           />
         </View>
-
-        {/* {fulldata && (
-          <View style={styles.titleTextRow}>
-            <Image
-              resizeMode="contain"
-              source={require("../assets/icon-featherpiechart.png")}
-              style={{ width: horizontalScale(25), height: verticalScale(25) }}
-            />
-            <AppText
-              style={[
-                styles.titleText,
-                {
-                  fontWeight: Platform.OS === "android" ? "normal" : "700",
-                  fontFamily: "Helvetica",
-                  fontSize: 24,
-                },
-              ]}
-            >
-              Upcoming Spendings
-            </AppText>
-          </View>
-        )} */}
         <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
           <TransactionHead headerTitle="Upcoming spending" />
           {data.map((transaction, index) => (
@@ -553,165 +447,9 @@ const Analytics = ({ navigation }) => {
             />
           ))}
         </View>
-
-        {/* {fulldata &&
-          !loadMore &&
-          data.map((transaction, index) => (
-            <View key={index}>
-              <TouchableOpacity
-                style={[styles.transactionBox, styles.rounded]}
-                // onPress={() => navigation.navigate("Transactions")}
-              >
-                <View style={{ height: "100%", flexDirection: "row" }}>
-                  <View
-                    style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 25,
-                      backgroundColor: "#F6F5F8",
-                      borderColor: "black",
-                      alignSelf: "center",
-                      marginLeft: "2.5%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <AppText
-                      style={{
-                        alignSelf: "center",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlignVertical: "center",
-                        fontWeight: "700",
-                      }}
-                    >
-                      {transaction?.scheduleID[0]}
-                    </AppText>
-                  </View>
-                  <View
-                    style={{
-                      flex: 3.5,
-                      alignSelf: "center",
-                      justifyContent: "space-evenly",
-                      marginLeft: "5%",
-                    }}
-                  >
-                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                      {transaction?.scheduleID}
-                    </AppText>
-                    <AppText style={{}}>
-                      {moment(transaction?.date).format("LL")}
-                    </AppText>
-                  </View>
-                  <View
-                    style={{
-                      flex: 5,
-                      justifyContent: "space-evenly",
-                      alignItems: "flex-end",
-                      marginRight: "2.5%",
-                    }}
-                  >
-                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                      £{transaction?.amount.toFixed(2)}
-                    </AppText>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ))}
-        {loadMore &&
-          fulldata.map((transaction, index) => (
-            <View key={index}>
-              <TouchableOpacity
-                style={[styles.transactionBox, styles.rounded]}
-                //onPress={() => navigation.navigate("Transactions")}
-              >
-                <View style={{ height: "100%", flexDirection: "row" }}>
-                  <View
-                    style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 25,
-                      backgroundColor: "#F6F5F8",
-                      borderColor: "black",
-                      alignSelf: "center",
-                      marginLeft: "2.5%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <AppText
-                      style={{
-                        alignSelf: "center",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlignVertical: "center",
-                        fontWeight: "700",
-                      }}
-                    >
-                      {transaction.scheduleID[0]}
-                    </AppText>
-                  </View>
-                  <View
-                    style={{
-                      flex: 3.5,
-                      alignSelf: "center",
-                      justifyContent: "space-evenly",
-                      marginLeft: "5%",
-                    }}
-                  >
-                    <AppText style={{ fontSize: 14, fontWeight: "700" }}>
-                      {transaction.scheduleID}
-                    </AppText>
-                    <AppText style={{}}>
-                      {moment(transaction.date).format("LL")}
-                    </AppText>
-                  </View>
-                  <View
-                    style={{
-                      flex: 5,
-                      justifyContent: "space-evenly",
-                      alignItems: "flex-end",
-                      marginRight: "2.5%",
-                    }}
-                  >
-                    <AppText style={{ marginRight: "2.5%", fontWeight: "700" }}>
-                      £{transaction.amount.toFixed(2)}
-                    </AppText>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ))}
-
-        {fulldata && (
-          <TouchableOpacity onPress={() => setLoadMore((prev) => !prev)}>
-            <View
-              style={{
-                flex: 1,
-                height: 70,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {!loadMore ? (
-                <MaterialCommunityIcons
-                  name="chevron-down"
-                  size={40}
-                  color="grey"
-                />
-              ) : (
-                <MaterialCommunityIcons
-                  name="chevron-up"
-                  size={40}
-                  color="grey"
-                />
-              )}
-            </View>
-          </TouchableOpacity>
-        )} */}
         <View style={{ height: 20, width: "100%" }} />
       </View>
+      <Tagline/>
     </ScrollView>
   );
 };
