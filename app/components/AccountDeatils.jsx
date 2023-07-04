@@ -93,7 +93,7 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
               )}
             </View>
             <View>
-              <Text style={styles.incometext}>CO2 spending</Text>
+              <Text style={styles.incometext}>CO{"\u2082"} spending</Text>
               <Text style={styles.incomeAmount}>
                 {userImpact?.totalAssets} kg
               </Text>
