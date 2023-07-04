@@ -30,6 +30,7 @@ import VirtualPlanet from "../components/VirtualPlanet";
 import XeroDashboard from "../components/XeroDashboard";
 import ReferNow from "../components/ReferNow";
 import colors from "../config/colors";
+import Tagline from "../components/Tagline";
 
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -239,15 +240,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               <ReferNow />
             </View>
             <View style={{ display: "flex", alignItems: "center" }}>
-              <Text style={styles.bottomText}>
-                Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-                <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-                <Text style={styles.bottomTextBold}>Choice</Text>
-              </Text>
+             <Tagline />
             </View>
           </View>
-
-          <View style={{ marginTop: 50 }}></View>
         </ScrollView>
       </View>
     </ImageBackground>

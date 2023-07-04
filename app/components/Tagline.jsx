@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Tagline = () => {
   return (
-    <View style={[styles.container, { paddingBottom: 100 }]}>
+    <View style={[styles.container, { marginBottom: 300 }]}>
       <Text style={styles.bottomText}>
         Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
         <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
