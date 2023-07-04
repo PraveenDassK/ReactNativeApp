@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
     },
     initials: {
-      fontSize: 10,
+      fontSize: 15,
       fontWeight: "bold",
       color: "black",
     },

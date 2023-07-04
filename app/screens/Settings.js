@@ -22,7 +22,7 @@ import Button from "../components/AppButton";
 import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
 import colors from "../config/colors";
-
+import Tagline from "../components/Tagline";
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -401,15 +401,6 @@ const Settings = ({ navigation }) => {
             </View>
           </View>
         </View>
-
-        <TouchableOpacity style={[styles.button]}>
-          <Button
-            title="Subscription"
-            style={[styles.boxShadow]}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("Subscriptions")}
-          />
-        </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Button
             title="Account"
@@ -444,16 +435,6 @@ const Settings = ({ navigation }) => {
             onPress={() => navigation.navigate("Devices")}
           />
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}>
-          <Button
-            title="Payment Link"
-            style={styles.boxShadow}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("PaymentLink")}
-          />
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.button}>
           <Button
             title="Contact us"
@@ -518,6 +499,7 @@ const Settings = ({ navigation }) => {
           <AppText style={{ color: "blue" }}>Terms & Conditions</AppText>
         </Pressable>
       </View>
+      <Tagline/>
     </ScrollView>
   );
 };

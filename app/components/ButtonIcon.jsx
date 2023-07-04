@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     height: 50, // Set a fixed height for the text container
+    width:100,
   },
   name: {
     fontSize: 12,
