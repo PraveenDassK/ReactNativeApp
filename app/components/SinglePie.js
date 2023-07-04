@@ -1,7 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from "react-native";
-import { Svg } from 'react-native-svg';
-import { VictoryPie, VictoryLabel, VictoryTheme } from "victory-native";
+import { VictoryPie } from "victory-native";
 
 
 
