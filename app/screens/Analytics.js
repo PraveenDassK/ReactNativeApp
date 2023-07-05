@@ -487,13 +487,13 @@ const Bazier = ({ graphData }) => {
         withVerticalLines={false}
         withHorizontalLabels={false}
         chartConfig={{
-          backgroundGradientFrom: GlobalStyles.Color.backgroundColor,
-          backgroundGradientTo: GlobalStyles.Color.backgroundColor,
+          backgroundGradientFrom: GlobalStyles.Color.backgroundColorOg,
+          backgroundGradientTo: GlobalStyles.Color.backgroundColorOg,
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
           fillShadowGradientFrom: "black",
-          fillShadowGradientTo: GlobalStyles.Color.backgroundColor,
+          fillShadowGradientTo: GlobalStyles.Color.backgroundColorOg,
           strokeWidth: 5,
           style: { borderRadius: 16 },
           propsForDots: {
