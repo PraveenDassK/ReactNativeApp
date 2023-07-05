@@ -940,7 +940,7 @@ const StackNavigator = () => {
         name="Terminate"
         component={gestureHandlerRootHOC(Terminate)}
         options={{
-          title: "Terminate",
+          title: "Terminate card",
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />

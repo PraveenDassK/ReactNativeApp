@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Pressable,
   Dimensions,
-  ActivityIndicator,
+  ActivityIndicator
 } from "react-native";
 // import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
@@ -65,14 +65,14 @@ const numOfTransactions = 4;
 
 export default function MyCards({ navigation }) {
   const { accountID } = useContext(AuthContext);
-
-  const [isLoading, setIsLoading] = useState(false);
-
   const [isFrozen, setFrozen] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [filterTransactions, setFilterTransactions] = useState([
     ...transactions,
   ]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [cardData, setCardData] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
 
   useEffect(() => {
     loadData();
@@ -104,7 +104,42 @@ export default function MyCards({ navigation }) {
     const transactionRes = response.content;
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
+
+    const cards = await apiCall.GetCardByAccount("686283112");
+    console.log(cards)
+    setCardData(cards);
+    //     console.log(cards);
+    //     const currentCard = cards[cardIndex];
+    //     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
+
+    //     setRole(currentCard.cardRole);
+    //     setInitals(
+    //       currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
+    //     );
+    //     setIsLoading(false);
+    //     setType(currentCard.productCode);
+
+    //     setcardnumber(cardDetails.number);
+    //     setfirstname("CVV " + cardDetails.cvv);
+    //     setlastname(cardDetails.name);
+    //     console.log(cardDetails);
   };
+
+  const filterCards = (type) =>{
+    console.log(type)
+    const filterCardsByType = (type) => {
+      return cardData.filter((card) => {
+        if (type === "physical") {
+          return card.productCode === "MC_PHYSICAL";
+        } else if (type === "virtual") {
+          return card.productCode === "MC_VIRTUAL";
+        } else {
+          return false; // Invalid type, return an empty array
+        }
+      });
+    };
+    setFilteredCards(filterCardsByType(type))
+  }
 
   const handleTransactionFilter = (item) => {
     if (item == "income") {
@@ -123,7 +158,7 @@ export default function MyCards({ navigation }) {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size={"large"} color="black" />
       </View>
     );
   }
@@ -131,7 +166,7 @@ export default function MyCards({ navigation }) {
   return (
     <AppScreen>
       <ScrollView>
-        <CardSelector onCardSelect={(card) => console.log(card)} />
+        <CardSelector onCardSelect={(card) => filterCards(card)} />
         <View style={styles.settingsPositioning}>
           <Icon
             title={"settings"}
@@ -140,7 +175,7 @@ export default function MyCards({ navigation }) {
         </View>
 
         <CardCarousel
-          cards={cards}
+          cards={filteredCards}
           onCardPress={() => console.log("pressed")}
         />
 
@@ -290,7 +325,6 @@ const CardCarousel = ({ cards, onCardPress }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
-
   if (showPinModal) {
     return (
       <View style={styles.mainContainer}>
@@ -301,8 +335,10 @@ const CardCarousel = ({ cards, onCardPress }) => {
           <PinModal
             title="Enter your PIN"
             success={() => {
-              setShowPinModal(false);
-            }}
+              setShowPinModal(false)
+
+            }
+            }
           />
         ) : null}
       </View>
@@ -370,7 +406,7 @@ const CardCarousel = ({ cards, onCardPress }) => {
               >
                 {/* Face Side */}
                 <Image
-                  source={item.cardUrl}
+                  source={require("../assets/cardLion.png")}
                   style={{
                     flex: 1,
                     // marginLeft: "25%",
@@ -391,12 +427,13 @@ const CardCarousel = ({ cards, onCardPress }) => {
 
 const CardBackSide = () => {
   const cardBackOBJ = {
-    firstName: "Jack",
-    lastName: "Huang",
-    cardNumber: "1234123412341234",
-    expiaryDate: "01/01",
-    cvv: "000",
-  };
+    "firstName": "Jack",
+    "lastName": "Huang",
+    "cardNumber": "1234123412341234",
+    "expiaryDate": "01/01",
+    "cvv": "000"
+  }
+
 
   return (
     <View style={styles.backCardContainer}>
