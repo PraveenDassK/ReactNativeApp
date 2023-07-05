@@ -1,14 +1,49 @@
-import * as React from "react";
-import { Image, StyleSheet, Text, View, Pressable } from "react-native";
+import React, { useState } from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ImageBackground,
+  Dimensions,
+  Linking,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
+import { Rating, AirbnbRating } from "react-native-ratings";
+import BrokenCard from "../assets/TerminateCard/brokencardBottom.svg";
+import BrokenTop from "../assets/TerminateCard/brokencard.svg";
+const height = Dimensions.get("window").height;
 
-
-const TerminatedCard = ({navigation}) => {
-
-
+const TerminatedCard = ({ navigation }) => {
+  const [animationProgress, setAnimationProgress] = useState(true);
+  function ratingCompleted(rating) {
+    console.log("Rating is: " + rating);
+  }
   return (
     <View style={styles.terminatedCard}>
+      {/* <View
+          style={{
+            // position: "absolute",
+            zIndex: 10,
+            flex: 1,
+            height: "100%",
+            left: "25%",
+          }}
+        >
+         
+          <View style={{ width: "100%", height: "50%", top: "10%" }}>
+            <BrokenTop height="100%" />
+          </View>
+          <View style={{ width: "100%", height: "50%", bottom: "25%" }}>
+            <BrokenCard height="100%" />
+          </View>
+        </View> */}
       <View style={styles.brokenCreditCardParent}>
         <Image
           style={[styles.brokenCreditCardIcon, styles.groupParentPosition]}
@@ -16,20 +51,56 @@ const TerminatedCard = ({navigation}) => {
           source={require("../assets/brokencreditcard.png")}
         />
         <Text style={[styles.hello, styles.helloTypo]}>
-          <Text style={styles.yourCardHas}>Your card has been{" "}</Text>
+          <Text style={styles.yourCardHas}>Your card has been </Text>
           <Text style={styles.yourCardHas}>terminated.</Text>
-
         </Text>
-        <Pressable
-          style={[styles.groupParent, styles.groupParentPosition]}
-          onPress={() => navigation.navigate("CardSettings")}
-        >
-          <View style={[styles.rectangleParent]}>
-            <View style={styles.groupChild} />
-            <View style={[styles.maskGroup236]} />
-          </View>
-          <Text style={[styles.hello1, styles.helloTypo]}>GO Back</Text>
-        </Pressable>
+        <Text style={styles.useCard}>
+          You will not be able to use this card.
+        </Text>
+      </View>
+
+      <ImageBackground
+        resizeMode="stretch"
+        source={require("../assets/backgrounds/terminatecard.jpg")}
+        style={styles.container}
+      />
+      <View
+        style={{
+          position: "absolute",
+          bottom: "20%",
+          width: "100%",
+          paddingHorizontal: 10,
+        }}
+      >
+        <View style={styles.brokenBottomCreditCardParent}>
+          <Text style={styles.sadText}>Sad to see you go!</Text>
+          <Text style={styles.sadTextNormal}>
+            The planet is in danger! We can make it better{"\n"}.Stay connect
+            with us:
+            <Text
+              style={styles.sadText}
+              onPress={() => Linking.openURL("https://carbonyte.io/")}
+            >
+              {" "}
+              www.carbonyte.io
+            </Text>
+          </Text>
+          <Text style={styles.happytohelp}>Happy to hear your feedback. </Text>
+          <Rating
+            type="star"
+            ratingCount={5}
+            imageSize={50}
+            showRating={false}
+            onFinishRating={ratingCompleted}
+            style={{ width: "100%", marginVertical: 5 }}
+          />
+        </View>
+
+        <Text style={styles.bottomText}>
+          Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+          <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+          <Text style={styles.bottomTextBold}>Choice</Text>
+        </Text>
       </View>
     </View>
   );
@@ -48,31 +119,40 @@ const styles = StyleSheet.create({
     right: "50%",
     left: "50%",
     top: verticalScale(0),
-
   },
   brokenCreditCardIcon: {
     width: "20%",
     height: "20%",
     top: "25%",
-      },
+  },
   yourCardHas: {},
   hello: {
-    fontSize: GlobalStyles.FontSize.size_7xl,
+    fontSize: 18,
     fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
+    fontFamily: "Montserrat",
     textAlign: "center",
     width: "100%",
-    top: "50%",
+    top: "55%",
+  },
+  useCard: {
+    fontSize: 16,
+    fontWeight: "normal",
+    color: "#707070",
+    textAlign: "center",
+    fontFamily: "Montserrat",
+
+    width: "100%",
+    top: "70%",
   },
   groupChild: {
     height: "100%",
     borderRadius: GlobalStyles.Border.br_lg,
     backgroundColor: "#D8EBF9",
     width: "100%",
-    alignItems: 'center'
+    alignItems: "center",
   },
-  maskGroup236: {
-  },
+  maskGroup236: {},
   rectangleParent: {
     bottom: verticalScale(0),
     width: "30%",
@@ -84,7 +164,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: "black",
     width: "100%",
-
   },
   groupParent: {
     width: "40%",
@@ -92,15 +171,72 @@ const styles = StyleSheet.create({
     bottom: verticalScale(0),
   },
   brokenCreditCardParent: {
+    width: "90%",
+    height: 180,
+    backgroundColor: "#FFFFFF",
+    borderColor: "#FFFFFF3",
+    borderRadius: 20,
+    marginTop: 30,
+    marginLeft: "5%",
+  },
+  brokenBottomCreditCardParent: {
     width: "100%",
-    height: "80%",
-
+    backgroundColor: "rgba(0,0,0, 0.5)",
+    opacity: 1,
+    borderColor: "#FFFFFF3",
+    borderRadius: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 3,
+    paddingVertical: 5,
   },
   terminatedCard: {
     backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     height: "100%",
     width: "100%",
+    position: "relative",
+  },
+  container: {
+    width: "100%",
+    height: height / 1.5,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 0,
+  },
+  bottomText: {
+    color: "white",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "light",
+    textAlign: "center",
+    marginTop: 10,
+  },
+  bottomTextBold: {
+    color: "white",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+  },
+  sadText: {
+    color: "white",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  sadTextNormal: {
+    color: "white",
+    fontFamily: "Montserrat",
+    fontWeight: "normal",
+    fontSize: 12,
+  },
+  happytohelp: {
+    color: "white",
+    fontFamily: "Montserrat",
+    fontWeight: "normal",
+    fontSize: 14,
+    marginTop: 10,
   },
 });
 
