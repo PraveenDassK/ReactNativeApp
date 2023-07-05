@@ -17,6 +17,7 @@ import {
 
 import TerminateCardAlert from "../utility/terminateCardAlert";
 import Tagline from "../components/Tagline";
+import apiCall from "../api/apiCall"
 const Terminate = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(true);
 
@@ -28,6 +29,13 @@ const Terminate = ({ navigation }) => {
   const terminateFn = () => {
     navigation.navigate("TerminatedCard");
   };
+  const handleYes = async () => {
+    //  const result = await apiCall.TerminateCard({ID},"Terminate")
+    setModalVisible(!modalVisible);
+
+    navigation.navigate("TerminatedCard");
+
+  }
 
   return (
     <View style={styles.terminate}>
@@ -46,7 +54,7 @@ const Terminate = ({ navigation }) => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          // Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
@@ -79,10 +87,7 @@ const Terminate = ({ navigation }) => {
               >
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    // setModalVisible(!modalVisible);
-                    navigation.navigate("TerminatedCard");
-                  }}
+                  onPress={handleYes}
                 >
                   <Text style={styles.textStyle}>Yes</Text>
                 </Pressable>
@@ -173,6 +178,7 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontWeight: "bold",
   },
+  
 });
 
 export default Terminate;

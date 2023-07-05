@@ -7,6 +7,8 @@ import {
   Switch,
   ScrollView,
   ActivityIndicator,
+  ImageBackground,
+  Text,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
@@ -91,6 +93,46 @@ const CardSettings = ({ navigation }) => {
         {/* <View style={styles.titleTextRow}>
           <AppText style={styles.titleText}>Settings</AppText>
         </View> */}
+        <Pressable
+          style={[styles.boxShadow]}
+          onPress={() => navigation.navigate("SpendingLimit")}
+        >
+          <View
+            style={[
+              {
+                width: "90%",
+                marginLeft: "5%",
+                borderRadius: 15,
+                marginTop: "5%",
+                backgroundColor: "white",
+                // height: 60,
+                paddingVertical: "5%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                height: "60%",
+                resizeMode: "contain",
+                flex: 1,
+                alignSelf: "center",
+                marginLeft: "5%",
+              }}
+              source={require("../assets/meter-1.png")}
+            />
+            <View
+              style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
+            >
+              <AppText style={styles.cardHeading}>View Pin</AppText>
+              <AppText style={styles.cardSubHeading}>
+                View your security PIN number
+              </AppText>
+            </View>
+          </View>
+        </Pressable>
 
         <Pressable
           style={[styles.boxShadow]}
@@ -104,7 +146,8 @@ const CardSettings = ({ navigation }) => {
                 borderRadius: 15,
                 marginTop: "5%",
                 backgroundColor: "white",
-                height: 60,
+                // height: 60,
+                paddingVertical: "5%",
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -113,7 +156,7 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "70%",
+                height: "60%",
                 resizeMode: "contain",
                 flex: 1,
                 alignSelf: "center",
@@ -124,8 +167,8 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
             >
-              <AppText style={{ fontWeight: "700" }}>Spending Limit</AppText>
-              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+              <AppText style={styles.cardHeading}>Spending Limit</AppText>
+              <AppText style={styles.cardSubHeading}>
                 Set you monthly spending limit
               </AppText>
             </View>
@@ -136,8 +179,10 @@ const CardSettings = ({ navigation }) => {
           style={{
             marginLeft: "10%",
             marginTop: "5%",
-            fontSize: 12,
-            fontWeight: "700",
+            fontSize: 14,
+            fontWeight: "bold",
+            fontFamily: "Montserrat",
+            color: "#888888",
           }}
         >
           Security
@@ -159,7 +204,8 @@ const CardSettings = ({ navigation }) => {
           <View
             style={{
               width: "100%",
-              height: 85,
+              // height: 60,
+              paddingVertical: "5%",
               borderRadius: 15,
               display: "flex",
               flexDirection: "row",
@@ -169,7 +215,7 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "70%",
+                height: "30%",
                 resizeMode: "contain",
                 flex: 1,
                 alignSelf: "center",
@@ -180,10 +226,8 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{ flex: 5, justifyContent: "center", marginLeft: "2.5%" }}
             >
-              <AppText style={{ fontWeight: "700" }}>
-                Online Transactions
-              </AppText>
-              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+              <AppText style={styles.cardHeading}>Online Transactions</AppText>
+              <AppText style={styles.cardSubHeading}>
                 Internet based transactions are generally high-risk. You can
                 switch them off for extra security. Payments you make using
                 mobile wallets like Apple Pay won’t be affected.
@@ -204,7 +248,8 @@ const CardSettings = ({ navigation }) => {
             style={[
               {
                 width: "100%",
-                height: 85,
+                // height: 60,
+                paddingVertical: "5%",
                 borderRadius: 15,
                 display: "flex",
                 flexDirection: "row",
@@ -214,7 +259,7 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "70%",
+                height: "40%",
                 resizeMode: "contain",
                 flex: 1,
                 alignSelf: "center",
@@ -225,8 +270,8 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
             >
-              <AppText style={{ fontWeight: "700" }}>Swipe Payments</AppText>
-              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+              <AppText style={styles.cardHeading}>Swipe Payments</AppText>
+              <AppText style={styles.cardSubHeading}>
                 Sometimes cards can be cloned, you can turn of the magnetic
                 stripe here
               </AppText>
@@ -246,7 +291,8 @@ const CardSettings = ({ navigation }) => {
             style={[
               {
                 width: "100%",
-                height: 85,
+                // height: 60,
+                paddingVertical: "5%",
                 borderRadius: 15,
                 display: "flex",
                 flexDirection: "row",
@@ -256,7 +302,7 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "70%",
+                height: "60%",
                 resizeMode: "contain",
                 flex: 1,
                 alignSelf: "center",
@@ -267,8 +313,8 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
             >
-              <AppText style={{ fontWeight: "700" }}>ATM Withdrawals</AppText>
-              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+              <AppText style={styles.cardHeading}>ATM Withdrawals</AppText>
+              <AppText style={styles.cardSubHeading}>
                 Turn off ATM Withdrawals here
               </AppText>
             </View>
@@ -287,7 +333,8 @@ const CardSettings = ({ navigation }) => {
             style={[
               {
                 width: "100%",
-                height: 85,
+                // height: 60,
+                paddingVertical: "5%",
                 borderRadius: 15,
                 display: "flex",
                 flexDirection: "row",
@@ -297,7 +344,7 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "70%",
+                height: "60%",
                 resizeMode: "contain",
                 flex: 1,
                 alignSelf: "center",
@@ -308,10 +355,8 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
             >
-              <AppText style={{ fontWeight: "700" }}>
-                Contactless Payments
-              </AppText>
-              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+              <AppText style={styles.cardHeading}>Contactless Payments</AppText>
+              <AppText style={styles.cardSubHeading}>
                 Turn off contactless functionality
               </AppText>
             </View>
@@ -343,7 +388,9 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{
                 width: "100%",
-                height: 60,
+                // height: 60,
+                // height: 60,
+                paddingVertical: "5%",
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -351,7 +398,7 @@ const CardSettings = ({ navigation }) => {
             >
               <Image
                 style={{
-                  height: "70%",
+                  height: "60%",
                   resizeMode: "contain",
                   flex: 1,
                   alignSelf: "center",
@@ -366,8 +413,8 @@ const CardSettings = ({ navigation }) => {
                   marginLeft: "2.5%",
                 }}
               >
-                <AppText style={{ fontWeight: "700" }}>Replace Card</AppText>
-                <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                <AppText style={styles.cardHeading}>Replace Card</AppText>
+                <AppText style={styles.cardSubHeading}>
                   Lost, Stolen, Not Delivered
                 </AppText>
               </View>
@@ -377,7 +424,8 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{
                 width: "100%",
-                height: 60,
+                // height: 60,
+                paddingVertical: "5%",
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -385,7 +433,7 @@ const CardSettings = ({ navigation }) => {
             >
               <Image
                 style={{
-                  height: "70%",
+                  height: "60%",
                   resizeMode: "contain",
                   flex: 1,
                   alignSelf: "center",
@@ -400,8 +448,8 @@ const CardSettings = ({ navigation }) => {
                   marginLeft: "2.5%",
                 }}
               >
-                <AppText style={{ fontWeight: "700" }}>Terminate Card</AppText>
-                <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+                <AppText style={styles.cardHeading}>Terminate Card</AppText>
+                <AppText style={styles.cardSubHeading}>
                   This card will be permanently terminated
                 </AppText>
               </View>
@@ -421,7 +469,8 @@ const CardSettings = ({ navigation }) => {
                 borderRadius: 15,
                 marginTop: "5%",
                 backgroundColor: "white",
-                height: 60,
+                // height: 60,
+                paddingVertical: "5%",
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -430,7 +479,7 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "70%",
+                height: "60%",
                 resizeMode: "contain",
                 flex: 1,
                 alignSelf: "center",
@@ -441,13 +490,33 @@ const CardSettings = ({ navigation }) => {
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
             >
-              <AppText style={{ fontWeight: "700" }}>Upgrade Card</AppText>
-              <AppText style={{ fontWeight: "200", fontSize: 10 }}>
+              <AppText style={styles.cardHeading}>Upgrade Card</AppText>
+              <AppText style={styles.cardSubHeading}>
                 Upgrade your card plan
               </AppText>
             </View>
           </View>
         </Pressable>
+      </View>
+      <ImageBackground
+        resizeMode="stretch"
+        source={require("../assets/backgrounds/cardsettings.jpg")}
+        style={styles.container}
+      />
+      <View
+        style={{
+          position: "absolute",
+          bottom: "10%",
+          width: "100%",
+          paddingHorizontal: 10,
+          left: "10%",
+        }}
+      >
+        <Text style={styles.bottomText}>
+          Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+          <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+          <Text style={styles.bottomTextBold}>Choice</Text>
+        </Text>
       </View>
     </ScrollView>
   );
@@ -472,6 +541,37 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
+  },
+  cardHeading: {
+    fontFamily: "Montserrat",
+    color: "#272727",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  cardSubHeading: {
+    color: "#888888",
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    fontWeight: "normal",
+  },
+  container: {
+    width: "100%",
+    height: 250,
+    // position: "absolute",
+    bottom: 0,
+    zIndex: 0,
+  },
+  bottomText: {
+    color: "black",
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "normal",
+  },
+  bottomTextBold: {
+    color: "black",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
   },
 });
 

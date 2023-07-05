@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { treeImages } from "../assets/Forest/AllForest";
-import {turtleImages} from "../assets/Turtles/AllTurtles"
-const VirtualPlanetCard = ({ data ,handleVirtual}) => {
+import { turtleImages } from "../assets/Turtles/AllTurtles";
+const VirtualPlanetCard = ({ data, handleVirtual }) => {
   return (
     <>
       {data.map((eachValue, i) => {
-        console.log(eachValue)
+        console.log(eachValue);
         return (
           <View style={styles.container} key={i}>
             <View style={{ paddingVertical: 10 }}>
@@ -22,12 +22,15 @@ const VirtualPlanetCard = ({ data ,handleVirtual}) => {
               </Text>
             </View>
             <View style={styles.insideCard}>
-              <Image
-                source={eachValue.image}
-                style={{ height: 100, width: 130 }}
-              />
+              <View style={{ width: 150 }}>
+                <Image
+                  resizeMode="contain"
+                  source={eachValue.image}
+                  style={{ height: 120, width: "100%" }}
+                />
+              </View>
 
-              <View>
+              <View >
                 <Text
                   style={{
                     fontSize: 30,
@@ -69,7 +72,7 @@ const VirtualPlanetCard = ({ data ,handleVirtual}) => {
     </>
   );
 };
-const VirtualPlanet = ({ treeData,handleVirtual }) => {
+const VirtualPlanet = ({ treeData, handleVirtual }) => {
   console.log(treeData?.totalAssets, "this is a virtual planet");
   const data = [
     {
@@ -77,23 +80,23 @@ const VirtualPlanet = ({ treeData,handleVirtual }) => {
       image:
         treeData?.totalAssets > 50
           ? treeImages[49]?.image
-          :treeImages[treeData?.totalAssets - 1]?.image ,
+          : treeImages[treeData?.totalAssets - 1]?.image,
       total: treeData?.totalAssets,
-      subTitle:"Total Trees Planted"
+      subTitle: "Total Trees Planted",
     },
     {
       title: "Virtual Ocean",
       image:
         treeData?.totalAssets > 50
-        ? turtleImages[49]?.image
-        :turtleImages[treeData?.totalAssets - 1]?.image ,
+          ? turtleImages[49]?.image
+          : turtleImages[treeData?.totalAssets - 1]?.image,
       total: treeData?.totalAssets,
-      subTitle:"Total Turtle Released"
+      subTitle: "Total Turtle Released",
     },
   ];
   return (
     <View>
-      <VirtualPlanetCard data={data} handleVirtual={handleVirtual}/>
+      <VirtualPlanetCard data={data} handleVirtual={handleVirtual} />
     </View>
   );
 };
@@ -114,5 +117,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 5,
+    
   },
 });
