@@ -287,7 +287,7 @@ const Analytics = ({ navigation }) => {
                   width: horizontalScale(75),
                 }}
               >
-                <AppText style={{ color: "#999", fontSize: 14 }}>
+                <AppText style={{ color: "#999", fontSize: 12 }}>
                   No. of Payments
                 </AppText>
               </View>
