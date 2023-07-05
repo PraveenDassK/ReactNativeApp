@@ -373,7 +373,7 @@ const CardSettings = ({ navigation }) => {
               </View>
             </View>
           </Pressable>
-          <Pressable onPress={terminateCardAlert}>
+          <Pressable onPress={() => navigation.navigate("Terminate")}>
             <View
               style={{
                 width: "100%",
