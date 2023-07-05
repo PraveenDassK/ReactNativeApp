@@ -82,76 +82,75 @@ const SecurityAndPrivacy = ({ navigation }) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>Security And Privacy</Text>
-      </View>
-
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/icon-faceid.png")}
-        />
-
-        <Text style={styles.divText}>Sign in with Face ID</Text>
-
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-      </View>
-
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/icon-view.png")}
-        />
-
-        <Text style={styles.divText}>Hide Balances</Text>
-
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled1 ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch1}
-          value={isEnabled1}
-        />
-      </View>
-
-      <View style={styles.divRow}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/blueMessage.png")}
-        />
-
-        <Text style={styles.divText}>Allow transaction sharing</Text>
-
-        <Switch
-          style={[styles.groupChildPosition]}
-          trackColor={{
-            false: GlobalStyles.Color.gray_600,
-            true: GlobalStyles.Color.blue_100,
-          }}
-          thumbColor={isEnabled3 ? "#f4f3f4" : "#f4f3f4"}
-          onValueChange={toggleSwitch2}
-          value={isEnabled2}
-        />
-      </View>
-      <TouchableOpacity style={styles.button}>
-          <Button
-            title="Reset app passcode"
-            style={styles.boxShadow}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("PinSetApp")}
+        <View style={styles.divRow}>
+          <Image
+            style={styles.icon}
+            source={require("../assets/icon-faceid.png")}
           />
-        </TouchableOpacity>
+
+          <Text style={styles.divText}>Sign in with Face ID</Text>
+
+          <Switch
+            style={[styles.groupChildPosition]}
+            trackColor={{
+              false: GlobalStyles.Color.gray_600,
+              true: GlobalStyles.Color.blue_100,
+            }}
+            thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
+
+        <View style={styles.divRow}>
+          <Image
+            style={styles.icon}
+            source={require("../assets/icon-view.png")}
+          />
+
+          <Text style={styles.divText}>Hide Balances</Text>
+
+          <Switch
+            style={[styles.groupChildPosition]}
+            trackColor={{
+              false: GlobalStyles.Color.gray_600,
+              true: GlobalStyles.Color.blue_100,
+            }}
+            thumbColor={isEnabled1 ? "#f4f3f4" : "#f4f3f4"}
+            onValueChange={toggleSwitch1}
+            value={isEnabled1}
+          />
+        </View>
+
+        <View style={styles.divRow}>
+          <Image
+            style={styles.icon}
+            source={require("../assets/blueMessage.png")}
+          />
+
+          <Text style={styles.divText}>Allow transaction sharing</Text>
+
+          <Switch
+            style={[styles.groupChildPosition]}
+            trackColor={{
+              false: GlobalStyles.Color.gray_600,
+              true: GlobalStyles.Color.blue_100,
+            }}
+            thumbColor={isEnabled3 ? "#f4f3f4" : "#f4f3f4"}
+            onValueChange={toggleSwitch2}
+            value={isEnabled2}
+          />
+        </View>
+      </View>
+
+      <View style={{ paddingHorizontal: "5%", marginBottom: "10%"}}>
+        <Button
+          title="Reset app passcode"
+          style={styles.boxShadow}
+          transform={{ textTransform: "none" }}
+          onPress={() => navigation.navigate("PinSetApp")}
+        />
+      </View>
     </View>
   );
 };
@@ -162,6 +161,7 @@ const styles = StyleSheet.create({
     height: GlobalStyles.DivContainer.height,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
+    justifyContent: "space-between"
   },
 
   titleTextRow: {

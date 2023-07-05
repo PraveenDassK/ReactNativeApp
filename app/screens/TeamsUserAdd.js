@@ -22,7 +22,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "../components/forms/ErrorMessage";
-import AppButton from "../components/AppButton";
+
 
 const items = [
     {
@@ -129,19 +129,7 @@ return (
                   </View>
                 ))}
               </View>
-              <AppButton title="Continue" />
-              {/* <View style={styles.buttonContainer}>
-                <TouchableOpacity>
-                  <LinearGradient
-                    colors={["#212529", "#3A3A3B"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>Continue</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View> */}
+              <Button title="Continue" />
             </View>
           )}
         </Formik>
