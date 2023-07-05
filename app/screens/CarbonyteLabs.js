@@ -82,11 +82,11 @@ const CarbonyteLabs = ({ navigation }) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.titleTextRow}>
-        <Text style={styles.titleText}>Carbonyte labs</Text>
+      
       </View>
-      <View>
-        <Text>
-          Warning these are test functions that will be added into a let version
+      <View style={{marginLeft: GlobalStyles.DivContainer.marginLeft}}>
+        <Text style={{color: "red", fontSize: 10}}>
+          Warning these are test functions that will be added into a later version
         </Text>
       </View>
 

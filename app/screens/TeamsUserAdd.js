@@ -23,6 +23,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "../components/forms/ErrorMessage";
 
+
 const items = [
     {
       id: 2,
@@ -89,8 +90,8 @@ return (
             setFieldTouched,
             touched,
           }) => (
-            <>
-              <View>
+            <View style={styles.mainContainer}>
+              <View >
                 <Text style={styles.formLabel}>Select account type</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <CheckBox
@@ -128,19 +129,8 @@ return (
                   </View>
                 ))}
               </View>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity>
-                  <LinearGradient
-                    colors={["#212529", "#3A3A3A"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>Continue</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
-            </>
+              <Button title="Continue" />
+            </View>
           )}
         </Formik>
       </View>
@@ -190,5 +180,12 @@ const styles = StyleSheet.create({
       fontSize: 14,
       fontFamily: "Montserrat",
     },
+    mainContainer: {
+      flex: 1,
+      justifyContent: "space-between",
+      alignContent: "center",
+      
+    },
+    
   });
   

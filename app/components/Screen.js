@@ -1,5 +1,5 @@
 import React from "react";
-// import Constants from "expo-constants";
+
 import { StyleSheet, SafeAreaView, View, TouchableWithoutFeedback, Keyboard,  Platform} from "react-native";
 import KeyboardAvoider from "./KeyboardAvoider";
 
@@ -17,7 +17,7 @@ function Screen({ children, style, enabled = true }) {
 
 const styles = StyleSheet.create({
   screen: {
-    // paddingTop: Constants.statusBarHeight,
+   
     flex: 1,
   },
   view: {

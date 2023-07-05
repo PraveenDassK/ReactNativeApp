@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Pressable,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 // import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
@@ -65,6 +66,8 @@ const numOfTransactions = 4;
 export default function MyCards({ navigation }) {
   const { accountID } = useContext(AuthContext);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [isFrozen, setFrozen] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [filterTransactions, setFilterTransactions] = useState([
@@ -91,10 +94,12 @@ export default function MyCards({ navigation }) {
   };
 
   const loadData = async () => {
+    setIsLoading(true);
     const response = await apiCall.GetTransactions(
       accountID,
       numOfTransactions
     );
+    setIsLoading(false);
     // const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
     const transactionRes = response.content;
     setTransactions(transactionRes);
@@ -114,6 +119,14 @@ export default function MyCards({ navigation }) {
       setFilterTransactions(transactions);
     }
   };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
 
   return (
     <AppScreen>
@@ -137,9 +150,17 @@ export default function MyCards({ navigation }) {
           <View>
             <Text>Current Balance</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontSize: 34, fontWeight: "900", color: "green" }}>
-                {formatCurrency(transactions[0]?.account?.balance, "GBP", false)}
-              </Text>
+              {transactions && (
+                <Text
+                  style={{ fontSize: 34, fontWeight: "900", color: "green" }}
+                >
+                  {formatCurrency(
+                    transactions[0]?.account?.balance,
+                    "GBP",
+                    false
+                  )}
+                </Text>
+              )}
             </View>
             <Text style={{ lineHeight: 40 }}>
               Total 1220 Kg of carbon emissions produced
@@ -280,14 +301,12 @@ const CardCarousel = ({ cards, onCardPress }) => {
           <PinModal
             title="Enter your PIN"
             success={() => {
-              setShowPinModal(false)
-              
-            }
-          }
+              setShowPinModal(false);
+            }}
           />
         ) : null}
       </View>
-    )
+    );
   }
   return (
     <ScrollView
@@ -316,7 +335,6 @@ const CardCarousel = ({ cards, onCardPress }) => {
           outputRange: [0.85, 1, 0.85],
         });
 
-
         const opacity = scrollX.interpolate({
           inputRange,
           outputRange: [0.5, 1, 0.5],
@@ -341,10 +359,10 @@ const CardCarousel = ({ cards, onCardPress }) => {
                 flipVertical={false}
                 flip={flipped}
                 clickable={true}
-                onFlipStart={()=>{
+                onFlipStart={() => {
                   //Ask for pin to flip
                   // setShowPinModal(true)
-                  setFlipped(false)
+                  setFlipped(false);
                 }}
                 onFlipEnd={(isFlipEnd) => {
                   console.log("isFlipEnd", isFlipEnd);
@@ -361,9 +379,7 @@ const CardCarousel = ({ cards, onCardPress }) => {
                 />
                 {/* Back Side */}
 
-                <CardBackSide
-
-                />
+                <CardBackSide />
               </FlipCard>
             </Animated.View>
           </TouchableOpacity>
@@ -375,13 +391,12 @@ const CardCarousel = ({ cards, onCardPress }) => {
 
 const CardBackSide = () => {
   const cardBackOBJ = {
-    "firstName": "Jack",
-    "lastName": "Huang",
-    "cardNumber": "1234123412341234",
-    "expiaryDate":"01/01",
-    "cvv": "000"
-  }
-
+    firstName: "Jack",
+    lastName: "Huang",
+    cardNumber: "1234123412341234",
+    expiaryDate: "01/01",
+    cvv: "000",
+  };
 
   return (
     <View style={styles.backCardContainer}>

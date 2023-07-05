@@ -36,7 +36,7 @@ const UserIcon = ({
             <Text style={styles.initials}>{initals}</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.name} numberOfLines={2}>{name}</Text>
+            <Text style={styles.name} numberOfLines={1}>{name}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
     },
     textContainer: {
       height: 30, // Set a fixed height for the text container
-      paddingHorizontal: 10, // Add horizontal padding for text wrapping
-      width:50,
+      width:"140%",
+  
     },
     name: {
       fontSize: 12,
