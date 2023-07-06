@@ -7,7 +7,9 @@ import {
   Image,
   Modal,
   ImageBackground,
+  Button,
 } from "react-native";
+
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
@@ -17,25 +19,82 @@ import {
 
 import TerminateCardAlert from "../utility/terminateCardAlert";
 import Tagline from "../components/Tagline";
-import apiCall from "../api/apiCall"
+import apiCall from "../api/apiCall";
+
+import BrokenCard from "../assets/TerminateCard/brokencard.svg";
+import BrokenCardBottom from "../assets/TerminateCard/brokencardBottom.svg";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  withSequence,
+} from "react-native-reanimated";
+import TerminatedCard from "./TerminatedCard";
+
+const SIZE = 100.0;
+
 const Terminate = ({ navigation }) => {
+  const translateY = useSharedValue(0);
+  const translateX = useSharedValue(0);
+  const rotation = useSharedValue(0);
+
+  const [terminate, setTerminate] = useState(false)
+
   const [modalVisible, setModalVisible] = useState(true);
 
-  const navigate = () => {
-    console.log("Function");
-    navigation.navigate("CardSettings");
-  };
+  // useEffect(() => {
+
+  //   translateY.value = withTiming(70, { duration: 1000 })
+  //   translateX.value = withTiming(50, { duration: 4000 })
+  //   rotation.value = withTiming(-50, { duration: 3000 })
+
+  // }, [])
+
   useEffect(() => {}, []);
   const terminateFn = () => {
     navigation.navigate("TerminatedCard");
   };
+
+  const reanimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: translateX.value * 8 },
+        { rotateZ: `${rotation.value}deg` },
+        { translateY: translateY.value * 1 },
+      ],
+    };
+  }, []);
+
+  const reanimatedTopStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: -translateX.value * 8 },
+        { rotateZ: `${rotation.value}deg` },
+      ],
+    };
+  }, []);
+
+  const navigate = () => {
+    console.log("function");
+    navigation.navigate("CardSettings");
+  };
   const handleYes = async () => {
     //  const result = await apiCall.TerminateCard({ID},"Terminate")
+    terminateAnimation();
     setModalVisible(!modalVisible);
+    setTimeout(() => {
+      setTerminate(true)
+    }, 5000);
+  };
 
-    navigation.navigate("TerminatedCard");
+  const terminateAnimation = () => {
+    translateY.value = withTiming(70, { duration: 1000 });
+    translateX.value = withTiming(50, { duration: 4000 });
+    rotation.value = withTiming(-50, { duration: 3000 });
+  };
 
-  }
+  if (terminate) return <TerminatedCard />
 
   return (
     <View style={styles.terminate}>
@@ -47,7 +106,16 @@ const Terminate = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <Image source={require("../assets/cardLion.png")} />
+        <View style={{ marginTop: "10%" }}>
+          <Animated.View style={reanimatedTopStyle}>
+            <BrokenCard />
+          </Animated.View>
+          <Animated.View
+            style={[{ position: "absolute", top: 109 }, reanimatedStyle]}
+          >
+            <BrokenCardBottom />
+          </Animated.View>
+        </View>
       </View>
       <Modal
         animationType="slide"
@@ -101,7 +169,7 @@ const Terminate = ({ navigation }) => {
         source={require("../assets/backgrounds/terminatecard.jpg")}
         style={styles.container}
       />
-      <View style={{ position: "absolute", bottom: "20%",left:"15%" }}>
+      <View style={{ position: "absolute", bottom: "20%", left: "15%" }}>
         <Text style={styles.bottomText}>
           Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
           <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
@@ -164,7 +232,8 @@ const styles = StyleSheet.create({
     height: 450,
     position: "absolute",
     bottom: 0,
-    zIndex: 0,
+    zIndex: -10,
+
   },
   bottomText: {
     color: "white",
@@ -178,7 +247,6 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontWeight: "bold",
   },
-  
 });
 
 export default Terminate;
