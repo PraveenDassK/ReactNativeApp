@@ -16,7 +16,7 @@ const XeroDashboard = () => {
             color: "#212529",
             textAlign: "center",
             fontSize: 12,
-            fontFamily: "Montserrat",
+            fontFamily: "Montserrat-Regular",
             fontWeight: "regular",
           }}
         >

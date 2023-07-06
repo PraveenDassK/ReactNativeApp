@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   bottomText: {
     color: "#212529",
     fontSize: 16,
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat-Regular",
     fontWeight: "light",
   },
   bottomTextBold: {

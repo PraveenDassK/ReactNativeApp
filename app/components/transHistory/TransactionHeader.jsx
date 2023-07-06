@@ -35,6 +35,7 @@ const TransactionHeader = ({ onTransactionFilter }) => {
             >
               <Text
                 style={{
+                  fontFamily: 'Montserrat-Regular',
                   textTransform: "capitalize",
                   opacity: selection.name == isSelected ? 1 : 0.5,
                 }}

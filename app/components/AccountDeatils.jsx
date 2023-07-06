@@ -41,6 +41,7 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
           <Text style={styles.accountName}>Account</Text>
           <View style={styles.accountNumberStyle}>
             <Dropdown
+            fontFamily="Montserrat-Regular"
               data={dropdownData}
               value={title}
               activeColor={GlobalStyles.Color.backgroundColor}
@@ -52,11 +53,12 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
                 handleBalance(item?.value);
               }}
               style={styles.dropdown}
-              selectedTextStyle={{ color: "white" }}
+              selectedTextStyle={{ color: GlobalStyles.Color.backgroundColorOg }}
               iconColor={"white"}
               containerStyle={{
                 borderBottomStartRadius: 10,
                 borderBottomEndRadius: 10,
+                width: "100%"
               }}
             
             />
@@ -137,12 +139,12 @@ const styles = StyleSheet.create({
   accountName: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat-Regular",
     color: "#FFFFFF",
     letterSpacing: 1,
   },
   dropdown: {
-    width: 120,
+    width: 130,
     fontSize: 16,
     borderWidth: 0,
   },
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "white",
     fontWeight: "100",
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat-Regular",
   },
   totalAmount: {
     fontSize: 30,
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     fontWeight: "normal",
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat-Regular",
   },
   incomeAmount: {
     fontSize: 16,

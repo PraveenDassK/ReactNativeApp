@@ -285,11 +285,12 @@ const styles = StyleSheet.create({
   welcomText: {
     fontSize: 14,
     color: "white",
-    fontWeight: "normal",
+    
+    fontFamily: 'Montserrat-Regular'
   },
   nameText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: 'Montserrat',
     color: "white",
   },
   mainContent: {
