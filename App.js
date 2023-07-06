@@ -1,5 +1,4 @@
 import "react-native-gesture-handler";
-import "expo-dev-menu";
 
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Text, View, Button, Platform, ActivityIndicator } from "react-native";
@@ -162,7 +161,7 @@ export default function App() {
     // }
     // console.log(JailMonkey.isJailBroken(), "Broken")
   }, []);
-  usePreventScreenCapture();
+  // usePreventScreenCapture();
 
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChange);

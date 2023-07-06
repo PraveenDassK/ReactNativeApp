@@ -5,33 +5,39 @@ import {
   View,
   Image,
   Pressable,
+  TextInput,
   Switch,
   ScrollView,
   ActivityIndicator,
+  ImageBackground,
+  Button,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
-
 import api from "../api/api_list";
 import apiCall from "../api/apiCall";
-
 import { useFocusEffect } from "@react-navigation/native";
-
 import SinglePie from "../components/SinglePie";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
 import storage from "../auth/storage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
+import { Dropdown } from "react-native-element-dropdown";
 
 const SpendingLimit = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const authContext = useContext(AuthContext);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-
+  const [dropDownValue, setDropDownValue] = useState([]);
   const [monthLim, setMonLim] = useState(0);
   const [spend, setSpend] = useState(0);
   const [percent, setPercent] = useState();
-
+  const [selectedCard, setSelectedCard] = useState();
+  const [accountData, setAccountData] = useState([]);
+  const [isToggled, setIsToggled] = useState(false);
+  const [validCheck, setValidator] = useState(false);
+  const [amount, setAmount] = useState("0");
+  const { userID } = useContext(AuthContext);
   useEffect(() => {}, []);
 
   //Calls the API once during load
@@ -52,16 +58,58 @@ const SpendingLimit = ({ navigation, route }) => {
   const loadData = async () => {
     //Gets the data from the api
     setIsLoading(true);
-    const response = await apiCall.GetLimits(authContext.accountID);
+    const response = await apiCall.GetLimits(selectedCard);
     const spendTotal = response === null ? 0 : response.spend;
     const monthlyAmount = response === null ? 0 : response.monthlyAmount;
 
-    console.log(response);
+    const cards = await apiCall.GetCardByAccount("686283112");
+    const accountApi = await apiCall.GetAllAccounts(userID);
+    console.log(accountApi, "this is cards that");
+    setDropDownValue(cards);
     setMonLim(monthlyAmount);
+    setAccountData(accountApi);
     setSpend(spendTotal);
     setPercent(spendTotal / monthlyAmount);
     setIsLoading(false);
   };
+  // const setandGetValue= ()={}
+
+  let newArray = dropDownValue?.map((eachData, i) => {
+    return { label: eachData?.accountId, value: eachData?.accountId };
+  });
+  const checkText = (text) => {
+    setAmount(text);
+    //First check if there is a value
+    if (
+      //First check if there is a value
+      text == " " &&
+      //Then check if it is above a limit
+      text > 1000
+      //Any other checks for the text add it here
+    ) {
+      setValidator(false);
+    } else {
+      //If all the checks pass then set the validator to true
+      setValidator(true);
+    }
+  };
+  const navigate = async () => {
+    //Check if the text is valid from the validator
+    if (validCheck) {
+      //If it is do this
+      const response = await api.SetLimit(selectedCard, amount);
+      console.log(response);
+      console.log(selectedCard);
+      setIsToggled(false);
+      loadData();
+    } else {
+      //If it isn't show an error message here
+      console.log("Invalid");
+    }
+  };
+  let newAccountArray = accountData.map((eachData, i) => {
+    return { label: eachData?.id, value: eachData?.id };
+  });
 
   /**
    * @todo set spending limit to 0 on trigger
@@ -70,15 +118,14 @@ const SpendingLimit = ({ navigation, route }) => {
   const spendingToggle = async () => {
     if (isEnabled) {
       const amount = "3000";
-      const response = await api.SetLimit(authContext.accountID, amount);
+      const response = await api.SetLimit(selectedCard, amount);
       console.log("setLimit", response);
       setIsEnabled(false);
-
       loadData();
     } else {
       setIsEnabled(true);
       storage.storeLimits(true);
-      navigation.navigate("SetLimit");
+      // navigation.navigate("SetLimit");
       console.log(setIsEnabled);
     }
   };
@@ -90,205 +137,266 @@ const SpendingLimit = ({ navigation, route }) => {
       </View>
     );
   }
+  const renderItem = (item) => {
+    const newElemet = accountData.filter(
+      (eachValue, index) => index === item._index
+    );
+    console.log(newElemet, "thsisi");
 
+    return (
+      <View style={styles.dropDownarrayitem}>
+        <Image
+          source={require("../assets/cardLion.png")}
+          resizeMode="contain"
+          style={{ height: 30, width: 30 }}
+        />
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Text>{` ${newElemet[0]?.customerName}`}</Text>
+          <Text style={styles.textItem}>{item.label}</Text>
+        </View>
+      </View>
+    );
+  };
+  console.log(selectedCard);
   return (
     <KeyboardAvoider>
-      <ScrollView>
-        <View style={styles.mainContainer}>
-          <View style={styles.titleTextRow}>
-            <Text style={styles.titleText}>Spending Limit</Text>
-          </View>
-
-          <View style={styles.subTextRow}>
-            <Text style={styles.subText}>
-              The limit determines the amount that can be spent or withdrawn
-              using this card per month
-            </Text>
-          </View>
-
-          <View
-            style={{
-              width: "90%",
-              marginLeft: "5%",
-              backgroundColor: "white",
-              borderRadius: 15,
-
-              marginTop: "15%",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                width: "100%",
-                justifyContent: "space-between",
-                alignItems: "center",
-                height: 60,
-                padding: "5%",
-              }}
-            >
-              <Image
-                style={{ flex: 2, height: 35, width: 35 }}
-                resizeMode="contain"
-                source={require("../assets/meter-1.png")}
-              />
-              <View style={{ flex: 6, marginLeft: "5%" }}>
-                <Text style={{ fontWeight: "700", fontSize: 16 }}>
-                  Card Spending limit
-                </Text>
-                <Text style={{ fontSize: 10 }}>The spend & withdrawal cap</Text>
-              </View>
-              <Pressable
-                style={{ height: 50, width: "auto" }}
-                onPress={() => console.log("?")}
-                title="Set Limit"
-              >
-                <Switch
-                  style={{ flex: 2 }}
-                  trackColor={{
-                    false: GlobalStyles.Color.gray_600,
-                    true: GlobalStyles.Color.blue_100,
-                  }}
-                  thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-                  onValueChange={spendingToggle}
-                  value={isEnabled}
-                />
-              </Pressable>
+      <ImageBackground
+        source={require("../assets/backgrounds/cardsettings.jpg")}
+        // style={{  width: "100%" }}
+        resizeMode="contain"
+        imageStyle={{
+          top: "60%", // Whatever offset you want from the bottom
+        }}
+        style={styles.mainContainer}
+      >
+        <ScrollView>
+          <View>
+            <View style={styles.subTextRow}>
+              <Text style={styles.subText}>
+                The limit determines the amount that can be spent or withdrawn
+                using this card per month
+              </Text>
             </View>
-            <View
-              style={{
-                flex: 1,
-                marginTop: "2.5%",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 28, fontWeight: "700" }}>
-                £{spend.toFixed(2)}
-              </Text>
-              <Text style={{ fontSize: 14, marginTop: "1%" }}>
-                Spent this month
-              </Text>
-              <Text
-                style={{ fontSize: 28, marginTop: "5%", fontWeight: "700" }}
-              >
-                £{monthLim.toFixed(2)}
-              </Text>
-              <Text style={{ fontSize: 14, marginTop: "1%" }}>
-                Current spend limit
-              </Text>
-              {monthLim - spend && percent >= 0 ? (
-                <View style={{ marginTop: "5%" }}>
-                  {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor=GlobalStyles.Color.backgroundColor>
-              <Text style={styles.barText}>test</Text>
-            </View> */}
-
-                  <SinglePie percent={percent} />
-                </View>
-              ) : (
-                <View>
-                  {/* <View style={{ maxWidth: "90%", marginTop: "2.5%", height: 35, borderRadius: 15 }} width={percent} backgroundColor="red">
-              <Text style={styles.barText}>£{(monthLim - spend).toFixed(2)}</Text>
-            </View> */}
-                  <SinglePie percent={percent} />
-                </View>
-              )}
-
-              <View
-                style={{
-                  position: "absolute",
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  top: 300,
+            <View style={styles.subTextRow}>
+              <Text style={styles.subText}>Select Card</Text>
+              <Dropdown
+                data={newAccountArray}
+                value={selectedCard}
+                labelField="label"
+                valueField="value"
+                // defalutValue="Mr"
+                onChange={(item) => {
+                  console.log(item, "thsis is item selected");
+                  setSelectedCard(item.value);
+                  loadData();
                 }}
-              >
-                {monthLim - spend >= 0 ? (
-                  <Text
-                    style={{ fontSize: 28, color: "blue", fontWeight: "700" }}
-                  >
-                    {" "}
-                    £{(monthLim - spend).toFixed(2)}
-                  </Text>
-                ) : (
-                  <Text
-                    style={{
-                      fontSize: 28,
-                      marginTop: "2.5%",
-                      color: "red",
-                      fontWeight: "700",
-                    }}
-                  >
-                    {" "}
-                    £{(monthLim - spend).toFixed(2)}
-                  </Text>
+                style={styles.dropdown}
+                containerStyle={styles.containerStyle}
+                renderRightIcon={() => (
+                  <AntDesign name="checkcircle" size={24} color="green" />
                 )}
-                <Text
-                  style={{
-                    fontSize: 14,
-                    marginTop: "1%",
-                    fontWeight: "700",
-                    opacity: 0.3,
-                  }}
-                >
-                  Spendable funds left
-                </Text>
-              </View>
+                renderItem={renderItem}
+                placeholder="Select Card"
+                autoScroll={false}
+              />
             </View>
+
             <View
               style={{
-                width: "100%",
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: "5%",
+                width: "90%",
+                marginLeft: "5%",
+                backgroundColor: "white",
+                borderRadius: 15,
+                marginTop: "5%",
               }}
             >
-              <Image
-                style={{ height: 35, width: 35 }}
-                resizeMode="contain"
-                source={require("../assets/card.png")}
-              />
-              {monthLim ? (
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      fontWeight: "700",
-                      opacity: 0.3,
-                      marginRight: "1%",
-                    }}
-                  >
-                    Limit is £{monthLim.toFixed(2)}
-                  </Text>
-                  <Text
-                    onPress={() => navigation.navigate("SetLimit")}
-                    style={{
-                      fontSize: 10,
-                      fontWeight: "700",
-                      color: "blue",
-                      opacity: 1,
-                    }}
-                  >
-                    Change limit
-                  </Text>
+              {isToggled ? (
+                <View style={{ padding: "10%" }}>
+                  <Text>Set a monthly limit</Text>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder={"£"}
+                    keyboardType="numeric"
+                    onChangeText={(newText) => checkText(newText)}
+                  />
+                  <Pressable style={styles.button}>
+                    <Text onPress={() => navigate()} style={styles.buttonText}>
+                      Set Limit
+                    </Text>
+                  </Pressable>
                 </View>
               ) : (
-                <Text
-                  style={{
-                    fontSize: 10,
-                    marginTop: "2.5%",
-                    fontWeight: "700",
-                    opacity: 0.3,
-                  }}
-                >
-                  Limit is toggled off
-                </Text>
+                <>
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {monthLim - spend && percent >= 0 ? (
+                      <View style={{ marginTop: "5%" }}>
+                        <SinglePie percent={percent} />
+                      </View>
+                    ) : (
+                      <View>
+                        <SinglePie percent={percent} />
+                      </View>
+                    )}
+
+                    <View
+                      style={{
+                        position: "absolute",
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        top: 150,
+                      }}
+                    >
+                      {monthLim - spend >= 0 ? (
+                        <Text
+                          style={{
+                            fontSize: 28,
+                            color: "blue",
+                            fontWeight: "700",
+                          }}
+                        >
+                          {" "}
+                          £{(monthLim - spend).toFixed(2)}
+                        </Text>
+                      ) : (
+                        <Text
+                          style={{
+                            fontSize: 28,
+                            marginTop: "2.5%",
+                            color: "red",
+                            fontWeight: "700",
+                          }}
+                        >
+                          {" "}
+                          £{(monthLim - spend).toFixed(2)}
+                        </Text>
+                      )}
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          marginTop: "1%",
+                          fontWeight: "700",
+                          opacity: 0.3,
+                        }}
+                      >
+                        Spendable funds left
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      width: "100%",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      height: 60,
+                      paddingHorizontal: "5%",
+                    }}
+                  >
+                    <Image
+                      style={{ flex: 2, height: 35, width: 35 }}
+                      resizeMode="contain"
+                      source={require("../assets/meter-1.png")}
+                    />
+                    <View style={{ flex: 6, marginLeft: "5%" }}>
+                      <Text style={{ fontWeight: "700", fontSize: 16 }}>
+                        Card Spending limit
+                      </Text>
+                      <Text style={{ fontSize: 10 }}>
+                        The spend & withdrawal cap
+                      </Text>
+                    </View>
+                    <Pressable
+                      style={{ height: 50, width: "auto" }}
+                      onPress={() => console.log("?")}
+                      title="Set Limit"
+                    >
+                      <Switch
+                        style={{ flex: 2 }}
+                        trackColor={{
+                          false: GlobalStyles.Color.gray_600,
+                          true: GlobalStyles.Color.blue_100,
+                        }}
+                        thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                        onValueChange={spendingToggle}
+                        value={isEnabled}
+                      />
+                    </Pressable>
+                  </View>
+                  <View
+                    style={{
+                      width: "100%",
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "5%",
+                      flexDirection: "row",
+                      gap: 3,
+                    }}
+                  >
+                    <Image
+                      style={{ height: 15, width: 15 }}
+                      resizeMode="contain"
+                      source={require("../assets/card.png")}
+                    />
+
+                    <View style={{ flexDirection: "row", gap: 2 }}>
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          fontWeight: "700",
+                          opacity: 0.3,
+                          marginRight: "1%",
+                        }}
+                      >
+                        Limit is £{monthLim.toFixed(2)}
+                      </Text>
+                      <Text
+                        onPress={() => setIsToggled(true)}
+                        style={{
+                          fontSize: 10,
+                          fontWeight: "700",
+                          color: "blue",
+                          opacity: 1,
+                        }}
+                      >
+                        Change limit
+                      </Text>
+                    </View>
+                  </View>
+                </>
               )}
             </View>
+            <View style={{ width: "100%", height: 35 }} />
           </View>
-          <View style={{ width: "100%", height: 35 }} />
+        </ScrollView>
+        <View
+          style={{
+            position: "absolute",
+            bottom: "10%",
+            width: "100%",
+            paddingHorizontal: 10,
+            left: "10%",
+          }}
+        >
+          <Text style={styles.bottomText}>
+            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+            <Text style={styles.bottomTextBold}>Choice</Text>
+          </Text>
         </View>
-      </ScrollView>
+      </ImageBackground>
     </KeyboardAvoider>
   );
 };
@@ -313,15 +421,17 @@ const styles = StyleSheet.create({
   },
 
   subText: {
-    fontSize: GlobalStyles.RowText.fontSize,
-    fontWeight: GlobalStyles.RowText.fontWeight,
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    color: "#707070",
+    fontWeight: "regular",
   },
 
   subTextRow: {
-    marginTop: GlobalStyles.RowText.marginTop,
-    width: GlobalStyles.DivContainer.width,
-    marginLeft: GlobalStyles.DivContainer.marginLeft,
-    fontColor: GlobalStyles.RowText.fontColor,
+    textAlign: "center",
+    marginTop: "10%",
+    width: "100%",
+    paddingHorizontal: "5%",
   },
   carbonSpendingAnalysysBarProgress: {
     height: "100%",
@@ -334,6 +444,84 @@ const styles = StyleSheet.create({
     top: "25%",
     fontSize: 15,
     fontWeight: "bold",
+  },
+  dropdown: {
+    borderColor: "#EBEBEB",
+    borderRadius: 10,
+    width: "100%",
+    padding: 10,
+    fontSize: 16,
+    paddingLeft: 20,
+    borderWidth: 1,
+    marginBottom: "5%",
+    marginTop: "2.5%",
+    opacity: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  dropdownContainer: {
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
+  },
+  containerStyle: {
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
+    color: "white",
+  },
+  dropDownarrayitem: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    margin: 10,
+  },
+  container: {
+    width: "100%",
+    height: 350,
+    // position: "absolute",
+    bottom: 0,
+    zIndex: 0,
+  },
+  bottomText: {
+    color: "black",
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "normal",
+  },
+  bottomTextBold: {
+    color: "black",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+  },
+  groupParent: {
+    height: 60,
+  },
+  // parentPosition: {
+  //   bottom: 0,
+  //   left: 0,
+  //   right: 0,
+  //   position: "absolute",
+  // },
+  textInput: {
+    borderColor: "#EBEBEB",
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    paddingHorizontal: "7%",
+    paddingVertical: "5%",
+    fontSize: 15,
+    marginVertical: "10%",
+  },
+  button: {
+    paddingVertical: 20,
+    backgroundColor: "#212529",
+    color: "white",
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "normal",
+    textAlign: "center",
   },
 });
 
