@@ -53,11 +53,12 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
                 handleBalance(item?.value);
               }}
               style={styles.dropdown}
-              selectedTextStyle={{ color: "white" }}
+              selectedTextStyle={{ color: GlobalStyles.Color.backgroundColorOg }}
               iconColor={"white"}
               containerStyle={{
                 borderBottomStartRadius: 10,
                 borderBottomEndRadius: 10,
+                width: "100%"
               }}
             
             />
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   dropdown: {
-    width: 120,
+    width: 130,
     fontSize: 16,
     borderWidth: 0,
   },
