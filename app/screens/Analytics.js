@@ -17,12 +17,14 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   FlatList,
+  ImageBackground,
+  Text,
 } from "react-native";
 
 import GlobalStyles from "../../GlobalStyles";
 import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { Ionicons } from "@expo/vector-icons";
 import { horizontalScale, verticalScale } from "../config/metrics";
 
 import apiCall from "../api/apiCall";
@@ -38,7 +40,7 @@ import {
   TransactionFooter,
   TransactionHead,
 } from "../components/transactions";
-
+import colors from "../config/colors";
 import Tagline from "../components/Tagline";
 const Analytics = ({ navigation }) => {
   const { device } = useDevice();
@@ -76,7 +78,7 @@ const Analytics = ({ navigation }) => {
   const { userID, accountID } = useContext(AuthContext);
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const [carbonGraphData, setCarbonGraphData] = useState(null);
-
+  const [name, setName] = useState([]);
   useEffect(() => {
     loadData();
   }, [accountID, userID]);
@@ -91,8 +93,9 @@ const Analytics = ({ navigation }) => {
     const response = await apiCall.GetScheduledPayments("CC1");
     const graphData = await apiCall.GetTransactionsWeek(accountID);
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
-
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
+    const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
+
     setCarbonGraphData(carbonSpendDataBarGraph);
     setCatNames(carbonSpendDataBarGraph.labels);
     setDataPercentages(carbonSpendDataBarGraph.percentages);
@@ -100,7 +103,7 @@ const Analytics = ({ navigation }) => {
     setTotalFootprint(carbonSpendData.total);
     setTotalTrans(dataCall.totalTransactions);
     setTotal(dataCall.totalSpend);
-
+    setName(userDataReturn);
     setRecent(dataCall.transactions.slice(0, 3));
     setTrans(dataCall.transactions);
     setBal(dataCall.balance);
@@ -169,219 +172,24 @@ const Analytics = ({ navigation }) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
+      <ImageBackground
+        source={require("../assets/backgrounds/River.png")}
+        style={styles.backgroundImage}
+      >
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.welcomText}>Welcome back,</Text>
+            <Text style={styles.nameText}>{name?.[0]?.customerName} !</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <DarkMode />
+            <Notification />
+          </View>
+        </View>
+      </ImageBackground>
       <View style={styles.mainContainer}>
-        <View style={styles.titleTextRow}>
-          {/* <AppText style={[styles.titleText, ]}>Analysis</AppText> */}
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 28,
-          }}
-        >
-          <AppText
-            style={{
-              fontWeight: Platform.OS === "android" ? "normal" : "700",
-              fontFamily: "Helvetica",
-              fontSize: device == 1 ? 24 : 40,
-              width: device == 1 ? 250 : 350,
-              textAlign: "center",
-            }}
-          >
-            Your average monthly Carbon Footprint is
-          </AppText>
-        </View>
-
-        <View>
-          <DoughnutChart
-            data={carbnonSpendData}
-            children={
-              <View>
-                <AppText
-                  style={{
-                    fontSize: 50,
-                    fontWeight: "700",
-                    width: 250,
-                    textAlign: "center",
-                  }}
-                >
-                  {totalFootprint}
-                </AppText>
-                <AppText
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "700",
-                    width: 250,
-                    textAlign: "center",
-                  }}
-                >
-                  kg CO{"\u2082"}
-                </AppText>
-              </View>
-            }
-          />
-        </View>
-        <View style={[styles.balanceContainer]}>
-          <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16 }}>
-            Balance
-          </AppText>
-          <AppText
-            style={{
-              flex: 2,
-              alignItems: "center",
-              justifyContent: "flex-end",
-              textAlign: "right",
-              width: "100%",
-              fontWeight: "700",
-              color: "#0101FD",
-            }}
-          >
-            <AppText
-              style={{
-                fontWeight: "800",
-                fontSize: 30,
-                color: "blue",
-              }}
-            >
-              £ {balance}
-            </AppText>
-          </AppText>
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            width: "90%",
-            height: "auto",
-            marginTop: "5%",
-            borderRadius: 15,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginLeft: "5%",
-          }}
-        >
-          <View
-            style={[
-              {
-                height: "100%",
-                backgroundColor: "white",
-                width: "47.5%",
-                borderRadius: 15,
-                padding: "5%",
-                alignSelf: "center",
-              },
-              ,
-            ]}
-          >
-            <AppText style={{ fontWeight: "500" }}>Total Spend</AppText>
-            <AppText style={styles.money}>£ {totalSpend.toFixed(2)}</AppText>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View
-                style={{
-                  flex: 1,
-                  marginTop: verticalScale(5),
-                  alignItems: "flex-start",
-                  width: horizontalScale(75),
-                }}
-              >
-                <AppText style={{ color: "#999", fontSize: 12 }}>
-                  No. of Payments
-                </AppText>
-              </View>
-
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "flex-end",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <AppText style={{ color: "#999", fontSize: 22 }}>
-                  {totalTransactions}
-                </AppText>
-              </View>
-            </View>
-          </View>
-          <View
-            style={[
-              {
-                height: "100%",
-                backgroundColor: "white",
-                width: "47.5%",
-                borderRadius: 15,
-                padding: "5%",
-              },
-              ,
-            ]}
-          >
-            <AppText style={{ fontWeight: "700" }}>
-              Average Transaction spend
-            </AppText>
-            <View
-              style={{
-                marginTop: verticalScale(5),
-                flex: 1,
-                justifyContent: "flex-end",
-              }}
-            >
-              <AppText style={styles.money}>
-                £ {monthAverage.toFixed(2)}
-              </AppText>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.titleTextRow}>
-          <Image
-            source={require("../assets/icon-featherpiechart.png")}
-            resizeMode="contain"
-            style={{ width: horizontalScale(25), height: verticalScale(25) }}
-          />
-          <AppText
-            style={[
-              styles.titleText,
-              {
-                fontWeight: Platform.OS === "android" ? "normal" : "700",
-                fontFamily: "Helvetica",
-                fontSize: 24,
-              },
-            ]}
-          >
-            Spendings
-          </AppText>
-        </View>
-
-        <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-          {catNames.map((name, index) => {
-            return (
-              <Fragment key={`${name + index}`}>
-                <AppText style={styles.subtitleText}>{name}</AppText>
-                <View
-                  style={[
-                    styles.carbonSpendingAnalysysBarBackground,
-                    styles.rounded,
-                  ]}
-                >
-                  <View
-                    style={[
-                      styles.carbonSpendingAnalysysBarProgress,
-                      styles.rounded,
-                    ]}
-                    width={dataPercentages[index]}
-                    backgroundColor={colors[index % colors.length]}
-                  >
-                    <AppText style={styles.barText}>
-                      {dataPercentages[index]}
-                    </AppText>
-                  </View>
-                </View>
-              </Fragment>
-            );
-          })}
-
+        <View style={styles.innerContainer}>
+          {graphData && <Bazier graphData={graphData} />}
           {graphData && (
             <View
               style={{
@@ -415,44 +223,267 @@ const Analytics = ({ navigation }) => {
                 ))}
             </View>
           )}
+          <View style={styles.titleTextRow}>
+            {/* <AppText style={[styles.titleText, ]}>Analysis</AppText> */}
+          </View>
 
-          {graphData && <Bazier graphData={graphData} />}
-        </View>
-        <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
-          <TransactionHead />
-          {recentTransactions.map((transaction, index) => (
-            <TransactionBody
-              key={index}
-              name={transaction.description}
-              date={transaction.transactionDate}
-              amount={transaction.amount}
-              credit={transaction.credit}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 28,
+            }}
+          >
+            <AppText
+              style={{
+                fontWeight: Platform.OS === "android" ? "normal" : "700",
+                fontFamily: "Helvetica",
+                fontSize: device == 1 ? 24 : 40,
+                width: device == 1 ? 250 : 350,
+                textAlign: "center",
+              }}
+            >
+              Your average monthly Carbon Footprint is
+            </AppText>
+          </View>
+
+          <View>
+            <DoughnutChart
+              data={carbnonSpendData}
+              children={
+                <View>
+                  <AppText
+                    style={{
+                      fontSize: 50,
+                      fontWeight: "700",
+                      width: 250,
+                      textAlign: "center",
+                    }}
+                  >
+                    {totalFootprint}
+                  </AppText>
+                  <AppText
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "700",
+                      width: 250,
+                      textAlign: "center",
+                    }}
+                  >
+                    kg CO{"\u2082"}
+                  </AppText>
+                </View>
+              }
             />
-          ))}
-          <TransactionFooter
-            number={3}
-            total={transactions.length}
-            onSee={() => navigation.navigate("Transactions")}
-          />
-        </View>
-        <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
-          <TransactionHead headerTitle="Upcoming spending" />
-          {data.map((transaction, index) => (
-            <TransactionBody
-              key={index}
-              name={transaction.scheduleID}
-              date={transaction.date}
-              amount={transaction.amount}
-              credit={transaction.credit}
+          </View>
+          <View style={[styles.balanceContainer]}>
+            <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16 }}>
+              Balance
+            </AppText>
+            <AppText
+              style={{
+                flex: 2,
+                alignItems: "center",
+                justifyContent: "flex-end",
+                textAlign: "right",
+                width: "100%",
+                fontWeight: "700",
+                color: "#0101FD",
+              }}
+            >
+              <AppText
+                style={{
+                  fontWeight: "800",
+                  fontSize: 30,
+                  color: "blue",
+                }}
+              >
+                £ {balance}
+              </AppText>
+            </AppText>
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              width: "90%",
+              height: "auto",
+              marginTop: "5%",
+              borderRadius: 15,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginLeft: "5%",
+            }}
+          >
+            <View
+              style={[
+                {
+                  height: "100%",
+                  backgroundColor: "white",
+                  width: "47.5%",
+                  borderRadius: 15,
+                  padding: "5%",
+                  alignSelf: "center",
+                },
+                ,
+              ]}
+            >
+              <AppText style={{ fontWeight: "500" }}>Total Spend</AppText>
+              <AppText style={styles.money}>£ {totalSpend.toFixed(2)}</AppText>
+              <View style={{ flex: 1, flexDirection: "row" }}>
+                <View
+                  style={{
+                    flex: 1,
+                    marginTop: verticalScale(5),
+                    alignItems: "flex-start",
+                    width: horizontalScale(75),
+                  }}
+                >
+                  <AppText style={{ color: "#999", fontSize: 12 }}>
+                    No. of Payments
+                  </AppText>
+                </View>
+
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "flex-end",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <AppText style={{ color: "#999", fontSize: 22 }}>
+                    {totalTransactions}
+                  </AppText>
+                </View>
+              </View>
+            </View>
+            <View
+              style={[
+                {
+                  height: "100%",
+                  backgroundColor: "white",
+                  width: "47.5%",
+                  borderRadius: 15,
+                  padding: "5%",
+                },
+                ,
+              ]}
+            >
+              <AppText style={{ fontWeight: "700" }}>
+                Average Transaction spend
+              </AppText>
+              <View
+                style={{
+                  marginTop: verticalScale(5),
+                  flex: 1,
+                  justifyContent: "flex-end",
+                }}
+              >
+                <AppText style={styles.money}>
+                  £ {monthAverage.toFixed(2)}
+                </AppText>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.titleTextRow}>
+            <Image
+              source={require("../assets/icon-featherpiechart.png")}
+              resizeMode="contain"
+              style={{ width: horizontalScale(25), height: verticalScale(25) }}
             />
-          ))}
+            <AppText
+              style={[
+                styles.titleText,
+                {
+                  fontWeight: Platform.OS === "android" ? "normal" : "700",
+                  fontFamily: "Helvetica",
+                  fontSize: 24,
+                },
+              ]}
+            >
+              Spendings
+            </AppText>
+          </View>
+
+          <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
+            {catNames.map((name, index) => {
+              return (
+                <Fragment key={`${name + index}`}>
+                  <AppText style={styles.subtitleText}>{name}</AppText>
+                  <View
+                    style={[
+                      styles.carbonSpendingAnalysysBarBackground,
+                      styles.rounded,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.carbonSpendingAnalysysBarProgress,
+                        styles.rounded,
+                      ]}
+                      width={dataPercentages[index]}
+                      backgroundColor={colors[index % colors.length]}
+                    >
+                      <AppText style={styles.barText}>
+                        {dataPercentages[index]}
+                      </AppText>
+                    </View>
+                  </View>
+                </Fragment>
+              );
+            })}
+          </View>
+          <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
+            <TransactionHead />
+            {recentTransactions.map((transaction, index) => (
+              <TransactionBody
+                key={index}
+                name={transaction.description}
+                date={transaction.transactionDate}
+                amount={transaction.amount}
+                credit={transaction.credit}
+              />
+            ))}
+            <TransactionFooter
+              number={3}
+              total={transactions.length}
+              onSee={() => navigation.navigate("Transactions")}
+            />
+          </View>
+          <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
+            <TransactionHead headerTitle="Upcoming spending" />
+            {data.map((transaction, index) => (
+              <TransactionBody
+                key={index}
+                name={transaction.scheduleID}
+                date={transaction.date}
+                amount={transaction.amount}
+                credit={transaction.credit}
+              />
+            ))}
+          </View>
+          <View style={{ height: 20, width: "100%" }} />
         </View>
-        <View style={{ height: 20, width: "100%" }} />
       </View>
       <Tagline />
     </ScrollView>
   );
 };
+const DarkMode = () => (
+  <View style={styles.iconStyle}>
+    <Ionicons name="moon" color="white" size={24} />
+  </View>
+);
+const Notification = () => (
+  <View style={styles.iconStyle}>
+    <View style={styles.iconBadgeContainer}>
+      <Text style={styles.iconBadgeNumber}>1</Text>
+    </View>
+    <MaterialCommunityIcons name="bell-outline" color="white" size={24} />
+  </View>
+);
 
 const Bazier = ({ graphData }) => {
   let [tooltipPos, setTooltipPos] = useState({
@@ -490,7 +521,7 @@ const Bazier = ({ graphData }) => {
           backgroundGradientFrom: GlobalStyles.Color.backgroundColorOg,
           backgroundGradientTo: GlobalStyles.Color.backgroundColorOg,
           decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(0,0,255,${opacity})`,
+          color: (opacity = 1) => `rgba(23,148,36,${opacity})`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
           fillShadowGradientFrom: "black",
           fillShadowGradientTo: GlobalStyles.Color.backgroundColorOg,
@@ -559,8 +590,22 @@ const styles = StyleSheet.create({
     height: GlobalStyles.DivContainer.height,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: -20,
+    zIndex: 1,
+    paddingHorizontal:"10%"
   },
-
+  innerContainer:{
+    backgroundColor: "rgba(255,255,255,0.25)",
+    height: GlobalStyles.DivContainer.height,
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: -50,
+    zIndex: 10,
+  },
   titleTextRow: {
     flexDirection: "row",
     marginTop: GlobalStyles.Title.marginTop,
@@ -646,6 +691,66 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     backgroundColor: "white",
     borderRadius: 15,
+  },
+  backgroundImage: {
+    height: 270,
+    width: "100%",
+  },
+  backgroundImage: {
+    height: 270,
+    width: "100%",
+  },
+  iconContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 5,
+  },
+  welcomText: {
+    fontSize: 14,
+    color: "white",
+    fontWeight: "normal",
+  },
+  nameText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
+  },
+  iconStyle: {
+    height: 40,
+    width: 40,
+    // borderWidth: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    borderRadius: 20,
+    backgroundColor: "rgba(0, 0, 0, .25)",
+  },
+  iconBadgeContainer: {
+    position: "absolute",
+    backgroundColor: "red",
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    right: 8,
+    top: 8,
+    zIndex: 5,
+  },
+  iconBadgeNumber: {
+    fontSize: 6,
+    color: colors.white,
+    fontWeight: "900",
+  },
+  header: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+    marginTop: 30,
   },
 });
 
