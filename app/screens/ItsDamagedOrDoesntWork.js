@@ -31,7 +31,7 @@ const ItsDamagedOrDoesntWork = ({ navigation }) => {
             >
               <Button
                 title={`Terminate & Order card`}
-                onPress={() => terminateCardAlert(handleTerminate)}
+                onPress={() => navigation.navigate("TerminatedCard")}
               />
             </View>
 
