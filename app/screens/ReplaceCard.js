@@ -1,275 +1,189 @@
-import React, { useContext, useEffect, useState } from "react"; 
+import React, { useContext, useEffect, useState } from "react";
 //import * as React from "react";
-import { Text, StyleSheet, View, Pressable, Image } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Pressable,
+  Image,
+  ImageBackground,
+  Dimensions
+} from "react-native";
 import Screen from "../components/Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list";
-
-
-const ReplaceCard = ({navigation}) => 
+ let height = Dimensions.get("window").height;
+const ReplaceCard = ({ navigation }) =>
   //Comment
   // const cardName = "Carbonyte Standard - 7761"
   {
-    const [cardname, setCardname] = useState(null)
-  const authContext = useContext(AuthContext);
+    const [cardname, setCardname] = useState(null);
+    const authContext = useContext(AuthContext);
     //Calls the API once during load
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus',  () => {
-      loadData()
-    })
-  },[])
-  const loadData = async() =>{
-      setCardname(authContext.accountID)
-      console.log(authContext.accountID)
-  }
-    
-  
-  
-  return (
-    <Screen>
-    <View style={styles.replaceCard}>
-      <View style={styles.helloParent}>
-        <Text style={[styles.hello, styles.helloTypo]}>Replace card</Text>
-        <Pressable
-          style={[styles.rectangleParent, styles.groupPosition]}
-          onPress={() => navigation.navigate("ItWasLost")}
-        >
-          <View style={[styles.groupChild, styles.groupPosition]} />
-          <View style={styles.itWasLostWrapper}>
-            <Text
-              style={[
-                styles.itWasLost,
-                styles.itWasLostPosition,
-                styles.itWasLostTypo,
-              ]}
-            >
-              It was lost
-            </Text>
-          </View>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleGroup, styles.groupPosition]}
-          onPress={() => navigation.navigate("IWasAVictimOfFraudOrThe")}
-        >
-          <View style={[styles.groupChild, styles.groupPosition]} />
-          <View style={styles.itWasLostWrapper}>
-            <Text
-              style={[
-                styles.itWasLost,
-                styles.itWasLostPosition,
-                styles.itWasLostTypo,
-              ]}
-            >
-              I was a victim of fraud or theft
-            </Text>
-          </View>
-        </Pressable>
-        <Pressable
-          style={[styles.rectangleContainer, styles.groupPosition]}
-          onPress={() => navigation.navigate("ItsDamagedOrDoesntWork")}
-        >
-          <View style={[styles.groupChild, styles.groupPosition]} />
-          <View style={styles.itWasLostWrapper}>
-            <Text
-              style={[
-                styles.itWasLost,
-                styles.itWasLostPosition,
-                styles.itWasLostTypo,
-              ]}
-            >
-              It’s damaged or doesn’t work
-            </Text>
-          </View>
-        </Pressable>
-        <Text style={[styles.hello1, styles.hello1Color, styles.helloTypo]}>
-          Select the best option:
-        </Text>
-        <Image
-          style={[styles.iconFeatherChevronRight, styles.iconLayout]}
-          resizeMode="cover"
-          source={require("../assets/icon-featherchevronright.png")}
-        />
-        <Image
-          style={[styles.iconFeatherChevronRight1, styles.iconLayout]}
-          resizeMode="cover"
-          source={require("../assets/icon-featherchevronright.png")}
-        />
-        <Image
-          style={[styles.iconFeatherChevronRight2, styles.iconLayout]}
-          resizeMode="cover"
-          source={require("../assets/icon-featherchevronright.png")}
-        />
-        <View style={[styles.groupView, styles.viewPosition]}>
-          <View style={[styles.rectangleView, styles.viewPosition]} />
-          <View style={styles.carbonyteStandard7761MastParent}>
-            <Text
-              style={[
-                styles.carbonyteStandard7761Mast,
-                styles.itWasLostPosition,
-              ]}
-            >
-              <Text style={styles.carbonyteStandard7761}>
-                <Text style={[styles.carbonyteStandard, styles.itWasLostTypo]}>
-                  Account Number: {cardname}
-                </Text>
-              </Text>
-              {/* <Text style={styles.carbonyteStandard7761}>
-                <Text style={styles.hello1Color}>{"\n"}Mastercard</Text>
-              </Text> */}
-            </Text>
-            <Image
-              style={styles.iconFeatherCreditCard}
-              resizeMode="cover"
-              source={require("../assets/icon-feathercreditcard.png")}
-            />
+    useEffect(() => {
+      const unsubscribe = navigation.addListener("focus", () => {
+        loadData();
+      });
+    }, []);
+    const loadData = async () => {
+      setCardname(authContext.accountID);
+      console.log(authContext.accountID);
+    };
+
+    const dataOfLost = [
+      {
+        name: "It was lost",
+        navigate: () => navigation.navigate("ItWasLost"),
+      },
+      {
+        name: "I was a victim of fraud or theft",
+        navigate: () => navigation.navigate("IWasAVictimOfFraudOrThe"),
+      },
+      {
+        name: "It’s damaged or doesn’t work",
+        navigate: () => navigation.navigate("ItsDamagedOrDoesntWork"),
+      },
+    ];
+
+    return (
+      <Screen>
+        <View style={styles.replaceCard}>
+          <View>
+            <View style={styles.topContainer}>
+              <Image
+                style={styles.iconFeatherCreditCard}
+                resizeMode="contain"
+                source={require("../assets/cardLion.png")}
+              />
+              <View
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  paddingBottom: 10,
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                }}
+              >
+                <Text style={styles.hello1Color}>Business Elite</Text>
+                <Text style={styles.textAccount}>{cardname}</Text>
+              </View>
+            </View>
+            <Text style={styles.title}>Why do you need a new card?</Text>
+            <Text style={styles.selectText}>Select the best option :</Text>
+
+            {dataOfLost.map((eachValue, index) => {
+              return (
+                <Pressable
+                  style={styles.buttonStyle}
+                  onPress={eachValue.navigate}
+                  key={index}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
+                      padding: 10,
+                    }}
+                  >
+                    <Text style={styles.lostTextColor}>{eachValue.name}</Text>
+                    <Image
+                      resizeMode="contain"
+                      style={{ height: 15, width: 15 }}
+                      source={require("../assets/icon-featherchevronright.png")}
+                    />
+                  </View>
+                </Pressable>
+              );
+            })}
           </View>
         </View>
-      </View>
-    </View>
-    </Screen>
-  );
-};
+        <ImageBackground
+          resizeMode="stretch"
+          source={require("../assets/backgrounds/replaceCard.jpg")}
+          style={styles.container}
+        />
+        <View
+          style={{
+            position: "absolute",
+            bottom: "10%",
+            width: "100%",
+            paddingHorizontal: 10,
+            left: "10%",
+          }}
+        >
+          <Text style={styles.bottomText}>
+            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+            <Text style={styles.bottomTextBold}>Choice</Text>
+          </Text>
+        </View>
+      </Screen>
+    );
+  };
 
 const styles = StyleSheet.create({
-  helloTypo: {
-    textAlign: "left",
-    fontWeight: "700",
-    left: 2,
-    position: "absolute",
+  topContainer: {
+    backgroundColor: "white",
+    borderColor: "gray",
+    padding: 10,
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+    borderRadius: 10,
   },
-  groupPosition: {
-    height: 43,
-    right: 0,
-    left: 0,
-    position: "absolute",
+  title: {
+    color: "#212529",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 20,
+    marginVertical: 15,
   },
-  itWasLostPosition: {
-    width: 257,
-    top: "50%",
-    textAlign: "left",
-    position: "absolute",
+  buttonStyle: {
+    backgroundColor: "white",
+    borderColor: "gray",
+    padding: 5,
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+    borderRadius: 10,
+    marginVertical: 10,
   },
-  itWasLostTypo: {
-    fontWeight: "700",
+  lostTextColor: {
+    color: "#2B2B2B",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 16,
   },
+  selectText: {
+    color: "#888888",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+
   hello1Color: {
-    color: GlobalStyles.Color.gray_800,
+    color: "#000000",
+    fontFamily: "Montserrat",
+    fontWeight: "normal",
+    fontSize: 20,
   },
-  iconLayout: {
-    height: 14,
-    width: 8,
-    right: 18,
-    position: "absolute",
-  },
-  viewPosition: {
-    height: 63,
-    left: 0,
-    right: 0,
-    top: "50%",
-    position: "absolute",
-  },
-  hello: {
-    top: 0,
-    fontSize: GlobalStyles.FontSize.size_7xl,
-    color: GlobalStyles.Color.indigo_100,
-  },
-  groupChild: {
-    marginTop: -21.5,
-    borderRadius: GlobalStyles.Border.br_md,
-    backgroundColor: GlobalStyles.Color.gray_400,
-    top: "50%",
-  },
-  itWasLost: {
-    marginTop: -6,
-    color: GlobalStyles.Color.gray_1300,
-    fontSize: GlobalStyles.FontSize.size_xs,
-    left: 0,
-  },
-  itWasLostWrapper: {
-    marginTop: -7.5,
-    right: 46,
-    left: 24,
-    height: 12,
-    top: "50%",
-    position: "absolute",
-  },
-  rectangleParent: {
-    marginTop: 9,
-    top: "50%",
-  },
-  rectangleGroup: {
-    marginTop: 57,
-    top: "50%",
-  },
-  rectangleContainer: {
-    bottom: 0,
-  },
-  hello1: {
-    marginTop: -15,
-    fontSize: GlobalStyles.FontSize.size_xs,
-    top: "50%",
-  },
-  iconFeatherChevronRight: {
-    marginTop: 23.5,
-    top: "50%",
-  },
-  iconFeatherChevronRight1: {
-    marginTop: 71.8,
-    top: "50%",
-  },
-  iconFeatherChevronRight2: {
-    bottom: 14,
-  },
-  rectangleView: {
-    marginTop: -31.5,
-    borderRadius: GlobalStyles.Border.br_2xl,
-    backgroundColor: GlobalStyles.Color.white,
-  },
-  carbonyteStandard: {
-    color: GlobalStyles.Color.gray_1400,
-  },
-  carbonyteStandard7761: {
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
-  carbonyteStandard7761Mast: {
-    marginTop: -16,
-    left: 38,
-    fontSize: GlobalStyles.FontSize.size_base,
-    lineHeight: 28,
+  textAccount: {
+    color: "#000000",
+    fontFamily: "Montserrat",
+    fontWeight: "normal",
+    fontSize: 20,
   },
   iconFeatherCreditCard: {
-    top: 4,
-    width: 29,
-    height: 21,
-    left: 0,
-    position: "absolute",
+    width: 50,
+    height: 50,
   },
-  carbonyteStandard7761MastParent: {
-    marginTop: -15.5,
-    left: 14,
-    height: 32,
-    right: 18,
-    top: "50%",
-    position: "absolute",
-  },
-  groupView: {
-    marginTop: -102,
-  },
-  helloParent: {
-    width: "100%",
-    height: 296,
-  },
-  arrowPosition: {
-    top: "6%",
-    position: "absolute",
-  },
-  arrowCircle: {
-    marginTop: -10.11,
-    marginRight: 303.54,
-    width: 15,
-    height: 15,
-  },
+
   replaceCard: {
     flex: 1,
     width: "100%",
@@ -277,6 +191,25 @@ const styles = StyleSheet.create({
     paddingTop: GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
     backgroundColor: GlobalStyles.Color.gray_100,
+  },
+  container: {
+    width: "100%",
+    height: height/2.6,
+    // position: "absolute",
+    bottom: 0,
+    zIndex: 0,
+  },
+  bottomText: {
+    color: "white",
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "regular",
+  },
+  bottomTextBold: {
+    color: "white",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
   },
 });
 

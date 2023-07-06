@@ -95,7 +95,7 @@ const CardSettings = ({ navigation }) => {
         </View> */}
         <Pressable
           style={[styles.boxShadow]}
-          onPress={() => navigation.navigate("SpendingLimit")}
+          onPress={() => navigation.navigate("viewpin")}
         >
           <View
             style={[

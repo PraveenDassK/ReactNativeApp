@@ -107,7 +107,7 @@ const ItWasLost = ({ navigation }) => {
                 </Text>
                 <Text style={styles.yourCurrentCardWillBeTerm1}>
                   <Text style={styles.toKeepYour}>
-                    {"\n"}You may be charged for the new card
+                    You may be charged for the new card
                   </Text>
                 </Text>
               </Text>
@@ -179,7 +179,7 @@ const ItWasLost = ({ navigation }) => {
           <View style={[styles.groupParent, styles.groupPosition]}>
             <Button
               title={`Terminate & Order card`}
-              onPress={() => terminateCardAlert(handleTerminate)}
+              onPress={() => navigation.navigate("TerminatedCard")}
             />
           </View>
         </View>

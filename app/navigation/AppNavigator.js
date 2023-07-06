@@ -21,6 +21,7 @@ import Settings from "../screens/Settings";
 import AccountDummy from "../screens/AccountDummy";
 import AccountDummy2 from "../screens/AccountDummy2";
 import DashBoard from "../screens/Dashboard";
+import ViewPin from "../screens/ViewPin";
 /**
  * @notice Screens on account page to navigate to
  */
@@ -873,6 +874,14 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CardSettings)}
         options={{
           title: "Settings",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+        }}
+      />
+       <Stack.Screen
+        name="viewpin"
+        component={gestureHandlerRootHOC(ViewPin)}
+        options={{
+          title: "Your security PIN",
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
