@@ -65,8 +65,8 @@ const TransactionBody = ({
   };
 
   const styles = StyleSheet.create({
-    bold: { fontWeight: "700" },
-    subText: { opacity: 0.5, fontSize: 10, lineHeight: 15 },
+    bold: { fontWeight: "700", fontFamily: 'Montserrat-SemiBold' },
+    subText: { opacity: 0.5, fontSize: 10, lineHeight: 15, fontFamily:'Montserrat-Regular' },
   })
 
 export default TransactionBody

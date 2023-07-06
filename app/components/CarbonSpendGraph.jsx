@@ -95,7 +95,7 @@ const CarbonSpendGraph = ({ handleViewMore}) => {
                 }}
               >
                 <Text style={styles.headingText}>{eachValue?.x}</Text>
-                <Text style={styles.headingText}>{eachValue?.y}kg</Text>
+                <Text style={styles.headingText}>{eachValue?.y} kg</Text>
               </View>
               <Progress.Bar
                 progress={value}
