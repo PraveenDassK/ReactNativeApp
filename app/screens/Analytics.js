@@ -39,11 +39,12 @@ import {
   TransactionBody,
   TransactionFooter,
   TransactionHead,
+  UpcomingTransactionBody,
+  UpcomingHead,
 } from "../components/transactions";
 import colors from "../config/colors";
 import Tagline from "../components/Tagline";
 import * as Device from "expo-device";
-
 const Analytics = ({ navigation }) => {
   const { device } = useDevice();
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +98,7 @@ const Analytics = ({ navigation }) => {
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
     const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
-    console.log(dataCall,"this is data call")
+    console.log(dataCall, "this is data call");
     setCarbonGraphData(carbonSpendDataBarGraph);
     setCatNames(carbonSpendDataBarGraph.labels);
     setDataPercentages(carbonSpendDataBarGraph.percentages);
@@ -180,8 +181,8 @@ const Analytics = ({ navigation }) => {
       >
         <View style={styles.header}>
           <View>
-            <Text style={styles.welcomText}>Welcome back,</Text>
-            <Text style={styles.nameText}>{name?.[0]?.customerName} !</Text>
+            <Text style={styles.nameText}>Spend Analytics</Text>
+            <Text style={styles.welcomText}>Track & control your spending</Text>
           </View>
           <View style={styles.iconContainer}>
             <DarkMode />
@@ -572,14 +573,15 @@ const Analytics = ({ navigation }) => {
               { marginVertical: 40, borderRadius: 10 },
             ]}
           >
-            <TransactionHead headerTitle="Upcoming spending" />
+            <UpcomingHead headerTitle="Upcoming spending" />
             {data.map((transaction, index) => (
-              <TransactionBody
+              <UpcomingTransactionBody
                 key={index}
                 name={transaction.scheduleID}
                 date={transaction.date}
                 amount={transaction.amount}
                 credit={transaction.credit}
+                accountID={accountID}
               />
             ))}
           </View>
@@ -659,9 +661,9 @@ const Bazier = ({ graphData }) => {
         chartConfig={{
           // background: "transparent",
           backgroundGradientFrom: "rgba(255,255,255,0)",
-          backgroundGradientFromOpacity:0,
+          backgroundGradientFromOpacity: 0,
           backgroundGradientTo: "rgba(255,255,255,0)",
-          backgroundGradientToOpacity:0,
+          backgroundGradientToOpacity: 0,
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `#179424`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
@@ -739,7 +741,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
   },
   innerContainer: {
-    backgroundColor: "rgba(255,255,255,0.25)",
+    backgroundColor: "rgba(255,255,255,0.5)",
     height: GlobalStyles.DivContainer.height,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,

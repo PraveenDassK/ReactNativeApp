@@ -103,7 +103,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
               <View style={styles.iconContainer}>
                 <DarkMode />
-                <Notification />
+                <TouchableOpacity  onPress={() => navigation.navigate("Notification")}>
+                <Notification  />
+                </TouchableOpacity >
               </View>
             </View>
           </ImageBackground>
@@ -255,7 +257,7 @@ const DarkMode = () => (
   </View>
 );
 const Notification = () => (
-  <View style={styles.iconStyle}>
+  <View style={styles.iconStyle} >
     <View style={styles.iconBadgeContainer}>
       <Text style={styles.iconBadgeNumber}>1</Text>
     </View>
