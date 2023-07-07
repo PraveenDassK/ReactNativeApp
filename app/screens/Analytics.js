@@ -26,7 +26,7 @@ import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { horizontalScale, verticalScale } from "../config/metrics";
-
+import { VictoryPie, VictoryChart, VictoryTheme } from "victory-native";
 import apiCall from "../api/apiCall";
 import AuthContext from "../auth/context";
 import moment from "moment";
@@ -42,6 +42,8 @@ import {
 } from "../components/transactions";
 import colors from "../config/colors";
 import Tagline from "../components/Tagline";
+import * as Device from "expo-device";
+
 const Analytics = ({ navigation }) => {
   const { device } = useDevice();
   const [isLoading, setIsLoading] = useState(false);
@@ -95,7 +97,7 @@ const Analytics = ({ navigation }) => {
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
     const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
-
+    console.log(dataCall,"this is data call")
     setCarbonGraphData(carbonSpendDataBarGraph);
     setCatNames(carbonSpendDataBarGraph.labels);
     setDataPercentages(carbonSpendDataBarGraph.percentages);
@@ -199,9 +201,9 @@ const Analytics = ({ navigation }) => {
                 alignItems: "center",
                 marginTop: verticalScale(30),
                 paddingBottom: verticalScale(5),
-                opacity: 0.5,
-
+                // opacity: 0.5,
                 borderBottomWidth: 1.5,
+                borderBottomColor: "gray",
               }}
             >
               {graphData &&
@@ -214,7 +216,7 @@ const Analytics = ({ navigation }) => {
                       style={{
                         fontSize: 15,
                         fontWeight: "800",
-                        color: active === tab.title ? "blue" : "grey",
+                        color: active === tab.title ? "#0101FD" : "grey",
                       }}
                     >
                       {tab.title}
@@ -223,10 +225,11 @@ const Analytics = ({ navigation }) => {
                 ))}
             </View>
           )}
-          <View style={styles.titleTextRow}>
-            {/* <AppText style={[styles.titleText, ]}>Analysis</AppText> */}
-          </View>
+          {/* <View style={styles.titleTextRow}>
+            <AppText style={[styles.titleText, ]}>Analysis</AppText>
+          </View> */}
 
+          {/* 
           <View
             style={{
               flex: 1,
@@ -246,65 +249,174 @@ const Analytics = ({ navigation }) => {
             >
               Your average monthly Carbon Footprint is
             </AppText>
-          </View>
+          </View> */}
+          <View
+            style={{
+              backgroundColor: "white",
+              paddingBottom: "5%",
+              borderRadius: 10,
+            }}
+          >
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <VictoryPie
+                style={{ labels: { fill: "black" }, width: "100%" }}
+                colorScale={["tomato", "orange", "gold", "cyan", "green"]}
+                innerRadius={device == 1 ? 130 : 300}
+                labelRadius={device == 1 ? 110 : 320}
+                padAngle={1}
+                // labels={({ datum }) => `${datum.x[0]}`}
+                labels={({ datum }) => `${datum.x[0]}`}
+                // cornerRadius={10}
+                data={carbnonSpendData}
+                cornerRadius={({ datum }) => datum.y * 5}
+                width={device == 1 ? 300 : 200}
+                height={device == 1 ? 320 : 300}
+              />
 
-          <View>
-            <DoughnutChart
-              data={carbnonSpendData}
-              children={
+              <View
+                style={{
+                  position: "absolute",
+                  // flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 28,
+                  bottom: "43%",
+                  left: device == 1 ? "30%" : "35%",
+                }}
+              >
                 <View>
-                  <AppText
-                    style={{
-                      fontSize: 50,
-                      fontWeight: "700",
-                      width: 250,
-                      textAlign: "center",
-                    }}
-                  >
-                    {totalFootprint}
-                  </AppText>
                   <AppText
                     style={{
                       fontSize: 20,
                       fontWeight: "700",
-                      width: 250,
+                      width: "100%",
+                      textAlign: "center",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    Total Spend
+                  </AppText>
+                  <AppText
+                    style={{
+                      fontSize: 25,
+                      fontWeight: "bold",
+                      width: "100%",
                       textAlign: "center",
                     }}
                   >
-                    kg CO{"\u2082"}
+                    {/* {totalFootprint} */}£ {totalSpend.toFixed(2)}
                   </AppText>
                 </View>
-              }
-            />
-          </View>
-          <View style={[styles.balanceContainer]}>
-            <AppText style={{ flex: 2, fontWeight: "700", fontSize: 16 }}>
-              Balance
-            </AppText>
-            <AppText
-              style={{
-                flex: 2,
-                alignItems: "center",
-                justifyContent: "flex-end",
-                textAlign: "right",
-                width: "100%",
-                fontWeight: "700",
-                color: "#0101FD",
-              }}
-            >
+              </View>
+            </View>
+            <View style={[styles.balanceContainer]}>
               <AppText
                 style={{
-                  fontWeight: "800",
-                  fontSize: 30,
-                  color: "blue",
+                  flex: 2,
+                  fontFamily: "Montserrat",
+
+                  fontWeight: "normal",
+                  fontSize: 14,
+                  color: "#212529",
+                }}
+              >
+                Money Spent
+              </AppText>
+
+              <AppText
+                style={{
+                  fontFamily: "Montserrat",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  color: "#212529",
+                }}
+              >
+                £ {totalSpend.toFixed(2)}{" "}
+              </AppText>
+            </View>
+            <View style={[styles.balanceContainer]}>
+              <AppText
+                style={{
+                  flex: 2,
+                  fontFamily: "Montserrat",
+
+                  fontWeight: "normal",
+                  fontSize: 14,
+                  color: "#212529",
+                }}
+              >
+                Money Received
+              </AppText>
+
+              <AppText
+                style={{
+                  fontFamily: "Montserrat",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  color: "#212529",
+                }}
+              >
+                {/* £ {totalSpend.toFixed(2)}{" "} */}
+                Coming soon..
+              </AppText>
+            </View>
+            <View style={[styles.balanceContainer]}>
+              <AppText
+                style={{
+                  flex: 2,
+                  fontFamily: "Montserrat",
+
+                  fontWeight: "normal",
+                  fontSize: 14,
+                  color: "#212529",
+                }}
+              >
+                No.of Payments
+              </AppText>
+
+              <AppText
+                style={{
+                  fontFamily: "Montserrat",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  color: "#212529",
+                }}
+              >
+                {totalTransactions}
+              </AppText>
+            </View>
+            <View style={[styles.balanceContainer]}>
+              <AppText
+                style={{
+                  flex: 2,
+                  fontFamily: "Montserrat",
+                  fontWeight: "normal",
+                  fontSize: 14,
+                  color: "#212529",
+                }}
+              >
+                Current Balance
+              </AppText>
+
+              <AppText
+                style={{
+                  fontFamily: "Montserrat",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  color: "#212529",
                 }}
               >
                 £ {balance}
               </AppText>
-            </AppText>
-          </View>
+            </View>
 
-          <View
+            {/* <View
             style={{
               flex: 1,
               width: "90%",
@@ -385,8 +497,8 @@ const Analytics = ({ navigation }) => {
                 </AppText>
               </View>
             </View>
-          </View>
-
+          </View> */}
+            {/* 
           <View style={styles.titleTextRow}>
             <Image
               source={require("../assets/icon-featherpiechart.png")}
@@ -405,37 +517,39 @@ const Analytics = ({ navigation }) => {
             >
               Spendings
             </AppText>
-          </View>
+          </View> */}
 
-          <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
-            {catNames.map((name, index) => {
-              return (
-                <Fragment key={`${name + index}`}>
-                  <AppText style={styles.subtitleText}>{name}</AppText>
-                  <View
-                    style={[
-                      styles.carbonSpendingAnalysysBarBackground,
-                      styles.rounded,
-                    ]}
-                  >
+            <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
+              {catNames.map((name, index) => {
+                return (
+                  <Fragment key={`${name + index}`}>
+                    <AppText style={styles.subtitleText}>{name}</AppText>
                     <View
                       style={[
-                        styles.carbonSpendingAnalysysBarProgress,
+                        styles.carbonSpendingAnalysysBarBackground,
                         styles.rounded,
                       ]}
-                      width={dataPercentages[index]}
-                      backgroundColor={colors[index % colors.length]}
                     >
-                      <AppText style={styles.barText}>
-                        {dataPercentages[index]}
-                      </AppText>
+                      <View
+                        style={[
+                          styles.carbonSpendingAnalysysBarProgress,
+                          styles.rounded,
+                        ]}
+                        width={dataPercentages[index]}
+                        backgroundColor={colors[index % colors.length]}
+                      >
+                        <AppText style={styles.barText}>
+                          {dataPercentages[index]}
+                        </AppText>
+                      </View>
                     </View>
-                  </View>
-                </Fragment>
-              );
-            })}
+                  </Fragment>
+                );
+              })}
+            </View>
           </View>
-          <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
+
+          {/* <View style={[styles.containerSpacing, { marginVertical: 40,borderRadius:10 }]}>
             <TransactionHead />
             {recentTransactions.map((transaction, index) => (
               <TransactionBody
@@ -451,8 +565,13 @@ const Analytics = ({ navigation }) => {
               total={transactions.length}
               onSee={() => navigation.navigate("Transactions")}
             />
-          </View>
-          <View style={[styles.containerSpacing, { marginVertical: 40 }]}>
+          </View> */}
+          <View
+            style={[
+              styles.containerSpacing,
+              { marginVertical: 40, borderRadius: 10 },
+            ]}
+          >
             <TransactionHead headerTitle="Upcoming spending" />
             {data.map((transaction, index) => (
               <TransactionBody
@@ -464,10 +583,29 @@ const Analytics = ({ navigation }) => {
               />
             ))}
           </View>
-          <View style={{ height: 20, width: "100%" }} />
+          <View style={{ height: 20, width: "100%", position: "relative" }} />
         </View>
       </View>
-      <Tagline />
+      <ImageBackground
+        resizeMode="stretch"
+        source={require("../assets/backgrounds/replaceCard.jpg")}
+        style={styles.container}
+      />
+      <View
+        style={{
+          position: "absolute",
+          bottom: "10%",
+          width: "100%",
+          paddingHorizontal: 10,
+          left: "10%",
+        }}
+      >
+        <Text style={styles.bottomText}>
+          Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+          <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+          <Text style={styles.bottomTextBold}>Choice</Text>
+        </Text>
+      </View>
     </ScrollView>
   );
 };
@@ -509,7 +647,8 @@ const Bazier = ({ graphData }) => {
           labels: xAxis,
           datasets: [{ data: yAxis }],
         }}
-        width={Dimensions.get("window").width * 0.8125} // from react-native
+        // width={Dimensions.get("window").width * 0.8125} // from react-native
+        width={300}
         height={220}
         yAxisLabel="£"
         yAxisSuffix=""
@@ -518,19 +657,22 @@ const Bazier = ({ graphData }) => {
         withVerticalLines={false}
         withHorizontalLabels={false}
         chartConfig={{
-          backgroundGradientFrom: GlobalStyles.Color.backgroundColorOg,
-          backgroundGradientTo: GlobalStyles.Color.backgroundColorOg,
+          // background: "transparent",
+          backgroundGradientFrom: "rgba(255,255,255,0)",
+          backgroundGradientFromOpacity:0,
+          backgroundGradientTo: "rgba(255,255,255,0)",
+          backgroundGradientToOpacity:0,
           decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(23,148,36,${opacity})`,
+          color: (opacity = 1) => `#179424`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
-          fillShadowGradientFrom: "black",
+          fillShadowGradientFrom: "green",
           fillShadowGradientTo: GlobalStyles.Color.backgroundColorOg,
           strokeWidth: 5,
           style: { borderRadius: 16 },
           propsForDots: {
             r: "3",
-            strokeWidth: "8",
-            stroke: `rgba(30, 81, 123, 0.3)`,
+            strokeWidth: "4",
+            stroke: `#0101FD`,
           },
         }}
         bezier
@@ -594,16 +736,16 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     marginTop: -20,
     zIndex: 1,
-    paddingHorizontal:"10%"
+    paddingHorizontal: "5%",
   },
-  innerContainer:{
+  innerContainer: {
     backgroundColor: "rgba(255,255,255,0.25)",
     height: GlobalStyles.DivContainer.height,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    marginTop: -50,
+    marginTop: -70,
     zIndex: 10,
   },
   titleTextRow: {
@@ -633,16 +775,15 @@ const styles = StyleSheet.create({
   },
 
   balanceContainer: {
-    width: "90%",
-    marginLeft: "5%",
+    width: "100%",
+    // marginLeft: "5%",
     flexDirection: "row",
     backgroundColor: "white",
-    borderRadius: 15,
+    // borderRadius: 15,
 
     alignItems: "center",
-    padding: "5%",
-
-    marginTop: "5%",
+    paddingHorizontal: "5%",
+    paddingVertical: "1%",
   },
 
   money: {
@@ -654,18 +795,21 @@ const styles = StyleSheet.create({
     width: "100%",
     height: verticalScale(35),
     marginTop: "2.5%",
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.DivContainer.backgroundColor,
   },
-  containerSpacing: { paddingHorizontal: "5%" },
+  containerSpacing: { paddingHorizontal: "0%" },
   carbonSpendingAnalysysBarProgress: {
     height: "100%",
     borderRadius: 15,
     maxWidth: "100%",
   },
   carbonSpendingAnalysysDiv: {
-    width: "90%",
-    marginLeft: "5%",
+    width: "100%",
     height: "auto",
+    backgroundColor: "white",
+    paddingHorizontal: "5%",
+    paddingVertical: "2%",
+    marginTop: "5%",
   },
   barText: {
     left: 20,
@@ -678,7 +822,7 @@ const styles = StyleSheet.create({
   },
 
   subtitleText: {
-    marginLeft: "5%",
+    marginLeft: "0%",
     marginTop: "2.5%",
     fontSize: 15,
     fontWeight: "700",
@@ -751,6 +895,25 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 20,
     marginTop: 30,
+  },
+  container: {
+    width: "100%",
+    height: 300,
+    // position: "absolute",
+    bottom: 0,
+    zIndex: 0,
+  },
+  bottomText: {
+    color: "white",
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "regular",
+  },
+  bottomTextBold: {
+    color: "white",
+    fontSize: 16,
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
   },
 });
 
