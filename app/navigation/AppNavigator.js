@@ -142,21 +142,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View
-      style={{
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 70 + insets.bottom,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        borderTopRightRadius: 20,
-        borderTopLeftRadius: 20,
-        overflow: "hidden",
-      }}
-    >
+    
       <BlurView
         tint="light"
         intensity={60}
@@ -170,8 +156,11 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "rgba(255, 255, 255, 0.2)",
+          borderTopRightRadius: 20,
+          borderTopLeftRadius: 20,
+          overflow: "hidden",
         }}
-      />
+      >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -268,7 +257,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
           </React.Fragment>
         );
       })}
-    </View>
+    </BlurView>
   );
 }
 

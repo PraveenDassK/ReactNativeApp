@@ -7,7 +7,7 @@ import apiCarbon from "../api/apiCarbon";
 import * as Progress from "react-native-progress";
 import GlobalStyles from "../../GlobalStyles";
 
-const CarbonSpendGraph = ({ handleViewMore}) => {
+const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const { userID, accountID } = useContext(AuthContext);
   const [totalFootprint, setTotalFootprint] = useState(false);
@@ -51,8 +51,11 @@ const CarbonSpendGraph = ({ handleViewMore}) => {
     );
   }
 
+  const styled = {backgroundColor: "rgba(255, 255, 255, 0.5)",
+  borderRadius: 15,}
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isStyled ? styled : null] }>
       <DoughnutChart
         data={carbnonSpendData}
         children={
@@ -130,8 +133,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
-    borderRadius: 15,
+    
   },
   icon: {
     borderWidth: 0,

@@ -5,24 +5,29 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 const TransactionFooter = ({ navigate = true, onSee }) => {
   return (
-    
-
-    
-    <View style={styles.transactionHeadContainer}><BlurView tint="light" intensity={60} style={[styles.blurView, {backgroundColor: "rgba(255, 255, 255, 0.5)"}]}>
-      <View style={styles.spacing}>
-        {navigate && (
-          <View style={styles.headerTitleContainer}>
-            <TouchableOpacity
-              style={styles.navigationContainer}
-              onPress={onSee}
-            >
-              <Text style={styles.navigationText}>View all</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View></BlurView>
+    <View style={styles.transactionHeadContainer}>
+      <BlurView
+        tint="light"
+        intensity={60}
+        style={[
+          styles.blurView,
+          { backgroundColor: "rgba(255, 255, 255, 0.5)" },
+        ]}
+      >
+        <View style={styles.spacing}>
+          {navigate && (
+            <View style={styles.headerTitleContainer}>
+              <TouchableOpacity
+                style={styles.navigationContainer}
+                onPress={onSee}
+              >
+                <Text style={styles.navigationText}>View all</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      </BlurView>
     </View>
-    
   );
 };
 
@@ -37,8 +42,7 @@ const styles = StyleSheet.create({
   transactionHeadContainer: {
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    overflow: "hidden"
-    
+    overflow: "hidden",
   },
   headerTitleContainer: {
     flexDirection: "row",
