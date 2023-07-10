@@ -776,11 +776,15 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerTitleStyle: {
+            fontFamily: 'Montserrat',
+            fontSize:20,
+          },
           headerBackImage: () => (
             <View
               style={styles.iconDropDownContainer}
             >
-              <MaterialCommunityIcons name="arrow-down" size={30} />
+              <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
           headerBackTitleVisible: false,
@@ -790,16 +794,20 @@ const StackNavigator = () => {
         name="AddBeneficiaryContact"
         component={gestureHandlerRootHOC(AddBeneficiaryContact)}
         options={{
-          title: "Bank Details",
+          title: "Add new beneficiary",
           presentation: "modal",
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerTitleStyle: {
+            fontFamily: 'Montserrat',
+            fontSize:20,
+          },
           headerBackImage: () => (
             <View
               style={styles.iconDropDownContainer}
             >
-              <MaterialCommunityIcons name="arrow-down" size={30} />
+              <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
           headerBackTitleVisible: false,
@@ -810,16 +818,20 @@ const StackNavigator = () => {
         name="AddBeneficiaryRefrence"
         component={gestureHandlerRootHOC(AddBeneficiaryRefrence)}
         options={{
-          title: "Bank Details",
+          title: "Add new beneficiary",
           presentation: "modal",
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerTitleStyle: {
+            fontFamily: 'Montserrat',
+            fontSize:20,
+          },
           headerBackImage: () => (
             <View
               style={styles.iconDropDownContainer}
             >
-              <MaterialCommunityIcons name="arrow-down" size={30} />
+              <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
           headerBackTitleVisible: false,

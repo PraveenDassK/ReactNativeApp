@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
   TouchableOpacity,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
@@ -17,46 +18,35 @@ import Button from "../components/AppButton";
 import { verticalScale } from "../config/scaling";
 import { Formik } from "formik";
 import * as Yup from "yup";
-
+import { Dropdown } from "react-native-element-dropdown";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 import CountdownBar from "../components/CountdownBar";
 import { CheckBox } from "@rneui/themed";
+import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import StepProgress from "../components/SteeperCounter";
 
 const validationSchema = Yup.object().shape({
-  accountName: Yup.string().required().min(1).max(30).label("Account name"),
-  phoneNumber: Yup.string()
-    .required()
-    .matches(/^[0-9]+$/, "Phone number must be digits")
-    .min(9)
-    .max(11)
-    .label("Phone number"),
+  iban: Yup.string(),
 
-  sortCode: Yup.string()
-    .required()
-    .matches(/^[0-9]+$/, "Sort code must be digits")
-    .min(6, "Must be exactly 6 digits")
-    .max(6, "Must be exactly 6 digits")
-    .label("Sort code"),
-  accNum: Yup.string()
-    .required()
-    .matches(/^[0-9]+$/, "Account number must be digits")
-    .min(8, "Must be exactly 8 digits")
-    .max(8, "Must be exactly 8 digits")
-    .label("Account number"),
+  bic: Yup.string(),
+
+  currency: Yup.string().required("Currency type is required"),
+
+  reference: Yup.string(),
 });
-
 const items = [
   {
     id: 1,
     label: "IBAN",
-    placeholder: "",
+    placeholder: "Enter the IBAN",
     initialValue: "iban",
   },
   {
     id: 2,
     label: "BIC",
-    placeholder: "",
+    placeholder: "Enter the BIC",
     initialValue: "bic",
   },
   {
@@ -68,7 +58,7 @@ const items = [
   {
     id: 4,
     label: "Refrence",
-    placeholder: "",
+    placeholder: "Enter the reference",
     initialValue: "refrence",
   },
 ];
@@ -76,39 +66,46 @@ const items = [
 const AddBeneficiary = ({ navigation, route }) => {
   const authContext = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async ({
-    iban,
-    bic,
-    currency,
-    refrence,
-  }) => {
-    let requestObj = route.params
-    requestObj.destinationIdentifier.iban = iban
-    requestObj.destinationIdentifier.bic = bic
-    requestObj.destinationIdentifier.currency = currency
-    requestObj.externalRefrence = refrence
-    console.log(requestObj)
+  const [selectedCard, setSelectedCard] = useState();
+  const [currencyError, setCurrencyError] = useState("");
+  const handleSubmit = async ({ iban, bic, currency, refrence }) => {
+    let requestObj = route.params;
+    if (!selectedCard) {
+      setCurrencyError("Need to Select Currency");
+      return;
+    } else {
+      setCurrencyError("");
+    }
+    requestObj.destinationIdentifier.iban = iban;
+    requestObj.destinationIdentifier.bic = bic;
+    requestObj.destinationIdentifier.currency = selectedCard;
+    requestObj.externalRefrence = refrence;
+    console.log(requestObj);
 
     const checkRequestObj = {
-      "paymentAccountId": "A122HTHM",
-      "sortCode": "000000",
-      "accountNumber": "12345674",
-      "secondaryAccountId": "1",
-      "accountType": "PERSONAL",
-      "name": "a"
-    }
+      paymentAccountId: "A122HTHM",
+      sortCode: "000000",
+      accountNumber: "12345674",
+      secondaryAccountId: "1",
+      accountType: "PERSONAL",
+      name: "a",
+    };
 
     //API call
-    const checkCall = await apiBeneficiaries.checkBeneficary(authContext.userId,checkRequestObj);
-    console.log(checkCall)
-    if(checkCall.result.code == "MATCHED"){
-
+    const checkCall = await apiBeneficiaries.checkBeneficary(
+      authContext.userId,
+      checkRequestObj
+    );
+    console.log(checkCall);
+    if (checkCall.result.code == "MATCHED") {
     }
 
-    const beneficaryCall = await apiBeneficiaries.AddBeneficiary(authContext.userID, requestObj);
-    console.log(beneficaryCall)
-    console.log(beneficaryCall.data.details)
+    const beneficaryCall = await apiBeneficiaries.AddBeneficiary(
+      authContext.userID,
+      requestObj
+    );
+    console.log(beneficaryCall);
+    console.log(beneficaryCall.data.details);
     //If the payee is a duplicate don't add them
     if (
       beneficaryCall.data.resultMessage ==
@@ -118,9 +115,9 @@ const AddBeneficiary = ({ navigation, route }) => {
       return;
     }
 
-    navigation.navigate("Account")
+    navigation.navigate("Account");
   };
-
+  console.log(selectedCard, "thsios is selected");
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -129,20 +126,81 @@ const AddBeneficiary = ({ navigation, route }) => {
     );
   }
 
+  const arrayData = [
+    {
+      label: "Pounds",
+      value: "Pounds",
+    },
+    {
+      label: "Euros",
+      value: "Euros",
+    },
+    {
+      label: "American dollars",
+      value: "American dollars",
+    },
+  ];
+
+  const renderItem = (item) => {
+    return (
+      <View style={styles.dropDownarrayitem}>
+        <View
+          style={{
+            width: 30,
+            height: 30,
+            backgroundColor: "#EBEBEB",
+            borderRadius: 15,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {item.label === "American dollars" && (
+            <FontAwesome name="dollar" size={14} color="black" />
+          )}
+          {item.label === "Euros" && (
+            <FontAwesome name="euro" size={14} color="black" />
+          )}
+          {item.label === "Pounds" && (
+            <FontAwesome5 name="pound-sign" size={14} color="black" />
+          )}
+        </View>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Text style={styles.textItem}>{item.label}</Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <KeyboardAvoider>
-      <CountdownBar currentPage={3} />
+      {/* <CountdownBar currentPage={3} /> */}
+      <StepProgress currentStep={3} />
+
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1, paddingVertical: verticalScale(60) }}>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 20,
+            paddingVertical: 24,
+            backgroundColor: "#FFFFFF",
+            marginTop: 27,
+            borderRadius: 20,
+          }}
+        >
           <Formik
             initialValues={{
               iban: "",
               bic: "",
               currency: "GBP",
-              refrence: "Friend"
+              refrence: "Friend",
             }}
             onSubmit={handleSubmit}
-          // validationSchema={validationSchema}
+            validationSchema={validationSchema}
           >
             {({
               handleChange,
@@ -162,20 +220,43 @@ const AddBeneficiary = ({ navigation, route }) => {
                         marginBottom: "5%",
                       }}
                     >
-                      <Text style={{ fontSize: 14 }}>{item.label}</Text>
-                      <TextInput
-                        onBlur={() => setFieldTouched(item.initialValue)}
-                        onChangeText={handleChange(item.initialValue)}
-                        style={{ fontSize: 24, marginTop: "1%" }}
-                      ></TextInput>
-                      <View
-                        style={{
-                          height: 1,
-                          backgroundColor: "black",
-                          marginTop: "1%",
-                          opacity: 0.7,
-                        }}
-                      />
+                      <Text style={styles.lable}>{item.label}</Text>
+                      {item.label === "Currency" ? (
+                        <View>
+                          <Dropdown
+                            data={arrayData}
+                            value={selectedCard}
+                            labelField="label"
+                            valueField="value"
+                            // defalutValue="Mr"
+                            onChange={(item) => {
+                              console.log(item, "thsis is item selected");
+                              setSelectedCard(item.value);
+                              handleChange(item.value);
+                            }}
+                            style={styles.dropdown}
+                            containerStyle={styles.containerStyle}
+                            // renderRightIcon={() => (
+                            //   <AntDesign name="checkcircle" size={24} color="green" />
+                            // )}
+                            renderItem={renderItem}
+                            placeholder="Select Currency"
+                            autoScroll={false}
+                          />
+                          <ErrorMessage
+                            error={currencyError}
+                            visible={currencyError}
+                          />
+                        </View>
+                      ) : (
+                        <TextInput
+                          onBlur={() => setFieldTouched(item.initialValue)}
+                          onChangeText={handleChange(item.initialValue)}
+                          style={styles.inputBox}
+                          placeholder={item.placeholder}
+                        />
+                      )}
+
                       <ErrorMessage
                         error={errors[item.initialValue]}
                         visible={touched[item.initialValue]}
@@ -183,11 +264,7 @@ const AddBeneficiary = ({ navigation, route }) => {
                     </View>
                   ))}
                 </View>
-                <View
-                  style={[
-                    { flex: 1, justifyContent: "flex-end" }
-                  ]}
-                >
+                <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
                   <TouchableOpacity style={styles.button}>
                     <Button title="Confirm" onPress={handleSubmit} />
                   </TouchableOpacity>
@@ -216,6 +293,48 @@ const styles = StyleSheet.create({
   button: {
     width: "90%",
     left: "5%",
+  },
+  inputBox: {
+    width: "100%",
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "gray",
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: "#999999",
+  },
+  lable: {
+    color: "#000000",
+    fontFamily: "Montserrat",
+    fontSize: 14,
+  },
+  containerStyle: {
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
+    // backgroundColor:"red",
+    // color:"white",
+  },
+  dropdown: {
+    width: "100%",
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "gray",
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: "#999999",
+  },
+  dropDownarrayitem: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    gap: 10,
   },
 });
 
