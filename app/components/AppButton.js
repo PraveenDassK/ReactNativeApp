@@ -22,7 +22,8 @@ function AppButton({
   disabled = false,
   counter = false,
   onDelete,
-  onAdd
+  onAdd,
+  isNavigate = false
 }) {
   return (
     <TouchableOpacity
@@ -78,6 +79,10 @@ function AppButton({
             color="white"
           />
         )}
+        {isNavigate && <View style={{marginLeft: "3.5%"}}>
+          <Icon name="long-arrow-right"  color={colors.white} size={14}/>
+        </View>}
+        
       </View>
     </TouchableOpacity>
   );
@@ -102,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: "capitalize",
     fontWeight: "700",
+    fontFamily: "Montserrat-Regular"
   },
   textContainer: {
     flexDirection: "row",
