@@ -26,6 +26,7 @@ import { CheckBox } from "@rneui/themed";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import StepProgress from "../components/SteeperCounter";
+import PinModal from "../components/PinModal";
 
 const validationSchema = Yup.object().shape({
   iban: Yup.string(),
@@ -68,6 +69,8 @@ const AddBeneficiary = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCard, setSelectedCard] = useState();
   const [currencyError, setCurrencyError] = useState("");
+  const [showPinModal, setShowPinModal] = useState(false);
+
   const handleSubmit = async ({ iban, bic, currency, refrence }) => {
     let requestObj = route.params;
     if (!selectedCard) {
@@ -90,20 +93,22 @@ const AddBeneficiary = ({ navigation, route }) => {
       accountType: "PERSONAL",
       name: "a",
     };
-
+    setShowPinModal(true);
     //API call
-    const checkCall = await apiBeneficiaries.checkBeneficary(
-      authContext.userId,
-      checkRequestObj
-    );
-    console.log(checkCall);
-    if (checkCall.result.code == "MATCHED") {
-    }
+    if (!showPinModal) {
+      const checkCall = await apiBeneficiaries.checkBeneficary(
+        authContext.userId,
+        checkRequestObj
+      );
+      console.log(checkCall);
+      if (checkCall.result.code == "MATCHED") {
+      }
 
-    const beneficaryCall = await apiBeneficiaries.AddBeneficiary(
-      authContext.userID,
-      requestObj
-    );
+      const beneficaryCall = await apiBeneficiaries.AddBeneficiary(
+        authContext.userID,
+        requestObj
+      );
+    }
     console.log(beneficaryCall);
     console.log(beneficaryCall.data.details);
     //If the payee is a duplicate don't add them
@@ -115,7 +120,7 @@ const AddBeneficiary = ({ navigation, route }) => {
       return;
     }
 
-    navigation.navigate("Account");
+    // navigation.navigate("Account");
   };
   console.log(selectedCard, "thsios is selected");
   if (isLoading) {
@@ -125,7 +130,21 @@ const AddBeneficiary = ({ navigation, route }) => {
       </View>
     );
   }
-
+  if (showPinModal) {
+    return (
+      <View style={styles.mainContainer}>
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal
+            title="Enter your PIN"
+            success={() => setShowPinModal(false)}
+          />
+        ) : null}
+      </View>
+    );
+  }
   const arrayData = [
     {
       label: "Pounds",
@@ -335,6 +354,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     gap: 10,
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
   },
 });
 
