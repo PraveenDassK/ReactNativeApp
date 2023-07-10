@@ -13,6 +13,15 @@ const TransactionBody = ({
     index,
     lastElement,
   }) => {
+
+    function truncateString(str, maxLength) {
+      if (str.length > maxLength) {
+        return str.substring(0, maxLength) + "...";
+      }
+      return str;
+    }
+
+
     return (
       <BlurView tint="light" intensity={60} style={{backgroundColor: "rgba(255, 255, 255, 0.5)"}}>
         <Pressable
@@ -40,7 +49,7 @@ const TransactionBody = ({
               />
             </View>
             <View>
-              <Text style={styles.bold}>{description}</Text>
+              <Text style={styles.bold} numberOfLines={1}>{truncateString(description, 23)}</Text> 
               <Text style={styles.subText}>{moment(date).calendar()}</Text>
             </View>
           </View>
