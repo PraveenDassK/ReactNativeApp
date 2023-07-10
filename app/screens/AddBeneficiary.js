@@ -23,30 +23,40 @@ import KeyboardAvoider from "../components/KeyboardAvoider";
 import CountdownBar from "../components/CountdownBar";
 import { CheckBox } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
-
+import StepProgress from "../components/SteeperCounter";
 const validationSchema = Yup.object().shape({
-  accountName: Yup.string().required().min(1).max(30).label("Account name"),
-  phoneNumber: Yup.string()
-    .required()
-    .matches(/^[0-9]+$/, "Phone number must be digits")
-    .min(9)
-    .max(11)
-    .label("Phone number"),
+  firstName: Yup.string()
+
+    .required("Name is required")
+
+    .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
+
+    .min(2, "Name must be at least 2 characters")
+
+    .max(20, "Name must be less than 20 characters"),
+
+  lastName: Yup.string()
+
+    .required("Name is required")
+
+    .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
+
+    .min(2, "Name must be at least 2 characters")
+
+    .max(20, "Name must be less than 20 characters"),
 
   sortCode: Yup.string()
-    .required()
-    .matches(/^[0-9]+$/, "Sort code must be digits")
-    .min(6, "Must be exactly 6 digits")
-    .max(6, "Must be exactly 6 digits")
-    .label("Sort code"),
-  accNum: Yup.string()
-    .required()
-    .matches(/^[0-9]+$/, "Account number must be digits")
-    .min(8, "Must be exactly 8 digits")
-    .max(8, "Must be exactly 8 digits")
-    .label("Account number"),
-});
 
+    .required("Sort code is required")
+
+    .matches(/^\d{6}$/, "Sort code must be 6 digits"),
+
+  accNum: Yup.string()
+
+    .required("Account number is required")
+
+    .matches(/^\d{8}$/, "Account number must be 8 digits"),
+});
 const items = [
   {
     id: 2,
@@ -172,7 +182,8 @@ const AddBeneficiary = ({ navigation }) => {
 
   return (
     <KeyboardAvoider>
-      <CountdownBar />
+      {/* <CountdownBar /> */}
+        <StepProgress currentStep={1} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View
           style={{
@@ -186,13 +197,13 @@ const AddBeneficiary = ({ navigation }) => {
         >
           <Formik
             initialValues={{
-              firstName: "Jack",
-              lastName: "Huang",
-              sortCode: "123456",
-              accNum: "12341234",
+              firstName: "",
+              lastName: "",
+              sortCode: "",
+              accNum: "",
             }}
             onSubmit={handleSubmit}
-            // validationSchema={validationSchema}
+            validationSchema={validationSchema}
           >
             {({
               handleChange,
@@ -242,12 +253,12 @@ const AddBeneficiary = ({ navigation }) => {
                 </View>
 
                 <Button
-                      title="Continue"
-                      textColor="white"
-                      color="black"
-                      style={styles.buttonColor}
-                      onPress={handleSubmit}
-                    />
+                  title="Continue"
+                  textColor="white"
+                  color="black"
+                  style={styles.buttonColor}
+                  onPress={handleSubmit}
+                />
               </>
             )}
           </Formik>

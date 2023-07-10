@@ -1,6 +1,5 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-
 import ButtonIcon from "./ButtonIcon";
 import { addScreenshotListener } from "expo-screen-capture";
 
@@ -54,6 +53,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "80%",
+ 
   },
 });
 
