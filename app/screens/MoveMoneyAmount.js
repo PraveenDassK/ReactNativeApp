@@ -18,7 +18,6 @@ import SendFrom from "../components/SendFrom";
 import AuthContext from "../auth/context";
 
 const MoveMoneyAmount = ({ navigation, route }) => {
-  console.log(route.params, "this is move money amount");
   const [isModal, setModal] = useState(false);
   const [accountList, setAccountList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,30 +40,24 @@ const MoveMoneyAmount = ({ navigation, route }) => {
       const accountDataResponse = await apiCall.GetAllAccounts(userID);
       //Remove the selected "to" account
       // let requestObj = route.params
-      console.log(accountDataResponse, "this is the selected account");
       setAccountList(accountDataResponse);
     } catch {
       setIsLoading(false);
     }
   };
   const accountValue = route.params;
-  console.log(accountValue, "this is move money amount account value");
   const handleSubmit = (values) => {
-    console.log(values.amountToSend, "this is value");
     setAmountPay(values.amountToSend);
     setModal(true);
     requestObj.amount = values.amountToSend;
   };
 
   const handleAccount = (value) => {
-    console.log("handle", value);
     setSelectedAccount(value);
   };
 
   const handleSendMoney = () => {
     requestObj.sourceAccountId = selectedAccount.id;
-
-    console.log("final Value", requestObj);
     navigation.navigate("MoveMoneyPin", requestObj);
   };
 

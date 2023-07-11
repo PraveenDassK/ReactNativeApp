@@ -39,13 +39,11 @@ const MoveMoney = ({ navigation }) => {
       setIsLoading(false);
     }
   };
-  console.log(accountList);
 
   /**
    * @dev This takes the selected destination account data and passes it to another screen
    */
   const selectAccount = (account) => {
-    console.log(account.balance, "this is account");
     const requestObj = {
       sourceAccountId: "",
       destination: {
