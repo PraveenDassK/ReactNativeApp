@@ -61,6 +61,16 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
         children={
           <View>
             <AppText
+            style={{
+              fontSize: 20,
+              fontWeight: "700",
+              width: 250,
+              textAlign: "center",
+            }}
+            >
+              Total
+            </AppText>
+            <AppText
               style={{
                 fontSize: 50,
                 fontWeight: "700",

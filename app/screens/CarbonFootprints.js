@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: "5%",
     overflow: "hidden",
-    marginTop: "-20%",
+    marginTop: "-30%",
   },
   bottomBorder: {
     borderBottomWidth: 0.2,
