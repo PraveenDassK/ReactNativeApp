@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AccountMain from "../screens/AccountMain";
 import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
+import CarbonExplore from "../screens/CarbonExplore";
 import Settings from "../screens/Settings";
 
 import AccountDummy from "../screens/AccountDummy";
