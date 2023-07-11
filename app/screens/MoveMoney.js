@@ -8,10 +8,12 @@ import {
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 import CountdownBar from "../components/CountdownBar";
+import StepProgress from "../components/SteeperCounter";
 
 const MoveMoney = ({ navigation }) => {
   const [accountList, setAccountList] = useState([]);
@@ -43,7 +45,7 @@ const MoveMoney = ({ navigation }) => {
    * @dev This takes the selected destination account data and passes it to another screen
    */
   const selectAccount = (account) => {
-    console.log(account);
+    console.log(account.balance, "this is account");
     const requestObj = {
       sourceAccountId: "",
       destination: {
@@ -51,6 +53,7 @@ const MoveMoney = ({ navigation }) => {
         id: account.id,
         accountNumber: account.identifiers[0].accountNumber,
         sortCode: account.identifiers[0].sortCode,
+        balance: account.balance,
         name: account.name,
         phoneNumber: "",
       },
@@ -58,8 +61,8 @@ const MoveMoney = ({ navigation }) => {
       amount: 0,
       reference: "Transfer",
     };
-    console.log(requestObj);
-    navigation.navigate("MoveMoneyFromAccount", requestObj);
+    // console.log(requestObj);
+    navigation.navigate("MoveMoneyAmount", requestObj);
   };
 
   /**
@@ -78,7 +81,9 @@ const MoveMoney = ({ navigation }) => {
   return (
     <View>
       <View>
-        <CountdownBar pageCount={3} currentPage={1} />
+        {/* <CountdownBar pageCount={3} currentPage={1} /> */}
+        <StepProgress currentStep={1} />
+
         <View style={styles.overallAccountContainer}>
           <Text style={styles.containerHeading}>Send to</Text>
           <View>
@@ -102,10 +107,19 @@ const MoveMoney = ({ navigation }) => {
                 return (
                   <TouchableOpacity onPress={() => selectAccount(account.item)}>
                     <View style={styles.itemContainer}>
-                      <Text style={styles.itemContent}>{account.item.id}</Text>
-                      <Text style={styles.itemContent}>
-                        {account.item.balance}
-                      </Text>
+                      <Image
+                        source={require("../assets/cardLion.png")}
+                        style={{ height: 30, width: 30 }}
+                        resizeMode="contain"
+                      />
+                      <View>
+                        <Text style={styles.itemContent}>
+                          {account.item.id}
+                        </Text>
+                        <Text style={styles.itemContent}>
+                          {account.item.balance}
+                        </Text>
+                      </View>
                     </View>
                   </TouchableOpacity>
                 );
@@ -145,6 +159,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 22,
     paddingVertical: 17,
     width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    gap: 20,
+    alignItems: "center",
   },
   itemContent: {
     fontFamily: "Montserrat",

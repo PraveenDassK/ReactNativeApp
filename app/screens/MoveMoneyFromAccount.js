@@ -5,6 +5,7 @@ import { Text, StyleSheet, View, ScrollView, ActivityIndicator, FlatList, Toucha
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 import CountdownBar from "../components/CountdownBar";
+import StepProgress from "../components/SteeperCounter";
 
 const MoveMoneyFromAccount = ({ navigation, route }) => {
     const [accountList, setAccountList] = useState([]);
@@ -57,10 +58,12 @@ const MoveMoneyFromAccount = ({ navigation, route }) => {
     return (
         <View>
             <View>
-                <CountdownBar
+                {/* <CountdownBar
                     pageCount={3}
                     currentPage={2}
-                />
+                /> */}
+                        <StepProgress currentStep={2} />
+
                 <Text>
                     Send From
                 </Text>
