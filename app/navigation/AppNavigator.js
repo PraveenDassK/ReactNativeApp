@@ -36,7 +36,7 @@ import AddBeneficiary from "../screens/AddBeneficiary";
 import AddBeneficiaryContact from "../screens/AddBeneficiaryContact";
 import AddBeneficiaryRefrence from "../screens/AddBeneficiaryRefrence";
 import BankTransferAmount from "../screens/BankTransferAmount";
-
+import GroupBeneficiaryMoney from "../screens/GroupSendMoney";
 //Generic
 //Used by add funds and send money
 import Pin from "../screens/Pin";
@@ -440,6 +440,29 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View
+              style={styles.iconDropDownContainer}
+            >
+              <MaterialCommunityIcons name="arrow-left" size={30} />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+        }}
+      />
+      <Stack.Screen
+        name="GroupBeneficiaryMoney"
+        component={gestureHandlerRootHOC(GroupBeneficiaryMoney)}
+        options={{
+          title: "Send money to group",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerTitleStyle: {
+            fontFamily: 'Montserrat',
+            fontSize:20,
+          },
           headerBackImage: () => (
             <View
               style={styles.iconDropDownContainer}

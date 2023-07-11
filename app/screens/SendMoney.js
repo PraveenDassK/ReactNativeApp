@@ -88,7 +88,7 @@ const SendMoney = ({ navigation }) => {
     const payeeDetails = {
       name: beneficaryData.groupName,
     };
-    navigation.navigate("BankTransferAmount", { payeeDetails, requestObj });
+    navigation.navigate("GroupBeneficiaryMoney", { payeeDetails, requestObj });
   };
 
   /**
