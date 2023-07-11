@@ -186,7 +186,165 @@ const GroupSendMoney = ({ route, navigation }) => {
 
   return (
     <View>
-      <View style={styles.headerContainer}>
+      
+          <FlatList
+          ListHeaderComponent={  <>
+            <View style={styles.headerContainer}>
+                  <View>
+                    <Text style={styles.headerHeading}>Payee name</Text>
+                    <Text style={styles.contentText}>{name}</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.headerHeading}>Account number</Text>
+                    <Text style={styles.contentText}>{accountNumber}</Text>
+                  </View>
+                </View>
+                <View style={styles.paymentContainer}>
+                  <View>
+                    <Text style={styles.contentText}>
+                      Enter the amount you want to send
+                    </Text>
+                    <TextInput
+                      style={styles.inputBox}
+                      placeholder="£0"
+                      onChangeText={(text) => setAmount(text)}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 20,
+                      marginVertical: 20,
+                    }}
+                  >
+                    {groupValue[0]?.beneficiariesDetails?.map((eachValue, index) => {
+                      return (
+                        <View
+                          key={index}
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
+                          <UserIcon
+                            name={eachValue?.beneficiariesName}
+                            //   onPress={() => sendPayeeTrigger(beneficary.item)}
+                          />
+                          {/* <View>
+                            <Text>{eachValue?.beneficiariesName}</Text>
+                          </View> */}
+                          <Text style={styles.amountText}>
+                            {formatCurrency(amount, "GBP", false)}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+          
+                  <View>
+                    <Text style={styles.contentText}>Send from</Text>
+                    {/* <ScrollView style={{ flex: 1 }}>
+                        <FlatList
+                          data={accountList.slice(0, 10)} // Show only the first 6 items
+                          keyExtractor={(accountList) => accountList.id}
+                          numColumns={1}
+                          contentContainerStyle={styles.flatListContent}
+                          style={{ height: 300 }} // Set a fixed height for the FlatList container
+                          nestedScrollEnabled={true}
+                          ItemSeparatorComponent={() => (
+                            <View
+                              style={{
+                                width: "100%",
+                                height: 1,
+                                backgroundColor: "#EBEBEB",
+                                color: "#EBEBEB",
+                              }}
+                            />
+                          )}
+                          renderItem={(account) => {
+                            return (
+                              <TouchableOpacity
+                                onPress={() => handleSelectAccount(account.item)}
+                              >
+                                <View style={styles.itemContainer}>
+                                  <View>
+                                    <Text style={styles.itemContent}>
+                                      {account.item.id}
+                                    </Text>
+                                    <Text style={styles.itemContent}>
+                                      {account.item.balance}
+                                    </Text>
+                                  </View>
+                                  {selectedAccount === account.item && (
+                                    <View>
+                                      <AntDesign
+                                        name="checkcircle"
+                                        size={17}
+                                        color="#27AF7C"
+                                      />
+                                    </View>
+                                  )}
+                                </View>
+                              </TouchableOpacity>
+                            );
+                          }}
+                        />
+                      </ScrollView> */}
+                  </View>
+                  </View>
+                  </>}
+          ListFooterComponent={
+            FootComponent
+          }
+            data={accountList}
+            keyExtractor={(accountList, index) => accountList.id}
+            numColumns={1}
+            contentContainerStyle={styles.flatListContentContainer}
+            // nestedScrollEnabled={true}
+            renderItem={(account) => {
+              return (
+                  <TouchableOpacity onPress={() => setOneAccount(account.item)}>
+                    <View style={styles.itemContainer}>
+                      <Image
+                        source={require("../assets/cardLion.png")}
+                        style={{ height: 30, width: 30 }}
+                        resizeMode="contain"
+                      />
+                      <View>
+                        <Text style={styles.itemContent}>
+                          {account.item.id}
+                        </Text>
+                        <Text style={styles.itemContent}>
+                          {account.item.balance}
+                        </Text>
+                      </View>
+                      {oneselectedAccount?.id === account.item.id ? (
+                        <View
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                            flex: 1,
+                          }}
+                        >
+                          <AntDesign
+                            name="checkcircle"
+                            size={24}
+                            color="green"
+                          />
+                        </View>
+                      ) : null}
+                    </View>
+                  </TouchableOpacity>
+              );
+            }}
+          />
+      
+    </View>
+  );
+};
+
+const HeaderComponent = () => (
+  <>
+  <View style={styles.headerContainer}>
         <View>
           <Text style={styles.headerHeading}>Payee name</Text>
           <Text style={styles.contentText}>{name}</Text>
@@ -285,81 +443,30 @@ const GroupSendMoney = ({ route, navigation }) => {
                 }}
               />
             </ScrollView> */}
-          <FlatList
-            data={accountList}
-            keyExtractor={(accountList, index) => accountList.id}
-            numColumns={1}
-            contentContainerStyle={styles.flatListContentContainer}
-            // nestedScrollEnabled={true}
-            renderItem={(account) => {
-              return (
-                  <TouchableOpacity onPress={() => setOneAccount(account.item)}>
-                    <View style={styles.itemContainer}>
-                      <Image
-                        source={require("../assets/cardLion.png")}
-                        style={{ height: 30, width: 30 }}
-                        resizeMode="contain"
-                      />
-                      <View>
-                        <Text style={styles.itemContent}>
-                          {account.item.id}
-                        </Text>
-                        <Text style={styles.itemContent}>
-                          {account.item.balance}
-                        </Text>
-                      </View>
-                      {oneselectedAccount?.id === account.item.id ? (
-                        <View
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            alignItems: "flex-end",
-                            flex: 1,
-                          }}
-                        >
-                          <AntDesign
-                            name="checkcircle"
-                            size={24}
-                            color="green"
-                          />
-                        </View>
-                      ) : null}
-                    </View>
-                  </TouchableOpacity>
-              );
-            }}
-          />
         </View>
-        {/* <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "15%",
-          }}
-        ></View> */}
-        {/* <Button title="Continue" color="white" textColor="black" /> */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => selectAccount()}
-            // onPress={() => {
-            //   navigation.navigate("Success");
-            // }}
-          >
-            <LinearGradient
-              colors={["#212529", "#3A3A3A"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Send</Text>
-            </LinearGradient>
-          </TouchableOpacity>
         </View>
-        {/* <Button title="Continue" color="white" textColor="black" /> */}
-      </View>
-    </View>
-  );
-};
+        </>
+)
+
+const FootComponent = () => (
+  <View style={styles.buttonContainer}>
+  <TouchableOpacity
+    onPress={() => selectAccount()}
+    // onPress={() => {
+    //   navigation.navigate("Success");
+    // }}
+  >
+    <LinearGradient
+      colors={["#212529", "#3A3A3A"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.button}
+    >
+      <Text style={styles.buttonText}>Send</Text>
+    </LinearGradient>
+  </TouchableOpacity>
+</View>
+)
 
 const styles = StyleSheet.create({
   mainHeading: {
