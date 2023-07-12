@@ -187,6 +187,7 @@ const GroupSendMoney = ({ route, navigation }) => {
   return (
     <View style={styles.flatListContentContainer}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
             <View style={styles.headerContainer}>
