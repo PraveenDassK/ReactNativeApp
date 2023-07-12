@@ -185,7 +185,7 @@ const GroupSendMoney = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.flatListContentContainer}>
+    
       <FlatList
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
@@ -298,8 +298,6 @@ const GroupSendMoney = ({ route, navigation }) => {
         ListFooterComponent={FootComponent}
         data={accountList}
         keyExtractor={(accountList, index) => accountList.id}
-        
-        
         renderItem={(account) => {
           return (
             <TouchableOpacity onPress={() => setOneAccount(account.item)}>
@@ -330,7 +328,7 @@ const GroupSendMoney = ({ route, navigation }) => {
           );
         }}
       />
-    </View>
+   
   );
 };
 
