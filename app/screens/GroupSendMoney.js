@@ -185,7 +185,7 @@ const GroupSendMoney = ({ route, navigation }) => {
   };
 
   return (
-    
+    <View style={styles.flatListContentContainer}>
       <FlatList
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
@@ -328,7 +328,7 @@ const GroupSendMoney = ({ route, navigation }) => {
           );
         }}
       />
-   
+    </View>
   );
 };
 
@@ -555,8 +555,8 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
   },
   flatListContentContainer: {
-  
-    paddingHorizontal: "5%"
+    
+    paddingHorizontal: "5%",flex: 1
   },
   itemContainer: {
     paddingHorizontal: 22,
