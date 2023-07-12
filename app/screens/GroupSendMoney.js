@@ -557,7 +557,7 @@ const styles = StyleSheet.create({
   },
   flatListContentContainer: {
     
-    paddingHorizontal: "5%",flex: 1
+    padding: "5%",flex: 1
   },
   itemContainer: {
     paddingHorizontal: 22,
