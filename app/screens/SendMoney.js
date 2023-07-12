@@ -6,7 +6,7 @@ import {
   ScrollView,
   ActivityIndicator,
   FlatList,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -16,10 +16,13 @@ import apiBeneficiaries from "../api/apiBeneficiaries";
 import AuthContext from "../auth/context";
 import UserIcon from "../components/UserIcon";
 import Tagline from "../components/Tagline";
+import BeneficiaryPopup from "../components/BeneficiaryPopup";
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { userID, customerDetails, accountID } = useContext(AuthContext);
   const isFocused = useIsFocused();
 
@@ -55,7 +58,7 @@ const SendMoney = ({ navigation }) => {
       sourceAccountId: accountID,
       destination: {
         type: "SCAN",
-        id: beneficaryData.customerId,//"A1226WEM",
+        id: beneficaryData.customerId, //"A1226WEM",
         accountNumber: beneficaryData.destinationIdentifier.accountNumber,
         sortCode: "000000", //beneficaryData.destinationIdentifier.sortCode
         name: beneficaryData.name,
@@ -102,8 +105,28 @@ const SendMoney = ({ navigation }) => {
     );
   }
 
+  const handleDelete = async (id) => {
+    console.log(id.groupId, "this is a delete");
+
+    let apiCall = await apiBeneficiaries.DeleteGroupBenificiary(id.groupId);
+    loadData();
+    console.log(apiCall, "this is a api call for delete");
+  };
+
+  const handleBeneficiaryDelete = async (beneficaryid) => {
+    console.log(beneficaryid.id, "this is a delete for single");
+
+    let apiCall = await apiBeneficiaries.DeleteBenificiary(
+      userID,
+      beneficaryid.id
+    );
+    loadData();
+    console.log(apiCall, "this is a api call for delete");
+  };
+
   return (
     <SafeAreaView>
+      {/* <ScrollView nestedScrollEnabled={true} style={{ flex: 1 }}> */}
       <View style={{ marginTop: 47 }}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -133,7 +156,12 @@ const SendMoney = ({ navigation }) => {
             >
               New payee account name check
             </Text>
-            <Feather name="info" size={12} color="black" />
+            <Feather
+              name="info"
+              size={12}
+              color="black"
+              onPress={() => setModalVisible(true)}
+            />
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
             <View style={styles.buttonPaySelf}>
@@ -162,16 +190,27 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.name}
                   onPress={() => sendPayeeTrigger(beneficary.item)}
                 />
+                <Text
+                  style={{
+                    position: "absolute",
+                    right: 16,
+                    fontSize: 14,
+                    top: -5,
+                  }}
+                  onPress={() => handleBeneficiaryDelete(beneficary.item)}
+                >
+                  X
+                </Text>
               </View>
             );
           }}
         />
       </View>
-
       <View
         style={{
           backgroundColor: "#FFFFFF",
           padding: 24,
+          marginBottom: 100,
         }}
       >
         <View style={styles.payHeaderContainer}>
@@ -183,7 +222,11 @@ const SendMoney = ({ navigation }) => {
               color="#0101FD"
               style={{ marginRight: 3, marginTop: 1 }}
             />
-            <TouchableOpacity onPress={() => {navigation.navigate("GroupBeneficiary")}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("GroupBeneficiary");
+              }}
+            >
               <Text style={styles.paySideHeading}>Create Group</Text>
             </TouchableOpacity>
           </View>
@@ -200,12 +243,28 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.groupName}
                   onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                 />
+                <Text
+                  style={{
+                    position: "absolute",
+                    right: 16,
+                    fontSize: 14,
+                    top: -5,
+                  }}
+                  onPress={() => handleDelete(beneficary.item)}
+                >
+                  X
+                </Text>
               </View>
             );
           }}
         />
-        <Tagline/>
+        <Tagline />
       </View>
+      <BeneficiaryPopup
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+      />
+      <View style={{ height: 400 }} />
     </SafeAreaView>
   );
 };
@@ -291,6 +350,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     padding: "5%",
+    marginTop: "5%",
   },
 });
 
