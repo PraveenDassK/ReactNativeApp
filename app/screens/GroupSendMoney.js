@@ -12,8 +12,9 @@ import {
   Keyboard,
   Pressable,
   Image,
-  FlatList,
+  
 } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
