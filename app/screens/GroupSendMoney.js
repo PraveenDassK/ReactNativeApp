@@ -117,8 +117,16 @@ const GroupSendMoney = ({ route, navigation }) => {
     requestObj.amount = amount;
     requestObj.sourceAccountId = oneselectedAccount?.id;
     console.log(requestObj, "this ois req obj");
+    setIsLoading(true)
     const transferRequest = await apiTransaction.sendToGroup(requestObj);
+    const successObject ={
+      amount:amount,
+      name:name
+    }
+    setIsLoading(false);
 
+    navigation.navigate("sendmoneysuccess",{successObject})
+    console.log(transferRequest, "this is transfer request");
     console.log(transferRequest,"this is transfer request");
   }
 

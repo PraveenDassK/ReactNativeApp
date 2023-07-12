@@ -136,6 +136,7 @@ import MoveMoney from "../screens/MoveMoney";
 import MoveMoneyAmount from "../screens/MoveMoneyAmount";
 import MoveMoneyPin from "../screens/MoveMoneyPin";
 import MoveMoneySuccess from "../screens/MoveMoneySuccess";
+import SendMoneySuccessPage from "../screens/SendMoneySucessPage";
 
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTab, setSelectedTab] = useState("");
@@ -437,6 +438,25 @@ const StackNavigator = () => {
         component={MoveMoneySuccess}
         options={{
           title: "Move Money",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View
+              style={styles.iconDropDownContainer}
+            >
+              <MaterialCommunityIcons name="arrow-left" size={30} />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+        }}
+      />
+       <Stack.Screen
+        name="sendmoneysuccess"
+        component={SendMoneySuccessPage}
+        options={{
+          title: "Send Money",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
@@ -855,22 +875,23 @@ const StackNavigator = () => {
         name="BankTransferAmount"
         component={gestureHandlerRootHOC(BankTransferAmount)}
         options={{
-          title: "Send Funds",
+          title: "Send money ",
           presentation: "modal",
-          headerShown: false,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerTitleStyle: {
+            fontFamily: 'Montserrat',
+            fontSize:20,
+          },
           headerBackImage: () => (
             <View
               style={styles.iconDropDownContainer}
             >
-              <MaterialCommunityIcons name="arrow-down" size={30} />
+              <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
           headerBackTitleVisible: false,
-          headerStyle: {
-            backgroundColor: GlobalStyles.Color.backgroundColor,
-          },
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
