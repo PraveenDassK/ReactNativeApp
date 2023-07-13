@@ -114,6 +114,7 @@ export default function App() {
   });
 
   useEffect(() => {
+    
     const prepare = async () => {
       await SplashScreen.preventAutoHideAsync();
     };
