@@ -14,7 +14,7 @@ import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 import CountdownBar from "../components/CountdownBar";
 import StepProgress from "../components/SteeperCounter";
-
+import GlobalStyles from "../../GlobalStyles";
 const MoveMoney = ({ navigation }) => {
   const [accountList, setAccountList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -96,8 +96,8 @@ const MoveMoney = ({ navigation }) => {
                   style={{
                     width: "100%",
                     height: 1,
-                    backgroundColor: "#EBEBEB",
-                    color: "#EBEBEB",
+                    backgroundColor: GlobalStyles.Color.borderColor,
+                    color: GlobalStyles.Color.borderColor,
                   }}
                 />
               )}
@@ -132,7 +132,7 @@ const MoveMoney = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   overallAccountContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: GlobalStyles.Color.white,
     paddingHorizontal: 20,
     paddingVertical: 30,
     borderRadius: 20,
@@ -141,13 +141,13 @@ const styles = StyleSheet.create({
   containerHeading: {
     fontFamily: "Montserrat",
     fontSize: 14,
-    color: "#000000",
+    color: GlobalStyles.Color.black,
   },
   accountContainer: {
     marginVertical: 20,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#EBEBEB",
+    borderColor: GlobalStyles.Color.borderColor,
   },
   flatListContent: {
     paddingHorizontal: 10,
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   itemContent: {
     fontFamily: "Montserrat",
     fontSize: 14,
-    color: "#000000",
+    color: GlobalStyles.Color.black,
   },
 });
 

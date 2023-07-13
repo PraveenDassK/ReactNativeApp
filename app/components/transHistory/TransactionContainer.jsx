@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     padding: "5%",
   },
-  bold: { fontWeight: "700", fontFamily: 'Montserrat' },
+  bold: {  fontFamily: 'Montserrat' },
   header: { fontSize: 20 },
 });
 

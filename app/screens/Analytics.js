@@ -216,8 +216,11 @@ const Analytics = ({ navigation }) => {
                     <AppText
                       style={{
                         fontSize: 15,
-                        fontWeight: "800",
-                        color: active === tab.title ? "#0101FD" : "grey",
+                        fontFamily: "Montserrat",
+                        color:
+                          active === tab.title
+                            ? GlobalStyles.Color.gray_500
+                            : GlobalStyles.Color.lightBlack,
                       }}
                     >
                       {tab.title}
@@ -253,7 +256,7 @@ const Analytics = ({ navigation }) => {
           </View> */}
           <View
             style={{
-              backgroundColor: "white",
+              backgroundColor: GlobalStyles.Color.white,
               paddingBottom: "5%",
               borderRadius: 10,
             }}
@@ -295,7 +298,7 @@ const Analytics = ({ navigation }) => {
                   <AppText
                     style={{
                       fontSize: 20,
-                      fontWeight: "700",
+                      fontFamily: "Montserrat",
                       width: "100%",
                       textAlign: "center",
                       marginLeft: "5%",
@@ -306,9 +309,10 @@ const Analytics = ({ navigation }) => {
                   <AppText
                     style={{
                       fontSize: 25,
-                      fontWeight: "bold",
+                      fontFamily: "Montserrat",
                       width: "100%",
                       textAlign: "center",
+                      color: GlobalStyles.Color.black,
                     }}
                   >
                     {/* {totalFootprint} */}£ {totalSpend.toFixed(2)}
@@ -320,11 +324,9 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   flex: 2,
-                  fontFamily: "Montserrat",
-
-                  fontWeight: "normal",
+                  fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 Money Spent
@@ -333,9 +335,8 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   fontFamily: "Montserrat",
-                  fontWeight: "bold",
                   fontSize: 16,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 £ {totalSpend.toFixed(2)}{" "}
@@ -345,11 +346,9 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   flex: 2,
-                  fontFamily: "Montserrat",
-
-                  fontWeight: "normal",
+                  fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 Money Received
@@ -358,9 +357,8 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   fontFamily: "Montserrat",
-                  fontWeight: "bold",
                   fontSize: 16,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 {/* £ {totalSpend.toFixed(2)}{" "} */}
@@ -371,11 +369,9 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   flex: 2,
-                  fontFamily: "Montserrat",
-
-                  fontWeight: "normal",
+                  fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 No.of Payments
@@ -384,9 +380,8 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   fontFamily: "Montserrat",
-                  fontWeight: "bold",
                   fontSize: 16,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 {totalTransactions}
@@ -396,10 +391,9 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   flex: 2,
-                  fontFamily: "Montserrat",
-                  fontWeight: "normal",
+                  fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 Current Balance
@@ -408,9 +402,8 @@ const Analytics = ({ navigation }) => {
               <AppText
                 style={{
                   fontFamily: "Montserrat",
-                  fontWeight: "bold",
                   fontSize: 16,
-                  color: "#212529",
+                  color: GlobalStyles.Color.lightBlack,
                 }}
               >
                 £ {balance}
@@ -525,6 +518,7 @@ const Analytics = ({ navigation }) => {
                 return (
                   <Fragment key={`${name + index}`}>
                     <AppText style={styles.subtitleText}>{name}</AppText>
+
                     <View
                       style={[
                         styles.carbonSpendingAnalysysBarBackground,
@@ -588,32 +582,36 @@ const Analytics = ({ navigation }) => {
           <View style={{ height: 20, width: "100%", position: "relative" }} />
         </View>
       </View>
+      <View
+        style={{
+          position: "absolute",
+          bottom: "0%",
+          width: "100%",
+          paddingHorizontal: 10,
+          left: "0%",
+          zIndex:10,
+        }}
+      >
+        <Tagline />
+      </View>
+
       <ImageBackground
         resizeMode="stretch"
         source={require("../assets/backgrounds/replaceCard.jpg")}
         style={styles.container}
       />
-      <View
-        style={{
-          position: "absolute",
-          bottom: "10%",
-          width: "100%",
-          paddingHorizontal: 10,
-          left: "10%",
-        }}
-      >
-        <Text style={styles.bottomText}>
+
+      {/* <Text style={styles.bottomText}>
           Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
           <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
           <Text style={styles.bottomTextBold}>Choice</Text>
-        </Text>
-      </View>
+        </Text> */}
     </ScrollView>
   );
 };
 const DarkMode = () => (
   <View style={styles.iconStyle}>
-    <Ionicons name="moon" color="white" size={24} />
+    <Ionicons name="moon" color={GlobalStyles.Color.white} size={24} />
   </View>
 );
 const Notification = () => (
@@ -621,7 +619,11 @@ const Notification = () => (
     <View style={styles.iconBadgeContainer}>
       <Text style={styles.iconBadgeNumber}>1</Text>
     </View>
-    <MaterialCommunityIcons name="bell-outline" color="white" size={24} />
+    <MaterialCommunityIcons
+      name="bell-outline"
+      color={GlobalStyles.Color.white}
+      size={24}
+    />
   </View>
 );
 
@@ -780,7 +782,7 @@ const styles = StyleSheet.create({
     width: "100%",
     // marginLeft: "5%",
     flexDirection: "row",
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     // borderRadius: 15,
 
     alignItems: "center",
@@ -789,7 +791,7 @@ const styles = StyleSheet.create({
   },
 
   money: {
-    color: "blue",
+    color: GlobalStyles.Color.blue_100,
     fontWeight: "700",
     fontSize: 16,
   },
@@ -808,7 +810,7 @@ const styles = StyleSheet.create({
   carbonSpendingAnalysysDiv: {
     width: "100%",
     height: "auto",
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     paddingHorizontal: "5%",
     paddingVertical: "2%",
     marginTop: "5%",
@@ -827,7 +829,8 @@ const styles = StyleSheet.create({
     marginLeft: "0%",
     marginTop: "2.5%",
     fontSize: 15,
-    fontWeight: "700",
+    fontFamily: "Montserrat-SemiBold",
+    color: GlobalStyles.Color.lightBlack,
   },
 
   transactionBox: {
@@ -835,7 +838,7 @@ const styles = StyleSheet.create({
     height: verticalScale(80),
     marginTop: "5%",
     marginLeft: "5%",
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     borderRadius: 15,
   },
   backgroundImage: {
@@ -853,13 +856,13 @@ const styles = StyleSheet.create({
   },
   welcomText: {
     fontSize: 14,
-    color: "white",
-    fontWeight: "normal",
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Regular",
   },
   nameText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "white",
+    fontSize: 18,
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
   },
   iconStyle: {
     height: 40,
@@ -906,13 +909,13 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   bottomText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 14,
     fontFamily: "Montserrat",
     fontWeight: "regular",
   },
   bottomTextBold: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat",
     fontWeight: "bold",

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-
+import GlobalStyles from "../../../GlobalStyles";
 const UpcomingHead = ({ headerTitle = "Recent transactions" }) => {
   return (
     <View style={styles.transactionHeadContainer}>
@@ -28,11 +28,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     paddingTop: 10,
     marginBottom: "1%",
-    marginTop:"5%",
+    marginTop: "5%",
     paddingHorizontal: "3%",
   },
   headerTitleContainer: { flex: 1 },
-  headerText: { fontWeight: "700", fontSize: 20 },
+  headerText: {
+    color: GlobalStyles.Color.lightBlack,
+    fontFamily: "Montserrat",
+    fontSize: 20,
+  },
   transactionContainer: {
     flexDirection: "row",
     // paddingHorizontal: "0.5%"
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
     textAlign: "center",
     fontFamily: "Montserrat-Regular",
-    fontSize:14,
+    fontSize: 14,
   },
   amountContainerTH: { flex: 3, alignItems: "flex-end" },
   spacing: { marginBottom: "5%" },

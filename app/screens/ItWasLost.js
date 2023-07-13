@@ -107,6 +107,7 @@ const ItWasLost = ({ navigation }) => {
                 </Text>
                 <Text style={styles.yourCurrentCardWillBeTerm1}>
                   <Text style={styles.toKeepYour}>
+                    {"\n"}
                     You may be charged for the new card
                   </Text>
                 </Text>

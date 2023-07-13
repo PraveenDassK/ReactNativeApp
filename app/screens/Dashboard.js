@@ -67,7 +67,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size="large" color={GlobalStyles.Color.black} />
       </View>
     );
   }
@@ -285,15 +285,14 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   welcomText: {
-    fontSize: 14,
-    color: "white",
-    
-    fontFamily: 'Montserrat-Regular'
+    fontSize: 12,
+    color: GlobalStyles.Color.white,
+    fontFamily: 'Montserrat-Medium'
   },
   nameText: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Montserrat',
-    color: "white",
+    color: GlobalStyles.Color.white,
   },
   mainContent: {
     backgroundColor: GlobalStyles.Color.backgroundColorOg,
@@ -352,23 +351,20 @@ const styles = StyleSheet.create({
     marginTop: "40%",
   },
   headingText: {
-    color: "#212529",
+    color: GlobalStyles.Color.lightBlack,
     fontSize: 18,
-    fontWeight: "bold",
     fontFamily: "Montserrat",
     marginBottom: 10,
   },
   bottomText: {
-    color: "#212529",
+    color: GlobalStyles.Color.lightBlack,
     fontSize: 14,
-    fontFamily: "Montserrat",
-    fontWeight: "regular",
+    fontFamily: "Montserrat-Regular",
   },
   bottomTextBold: {
-    color: "#212529",
+    color:GlobalStyles.Color.lightBlack,
     fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
   },
 });
 

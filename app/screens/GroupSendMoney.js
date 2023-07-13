@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   mainHeading: {
     fontFamily: "Montserrat",
     fontSize: 18,
-    color: "#212529",
+    color: GlobalStyles.Color.lightBlack,
   },
   headerContainer: {
     display: "flex",
@@ -410,16 +410,15 @@ const styles = StyleSheet.create({
   headerHeading: {
     fontFamily: "Montserrat-Regular",
     fontSize: 14,
-    color: "#212529",
-    fontWeight: "bold",
+    color: GlobalStyles.Color.lightBlack,
   },
   contentText: {
     fontFamily: "Montserrat",
     fontSize: 14,
-    color: "#212529",
+    color: GlobalStyles.Color.lightBlack,
   },
   paymentContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: GlobalStyles.Color.white,
     paddingHorizontal: 20,
     paddingVertical: 34,
     borderRadius: 20,
@@ -429,11 +428,11 @@ const styles = StyleSheet.create({
     height: 75,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#EBEBEB",
+    borderColor: GlobalStyles.Color.borderColor,
     paddingHorizontal: 26,
     paddingVertical: 16,
     fontSize: 35,
-    color: "#179424",
+    color: GlobalStyles.Color.green_total,
     fontFamily: "Helvetica",
     fontWeight: "bold",
     marginVertical: 20,
@@ -442,7 +441,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#EBEBEB",
+    borderColor: GlobalStyles.Color.borderColor,
   },
   flatListContent: {
     paddingHorizontal: 10,
@@ -459,7 +458,7 @@ const styles = StyleSheet.create({
   itemContent: {
     fontFamily: "Montserrat",
     fontSize: 14,
-    color: "#000000",
+    color: GlobalStyles.Color.black,
   },
   buttonContainer: {
     display: "flex",
@@ -478,7 +477,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: GlobalStyles.Color.white,
     fontSize: 14,
     fontFamily: "Montserrat",
   },
@@ -488,7 +487,7 @@ const styles = StyleSheet.create({
     paddingTop: "2.5%",
   },
   selectedTextStyle: {
-    color: "black",
+    color: GlobalStyles.Color.black,
     marginLeft: "15%",
     marginTop: "1%",
   },
@@ -592,7 +591,7 @@ const styles = StyleSheet.create({
   groupItem: {},
 
   amountText: {
-    color: "#179424",
+    color: GlobalStyles.Color.green_total,
     fontSize: 14,
     fontFamily: "Montserrat-Medium",
   },
@@ -608,7 +607,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 20,
     alignItems: "center",
-    borderBottomColor: "#EBEBEB",
+    borderBottomColor: GlobalStyles.Color.borderColor,
     borderBottomWidth: 1,
   },
   itemContent: {

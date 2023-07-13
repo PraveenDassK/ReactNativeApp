@@ -12,7 +12,7 @@ import React, { useState, useEffect } from "react";
 import formatCurrency from "../utility/formatCurrency";
 import apiCall from "../api/apiCall";
 import { AntDesign } from "@expo/vector-icons";
-
+import GlobalStyles from "../../GlobalStyles";
 const SendFrom = ({
   isModal,
   setModal,
@@ -29,7 +29,7 @@ const SendFrom = ({
   console.log(selectedAccount, "this ia account list");
 
   return (
-    <View style={{ backgroundColor: "white" }}>
+    <View style={{ backgroundColor: GlobalStyles.Color.white }}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -42,7 +42,7 @@ const SendFrom = ({
           style={{
             height: "70%",
             marginTop: "auto",
-            backgroundColor: "#F6F6F6",
+            backgroundColor: GlobalStyles.Color.gray_100,
             borderTopRightRadius: 10,
             borderTopLeftRadius: 10,
             paddingHorizontal: 10,
@@ -105,7 +105,7 @@ const SendFrom = ({
           <View style={{ paddingHorizontal: 20 }}>
             <TouchableOpacity onPress={() => handleSendMoney()}>
               <View style={styles.button}>
-                <Text style={{ color: "white" }}>Send Money</Text>
+                <Text style={{ color: GlobalStyles.Color.white }}>Send Money</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -134,17 +134,17 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   headerText: {
-    color: "#212529",
+    color: GlobalStyles.Color.lightBlack,
     fontFamily: "Montserrat-Regular",
     fontSize: 16,
   },
   amountText: {
-    color: "#179424",
+    color: GlobalStyles.Color.green_total,
     fontSize: 35,
     fontWeight: "bold",
   },
   addButtonText: {
-    color: "#999999",
+    color: GlobalStyles.Color.darkGray,
     fontSize: 20,
   },
   itemContainer: {
@@ -155,27 +155,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 20,
     alignItems: "center",
-    borderBottomColor: "#EBEBEB",
+    borderBottomColor: GlobalStyles.Color.borderColor,
     borderBottomWidth: 1,
   },
   itemContent: {
     fontFamily: "Montserrat",
     fontSize: 14,
-    color: "#000000",
+    color: GlobalStyles.Color.black,
   },
   flatListContent: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: GlobalStyles.Color.white,
     width: "80%",
     marginLeft: "10%",
   },
   containerHeading: {
     fontFamily: "Montserrat",
     fontSize: 14,
-    color: "#000000",
+    color: GlobalStyles.Color.black,
     marginVertical: 10,
   },
   button: {
-    backgroundColor: "black",
+    backgroundColor: GlobalStyles.Color.black,
     paddingVertical: 20,
     display: "flex",
     alignItems: "center",

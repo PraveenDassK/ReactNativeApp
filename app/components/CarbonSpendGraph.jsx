@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, Text ,ActivityIndicator} from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import DoughnutChart from "../components/DoughnutChart";
 import AuthContext from "../auth/context";
 import AppText from "../components/Text";
@@ -7,7 +7,7 @@ import apiCarbon from "../api/apiCarbon";
 import * as Progress from "react-native-progress";
 import GlobalStyles from "../../GlobalStyles";
 
-const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
+const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const { userID, accountID } = useContext(AuthContext);
   const [totalFootprint, setTotalFootprint] = useState(false);
@@ -19,7 +19,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const carbonSpendData = await apiCarbon.GetCarbonSpending();
       setCarbonSpendData(carbonSpendData.chartData);
       setTotalFootprint(carbonSpendData.total);
@@ -31,9 +31,9 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
   };
   console.log(carbnonSpendData, "this is spend data");
   const colorsArray = ["tomato", "orange", "gold", "cyan", "green"];
-  function getRandomItem(arr,i) {
+  function getRandomItem(arr, i) {
     // get random index value
-    const randomIndex = i
+    const randomIndex = i;
 
     // get random item
     const item = arr[randomIndex];
@@ -46,21 +46,23 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size="large" color={GlobalStyles.Color.black} />
       </View>
     );
   }
 
-  const styled = {backgroundColor: "rgba(255, 255, 255, 0.5)",
-  borderRadius: 15,}
+  const styled = {
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    borderRadius: 15,
+  };
 
   return (
-    <View style={[styles.container, isStyled ? styled : null] }>
+    <View style={[styles.container, isStyled ? styled : null]}>
       <DoughnutChart
         data={carbnonSpendData}
         children={
           <View>
-            <AppText
+            {/* <AppText
             style={{
               fontSize: 20,
               fontWeight: "700",
@@ -69,12 +71,12 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
             }}
             >
               Total
-            </AppText>
+            </AppText> */}
             <AppText
               style={{
                 fontSize: 50,
-                fontWeight: "700",
                 width: 250,
+                fontFamily: "Montserrat-Bold",
                 textAlign: "center",
               }}
             >
@@ -83,7 +85,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
             <AppText
               style={{
                 fontSize: 20,
-                fontWeight: "700",
+                fontFamily: "Montserrat-Bold",
                 width: 250,
                 textAlign: "center",
               }}
@@ -115,22 +117,28 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true}) => {
                 width={300}
                 height={30}
                 borderRadius={15}
-                borderColor={"white"}
+                borderColor={GlobalStyles.Color.white}
                 unfilledColor={GlobalStyles.Color.backgroundColor}
-                color={getRandomItem(colorsArray,i)}
+                color={getRandomItem(colorsArray, i)}
                 animated={true}
                 indeterminateAnimationDuration={1000}
                 useNativeDriver={true}
                 animationConfig={{ bounciness: 1 }}
                 animationType="spring"
-
               />
             </View>
           );
         })}
       </View>
       <View style={{ marginVertical: 10 }}>
-        <Text style={{ color: "#178BFF", fontSize: 18, fontWeight: "bold" }} onPress={handleViewMore}>
+        <Text
+          style={{
+            color: GlobalStyles.Color.skyblue,
+            fontSize: 18,
+            fontFamily: "Montserrat",
+          }}
+          onPress={handleViewMore}
+        >
           View more
         </Text>
       </View>
@@ -143,7 +151,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    
   },
   icon: {
     borderWidth: 0,
@@ -165,8 +172,7 @@ const styles = StyleSheet.create({
   headingText: {
     color: "#212529",
     fontSize: 16,
-    fontWeight: "bold",
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat-SemiBold",
     marginBottom: 3,
   },
 });

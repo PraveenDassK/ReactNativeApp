@@ -127,7 +127,7 @@ const ReplaceCard = ({ navigation }) =>
 
 const styles = StyleSheet.create({
   topContainer: {
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     borderColor: "gray",
     padding: 10,
     display: "flex",
@@ -137,14 +137,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   title: {
-    color: "#212529",
+    color:GlobalStyles.Color.lightBlack,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 16,
     marginVertical: 15,
   },
   buttonStyle: {
-    backgroundColor: "white",
+    backgroundColor:GlobalStyles.Color.white,
     borderColor: "gray",
     padding: 5,
     display: "flex",
@@ -155,29 +154,25 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   lostTextColor: {
-    color: "#2B2B2B",
+    color: GlobalStyles.Color. gray_1300,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
     fontSize: 16,
   },
   selectText: {
-    color: "#888888",
+    color: GlobalStyles.Color.gray_2100,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
     fontSize: 14,
   },
 
   hello1Color: {
-    color: "#000000",
+    color: GlobalStyles.Color.black,
     fontFamily: "Montserrat",
-    fontWeight: "normal",
-    fontSize: 20,
+    fontSize: 16,
   },
   textAccount: {
-    color: "#000000",
+    color: GlobalStyles.Color.black,
     fontFamily: "Montserrat",
-    fontWeight: "normal",
-    fontSize: 20,
+    fontSize: 16,
   },
   iconFeatherCreditCard: {
     width: 50,
@@ -200,16 +195,14 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   bottomText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 14,
-    fontFamily: "Montserrat",
-    fontWeight: "regular",
+    fontFamily: "Montserrat-Regular",
   },
   bottomTextBold: {
-    color: "white",
+    color:  GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
   },
 });
 

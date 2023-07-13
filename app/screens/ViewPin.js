@@ -19,12 +19,12 @@ import { Rating, AirbnbRating } from "react-native-ratings";
 import BrokenCard from "../assets/TerminateCard/brokencardBottom.svg";
 import BrokenTop from "../assets/TerminateCard/brokencard.svg";
 import PinModal from "../components/PinModal";
-
+import Tagline from "../components/Tagline";
 const height = Dimensions.get("window").height;
 
 const TerminatedCard = ({ navigation }) => {
   const [animationProgress, setAnimationProgress] = useState(true);
-  const [showPinModal, setShowPinModal] = useState(true);
+  const [showPinModal, setShowPinModal] = useState(false);
 
   function ratingCompleted(rating) {
     console.log("Rating is: " + rating);
@@ -86,11 +86,7 @@ const TerminatedCard = ({ navigation }) => {
           </View>
         </View>
         <View style={{    marginTop: "60%"}}>
-          <Text style={styles.bottomText}>
-            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-            <Text style={styles.bottomTextBold}>Choice</Text>
-          </Text>
+          <Tagline/>
         </View>
       </View>
     </View>
@@ -119,7 +115,6 @@ const styles = StyleSheet.create({
   yourCardHas: {},
   hello: {
     fontSize: 18,
-    fontWeight: "700",
     color: GlobalStyles.Color.indigo_100,
     fontFamily: "Montserrat",
     textAlign: "center",
@@ -153,7 +148,7 @@ const styles = StyleSheet.create({
     top: "35%",
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
-    color: "black",
+    color: GlobalStyles.Color.black,
     width: "100%",
   },
   groupParent: {
@@ -195,36 +190,21 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 0,
   },
-  bottomText: {
-    color: "black",
-    fontSize: 16,
-    fontFamily: "Montserrat",
-    fontWeight: "light",
-    textAlign: "center",
-  },
-  bottomTextBold: {
-    color: "black",
-    fontSize: 16,
-    fontFamily: "Montserrat",
-    fontWeight: "bold",
-  },
+
   sadText: {
-    color: "white",
-    fontFamily: "Montserrat",
-    fontWeight: "bold",
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Regular",
     fontSize: 18,
   },
   sadTextNormal: {
-    color: "black",
+    color: GlobalStyles.Color.gray_1400,
     fontFamily: "Montserrat",
-    fontWeight: "normal",
     fontSize: 80,
     letterSpacing:20,
   },
   happytohelp: {
-    color: "#888888",
-    fontFamily: "Montserrat",
-    fontWeight: "normal",
+    color: GlobalStyles.Color.gray_2100,
+    fontFamily: "Montserrat-Regular",
     fontSize: 14,
     marginTop: 10,
   },
@@ -236,16 +216,15 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 15,
     backgroundColor: "#212529",
-    color: "white",
+    color: GlobalStyles.Color.white,
     borderRadius: 10,
     width: "90%",
     marginVertical:10
   },
   buttonText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
-    fontFamily: "Montserrat",
-    fontWeight: "normal",
+    fontFamily: "Montserrat-Regular",
     textAlign: "center",
   },
 });

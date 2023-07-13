@@ -22,7 +22,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import storage from "../auth/storage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 import { Dropdown } from "react-native-element-dropdown";
-
+import Tagline from "../components/Tagline";
 const SpendingLimit = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -263,7 +263,7 @@ const SpendingLimit = ({ navigation, route }) => {
                           style={{
                             fontSize: 28,
                             color: "blue",
-                            fontWeight: "700",
+                            fontFamily:"Montserrat-Bold",
                           }}
                         >
                           {" "}
@@ -275,7 +275,7 @@ const SpendingLimit = ({ navigation, route }) => {
                             fontSize: 28,
                             marginTop: "2.5%",
                             color: "red",
-                            fontWeight: "700",
+                            fontFamily:"Montserrat-Bold",
                           }}
                         >
                           {" "}
@@ -284,13 +284,14 @@ const SpendingLimit = ({ navigation, route }) => {
                       )}
                       <Text
                         style={{
-                          fontSize: 14,
+                          fontSize: 16,
                           marginTop: "1%",
-                          fontWeight: "700",
-                          opacity: 0.3,
+                          fontFamily:"Montserrat",
+                          // opacity: 0.3,
+                          color:GlobalStyles.Color.gray_2100
                         }}
                       >
-                        Spendable funds left
+                        Spent this month
                       </Text>
                     </View>
                   </View>
@@ -310,10 +311,22 @@ const SpendingLimit = ({ navigation, route }) => {
                       source={require("../assets/meter-1.png")}
                     />
                     <View style={{ flex: 6, marginLeft: "5%" }}>
-                      <Text style={{ fontWeight: "700", fontSize: 16 }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Montserrat",
+                          color: GlobalStyles.Color.gray_1400,
+                        }}
+                      >
                         Card Spending limit
                       </Text>
-                      <Text style={{ fontSize: 10 }}>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          fontFamily: "Montserrat-Regular",
+                          color: GlobalStyles.Color.gray_2100,
+                        }}
+                      >
                         The spend & withdrawal cap
                       </Text>
                     </View>
@@ -355,7 +368,8 @@ const SpendingLimit = ({ navigation, route }) => {
                       <Text
                         style={{
                           fontSize: 12,
-                          fontWeight: "700",
+                          fontFamily: "Montserrat-Regular",
+                          color: GlobalStyles.Color.lightBlack,
                           opacity: 0.3,
                           marginRight: "1%",
                         }}
@@ -366,8 +380,8 @@ const SpendingLimit = ({ navigation, route }) => {
                         onPress={() => setIsToggled(true)}
                         style={{
                           fontSize: 10,
-                          fontWeight: "700",
-                          color: "blue",
+                          fontFamily: "Montserrat",
+                          color: GlobalStyles.Color.skyblue,
                           opacity: 1,
                         }}
                       >
@@ -384,17 +398,13 @@ const SpendingLimit = ({ navigation, route }) => {
         <View
           style={{
             position: "absolute",
-            bottom: "10%",
+            bottom: "-15%",
             width: "100%",
             paddingHorizontal: 10,
-            left: "10%",
+            zIndex: 10,
           }}
         >
-          <Text style={styles.bottomText}>
-            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-            <Text style={styles.bottomTextBold}>Choice</Text>
-          </Text>
+          <Tagline />
         </View>
       </ImageBackground>
     </KeyboardAvoider>
@@ -422,9 +432,8 @@ const styles = StyleSheet.create({
 
   subText: {
     fontSize: 14,
-    fontFamily: "Montserrat",
-    color: "#707070",
-    fontWeight: "regular",
+    fontFamily: "Montserrat-Regular",
+    color: GlobalStyles.Color.gray_1000,
   },
 
   subTextRow: {
@@ -446,7 +455,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   dropdown: {
-    borderColor: "#EBEBEB",
+    borderColor: GlobalStyles.Color.borderColor,
     borderRadius: 10,
     width: "100%",
     padding: 10,
@@ -456,7 +465,7 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
     marginTop: "2.5%",
     opacity: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: GlobalStyles.Color.white,
   },
   dropdownContainer: {
     borderBottomEndRadius: 10,
@@ -465,7 +474,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
-    color: "white",
+    color: GlobalStyles.Color.white,
   },
   dropDownarrayitem: {
     display: "flex",
@@ -481,16 +490,14 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   bottomText: {
-    color: "black",
+    color: GlobalStyles.Color.white,
     fontSize: 14,
-    fontFamily: "Montserrat",
-    fontWeight: "normal",
+    fontFamily: "Montserrat-Regular",
   },
   bottomTextBold: {
-    color: "black",
+    color: GlobalStyles.Color.black,
     fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
   },
   groupParent: {
     height: 60,
@@ -502,8 +509,8 @@ const styles = StyleSheet.create({
   //   position: "absolute",
   // },
   textInput: {
-    borderColor: "#EBEBEB",
-    backgroundColor: "#FFFFFF",
+    borderColor: GlobalStyles.Color.borderColor,
+    backgroundColor: GlobalStyles.Color.white,
     borderWidth: 1,
     paddingHorizontal: "7%",
     paddingVertical: "5%",
@@ -512,15 +519,14 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 20,
-    backgroundColor: "#212529",
-    color: "white",
+    backgroundColor: GlobalStyles.Color.lightBlack,
+    color: GlobalStyles.Color.white,
     borderRadius: 10,
   },
   buttonText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
-    fontFamily: "Montserrat",
-    fontWeight: "normal",
+    fontFamily: "Montserrat-Regular",
     textAlign: "center",
   },
 });

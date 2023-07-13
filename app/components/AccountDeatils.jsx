@@ -30,7 +30,7 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
   return (
     <View style={styles.border}>
       <LinearGradient
-        colors={["#0101FD", "#178BFF"]}
+        colors={[ "#00005F","#5888F5"]}
         style={styles.cardContainer}
       >
         <View style={{position: "absolute", right: -40, bottom: -20, opacity: 0.3}}>
@@ -41,7 +41,7 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
           <Text style={styles.accountName}>Account</Text>
           <View style={styles.accountNumberStyle}>
             <Dropdown
-            fontFamily="Montserrat-Regular"
+            fontFamily="Montserrat-Medium"
               data={dropdownData}
               value={title}
               activeColor={GlobalStyles.Color.backgroundColor}
@@ -133,19 +133,18 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     paddingVertical: 10,
-    borderBottomColor: "white",
+    borderBottomColor: GlobalStyles.Color.white,
     borderBottomWidth: 0.5,
   },
   accountName: {
-    fontSize: 16,
-    fontWeight: "bold",
-    fontFamily: "Montserrat-Regular",
-    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "Montserrat-Medium",
+    color:GlobalStyles.Color.white ,
     letterSpacing: 1,
   },
   dropdown: {
     width: 130,
-    fontSize: 16,
+    fontSize: 14,
     borderWidth: 0,
   },
   accountNumberStyle: {
@@ -164,36 +163,32 @@ const styles = StyleSheet.create({
     gap: 3,
     paddingVertical: 10,
   },
-  border: {  borderColor: "white", borderRadius: 20, borderTopWidth: 0.5, borderLeftWidth: 0.5},
+  border: {  borderColor: GlobalStyles.Color.white, borderRadius: 20, borderTopWidth: 0.5, borderLeftWidth: 0.5},
   totalTitle: {
     fontSize: 16,
-    color: "white",
-    fontWeight: "100",
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat-Regular",
   },
   totalAmount: {
     fontSize: 30,
-    color: "white",
-    fontWeight: "bold",
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
   },
   incometext: {
     fontSize: 14,
-    color: "white",
-    fontWeight: "normal",
-    fontFamily: "Montserrat-Regular",
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Medium",
   },
   incomeAmount: {
     fontSize: 16,
-    color: "white",
-    fontWeight: "bold",
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     marginTop: 5,
   },
   sendButton: {
     height: 60,
     width: "50%",
-    backgroundColor: "black",
+    backgroundColor: GlobalStyles.Color.lightBlack,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -201,9 +196,9 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   sendButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "normal",
+    color: GlobalStyles.Color.white,
+    fontSize: 14,
+    fontFamily:"Montserrat-Medium",
   },
   buttonContainer: {
     position: "absolute",

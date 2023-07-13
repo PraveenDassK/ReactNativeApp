@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     backgroundColor: GlobalStyles.Color.backgroundColor,
-    borderColor: "black",
+    borderColor: GlobalStyles.Color.black,
     alignSelf: "center",
     flex: 1,
   },
@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   displayText: {
-    color: "rgba(0, 0, 0, 1)",
+    color: GlobalStyles.Color.black,
     fontFamily: "Montserrat",
     fontSize: 16,
   },
   bottomdisplayText: {
-    color: "#999999",
+    color: GlobalStyles.Color.darkGray,
     fontFamily: "Montserrat-Regular",
     fontSize: 14,
   },

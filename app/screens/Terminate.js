@@ -196,13 +196,12 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 20,
     paddingVertical: 10,
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     opacity: 0.9,
   },
   modalText: {
-    color: "#212529",
+    color: GlobalStyles.Color.lightBlack,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
     fontSize: 16,
     textAlign: "center",
     marginVertical: 25,
@@ -218,9 +217,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     textAlign: "center",
-    color: "blue",
+    color: GlobalStyles.Color.skyblue,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
     fontSize: 16,
     textAlign: "center",
   },
@@ -236,16 +234,14 @@ const styles = StyleSheet.create({
 
   },
   bottomText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
-    fontFamily: "Montserrat",
-    fontWeight: "light",
+    fontFamily: "Montserrat-Regular",
   },
   bottomTextBold: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
   },
 });
 

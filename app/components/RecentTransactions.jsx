@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import AuthContext from "../auth/context";
-
+import GlobalStyles from "../../GlobalStyles";
 import apiTransaction from "../api/apiTransaction";
 
 import {
@@ -63,7 +63,7 @@ const RecentTransactions = ({ amount }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size="large" color={GlobalStyles.Color.black} />
       </View>
     );
   }
