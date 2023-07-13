@@ -12,7 +12,6 @@ import {
   Keyboard,
   Pressable,
   Image,
-  
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
@@ -32,11 +31,16 @@ import apiCall from "../api/apiCall";
 import Button from "../components/AppButton";
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import formatCurrency from "../utility/formatCurrency";
+import PinModal from "../components/PinModal";
+import apiTransaction from "../api/apiTransaction";
+
 const GroupSendMoney = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
   const [selectedAccount, setSelectedAccount] = useState({});
   const [userData, setCode] = useState("");
   const [oneselectedAccount, setOneAccount] = useState();
+  const [showPinModal, setShowPinModal] = useState(false);
+
   const payeeDetails = route.params;
   const destination = {};
   console.log(payeeDetails, "this is patDetails");
@@ -97,13 +101,34 @@ const GroupSendMoney = ({ route, navigation }) => {
    * @dev This takes the selected destination account data and passes it to another screen
    */
 
-  const selectAccount = (account) => {
+  const selectAccount = async (account) => {
+    
+    setShowPinModal(true);
+
+   
+
+    // navigation.navigate("Pin", requestObj);
+  };
+
+  const handleSuccess =async () => {
+    setShowPinModal(false);
+
     const requestObj = payeeDetails.requestObj;
     requestObj.amount = amount;
     requestObj.sourceAccountId = oneselectedAccount?.id;
     console.log(requestObj, "this ois req obj");
-    // navigation.navigate("Pin", requestObj);
-  };
+    setIsLoading(true)
+    const transferRequest = await apiTransaction.sendToGroup(requestObj);
+    const successObject ={
+      amount:amount,
+      name:name
+    }
+    setIsLoading(false);
+
+    navigation.navigate("sendmoneysuccess",{successObject})
+    console.log(transferRequest, "this is transfer request");
+    console.log(transferRequest,"this is transfer request");
+  }
 
   /**
    * @dev If the page is loading show the loading icon
@@ -112,6 +137,22 @@ const GroupSendMoney = ({ route, navigation }) => {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
+
+  if (showPinModal) {
+    return (
+      <View style={styles.mainContainer}>
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal
+            title="Enter your PIN"
+            success={() => handleSuccess()}
+          />
+        ) : null}
       </View>
     );
   }
@@ -193,13 +234,13 @@ const GroupSendMoney = ({ route, navigation }) => {
           <>
             <View style={styles.headerContainer}>
               <View>
-                <Text style={styles.headerHeading}>Payee name</Text>
+                <Text style={styles.headerHeading}>Group name</Text>
                 <Text style={styles.contentText}>{name}</Text>
               </View>
-              <View>
+              {/* <View>
                 <Text style={styles.headerHeading}>Account number</Text>
                 <Text style={styles.contentText}>{accountNumber}</Text>
-              </View>
+              </View> */}
             </View>
             <View style={styles.paymentContainer}>
               <View>
@@ -296,7 +337,7 @@ const GroupSendMoney = ({ route, navigation }) => {
             </View>
           </>
         }
-        ListFooterComponent={FootComponent}
+        ListFooterComponent={FootComponent(selectAccount)}
         data={accountList}
         keyExtractor={(accountList, index) => accountList.id}
         renderItem={(account) => {
@@ -333,10 +374,10 @@ const GroupSendMoney = ({ route, navigation }) => {
   );
 };
 
-const FootComponent = () => (
+const FootComponent = (selectAccount) => (
   <View style={styles.buttonContainer}>
     <TouchableOpacity
-      onPress={() => selectAccount()}
+      onPress={selectAccount}
       // onPress={() => {
       //   navigation.navigate("Success");
       // }}
@@ -367,7 +408,7 @@ const styles = StyleSheet.create({
     marginVertical: 28,
   },
   headerHeading: {
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat-Regular",
     fontSize: 14,
     color: "#212529",
     fontWeight: "bold",
@@ -556,8 +597,8 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
   },
   flatListContentContainer: {
-    
-    padding: "5%",flex: 1
+    padding: "5%",
+    flex: 1,
   },
   itemContainer: {
     paddingHorizontal: 22,
@@ -574,6 +615,11 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontSize: 14,
     color: "#000000",
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
   },
 });
 
