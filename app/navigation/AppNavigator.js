@@ -1034,6 +1034,14 @@ const StackNavigator = () => {
         }}
       />
       <Stack.Screen
+        name="CarbonExplore"
+        component={gestureHandlerRootHOC(CarbonExplore)}
+        options={{
+          title: "Carbon Explore",
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+        }}
+      />
+      <Stack.Screen
         name="ChooseCardsStandard5"
         component={gestureHandlerRootHOC(ChooseCardsStandard5)}
         options={{

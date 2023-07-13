@@ -131,7 +131,7 @@ const Carbon = ({ route, navigation }) => {
 
   if(visitedCarbon) {
     return(
-      <CarbonFootprints />
+      <CarbonFootprints navigation={navigation}/>
     )
   }
 

@@ -17,7 +17,8 @@ import { FlatList } from "react-native-gesture-handler";
 import { center } from "@shopify/react-native-skia";
 import Tagline from "../components/Tagline";
 
-const CarbonFootprints = () => {
+const CarbonFootprints = ({ navigation }) => {
+  const handleNavigation = () => navigation.navigate("CarbonExplore")
   return (
     <ScrollView>
       <ImageBackground
@@ -52,7 +53,7 @@ const CarbonFootprints = () => {
         <BlurView tint="light" intensity={60} style={styles.blurView}>
           <CarbonSpendGraph isStyled={false} />
         </BlurView>
-        <CarbonContainer title='Carbon offset summary'>
+        <CarbonContainer title='Carbon offset summary' onNavigate={handleNavigation}>
           <ImageCardContainer />
         </CarbonContainer >
         <CarbonContainer title='Your virtual planet'>
@@ -73,7 +74,7 @@ const CarbonFootprints = () => {
   );
 };
 
-const CarbonContainer = ({ title, children }) => {
+const CarbonContainer = ({ title, children, onNavigate }) => {
   return (
     <View style={styles.containerSpacing}>
       <Text style={styles.header}>{title}</Text>
@@ -106,7 +107,7 @@ const CarbonContainer = ({ title, children }) => {
 
         <TouchableOpacity
           style={[styles.navigateContainer, styles.containerSpacing]}
-          onPress={() => console.log("navigate")}
+          onPress={onNavigate}
         >
           <Text style={styles.navigateText}>Explore more projects</Text>
         </TouchableOpacity>
