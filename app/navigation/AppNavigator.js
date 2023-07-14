@@ -1037,7 +1037,7 @@ const StackNavigator = () => {
         name="CarbonExplore"
         component={gestureHandlerRootHOC(CarbonExplore)}
         options={{
-          title: "Carbon Explore",
+          title: "",
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
