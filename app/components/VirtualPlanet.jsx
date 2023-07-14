@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { treeImages } from "../assets/Forest/AllForest";
 import { turtleImages } from "../assets/Turtles/AllTurtles";
+import GlobalStyles from "../../GlobalStyles";
 const VirtualPlanetCard = ({ data, handleVirtual }) => {
   return (
     <>
@@ -12,10 +13,9 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
             <View style={{ paddingVertical: 10 }}>
               <Text
                 style={{
-                  fontSize: 18,
-                  color: "#212529",
+                  fontSize: 15,
+                  color: GlobalStyles.Color.lightBlack,
                   fontFamily: "Montserrat",
-                  fontWeight: "bold",
                 }}
               >
                 {eachValue.title}
@@ -34,9 +34,8 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
                 <Text
                   style={{
                     fontSize: 30,
-                    color: "#179424",
+                    color: GlobalStyles.Color.green_total,
                     fontFamily: "Montserrat",
-                    fontWeight: "bold",
                   }}
                 >
                   {eachValue?.total}
@@ -44,9 +43,8 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: "#00003D",
+                    color: GlobalStyles.Color.indigo_100,
                     fontFamily: "Montserrat",
-                    fontWeight: "bold",
                     width: "80%",
                   }}
                 >
@@ -55,9 +53,8 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: "#178BFF",
+                    color: GlobalStyles.Color.skyblue,
                     fontFamily: "Montserrat",
-                    fontWeight: "bold",
                     marginTop: 10,
                   }}
                   onPress={handleVirtual}

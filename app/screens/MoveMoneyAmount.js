@@ -16,7 +16,7 @@ import StepProgress from "../components/SteeperCounter";
 import formatCurrency from "../utility/formatCurrency";
 import SendFrom from "../components/SendFrom";
 import AuthContext from "../auth/context";
-
+import GlobalStyles from "../../GlobalStyles";
 const MoveMoneyAmount = ({ navigation, route }) => {
   const [isModal, setModal] = useState(false);
   const [accountList, setAccountList] = useState([]);
@@ -189,12 +189,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   sendToText: {
-    color: "#000000",
+    color: GlobalStyles.Color.black,
     fontSize: 16,
     fontFamily: "Montserrat-Regular",
   },
   idText: {
-    color: "#000000",
+    color: GlobalStyles.Color.black,
     fontSize: 16,
     fontFamily: "Montserrat-Medium",
   },
@@ -203,10 +203,10 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
     paddingHorizontal: 10,
     fontSize: 30,
-    color: "#179424",
+    color: GlobalStyles.Color.green_total,
     fontWeight: "bold",
     borderWidth: 2,
-    borderColor: "#EBEBEB",
+    borderColor: GlobalStyles.Color.borderColor,
     marginTop: 20,
     borderRadius: 10,
   },
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     borderWidth: 2,
     fontSize: 16,
-    borderColor: "#EBEBEB",
+    borderColor: GlobalStyles.Color.borderColor,
     marginVertical: 20,
     paddingVertical: 5,
     paddingHorizontal: 5,
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     height: "100%",
     paddingHorizontal: "7%",
     marginTop: "5%",

@@ -17,6 +17,7 @@ import AuthContext from "../auth/context";
 import UserIcon from "../components/UserIcon";
 import Tagline from "../components/Tagline";
 import BeneficiaryPopup from "../components/BeneficiaryPopup";
+import GlobalStyles from "../../GlobalStyles";
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
@@ -100,7 +101,7 @@ const SendMoney = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size="large" color={GlobalStyles.Color.black} />
       </View>
     );
   }
@@ -133,7 +134,7 @@ const SendMoney = ({ navigation }) => {
             onPress={() => navigation.navigate("AddBeneficiary")}
           >
             <View style={styles.buttonPayNew}>
-              <Ionicons name="add-circle-outline" size={20} color="#FFFFFF" />
+              <Ionicons name="add-circle-outline" size={20} color={GlobalStyles.Color.white} />
               <Text style={styles.buttonPayNewText}>Pay someone new</Text>
             </View>
           </TouchableOpacity>
@@ -148,9 +149,9 @@ const SendMoney = ({ navigation }) => {
           >
             <Text
               style={{
-                fontFamily: "Montserrat",
+                fontFamily: "Montserrat-Medium",
                 fontSize: 12,
-                color: "#505A63",
+                color: GlobalStyles.Color.gray_2000,
                 marginBottom: 37,
               }}
             >
@@ -159,13 +160,13 @@ const SendMoney = ({ navigation }) => {
             <Feather
               name="info"
               size={12}
-              color="black"
+              color={GlobalStyles.Color.black}
               onPress={() => setModalVisible(true)}
             />
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
             <View style={styles.buttonPaySelf}>
-              <Feather name="send" size={20} color="#212529" />
+              <Feather name="send" size={20} color={GlobalStyles.Color.lightBlack} />
               <Text style={styles.buttonPaySelfText}>To self account</Text>
             </View>
           </TouchableOpacity>
@@ -208,7 +209,7 @@ const SendMoney = ({ navigation }) => {
       </View>
       <View
         style={{
-          backgroundColor: "#FFFFFF",
+          backgroundColor: GlobalStyles.Color.white,
           padding: 24,
           marginBottom: 100,
         }}
@@ -219,7 +220,7 @@ const SendMoney = ({ navigation }) => {
             <Ionicons
               name="add"
               size={12}
-              color="#0101FD"
+              color={GlobalStyles.Color.gray_500}
               style={{ marginRight: 3, marginTop: 1 }}
             />
             <TouchableOpacity
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
   },
   buttonPayNew: {
     borderRadius: 10,
-    backgroundColor: "#212529",
+    backgroundColor: GlobalStyles.Color.lightBlack,
     height: 47,
     width: 312.33,
     display: "flex",
@@ -291,9 +292,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   buttonPayNewText: {
-    color: "#FFFFFF",
-    fontFamily: "Montserrat",
-    fontWeight: "bold",
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Medium",
     fontSize: 14,
     marginLeft: 6,
   },
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#212529",
+    borderColor: GlobalStyles.Color.lightBlack,
     backgroundColor: "#0101FD05",
     height: 47,
     width: 312.33,
@@ -312,14 +312,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   buttonPaySelfText: {
-    color: "#212529",
+    color: GlobalStyles.Color.lightBlack,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
     fontSize: 14,
     marginLeft: 6,
   },
   payContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: GlobalStyles.Color.white,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     padding: 20,
@@ -335,14 +334,12 @@ const styles = StyleSheet.create({
   },
   payMainHeading: {
     fontFamily: "Montserrat",
-    fontWeight: "bold",
-    color: "#212529",
+    color: GlobalStyles.Color.black,
     fontSize: 14,
   },
   paySideHeading: {
     fontFamily: "Montserrat",
-    fontWeight: "bold",
-    color: "#0101FD",
+    color: GlobalStyles.Color.skyblue,
     fontSize: 10,
   },
   flatListContent: {

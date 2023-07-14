@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Modal, Pressable } from "react-native";
 import React, { useState } from "react";
+import GlobalStyles from "../../GlobalStyles";
 
 const BeneficiaryPopup = ({ modalVisible, setModalVisible }) => {
   return (
@@ -45,10 +46,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "red",
   },
   modalMainView: {
-    backgroundColor: "#ffffff",
+    backgroundColor: GlobalStyles.Color.white,
     marginTop: "50%",
     marginHorizontal: "8%",
     padding: 20,
@@ -64,15 +64,15 @@ const styles = StyleSheet.create({
   modalText:{
     fontFamily:"Montserrat",
     fontSize:14,
-    color:'#505A63',
+    color:GlobalStyles.Color.gray_2000,
   },
   textStyle:{
-    color:"#212529",
+    color:GlobalStyles.Color.lightBlack,
     fontSize:16,
     fontFamily:"Montserrat"
   },
   bottomText:{
-    color:"#505A63",
+    color:GlobalStyles.Color.gray_2000,
     fontFamily:"Montserrat-Regular",
     fontSize:12,
   }

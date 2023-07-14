@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React from "react";
-
+import GlobalStyles from "../../GlobalStyles";
 const XeroDashboard = () => {
   return (
     <View style={styles.container}>
@@ -13,11 +13,10 @@ const XeroDashboard = () => {
       <View>
         <Text
           style={{
-            color: "#212529",
+            color: GlobalStyles.Color.lightBlack,
             textAlign: "center",
-            fontSize: 12,
+            fontSize: 14,
             fontFamily: "Montserrat-Regular",
-            fontWeight: "regular",
           }}
         >
           Sync your Carbonyte bank {`\n`}directly into your XERO account and
@@ -49,15 +48,15 @@ const styles = StyleSheet.create({
   sendButton: {
     height: 60,
     width: "50%",
-    backgroundColor: "black",
+    backgroundColor:GlobalStyles.Color.lightBlack,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
   },
   sendButtonText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
-    fontWeight: "normal",
+    fontFamily:"Montserrat-Medium"
   },
 });

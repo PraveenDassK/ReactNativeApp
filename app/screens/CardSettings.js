@@ -13,7 +13,7 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import { useFocusEffect } from "@react-navigation/native";
-
+import Tagline from "../components/Tagline";
 import apiSettings from "../api/apiSettings";
 import AppText from "../components/Text";
 import terminateCardAlert from "../utility/terminateCardAlert";
@@ -104,7 +104,7 @@ const CardSettings = ({ navigation }) => {
                 marginLeft: "5%",
                 borderRadius: 15,
                 marginTop: "5%",
-                backgroundColor: "white",
+                backgroundColor: GlobalStyles.Color.white,
                 // height: 60,
                 paddingVertical: "5%",
                 display: "flex",
@@ -145,7 +145,7 @@ const CardSettings = ({ navigation }) => {
                 marginLeft: "5%",
                 borderRadius: 15,
                 marginTop: "5%",
-                backgroundColor: "white",
+                backgroundColor: GlobalStyles.Color.white,
                 // height: 60,
                 paddingVertical: "5%",
                 display: "flex",
@@ -180,9 +180,8 @@ const CardSettings = ({ navigation }) => {
             marginLeft: "10%",
             marginTop: "5%",
             fontSize: 14,
-            fontWeight: "bold",
             fontFamily: "Montserrat",
-            color: "#888888",
+            color: GlobalStyles.Color.gray_2100,
           }}
         >
           Security
@@ -195,7 +194,7 @@ const CardSettings = ({ navigation }) => {
               marginLeft: "5%",
               borderRadius: 15,
               marginTop: "5%",
-              backgroundColor: "white",
+              backgroundColor: GlobalStyles.Color.white,
               height: "auto",
               paddingRight: "2.5%",
             },
@@ -379,7 +378,7 @@ const CardSettings = ({ navigation }) => {
               marginLeft: "5%",
               borderRadius: 15,
               marginTop: "5%",
-              backgroundColor: "white",
+              backgroundColor: GlobalStyles.Color.white,
               height: "auto",
             },
           ]}
@@ -468,7 +467,7 @@ const CardSettings = ({ navigation }) => {
                 marginLeft: "5%",
                 borderRadius: 15,
                 marginTop: "5%",
-                backgroundColor: "white",
+                backgroundColor:GlobalStyles.Color.white,
                 // height: 60,
                 paddingVertical: "5%",
                 display: "flex",
@@ -498,26 +497,23 @@ const CardSettings = ({ navigation }) => {
           </View>
         </Pressable>
       </View>
+      <View
+        style={{
+          position: "absolute",
+          bottom: "0%",
+          width: "100%",
+          paddingHorizontal: 10,
+          zIndex:10,
+        }}
+      >
+       <Tagline/>
+      </View>
       <ImageBackground
         resizeMode="stretch"
         source={require("../assets/backgrounds/cardsettings.jpg")}
         style={styles.container}
       />
-      <View
-        style={{
-          position: "absolute",
-          bottom: "10%",
-          width: "100%",
-          paddingHorizontal: 10,
-          left: "10%",
-        }}
-      >
-        <Text style={styles.bottomText}>
-          Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-          <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-          <Text style={styles.bottomTextBold}>Choice</Text>
-        </Text>
-      </View>
+    
     </ScrollView>
   );
 };
@@ -544,15 +540,13 @@ const styles = StyleSheet.create({
   },
   cardHeading: {
     fontFamily: "Montserrat",
-    color: "#272727",
+    color: GlobalStyles.Color.gray_1400,
     fontSize: 16,
-    fontWeight: "bold",
   },
   cardSubHeading: {
-    color: "#888888",
-    fontFamily: "Montserrat",
+    color: GlobalStyles.Color.gray_2100,
+    fontFamily: "Montserrat-Regular",
     fontSize: 14,
-    fontWeight: "normal",
   },
   container: {
     width: "100%",
@@ -562,16 +556,14 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   bottomText: {
-    color: "black",
+    color: GlobalStyles.Color.black,
     fontSize: 14,
     fontFamily: "Montserrat",
-    fontWeight: "normal",
   },
   bottomTextBold: {
-    color: "black",
+    color: GlobalStyles.Color.black,
     fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
   },
 });
 

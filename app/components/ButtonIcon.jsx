@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import GlobalStyles from "../../GlobalStyles";
 const ButtonIcon = ({
   name = "Default",
   size = 50,
@@ -15,7 +15,7 @@ const ButtonIcon = ({
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.container, { width: size, height: size }]}>
         <View style={styles.icon} backgroundColor={colour}>
-          <MaterialCommunityIcons name={image} size={30} color={'#212529'}/>
+          <MaterialCommunityIcons name={image} size={30} color={GlobalStyles.Color.lightBlack}/>
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.name}>{name}</Text>
@@ -49,9 +49,10 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 12,
-    color: "black",
+    color: "#212529",
     marginTop: 5,
     textAlign: "center",
+    fontFamily:"Montserrat-Medium",
   },
 });
 

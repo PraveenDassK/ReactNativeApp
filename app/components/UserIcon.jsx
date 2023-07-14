@@ -135,8 +135,9 @@ const styles = StyleSheet.create({
     },
     name: {
       fontSize: 12,
-      color: "black",
+      color: GlobalStyles.Color.black,
       textAlign: "center",
+      fontFamily:"Montserrat-Medium",
     },
   });
   

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Image, } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-
+import GlobalStyles from "../../GlobalStyles";
 const ReferNow = () => {
 
   return (
@@ -23,22 +23,20 @@ const ReferNow = () => {
         <View style={{width:"50%",paddingVertical:5}}>
           <Text
             style={{
-              color: "#212529",
+              color: GlobalStyles.Color.lightBlack,
               textAlign: "center",
               fontSize: 20,
               fontFamily: "Montserrat",
-              fontWeight: "bold",
             }}
           >
             Refer & Earn
           </Text>
           <Text
             style={{
-              color: "#212529",
+              color: GlobalStyles.Color.lightBlack,
               textAlign: "center",
-              fontSize: 12,
+              fontSize: 14,
               fontFamily: "Montserrat-Regular",
-              fontWeight: "regular",
               marginVertical:10,
             }}
           >
@@ -73,15 +71,15 @@ const styles = StyleSheet.create({
   sendButton: {
     height: 60,
     width: "100%",
-    backgroundColor: "black",
+    backgroundColor: GlobalStyles.Color.lightBlack,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
   },
   sendButtonText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
-    fontWeight: "normal",
+    fontFamily:"Montserrat-Medium"
   },
 });

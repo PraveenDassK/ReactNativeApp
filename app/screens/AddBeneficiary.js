@@ -190,7 +190,7 @@ const AddBeneficiary = ({ navigation }) => {
             flex: 1,
             paddingHorizontal: 20,
             paddingVertical: 24,
-            backgroundColor: "#FFFFFF",
+            backgroundColor: GlobalStyles.Color.white,
             marginTop: 27,
             borderRadius: 20,
           }}
@@ -254,7 +254,7 @@ const AddBeneficiary = ({ navigation }) => {
 
                 <Button
                   title="Continue"
-                  textColor="white"
+                  textColor={GlobalStyles.Color.white}
                   color="black"
                   style={styles.buttonColor}
                   onPress={handleSubmit}
@@ -280,11 +280,11 @@ const styles = StyleSheet.create({
     height: 46,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#EBEBEB",
+    borderColor: GlobalStyles.Color.borderColor,
     paddingHorizontal: 20,
     paddingVertical: 14,
     fontSize: 14,
-    color: "#999999",
+    color: GlobalStyles.Color.darkGray,
   },
   buttonContainer: {
     display: "flex",
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: GlobalStyles.Color.white,
     fontSize: 14,
     fontFamily: "Montserrat",
   },
