@@ -8,7 +8,7 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
 import api from "../api/api_list";
@@ -18,6 +18,7 @@ import UserIcon from "../components/UserIcon";
 import Tagline from "../components/Tagline";
 import BeneficiaryPopup from "../components/BeneficiaryPopup";
 import GlobalStyles from "../../GlobalStyles";
+import colors from "../config/colors";
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
@@ -134,7 +135,11 @@ const SendMoney = ({ navigation }) => {
             onPress={() => navigation.navigate("AddBeneficiary")}
           >
             <View style={styles.buttonPayNew}>
-              <Ionicons name="add-circle-outline" size={20} color={GlobalStyles.Color.white} />
+              <Ionicons
+                name="add-circle-outline"
+                size={20}
+                color={GlobalStyles.Color.white}
+              />
               <Text style={styles.buttonPayNewText}>Pay someone new</Text>
             </View>
           </TouchableOpacity>
@@ -166,7 +171,11 @@ const SendMoney = ({ navigation }) => {
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
             <View style={styles.buttonPaySelf}>
-              <Feather name="send" size={20} color={GlobalStyles.Color.lightBlack} />
+              <Feather
+                name="send"
+                size={20}
+                color={GlobalStyles.Color.lightBlack}
+              />
               <Text style={styles.buttonPaySelfText}>To self account</Text>
             </View>
           </TouchableOpacity>
@@ -191,17 +200,23 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.name}
                   onPress={() => sendPayeeTrigger(beneficary.item)}
                 />
-                <Text
+                <View
+                  
                   style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 15,
+                    height: 15,
+                    borderRadius: 7.5,
+                    backgroundColor: colors.danger,
                     position: "absolute",
-                    right: 16,
-                    fontSize: 14,
-                    top: -5,
+                    zIndex: 5,
+                    top: 0,
+                    right: 15,
                   }}
-                  onPress={() => handleBeneficiaryDelete(beneficary.item)}
                 >
-                  X
-                </Text>
+                  <AntDesign name="minus" size={10} onPress={() => handleBeneficiaryDelete(beneficary.item)}/>
+                </View>
               </View>
             );
           }}
@@ -244,17 +259,23 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.groupName}
                   onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                 />
-                <Text
+                <View
                   style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 15,
+                    height: 15,
+                    borderRadius: 7.5,
+                    backgroundColor: colors.danger,
                     position: "absolute",
-                    right: 16,
-                    fontSize: 14,
-                    top: -5,
+                    zIndex: 5,
+                    top: 0,
+                    right: 15,
                   }}
-                  onPress={() => handleDelete(beneficary.item)}
+                  
                 >
-                  X
-                </Text>
+                  <AntDesign name="minus" size={10} onPress={() => handleDelete(beneficary.item)}/>
+                </View>
               </View>
             );
           }}
