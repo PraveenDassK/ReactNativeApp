@@ -1,38 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useIsFocused } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
+import { useIsFocused } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Text,
-  StyleSheet,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Keyboard,
-  Pressable,
   Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { LinearGradient } from "expo-linear-gradient";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import GlobalStyles from "../../GlobalStyles";
+import apiBeneficiaries from "../api/apiBeneficiaries";
+import apiCall from "../api/apiCall";
+import apiTransaction from "../api/apiTransaction";
+import AuthContext from "../auth/context";
+import PinModal from "../components/PinModal";
+import UserIcon from "../components/UserIcon";
 import {
   horizontalScale,
-  verticalScale,
-  moderateScale,
+  verticalScale
 } from "../config/scaling";
-import AuthContext from "../auth/context";
-import GlobalStyles from "../../GlobalStyles";
-import AppText from "../components/Text";
-import KeyboardAvoider from "../components/KeyboardAvoider";
-import UserIcon from "../components/UserIcon";
-import AppDropdown from "../components/AppDropdown";
-import apiCall from "../api/apiCall";
-import Button from "../components/AppButton";
-import apiBeneficiaries from "../api/apiBeneficiaries";
 import formatCurrency from "../utility/formatCurrency";
-import PinModal from "../components/PinModal";
-import apiTransaction from "../api/apiTransaction";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
