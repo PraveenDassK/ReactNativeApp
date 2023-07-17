@@ -89,6 +89,7 @@ const MoveMoney = ({ navigation }) => {
               data={accountList}
               keyExtractor={(accountList, index) => accountList.id}
               numColumns={1}
+              showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.flatListContent}
               style={styles.accountContainer}
               ItemSeparatorComponent={() => (

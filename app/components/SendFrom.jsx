@@ -66,6 +66,7 @@ const SendFrom = ({
           </View>
           <Text style={styles.containerHeading}>Send From</Text>
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={accountList}
             keyExtractor={(accountList, index) => accountList.id}
             numColumns={1}
