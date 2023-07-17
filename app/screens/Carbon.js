@@ -567,6 +567,8 @@ const styles = StyleSheet.create({
     height: "120%",
     marginBottom: "5%",
     overflow: "hidden",
+    borderColor: 'white',
+    borderWidth: 0.5,
   },
   container: {
     flex: 1,

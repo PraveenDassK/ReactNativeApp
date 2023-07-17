@@ -17,7 +17,6 @@ const StepProgress = ({ currentStep }) => {
         <Text
           style={[styles.stepText, currentStep >= 1 && styles.activeStepText]}
         >
-          {" "}
           1
         </Text>
       </TouchableOpacity>

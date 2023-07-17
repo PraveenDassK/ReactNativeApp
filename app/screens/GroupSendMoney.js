@@ -248,6 +248,7 @@ const GroupSendMoney = ({ route, navigation }) => {
                   Enter the amount you want to send
                 </Text>
                 <TextInput
+                  keyboardType="numeric"
                   style={styles.inputBox}
                   placeholder="£0"
                   onChangeText={(text) => setAmount(text)}

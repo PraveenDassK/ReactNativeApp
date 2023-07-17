@@ -1,6 +1,7 @@
 import "react-native-gesture-handler";
 
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import NetInfo, { useNetInfo } from "@react-native-community/netinfo";
 import { Text, View, Button, Platform, ActivityIndicator } from "react-native";
 import { AppState } from "react-native";
 import { useFonts } from "expo-font";
@@ -20,7 +21,7 @@ import authStorage from "./app/auth/storage";
 import apiLogin from "./app/api/apiLogin";
 
 import versionChecker from "./app/utility/versionChecker";
-import { usePreventScreenCapture } from 'expo-screen-capture';
+import { usePreventScreenCapture } from "expo-screen-capture";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -42,6 +43,8 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+  const netInfo = useNetInfo();
+
   const [loaded] = useFonts({
     Helvetica: require("./app/assets/fonts/Helvetica.ttf"),
     Typo: require("./app/assets/fonts/typo-grotesk.regular.otf"),
@@ -50,7 +53,7 @@ export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   const fetchFonts = () => {
     return Font.loadAsync({
-      "Montserrat": require("./app/assets/fonts/Montserrat-Bold.ttf"),
+      Montserrat: require("./app/assets/fonts/Montserrat-Bold.ttf"),
       "Montserrat-Bold": require("./app/assets/fonts/Montserrat-Bold.ttf"),
       "Montserrat-Medium": require("./app/assets/fonts/Montserrat-Medium.ttf"),
       "Montserrat-Regular": require("./app/assets/fonts/Montserrat-Regular.ttf"),
@@ -59,7 +62,7 @@ export default function App() {
   };
 
   if (!fontLoaded) {
-    fetchFonts()
+    fetchFonts();
   }
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -97,7 +100,7 @@ export default function App() {
   //Carbonyte ID CC1
   const [customerDetails, setCustomerDetails] = useState("");
 
-  const [version, setVersion] = useState("0.0.9");
+  const [version, setVersion] = useState("0.0.10");
 
   const [missingAccountSetup, setMissingAccountSetup] = useState(false);
 
@@ -114,7 +117,6 @@ export default function App() {
   });
 
   useEffect(() => {
-    
     const prepare = async () => {
       await SplashScreen.preventAutoHideAsync();
     };
@@ -174,7 +176,6 @@ export default function App() {
 
   const authenticate = async () => {
     "starting authentication";
-
 
     const result = await LocalAuthentication.authenticateAsync();
     const device =
@@ -255,7 +256,12 @@ export default function App() {
     );
   }
 
-  return (
+  return !netInfo.isInternetReachable ? (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>No internet connection</Text>
+      <ActivityIndicator size="large" color="black" />
+    </View>
+  ) : (
     <AuthContext.Provider
       value={{
         user,

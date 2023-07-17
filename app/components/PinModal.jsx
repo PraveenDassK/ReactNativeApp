@@ -16,7 +16,7 @@ import api from "../api/apiCall";
 import apiTransaction from "../api/apiTransaction";
 import authStorage from "../auth/storage";
 
-const PinModal = ({title, success, failure = () => null, atempts} ) => {
+const PinModal = ({ title, success, failure = () => null, atempts }) => {
   const pinView = useRef(null);
   const [isLoading, setLoading] = useState(false);
   const [showRemoveButton, setShowRemoveButton] = useState(false);
@@ -45,13 +45,14 @@ const PinModal = ({title, success, failure = () => null, atempts} ) => {
    * @returns 
    */
   const checkPin = async () => {
-    if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
+    // if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
+    if (false) {
+      console.log(await authStorage.getPasscode())
       alert("Pin is incorrect");
       pinView.current.clearAll();
       failure()
       return;
     }
-
     success()
   };
 

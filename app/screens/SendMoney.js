@@ -7,8 +7,9 @@ import {
   ActivityIndicator,
   FlatList,
   SafeAreaView,
+  Alert,
 } from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
 import api from "../api/api_list";
@@ -18,10 +19,12 @@ import UserIcon from "../components/UserIcon";
 import Tagline from "../components/Tagline";
 import BeneficiaryPopup from "../components/BeneficiaryPopup";
 import GlobalStyles from "../../GlobalStyles";
+import colors from "../config/colors";
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const { userID, customerDetails, accountID } = useContext(AuthContext);
@@ -107,22 +110,29 @@ const SendMoney = ({ navigation }) => {
   }
 
   const handleDelete = async (id) => {
-    console.log(id.groupId, "this is a delete");
-
-    let apiCall = await apiBeneficiaries.DeleteGroupBenificiary(id.groupId);
-    loadData();
-    console.log(apiCall, "this is a api call for delete");
+    Alert.alert("Are you sure you want to delete group?", null, [
+      { text: "Cancel", onPress: () => console.log("Cancelled") },
+      {
+        text: "Delete",
+        onPress: async () => {
+          await apiBeneficiaries.DeleteGroupBenificiary(id.groupId);
+          loadData();
+        },
+      },
+    ]);
   };
 
   const handleBeneficiaryDelete = async (beneficaryid) => {
-    console.log(beneficaryid.id, "this is a delete for single");
-
-    let apiCall = await apiBeneficiaries.DeleteBenificiary(
-      userID,
-      beneficaryid.id
-    );
-    loadData();
-    console.log(apiCall, "this is a api call for delete");
+    Alert.alert("Are you sure you want to delete payee?", null, [
+      { text: "Cancel", onPress: () => console.log("Cancelled") },
+      {
+        text: "Delete",
+        onPress: async () => {
+          await apiBeneficiaries.DeleteBenificiary(userID, beneficaryid.id);
+          loadData();
+        },
+      },
+    ]);
   };
 
   return (
@@ -134,7 +144,11 @@ const SendMoney = ({ navigation }) => {
             onPress={() => navigation.navigate("AddBeneficiary")}
           >
             <View style={styles.buttonPayNew}>
-              <Ionicons name="add-circle-outline" size={20} color={GlobalStyles.Color.white} />
+              <Ionicons
+                name="add-circle-outline"
+                size={20}
+                color={GlobalStyles.Color.white}
+              />
               <Text style={styles.buttonPayNewText}>Pay someone new</Text>
             </View>
           </TouchableOpacity>
@@ -166,7 +180,11 @@ const SendMoney = ({ navigation }) => {
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
             <View style={styles.buttonPaySelf}>
-              <Feather name="send" size={20} color={GlobalStyles.Color.lightBlack} />
+              <Feather
+                name="send"
+                size={20}
+                color={GlobalStyles.Color.lightBlack}
+              />
               <Text style={styles.buttonPaySelfText}>To self account</Text>
             </View>
           </TouchableOpacity>
@@ -175,7 +193,12 @@ const SendMoney = ({ navigation }) => {
       <View style={styles.payContainer}>
         <View style={styles.payHeaderContainer}>
           <Text style={styles.payMainHeading}>Pay an existing payee</Text>
-          <Text style={styles.paySideHeading}>Manage Beneficiary</Text>
+          <Text
+            onPress={() => setShowDelete(!showDelete)}
+            style={styles.paySideHeading}
+          >
+            Manage Beneficiary
+          </Text>
         </View>
         <FlatList
           data={beneficaryList}
@@ -191,17 +214,28 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.name}
                   onPress={() => sendPayeeTrigger(beneficary.item)}
                 />
-                <Text
-                  style={{
-                    position: "absolute",
-                    right: 16,
-                    fontSize: 14,
-                    top: -5,
-                  }}
-                  onPress={() => handleBeneficiaryDelete(beneficary.item)}
-                >
-                  X
-                </Text>
+                {showDelete && (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 15,
+                      height: 15,
+                      borderRadius: 7.5,
+                      backgroundColor: colors.danger,
+                      position: "absolute",
+                      zIndex: 5,
+                      top: 0,
+                      right: 15,
+                    }}
+                  >
+                    <AntDesign
+                      name="minus"
+                      size={10}
+                      onPress={() => handleBeneficiaryDelete(beneficary.item)}
+                    />
+                  </View>
+                )}
               </View>
             );
           }}
@@ -244,17 +278,28 @@ const SendMoney = ({ navigation }) => {
                   name={beneficary?.item.groupName}
                   onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                 />
-                <Text
-                  style={{
-                    position: "absolute",
-                    right: 16,
-                    fontSize: 14,
-                    top: -5,
-                  }}
-                  onPress={() => handleDelete(beneficary.item)}
-                >
-                  X
-                </Text>
+                {showDelete && (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 15,
+                      height: 15,
+                      borderRadius: 7.5,
+                      backgroundColor: colors.danger,
+                      position: "absolute",
+                      zIndex: 5,
+                      top: 0,
+                      right: 15,
+                    }}
+                  >
+                    <AntDesign
+                      name="minus"
+                      size={10}
+                      onPress={() => handleDelete(beneficary.item)}
+                    />
+                  </View>
+                )}
               </View>
             );
           }}

@@ -21,6 +21,8 @@ import {
   Text,
 } from "react-native";
 
+
+
 import GlobalStyles from "../../GlobalStyles";
 import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -45,6 +47,7 @@ import {
 import colors from "../config/colors";
 import Tagline from "../components/Tagline";
 import * as Device from "expo-device";
+import { BlurView } from "expo-blur/build";
 const Analytics = ({ navigation }) => {
   const { device } = useDevice();
   const [isLoading, setIsLoading] = useState(false);
@@ -191,7 +194,10 @@ const Analytics = ({ navigation }) => {
         </View>
       </ImageBackground>
       <View style={styles.mainContainer}>
-        <View style={styles.innerContainer}>
+        <BlurView
+         tint="light"
+         intensity={60}
+        style={styles.innerContainer}>
           {graphData && <Bazier graphData={graphData} />}
           {graphData && (
             <View
@@ -282,6 +288,25 @@ const Analytics = ({ navigation }) => {
                 width={device == 1 ? 300 : 200}
                 height={device == 1 ? 320 : 300}
               />
+
+             <BlurView 
+             tint="light"
+             intensity={100}
+              style={{
+                marginTop: -20,
+                marginBottom: '10%',
+                width: 30,
+                height: 10,
+                backgroundColor: "rgba(0,0,0,0.5)",
+                borderRadius: 15,
+                transform: [
+                  {scaleX: 3}
+                ]
+
+              }}
+              overflow='hidden'
+             />
+
 
               <View
                 style={{
@@ -580,7 +605,7 @@ const Analytics = ({ navigation }) => {
             ))}
           </View>
           <View style={{ height: 20, width: "100%", position: "relative" }} />
-        </View>
+        </BlurView>
       </View>
       <View
         style={{
@@ -749,8 +774,11 @@ const styles = StyleSheet.create({
     flex: GlobalStyles.DivContainer.flex,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    borderColor: 'white',
+    borderWidth: 0.5,
     marginTop: -70,
     zIndex: 10,
+    overflow: 'hidden'
   },
   titleTextRow: {
     flexDirection: "row",
