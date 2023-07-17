@@ -144,33 +144,33 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   const insets = useSafeAreaInsets();
 
   return (
-    
-      <BlurView
-        tint="light"
-        intensity={60}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 70 + insets.bottom,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "rgba(255, 255, 255, 0.2)",
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
-          overflow: "hidden",
-        }}
-      >
+
+    <BlurView
+      tint="light"
+      intensity={60}
+      style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 70 + insets.bottom,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(255, 255, 255, 0.2)",
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        overflow: "hidden",
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
 
         const isFocused = state.index === index;
 
@@ -204,26 +204,26 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         let imageSource;
         switch (index) {
           case 0:
-            imageSource = <C02 width={30} height={30}/> 
+            imageSource = <C02 width={30} height={30} />
             break;
           case 1:
-            imageSource = <Home width={30} height={30}/> 
+            imageSource = <Home width={30} height={30} />
             break;
           case 2:
-            imageSource = <Analysis width={30} height={30}/> 
+            imageSource = <Analysis width={30} height={30} />
             break;
           case 3:
-            imageSource = <Send width={50} height={50}/> 
+            imageSource = <Send width={50} height={50} />
             break;
           case 4:
-            imageSource = <C02 width={40} height={40}/> 
+            imageSource = <C02 width={40} height={40} />
             break;
           case 5:
-            imageSource = <Profile width={30} height={30}/> 
+            imageSource = <Profile width={30} height={30} />
             break;
           // Add cases for other tabs
           default:
-            imageSource = <C02 width={30} height={30}/>  // Set a default image source if needed
+            imageSource = <C02 width={30} height={30} />  // Set a default image source if needed
             break;
         }
 
@@ -246,7 +246,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                     marginLeft: index !== 3 ? "33%" : "20%",
                   }}
                 >
-                  
+
                   {imageSource}
                   {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
                     name={imageSource}
@@ -295,7 +295,7 @@ const StackNavigator = () => {
           </View>
         ),
       }}
-      
+
     >
       <Stack.Screen
         name="Account"
@@ -452,7 +452,7 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="sendmoneysuccess"
         component={SendMoneySuccessPage}
         options={{
@@ -481,7 +481,7 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
             fontFamily: 'Montserrat',
-            fontSize:20,
+            fontSize: 20,
           },
           headerBackImage: () => (
             <View
@@ -533,6 +533,28 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
+
+      <Stack.Screen
+        name="Marketplace"
+        component={gestureHandlerRootHOC(Marketplace)}
+        options={{
+          title: "Marketplace",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View
+              style={styles.iconDropDownContainer}
+            >
+              <MaterialCommunityIcons name="arrow-down" size={30} />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+        }}
+      />
+
+
 
       <Stack.Screen
         name="DirectDebitForm"
@@ -811,7 +833,7 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
             fontFamily: 'Montserrat',
-            fontSize:20,
+            fontSize: 20,
           },
           headerBackImage: () => (
             <View
@@ -834,7 +856,7 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
             fontFamily: 'Montserrat',
-            fontSize:20,
+            fontSize: 20,
           },
           headerBackImage: () => (
             <View
@@ -858,7 +880,7 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
             fontFamily: 'Montserrat',
-            fontSize:20,
+            fontSize: 20,
           },
           headerBackImage: () => (
             <View
@@ -881,7 +903,7 @@ const StackNavigator = () => {
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
             fontFamily: 'Montserrat',
-            fontSize:20,
+            fontSize: 20,
           },
           headerBackImage: () => (
             <View
@@ -924,7 +946,7 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="viewpin"
         component={gestureHandlerRootHOC(ViewPin)}
         options={{
@@ -1219,13 +1241,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-        // listeners={({ navigation, route }) => ({
-        //   focus: () => {
+      // listeners={({ navigation, route }) => ({
+      //   focus: () => {
 
-        //     // Do something with the `navigation` object
-        //     navigation.navigate('AccountTab');
-        //   },
-        // })}
+      //     // Do something with the `navigation` object
+      //     navigation.navigate('AccountTab');
+      //   },
+      // })}
       />
     </Tab.Navigator>
   );
@@ -1240,7 +1262,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-  }, 
+  },
   headerBackImage: {
     marginLeft: "10%",
     backgroundColor: "lightgrey",

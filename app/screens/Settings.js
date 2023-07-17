@@ -435,6 +435,16 @@ const Settings = ({ navigation }) => {
             onPress={() => navigation.navigate("Devices")}
           />
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Button
+            title="Marketplace"
+            style={styles.boxShadow}
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("Marketplace")}
+          />
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.button}>
           <Button
             title="Contact us"

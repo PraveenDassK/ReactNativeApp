@@ -100,7 +100,7 @@ export default function App() {
   //Carbonyte ID CC1
   const [customerDetails, setCustomerDetails] = useState("");
 
-  const [version, setVersion] = useState("0.0.9");
+  const [version, setVersion] = useState("0.0.10");
 
   const [missingAccountSetup, setMissingAccountSetup] = useState(false);
 
