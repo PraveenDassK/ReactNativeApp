@@ -36,8 +36,8 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
         <View
           style={{
             position: "absolute",
-            right: 0,
-            bottom: -20,
+            right: -2,
+            bottom: -2,
             opacity: 0.3,
           }}
         >

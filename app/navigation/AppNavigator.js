@@ -147,7 +147,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
     <BlurView
       tint="light"
-      intensity={60}
+      
+      intensity={100}
       style={{
         position: "absolute",
         bottom: 0,
@@ -157,7 +158,9 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "rgba(255, 255, 255, 0.2)",
+        // backgroundColor: "rgba(255, 255, 255, 0.2)",
+        // backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        opacity: 0.9,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
         overflow: "hidden",
@@ -1184,6 +1187,7 @@ const AppNavigator = () => {
       tabBarPosition="bottom"
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="Dashboard"
+      
     >
       <Tab.Screen
         name="Loop1"
