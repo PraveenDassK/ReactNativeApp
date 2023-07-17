@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Pressable,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 // import moment from "moment";
 import { MaterialCommunityIcons, Ionicons } from "react-native-vector-icons";
@@ -23,7 +23,7 @@ import apiCall from "../api/api";
 import colors from "../config/colors";
 import formatCurrency from "../utility/formatCurrency";
 import AppScreen from "../components/AppScreen";
-
+import GlobalStyles from "../../GlobalStyles";
 import { TransactionContainer } from "../components/transHistory";
 import apiTransaction from "../api/apiTransaction";
 import Tagline from "../components/Tagline";
@@ -106,7 +106,7 @@ export default function MyCards({ navigation }) {
     setFilterTransactions(transactionRes);
 
     const cards = await apiCall.GetCardByAccount("686283112");
-    console.log(cards)
+    console.log(cards);
     setCardData(cards);
     //     console.log(cards);
     //     const currentCard = cards[cardIndex];
@@ -125,8 +125,8 @@ export default function MyCards({ navigation }) {
     //     console.log(cardDetails);
   };
 
-  const filterCards = (type) =>{
-    console.log(type)
+  const filterCards = (type) => {
+    console.log(type);
     const filterCardsByType = (type) => {
       return cardData.filter((card) => {
         if (type === "physical") {
@@ -138,8 +138,8 @@ export default function MyCards({ navigation }) {
         }
       });
     };
-    setFilteredCards(filterCardsByType(type))
-  }
+    setFilteredCards(filterCardsByType(type));
+  };
 
   const handleTransactionFilter = (item) => {
     if (item == "income") {
@@ -183,11 +183,15 @@ export default function MyCards({ navigation }) {
 
         <View style={styles.settingsContainer}>
           <View>
-            <Text>Current Balance</Text>
+            <Text style={styles.currentBalance}>Current Balance</Text>
             <View style={{ flexDirection: "row" }}>
               {transactions && (
                 <Text
-                  style={{ fontSize: 34, fontWeight: "900", color: "green" }}
+                  style={{
+                    fontSize: 30,
+                    fontFamily: "Montserrat",
+                    color: "green",
+                  }}
                 >
                   {formatCurrency(
                     transactions[0]?.account?.balance,
@@ -197,7 +201,14 @@ export default function MyCards({ navigation }) {
                 </Text>
               )}
             </View>
-            <Text style={{ lineHeight: 40 }}>
+            <Text
+              style={{
+                lineHeight: 40,
+                fontFamily: "Montserrat-SemiBold",
+                color: GlobalStyles.Color.black,
+                fontSize: 12,
+              }}
+            >
               Total 1220 Kg of carbon emissions produced
             </Text>
           </View>
@@ -258,21 +269,28 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
     <View
       style={{
         backgroundColor: isIncome ? "green" : "red",
-        height: 40,
-        width: 40,
-        borderRadius: 20,
+        height: 35,
+        width: 35,
+        borderRadius: 17,
       }}
     >
       <MaterialCommunityIcons
         name={isIncome ? "arrow-bottom-left" : "arrow-top-right"}
-        size={40}
+        size={35}
         color={colors.white}
       />
     </View>
 
     <View style={{ marginLeft: "5%" }}>
-      <Text>{isIncome ? "Income" : "Expenses"}</Text>
-      <Text style={{ color: isIncome ? "green" : "red", lineHeight: 18 }}>
+      <Text style={styles.incomeText}>{isIncome ? "Income" : "Expenses"}</Text>
+      <Text
+        style={{
+          color: isIncome ? "green" : "red",
+          lineHeight: 18,
+          fontFamily: "Montserrat-SemiBold",
+          fontSize:15,
+        }}
+      >
         {isIncome ? "+" : ""}
         {formatCurrency(3280, "GBP", !isIncome)}
       </Text>
@@ -335,10 +353,8 @@ const CardCarousel = ({ cards, onCardPress }) => {
           <PinModal
             title="Enter your PIN"
             success={() => {
-              setShowPinModal(false)
-
-            }
-            }
+              setShowPinModal(false);
+            }}
           />
         ) : null}
       </View>
@@ -427,13 +443,12 @@ const CardCarousel = ({ cards, onCardPress }) => {
 
 const CardBackSide = () => {
   const cardBackOBJ = {
-    "firstName": "Jack",
-    "lastName": "Huang",
-    "cardNumber": "1234123412341234",
-    "expiaryDate": "01/01",
-    "cvv": "000"
-  }
-
+    firstName: "Jack",
+    lastName: "Huang",
+    cardNumber: "1234123412341234",
+    expiaryDate: "01/01",
+    cvv: "000",
+  };
 
   return (
     <View style={styles.backCardContainer}>
@@ -484,7 +499,7 @@ const CardBackSide = () => {
       <Text style={styles.backCardText} />
       <View
         style={{
-          backgroundColor: "white",
+          backgroundColor: GlobalStyles.Color.white,
           height: 30,
           width: "80%",
         }}
@@ -501,8 +516,21 @@ const CardBackSide = () => {
 };
 const TapContainer = () => (
   <View style={styles.tapContainer}>
-    <MaterialCommunityIcons name="gesture-tap" size={18} />
-    <Text style={{ opacity: 0.5 }}>Tap the card to see card details</Text>
+    <MaterialCommunityIcons
+      name="gesture-tap"
+      size={18}
+      color={GlobalStyles.Color.darkGray}
+    />
+    <Text
+      style={{
+        // opacity: 0.5,
+        color: GlobalStyles.Color.darkGray,
+        fontFamily: "Montserrat-Medium",
+        fontSize: 12,
+      }}
+    >
+      Tap the card to see card details
+    </Text>
   </View>
 );
 
@@ -514,7 +542,9 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
     >
       <View
         style={{
-          backgroundColor: isFrozen ? "black" : colors.babyBlue,
+          backgroundColor: isFrozen
+            ? GlobalStyles.Color.black
+            : colors.babyBlue,
           height: 50,
           width: 50,
           justifyContent: "center",
@@ -526,7 +556,7 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
         {title !== "settings" ? (
           <MaterialCommunityIcons
             name={!isFrozen ? "snowflake" : "snowflake-off"}
-            color={isFrozen ? colors.babyBlue : "black"}
+            color={isFrozen ? colors.babyBlue : GlobalStyles.Color.black}
             size={30}
           />
         ) : (
@@ -534,9 +564,9 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
         )}
       </View>
       {!isFrozen ? (
-        <Text style={{ textTransform: "capitalize" }}>{title}</Text>
+        <Text style={styles.settingTitle}>{title}</Text>
       ) : (
-        <Text style={{ textTransform: "capitalize" }}>{`Un${title}`}</Text>
+        <Text style={styles.settingTitle}>{`Un${title}`}</Text>
       )}
     </TouchableOpacity>
   );
@@ -548,7 +578,7 @@ const styles = StyleSheet.create({
     height: 320,
     width: 201,
     borderRadius: 10,
-    backgroundColor: "black",
+    backgroundColor: GlobalStyles.Color.black,
     // marginLeft: "25%",
     padding: "10%",
   },
@@ -556,7 +586,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   backCardText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
   },
   backCardSmallText: {
     fontSize: 6,
@@ -625,7 +655,7 @@ const styles = StyleSheet.create({
     width: 200,
     borderRadius: 7,
     flexDirection: "row",
-    backgroundColor: "lightgrey",
+    backgroundColor: GlobalStyles.Color.lightGrey,
   },
   selectorPositioning: {
     zIndex: 1,
@@ -644,4 +674,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   settingsPositioning: { zIndex: 1, position: "absolute", top: 270, left: 15 },
+  settingTitle: {
+    textTransform: "capitalize",
+    fontFamily: "Montserrat-Medium",
+    color: GlobalStyles.Color.black,
+  },
+  currentBalance: {
+    color: GlobalStyles.Color.lightBlack,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+  },
+  incomeText: {
+    fontFamily: "Montserrat-Medium",
+    fontSize: 12,
+    color: GlobalStyles.Color.black,
+  },
 });

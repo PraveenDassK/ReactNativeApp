@@ -574,7 +574,7 @@ const styles = StyleSheet.create({
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
     fontFamily: "Helvetica",
-    color: "black",
+    color: GlobalStyles.Color.black,
   },
   description: {
     color: "grey",
@@ -628,12 +628,12 @@ const styles = StyleSheet.create({
   AppText: {
     fontWeight: "bold",
     textAlign: "center",
-    color: "black",
+    color: GlobalStyles.Color.black,
   },
   textSub: {
     fontWeight: "bold",
     textAlign: "left",
-    color: "black",
+    color: GlobalStyles.Color.black,
   },
   title: {
     fontSize: moderateScale(30),
@@ -657,7 +657,7 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(15),
     paddingVertical: verticalScale(20),
     paddingHorizontal: horizontalScale(20),
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     width: "100%",
   },
   subTitleText: {

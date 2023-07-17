@@ -30,18 +30,24 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
   return (
     <View style={styles.border}>
       <LinearGradient
-        colors={[ "#00005F","#5888F5"]}
+        colors={["#00005F", "#5888F5"]}
         style={styles.cardContainer}
       >
-        <View style={{position: "absolute", right: -40, bottom: -20, opacity: 0.3}}>
-        <Logo width={140} height={160} />
-
+        <View
+          style={{
+            position: "absolute",
+            right: 0,
+            bottom: -20,
+            opacity: 0.3,
+          }}
+        >
+          <Logo width={140} height={160} />
         </View>
         <View style={styles.accountContainer}>
           <Text style={styles.accountName}>Account</Text>
           <View style={styles.accountNumberStyle}>
             <Dropdown
-            fontFamily="Montserrat-Medium"
+              fontFamily="Montserrat-Medium"
               data={dropdownData}
               value={title}
               activeColor={GlobalStyles.Color.backgroundColor}
@@ -53,14 +59,16 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
                 handleBalance(item?.value);
               }}
               style={styles.dropdown}
-              selectedTextStyle={{ color: GlobalStyles.Color.backgroundColorOg }}
+              selectedTextStyle={{
+                color: GlobalStyles.Color.backgroundColorOg,
+              }}
               iconColor={"white"}
+              autoScroll={false}
               containerStyle={{
                 borderBottomStartRadius: 10,
                 borderBottomEndRadius: 10,
-                width: "100%"
+                width: "100%",
               }}
-            
             />
           </View>
         </View>
@@ -76,11 +84,15 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
               <Text style={styles.incometext}>Income</Text>
               {accountBalance[0]?.income ? (
                 <Text style={styles.incomeAmount}>
-                  <AntDesign name="arrowdown" size={20} />
+                  <AntDesign name="arrowup" size={20} />
                   {formatCurrency(accountBalance[0]?.income, "GBP", false)}
                 </Text>
               ) : (
-                <Text style={styles.incomeAmount}>Coming soon..</Text>
+                // <Text style={styles.incomeAmount}>Coming soon..</Text>
+                <Text style={styles.incomeAmount}>
+                  <AntDesign name="arrowup" size={20} />
+                  {formatCurrency(200, "GBP", false)}
+                </Text>
               )}
             </View>
             <View>
@@ -91,7 +103,11 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
                   {formatCurrency(accountBalance[0]?.expenses, "GBP", false)}
                 </Text>
               ) : (
-                <Text style={styles.incomeAmount}>Coming soon..</Text>
+                // <Text style={styles.incomeAmount}>Coming soon..</Text>
+                <Text style={styles.incomeAmount}>
+                <AntDesign name="arrowdown" size={20} />
+                {formatCurrency(100, "GBP", false)}
+              </Text>
               )}
             </View>
             <View>
@@ -124,7 +140,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     position: "relative",
-    
   },
   accountContainer: {
     display: "flex",
@@ -139,7 +154,7 @@ const styles = StyleSheet.create({
   accountName: {
     fontSize: 14,
     fontFamily: "Montserrat-Medium",
-    color:GlobalStyles.Color.white ,
+    color: GlobalStyles.Color.white,
     letterSpacing: 1,
   },
   dropdown: {
@@ -163,7 +178,12 @@ const styles = StyleSheet.create({
     gap: 3,
     paddingVertical: 10,
   },
-  border: {  borderColor: GlobalStyles.Color.white, borderRadius: 20, borderTopWidth: 0.5, borderLeftWidth: 0.5},
+  border: {
+    borderColor: GlobalStyles.Color.white,
+    borderRadius: 20,
+    borderTopWidth: 0.5,
+    borderLeftWidth: 0.5,
+  },
   totalTitle: {
     fontSize: 16,
     color: GlobalStyles.Color.white,
@@ -198,7 +218,7 @@ const styles = StyleSheet.create({
   sendButtonText: {
     color: GlobalStyles.Color.white,
     fontSize: 14,
-    fontFamily:"Montserrat-Medium",
+    fontFamily: "Montserrat-Medium",
   },
   buttonContainer: {
     position: "absolute",

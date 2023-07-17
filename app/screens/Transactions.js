@@ -18,7 +18,7 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import { Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import Tagline from "../components/Tagline";
 import {
   horizontalScale,
   moderateScale,
@@ -277,8 +277,7 @@ const Transactions = ({ navigation, route }) => {
   }
 
   return (
- 
-      <AppScreen>
+    <AppScreen>
       <View style={styles.page}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -290,6 +289,9 @@ const Transactions = ({ navigation, route }) => {
                   title="Unhide Transactions"
                 />
               )}
+              <View style={{ marginTop: "10%" }}>
+                <Tagline />
+              </View>
             </View>
           }
           refreshControl={
@@ -350,8 +352,8 @@ const Transactions = ({ navigation, route }) => {
         />
 
         {modalVisible ? modal() : null}
-      </View></AppScreen>
-    
+      </View>
+    </AppScreen>
   );
 };
 

@@ -664,7 +664,7 @@ const StackNavigator = () => {
             <View
               style={styles.iconDropDownContainer}
             >
-              <MaterialCommunityIcons name="arrow-down" size={30} />
+              <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
           headerBackTitleVisible: false,

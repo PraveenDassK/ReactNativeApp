@@ -20,7 +20,7 @@ import Icon from "../components/Icon";
 import { Entypo } from '@expo/vector-icons';
 import * as Clipboard from "expo-clipboard";
 import apiTransaction from "../api/apiPaymentLink";
-
+import GlobalStyles from "../../GlobalStyles";
 import Tagline from "../components/Tagline";
 import { Dropdown } from "react-native-element-dropdown";
 const LINK = "https://www.google.com";
@@ -139,7 +139,7 @@ const PaymentLink = () => {
 
           <View style={styles.linkContainer}>
             <Entypo name="link" size={20} color="black" />
-            <Text>{link?.slice(0, 100)}...</Text>
+            <Text style={{color:GlobalStyles.Color.black}}>{link?.slice(0, 100)}...</Text>
           </View>
           <TouchableOpacity
             style={styles.paymentContainer}
@@ -149,7 +149,9 @@ const PaymentLink = () => {
             <Icon name="content-copy" size={45} />
           </TouchableOpacity>
         </View>
+        <View style={{position:"absolute",bottom:0,left:"15%"}}>
         <Tagline />
+        </View>
       </View>
     </ImageBackground>
   );
@@ -158,15 +160,14 @@ const PaymentLink = () => {
 const styles = StyleSheet.create({
   balance: {
     fontSize: 13,
-    color: "#212529",
-    fontFamily: "Montserrat",
-    fontWeight: "semibold",
+    color: GlobalStyles.Color.black,
+    fontFamily: "Montserrat-SemiBold",
   },
   balanceContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: GlobalStyles.Color.white,
     padding: 20,
     // marginHorizontal:"10%"
     borderRadius: 20,
@@ -193,9 +194,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   paymentLink: {
-    color: "#FFFFFF",
+    color:  GlobalStyles.Color.white,
     fontSize: 17,
     marginRight: 10,
+    fontFamily:"Montserrat-Medium"
   },
   linkContainer: {
     borderColor: "#F7F7F7",
@@ -207,6 +209,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
+    borderRadius: 10,
   },
   dropdown: {
     borderRadius: 10,

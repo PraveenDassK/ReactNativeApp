@@ -62,22 +62,25 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
         data={carbnonSpendData}
         children={
           <View>
-            {/* <AppText
+            <AppText
             style={{
-              fontSize: 20,
-              fontWeight: "700",
+              fontSize: 25,
+              fontFamily: "Montserrat-Bold",
               width: 250,
               textAlign: "center",
+              color:GlobalStyles.Color.black,
             }}
             >
               Total
-            </AppText> */}
+            </AppText>
             <AppText
               style={{
                 fontSize: 50,
                 width: 250,
                 fontFamily: "Montserrat-Bold",
                 textAlign: "center",
+                color:GlobalStyles.Color.black,
+
               }}
             >
               {totalFootprint}
@@ -88,6 +91,8 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
                 fontFamily: "Montserrat-Bold",
                 width: 250,
                 textAlign: "center",
+                color:GlobalStyles.Color.black,
+
               }}
             >
               kg CO{"\u2082"}
@@ -95,7 +100,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
           </View>
         }
       />
-      <View>
+      <View >
         {carbnonSpendData.map((eachValue, i) => {
           let value = eachValue?.y / sumofValues;
           console.log(value, "this is value");
@@ -170,7 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   headingText: {
-    color: "#212529",
+    color: GlobalStyles.Color.gray_1600,
     fontSize: 16,
     fontFamily: "Montserrat-SemiBold",
     marginBottom: 3,

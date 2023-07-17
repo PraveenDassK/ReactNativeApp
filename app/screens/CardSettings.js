@@ -214,11 +214,11 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "30%",
+                height: 30,
                 resizeMode: "contain",
-                flex: 1,
+                // flex: 1,
                 alignSelf: "center",
-                marginLeft: "5%",
+                // marginLeft: "5%",
               }}
               source={require("../assets/globe.png")}
             />

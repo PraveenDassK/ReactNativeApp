@@ -82,34 +82,35 @@ const Notification = ({ navigation }) =>
       <ImageBackground
         resizeMode="contain"
         source={require("../assets/backgrounds/replaceCard.jpg")}
-        imageStyle={
-          {
-            top: "50%", // Whatever offset you want from the bottom
-          }
-        }
-        style={{ position:"relative",flex:1}}
+        imageStyle={{
+          top: "50%", // Whatever offset you want from the bottom
+        }}
+        style={{ position: "relative", flex: 1 }}
       >
-        <View style={{ marginBottom:0, position: "relative" }}>
+        <View style={{ marginBottom: 0, position: "relative" }}>
           <View style={styles.replaceCard}>
             <FlatList
               data={arrayValue}
               renderItem={({ item }) => <Item title={item} />}
               keyExtractor={(item, index) => index}
-
             />
           </View>
 
           {!viewMore && (
             <View>
               <Text
-                style={{ textAlign: "center", color: "blue" }}
+                style={{
+                  textAlign: "center",
+                  color: GlobalStyles.Color.skyblue,
+                  fontFamily: "Montserrat",
+                }}
                 onPress={() => setViewMore(true)}
               >
                 View more
               </Text>
             </View>
-          )} 
-            
+          )}
+
           {/* <View
             style={{
               position: "absolute",
@@ -132,7 +133,7 @@ const Notification = ({ navigation }) =>
 
 const styles = StyleSheet.create({
   topContainer: {
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.Color.white,
     borderColor: "gray",
     padding: 10,
     display: "flex",
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
 
   replaceCard: {
     width: "100%",
-    backgroundColor:"transparent",
+    backgroundColor: "transparent",
     zIndex: 1,
   },
   container: {
@@ -156,16 +157,14 @@ const styles = StyleSheet.create({
     // zIndex: -0.5,
   },
   bottomText: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 14,
-    fontFamily: "Montserrat",
-    fontWeight: "regular",
+    fontFamily: "Montserrat-Regular",
   },
   bottomTextBold: {
-    color: "white",
+    color: GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold",
   },
   item: {
     backgroundColor: "transparent",
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   title: {
-    color: "#000000",
+    color: GlobalStyles.Color.black,
     fontFamily: "Montserrat",
     fontSize: 16,
   },

@@ -215,7 +215,6 @@ const Settings = ({ navigation }) => {
             style={[
               styles.subText,
               styles.customTitle,
-              { fontWeight: "normal" },
             ]}
           >
             Account Details
@@ -512,8 +511,8 @@ const styles = StyleSheet.create({
     flex: GlobalStyles.DivContainer.flex,
   },
   customTitle: {
-    fontWeight: Platform.OS === "android" ? "normal" : "700",
-    fontFamily: "Helvetica",
+    // fontWeight: Platform.OS === "android" ? "normal" : "700",
+    fontFamily: "Montserrat",
     color: "black",
   },
   titleTextRow: {
@@ -524,12 +523,12 @@ const styles = StyleSheet.create({
 
   titleText: {
     fontSize: GlobalStyles.Title.fontSize,
-    fontWeight: GlobalStyles.Title.fontWeight,
+    // fontWeight: GlobalStyles.Title.fontWeight,
   },
 
   subText: {
     fontSize: GlobalStyles.RowText.fontSize,
-    fontWeight: GlobalStyles.RowText.fontWeight,
+    // fontWeight: GlobalStyles.RowText.fontWeight,
   },
 
   subTextRow: {
