@@ -289,6 +289,25 @@ const Analytics = ({ navigation }) => {
                 height={device == 1 ? 320 : 300}
               />
 
+             <BlurView 
+             tint="light"
+             intensity={100}
+              style={{
+                marginTop: -20,
+                marginBottom: '10%',
+                width: 30,
+                height: 10,
+                backgroundColor: "rgba(0,0,0,0.5)",
+                borderRadius: 15,
+                transform: [
+                  {scaleX: 3}
+                ]
+
+              }}
+              overflow='hidden'
+             />
+
+
               <View
                 style={{
                   position: "absolute",
