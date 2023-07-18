@@ -155,7 +155,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
   return (
     <BlurView
       tint="light"
-      intensity={100}
+      intensity={Platform.OS === "ios" ? 70 : 135}
       style={{
         position: "absolute",
         bottom: 0,
@@ -175,7 +175,15 @@ function MyTabBar({ state, descriptors, navigation, position }) {
     >
       <View
         style={{
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          ...Platform.select({
+            ios: {
+              backgroundColor: 'transparent',
+            },
+            android: {
+              backgroundColor: 'rgba(155, 155, 155, 0.3)',
+            },
+          }),
+
           flex: 1,
           height: 70 + insets.bottom,
 
