@@ -104,13 +104,11 @@ import Teams from "../screens/Teams";
 import TeamsUser from "../screens/TeamsUser";
 import TeamsUserAdd from "../screens/TeamsUserAdd";
 
-import C02 from '../assets/Dashboard/CO2.svg'
-import Profile from '../assets/Dashboard/Profile.svg'
-import Send from '../assets/Dashboard/SendMoney.svg'
-import Home from '../assets/Dashboard/home.svg'
-import Analysis from '../assets/Dashboard/Analysis.svg'
-
-
+import C02 from "../assets/Dashboard/CO2.svg";
+import Profile from "../assets/Dashboard/Profile.svg";
+import Send from "../assets/Dashboard/SendMoney.svg";
+import Home from "../assets/Dashboard/home.svg";
+import Analysis from "../assets/Dashboard/Analysis.svg";
 
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
@@ -124,7 +122,7 @@ import {
   Platform,
   Text,
   Image,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
@@ -137,17 +135,26 @@ import MoveMoneyAmount from "../screens/MoveMoneyAmount";
 import MoveMoneyPin from "../screens/MoveMoneyPin";
 import MoveMoneySuccess from "../screens/MoveMoneySuccess";
 import SendMoneySuccessPage from "../screens/SendMoneySucessPage";
-
+import {
+  BackdropBlur,
+  Blur,
+  BlurMask,
+  Canvas,
+  Circle,
+  Fill,
+  Group,
+  Paint,
+  rect,
+  Rect,
+} from "@shopify/react-native-skia";
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTab, setSelectedTab] = useState("");
 
   const insets = useSafeAreaInsets();
 
   return (
-
     <BlurView
       tint="light"
-      
       intensity={100}
       style={{
         position: "absolute",
@@ -166,102 +173,119 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         overflow: "hidden",
       }}
     >
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
+      <View
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          flex: 1,
+          height: 70 + insets.bottom,
+
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          // backgroundColor: "rgba(255, 255, 255, 0.2)",
+          // backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          opacity: 0.9,
+          borderTopRightRadius: 20,
+          borderTopLeftRadius: 20,
+          overflow: "hidden",
+        }}
+      >
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
               ? options.title
               : route.name;
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        const onPress = () => {
-          setSelectedTab(route);
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-            canPreventDefault: true,
+          const onPress = () => {
+            setSelectedTab(route);
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate({ name: route.name, merge: true });
+            }
+          };
+
+          const onLongPress = () => {
+            navigation.emit({
+              type: "tabLongPress",
+              target: route.key,
+            });
+          };
+
+          const inputRange = state.routes.map((_, i) => i);
+          const opacity = position.interpolate({
+            inputRange,
+            outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
           });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate({ name: route.name, merge: true });
+          // Define the image source for each tab
+          let imageSource;
+          switch (index) {
+            case 0:
+              imageSource = <C02 width={30} height={30} />;
+              break;
+            case 1:
+              imageSource = <Home width={30} height={30} />;
+              break;
+            case 2:
+              imageSource = <Analysis width={30} height={30} />;
+              break;
+            case 3:
+              imageSource = <Send width={50} height={50} />;
+              break;
+            case 4:
+              imageSource = <C02 width={40} height={40} />;
+              break;
+            case 5:
+              imageSource = <Profile width={30} height={30} />;
+              break;
+            // Add cases for other tabs
+            default:
+              imageSource = <C02 width={30} height={30} />; // Set a default image source if needed
+              break;
           }
-        };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key,
-          });
-        };
-
-        const inputRange = state.routes.map((_, i) => i);
-        const opacity = position.interpolate({
-          inputRange,
-          outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
-        });
-
-        // Define the image source for each tab
-        let imageSource;
-        switch (index) {
-          case 0:
-            imageSource = <C02 width={30} height={30} />
-            break;
-          case 1:
-            imageSource = <Home width={30} height={30} />
-            break;
-          case 2:
-            imageSource = <Analysis width={30} height={30} />
-            break;
-          case 3:
-            imageSource = <Send width={50} height={50} />
-            break;
-          case 4:
-            imageSource = <C02 width={40} height={40} />
-            break;
-          case 5:
-            imageSource = <Profile width={30} height={30} />
-            break;
-          // Add cases for other tabs
-          default:
-            imageSource = <C02 width={30} height={30} />  // Set a default image source if needed
-            break;
-        }
-
-        return (
-          <React.Fragment key={route.name.toString()}>
-            {index === 6 || index === 0 ? null : (
-              <TouchableOpacity
-                key={route.name.toString()}
-                accessibilityRole="button"
-                accessibilityState={isFocused ? { selected: true } : {}}
-                accessibilityLabel={options.tabBarAccessibilityLabel}
-                testID={options.tabBarTestID}
-                onPress={onPress}
-                onLongPress={onLongPress}
-                style={{ flex: 1 }}
-              >
-                <Animated.View
-                  style={{
-                    paddingVertical: 0,
-                    marginLeft: index !== 3 ? "33%" : "20%",
-                  }}
+          return (
+            <React.Fragment key={route.name.toString()}>
+              {index === 6 || index === 0 ? null : (
+                <TouchableOpacity
+                  key={route.name.toString()}
+                  accessibilityRole="button"
+                  accessibilityState={isFocused ? { selected: true } : {}}
+                  accessibilityLabel={options.tabBarAccessibilityLabel}
+                  testID={options.tabBarTestID}
+                  onPress={onPress}
+                  onLongPress={onLongPress}
+                  style={{ flex: 1 }}
                 >
-
-                  {imageSource}
-                  {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
+                  <Animated.View
+                    style={{
+                      paddingVertical: 0,
+                      marginLeft: index !== 3 ? "33%" : "20%",
+                    }}
+                  >
+                    {imageSource}
+                    {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
                     name={imageSource}
                     size={40}
                     color={isFocused ? colors.blue : colors.black}
                   />: <C02 width={40} height={40}/> } */}
-                </Animated.View>
-              </TouchableOpacity>
-            )}
-          </React.Fragment>
-        );
-      })}
+                  </Animated.View>
+                </TouchableOpacity>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </View>
     </BlurView>
   );
 }
@@ -298,7 +322,6 @@ const StackNavigator = () => {
           </View>
         ),
       }}
-
     >
       <Stack.Screen
         name="Account"
@@ -326,9 +349,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.headerBackImage}
-            >
+            <View style={styles.headerBackImage}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -346,9 +367,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -366,9 +385,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -386,9 +403,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -406,9 +421,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -426,9 +439,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -445,9 +456,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -464,9 +473,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -483,13 +490,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
-            fontFamily: 'Montserrat',
+            fontFamily: "Montserrat",
             fontSize: 20,
           },
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -506,9 +511,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -526,9 +529,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -546,9 +547,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -556,8 +555,6 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
-
-
 
       <Stack.Screen
         name="DirectDebitForm"
@@ -568,9 +565,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -588,9 +583,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -608,9 +601,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -627,9 +618,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -646,9 +635,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -666,9 +653,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -686,9 +671,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -706,9 +689,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -751,9 +732,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -773,9 +752,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -835,13 +812,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
-            fontFamily: 'Montserrat',
+            fontFamily: "Montserrat",
             fontSize: 20,
           },
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -858,13 +833,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
-            fontFamily: 'Montserrat',
+            fontFamily: "Montserrat",
             fontSize: 20,
           },
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -882,13 +855,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
-            fontFamily: 'Montserrat',
+            fontFamily: "Montserrat",
             fontSize: 20,
           },
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -905,13 +876,11 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerTitleStyle: {
-            fontFamily: 'Montserrat',
+            fontFamily: "Montserrat",
             fontSize: 20,
           },
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
@@ -930,9 +899,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -1150,9 +1117,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View
-              style={styles.iconDropDownContainer}
-            >
+            <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
             </View>
           ),
@@ -1187,7 +1152,6 @@ const AppNavigator = () => {
       tabBarPosition="bottom"
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="Dashboard"
-      
     >
       <Tab.Screen
         name="Loop1"
@@ -1245,13 +1209,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-      // listeners={({ navigation, route }) => ({
-      //   focus: () => {
+        // listeners={({ navigation, route }) => ({
+        //   focus: () => {
 
-      //     // Do something with the `navigation` object
-      //     navigation.navigate('AccountTab');
-      //   },
-      // })}
+        //     // Do something with the `navigation` object
+        //     navigation.navigate('AccountTab');
+        //   },
+        // })}
       />
     </Tab.Navigator>
   );
@@ -1275,7 +1239,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-  }
-})
+  },
+});
 
 export default StackNavigator;
