@@ -28,6 +28,7 @@ import { TransactionContainer } from "../components/transHistory";
 import apiTransaction from "../api/apiTransaction";
 import Tagline from "../components/Tagline";
 import PinModal from "../components/PinModal";
+import { AntDesign } from '@expo/vector-icons'; 
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -177,6 +178,7 @@ export default function MyCards({ navigation }) {
         <CardCarousel
           cards={filteredCards}
           onCardPress={() => console.log("pressed")}
+          onPress={()=>navigation.navigate("AddNewCard")}
         />
 
         <TapContainer />
@@ -288,7 +290,7 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
           color: isIncome ? "green" : "red",
           lineHeight: 18,
           fontFamily: "Montserrat-SemiBold",
-          fontSize:15,
+          fontSize: 15,
         }}
       >
         {isIncome ? "+" : ""}
@@ -339,7 +341,8 @@ const CardSelector = ({ onCardSelect }) => {
   );
 };
 
-const CardCarousel = ({ cards, onCardPress }) => {
+const CardCarousel = ({ cards, onCardPress,onPress }) => {
+  console.log(cards, "this is card");
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
@@ -437,6 +440,25 @@ const CardCarousel = ({ cards, onCardPress }) => {
           </TouchableOpacity>
         );
       })}
+      <TouchableOpacity
+        style={{
+          width: ITEM_WIDTH + 30,
+          height: ITEM_HEIGHT,
+          marginLeft: OFFSET + 35,
+          marginRight: OFFSET -1,
+          borderColor:GlobalStyles.Color.black,
+          borderStyle:"dashed",
+          borderWidth:1,
+          display:"flex",
+          alignItems:"center",
+          justifyContent:"center",
+          
+        }}
+        onPress={onPress}
+      >
+        <AntDesign name="plus" size={44} color="black" />
+        <Text style={{color:GlobalStyles.Color.black,fontSize:20,fontFamily:"Montserrat"}}>Add New Card</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

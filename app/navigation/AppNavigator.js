@@ -12,7 +12,7 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
+import AddNewCard from "../screens/AddNewCard";
 import AccountMain from "../screens/AccountMain";
 import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
@@ -931,6 +931,24 @@ const StackNavigator = () => {
           headerBackImage: () => (
             <View style={styles.iconDropDownContainer}>
               <MaterialCommunityIcons name="arrow-down" size={30} />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+        }}
+      />
+        <Stack.Screen
+        name="AddNewCard"
+        component={gestureHandlerRootHOC(AddNewCard)}
+        options={{
+          title: "New Card",
+          presentation: "modal",
+          headerShown: true,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View style={styles.iconDropDownContainer}>
+              <MaterialCommunityIcons name="arrow-left" size={30} />
             </View>
           ),
           headerBackTitleVisible: false,

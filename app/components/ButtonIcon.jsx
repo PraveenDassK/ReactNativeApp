@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import GlobalStyles from "../../GlobalStyles";
+import { FontAwesome } from '@expo/vector-icons'; 
+
 const ButtonIcon = ({
   name = "Default",
   size = 50,
@@ -15,7 +17,14 @@ const ButtonIcon = ({
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.container, { width: size, height: size }]}>
         <View style={styles.icon} backgroundColor={colour}>
-          <MaterialCommunityIcons name={image} size={30} color={GlobalStyles.Color.lightBlack}/>
+          {/* <MaterialCommunityIcons name={image} size={30} color={GlobalStyles.Color.lightBlack}/> */}
+          { name === "Send money" ? (
+           <FontAwesome name={image} size={24} color="black" />
+
+          ):(
+            <MaterialCommunityIcons name={image} size={30} color={GlobalStyles.Color.lightBlack}/>
+
+          )}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.name}>{name}</Text>
