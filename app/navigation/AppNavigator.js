@@ -35,6 +35,7 @@ import SendMoney from "../screens/SendMoney";
 import AddBeneficiary from "../screens/AddBeneficiary";
 import AddBeneficiaryContact from "../screens/AddBeneficiaryContact";
 import AddBeneficiaryRefrence from "../screens/AddBeneficiaryRefrence";
+import AddBeneficiarySuccess  from "../screens/AddBeneficiarySuccess"
 import BankTransferAmount from "../screens/BankTransferAmount";
 import GroupBeneficiaryMoney from "../screens/GroupSendMoney";
 //Generic
@@ -813,6 +814,27 @@ const StackNavigator = () => {
       <Stack.Screen
         name="AddBeneficiary"
         component={gestureHandlerRootHOC(AddBeneficiary)}
+        options={{
+          title: "Add new beneficiary",
+          presentation: "modal",
+          headerShown: true,
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerTitleStyle: {
+            fontFamily: "Montserrat",
+            fontSize: 20,
+          },
+          headerBackImage: () => (
+            <View style={styles.iconDropDownContainer}>
+              <MaterialCommunityIcons name="arrow-left" size={30} />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="AddBeneficiarySuccess"
+        component={gestureHandlerRootHOC(AddBeneficiarySuccess)}
         options={{
           title: "Add new beneficiary",
           presentation: "modal",

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   Platform,
+  ActivityIndicator,
   TouchableWithoutFeedback,
   Keyboard,
   Image,
@@ -29,9 +30,9 @@ import StepProgress from "../components/SteeperCounter";
 import PinModal from "../components/PinModal";
 
 const validationSchema = Yup.object().shape({
-  iban: Yup.string(),
+  iban: Yup.string().required("IBAN is required").matches(/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/, "Invalid IBAN format"),
 
-  bic: Yup.string(),
+  bic: Yup.string().required("BIC is required").matches(/^[A-Za-z]{6}[A-Za-z0-9]{2}([A-Za-z0-9]{3})?$/, "Invalid BIC format"),
 
   currency: Yup.string().required("Currency type is required"),
 
@@ -70,9 +71,10 @@ const AddBeneficiary = ({ navigation, route }) => {
   const [selectedCard, setSelectedCard] = useState();
   const [currencyError, setCurrencyError] = useState("");
   const [showPinModal, setShowPinModal] = useState(false);
-
+  let requestObj = route.params;
+  console.log(authContext.userID);
   const handleSubmit = async ({ iban, bic, currency, refrence }) => {
-    let requestObj = route.params;
+    console.log()
     if (!selectedCard) {
       setCurrencyError("Need to Select Currency");
       return;
@@ -82,7 +84,7 @@ const AddBeneficiary = ({ navigation, route }) => {
     requestObj.destinationIdentifier.iban = iban;
     requestObj.destinationIdentifier.bic = bic;
     requestObj.destinationIdentifier.currency = selectedCard;
-    requestObj.externalRefrence = refrence;
+    requestObj.externalReference = refrence;
     console.log(requestObj);
 
     const checkRequestObj = {
@@ -95,34 +97,31 @@ const AddBeneficiary = ({ navigation, route }) => {
     };
     setShowPinModal(true);
     //API call
-    if (!showPinModal) {
-      const checkCall = await apiBeneficiaries.checkBeneficary(
-        authContext.userId,
-        checkRequestObj
-      );
-      console.log(checkCall);
-      if (checkCall.result.code == "MATCHED") {
-      }
+    // if (!showPinModal) {
+    //   const checkCall = await apiBeneficiaries.checkBeneficary(
+    //     authContext.userId,
+    //     requestObj
+    //   );
+    //   console.log(checkCall);
+    //   if (checkCall.result.code == "MATCHED") {
+    //   }
 
-      const beneficaryCall = await apiBeneficiaries.AddBeneficiary(
-        authContext.userID,
-        requestObj
-      );
-    }
-    console.log(beneficaryCall);
-    console.log(beneficaryCall.data.details);
-    //If the payee is a duplicate don't add them
-    if (
-      beneficaryCall.data.resultMessage ==
-      '[{"field":"customer","code":"DUPLICATE","message":"Beneficiary already exists for Customer"}]'
-    ) {
-      alert("You already have this payee");
-      return;
-    }
-
-    // navigation.navigate("Account");
+    //   const beneficaryCall = await apiBeneficiaries.AddBeneficiary(
+    //     authContext.userID,
+    //     requestObj
+    //   );
+    // }
+    // console.log(beneficaryCall);
+    // console.log(beneficaryCall.data.details);
+    // //If the payee is a duplicate don't add them
+    // if (
+    //   beneficaryCall.data.resultMessage ==
+    //   '[{"field":"customer","code":"DUPLICATE","message":"Beneficiary already exists for Customer"}]'
+    // ) {
+    //   alert("You already have this payee");
+    //   return;
+    // }
   };
-  console.log(selectedCard, "thsios is selected");
   if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -130,6 +129,49 @@ const AddBeneficiary = ({ navigation, route }) => {
       </View>
     );
   }
+  const handleSuccess = async () => {
+    setShowPinModal(false);
+    setIsLoading(true);
+    console.log(requestObj, "This is from api after pin");
+    const checkCall = await apiBeneficiaries.checkBeneficary(
+      authContext.userId,
+      requestObj
+    );
+    console.log(checkCall, "this is call");
+    // if (checkCall.result.code == "MATCHED") {
+    // }
+
+    const beneficaryCall = await apiBeneficiaries.AddBeneficiary(
+      authContext.userID,
+      requestObj
+    );
+
+    console.log(beneficaryCall, "this ass call");
+    console.log(beneficaryCall.data, "Final data");
+    //If the payee is a duplicate don't add them
+    if (
+      beneficaryCall.data.resultMessage ==
+      '[{"field":"customer","code":"DUPLICATE","message":"Beneficiary already exists for Customer"}]'
+    ) {
+      setIsLoading(false);
+
+      alert("You already have this payee");
+      return navigation.navigate("SendMoney");
+    }
+    if (
+      beneficaryCall.data.status == 200
+    ) {
+      setIsLoading(false);
+
+      navigation.navigate("AddBeneficiarySuccess");
+      
+    } else {
+      setIsLoading(false);
+
+      alert(beneficaryCall.data.resultMessage);
+      return navigation.navigate("AddBeneficiaryRefrence");
+    }
+  };
   if (showPinModal) {
     return (
       <View style={styles.mainContainer}>
@@ -137,10 +179,7 @@ const AddBeneficiary = ({ navigation, route }) => {
         amount={10}
       /> */}
         {showPinModal ? (
-          <PinModal
-            title="Enter your PIN"
-            success={() => setShowPinModal(false)}
-          />
+          <PinModal title="Enter your PIN" success={() => handleSuccess()} />
         ) : null}
       </View>
     );
@@ -148,11 +187,11 @@ const AddBeneficiary = ({ navigation, route }) => {
   const arrayData = [
     {
       label: "Pounds",
-      value: "Pounds",
+      value: "GBP",
     },
     {
       label: "Euros",
-      value: "Euros",
+      value: "EUR",
     },
     {
       label: "American dollars",
@@ -346,7 +385,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingVertical: 14,
     fontSize: 14,
-    color:GlobalStyles.Color.darkGray,
+    color: GlobalStyles.Color.darkGray,
   },
   dropDownarrayitem: {
     display: "flex",

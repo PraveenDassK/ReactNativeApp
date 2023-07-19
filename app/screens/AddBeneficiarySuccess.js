@@ -9,105 +9,63 @@ const AddBeneficiarySuccess = ({navigation}) => {
   const user="Ortiz Tyrese";
 
   return (
-    <Screen>
-    <Pressable
-      style={styles.addBeneficiarySuccess}
-      onPress={() => navigation.navigate("AccountMain")}
-    >
+    // <Pressable
+    //   style={styles.addBeneficiarySuccess}
+    //   onPress={() => navigation.navigate("SendMoney")}
+    // >
       <View style={styles.groupParent}>
-        <View style={styles.groupPosition}>
-          <View style={[styles.groupChild, styles.groupPosition]} />
-        </View>
-        <Text style={[styles.hello, styles.helloTypo]}>
-          <Text style={styles.yourTransferTo}>
-            Your Transfer to {user}
-          </Text>
-          <Text style={styles.yourTransferTo}>{"\n"}is on its way!</Text>
-        </Text>
+        <View style={styles.sucessContainer}>
+        <Text style={styles.successText}>Beneficiary added {'\n'} successfully!!</Text>
+        
         <Image
-          style={[styles.iconAwesomeCheckCircle, styles.hello1Position]}
-          resizeMode="cover"
+          style={{width:"50%",height:"50%"}}
+          resizeMode="contain"
           source={require("../assets/icon-awesomecheckcircle.png")}
         />
-        <Text style={[styles.hello1, styles.hello1Position, styles.helloTypo]}>
-          Tap anywhere to continue
-        </Text>
+        <Pressable style={styles.bottomButton} onPress={() => navigation.navigate("SendMoney")}>
+          <Text style={styles.buttontext}>Send Money</Text>
+        </Pressable>
       </View>
-    </Pressable>
-    </Screen>
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
-  groupPosition: {
-    left: horizontalScale(0),
-    bottom: verticalScale(0),
-    right: horizontalScale(0),
-    top: verticalScale(0),
-    position: "absolute",
+  groupParent:{
+    display: 'flex',
+    flex:1,
+    alignItems:"center",
+    justifyContent: 'flex-end',
   },
-  helloTypo: {
-    textAlign: "center",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
+  sucessContainer:{
+    width:"100%", 
+    backgroundColor:GlobalStyles.Color.white,
+    alignItems:"center",
+    flex:0.7,
+    borderTopRightRadius:30,
+    borderTopLeftRadius:30,
+    justifyContent:"space-between",
+    paddingVertical:40,
+
   },
-  hello1Position: {
-    top: "50%",
-    position: "absolute",
+  successText:{
+    textAlign:"center",
+    fontSize:24,
+    fontFamily:"Montserrat",
+    color:GlobalStyles.Color.black,
   },
-  groupChild: {
-    borderTopLeftRadius: GlobalStyles.Border.br_4xl,
-    borderTopRightRadius: GlobalStyles.Border.br_4xl,
-    shadowColor: "rgba(1, 1, 253, 0.05)",
-    shadowOffset: {
-      width: horizontalScale(0),
-      height: verticalScale(3),
-    },
-    shadowRadius: 6,
-    elevation: 6,
-    shadowOpacity: 1,
-    backgroundColor: GlobalStyles.Color.white,
+  bottomButton:{
+    backgroundColor:GlobalStyles.Color.lightBlack,
+    paddingVertical:20,
+    width:"80%",
+    borderRadius:15,
+    alignItems:"center",
   },
-  yourTransferTo: {
-    margin: GlobalStyles.Margin.margin_8xs,
-  },
-  hello: {
-    top: verticalScale(458),
-    marginTop: verticalScale(-100),
-    marginLeft: horizontalScale(-130),
-    left: "50%",
-    fontSize: GlobalStyles.FontSize.size_4xl,
-    lineHeight: verticalScale(24),
-    fontWeight: "700",
-    color: GlobalStyles.Color.indigo_100,
-    position: "absolute",
-    textAlign: "center",
-    // fontFamily: GlobalStyles.FontFamily.helvetica,
-  },
-  iconAwesomeCheckCircle: {
-    marginTop: verticalScale(-200),
-    marginLeft: horizontalScale(-80),
-    left: "50%",
-    width: horizontalScale(150),
-    height: verticalScale(150),
-    resizeMode:'contain',
-  },
-  hello1: {
-    marginTop: verticalScale(250),
-    marginLeft: horizontalScale(-70),
-    left: "50%",
-    fontSize: GlobalStyles.FontSize.size_xs,
-    color: GlobalStyles.Color.gray_700,
-  },
-  groupParent: {
-    width: "100%",
-    height: "100%",
-  },
-  addBeneficiarySuccess: {
-    flex: 1,
-    width: "100%",
-    paddingTop: GlobalStyles.Padding.padding_12xs,
-    backgroundColor: GlobalStyles.Color.gray_100,
-  },
+  buttontext:{
+    color:GlobalStyles.Color.white,
+    fontFamily:"Montserrat-Regular",
+    fontSize:14,
+  }
 });
 
 
