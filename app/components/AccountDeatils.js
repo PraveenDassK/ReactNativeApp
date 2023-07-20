@@ -7,6 +7,31 @@ import { LinearGradient } from "expo-linear-gradient";
 import Text from "./Text";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../assets/Dashboard/Carbonytelogomark.svg";
+
+
+const CurrentDateComponent = () => {
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    // Function to format the date as "June 6, 2023"
+    const formatDate = (date) => {
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(date);
+    };
+
+    // Get the current date
+    const now = new Date();
+    const formattedDate = formatDate(now);
+    setCurrentDate(formattedDate);
+  }, []);
+
+  return <Text>{currentDate}</Text>;
+};
+
+
 const AccountDeatils = ({ userData, userImpact, handlePress }) => {
   const [title, setTitle] = useState("");
   const [accountBalance, setBalance] = useState([]);
@@ -79,6 +104,8 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
               {formatCurrency(accountBalance[0]?.balance, "GBP", false)}
             </Text>
           </View>
+          <CurrentDateComponent />
+
           <View style={styles.bottomCard}>
             <View>
               <Text style={styles.incometext}>Income</Text>
