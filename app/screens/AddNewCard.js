@@ -7,8 +7,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  ImageBackground,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import StepProgress from "../components/SteeperCounter";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -20,48 +22,50 @@ import KeyboardAvoider from "../components/KeyboardAvoider";
 import { Dropdown } from "react-native-element-dropdown";
 import AuthContext from "../auth/context";
 import apiVirtualCard from "../api/apiVirtualCard";
-const AddNewCard = ({ navigation }) => {
+import Tagline from "../components/Tagline";
+import api_list from "../api/api_list";
+import PinModal from "../components/PinModal";
+
+const AddNewCard = ({ navigation, route }) => {
   const [selectedCard, setSelectedCard] = useState();
-  const { accountID, userID } = useContext(AuthContext);
+  const { accountID, userID, carbonyteID, cardID, customerDetails } =
+    useContext(AuthContext);
+  const [selectedAddress, setSelectedAddress] = useState();
+  const ref = useRef();
+  const [addressData, setAddressData] = useState([]);
+  const [data, setData] = useState([]);
+  const [postCodeforAddresses, setPostCodeforAddresses] = useState();
+  const [apiAccountId, setApiAccountId] = useState();
+  const [apiCustomerid, setApiCustomerid] = useState();
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  console.log(accountID, userID);
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string()
-
-      .required("Name is required")
-
-      .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
-
-      .min(2, "Name must be at least 2 characters")
-
-      .max(20, "Name must be less than 20 characters"),
-
-    lastName: Yup.string()
-
-      .required("Name is required")
-
-      .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
-
-      .min(2, "Name must be at least 2 characters")
-
-      .max(20, "Name must be less than 20 characters"),
+  //setting obj for virtual Card api
+  const [requestObj, setRequestob] = useState({
+    embossing: {
+      additionalField1: "",
+      additionalField2: "",
+      additionalField3: "",
+      additionalField4: "",
+      additionalField5: "",
+      companyName: "",
+      externalLayoutCode: "",
+      firstName: "Praveen",
+      lastName: "Dass",
+      manufacturer: "",
+    },
+    encryptedData: "",
+    expiration: {
+      month: 0,
+      year: 0,
+    },
+    pinStatus: "",
+    productCode: "",
+    segment: "",
   });
+  //setting obj for physical Card api
 
-  const items = [
-    {
-      id: 1,
-      label: "First name",
-      placeholder: "Enter your name",
-      initialValue: "firstName",
-    },
-    {
-      id: 2,
-      label: "Last name",
-      placeholder: "Enter your name",
-      initialValue: "lastName",
-    },
-  ];
-  const requestObj = {
+  const [physicalCardObj, setPhysicalCardObj] = useState({
     cardAddress: {
       address1: "",
       address2: "",
@@ -102,22 +106,169 @@ const AddNewCard = ({ navigation }) => {
     pinStatus: "",
     productCode: "",
     segment: "",
-  };
+  });
+  //getting card category from route
 
-  const handleSubmit = async ({ firstName, lastName }) => {
-    console.log(firstName, lastName, selectedCard, "this is data");
+  const cardCategory = route.params;
+
+  //validation for firstName and lastName
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string()
+
+      .required("Name is required")
+
+      .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
+
+      .min(2, "Name must be at least 2 characters")
+
+      .max(20, "Name must be less than 20 characters"),
+
+    lastName: Yup.string()
+
+      .required("Name is required")
+
+      .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
+
+      .min(2, "Name must be at least 2 characters")
+
+      .max(20, "Name must be less than 20 characters"),
+  });
+
+  // to check remove post code from array of input fields
+  useEffect(() => {
+    if (cardCategory === "virtual") {
+      items.pop();
+      setData(items);
+    } else {
+      setData(items);
+    }
+  }, []);
+  //loading data to get EnfuseAccountId and EnfuseCustomerId
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    const response = await api_list.GetCustomerDetailsForCard(customerDetails);
+    const listedAccount = response?.data?.details?.accountDetails;
+    console.log(accountID, "this is accountId");
+    const filterAccount = listedAccount.filter(
+      (eachValue, index) => eachValue?.accountId === accountID
+    );
+    console.log(filterAccount?.[0]?.enfuceAccountId, "this enfuse account Id ");
+    setApiAccountId(filterAccount?.[0]?.enfuceAccountId);
+    console.log(
+      response?.data?.details?.enfuceCustomerId,
+      "this is enfuseCustomerId"
+    );
+    setApiCustomerid(response?.data?.details?.enfuceCustomerId);
+  };
+  // array for input fields
+  const items = [
+    {
+      id: 1,
+      label: "First name",
+      placeholder: "Enter your name",
+      initialValue: "firstName",
+    },
+    {
+      id: 2,
+      label: "Last name",
+      placeholder: "Enter your name",
+      initialValue: "lastName",
+    },
+    {
+      id: 3,
+      label: "Postcode",
+      placeholder: "Enter the postcode",
+      initialValue: "postcode",
+    },
+  ];
+
+  // form submit to set req Obj
+  const handleSubmit = async ({ firstName, lastName, postcode }) => {
+    // handleAddress(postcode);
+    console.log(
+      firstName,
+      lastName,
+      selectedCard,
+      postcode,
+      selectedAddress,
+      "this is data"
+    );
     requestObj.embossing.firstName = firstName;
     requestObj.embossing.lastName = lastName;
-    let response = await apiVirtualCard.getNewVirtualCard(
-      userID,
-      accountID,
-      selectedCard,
-      requestObj
-    );
-    navigation.navigate("MyCards")
-    console.log(response, "this is a new virtual card");
+    physicalCardObj.embossing.firstName = firstName;
+    physicalCardObj.embossing.lastName = lastName;
+    physicalCardObj.cardAddress.address1 = selectedAddress?.address1;
+    physicalCardObj.cardAddress.address2 = selectedAddress?.address2;
+    physicalCardObj.cardAddress.city = selectedAddress?.city;
+    physicalCardObj.cardAddress.zipCode = selectedAddress?.postcode;
+    physicalCardObj.cardAddress.region = selectedAddress?.area;
+    setShowPinModal(true);
   };
 
+  // after successful Pin enter
+  const handleSuccess = async () => {
+    setShowPinModal(false);
+    setIsLoading(true);
+    console.log(requestObj, "This is from api after pin");
+    console.log(physicalCardObj, "this is physical obj");
+    if (cardCategory === "virtual") {
+      let response = await apiVirtualCard.getNewVirtualCard(
+        apiCustomerid,
+        apiAccountId,
+        selectedCard,
+        requestObj
+      );
+      if (response?.data?.status === 201) {
+        alert("New Virtual Card created successfully");
+
+        navigation.navigate("MyCards");
+      } else {
+        alert(response?.data?.message);
+      }
+    } else {
+      let response = await apiVirtualCard.getNewPhysicalCard(
+        apiCustomerid,
+        apiAccountId,
+        selectedCard,
+        physicalCardObj
+      );
+      if (response?.data?.status === 201) {
+        alert("New Physical Card created successfully");
+        console.log(response?.data, "this is a new physical card");
+
+        navigation.navigate("MyCards");
+      } else {
+        alert(response?.data?.message);
+      }
+    }
+  };
+
+  // to show the pin modal
+  if (showPinModal) {
+    return (
+      <View style={styles.mainContainer}>
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal title="Enter your PIN" success={() => handleSuccess()} />
+        ) : null}
+      </View>
+    );
+  }
+  // to show the loading on api calls
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
+  //array ti get cardRole category
   const arrayData = [
     {
       label: "Main",
@@ -128,6 +279,33 @@ const AddNewCard = ({ navigation }) => {
       value: "Supplementary",
     },
   ];
+
+  //getting address from postcode
+  const handleAddress = async (postcode) => {
+    // const response = await apiLogin.GetAddressByPostCode(postcode)
+    // console.log(response)
+    // setAddressData(response)
+
+    // Remove this on live
+
+    console.log(postcode, "this is postcode");
+
+    const dummyAddress = [
+      {
+        label: "Fake address",
+        value: {
+          address1: "123 street",
+          address2: "456 house",
+          area: "Area 5",
+          city: "City 6",
+          locale: "en_GB",
+          postcode: postcode,
+        },
+      },
+    ];
+    setAddressData(dummyAddress);
+  };
+
   return (
     <KeyboardAvoider>
       {/* <StepProgress currentStep={1} /> */}
@@ -136,93 +314,151 @@ const AddNewCard = ({ navigation }) => {
         <View
           style={{
             flex: 1,
-            paddingHorizontal: 20,
             paddingVertical: 24,
             backgroundColor: GlobalStyles.Color.white,
             marginTop: 27,
             borderRadius: 20,
           }}
         >
-          <Formik
-            initialValues={{
-              firstName: "",
-              lastName: "",
-             
+          <ImageBackground
+            source={require("../assets/backgrounds/Dashboard.jpg")}
+            // style={{  width: "100%" }}
+            resizeMode="contain"
+            imageStyle={{
+              bottom: "-70%", // Whatever offset you want from the bottom
             }}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
+            style={{
+              width: "100%",
+              flex: 1,
+            }}
           >
-            {({
-              handleChange,
-              handleSubmit,
-              errors,
-              setFieldTouched,
-              touched,
-            }) => (
-              <>
-                <View>
-                  {items.map((item, index) => (
+            <Formik
+              initialValues={{
+                firstName: "",
+                lastName: "",
+                postcode: "HA9 0HZ",
+              }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({
+                handleChange,
+                setFieldValue,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                values,
+                touched,
+              }) => (
+                <>
+                  <View style={{ paddingHorizontal: 40 }}>
+                    {data.map((item, index) => {
+                      return (
+                        <View
+                          key={item.id}
+                          style={{
+                            marginTop: 22,
+                          }}
+                        >
+                          <Text style={styles.formLabel}>{item.label}</Text>
+
+                          <TextInput
+                            style={styles.inputBox}
+                            onBlur={() => setFieldTouched(item.initialValue)}
+                            onChangeText={(text) => {
+                              // Update the firstName field with the new value entered in the TextInput
+                              setFieldValue(item.initialValue, text);
+                              console.log(text, "this is the new value");
+                              const updatedFirstName = values.postcode;
+                              if (item.label === "Postcode") {
+                                handleAddress(text);
+                              }
+                            }}
+                            placeholder={item.placeholder}
+                            // value={values}
+                          />
+
+                          <ErrorMessage
+                            error={errors[item.initialValue]}
+                            visible={touched[item.initialValue]}
+                          />
+                        </View>
+                      );
+                    })}
                     <View
-                      key={item.id}
                       style={{
-                        marginTop: 22,
+                        width: "100%",
+                        marginVertical: "5%",
                       }}
                     >
-                      {console.log("item", item)}
-                      <Text style={styles.formLabel}>{item.label}</Text>
-                      <TextInput
-                        style={styles.inputBox}
-                        onChangeText={handleChange(item.initialValue)}
-                        placeholder={item.placeholder}
-                      />
-                      <ErrorMessage
-                        error={errors[item.initialValue]}
-                        visible={touched[item.initialValue]}
+                      <Text style={styles.formLabel}>{"Cardtype"}</Text>
+
+                      <Dropdown
+                        data={arrayData}
+                        value={selectedCard}
+                        labelField="label"
+                        valueField="value"
+                        // defalutValue="Mr"
+                        onChange={(item) => {
+                          setSelectedCard(item.value);
+                          // handleChange(item.value);
+                        }}
+                        style={styles.dropdown}
+                        containerStyle={styles.containerStyle}
+                        // renderRightIcon={() => (
+                        //   <AntDesign name="checkcircle" size={24} color="green" />
+                        // )}
+                        // renderItem={renderItem}
+                        placeholder="Select CardType"
+                        autoScroll={false}
                       />
                     </View>
-                  ))}
+                    {cardCategory !== "virtual" ? (
+                      <View
+                        style={{
+                          width: "100%",
+                          marginVertical: "5%",
+                        }}
+                      >
+                        <Text style={styles.lable}>{"Address"}</Text>
+
+                        <Dropdown
+                          data={addressData}
+                          value={selectedAddress}
+                          labelField="label"
+                          valueField="value"
+                          onChange={(item) => {
+                            setSelectedAddress(item.value);
+                          }}
+                          style={styles.dropdown}
+                          containerStyle={styles.containerStyle}
+                          placeholder="Select Address"
+                          autoScroll={false}
+                        />
+                      </View>
+                    ) : null}
+                  </View>
                   <View
                     style={{
-                      width: "100%",
-                      marginVertical: "5%",
+                      justifyContent: "flex-end",
+                      paddingHorizontal: 40,
                     }}
                   >
-                    <Text style={styles.lable}>{"Address"}</Text>
-
-                    <Dropdown
-                      data={arrayData}
-                      value={selectedCard}
-                      labelField="label"
-                      valueField="value"
-                      // defalutValue="Mr"
-                      onChange={(item) => {
-                        console.log(item, "thsis is item selected");
-                        setSelectedCard(item.value);
-                        // handleChange(item.value);
-                      }}
-                      style={styles.dropdown}
-                      containerStyle={styles.containerStyle}
-                      // renderRightIcon={() => (
-                      //   <AntDesign name="checkcircle" size={24} color="green" />
-                      // )}
-                      // renderItem={renderItem}
-                      placeholder="Select Address"
-                      autoScroll={false}
+                    <Button
+                      title="Continue"
+                      textColor={GlobalStyles.Color.white}
+                      color="black"
+                      style={styles.buttonColor}
+                      onPress={handleSubmit}
                     />
                   </View>
-                </View>
-                <View style={{flex:1,justifyContent:"flex-end"}}>
-                <Button
-                  title="Continue"
-                  textColor={GlobalStyles.Color.white}
-                  color="black"
-                  style={styles.buttonColor}
-                  onPress={handleSubmit}
-                />
-                </View>
-              </>
-            )}
-          </Formik>
+                </>
+              )}
+            </Formik>
+            <View style={{ marginTop: "20%" }}>
+              <Tagline />
+            </View>
+          </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoider>
@@ -261,5 +497,10 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 10,
     // backgroundColor:"red",
     // color:"white",
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
   },
 });
