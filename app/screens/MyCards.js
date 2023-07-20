@@ -28,7 +28,7 @@ import { TransactionContainer } from "../components/transHistory";
 import apiTransaction from "../api/apiTransaction";
 import Tagline from "../components/Tagline";
 import PinModal from "../components/PinModal";
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from "@expo/vector-icons";
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -106,7 +106,8 @@ export default function MyCards({ navigation }) {
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
 
-    const cards = await apiCall.GetCardByAccount("238712312");
+    // const cards = await apiCall.GetCardByAccount("686283112");
+    console.log(cards);
     setCardData(cards);
     //     console.log(cards);
     //     const currentCard = cards[cardIndex];
@@ -175,9 +176,10 @@ export default function MyCards({ navigation }) {
         </View>
 
         <CardCarousel
-          cards={filteredCards}
+          cards={cards}
           onCardPress={() => console.log("pressed")}
-          onPress={()=>navigation.navigate("AddNewCard")}
+          onPress={() => navigation.navigate("AddNewCard")}
+          onTopCard={(card) => console.log('Card Carousel', card)}
         />
 
         <TapContainer />
@@ -340,11 +342,26 @@ const CardSelector = ({ onCardSelect }) => {
   );
 };
 
-const CardCarousel = ({ cards, onCardPress,onPress }) => {
+const CardCarousel = ({ cards, onCardPress, onPress, onTopCard }) => {
   console.log(cards, "this is card");
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+    {
+      useNativeDriver: false,
+      listener: (event) => {
+        const scrollPosition = event.nativeEvent.contentOffset.x;
+        const topCardIdx = Math.floor(scrollPosition / ITEM_WIDTH);
+        // console.log("Top Card Index:", topCardIdx);
+        onTopCard(topCardIdx)
+        // You can use topCardIdx for any further processing or actions
+      },
+      // You can add more configuration options for the Animated.event if needed
+    }
+  );
   if (showPinModal) {
     return (
       <View style={styles.mainContainer}>
@@ -365,16 +382,14 @@ const CardCarousel = ({ cards, onCardPress,onPress }) => {
   return (
     <ScrollView
       horizontal={true}
-      decelerationRate={"normal"}
+      decelerationRate={"fast"}
       snapToInterval={ITEM_WIDTH}
       style={styles.cardsContainer}
       showsHorizontalScrollIndicator={false}
       bounces={false}
       disableIntervalMomentum
-      onScroll={Animated.event(
-        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-        { useNativeDriver: false }
-      )}
+     
+      onScroll={handleScroll}
       scrollEventThrottle={12}
     >
       {cards.map((item, idx) => {
@@ -444,19 +459,26 @@ const CardCarousel = ({ cards, onCardPress,onPress }) => {
           width: ITEM_WIDTH + 30,
           height: ITEM_HEIGHT,
           marginLeft: OFFSET + 35,
-          marginRight: OFFSET -1,
-          borderColor:GlobalStyles.Color.black,
-          borderStyle:"dashed",
-          borderWidth:1,
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center",
-          
+          marginRight: OFFSET - 1,
+          borderColor: GlobalStyles.Color.black,
+          borderStyle: "dashed",
+          borderWidth: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
         onPress={onPress}
       >
         <AntDesign name="plus" size={44} color="black" />
-        <Text style={{color:GlobalStyles.Color.black,fontSize:20,fontFamily:"Montserrat"}}>Add New Card</Text>
+        <Text
+          style={{
+            color: GlobalStyles.Color.black,
+            fontSize: 20,
+            fontFamily: "Montserrat",
+          }}
+        >
+          Add New Card
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );

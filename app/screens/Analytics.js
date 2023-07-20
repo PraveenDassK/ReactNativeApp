@@ -48,6 +48,9 @@ import colors from "../config/colors";
 import Tagline from "../components/Tagline";
 import * as Device from "expo-device";
 import { BlurView } from "expo-blur/build";
+
+const screenWidth = Dimensions.get("window").width;
+
 const Analytics = ({ navigation }) => {
   const { device } = useDevice();
   const [isLoading, setIsLoading] = useState(false);
@@ -155,7 +158,7 @@ const Analytics = ({ navigation }) => {
     }
   };
 
-  const colors = ["tomato", "orange", "gold", "cyan", "green"];
+  const colors = ["tomato", "orange", "gold", "cyan", "#5AC661"];
 
   const graphTabs = [
     { id: 1, title: "Week" },
@@ -276,7 +279,7 @@ const Analytics = ({ navigation }) => {
             >
               <VictoryPie
                 style={{ labels: { fill: "black" }, width: "100%" }}
-                colorScale={["tomato", "orange", "gold", "cyan", "green"]}
+                colorScale={["tomato", "orange", "gold", "cyan", "#5AC661"]}
                 innerRadius={device == 1 ? 130 : 300}
                 labelRadius={device == 1 ? 110 : 320}
                 padAngle={1}
@@ -665,25 +668,31 @@ const Bazier = ({ graphData }) => {
   return (
     <View
       style={{
-        width: "90%",
-        marginLeft: "5%",
+        width: "100%",
+        
+        // backgroundColor: "red"
       }}
     >
       {/* <AppText>Bezier Line Chart</AppText> */}
-
+     
       <LineChart
+        style={{
+          
+          paddingRight: 15,
+          marginRight:10,
+
+      }}
         data={{
           labels: xAxis,
           datasets: [{ data: yAxis }],
         }}
-        // width={Dimensions.get("window").width * 0.8125} // from react-native
-        width={300}
+       width={screenWidth * 0.9} // from react-native
         height={220}
         yAxisLabel="£"
         yAxisSuffix=""
         yAxisInterval={1} // optional, defaults to 1
-        withHorizontalLines={false}
         withVerticalLines={false}
+        segments={8}
         withHorizontalLabels={false}
         chartConfig={{
           // background: "transparent",
@@ -694,18 +703,27 @@ const Bazier = ({ graphData }) => {
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `#179424`,
           labelColor: (opacity = 1) => `rgba(105,105,105, ${opacity})`,
-          fillShadowGradientFrom: "green",
+          fillShadowGradientFrom: "#5AC661",
           fillShadowGradientTo: GlobalStyles.Color.backgroundColorOg,
-          strokeWidth: 5,
+          strokeWidth: 1,
           style: { borderRadius: 16 },
+          propsForBackgroundLines: {
+            strokeDasharray: "",
+            stroke: '#0101FD',
+            strokeOpacity: 0.3,
+            strokeWidth: 0.3
+          },
           propsForDots: {
             r: "3",
-            strokeWidth: "4",
-            stroke: `#0101FD`,
+            strokeWidth: "8",
+            stroke: `rgba(1, 1, 253, 0.45)`,
+            fill: '#0101FD'
+            
+            
           },
         }}
-        bezier
-        style={{ marginVertical: 8, borderRadius: 0 }}
+        
+       
         decorator={() => {
           return tooltipPos.visible ? (
             <View>
@@ -715,15 +733,15 @@ const Bazier = ({ graphData }) => {
                   y={tooltipPos.y + 10}
                   width="60"
                   height="30"
-                  fill="white"
-                  rx={0.5}
-                  ry={0.5}
+                  fill="#179424"
+                  rx={15}
+                  ry={15}
                 />
                 <TextSVG
                   x={tooltipPos.x + 15}
                   y={tooltipPos.y + 30}
-                  fill="black"
-                  fontSize="10"
+                  fill="white"
+                  fontSize="8"
                   fontWeight="bold"
                   textAnchor="middle"
                 >

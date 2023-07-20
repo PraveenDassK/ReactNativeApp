@@ -20,6 +20,7 @@ import Tagline from "../components/Tagline";
 import BeneficiaryPopup from "../components/BeneficiaryPopup";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
+import FadeInView from "../components/fadeInview";
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
@@ -215,7 +216,8 @@ const SendMoney = ({ navigation }) => {
                   onPress={() => sendPayeeTrigger(beneficary.item)}
                 />
                 {showDelete && (
-                  <View
+                 
+                  <FadeInView
                     style={{
                       justifyContent: "center",
                       alignItems: "center",
@@ -234,7 +236,7 @@ const SendMoney = ({ navigation }) => {
                       size={10}
                       onPress={() => handleBeneficiaryDelete(beneficary.item)}
                     />
-                  </View>
+                  </FadeInView>
                 )}
               </View>
             );
@@ -279,7 +281,7 @@ const SendMoney = ({ navigation }) => {
                   onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                 />
                 {showDelete && (
-                  <View
+                  <FadeInView
                     style={{
                       justifyContent: "center",
                       alignItems: "center",
@@ -298,7 +300,7 @@ const SendMoney = ({ navigation }) => {
                       size={10}
                       onPress={() => handleDelete(beneficary.item)}
                     />
-                  </View>
+                  </FadeInView>
                 )}
               </View>
             );
