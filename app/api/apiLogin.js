@@ -157,8 +157,6 @@ const RegisterPersonalAccount = async (regData) => {
 };
 
 const RegisterBusinessAccount = async (regData, pushToken) => {
-  
-
   const response = await client.post(
     `https://api.carbonyte.io/regmodule/SaveCompanyDetails?tokenId=${pushToken}`,
     regData

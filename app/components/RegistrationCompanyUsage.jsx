@@ -31,7 +31,7 @@ import AuthScreen from "./AuthScreen";
 import ErrorMessage from "./forms/ErrorMessage";
 
 const validationSchema = Yup.object().shape({
-  customers: Yup.string().required().min(1).max(50).label("First name"),
+  customers: Yup.string().required().min(1).max(50).label("Customers"),
 });
 
 const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
