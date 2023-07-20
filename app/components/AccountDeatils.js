@@ -4,7 +4,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
 import formatCurrency from "../utility/formatCurrency";
 import { LinearGradient } from "expo-linear-gradient";
-import Text from "../components/Text";
+import Text from "./Text";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../assets/Dashboard/Carbonytelogomark.svg";
 const AccountDeatils = ({ userData, userImpact, handlePress }) => {
