@@ -10,7 +10,7 @@ async function compareVersion(currentVersion) {
     const urlIOS = 'https://play.google.com/apps/internaltest/4699808328535823531'
 
 
-    Alert.alert("Update", "New version avalible, please update your app", [
+    Alert.alert("Update", "New version available, please update your app", [
         {
             text: "Cancel",
             onPress: () => console.log("Cancel Pressed"),

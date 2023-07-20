@@ -106,8 +106,7 @@ export default function MyCards({ navigation }) {
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
 
-    const cards = await apiCall.GetCardByAccount("686283112");
-    console.log(cards);
+    const cards = await apiCall.GetCardByAccount("238712312");
     setCardData(cards);
     //     console.log(cards);
     //     const currentCard = cards[cardIndex];
