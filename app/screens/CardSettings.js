@@ -121,7 +121,7 @@ const CardSettings = ({ navigation }) => {
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
-              source={require("../assets/meter-1.png")}
+              source={require("../assets/newAssets/reset.png")}
             />
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
@@ -162,7 +162,7 @@ const CardSettings = ({ navigation }) => {
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
-              source={require("../assets/meter-1.png")}
+              source={require("../assets/newAssets/meter.png")}
             />
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
@@ -222,7 +222,7 @@ const CardSettings = ({ navigation }) => {
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
-              source={require("../assets/globe.png")}
+              source={require("../assets/newAssets/globe.png")}
             />
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
@@ -266,7 +266,7 @@ const CardSettings = ({ navigation }) => {
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
-              source={require("../assets/swipecard.png")}
+              source={require("../assets/newAssets/swipe-card.png")}
             />
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
@@ -309,7 +309,7 @@ const CardSettings = ({ navigation }) => {
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
-              source={require("../assets/atm.png")}
+              source={require("../assets/newAssets/ATM-withdrawals.png")}
             />
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
@@ -351,7 +351,7 @@ const CardSettings = ({ navigation }) => {
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
-              source={require("../assets/contactlesspayment-1.png")}
+              source={require("../assets/newAssets/contactless.png")}
             />
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
@@ -405,7 +405,7 @@ const CardSettings = ({ navigation }) => {
                   alignSelf: "center",
                   marginLeft: "5%",
                 }}
-                source={require("../assets/reset.png")}
+                source={require("../assets/newAssets/reset.png")}
               />
               <View
                 style={{
@@ -440,7 +440,7 @@ const CardSettings = ({ navigation }) => {
                   alignSelf: "center",
                   marginLeft: "5%",
                 }}
-                source={require("../assets/delete-redbin.png")}
+                source={require("../assets/newAssets/delete.png")}
               />
               <View
                 style={{
@@ -486,7 +486,7 @@ const CardSettings = ({ navigation }) => {
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
-              source={require("../assets/meter-1.png")}
+              source={require("../assets/newAssets/upgrade.png")}
             />
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}

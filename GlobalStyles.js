@@ -64,7 +64,7 @@ const GlobalStyles = {
     gray_2100:"#888888",
     darkGray:"#999999", 
     borderColor:"#EBEBEB",
-    blue_100: "blue",
+    blue_100: "#0101FD",
     indigo_100: "#00003d",
     white: "#fff",
     black: "#000", 
