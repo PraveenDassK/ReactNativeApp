@@ -89,7 +89,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <ImageBackground
-          source={require("../assets/backgrounds/River.png")}
+          source={require("../assets/backgrounds/River.jpg")}
           style={styles.backgroundImage}
         >
           <View style={styles.header}>

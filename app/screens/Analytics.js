@@ -182,7 +182,7 @@ const Analytics = ({ navigation }) => {
       }
     >
       <ImageBackground
-        source={require("../assets/backgrounds/River.png")}
+        source={require("../assets/backgrounds/beach.jpg")}
         style={styles.backgroundImage}
       >
         <View style={styles.header}>
@@ -201,6 +201,9 @@ const Analytics = ({ navigation }) => {
          tint="light"
          intensity={60}
         style={styles.innerContainer}>
+          <Text>
+            Total Spent this {active}
+          </Text>
           {graphData && <Bazier graphData={graphData} />}
           {graphData && (
             <View

@@ -30,9 +30,9 @@ import StepProgress from "../components/SteeperCounter";
 import PinModal from "../components/PinModal";
 
 const validationSchema = Yup.object().shape({
-  iban: Yup.string().required("IBAN is required").matches(/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/, "Invalid IBAN format"),
+  iban: Yup.string().matches(/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/, "Invalid IBAN format"),
 
-  bic: Yup.string().required("BIC is required").matches(/^[A-Za-z]{6}[A-Za-z0-9]{2}([A-Za-z0-9]{3})?$/, "Invalid BIC format"),
+  bic: Yup.string().matches(/^[A-Za-z]{6}[A-Za-z0-9]{2}([A-Za-z0-9]{3})?$/, "Invalid BIC format"),
 
   currency: Yup.string().required("Currency type is required"),
 
@@ -96,31 +96,6 @@ const AddBeneficiary = ({ navigation, route }) => {
       name: "a",
     };
     setShowPinModal(true);
-    //API call
-    // if (!showPinModal) {
-    //   const checkCall = await apiBeneficiaries.checkBeneficary(
-    //     authContext.userId,
-    //     requestObj
-    //   );
-    //   console.log(checkCall);
-    //   if (checkCall.result.code == "MATCHED") {
-    //   }
-
-    //   const beneficaryCall = await apiBeneficiaries.AddBeneficiary(
-    //     authContext.userID,
-    //     requestObj
-    //   );
-    // }
-    // console.log(beneficaryCall);
-    // console.log(beneficaryCall.data.details);
-    // //If the payee is a duplicate don't add them
-    // if (
-    //   beneficaryCall.data.resultMessage ==
-    //   '[{"field":"customer","code":"DUPLICATE","message":"Beneficiary already exists for Customer"}]'
-    // ) {
-    //   alert("You already have this payee");
-    //   return;
-    // }
   };
   if (isLoading) {
     return (
@@ -192,11 +167,7 @@ const AddBeneficiary = ({ navigation, route }) => {
     {
       label: "Euros",
       value: "EUR",
-    },
-    {
-      label: "American dollars",
-      value: "American dollars",
-    },
+    }
   ];
 
   const renderItem = (item) => {

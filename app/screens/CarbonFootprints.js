@@ -62,7 +62,7 @@ const CarbonFootprints = ({ navigation }) => {
         }}
       >
         <ImageBackground
-          source={require("../assets/backgrounds/Coral.png")}
+          source={require("../assets/backgrounds/beach.jpg")}
           resizeMode="contain"
           imageStyle={{
             bottom: "-95%", // Whatever offset you want from the bottom
