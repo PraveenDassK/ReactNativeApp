@@ -21,7 +21,7 @@ const ConfirmDetailsBusiness = ({ SaveDetails, setScreenToShow, data}) => {
     console.log("!");
     setScreenToShow("CompanyUsage");
   };
-  console.log(data)
+
   return (
     <AuthScreen title="Confirm Business details" img="turtleCard" handleBack={handleBack}>
       <Text>

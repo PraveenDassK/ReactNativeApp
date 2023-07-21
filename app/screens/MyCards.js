@@ -74,8 +74,8 @@ export default function MyCards({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [cardData, setCardData] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
-  const [cardCategory,setCardCategory] =useState("")
-  console.log(cardCategory,"this is a card category");
+  const [cardCategory, setCardCategory] = useState("");
+  console.log(cardCategory, "this is a card category");
   useEffect(() => {
     loadData();
   }, []);
@@ -106,9 +106,9 @@ export default function MyCards({ navigation }) {
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
 
-    // const cards = await apiCall.GetCardByAccount("686283112");
+    const cards = await apiCall.GetCardByAccount("686283112");
     console.log(cards);
-    setCardData(cards);
+    // setCardData(cards);
     //     console.log(cards);
     //     const currentCard = cards[cardIndex];
     //     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
@@ -140,7 +140,7 @@ export default function MyCards({ navigation }) {
       });
     };
     setFilteredCards(filterCardsByType(type));
-    setCardCategory(type)
+    setCardCategory(type);
   };
 
   const handleTransactionFilter = (item) => {
@@ -177,10 +177,10 @@ export default function MyCards({ navigation }) {
         </View>
 
         <CardCarousel
-          cards={cards}
+          cards={[]}
           onCardPress={() => console.log("pressed")}
-          onPress={() => navigation.navigate("AddNewCard")}
-          onTopCard={(card) => console.log('Card Carousel', card)}
+          onPress={() => navigation.navigate("AddNewCard", cardCategory)}
+          onTopCard={(card) => console.log("Card Carousel", card)}
         />
 
         <TapContainer />
@@ -357,7 +357,7 @@ const CardCarousel = ({ cards, onCardPress, onPress, onTopCard }) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
         const topCardIdx = Math.floor(scrollPosition / ITEM_WIDTH);
         // console.log("Top Card Index:", topCardIdx);
-        onTopCard(topCardIdx)
+        onTopCard(topCardIdx);
         // You can use topCardIdx for any further processing or actions
       },
       // You can add more configuration options for the Animated.event if needed
@@ -389,7 +389,6 @@ const CardCarousel = ({ cards, onCardPress, onPress, onTopCard }) => {
       showsHorizontalScrollIndicator={false}
       bounces={false}
       disableIntervalMomentum
-     
       onScroll={handleScroll}
       scrollEventThrottle={12}
     >
