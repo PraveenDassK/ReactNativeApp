@@ -209,21 +209,23 @@ const CardSettings = ({ navigation }) => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center",
+              // alignItems: "center",
+              
             }}
           >
+            
             <Image
               style={{
-                height: 30,
+                height: 22,
                 resizeMode: "contain",
-                // flex: 1,
+                flex: 1,
                 alignSelf: "center",
-                // marginLeft: "5%",
+                marginLeft: "5%",
               }}
               source={require("../assets/globe.png")}
             />
             <View
-              style={{ flex: 5, justifyContent: "center", marginLeft: "2.5%" }}
+              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
             >
               <AppText style={styles.cardHeading}>Online Transactions</AppText>
               <AppText style={styles.cardSubHeading}>
@@ -467,7 +469,7 @@ const CardSettings = ({ navigation }) => {
                 marginLeft: "5%",
                 borderRadius: 15,
                 marginTop: "5%",
-                backgroundColor:GlobalStyles.Color.white,
+                backgroundColor: GlobalStyles.Color.white,
                 // height: 60,
                 paddingVertical: "5%",
                 display: "flex",
@@ -503,17 +505,16 @@ const CardSettings = ({ navigation }) => {
           bottom: "0%",
           width: "100%",
           paddingHorizontal: 10,
-          zIndex:10,
+          zIndex: 10,
         }}
       >
-       <Tagline/>
+        <Tagline />
       </View>
       <ImageBackground
         resizeMode="stretch"
         source={require("../assets/backgrounds/cardsettings.jpg")}
         style={styles.container}
       />
-    
     </ScrollView>
   );
 };
