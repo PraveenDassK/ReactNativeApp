@@ -84,7 +84,7 @@ const GetTransactions = async (Id, amount, fromDate, toDate) => {
       "?size=" +
       toGet
   );
-  const requestData = request?.data?.details
+  const requestData = request?.data?.details;
   return requestData;
 };
 
@@ -203,6 +203,14 @@ const GetTransactionsYear = async (Id) => {
 const GetCardByAccount = async () => {
   const request = await client.get(
     "https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=686283112&auditUser=A12277V1"
+  );
+  const requestData = request?.data?.details;
+  return requestData;
+};
+
+const GetCardByEnfuseAccountId = async (accountId) => {
+  const request = await client.get(
+    `https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=${accountId}`
   );
   const requestData = request?.data?.details;
   return requestData;
@@ -358,4 +366,5 @@ export default {
   GetAllTransactionsThisMonth,
   cardSettings,
   SetToggles,
+  GetCardByEnfuseAccountId,
 };

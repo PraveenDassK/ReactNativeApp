@@ -19,7 +19,7 @@ import FlipCard from "react-native-flip-card";
 import Text from "../components/Text";
 import AuthContext from "../auth/context";
 import apiCall from "../api/api";
-
+import apiFreezeCall from "../api/apiCall";
 import colors from "../config/colors";
 import formatCurrency from "../utility/formatCurrency";
 import AppScreen from "../components/AppScreen";
@@ -29,6 +29,7 @@ import apiTransaction from "../api/apiTransaction";
 import Tagline from "../components/Tagline";
 import PinModal from "../components/PinModal";
 import { AntDesign } from "@expo/vector-icons";
+import api_list from "../api/api_list";
 
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
@@ -65,20 +66,24 @@ const transactionDisplayItems = [
 const numOfTransactions = 4;
 
 export default function MyCards({ navigation }) {
-  const { accountID } = useContext(AuthContext);
-  const [isFrozen, setFrozen] = useState(false);
+  const { accountID, customerDetails } = useContext(AuthContext);
+  const [isFrozen, setFrozen] = useState("");
   const [transactions, setTransactions] = useState([]);
   const [filterTransactions, setFilterTransactions] = useState([
     ...transactions,
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [dataAbovecard, setDataAbovecard] = useState([]);
   const [cardData, setCardData] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
   const [cardCategory, setCardCategory] = useState("");
-  console.log(cardCategory, "this is a card category");
+  const [apiAccountId, setApiAccountId] = useState();
+  const [apiCustomerid, setApiCustomerid] = useState();
+  const [selectedCardforFreeze, setSelectedCardForFreeze] = useState();
   useEffect(() => {
     loadData();
   }, []);
+
   const getFullCardData = async () => {
     const cardObject = await api.GetCardFromID("714613712");
     const cards = await apiCall.GetCardByAccount("686283112");
@@ -96,20 +101,35 @@ export default function MyCards({ navigation }) {
 
   const loadData = async () => {
     setIsLoading(true);
+    //api to get enfuse account id
+    const responseforgettingAccountId =
+      await api_list.GetCustomerDetailsForCard(customerDetails);
+    const listedAccount =
+      responseforgettingAccountId?.data?.details?.accountDetails;
+    const filterAccount = await listedAccount.filter(
+      (eachValue, index) => eachValue?.accountId === accountID
+    );
+    console.log(filterAccount?.[0]?.enfuceAccountId, "this enfuse account Id ");
+    let EnfuseAccountId = filterAccount?.[0]?.enfuceAccountId;
+    setApiAccountId(filterAccount?.[0]?.enfuceAccountId);
+
+    //api to get transaction
     const response = await apiCall.GetTransactions(
       accountID,
       numOfTransactions
     );
-    setIsLoading(false);
     // const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
     const transactionRes = response.content;
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
+    // api to get card details using enfuse account ID
 
-    // const cards = await apiCall.GetCardByAccount("686283112");
-    console.log(cards);
+    const cards = await apiCall.GetCardByEnfuseAccountId(EnfuseAccountId);
+    // console.log(cards, "this is a test card");
     setCardData(cards);
-    //     console.log(cards);
+    setIsLoading(false);
+
+    // console.log(cards);
     //     const currentCard = cards[cardIndex];
     //     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
 
@@ -125,13 +145,13 @@ export default function MyCards({ navigation }) {
     //     setlastname(cardDetails.name);
     //     console.log(cardDetails);
   };
-
   const filterCards = (type) => {
-    console.log(type);
     const filterCardsByType = (type) => {
       return cardData.filter((card) => {
         if (type === "physical") {
-          return card.productCode === "MC_PHYSICAL";
+          // return card.productCode === "MC_PHYSICAL";
+          //name changed for physical card
+          return card.productCode === "MC_CARD";
         } else if (type === "virtual") {
           return card.productCode === "MC_VIRTUAL";
         } else {
@@ -139,6 +159,7 @@ export default function MyCards({ navigation }) {
         }
       });
     };
+
     setFilteredCards(filterCardsByType(type));
     setCardCategory(type);
   };
@@ -164,6 +185,46 @@ export default function MyCards({ navigation }) {
       </View>
     );
   }
+  //function to find cardFreezed or not
+
+  const cardFreezed = () => {
+    const freezeCardData = filteredCards?.filter(
+      (eachValue, index) => index === selectedCardforFreeze
+    );
+    const freezeCardId = freezeCardData?.[0]?.id;
+    console.log(freezeCardData?.[0]?.status, "inside freeze");
+    setDataAbovecard(freezeCardData);
+    setFrozen(freezeCardData?.[0]?.status);
+  };
+  //function for freeze
+  const handleFreeze = async () => {
+    console.log(dataAbovecard, "this is data abovecard");
+    let cardStatus;
+    // const freezeCardData = filteredCards.filter(
+    //   (eachValue, index) => index === selectedCardforFreeze
+    // );
+    // console.log(selectedCardforFreeze, "this is index");
+    // console.log(freezeCardData, "data");
+    // console.log(freezeCardData, "data");
+
+    // console.log("freeze", freezeCardData?.[0]?.id);
+    const freezeCardId = dataAbovecard?.[0]?.id;
+    if (dataAbovecard?.[0]?.status === "CARD_OK") {
+      cardStatus = "CARD_BLOCKED";
+    } else {
+      cardStatus = "CARD_OK";
+    }
+
+    console.log(cardStatus, freezeCardId, "this is status");
+    const freezeApi = await apiFreezeCall.FreezeUpdateCard(
+      freezeCardId,
+      cardStatus
+    );
+    // setFrozen(!isFrozen);
+
+    loadData();
+    cardFreezed();
+  };
 
   return (
     <AppScreen>
@@ -177,10 +238,15 @@ export default function MyCards({ navigation }) {
         </View>
 
         <CardCarousel
-          cards={cards}
+          cards={filteredCards}
           onCardPress={() => console.log("pressed")}
           onPress={() => navigation.navigate("AddNewCard", cardCategory)}
-          onTopCard={(card) => console.log("Card Carousel", card)}
+          onTopCard={(card) => {
+            console.log("Card Carousel", card), cardFreezed();
+          }}
+          setSelectedCardForFreeze={setSelectedCardForFreeze}
+          isFrozen={isFrozen}
+          dataAbovecard={dataAbovecard}
         />
 
         <TapContainer />
@@ -218,11 +284,10 @@ export default function MyCards({ navigation }) {
           </View>
           <Icon
             title={"freeze"}
-            onSettingsPress={() => {
-              console.log("freeze");
-              setFrozen(!isFrozen);
-            }}
-            isFrozen={!isFrozen}
+            onSettingsPress={handleFreeze}
+            isFrozen={isFrozen}
+            // filteredCards={filteredCards}
+            // selectedCardforFreeze={selectedCardforFreeze}
           />
         </View>
         <View style={{ marginTop: "5%" }}>
@@ -310,6 +375,10 @@ const CardSelector = ({ onCardSelect }) => {
 
   const [isSelected, setSelected] = useState("physical");
 
+  useEffect(() => {
+    handleCardSelect("physical");
+  }, []);
+
   const handleCardSelect = (card) => {
     setSelected(card);
     onCardSelect(card);
@@ -343,11 +412,26 @@ const CardSelector = ({ onCardSelect }) => {
   );
 };
 
-const CardCarousel = ({ cards, onCardPress, onPress, onTopCard }) => {
-  console.log(cards, "this is card");
+const CardCarousel = ({
+  cards,
+  onCardPress,
+  onPress,
+  onTopCard,
+  setSelectedCardForFreeze,
+  isFrozen,
+  dataAbovecard,
+}) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
+  console.log(dataAbovecard, "this is data above card");
+  // const [frozen, setFrozen] = useState(false);
+  let frozen = false;
+  if (isFrozen === "CARD_BLOCKED") {
+    frozen = true;
+  } else {
+    frozen = false;
+  }
 
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
@@ -358,6 +442,8 @@ const CardCarousel = ({ cards, onCardPress, onPress, onTopCard }) => {
         const topCardIdx = Math.floor(scrollPosition / ITEM_WIDTH);
         // console.log("Top Card Index:", topCardIdx);
         onTopCard(topCardIdx);
+        console.log("Top Card Index:", topCardIdx);
+        setSelectedCardForFreeze(topCardIdx);
         // You can use topCardIdx for any further processing or actions
       },
       // You can add more configuration options for the Animated.event if needed
@@ -446,10 +532,55 @@ const CardCarousel = ({ cards, onCardPress, onPress, onTopCard }) => {
                     resizeMode: "contain",
                   }}
                 />
+
                 {/* Back Side */}
 
                 <CardBackSide />
               </FlipCard>
+              <View
+                style={{
+                  position: "absolute",
+                  height: "93%",
+                  width: ITEM_WIDTH,
+                  top: "50%",
+                  left: 15,
+                }}
+              >
+                <Text
+                  style={{ color: "white", fontSize: 16 }}
+                >{`Name on the card:  ${
+                  dataAbovecard?.[0]?.embossing?.firstName
+                    ? dataAbovecard?.[0]?.embossing?.firstName
+                    : "Name"
+                }`}</Text>
+                <Text
+                  style={{ color: "white", fontSize: 16 }}
+                >{`Card Number:   ****${
+                  dataAbovecard?.[0]?.maskedCardNumber
+                    ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
+                    : "4444"
+                }`}</Text>
+              </View>
+              {frozen ? (
+                <View
+                  style={{
+                    position: "absolute",
+                    height: "93%",
+                    width: ITEM_WIDTH,
+                    top: 12,
+                    left: 15,
+                  }}
+                >
+                  <Image
+                    source={require("../assets/cardFrozen.png")}
+                    style={{
+                      flex: 1,
+                      // marginLeft: "25%",
+                      resizeMode: "stretch",
+                    }}
+                  />
+                </View>
+              ) : null}
             </Animated.View>
           </TouchableOpacity>
         );
@@ -578,6 +709,14 @@ const TapContainer = () => (
 );
 
 const Icon = ({ title, isFrozen, onSettingsPress }) => {
+  console.log(isFrozen, "this is frozen");
+  // const [frozen, setFrozen] = useState(false);
+  let frozen = false;
+  if (isFrozen === "CARD_BLOCKED") {
+    frozen = true;
+  } else {
+    frozen = false;
+  }
   return (
     <TouchableOpacity
       onPress={onSettingsPress}
@@ -585,9 +724,7 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
     >
       <View
         style={{
-          backgroundColor: isFrozen
-            ? GlobalStyles.Color.black
-            : colors.babyBlue,
+          backgroundColor: frozen ? GlobalStyles.Color.black : colors.babyBlue,
           height: 50,
           width: 50,
           justifyContent: "center",
@@ -598,15 +735,15 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
       >
         {title !== "settings" ? (
           <MaterialCommunityIcons
-            name={!isFrozen ? "snowflake" : "snowflake-off"}
-            color={isFrozen ? colors.babyBlue : GlobalStyles.Color.black}
+            name={!frozen ? "snowflake" : "snowflake-off"}
+            color={frozen ? colors.babyBlue : GlobalStyles.Color.black}
             size={30}
           />
         ) : (
           <Ionicons name="settings-sharp" size={30} />
         )}
       </View>
-      {!isFrozen ? (
+      {!frozen ? (
         <Text style={styles.settingTitle}>{title}</Text>
       ) : (
         <Text style={styles.settingTitle}>{`Un${title}`}</Text>

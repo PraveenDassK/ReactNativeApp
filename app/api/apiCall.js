@@ -309,8 +309,18 @@ const GetAllCardDetails = async (Id) => {
  * @returns Bool True if successful
  */
 const FreezeCard = async (Id, freeze) => {
+  console.log(`Frozen card`, typeof freeze, freeze);
   const request = await client.patch(
     `https://api.carbonyte.io/walletmodule/Enfuce/UpdateVirtualCard?cardId=${Id}`,
+    {
+      status: freeze,
+    }
+  );
+  return request;
+};
+const FreezeUpdateCard = async (Id, freeze) => {
+  const request = await client.patch(
+    `https://api.carbonyte.io/walletmodule/Enfuce/UpdateVirtualCard/${Id}`,
     {
       status: freeze,
     }
@@ -449,7 +459,7 @@ const GetUserImpact = async (Id) => {
     const request = await client.get(
       `https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/${Id}`
     );
-    console.log(request)
+    console.log(request);
     const returnData = request.data.details;
     return {
       totalOffset: returnData.data.totalOffsetInTonnes.toFixed(1),
@@ -513,7 +523,7 @@ const GetTransactionsYear = async (Id) => {
   console.log(endOfMonth);
 
   requestData?.content?.forEach((element) => {
-    if(element.credit == true){
+    if (element.credit == true) {
       total += element.amount;
       let category = endOfMonth.diff(element.transactionDate, "months");
       data[category] += element.amount;
@@ -634,7 +644,8 @@ const GetLimits = async (Id) => {
     return {
       spend: spend,
       monthlyAmount: 0,
-    };  }
+    };
+  }
 
   console.log("request data", request.data);
   const requestData = request?.data?.details;
@@ -773,9 +784,17 @@ const RetriveGroupBeneficiares = async (Id) => {
 };
 
 /**Posters */
-const SendFunds = (amount, from, name, accountNumber, sortCode, address,reference) => {
-  console.log(reference)
-  let responseText = reference ? reference : "Transfer"
+const SendFunds = (
+  amount,
+  from,
+  name,
+  accountNumber,
+  sortCode,
+  address,
+  reference
+) => {
+  console.log(reference);
+  let responseText = reference ? reference : "Transfer";
   const request = client.post(
     "https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
     {
@@ -907,4 +926,5 @@ export default {
   GetScheduledPayments,
   FreezeCard,
   TerminateCard,
+  FreezeUpdateCard
 };

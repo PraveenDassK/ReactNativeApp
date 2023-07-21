@@ -206,6 +206,7 @@ const AddNewCard = ({ navigation, route }) => {
     physicalCardObj.cardAddress.city = selectedAddress?.city;
     physicalCardObj.cardAddress.zipCode = selectedAddress?.postcode;
     physicalCardObj.cardAddress.region = selectedAddress?.area;
+    physicalCardObj.cardAddress.country = selectedAddress?.country;
     setShowPinModal(true);
   };
 
@@ -228,6 +229,7 @@ const AddNewCard = ({ navigation, route }) => {
         navigation.navigate("MyCards");
       } else {
         alert(response?.data?.message);
+        setIsLoading(false);
       }
     } else {
       let response = await apiVirtualCard.getNewPhysicalCard(
@@ -242,7 +244,9 @@ const AddNewCard = ({ navigation, route }) => {
 
         navigation.navigate("MyCards");
       } else {
+        console.log(response, "this is error");
         alert(response?.data?.message);
+        setIsLoading(false);
       }
     }
   };
@@ -301,6 +305,7 @@ const AddNewCard = ({ navigation, route }) => {
           city: "City 6",
           locale: "en_GB",
           postcode: postcode,
+          country: "GBR",
         },
       },
     ];
