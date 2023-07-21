@@ -74,11 +74,11 @@ export default function MyCards({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [cardData, setCardData] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
-
+  const [cardCategory,setCardCategory] =useState("")
+  console.log(cardCategory,"this is a card category");
   useEffect(() => {
     loadData();
   }, []);
-
   const getFullCardData = async () => {
     const cardObject = await api.GetCardFromID("714613712");
     const cards = await apiCall.GetCardByAccount("686283112");
@@ -140,6 +140,7 @@ export default function MyCards({ navigation }) {
       });
     };
     setFilteredCards(filterCardsByType(type));
+    setCardCategory(type)
   };
 
   const handleTransactionFilter = (item) => {
