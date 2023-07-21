@@ -24,7 +24,7 @@ const CarbonFootprints = ({ navigation }) => {
     <ScrollView>
       <ImageBackground
         style={{ height: 280 }}
-        source={require("../assets/backgrounds/beach.jpg")}
+        source={require("../assets/backgrounds/carbonInside.png")}
       >
         <View style={styles.TopImageheader}>
           <View style={styles.backgroundTextContainer}>

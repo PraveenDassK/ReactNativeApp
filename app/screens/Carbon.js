@@ -12,6 +12,7 @@ import {
   SafeAreaView,
   ImageBackground,
   Text,
+  Dimensions
 } from "react-native";
 import * as Device from "expo-device";
 import { Canvas } from "@shopify/react-native-skia";
@@ -35,6 +36,8 @@ import * as Clipboard from "expo-clipboard";
 import colors from "../config/colors";
 import { BlurView } from "expo-blur";
 import CarbonFootprints from "./CarbonFootprints";
+
+const screenWidth = Dimensions.get("window").width
 
 const Carbon = ({ route, navigation }) => {
   const { height, width } = useWindowDimensions();
@@ -137,10 +140,13 @@ const Carbon = ({ route, navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "grey" }}>
+      <View>
       <ImageBackground
-        style={{ height: 280 }}
-        source={require("../assets/backgrounds/beach.jpg")}
-      ></ImageBackground>
+        resizeMode="cover"
+        style={{ width: screenWidth , height: screenWidth * 1, marginTop: -70 }}
+        source={require("../assets/backgrounds/carbonInside.png")}
+      />
+      </View>
       <View
         style={{
           backgroundColor: "#F7F7F7",
@@ -150,7 +156,7 @@ const Carbon = ({ route, navigation }) => {
           justifyContent: "flex-end",
           borderTopStartRadius: 20,
           borderTopEndRadius: 20,
-          marginTop: -20,
+          marginTop: -80,
         }}
       >
         <BlurView
@@ -525,7 +531,7 @@ const Carbon = ({ route, navigation }) => {
 const CarbonFeature = () => (
   <View style={{flex:1}}>
   <View style={{flex:1, paddingHorizontal: "15%", paddingTop: "15%"}}>
-    <Text style={{fontSize: 30, fontFamily: "Montserrat-Regular"}}>Embracing a <Text style={{fontFamily: "Montserrat"}}>Carbon-Neutral Lifestyle</Text></Text>
+    <Text style={{fontSize: 30, fontFamily: "Montserrat-Regular", color: 'white'}}>Embracing a <Text style={{fontFamily: "Montserrat"}}>Carbon-Neutral Lifestyle</Text></Text>
   </View>
   <View style={{flex:3, padding: "10%"}}>
     <View style={{justifyContent: "center", alignItems: "center", marginBottom: "10%"}}>
@@ -562,7 +568,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   blurView: {
-    backgroundColor: "rgba(255,255,255,0.5)",
+   
     borderRadius: 20,
     height: "120%",
     marginBottom: "5%",
@@ -576,7 +582,7 @@ const styles = StyleSheet.create({
   customTitle: {
     fontWeight: Platform.OS === "android" ? "normal" : "700",
     fontFamily: "Helvetica",
-    color: GlobalStyles.Color.black,
+    color: "black",
   },
   description: {
     color: "grey",
@@ -630,12 +636,12 @@ const styles = StyleSheet.create({
   AppText: {
     fontWeight: "bold",
     textAlign: "center",
-    color: GlobalStyles.Color.black,
+    color: "black",
   },
   textSub: {
     fontWeight: "bold",
     textAlign: "left",
-    color: GlobalStyles.Color.black,
+    color: "black",
   },
   title: {
     fontSize: moderateScale(30),
@@ -659,7 +665,7 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(15),
     paddingVertical: verticalScale(20),
     paddingHorizontal: horizontalScale(20),
-    backgroundColor: GlobalStyles.Color.white,
+    backgroundColor: "white",
     width: "100%",
   },
   subTitleText: {
