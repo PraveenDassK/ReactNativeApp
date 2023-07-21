@@ -110,6 +110,7 @@ const AddNewCard = ({ navigation, route }) => {
   //getting card category from route
 
   const cardCategory = route.params;
+  console.log(cardCategory, "this is a card category");
 
   //validation for firstName and lastName
   const validationSchema = Yup.object().shape({
@@ -135,14 +136,14 @@ const AddNewCard = ({ navigation, route }) => {
   });
 
   // to check remove post code from array of input fields
-  useEffect(() => {
-    if (cardCategory === "virtual") {
-      items.pop();
-      setData(items);
-    } else {
-      setData(items);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (cardCategory === "virtual") {
+  //     items.pop();
+  //     setData(items);
+  //   } else {
+  //     setData(items);
+  //   }
+  // }, []);
   //loading data to get EnfuseAccountId and EnfuseCustomerId
   useEffect(() => {
     loadData();
@@ -177,12 +178,12 @@ const AddNewCard = ({ navigation, route }) => {
       placeholder: "Enter your name",
       initialValue: "lastName",
     },
-    {
-      id: 3,
-      label: "Postcode",
-      placeholder: "Enter the postcode",
-      initialValue: "postcode",
-    },
+    // {
+    //   id: 3,
+    //   label: "Postcode",
+    //   placeholder: "Enter the postcode",
+    //   initialValue: "postcode",
+    // },
   ];
 
   // form submit to set req Obj
@@ -222,7 +223,7 @@ const AddNewCard = ({ navigation, route }) => {
         requestObj
       );
       if (response?.data?.status === 201) {
-        alert("New Virtual Card created successfully");
+        alert("Your new card has been made successfully");
 
         navigation.navigate("MyCards");
       } else {
@@ -236,7 +237,7 @@ const AddNewCard = ({ navigation, route }) => {
         physicalCardObj
       );
       if (response?.data?.status === 201) {
-        alert("New Physical Card created successfully");
+        alert("Your new card has been ordered  successfully");
         console.log(response?.data, "this is a new physical card");
 
         navigation.navigate("MyCards");
@@ -352,7 +353,7 @@ const AddNewCard = ({ navigation, route }) => {
               }) => (
                 <>
                   <View style={{ paddingHorizontal: 40 }}>
-                    {data.map((item, index) => {
+                    {items?.map((item, index) => {
                       return (
                         <View
                           key={item.id}
@@ -413,29 +414,58 @@ const AddNewCard = ({ navigation, route }) => {
                         autoScroll={false}
                       />
                     </View>
+                    {/* Show postcode and address  if category not virtual */}
                     {cardCategory !== "virtual" ? (
-                      <View
-                        style={{
-                          width: "100%",
-                          marginVertical: "5%",
-                        }}
-                      >
-                        <Text style={styles.lable}>{"Address"}</Text>
-
-                        <Dropdown
-                          data={addressData}
-                          value={selectedAddress}
-                          labelField="label"
-                          valueField="value"
-                          onChange={(item) => {
-                            setSelectedAddress(item.value);
+                      <>
+                        <View
+                          style={{
+                            marginTop: 22,
                           }}
-                          style={styles.dropdown}
-                          containerStyle={styles.containerStyle}
-                          placeholder="Select Address"
-                          autoScroll={false}
-                        />
-                      </View>
+                        >
+                          <Text style={styles.formLabel}>{"PostCode"}</Text>
+
+                          <TextInput
+                            style={styles.inputBox}
+                            onBlur={() => setFieldTouched("postcode")}
+                            onChangeText={(text) => {
+                              // Update the firstName field with the new value entered in the TextInput
+                              setFieldValue("postcode", text);
+                              console.log(text, "this is the new value");
+                              handleAddress(text);
+                            }}
+                            placeholder={"Enter your postcode"}
+                            // value={values}
+                          />
+
+                          <ErrorMessage
+                            error={errors["postcode"]}
+                            visible={touched["postcode"]}
+                          />
+                        </View>
+
+                        <View
+                          style={{
+                            width: "100%",
+                            marginVertical: "5%",
+                          }}
+                        >
+                          <Text style={styles.lable}>{"Address"}</Text>
+
+                          <Dropdown
+                            data={addressData}
+                            value={selectedAddress}
+                            labelField="label"
+                            valueField="value"
+                            onChange={(item) => {
+                              setSelectedAddress(item.value);
+                            }}
+                            style={styles.dropdown}
+                            containerStyle={styles.containerStyle}
+                            placeholder="Select Address"
+                            autoScroll={false}
+                          />
+                        </View>
+                      </>
                     ) : null}
                   </View>
                   <View
