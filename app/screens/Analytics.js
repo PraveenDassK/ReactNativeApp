@@ -729,17 +729,17 @@ const Bazier = ({ graphData }) => {
             <View>
               <Svg>
                 <Rect
-                  x={tooltipPos.x - 15}
+                  x={tooltipPos.x - 30}
                   y={tooltipPos.y + 10}
-                  width="60"
-                  height="30"
+                  width={60}
+                  height={30}
                   fill="#179424"
                   rx={15}
                   ry={15}
                 />
                 <TextSVG
-                  x={tooltipPos.x + 15}
-                  y={tooltipPos.y + 30}
+                  x={tooltipPos.x }
+                  y={tooltipPos.y + 25}
                   fill="white"
                   fontSize="8"
                   fontWeight="bold"
