@@ -24,7 +24,7 @@ const CarbonFootprints = ({ navigation }) => {
     <ScrollView>
       <ImageBackground
         style={{ height: 280 }}
-        source={require("../assets/backgrounds/beach.jpg")}
+        source={require("../assets/backgrounds/carbonInside.png")}
       >
         <View style={styles.TopImageheader}>
           <View style={styles.backgroundTextContainer}>
@@ -62,7 +62,7 @@ const CarbonFootprints = ({ navigation }) => {
         }}
       >
         <ImageBackground
-          source={require("../assets/backgrounds/Coral.png")}
+          source={require("../assets/backgrounds/beach.jpg")}
           resizeMode="contain"
           imageStyle={{
             bottom: "-95%", // Whatever offset you want from the bottom
