@@ -536,8 +536,8 @@ const CarbonFeature = () => (
   <View style={{flex:3, padding: "10%"}}>
     <View style={{justifyContent: "center", alignItems: "center", marginBottom: "10%"}}>
       <Image
-        source={require("../assets/Dashboard/xeroLogo.png")}
-        style={{ height: 100, width: 100 }}
+        source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
+        style={{ height: 200, width: 200 }}
       />
     </View>
     <View>
