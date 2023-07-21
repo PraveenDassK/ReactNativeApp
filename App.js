@@ -100,7 +100,7 @@ export default function App() {
   //Carbonyte ID CC1
   const [customerDetails, setCustomerDetails] = useState("");
 
-  const [version, setVersion] = useState("0.0.11");
+  const [version, setVersion] = useState("0.0.10");
 
   const [missingAccountSetup, setMissingAccountSetup] = useState(false);
 
@@ -209,7 +209,7 @@ export default function App() {
   const restoreToken = async () => {
     console.log("trying for restore token");
     //Get the token from storage
-    const token = await authStorage.removeToken();
+    const token = await authStorage.getToken();
     if (!token) {
       setIsLoading(false);
       return;
