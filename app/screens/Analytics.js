@@ -201,9 +201,9 @@ const Analytics = ({ navigation }) => {
          tint="light"
          intensity={60}
         style={styles.innerContainer}>
-          <Text>
+          {/* <Text>
             Total Spent this {active}
-          </Text>
+          </Text> */}
           {graphData && <Bazier graphData={graphData} />}
           {graphData && (
             <View
@@ -733,7 +733,7 @@ const Bazier = ({ graphData }) => {
               <Svg>
                 <Rect
                   x={tooltipPos.x - 30}
-                  y={tooltipPos.y + 10}
+                  y={tooltipPos.y + 8}
                   width={60}
                   height={30}
                   fill="#179424"
