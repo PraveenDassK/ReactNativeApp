@@ -106,9 +106,9 @@ export default function MyCards({ navigation }) {
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
 
-    // const cards = await apiCall.GetCardByAccount("686283112");
+    const cards = await apiCall.GetCardByAccount("686283112");
     console.log(cards);
-    setCardData(cards);
+    // setCardData(cards);
     //     console.log(cards);
     //     const currentCard = cards[cardIndex];
     //     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
@@ -177,7 +177,7 @@ export default function MyCards({ navigation }) {
         </View>
 
         <CardCarousel
-          cards={cards}
+          cards={[]}
           onCardPress={() => console.log("pressed")}
           onPress={() => navigation.navigate("AddNewCard")}
           onTopCard={(card) => console.log('Card Carousel', card)}

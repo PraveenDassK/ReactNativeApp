@@ -26,6 +26,7 @@ import CompanyDirectors from "../components/RegistrationDirectorsPartners.jsx";
 import CompanyConfirm from "../components/RegistrationCompanySendDetails";
 
 import colors from "../config/colors";
+import { add } from "react-native-reanimated";
 
 const Registration = ({ navigation }) => {
 
@@ -141,7 +142,7 @@ const Registration = ({ navigation }) => {
         setScreenToShow("CompanyAddress");
         return;
       case "CompanyAddress":
-        //setPersonalDetails(details);
+        setAddresses(details);
         setScreenToShow("CompanyInformation");
         return;
       case "CompanyInformation":
@@ -272,7 +273,7 @@ const Registration = ({ navigation }) => {
           <CompanyAddress
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
-            companyAddresses={companyHouse}
+            companyAddresses = {companyHouse}
           />
         );
       case "CompanyInformation":
@@ -315,7 +316,7 @@ const Registration = ({ navigation }) => {
       case "CompanyConfirm":
         return (
           <CompanyConfirm
-            data={companyHouse}
+            data = {companyHouse}
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
           />
@@ -377,17 +378,14 @@ const Registration = ({ navigation }) => {
             "marketingChoices": ""
           }
         ]
-      console.log(regData)
       const response = await apiLogin.RegisterPersonalAccount(regData)
-      console.log(response.data)
       // If registration was not successfull
       if (!response.data.result) return false;
       // return false;
       return true;
     } else {
       //Business registration
-      const businessRegData = companyHouse
-      const regObj = {
+      const newRegObject = {
         "type": companyHouse.type,
         "company_status": companyHouse.company_status,
         "etag": companyHouse.etag,
@@ -397,6 +395,10 @@ const Registration = ({ navigation }) => {
         "targetCustomer": "People",
         "customerOutOfUk": "True",
         "sic_codes": companyHouse.sic_codes,
+
+        "sic_category": "A",
+        "expectedMonthlySpendings": 0,
+
         "registered_office_is_in_dispute": companyHouse.registered_office_is_in_dispute,
         "jurisdiction": companyHouse.jurisdiction,
         "undeliverable_registered_office_address": companyHouse.undeliverable_registered_office_address,
@@ -409,6 +411,7 @@ const Registration = ({ navigation }) => {
         "has_insolvency_history": companyHouse.has_insolvency_history,
         "has_charges": companyHouse.has_charges,
         "confirmation_statement": companyHouse.confirmation_statement,
+
         "registered_office_address": {
           "country": "UK",
           "address_line_1": companyHouse.registered_office_address.address_line_1,
@@ -419,123 +422,31 @@ const Registration = ({ navigation }) => {
           "locale": "en_GB",
           "dateMovedIn": "2010-01-01",
         },
-
         "trading_address": {
           "country": "UK",
-          "address_line_1": companyHouse.registered_office_address.address_line_1,
-          "postal_code": companyHouse.registered_office_address.postal_code,
-          "locality": companyHouse.registered_office_address.locality,
-          "address_line_2": companyHouse.registered_office_address.address_line_2,
-          "region": "London",
-          "locale": "en_GB",
-          "dateMovedIn": "2010-01-01",
+          "countryCode": "UK",
+          "address_line_1": addresses.address1,
+          "address_line_2": addresses.address2,
+          "postal_code": addresses.postcode,
+          "locality": addresses.city,
+          "region": addresses.area,
+          "locale": addresses.locale,
+          "dateMovedIn": "01-01-2023"
         },
 
         "has_super_secure_pscs": companyHouse.has_super_secure_pscs,
         "can_file": companyHouse.can_file,
         "acceptanceDateTime": "29-06-2023",
         "policyVersion": "1",
-        "sic_category": "A"
       }
-
-      const newRegObject = {
-        "type": companyHouse.type,
-        "company_status": companyHouse.company_status,
-        "etag": companyHouse.etag,
-        "aboutBusiness": companyInformation,
-        "incomeSources": ["Sales revenue"],
-        "operationTime": companyOperations,
-        "targetCustomer": "People",
-        "customerOutOfUk": "True",
-        "sic_codes": companyHouse.sic_codes,
-
-        "sic_category": "",
-        "expectedMonthlySpendings": 0,
-
-        "registered_office_is_in_dispute": false,
-        "jurisdiction": "",
-        "undeliverable_registered_office_address": false,
-        "links": {
-          "self": "",
-          "filing_history": "",
-          "persons_with_significant_control": "",
-          "officers": ""
-        },
-        "company_name": "",
-        "accounts": {
-          "next_made_up_to": "",
-          "next_due": "",
-          "overdue": false,
-          "accounting_reference_date": {
-            "month": "",
-            "day": ""
-          },
-          "last_accounts": {
-            "type": "",
-            "made_up_to": "",
-            "period_start_on": "",
-            "period_end_on": ""
-          },
-          "next_accounts": {
-            "overdue": false,
-            "due_on": "",
-            "period_start_on": "",
-            "period_end_on": ""
-          }
-        },
-
-        "previous_company_names": [
-          {
-            "ceased_on": "",
-            "effective_from": "",
-            "name": ""
-          }
-        ],
-        "date_of_creation": "",
-        "company_number": "",
-        "has_insolvency_history": false,
-        "has_charges": false,
-        "confirmation_statement": {
-          "next_made_up_to": "",
-          "next_due": "",
-          "overdue": false,
-          "last_made_up_to": ""
-        },
-        "registered_office_address": {
-          "country": "",
-          "countryCode": "",
-          "address_line_1": "",
-          "address_line_2": "",
-          "postal_code": "",
-          "locality": "",
-          "region": "",
-          "locale": "",
-          "dateMovedIn": ""
-        },
-        "trading_address": {
-          "country": "",
-          "countryCode": "",
-          "address_line_1": "",
-          "address_line_2": "",
-          "postal_code": "",
-          "locality": "",
-          "region": "",
-          "locale": "",
-          "dateMovedIn": ""
-        },
-        "has_super_secure_pscs": false,
-        "can_file": false,
-        "acceptanceDateTime": "dd-MM-yyyy",
-        "policyVersion": ""
-      }
-      console.log(regObj)
-      const response = await apiLogin.RegisterBusinessAccount(regObj, "AA")
+      console.log(newRegObject)
+      const response = await apiLogin.RegisterBusinessAccount(newRegObject,"AA")
       console.log(response)
 
       if (!response.data.result) return response.data.resultMessage;
       console.log(response)
       // return false;
-      return true;
+      // return true;
     }
   }
 
