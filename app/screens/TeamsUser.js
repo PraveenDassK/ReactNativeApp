@@ -28,9 +28,10 @@ const TeamsUser = ({ navigation, route }) => {
             <Text>
                 {userData.name}
             </Text>
-            <RecentTransactions/>
+            <RecentTransactions />
+
             <Button
-                title = {"delete"}
+                title={"delete"}
                 onPress={() => deleteUser()}
             />
         </View>
