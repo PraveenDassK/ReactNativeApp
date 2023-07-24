@@ -34,27 +34,27 @@ const SecurityAndPrivacy = ({ navigation }) => {
     restoreSignIn();
   }, []);
 
-  useEffect(() => {
-    if (isEnabled === true) {
-      authStorage.storeSignInSetting(
-        JSON.stringify({ signedIn: `${isEnabled}` })
-      );
-      console.log("isEnabled", isEnabled);
-      // potential authenticate()
-    }
-    if (isEnabled === false) {
-      authStorage.storeSignInSetting(
-        JSON.stringify({ signedIn: `${isEnabled}` })
-      );
-      console.log("isNotEnabled", isEnabled);
-    }
-  }, [isEnabled]);
+  // useEffect(() => {
+  //   if (isEnabled === true) {
+  //     authStorage.storeSignInSetting(
+  //       JSON.stringify({ signedIn: `${isEnabled}` })
+  //     );
+  //     console.log("isEnabled", isEnabled);
+  //     // potential authenticate()
+  //   }
+  //   if (isEnabled === false) {
+  //     authStorage.storeSignInSetting(
+  //       JSON.stringify({ signedIn: `${isEnabled}` })
+  //     );
+  //     console.log("isNotEnabled", isEnabled);
+  //   }
+  // }, []);
 
   const restoreSignIn = async () => {
     const token = await authStorage.getSignInSettings();
     if (!token) return;
     console.log("restore token found in security", token.includes("true"));
-    setIsEnabled(token.includes("true"));
+    // setIsEnabled(token.includes("true"));
   };
 
   //Setts the settings when coming ot the page
@@ -65,18 +65,44 @@ const SecurityAndPrivacy = ({ navigation }) => {
   const setToggles = () => {
     console.log(settings);
     settings.hideBalance ? setIsEnabled1(true) : null;
-    settings.contactAccess ? setIsEnabled2(true) : null;
-    settings.transactionSharing ? setIsEnabled3(true) : null;
+    settings.contactAccess ? setIsEnabled3(true) : null;
+    settings.transactionSharing ? setIsEnabled2(true) : null;
+    settings.faceId ? setIsEnabled(true) : null;
   };
 
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () => {
+    if(!isEnabled){
+      setIsEnabled(true);
+
+    }else{
+      setIsEnabled(false);
+
+    }
+    // setIsEnabled((previousState) => !previousState);
+
+    setSettings((prev) => ({ ...prev, faceId: !prev.faceId }));
+  };
   const toggleSwitch1 = () => {
-    setIsEnabled1((previousState) => !previousState);
+    if(!isEnabled1){
+      setIsEnabled1(true);
+
+    }else{
+      setIsEnabled1(false);
+
+    }
+    // setIsEnabled1((previousState) => !previousState);
     setSettings((prev) => ({ ...prev, hideBalance: !prev.hideBalance }));
   };
   const toggleSwitch2 = () => {
-    setIsEnabled2((previousState) => !previousState);
-    setSettings((prev) => ({ ...prev, contactAccess: !prev.contactAccess }));
+    if(!isEnabled2){
+      setIsEnabled2(true);
+
+    }else{
+      setIsEnabled2(false);
+
+    }
+    // setIsEnabled2((previousState) => !previousState);
+    setSettings((prev) => ({ ...prev, transactionSharing: !prev.transactionSharing }));
   };
 
   return (
@@ -136,14 +162,14 @@ const SecurityAndPrivacy = ({ navigation }) => {
               false: GlobalStyles.Color.gray_600,
               true: GlobalStyles.Color.blue_100,
             }}
-            thumbColor={isEnabled3 ? "#f4f3f4" : "#f4f3f4"}
+            thumbColor={isEnabled2 ? "#f4f3f4" : "#f4f3f4"}
             onValueChange={toggleSwitch2}
             value={isEnabled2}
           />
         </View>
       </View>
 
-      <View style={{ paddingHorizontal: "5%", marginBottom: "10%"}}>
+      <View style={{ paddingHorizontal: "5%", marginBottom: "10%" }}>
         <Button
           title="Reset app passcode"
           style={styles.boxShadow}
@@ -161,7 +187,7 @@ const styles = StyleSheet.create({
     height: GlobalStyles.DivContainer.height,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
 
   titleTextRow: {
