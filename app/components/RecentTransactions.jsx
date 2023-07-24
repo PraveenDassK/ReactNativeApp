@@ -28,7 +28,7 @@ const RecentTransactions = ({ amount }) => {
   //All Income Expense
   const [typeSelection, setTypeSelection] = useState("All");
 
-  const { accountID } = useContext(AuthContext);
+  const { accountID ,darkMode} = useContext(AuthContext);
 
   useEffect(() => {
     loadData();
@@ -76,6 +76,7 @@ const RecentTransactions = ({ amount }) => {
         onTransaction={() => console.log("onTransaction")}
         transactions={filterTransactions}
         onTransactionFilter={(item) => handleTransactionFilter(item)}
+        darkMode={darkMode}
       />
     </View>
   );

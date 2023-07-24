@@ -57,7 +57,8 @@ const GlobalStyles = {
     gray_1500: "#232326",
     gray_1600: "#1f1f1f",
     gray_1700: "#1a1a1a",
-
+    buttonIconbg:"#D8EBF9",
+    darkTheme_bg:"#111111",
     gray_1800: "rgba(0, 0, 0, 0.87)",
     gray_1900: "rgba(0, 0, 0, 0)",
     gray_2000:"#505A63",

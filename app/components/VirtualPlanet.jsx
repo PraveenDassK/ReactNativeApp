@@ -3,7 +3,7 @@ import React from "react";
 import { treeImages } from "../assets/Forest/AllForest";
 import { turtleImages } from "../assets/Turtles/AllTurtles";
 import GlobalStyles from "../../GlobalStyles";
-const VirtualPlanetCard = ({ data, handleVirtual }) => {
+const VirtualPlanetCard = ({ data, handleVirtual, darkMode }) => {
   return (
     <>
       {data.map((eachValue, i) => {
@@ -14,7 +14,10 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
               <Text
                 style={{
                   fontSize: 15,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                   fontFamily: "Montserrat",
                 }}
               >
@@ -30,7 +33,7 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
                 />
               </View>
 
-              <View >
+              <View>
                 <Text
                   style={{
                     fontSize: 30,
@@ -43,7 +46,10 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: GlobalStyles.Color.indigo_100,
+                    color:
+                      darkMode === "DARK"
+                        ? GlobalStyles.Color.white
+                        : GlobalStyles.Color.indigo_100,
                     fontFamily: "Montserrat",
                     width: "80%",
                   }}
@@ -69,7 +75,7 @@ const VirtualPlanetCard = ({ data, handleVirtual }) => {
     </>
   );
 };
-const VirtualPlanet = ({ treeData, handleVirtual }) => {
+const VirtualPlanet = ({ treeData, handleVirtual, darkMode }) => {
   console.log(treeData?.totalAssets, "this is a virtual planet");
   const data = [
     {
@@ -93,7 +99,11 @@ const VirtualPlanet = ({ treeData, handleVirtual }) => {
   ];
   return (
     <View>
-      <VirtualPlanetCard data={data} handleVirtual={handleVirtual} />
+      <VirtualPlanetCard
+        data={data}
+        handleVirtual={handleVirtual}
+        darkMode={darkMode}
+      />
     </View>
   );
 };
@@ -114,6 +124,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 5,
-    
   },
 });

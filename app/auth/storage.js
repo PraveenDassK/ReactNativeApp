@@ -3,7 +3,8 @@ import * as SecureStore from "expo-secure-store";
 const key = "authToken";
 const settingsKey = "securityAndPrivacy";
 const accountKey = "limits";
-const passcodeKey = "passcode"
+const passcodeKey = "passcode";
+const colorTheme = "themeColor";
 const storeToken = async (authToken) => {
   try {
     await SecureStore.setItemAsync(key, authToken);
@@ -25,6 +26,34 @@ const removeToken = async () => {
     await SecureStore.deleteItemAsync(key);
   } catch (error) {
     console.log("Error removing the auth token", error);
+  }
+};
+
+const storeColor = async (color) => {
+  console.log(color, "this is the Color");
+  try {
+    await SecureStore.setItemAsync(colorTheme, color);
+  } catch (error) {
+    console.log("Error storing the color", error);
+  }
+};
+
+const getColor = async () => {
+  try {
+    console.log(colorTheme,"this is a color on get");
+    const result = await SecureStore.getItemAsync(colorTheme);
+  console.log(result,"this is result")
+    return result;
+  } catch (error) {
+    console.log("Error getting the Color", error);
+  }
+};
+
+const removeColor = async () => {
+  try {
+    await SecureStore.deleteItemAsync(colorTheme);
+  } catch (error) {
+    console.log("Error removing the Color", error);
   }
 };
 
@@ -102,7 +131,10 @@ export default {
   storeLimits,
   getLimits,
   storePasscode,
-  getPasscode
+  getPasscode,
+  storeColor,
+  getColor,
+  removeColor,
 };
 
 // import jwtDecode from "jwt-decode";

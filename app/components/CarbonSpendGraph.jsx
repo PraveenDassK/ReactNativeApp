@@ -9,7 +9,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
-  const { userID, accountID } = useContext(AuthContext);
+  const { userID, accountID, darkMode } = useContext(AuthContext);
   const [totalFootprint, setTotalFootprint] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -63,13 +63,16 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
         children={
           <View>
             <AppText
-            style={{
-              fontSize: 25,
-              fontFamily: "Montserrat-Bold",
-              width: 250,
-              textAlign: "center",
-              color:GlobalStyles.Color.black,
-            }}
+              style={{
+                fontSize: 25,
+                fontFamily: "Montserrat-Bold",
+                width: 250,
+                textAlign: "center",
+                color:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.white
+                    : GlobalStyles.Color.black,
+              }}
             >
               Total
             </AppText>
@@ -79,8 +82,10 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
                 width: 250,
                 fontFamily: "Montserrat-Bold",
                 textAlign: "center",
-                color:GlobalStyles.Color.black,
-
+                color:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.white
+                    : GlobalStyles.Color.black,
               }}
             >
               {totalFootprint}
@@ -91,8 +96,10 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
                 fontFamily: "Montserrat-Bold",
                 width: 250,
                 textAlign: "center",
-                color:GlobalStyles.Color.black,
-
+                color:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.white
+                    : GlobalStyles.Color.black,
               }}
             >
               kg CO{"\u2082"}
@@ -100,7 +107,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
           </View>
         }
       />
-      <View >
+      <View>
         {carbnonSpendData.map((eachValue, i) => {
           let value = eachValue?.y / sumofValues;
           console.log(value, "this is value");
@@ -114,16 +121,38 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
                   paddingHorizontal: 5,
                 }}
               >
-                <Text style={styles.headingText}>{eachValue?.x}</Text>
-                <Text style={styles.headingText}>{eachValue?.y} kg</Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.boldheadindText
+                      : styles.headingText
+                  }
+                >
+                  {eachValue?.x}
+                </Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.boldheadindText
+                      : styles.headingText
+                  }
+                >
+                  {eachValue?.y} kg
+                </Text>
               </View>
               <Progress.Bar
                 progress={value}
                 width={300}
                 height={30}
                 borderRadius={15}
-                borderColor={GlobalStyles.Color.white}
-                unfilledColor={GlobalStyles.Color.backgroundColor}
+                borderColor={
+                  darkMode === "DARK" ? "transparent" : GlobalStyles.Color.white
+                }
+                unfilledColor={
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.lightBlack
+                    : GlobalStyles.Color.backgroundColor
+                }
                 color={getRandomItem(colorsArray, i)}
                 animated={true}
                 indeterminateAnimationDuration={1000}
@@ -176,6 +205,12 @@ const styles = StyleSheet.create({
   },
   headingText: {
     color: GlobalStyles.Color.gray_1600,
+    fontSize: 16,
+    fontFamily: "Montserrat-SemiBold",
+    marginBottom: 3,
+  },
+  boldheadindText: {
+    color: GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat-SemiBold",
     marginBottom: 3,

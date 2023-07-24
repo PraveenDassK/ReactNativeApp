@@ -13,6 +13,7 @@ const TransactionBody = ({
   credit,
   index,
   lastElement,
+  darkMode,
 }) => {
   function truncateString(str, maxLength) {
     if (str.length > maxLength) {
@@ -25,7 +26,12 @@ const TransactionBody = ({
     <BlurView
       tint="light"
       intensity={60}
-      style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
+      style={{
+        backgroundColor:
+          darkMode === "DARK"
+            ? "rgba(255, 255, 255, 0.5) "
+            : "rgba(255, 255, 255, 0.5)",
+      }}
     >
       <Pressable
         onPress={onTransaction}
@@ -52,17 +58,36 @@ const TransactionBody = ({
             />
           </View>
           <View>
-            <Text style={styles.bold} numberOfLines={1}>
+            <Text
+              style={darkMode === "DARK" ? styles.darkBold : styles.bold}
+              numberOfLines={1}
+            >
               {truncateString(description, 23)}
             </Text>
-            <Text style={styles.subText}>{moment(date).calendar()}</Text>
+            <Text
+              style={darkMode === "DARK" ? styles.darksubText : styles.subText}
+            >
+              {moment(date).calendar()}
+            </Text>
           </View>
         </View>
         <View>
-          <Text style={[styles.bold, { textAlign: "right" }]}>
+          <Text
+            style={
+              darkMode === "DARK"
+                ? [styles.darkBold, { textAlign: "right" }]
+                : [styles.bold, { textAlign: "right" }]
+            }
+          >
             {!credit ? "-" : "+"} £{amount.toFixed(2)}
           </Text>
-          <Text style={[styles.subText, { textAlign: "right" }]}>
+          <Text
+            style={
+              darkMode === "DARK"
+                ? styles.darksubText
+                : [styles.subText, { textAlign: "right" }]
+            }
+          >
             {moment(date).format("D MMM")}
           </Text>
         </View>
@@ -70,7 +95,10 @@ const TransactionBody = ({
       <View
         style={{
           marginHorizontal: "5%",
-          borderBottomColor: "white",
+          borderBottomColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.black
+              : GlobalStyles.Color.white,
           borderBottomWidth: index == lastElement ? 0 : 3,
         }}
       />
@@ -84,12 +112,24 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.black,
     fontSize: 14,
   },
+  darkBold: {
+    fontFamily: "Montserrat-SemiBold",
+    color: GlobalStyles.Color.white,
+    fontSize: 14,
+  },
   subText: {
     fontSize: 12,
     lineHeight: 15,
     fontFamily: "Montserrat-Regular",
-    color:GlobalStyles.Color.darkGray,
-    marginTop:"5%"
+    color: GlobalStyles.Color.darkGray,
+    marginTop: "5%",
+  },
+  darksubText: {
+    fontSize: 12,
+    lineHeight: 15,
+    fontFamily: "Montserrat-Regular",
+    color: GlobalStyles.Color.borderColor,
+    marginTop: "5%",
   },
 });
 

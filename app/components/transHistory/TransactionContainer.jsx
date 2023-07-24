@@ -4,18 +4,29 @@ import { View, Text, StyleSheet } from "react-native";
 import TransactionHeader from "./TransactionHeader";
 import { TransactionFooter } from "../transactions";
 import TransactionBody from "./TransactionBody";
+import GlobalStyles from "../../../GlobalStyles";
 
 const TransactionContainer = ({
   title = "Transactions",
   onTransaction,
   transactions,
   onTransactionFilter,
+  darkMode,
 }) => (
   <View style={styles.transactionContainer}>
-    <Text style={[styles.bold, styles.header]}>{title}</Text>
+    <Text
+      style={
+        darkMode === "DARK"
+          ? [styles.bold, styles.darkheader]
+          : [styles.bold, styles.header]
+      }
+    >
+      {title}
+    </Text>
 
     <TransactionHeader
       onTransactionFilter={(item) => onTransactionFilter(item)}
+      darkMode={darkMode}
     />
 
     {transactions.map(
@@ -29,6 +40,7 @@ const TransactionContainer = ({
           credit={credit}
           index={index}
           lastElement={transactions.length - 1}
+          darkMode={darkMode}
         />
       )
     )}
@@ -42,8 +54,9 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     padding: "5%",
   },
-  bold: {  fontFamily: 'Montserrat' },
+  bold: { fontFamily: "Montserrat" },
   header: { fontSize: 20 },
+  darkheader: { fontSize: 20, color: GlobalStyles.Color.white },
 });
 
 export default TransactionContainer;

@@ -110,6 +110,10 @@ export default function App() {
   //Shopping card Details
   const [cart, setCart] = useState([]);
 
+  //state for Dark and light mode Context
+
+  const [darkMode, setDarkMode] = useState("");
+
   const [settings, setSettings] = useState({
     faceId: false,
     hideBalance: false,
@@ -154,6 +158,17 @@ export default function App() {
     console.log("currentUser & isAuth on load", currentUser, isAuth);
   }, [currentUser, isAuth]);
 
+  // use Effect and Function to set Dark theme
+
+  useEffect(() => {
+    loadDarkTheme();
+  }, [darkMode]);
+
+  const loadDarkTheme = async () => {
+    const darkTheme = await authStorage.getColor();
+    console.log(darkTheme, "this is global dark");
+    setDarkMode(darkTheme);
+  };
   useEffect(() => {
     restoreToken();
     restoreSignIn();
@@ -289,7 +304,8 @@ export default function App() {
         expoPushToken,
         missingAccountSetup,
         setMissingAccountSetup,
-
+        darkMode,
+        setDarkMode,
         directors,
         setDirectors,
         beneficialOwners,

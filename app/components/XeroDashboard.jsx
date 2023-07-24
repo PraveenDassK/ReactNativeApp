@@ -1,19 +1,22 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React from "react";
 import GlobalStyles from "../../GlobalStyles";
-const XeroDashboard = () => {
+const XeroDashboard = ({ darkMode }) => {
   return (
     <View style={styles.container}>
       <View>
         <Image
-          source={require('../assets/Dashboard/xeroLogo.png')}
+          source={require("../assets/Dashboard/xeroLogo.png")}
           style={{ height: 100, width: 100 }}
         />
       </View>
       <View>
         <Text
           style={{
-            color: GlobalStyles.Color.lightBlack,
+            color:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.white
+                : GlobalStyles.Color.lightBlack,
             textAlign: "center",
             fontSize: 14,
             fontFamily: "Montserrat-Regular",
@@ -24,7 +27,7 @@ const XeroDashboard = () => {
           keep a track of all your transactions.
         </Text>
       </View>
-      <View style={{ width: "100%" ,display:"flex",alignItems:"center"}}>
+      <View style={{ width: "100%", display: "flex", alignItems: "center" }}>
         <Pressable style={styles.sendButton}>
           <Text style={styles.sendButtonText}>Know more</Text>
         </Pressable>
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
   sendButton: {
     height: 60,
     width: "50%",
-    backgroundColor:GlobalStyles.Color.lightBlack,
+    backgroundColor: GlobalStyles.Color.lightBlack,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -57,6 +60,6 @@ const styles = StyleSheet.create({
   sendButtonText: {
     color: GlobalStyles.Color.white,
     fontSize: 16,
-    fontFamily:"Montserrat-Medium"
+    fontFamily: "Montserrat-Medium",
   },
 });
