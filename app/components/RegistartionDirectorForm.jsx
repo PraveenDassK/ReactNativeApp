@@ -241,8 +241,6 @@ const RegistartionDirectorForm = ({
       setCountryStatus("Country is required ");
     } else if (!nationallityValue) {
       setNationallityStatus("Nationality is required ");
-    } else if (!occupatioinValue) {
-      setOccupatioinStatus("Occupation is required ");
     } else if (validateDOB(birthdate) === false) {
       setBirthError("Age must be above 18yrs");
     } else {
@@ -556,7 +554,7 @@ const RegistartionDirectorForm = ({
                     <PhoneInput
                       ref={phoneInput}
                       defaultValue={phoneNumber}
-                      defaultCode="IN"
+                      defaultCode="GB"
                       onChangeFormattedText={(text) => {
                         setPhoneNumber(text);
                       }}
@@ -578,7 +576,7 @@ const RegistartionDirectorForm = ({
                       value={genderValue}
                       labelField="label"
                       valueField="value"
-                      placeholder="Please enter the Gender"
+                      placeholder="Please enter your Gender"
                       onChange={(item) => {
                         console.log(item, "thsis is item selected");
                         setGenderValue(item.value, { shouldValidate: true });
@@ -598,7 +596,7 @@ const RegistartionDirectorForm = ({
                       value={martialValue}
                       labelField="label"
                       valueField="value"
-                      placeholder="Please enter the Marital Status"
+                      placeholder="Please enter your Marital Status"
                       onChange={(item) => {
                         console.log(item, "thsis is item selected");
                         setMartialValue(item.value, { shouldValidate: true });
@@ -622,7 +620,7 @@ const RegistartionDirectorForm = ({
                       value={employementValue}
                       labelField="label"
                       valueField="value"
-                      placeholder="Please enter the Employement Details"
+                      placeholder="Please enter your Employement Details"
                       onChange={(item) => {
                         console.log(item, "thsis is item selected");
                         setEmployementValue(item.value);
@@ -647,7 +645,7 @@ const RegistartionDirectorForm = ({
                     </Text>
                     <TextInput
                       style={styles.textInuput}
-                      placeholder="Enter the National Insurance No"
+                      placeholder="Enter your National Insurance No"
                       onChangeText={handleChange("id")}
                     />
                     <ErrorMessage error={errors.id} visible={touched.id} />
@@ -710,19 +708,7 @@ const RegistartionDirectorForm = ({
                           visible={touched.city}
                         />
                       </View>
-                      {/* <View
-                        style={{
-                          width: "100%",
-                          paddingHorizontal: 10,
-                          marginTop: 10,
-                        }}
-                      >
-                        <Text style={styles.textStyle}>Country</Text>
-                        <TextInput
-                          style={styles.textInuput}
-                          placeholder="Enter the Country"
-                        />
-                      </View> */}
+
                     </View>
                   )}
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
@@ -917,26 +903,7 @@ const RegistartionDirectorForm = ({
                       />
                     )}
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
-                    <Text style={styles.textStyle}>Occupation</Text>
-                    <Dropdown
-                      data={occupatioinMenu}
-                      value={occupatioinValue}
-                      labelField="label"
-                      valueField="value"
-                      placeholder="Please enter the Occupation"
-                      onChange={(item) => {
-                        console.log(item, "thsis is item selected");
-                        setOccupatioin(item.value);
-                      }}
-                      style={styles.addressDropdown}
-                      containerStyle={styles.containerStyle}
-                    />
-                    <ErrorMessage
-                      error={occupationStatusError}
-                      visible={occupationStatusError}
-                    />
-                  </View>
+
                   <View
                     style={{
                       width: "100%",
@@ -947,7 +914,7 @@ const RegistartionDirectorForm = ({
                     <Text style={styles.textStyle}>Total Income</Text>
                     <TextInput
                       style={styles.textInuput}
-                      placeholder="totalIncom"
+                      placeholder="Total income"
                       onChangeText={handleChange("totalIncome")}
                     />
                     <ErrorMessage

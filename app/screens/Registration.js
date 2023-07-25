@@ -77,7 +77,8 @@ const Registration = ({ navigation }) => {
       setPersonalBusiness(type);
     } else if (type == "Business") {
       //Change this back to RegistrationNumber once done
-      setScreenToShow("CompanyAddress");
+      // setScreenToShow("RegistrationNumber");
+      navigation.navigate("Directororpartner")
       setPersonalBusiness(type);
     } else {
       navigation.navigate("Login");
@@ -273,7 +274,7 @@ const Registration = ({ navigation }) => {
           <CompanyAddress
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
-            companyAddresses = {companyHouse}
+            companyAddresses={companyHouse}
           />
         );
       case "CompanyInformation":
@@ -316,7 +317,7 @@ const Registration = ({ navigation }) => {
       case "CompanyConfirm":
         return (
           <CompanyConfirm
-            data = {companyHouse}
+            data={companyHouse}
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
           />
@@ -386,7 +387,7 @@ const Registration = ({ navigation }) => {
     } else {
       //Business registration
       const newRegObject = {
-        "type": companyHouse.type,
+        "type": "LPARTNRSHP",//companyHouse.type,
         "company_status": companyHouse.company_status,
         "etag": companyHouse.etag,
         "aboutBusiness": companyInformation,
@@ -424,13 +425,13 @@ const Registration = ({ navigation }) => {
         },
         "trading_address": {
           "country": "UK",
-          "countryCode": "UK",
-          "address_line_1": addresses.address1,
-          "address_line_2": addresses.address2,
-          "postal_code": addresses.postcode,
-          "locality": addresses.city,
-          "region": addresses.area,
-          "locale": addresses.locale,
+          "countryCode": "GBR",
+          "address_line_1": companyHouse.registered_office_address.address_line_1,
+          "postal_code": companyHouse.registered_office_address.postal_code,
+          "locality": companyHouse.registered_office_address.locality,
+          "address_line_2": companyHouse.registered_office_address.address_line_2,
+          "region": "London",
+          "locale": "en_GB",
           "dateMovedIn": "01-01-2023"
         },
 
@@ -440,7 +441,7 @@ const Registration = ({ navigation }) => {
         "policyVersion": "1",
       }
       console.log(newRegObject)
-      const response = await apiLogin.RegisterBusinessAccount(newRegObject,"AA")
+      const response = await apiLogin.RegisterBusinessAccount(newRegObject, "AA")
       console.log(response)
 
       if (!response.data.result) return response.data.resultMessage;

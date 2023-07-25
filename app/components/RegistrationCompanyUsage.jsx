@@ -12,10 +12,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import Screen from "./Screen";
-import AuthContext from "../auth/context";
-import GlobalStyles from "../../GlobalStyles";
-import apiLoginRegister from "../api/apiLogin";
 import * as Yup from "yup";
 import {
   horizontalScale,
@@ -45,6 +41,15 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
     console.log("!");
     setScreenToShow("CompanyOperations");
   };
+
+  const companyData = [
+    { label: "LLC", value: "LLC" },
+    { label: "SOLETRADER", value: "SOLETRADER" },
+    { label: "OPARTNRSHP", value: "OPARTNRSHP" },
+    { label: "LPARTNRSHP", value: "LPARTNRSHP" },
+    { label: "LLP", value: "LLP" },
+    { label: "PLC", value: "PLC" },
+  ]
 
   return (
     <AuthScreen
@@ -86,6 +91,21 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
               checked={isChecked}
               onPress={() => setChecked(!isChecked)}
             />
+
+            <Dropdown
+              style={[styles.dropdown]}
+              containerStyle={styles.dropdownContainer}
+              data={companyData}
+              maxHeight={100}
+              labelField="label"
+              valueField="label"
+              placeholder={"Select an option"}
+              value={operationTime}
+              onChange={(item) => {
+                setOperationTime(item.value);
+              }}
+            />
+
             <Button
               title="Continue"
               color="black"

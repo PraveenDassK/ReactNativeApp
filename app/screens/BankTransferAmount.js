@@ -108,14 +108,16 @@ const BankTransferAmount = ({ route, navigation }) => {
     setIsLoading(true);
 
     const transferRequest = await apiTransaction.sendMoney(requestObj);
-    const successObject ={
-      amount:amount,
-      name:name
+    const successObject = {
+      amount: amount,
+      name: name
     }
+
+    
     setIsLoading(false);
 
-    navigation.navigate("sendmoneysuccess",{successObject})
     console.log(transferRequest, "this is transfer request");
+    navigation.navigate("sendmoneysuccess", { successObject })
   };
 
   /**
@@ -256,7 +258,7 @@ const BankTransferAmount = ({ route, navigation }) => {
                       >
                         <UserIcon
                           name={eachValue?.beneficiariesName}
-                          //   onPress={() => sendPayeeTrigger(beneficary.item)}
+                        //   onPress={() => sendPayeeTrigger(beneficary.item)}
                         />
                         {/* <View>
                             <Text>{eachValue?.beneficiariesName}</Text>
@@ -317,9 +319,9 @@ const FootComponent = (selectAccount) => (
   <View style={styles.buttonContainer}>
     <TouchableOpacity
       onPress={selectAccount}
-      // onPress={() => {
-      //   navigation.navigate("Success");
-      // }}
+    // onPress={() => {
+    //   navigation.navigate("Success");
+    // }}
     >
       <LinearGradient
         colors={["#212529", "#3A3A3A"]}

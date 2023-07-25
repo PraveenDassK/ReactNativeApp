@@ -85,30 +85,6 @@ const RegistrationDirectororPartner = ({
       id: "5",
       title: "Vijay",
     },
-    // {
-    //   id: "6",
-    //   title: "VelanR",
-    // },
-    // {
-    //   id: "7",
-    //   title: "VelanR",
-    // },
-    // {
-    //   id: "8",
-    //   title: "VelanR",
-    // },
-    // {
-    //   id: "9",
-    //   title: "VelanR",
-    // },
-    // {
-    //   id: "10",
-    //   title: "VelanR",
-    // },
-    // {
-    //   id: "11",
-    //   title: "VelanR",
-    // },
   ];
   const handleDelete =(index,name)=>{
     console.log(index,name,"this is index");

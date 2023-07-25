@@ -4,12 +4,6 @@ import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import apiTransaction from "../api/apiTransaction";
 
-import {
-  TransactionBody,
-  TransactionHead,
-  TransactionFooter,
-} from "../components/transactions";
-
 const transactionDisplayItems = [
   { id: 1, title: "All" },
   { id: 2, title: "Income" },

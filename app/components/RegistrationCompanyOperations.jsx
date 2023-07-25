@@ -12,16 +12,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import Screen from "./Screen";
-import AuthContext from "../auth/context";
-import GlobalStyles from "../../GlobalStyles";
-import apiLoginRegister from "../api/apiLogin";
-import * as Yup from "yup";
-import {
-  horizontalScale,
-  verticalScale,
-  moderateScale,
-} from "../config/scaling";
 
 import Button from "./AppButton";
 import { Formik, Field, Form } from "formik";
