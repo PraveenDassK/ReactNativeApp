@@ -77,8 +77,9 @@ const Registration = ({ navigation }) => {
       setPersonalBusiness(type);
     } else if (type == "Business") {
       //Change this back to RegistrationNumber once done
-      // setScreenToShow("RegistrationNumber");
-      navigation.navigate("Directororpartner")
+      // setScreenToShow("CompanyAddress");
+      setScreenToShow("RegistrationNumber");
+
       setPersonalBusiness(type);
     } else {
       navigation.navigate("Login");

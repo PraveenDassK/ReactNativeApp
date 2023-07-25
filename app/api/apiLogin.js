@@ -7,9 +7,8 @@ import React, {
 } from "react";
 import client from "./client";
 import jwt_decode from "jwt-decode";
-import * as Device from 'expo-device';
+import * as Device from "expo-device";
 import AuthContext from "../auth/context";
-
 
 /**
  * @dev Used to get a login request
@@ -50,7 +49,7 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
       phoneOTP: phoneOTP,
     }
   );
-  console.log(request.data)
+  console.log(request.data);
   if (!request.data.result || request.status == 500) {
     return null;
   }
@@ -65,7 +64,7 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
   return {
     data: accountDetails,
     token: token,
-    customerID: accountID
+    customerID: accountID,
   };
 };
 
@@ -88,18 +87,19 @@ const GetCustomerDetails = async (Id) => {
  *          If the company number is correct then return the details
  */
 const GetCompanyByRegNo = async (Reg) => {
+  console.log("Getting res", Reg);
   try {
     const response = await client.get(
       `https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`
     );
-    console.log(response.data)
-    if (!response.data.result) {
-      return null;
-    }
-    const returnData = response.data.details;
+    console.log(response?.data?.details,"this is a company search");
+    // if (!response.data.result) {
+    //   return null;
+    // }
+    const returnData = response?.data?.details;
     return returnData;
   } catch {
-    return null
+    return null;
   }
 };
 
@@ -108,14 +108,16 @@ const getCompanyRegNoByName = async (name) => {
     const response = await client.get(
       `https://api.carbonyte.io/authverifymodule/AdvanceCompanySearch?company_name_includes=${name}`
     );
-    console.log(response.data)
-    const returnData = response?.data?.details?.top_hit.company_number;
+    console.log(
+      response.data?.details,
+      "thsis is api Callallalalalal"
+    );
+    const returnData = response?.data?.details;
     return returnData;
   } catch {
-    return null
+    return null;
   }
-
-}
+};
 
 /**
  *
@@ -148,7 +150,7 @@ const GetAddressByPostCode = async (postcode) => {
 };
 
 const RegisterPersonalAccount = async (regData) => {
-  const device = Device.osInternalBuildId
+  const device = Device.osInternalBuildId;
   const response = await client.post(
     "https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=personal",
     regData
@@ -161,11 +163,11 @@ const RegisterBusinessAccount = async (regData, pushToken) => {
     `https://api.carbonyte.io/regmodule/SaveCompanyDetails?tokenId=${pushToken}`,
     regData
   );
-  return response
+  return response;
 };
 
 const RegisterBusinessUsers = async (regData) => {
-  const device = Device.osInternalBuildId
+  const device = Device.osInternalBuildId;
   const response = await client.post(
     "https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=business",
     regData
@@ -173,7 +175,14 @@ const RegisterBusinessUsers = async (regData) => {
   return response;
 };
 
-const SendPushNotificationToken = async ({ customerID, tokenID, deviceID, deviceName, macAddress, operatingSystem }) => {
+const SendPushNotificationToken = async ({
+  customerID,
+  tokenID,
+  deviceID,
+  deviceName,
+  macAddress,
+  operatingSystem,
+}) => {
   const response = await client.post(
     `https://api.carbonyte.io/authverifymodule/SaveDeviceDetails/${customerID}/${tokenID}/${deviceID}?deviceName=${deviceName}&macAddress=${macAddress}&operatingSystem=${operatingSystem}`
   );
@@ -197,9 +206,9 @@ const GetIDs = async (JWT) => {
 
     //Get all the other IDs
     const accountData = await GetCustomerDetails(accountID);
-    const missingAccountSetup = false
+    const missingAccountSetup = false;
     if (missingAccountSetup) {
-      return "Missing Setup"
+      return "Missing Setup";
     }
 
     return {
@@ -207,34 +216,38 @@ const GetIDs = async (JWT) => {
       userID: accountData.modulrCustomerId,
       accountID: accountData.accountDetails[0]?.accountId,
       cardID: accountData.accountDetails[0]?.accountNo,
-      customerDetails: accountID
-    }
+      customerDetails: accountID,
+    };
   } catch {
-    return null
+    return null;
   }
-}
+};
 
 const VerifyDocument = async () => {
-  const device = Device.osInternalBuildId
+  const device = Device.osInternalBuildId;
   const obj = [
     {
-      "clientReference": "",
-      "documentType": "",
-      "frontImage": "",
-      "backImage": ""
-    }
-  ]
+      clientReference: "",
+      documentType: "",
+      frontImage: "",
+      backImage: "",
+    },
+  ];
   //https://api.carbonyte.io/authverifymodule/VerifyDocument
-  const response = await client.post(`https://api.carbonyte.io/authverifymodule/VerifyDocument`, obj)
-  return response
-}
+  const response = await client.post(
+    `https://api.carbonyte.io/authverifymodule/VerifyDocument`,
+    obj
+  );
+  return response;
+};
 
 const RegisterBusinessDirectors = async ({ businessId, obj }) => {
-  const businessDirectorRegistrationCall = await client.post(`https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=Business&businessId=${businessId}`
-    , obj
-  )
-  return businessDirectorRegistrationCall
-}
+  const businessDirectorRegistrationCall = await client.post(
+    `https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=Business&businessId=${businessId}`,
+    obj
+  );
+  return businessDirectorRegistrationCall;
+};
 
 export default {
   Login,
@@ -249,5 +262,5 @@ export default {
   VerifyDocument,
   getCompanyRegNoByName,
   RegisterBusinessUsers,
-  RegisterBusinessDirectors
+  RegisterBusinessDirectors,
 };

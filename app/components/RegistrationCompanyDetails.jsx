@@ -447,10 +447,12 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
                 style={[styles.dropdown]}
                 containerStyle={styles.dropdownContainer}
                 data={sortOptions(options)}
-                maxHeight={100}
+                maxHeight={150}
                 labelField="label"
                 valueField="value"
                 placeholder={"Select an option"}
+                searchPlaceholder={"Search..."}
+                search={true}
                 value={type}
                 onChange={(item) => {
                   setType(item.value);

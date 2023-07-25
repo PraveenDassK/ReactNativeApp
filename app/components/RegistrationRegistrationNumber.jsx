@@ -5,37 +5,59 @@ import apiLoginRegister from "../api/apiLogin";
 
 import Button from "./AppButton";
 import AuthScreen from "./AuthScreen";
-
+import { Dropdown } from "react-native-element-dropdown";
 import SICCodes from "../utility/sicCodes.json";
 const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
   const [regNum, setRegNum] = useState("");
   const [regName, setRegName] = useState("");
   const [companyDetails, setCompanyDetails] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [sicCode, setSicCode] = useState(null)
+  const [sicCode, setSicCode] = useState(null);
+  const [dropdownShow, setDropdownShow] = useState(false);
+  const [dropdownData, setDropdownData] = useState([{ label: "", value: "" }]);
 
+  const [type, setType] = useState();
   /**
    * @dev This gets the company data and the SIC code
    * @returns alert if the company cannot be found
    */
   const searchCompany = async () => {
+    let newArray = [];
     if (regName == "") return Alert.alert("Nothing entered");
-    setLoading(true)
-    const regNumber = await apiLoginRegister.getCompanyRegNoByName(regName)
-    console.log(regNumber)
+    setLoading(true);
+    const regNumber = await apiLoginRegister.getCompanyRegNoByName(regName);
+    console.log(regNumber, "this is company by name");
     if (regNumber == null) {
-      setLoading(false)
+      setLoading(false);
       return Alert.alert("The companay could not be found");
     }
+    newArray.push(regNumber);
+    console.log(newArray?.[0]?.items, "this is company by name array");
+    let newData = newArray?.[0]?.items?.map((eachData, i) => {
+      console.log(eachData, "this is each Data");
+      return {
+        label: eachData?.company_name,
+        value: eachData?.company_number,
+      };
+    });
+    console.log(newData, "this is new data");
+    setDropdownData(newData);
+    // const request = await apiLoginRegister.GetCompanyByRegNo(regNumber);
+    // console.log(request,"this is result")
+    setDropdownShow(true);
+    setLoading(false);
+    // if (request === null) return Alert.alert("Invalid business address");
 
-    const request = await apiLoginRegister.GetCompanyByRegNo(regNumber);
-    setLoading(false)
-    if (request === null) return Alert.alert("Invalid business address");
+    // const sicCode = SICCodes.filter(SICCodes => +request?.sic_codes?.[0].includes(SICCodes.sic_code))[0].section;
+    // console.log(sicCode)
+    // setSicCode(sicCode)
 
-    const sicCode = SICCodes.filter(SICCodes => +request.sic_codes[0].includes(SICCodes.sic_code))[0].section;
-    console.log(sicCode)
-    setSicCode(sicCode)
+    // setCompanyDetails(request);
+  };
 
+  const handleDropDown = async (value) => {
+    const request = await apiLoginRegister.GetCompanyByRegNo(value);
+    console.log(request, "this is result");
     setCompanyDetails(request);
   };
 
@@ -55,9 +77,7 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
       handleBack={handleBack}
     >
       <View style={[styles.component1981, styles.mt14]}>
-        <Text>
-          We need the name of your company to search on company house
-        </Text>
+        <Text>We need the name of your company to search on company house</Text>
         <TextInput
           placeholder="Company name"
           placeholderTextColor="grey"
@@ -69,6 +89,25 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
           ]}
         />
       </View>
+      {dropdownShow ? (
+        <Dropdown
+          style={[styles.dropdown]}
+          containerStyle={styles.dropdownContainer}
+          data={dropdownData}
+          maxHeight={150}
+          labelField="label"
+          valueField="value"
+          placeholder={"Select an option"}
+          searchPlaceholder={"Search..."}
+          search={false}
+          value={type}
+          onChange={(item) => {
+            setType(item.value);
+            handleDropDown(item.value);
+          }}
+        />
+      ) : null}
+
       {companyDetails ? (
         <View style={styles.spacing}>
           <Text style={styles.spacing}>Are these your details?</Text>
@@ -79,20 +118,21 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
           <Text>{companyDetails.registered_office_address.postal_code}</Text>
         </View>
       ) : null}
-      {loading ?
+      {loading ? (
         <Button
           title="Searching"
           color="white"
           textColor="black"
-          onPress={() => { }}
-        /> :
+          onPress={() => {}}
+        />
+      ) : (
         <Button
           title="Search"
           color="white"
           textColor="black"
           onPress={() => searchCompany()}
         />
-      }
+      )}
 
       {companyDetails ? (
         <Button
@@ -118,6 +158,20 @@ const styles = StyleSheet.create({
   },
   spacing: {
     marginBottom: "2.5%",
+  },
+  dropdown: {
+    borderRadius: 10,
+    borderWidth: 0.5,
+    height: 50,
+    paddingHorizontal: 8,
+    marginBottom: "5%",
+    marginTop: "2.5%",
+    opacity: 1,
+    borderColor: "#D3D3D3",
+  },
+  dropdownContainer: {
+    borderTopEndRadius: 10,
+    borderTopStartRadius: 10,
   },
 });
 
