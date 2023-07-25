@@ -424,6 +424,7 @@ const CardCarousel = ({
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
+  const [showName, setShowName]=useState(true);
   console.log(dataAbovecard, "this is data above card");
   // const [frozen, setFrozen] = useState(false);
   let frozen = false;
@@ -514,10 +515,12 @@ const CardCarousel = ({
                 flipVertical={false}
                 flip={flipped}
                 clickable={true}
-                onFlipStart={() => {
+                onFlipStart={(value) => {
                   //Ask for pin to flip
+                  console.log(value,"thsis onm flip")
                   // setShowPinModal(true)
                   setFlipped(false);
+                  setShowName(value)
                 }}
                 onFlipEnd={(isFlipEnd) => {
                   console.log("isFlipEnd", isFlipEnd);
@@ -537,30 +540,33 @@ const CardCarousel = ({
 
                 <CardBackSide />
               </FlipCard>
-              <View
-                style={{
-                  position: "absolute",
-                  height: "93%",
-                  width: ITEM_WIDTH,
-                  top: "50%",
-                  left: 15,
-                }}
-              >
-                <Text
-                  style={{ color: "white", fontSize: 16 }}
-                >{`Name on the card:  ${
-                  dataAbovecard?.[0]?.embossing?.firstName
-                    ? dataAbovecard?.[0]?.embossing?.firstName
-                    : "Name"
-                }`}</Text>
-                <Text
-                  style={{ color: "white", fontSize: 16 }}
-                >{`Card Number:   ****${
-                  dataAbovecard?.[0]?.maskedCardNumber
-                    ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
-                    : "4444"
-                }`}</Text>
-              </View>
+              {showName ? (
+                <View
+                  style={{
+                    position: "absolute",
+                    height: "93%",
+                    width: ITEM_WIDTH,
+                    top: "50%",
+                    left: 15,
+                  }}
+                >
+                  <Text
+                    style={{ color: "white", fontSize: 16 }}
+                  >{`Name on the card:  ${
+                    dataAbovecard?.[0]?.embossing?.firstName
+                      ? dataAbovecard?.[0]?.embossing?.firstName
+                      : "Name"
+                  }`}</Text>
+                  <Text
+                    style={{ color: "white", fontSize: 16 }}
+                  >{`Card Number:   ****${
+                    dataAbovecard?.[0]?.maskedCardNumber
+                      ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
+                      : "4444"
+                  }`}</Text>
+                </View>
+              ) : null}
+
               {frozen ? (
                 <View
                   style={{

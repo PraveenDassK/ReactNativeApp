@@ -120,7 +120,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         backgroundColor:
           darkMode === "DARK"
             ? GlobalStyles.Color.darkTheme_bg
-            : GlobalStyles.Color.white,
+            : GlobalStyles.Color.lightTheme_bg,
       }}
     >
       <ScrollView
