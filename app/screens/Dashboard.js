@@ -69,8 +69,23 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   };
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color={GlobalStyles.Color.black} />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -91,7 +106,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   console.log(darkMode, "this is darkModeijh");
   return (
     <ImageBackground
-      source={require("../assets/backgrounds/Dashboard.jpg")}
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/DashboardBottom.jpg")
+          : require("../assets/backgrounds/Dashboard.jpg")
+      }
       resizeMode="contain"
       imageStyle={{
         bottom: "-70%", // Whatever offset you want from the bottom
@@ -100,7 +119,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         width: "100%",
         backgroundColor:
           darkMode === "DARK"
-            ? GlobalStyles.Color.black
+            ? GlobalStyles.Color.darkTheme_bg
             : GlobalStyles.Color.white,
       }}
     >
@@ -109,7 +128,11 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <ImageBackground
-          source={require("../assets/backgrounds/River.jpg")}
+          source={
+            darkMode === "DARK"
+              ? require("../assets/dashboardDark/dashboardTop.jpg")
+              : require("../assets/backgrounds/River.jpg")
+          }
           style={styles.backgroundImage}
         >
           <View style={styles.header}>
