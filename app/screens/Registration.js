@@ -78,7 +78,7 @@ const Registration = ({ navigation }) => {
     } else if (type == "Business") {
       //Change this back to RegistrationNumber once done
       // setScreenToShow("CompanyAddress");
-      setScreenToShow("CompanyAddress");
+      setScreenToShow("RegistrationNumber");
 
       setPersonalBusiness(type);
     } else {
