@@ -328,7 +328,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             <ReferNow />
           </View>
           <View style={{ margin: 25 }}>
-            <MarketPlace />
+            <MarketPlace handleMarket={()=>navigation.navigate("Marketplace")}/>
           </View>
 
           <View style={{ display: "flex", alignItems: "center" }}>

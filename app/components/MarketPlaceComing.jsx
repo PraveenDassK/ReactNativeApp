@@ -3,7 +3,7 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../assets/Dashboard/Carbonytelogomark3.svg";
-const MarketPlace = () => {
+const MarketPlace = ({handleMarket}) => {
   return (
     <View>
       <LinearGradient
@@ -41,10 +41,12 @@ const MarketPlace = () => {
           >
             Refer a friend & {`\n`}earn rewards
           </Text> */}
+          <Text style={styles.sendButtonText}>Benefits</Text>
+
           <View style={{ width: "100%", display: "flex" }}>
-            {/* <Pressable style={styles.sendButton}>
-            </Pressable> */}
-            <Text style={styles.sendButtonText}>Benefits</Text>
+            <Pressable style={styles.sendButton} onPress={handleMarket}>
+              <Text style={styles.sendButtonText2}>Know more</Text>
+            </Pressable>
           </View>
         </View>
       </LinearGradient>
@@ -79,5 +81,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Montserrat",
     margin: "10%",
+  },
+  sendButtonText2: {
+    color: GlobalStyles.Color.white,
+    fontSize: 16,
+    fontFamily: "Montserrat-Medium",
   },
 });
