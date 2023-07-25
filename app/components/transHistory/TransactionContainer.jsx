@@ -28,7 +28,6 @@ const TransactionContainer = ({
       onTransactionFilter={(item) => onTransactionFilter(item)}
       darkMode={darkMode}
     />
-
     {transactions.map(
       ({ id, credit, description, transactionDate, amount }, index) => (
         <TransactionBody

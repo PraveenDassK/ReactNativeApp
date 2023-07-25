@@ -107,6 +107,18 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
           </View>
         }
       />
+
+      <View
+        style={{
+          position: "absolute",
+          width: "30%",
+          height: 5,
+          backgroundColor: "#0000001A",
+          top: "63%",
+          borderRadius: 100,
+        }}
+      />
+
       <View>
         {carbnonSpendData.map((eachValue, i) => {
           let value = eachValue?.y / sumofValues;
@@ -146,7 +158,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
                 height={30}
                 borderRadius={15}
                 borderColor={
-                  darkMode === "DARK" ? "transparent" : GlobalStyles.Color.white
+                  darkMode === "DARK" ? "#0000001A" : GlobalStyles.Color.white
                 }
                 unfilledColor={
                   darkMode === "DARK"

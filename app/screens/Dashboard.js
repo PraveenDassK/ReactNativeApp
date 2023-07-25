@@ -29,6 +29,7 @@ import CarbonSpendGraph from "../components/CarbonSpendGraph";
 import VirtualPlanet from "../components/VirtualPlanet";
 import XeroDashboard from "../components/XeroDashboard";
 import ReferNow from "../components/ReferNow";
+import MarketPlace from "../components/MarketPlaceComing";
 import colors from "../config/colors";
 import Tagline from "../components/Tagline";
 import authStorage from "../auth/storage";
@@ -89,43 +90,62 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   console.log(darkMode, "this is darkModeijh");
   return (
-    <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        source={require("../assets/backgrounds/River.jpg")}
-        style={styles.backgroundImage}
-      >
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.welcomText}>Welcome back,</Text>
-            <Text style={styles.nameText}>{userData?.[0]?.customerName} !</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={() => handleDark()}>
-              <DarkMode darkMode={darkMode} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Notification")}
-            >
-              <Notification />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ImageBackground>
-
-      <View style={styles.AccountDetailsCard}>
-        <AccountDeatils
-          userData={userData}
-          userImpact={userImpact}
-          handlePress={() => navigation.navigate("SendMoney")}
-        />
-      </View>
-
-      <View
-        style={
-          darkMode === "DARK" ? styles.darkMainContent : styles.mainContent
-        }
+    <ImageBackground
+      source={require("../assets/backgrounds/Dashboard.jpg")}
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.black
+            : GlobalStyles.Color.white,
+      }}
+    >
+      <ScrollView
+        nestedScrollEnabled={true}
+        showsVerticalScrollIndicator={false}
       >
         <ImageBackground
+          source={require("../assets/backgrounds/River.jpg")}
+          style={styles.backgroundImage}
+        >
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.welcomText}>Welcome back,</Text>
+              <Text style={styles.nameText}>
+                {userData?.[0]?.customerName} !
+              </Text>
+            </View>
+            <View style={styles.iconContainer}>
+              <TouchableOpacity onPress={() => handleDark()}>
+                <DarkMode darkMode={darkMode} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+              >
+                <Notification />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
+
+        <View style={styles.AccountDetailsCard}>
+          <AccountDeatils
+            userData={userData}
+            userImpact={userImpact}
+            handlePress={() => navigation.navigate("SendMoney")}
+          />
+        </View>
+
+        <View
+          style={
+            darkMode === "DARK" ? styles.darkMainContent : styles.mainContent
+          }
+        />
+        {/* <ImageBackground
           source={require("../assets/backgrounds/Dashboard.jpg")}
           resizeMode="contain"
           imageStyle={{
@@ -134,16 +154,40 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           style={{
             width: "100%",
           }}
+        > */}
+        <View
+          style={{
+            backgroundColor: `${
+              darkMode === "DARK" ? "transparent" : "transparent"
+            }`,
+          }}
         >
-          <View
-            style={{
-              backgroundColor: `${
-                darkMode === "DARK" ? "transparent" : "transparent"
-              }`,
-              marginBottom:"10%",
-            }}
-          >
-            {!iconShow && (
+          {!iconShow && (
+            <View style={styles.buttonContainer}>
+              <SquareIcon
+                name={"Move money"}
+                image={"bank-transfer"}
+                onPress={() => navigation.navigate("MoveMoney")}
+              />
+              <SquareIcon
+                name={"Send money"}
+                image={"send-o"}
+                onPress={() => navigation.navigate("SendMoney")}
+              />
+              <SquareIcon
+                name={"Cards"}
+                image={"credit-card"}
+                onPress={() => navigation.navigate("MyCards")}
+              />
+              <SquareIcon
+                name={"More"}
+                image={"dots-horizontal"}
+                onPress={() => setIconShow(!iconShow)}
+              />
+            </View>
+          )}
+          {iconShow && (
+            <View>
               <View style={styles.buttonContainer}>
                 <SquareIcon
                   name={"Move money"}
@@ -152,7 +196,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
                 <SquareIcon
                   name={"Send money"}
-                  image={"send-o"}
+                  image={"send"}
                   onPress={() => navigation.navigate("SendMoney")}
                 />
                 <SquareIcon
@@ -161,139 +205,117 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   onPress={() => navigation.navigate("MyCards")}
                 />
                 <SquareIcon
-                  name={"More"}
+                  name={"Switch accounts"}
+                  image={"account-switch"}
+                  onPress={() => navigation.navigate("SwitchAccounts")}
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <SquareIcon
+                  name={"Payment link"}
+                  image={"link-variant"}
+                  onPress={() => navigation.navigate("PaymentLink")}
+                />
+                <SquareIcon
+                  name={"Subscriptions"}
+                  image={"newspaper-variant-outline"}
+                  onPress={() => navigation.navigate("Subscriptions")}
+                />
+                <SquareIcon
+                  name={"Set limits"}
+                  image={"car-speed-limiter"}
+                  onPress={() => navigation.navigate("SpendingLimit")}
+                />
+                <SquareIcon
+                  name={"Transactions"}
+                  image={"bank-outline"}
+                  onPress={() => navigation.navigate("Transactions")}
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <SquareIcon
+                  name={"Teams"}
+                  image={"account-group"}
+                  onPress={() => navigation.navigate("Teams")}
+                />
+                <SquareIcon
+                  name={"Invoices"}
+                  image={"file-document-multiple"}
+                  onPress={() => navigation.navigate("Invoices")}
+                />
+                <SquareIcon
+                  name={"Direct debits"}
+                  image={"directions"}
+                  onPress={() => navigation.navigate("DirectDebits")}
+                />
+                <SquareIcon
+                  name={"Less"}
                   image={"dots-horizontal"}
                   onPress={() => setIconShow(!iconShow)}
                 />
               </View>
-            )}
-            {iconShow && (
-              <View>
-                <View style={styles.buttonContainer}>
-                  <SquareIcon
-                    name={"Move money"}
-                    image={"bank-transfer"}
-                    onPress={() => navigation.navigate("MoveMoney")}
-                  />
-                  <SquareIcon
-                    name={"Send money"}
-                    image={"send"}
-                    onPress={() => navigation.navigate("SendMoney")}
-                  />
-                  <SquareIcon
-                    name={"Cards"}
-                    image={"credit-card"}
-                    onPress={() => navigation.navigate("MyCards")}
-                  />
-                  <SquareIcon
-                    name={"Switch accounts"}
-                    image={"account-switch"}
-                    onPress={() => navigation.navigate("SwitchAccounts")}
-                  />
-                </View>
-                <View style={styles.buttonContainer}>
-                  <SquareIcon
-                    name={"Payment link"}
-                    image={"link-variant"}
-                    onPress={() => navigation.navigate("PaymentLink")}
-                  />
-                  <SquareIcon
-                    name={"Subscriptions"}
-                    image={"newspaper-variant-outline"}
-                    onPress={() => navigation.navigate("Subscriptions")}
-                  />
-                  <SquareIcon
-                    name={"Set limits"}
-                    image={"car-speed-limiter"}
-                    onPress={() => navigation.navigate("SpendingLimit")}
-                  />
-                  <SquareIcon
-                    name={"Transactions"}
-                    image={"bank-outline"}
-                    onPress={() => navigation.navigate("Transactions")}
-                  />
-                </View>
-                <View style={styles.buttonContainer}>
-                  <SquareIcon
-                    name={"Teams"}
-                    image={"account-group"}
-                    onPress={() => navigation.navigate("Teams")}
-                  />
-                  <SquareIcon
-                    name={"Invoices"}
-                    image={"file-document-multiple"}
-                    onPress={() => navigation.navigate("Invoices")}
-                  />
-                  <SquareIcon
-                    name={"Direct debits"}
-                    image={"directions"}
-                    onPress={() => navigation.navigate("DirectDebits")}
-                  />
-                  <SquareIcon
-                    name={"Less"}
-                    image={"dots-horizontal"}
-                    onPress={() => setIconShow(!iconShow)}
-                  />
-                </View>
-              </View>
-            )}
-            <View style={styles.recentTransactionsContainer}>
-              <RecentTransactions />
             </View>
-            <View style={{ margin: 25 }}>
-              <Text
-                style={
-                  darkMode === "DARK"
-                    ? styles.darkheadingText
-                    : styles.headingText
-                }
-              >
-                Your Carbon Footprints
-              </Text>
-              <CarbonSpendGraph
-                handleViewMore={() =>
-                  navigation.navigate("ChooseCardsStandard5")
-                }
-              />
-            </View>
-            <View style={{ margin: 25 }}>
-              <Text
-                style={
-                  darkMode === "DARK"
-                    ? styles.darkheadingText
-                    : styles.headingText
-                }
-              >
-                Your Virtual Planet Summary
-              </Text>
-              <VirtualPlanet
-                treeData={userImpact}
-                handleVirtual={() => navigation.navigate("VirtualEcoSystem")}
-                darkMode={darkMode}
-              />
-            </View>
-            <View style={{ margin: 25 }}>
-              <Text
-                style={
-                  darkMode === "DARK"
-                    ? styles.darkheadingText
-                    : styles.headingText
-                }
-              >
-                Carbonyte + Xero
-              </Text>
-              <XeroDashboard darkMode={darkMode} />
-            </View>
-            <View style={{ margin: 25 }}>
-              <ReferNow />
-            </View>
-            <View style={{ display: "flex", alignItems: "center" }}>
-              <Tagline darkMode={darkMode} />
-            </View>
+          )}
+          <View style={styles.recentTransactionsContainer}>
+            <RecentTransactions />
           </View>
-        </ImageBackground>
-      </View>
-    </ScrollView>
+          <View style={{ margin: 25 }}>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkheadingText
+                  : styles.headingText
+              }
+            >
+              Your Carbon Footprints
+            </Text>
+            <CarbonSpendGraph
+              handleViewMore={() => navigation.navigate("ChooseCardsStandard5")}
+            />
+          </View>
+          <View style={{ margin: 25 }}>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkheadingText
+                  : styles.headingText
+              }
+            >
+              Your Virtual Planet Summary
+            </Text>
+            <VirtualPlanet
+              treeData={userImpact}
+              handleVirtual={() => navigation.navigate("VirtualEcoSystem")}
+              darkMode={darkMode}
+            />
+          </View>
+          <View style={{ margin: 25 }}>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkheadingText
+                  : styles.headingText
+              }
+            >
+              Carbonyte + Xero
+            </Text>
+            <XeroDashboard darkMode={darkMode} />
+          </View>
+          <View style={{ margin: 25 }}>
+            <ReferNow />
+          </View>
+          <View style={{ margin: 25 }}>
+            <MarketPlace />
+          </View>
+
+          <View style={{ display: "flex", alignItems: "center" }}>
+            <Tagline darkMode={darkMode} />
+          </View>
+        </View>
+        {/* </ImageBackground> */}
+        {/* </View> */}
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -345,7 +367,7 @@ const styles = StyleSheet.create({
   },
   mainContent: {
     backgroundColor: GlobalStyles.Color.backgroundColorOg,
-    // height: 30,
+    height: 30,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     marginTop: -20,
@@ -353,7 +375,7 @@ const styles = StyleSheet.create({
   },
   darkMainContent: {
     backgroundColor: GlobalStyles.Color.darkTheme_bg,
-    // height: 30,
+    height: 30,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     marginTop: -20,

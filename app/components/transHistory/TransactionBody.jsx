@@ -31,6 +31,9 @@ const TransactionBody = ({
           darkMode === "DARK"
             ? "rgba(255, 255, 255, 0.5) "
             : "rgba(255, 255, 255, 0.5)",
+        borderColor: "transparent",
+
+        borderWidth: 0,
       }}
     >
       <Pressable
@@ -97,7 +100,7 @@ const TransactionBody = ({
           marginHorizontal: "5%",
           borderBottomColor:
             darkMode === "DARK"
-              ? GlobalStyles.Color.black
+              ? GlobalStyles.Color.lightBlack
               : GlobalStyles.Color.white,
           borderBottomWidth: index == lastElement ? 0 : 3,
         }}

@@ -8,17 +8,16 @@ import Text from "./Text";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../assets/Dashboard/Carbonytelogomark.svg";
 
-
 const CurrentDateComponent = () => {
-  const [currentDate, setCurrentDate] = useState('');
+  const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
     // Function to format the date as "June 6, 2023"
     const formatDate = (date) => {
-      return new Intl.DateTimeFormat('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+      return new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       }).format(date);
     };
 
@@ -28,9 +27,18 @@ const CurrentDateComponent = () => {
     setCurrentDate(formattedDate);
   }, []);
 
-  return <Text>{currentDate}</Text>;
+  return (
+    <Text
+      style={{
+        color: GlobalStyles.Color.white,
+        fontFamily: "Montserrat-Regular",
+        fontSize:12
+      }}
+    >
+      {currentDate}
+    </Text>
+  );
 };
-
 
 const AccountDeatils = ({ userData, userImpact, handlePress }) => {
   const [title, setTitle] = useState("");
@@ -61,7 +69,7 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
         <View
           style={{
             position: "absolute",
-            right: -2,
+            right: 0,
             bottom: -2,
             opacity: 0.3,
           }}
@@ -98,13 +106,17 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
           </View>
         </View>
         <View style={styles.bottomCardContainer}>
-          <View>
-            <Text style={styles.totalTitle}>Total Balance</Text>
-            <Text style={styles.totalAmount}>
-              {formatCurrency(accountBalance[0]?.balance, "GBP", false)}
-            </Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View>
+              <Text style={styles.totalTitle}>Total Balance</Text>
+              <Text style={styles.totalAmount}>
+                {formatCurrency(accountBalance[0]?.balance, "GBP", false)}
+              </Text>
+            </View>
+            <CurrentDateComponent />
           </View>
-          <CurrentDateComponent />
 
           <View style={styles.bottomCard}>
             <View>
@@ -132,9 +144,9 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
               ) : (
                 // <Text style={styles.incomeAmount}>Coming soon..</Text>
                 <Text style={styles.incomeAmount}>
-                <AntDesign name="arrowdown" size={20} />
-                {formatCurrency(100, "GBP", false)}
-              </Text>
+                  <AntDesign name="arrowdown" size={20} />
+                  {formatCurrency(100, "GBP", false)}
+                </Text>
               )}
             </View>
             <View>

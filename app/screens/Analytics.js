@@ -21,8 +21,6 @@ import {
   Text,
 } from "react-native";
 
-
-
 import GlobalStyles from "../../GlobalStyles";
 import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -197,10 +195,7 @@ const Analytics = ({ navigation }) => {
         </View>
       </ImageBackground>
       <View style={styles.mainContainer}>
-        <BlurView
-         tint="light"
-         intensity={60}
-        style={styles.innerContainer}>
+        <BlurView tint="light" intensity={60} style={styles.innerContainer}>
           {/* <Text>
             Total Spent this {active}
           </Text> */}
@@ -295,24 +290,30 @@ const Analytics = ({ navigation }) => {
                 height={device == 1 ? 320 : 300}
               />
 
-             <BlurView 
-             tint="light"
-             intensity={100}
-              style={{
-                marginTop: -20,
-                marginBottom: '10%',
-                width: 30,
-                height: 10,
-                backgroundColor: "rgba(0,0,0,0.5)",
-                borderRadius: 15,
-                transform: [
-                  {scaleX: 3}
-                ]
-
-              }}
-              overflow='hidden'
-             />
-
+              <View
+                style={{
+                  position: "absolute",
+                  width: "20%",
+                  height: 8,
+                  backgroundColor: "#0000001A",
+                  bottom: "12%",
+                  borderRadius: 100,
+                }}
+              />
+              <BlurView
+                tint="light"
+                intensity={100}
+                style={{
+                  marginTop: -20,
+                  marginBottom: "10%",
+                  width: 30,
+                  height: 10,
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                  borderRadius: 15,
+                  transform: [{ scaleX: 3 }],
+                }}
+                overflow="hidden"
+              />
 
               <View
                 style={{
@@ -620,7 +621,7 @@ const Analytics = ({ navigation }) => {
           width: "100%",
           paddingHorizontal: 10,
           left: "0%",
-          zIndex:10,
+          zIndex: 10,
         }}
       >
         <Tagline />
@@ -672,24 +673,22 @@ const Bazier = ({ graphData }) => {
     <View
       style={{
         width: "100%",
-        
+
         // backgroundColor: "red"
       }}
     >
       {/* <AppText>Bezier Line Chart</AppText> */}
-     
+
       <LineChart
         style={{
-          
           paddingRight: 15,
-          marginRight:10,
-
-      }}
+          marginRight: 10,
+        }}
         data={{
           labels: xAxis,
           datasets: [{ data: yAxis }],
         }}
-       width={screenWidth * 0.9} // from react-native
+        width={screenWidth * 0.9} // from react-native
         height={220}
         yAxisLabel="£"
         yAxisSuffix=""
@@ -712,21 +711,17 @@ const Bazier = ({ graphData }) => {
           style: { borderRadius: 16 },
           propsForBackgroundLines: {
             strokeDasharray: "",
-            stroke: '#0101FD',
+            stroke: "#0101FD",
             strokeOpacity: 0.3,
-            strokeWidth: 0.3
+            strokeWidth: 0.3,
           },
           propsForDots: {
             r: "3",
             strokeWidth: "8",
             stroke: `rgba(1, 1, 253, 0.45)`,
-            fill: '#0101FD'
-            
-            
+            fill: "#0101FD",
           },
         }}
-        
-       
         decorator={() => {
           return tooltipPos.visible ? (
             <View>
@@ -741,7 +736,7 @@ const Bazier = ({ graphData }) => {
                   ry={15}
                 />
                 <TextSVG
-                  x={tooltipPos.x }
+                  x={tooltipPos.x}
                   y={tooltipPos.y + 25}
                   fill="white"
                   fontSize="8"
@@ -795,11 +790,11 @@ const styles = StyleSheet.create({
     flex: GlobalStyles.DivContainer.flex,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 0.5,
     marginTop: -70,
     zIndex: 10,
-    overflow: 'hidden'
+    overflow: "hidden",
   },
   titleTextRow: {
     flexDirection: "row",
