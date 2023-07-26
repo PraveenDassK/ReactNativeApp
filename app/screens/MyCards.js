@@ -111,10 +111,10 @@ export default function MyCards({ navigation }) {
     const filterAccount = await listedAccount.filter(
       (eachValue, index) => eachValue?.accountId === accountID
     );
-    console.log(filterAccount?.[0]?.enfuceAccountId, "this enfuse account Id ");
+    console.log(filterAccount, "this enfuse  ");
     let EnfuseAccountId = filterAccount?.[0]?.enfuceAccountId;
     setApiAccountId(filterAccount?.[0]?.enfuceAccountId);
-
+    //  setDataAbovecard()
     //api to get transaction
     const response = await apiCall.GetTransactions(
       accountID,
@@ -168,6 +168,9 @@ export default function MyCards({ navigation }) {
     );
 
     setFilteredCards(cardStatusFilter);
+    console.log(cardStatusFilter, "this is filtered");
+
+    setDataAbovecard(new Array(cardStatusFilter?.[0]));
     setCardCategory(type);
   };
 
@@ -235,9 +238,9 @@ export default function MyCards({ navigation }) {
   const requestObject = {
     accountID: accountID,
     cardID: dataAbovecard?.[0]?.id,
-    EnfuseAccountId:dataAbovecard?.[0]?.accountId
+    EnfuseAccountId: dataAbovecard?.[0]?.accountId,
   };
-  console.log(requestObject,dataAbovecard?.[0]?.accountId, "data above card");
+  console.log(requestObject, dataAbovecard?.[0]?.accountId, "data above card");
 
   return (
     <AppScreen>
