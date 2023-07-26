@@ -62,13 +62,18 @@ const CardSettings = ({ navigation, route }) => {
 
   const getSettings = async () => {
     setIsLoading(true);
-    const cardSettings = await apiSettings.GetSettings(authContext.accountID);
-    const data = cardSettings;
-    console.log(data);
-    data.onlineTransactions ? setIsEnabled(true) : null;
-    data.swipePayments ? setIsEnabled1(true) : null;
-    data.atmWithdrawals ? setIsEnabled2(true) : null;
-    data.contactlessPayments ? setIsEnabled3(true) : null;
+    try {
+      const cardSettings = await apiSettings.GetSettings(authContext.accountID);
+      const data = cardSettings;
+      console.log(data);
+      data.onlineTransactions ? setIsEnabled(true) : null;
+      data.swipePayments ? setIsEnabled1(true) : null;
+      data.atmWithdrawals ? setIsEnabled2(true) : null;
+      data.contactlessPayments ? setIsEnabled3(true) : null;
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+    }
     setIsLoading(false);
   };
 
