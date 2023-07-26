@@ -161,8 +161,13 @@ export default function MyCards({ navigation }) {
         }
       });
     };
+    // card status close filtering
+    let filterCardBytype = filterCardsByType(type);
+    let cardStatusFilter = filterCardBytype.filter(
+      (eachValue, index) => eachValue?.status != "CARD_CLOSED"
+    );
 
-    setFilteredCards(filterCardsByType(type));
+    setFilteredCards(cardStatusFilter);
     setCardCategory(type);
   };
 
@@ -230,8 +235,9 @@ export default function MyCards({ navigation }) {
   const requestObject = {
     accountID: accountID,
     cardID: dataAbovecard?.[0]?.id,
+    EnfuseAccountId:dataAbovecard?.[0]?.accountId
   };
-  console.log(accountID, dataAbovecard, "data above card");
+  console.log(requestObject,dataAbovecard?.[0]?.accountId, "data above card");
 
   return (
     <AppScreen>
@@ -240,7 +246,9 @@ export default function MyCards({ navigation }) {
         <View style={styles.settingsPositioning}>
           <Icon
             title={"settings"}
-            onSettingsPress={() => navigation.navigate("CardSettings",requestObject)}
+            onSettingsPress={() =>
+              navigation.navigate("CardSettings", requestObject)
+            }
           />
         </View>
 
@@ -486,7 +494,7 @@ const CardCarousel = ({
       onScroll={handleScroll}
       scrollEventThrottle={12}
     >
-      {cards.map((item, idx) => {
+      {cards?.map((item, idx) => {
         const inputRange = [
           (idx - 1) * ITEM_WIDTH,
           idx * ITEM_WIDTH,
