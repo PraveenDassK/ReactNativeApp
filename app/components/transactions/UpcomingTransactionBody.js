@@ -13,6 +13,7 @@ const UpcomingTransactionBody = ({
   credit,
   token,
   accountID,
+  darkMode,
 }) => {
   return (
     <Pressable style={styles.transactionMainContainer}>
@@ -25,10 +26,22 @@ const UpcomingTransactionBody = ({
           />
 
           <View style={styles.dateContainer}>
-            <Text style={styles.displayText}>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkdisplayText
+                  : styles.displayText
+              }
+            >
               {name.replace("Payment to ", "")}
             </Text>
-            <Text style={styles.bottomdisplayText}>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkbottomdisplayText
+                  : styles.bottomdisplayText
+              }
+            >
               {moment(date).format(" DD MMM, HH:MM")}
               {/* {moment(item.transactionDate).format(" DD MMM YY")} */}
             </Text>
@@ -73,7 +86,7 @@ const styles = StyleSheet.create({
   transactionMainContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     padding: "3%",
-    height: moderateScale(50),
+    // height: moderateScale(50),
     // justifyContent: "center",
   },
   transactionContainer: {
@@ -105,9 +118,21 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontSize: 16,
   },
+  darkdisplayText: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
+    fontSize: 16,
+  },
   bottomdisplayText: {
     color: GlobalStyles.Color.darkGray,
     fontFamily: "Montserrat-Regular",
     fontSize: 14,
+    color: GlobalStyles.Color.borderColor,
+  },
+  darkbottomdisplayText: {
+    // color: GlobalStyles.Color.darkGray,
+    fontFamily: "Montserrat-Regular",
+    fontSize: 14,
+    color: GlobalStyles.Color.borderColor,
   },
 });
