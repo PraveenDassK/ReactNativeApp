@@ -17,6 +17,10 @@ import Tagline from "../components/Tagline";
 import apiSettings from "../api/apiSettings";
 import AppText from "../components/Text";
 import terminateCardAlert from "../utility/terminateCardAlert";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const CardSettings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -113,7 +117,7 @@ const CardSettings = ({ navigation }) => {
               },
             ]}
           >
-            <Image
+            {/* <Image
               style={{
                 height: "60%",
                 resizeMode: "contain",
@@ -122,7 +126,10 @@ const CardSettings = ({ navigation }) => {
                 marginLeft: "5%",
               }}
               source={require("../assets/newAssets/reset.png")}
-            />
+            /> */}
+            <View style={{ marginLeft: "5%" }}>
+              <FontAwesome name="lock" size={24} color="black" />
+            </View>
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
             >
@@ -154,7 +161,7 @@ const CardSettings = ({ navigation }) => {
               },
             ]}
           >
-            <Image
+            {/* <Image
               style={{
                 height: "60%",
                 resizeMode: "contain",
@@ -163,7 +170,10 @@ const CardSettings = ({ navigation }) => {
                 marginLeft: "5%",
               }}
               source={require("../assets/newAssets/meter.png")}
-            />
+            /> */}
+            <View style={{ marginLeft: "5%" }}>
+            <SimpleLineIcons name="speedometer" size={24} />
+            </View>
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
             >
@@ -210,11 +220,9 @@ const CardSettings = ({ navigation }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               // alignItems: "center",
-              
             }}
           >
-            
-            <Image
+            {/* <Image
               style={{
                 height: 22,
                 resizeMode: "contain",
@@ -223,7 +231,10 @@ const CardSettings = ({ navigation }) => {
                 marginLeft: "5%",
               }}
               source={require("../assets/newAssets/globe.png")}
-            />
+            /> */}
+            <View style={{ marginLeft: "5%" }}>
+              <Ionicons name="ios-globe-outline" size={24} color="black" />
+            </View>
             <View
               style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
             >
@@ -260,9 +271,9 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "40%",
+                height: "50%",
                 resizeMode: "contain",
-                flex: 1,
+                // flex: 1,
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
@@ -303,9 +314,9 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "60%",
+                height: "50%",
                 resizeMode: "contain",
-                flex: 1,
+                // flex: 1,
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
@@ -345,9 +356,9 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "60%",
+                height: "50%",
                 resizeMode: "contain",
-                flex: 1,
+                // flex: 1,
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
@@ -399,9 +410,9 @@ const CardSettings = ({ navigation }) => {
             >
               <Image
                 style={{
-                  height: "60%",
+                  height: "50%",
                   resizeMode: "contain",
-                  flex: 1,
+                  // flex: 1,
                   alignSelf: "center",
                   marginLeft: "5%",
                 }}
@@ -432,7 +443,7 @@ const CardSettings = ({ navigation }) => {
                 justifyContent: "space-between",
               }}
             >
-              <Image
+              {/* <Image
                 style={{
                   height: "60%",
                   resizeMode: "contain",
@@ -441,7 +452,10 @@ const CardSettings = ({ navigation }) => {
                   marginLeft: "5%",
                 }}
                 source={require("../assets/newAssets/delete.png")}
-              />
+              /> */}
+              <View style={{marginLeft:"5%"}}>
+              <MaterialCommunityIcons name="delete" size={24} color="black" />
+              </View>
               <View
                 style={{
                   flex: 9,
@@ -480,9 +494,9 @@ const CardSettings = ({ navigation }) => {
           >
             <Image
               style={{
-                height: "60%",
+                height: "50%",
                 resizeMode: "contain",
-                flex: 1,
+                // flex: 1,
                 alignSelf: "center",
                 marginLeft: "5%",
               }}
@@ -542,12 +556,12 @@ const styles = StyleSheet.create({
   cardHeading: {
     fontFamily: "Montserrat",
     color: GlobalStyles.Color.gray_1400,
-    fontSize: 16,
+    fontSize: 14,
   },
   cardSubHeading: {
     color: GlobalStyles.Color.gray_2100,
     fontFamily: "Montserrat-Regular",
-    fontSize: 14,
+    fontSize: 10,
   },
   container: {
     width: "100%",
