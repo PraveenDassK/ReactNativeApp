@@ -22,7 +22,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-const CardSettings = ({ navigation }) => {
+const CardSettings = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
