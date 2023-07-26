@@ -18,7 +18,7 @@ import apiSettings from "../api/apiSettings";
 import AppText from "../components/Text";
 import terminateCardAlert from "../utility/terminateCardAlert";
 
-const CardSettings = ({ navigation }) => {
+const CardSettings = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const [isEnabled1, setIsEnabled1] = useState(false);
