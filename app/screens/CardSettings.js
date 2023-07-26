@@ -101,7 +101,7 @@ const CardSettings = ({ navigation, route }) => {
         </View> */}
         <Pressable
           style={[styles.boxShadow]}
-          onPress={() => navigation.navigate("viewpin")}
+          onPress={() => navigation.navigate("viewpin", routeObj)}
         >
           <View
             style={[

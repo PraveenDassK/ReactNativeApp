@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -15,26 +15,32 @@ import {
   verticalScale,
   moderateScale,
 } from "../config/scaling";
-import { Rating, AirbnbRating } from "react-native-ratings";
-import BrokenCard from "../assets/TerminateCard/brokencardBottom.svg";
-import BrokenTop from "../assets/TerminateCard/brokencard.svg";
 import PinModal from "../components/PinModal";
 import Tagline from "../components/Tagline";
+
+//Card details apir
+import cardDetails from "../api/cardDetails";
+import {GetCardDetails} from "../utility/GetCardDetails.js";
+
 const height = Dimensions.get("window").height;
 
-const TerminatedCard = ({ navigation }) => {
-  const [animationProgress, setAnimationProgress] = useState(true);
-  const [showPinModal, setShowPinModal] = useState(false);
+const ViewPin = ({ navigation, route }) => {
 
-  function ratingCompleted(rating) {
-    console.log("Rating is: " + rating);
+  const [showPinModal, setShowPinModal] = useState(true);
+  const [pinDetails, setPinDetails] = useState("1234")
+  const [cardNumber, setCardNumber] = useState("1234 1234 1234 1234")
+
+  useEffect(() => {
+    getCardDetails();
+  });
+
+  const getCardDetails = async () => {
+    const cardDetails = GetCardDetails("734194812")
   }
+
   if (showPinModal) {
     return (
       <View style={styles.mainContainer}>
-        {/* <RecentTransactions
-        amount={10}
-      /> */}
         {showPinModal ? (
           <PinModal
             title="Enter your PIN"
@@ -53,7 +59,7 @@ const TerminatedCard = ({ navigation }) => {
         imageStyle={{
           top: "0%", // Whatever offset you want from the bottom
         }}
-        // style={styles.terminatedCard}
+      // style={styles.terminatedCard}
       />
       <View
         style={{
@@ -70,8 +76,8 @@ const TerminatedCard = ({ navigation }) => {
           }}
         >
           <View style={styles.brokenBottomCreditCardParent}>
-            <Text style={styles.sadText}>Card **** **** **** 1234</Text>
-            <Text style={styles.sadTextNormal}>1234</Text>
+            <Text style={styles.sadText}>Card {cardNumber}</Text>
+            <Text style={styles.sadTextNormal}>{pinDetails}</Text>
             <Text style={styles.happytohelp}>
               Don't share your PIN with anyone{" "}
             </Text>
@@ -85,8 +91,8 @@ const TerminatedCard = ({ navigation }) => {
             </Pressable>
           </View>
         </View>
-        <View style={{    marginTop: "60%"}}>
-          <Tagline/>
+        <View style={{ marginTop: "60%" }}>
+          <Tagline />
         </View>
       </View>
     </View>
@@ -200,7 +206,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_1400,
     fontFamily: "Montserrat",
     fontSize: 80,
-    letterSpacing:20,
+    letterSpacing: 20,
   },
   happytohelp: {
     color: GlobalStyles.Color.gray_2100,
@@ -219,7 +225,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.white,
     borderRadius: 10,
     width: "90%",
-    marginVertical:10
+    marginVertical: 10
   },
   buttonText: {
     color: GlobalStyles.Color.white,
@@ -229,4 +235,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TerminatedCard;
+export default ViewPin;

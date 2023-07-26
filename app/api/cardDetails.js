@@ -5,7 +5,7 @@ const getPinControlToken = async(id) => {
     //https://integration-api-cat2.{{environment}}.ext.{{realm}}.cia.enfuce.com/pincontrol/v2/plastic/{plasticId}
     const data = id
     const cardId = id
-    const endpoint = `/pincontrol/v2/plastic/${id}`
+    const endpoint = `/pincontrol/v2/plastic/${id}?auditUser=`
     
     return await client.post(endpoint, data, {
       auth: {
