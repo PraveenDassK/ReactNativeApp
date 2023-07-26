@@ -102,6 +102,8 @@ export default function MyCards({ navigation }) {
   const loadData = async () => {
     setIsLoading(true);
     //api to get enfuse account id
+    console.log(customerDetails, "this is a customer");
+
     const responseforgettingAccountId =
       await api_list.GetCustomerDetailsForCard(customerDetails);
     const listedAccount =
@@ -225,6 +227,11 @@ export default function MyCards({ navigation }) {
     loadData();
     cardFreezed();
   };
+  const requestObject = {
+    accountID: accountID,
+    cardID: dataAbovecard?.[0]?.id,
+  };
+  console.log(accountID, dataAbovecard, "data above card");
 
   return (
     <AppScreen>
@@ -233,7 +240,7 @@ export default function MyCards({ navigation }) {
         <View style={styles.settingsPositioning}>
           <Icon
             title={"settings"}
-            onSettingsPress={() => navigation.navigate("CardSettings")}
+            onSettingsPress={() => navigation.navigate("CardSettings",requestObject)}
           />
         </View>
 
@@ -424,7 +431,7 @@ const CardCarousel = ({
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
-  const [showName, setShowName]=useState(true);
+  const [showName, setShowName] = useState(true);
   console.log(dataAbovecard, "this is data above card");
   // const [frozen, setFrozen] = useState(false);
   let frozen = false;
@@ -517,10 +524,10 @@ const CardCarousel = ({
                 clickable={true}
                 onFlipStart={(value) => {
                   //Ask for pin to flip
-                  console.log(value,"thsis onm flip")
+                  console.log(value, "thsis onm flip");
                   // setShowPinModal(true)
                   setFlipped(false);
-                  setShowName(value)
+                  setShowName(value);
                 }}
                 onFlipEnd={(isFlipEnd) => {
                   console.log("isFlipEnd", isFlipEnd);

@@ -34,14 +34,16 @@ import TerminatedCard from "./TerminatedCard";
 
 const SIZE = 100.0;
 
-const Terminate = ({ navigation }) => {
+const Terminate = ({ navigation, route }) => {
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const rotation = useSharedValue(0);
 
-  const [terminate, setTerminate] = useState(false)
+  const [terminate, setTerminate] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(true);
+
+  console.log(route.params, "this is terminate");
 
   // useEffect(() => {
 
@@ -80,11 +82,14 @@ const Terminate = ({ navigation }) => {
     navigation.navigate("CardSettings");
   };
   const handleYes = async () => {
-    //  const result = await apiCall.TerminateCard({ID},"Terminate")
+    const ID = route?.params?.cardID;
+    const result = await apiCall.FreezeUpdateCard(ID, "CARD_CLOSED");
+    console.log(result, "this is terminate api call");
     terminateAnimation();
     setModalVisible(!modalVisible);
+
     setTimeout(() => {
-      setTerminate(true)
+      setTerminate(true);
     }, 5000);
   };
 
@@ -94,7 +99,7 @@ const Terminate = ({ navigation }) => {
     rotation.value = withTiming(-50, { duration: 3000 });
   };
 
-  if (terminate) return <TerminatedCard />
+  if (terminate) return <TerminatedCard />;
 
   return (
     <View style={styles.terminate}>
@@ -142,7 +147,7 @@ const Terminate = ({ navigation }) => {
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => {
-                    navigation.navigate("CardSettings");
+                    navigation.navigate("CardSettings", route.params);
                   }}
                 >
                   <Text style={styles.textStyle}>No</Text>
@@ -231,7 +236,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     zIndex: -10,
-
   },
   bottomText: {
     color: GlobalStyles.Color.white,

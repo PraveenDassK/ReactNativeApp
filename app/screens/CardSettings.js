@@ -20,7 +20,7 @@ import terminateCardAlert from "../utility/terminateCardAlert";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const CardSettings = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +28,8 @@ const CardSettings = ({ navigation, route }) => {
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
+  console.log(route.params, "this is route");
+  let routeObj = route.params;
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
     sendRequest();
@@ -172,7 +174,7 @@ const CardSettings = ({ navigation, route }) => {
               source={require("../assets/newAssets/meter.png")}
             /> */}
             <View style={{ marginLeft: "5%" }}>
-            <SimpleLineIcons name="speedometer" size={24} />
+              <SimpleLineIcons name="speedometer" size={24} />
             </View>
             <View
               style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
@@ -432,7 +434,9 @@ const CardSettings = ({ navigation, route }) => {
               </View>
             </View>
           </Pressable>
-          <Pressable onPress={() => navigation.navigate("Terminate")}>
+          <Pressable
+            onPress={() => navigation.navigate("Terminate", routeObj)}
+          >
             <View
               style={{
                 width: "100%",
@@ -453,8 +457,8 @@ const CardSettings = ({ navigation, route }) => {
                 }}
                 source={require("../assets/newAssets/delete.png")}
               /> */}
-              <View style={{marginLeft:"5%"}}>
-              <MaterialCommunityIcons name="delete" size={24} color="black" />
+              <View style={{ marginLeft: "5%" }}>
+                <MaterialCommunityIcons name="delete" size={24} color="black" />
               </View>
               <View
                 style={{
