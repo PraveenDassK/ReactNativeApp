@@ -22,6 +22,8 @@ const Notification = ({ navigation }) =>
     const [cardname, setCardname] = useState(null);
     const [viewMore, setViewMore] = useState(false);
     const authContext = useContext(AuthContext);
+    const darkMode = AuthContext._currentValue.darkMode;
+    console.log(AuthContext._currentValue.darkMode, "darkmoode");
     //Calls the API once during load
     useEffect(() => {
       const unsubscribe = navigation.addListener("focus", () => {
@@ -75,17 +77,29 @@ const Notification = ({ navigation }) =>
     }
     const Item = ({ title }) => (
       <View style={styles.item}>
-        <Text style={styles.title}>{title.notification}</Text>
+        <Text style={darkMode === "DARK" ? styles.darktitle : styles.title}>
+          {title.notification}
+        </Text>
       </View>
     );
     return (
       <ImageBackground
         resizeMode="contain"
-        source={require("../assets/backgrounds/replaceCard.jpg")}
+        source={
+          darkMode === "DARK"
+            ? require("../assets/dashboardDark/notification.jpg")
+            : require("../assets/backgrounds/cards.jpg")
+        }
         imageStyle={{
-          top: "50%", // Whatever offset you want from the bottom
+          // top: "64%",
+          bottom: "-70%", // Whatever offset you want from the bottom
         }}
-        style={{ position: "relative", flex: 1 }}
+        style={{
+          position: "relative",
+          flex: 1,
+          backgroundColor:
+            darkMode == "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
       >
         <View style={{ marginBottom: 0, position: "relative" }}>
           <View style={styles.replaceCard}>
@@ -174,6 +188,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: GlobalStyles.Color.black,
+    fontFamily: "Montserrat",
+    fontSize: 16,
+  },
+  darktitle: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     fontSize: 16,
   },

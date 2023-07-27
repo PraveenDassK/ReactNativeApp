@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   ScrollView,
   Text,
@@ -18,8 +18,26 @@ import { center } from "@shopify/react-native-skia";
 import Tagline from "../components/Tagline";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import AuthContext from "../auth/context";
+import authStorage from "../auth/storage";
+
 const CarbonFootprints = ({ navigation }) => {
   const handleNavigation = () => navigation.navigate("CarbonExplore");
+  const { darkMode, setDarkMode } = useContext(AuthContext);
+  console.log("CarbonExplore", darkMode);
+
+  const handleDark = async () => {
+    // const data=authStorage.removeColor();
+    // console.log(data, "this is a dark")
+    if (darkMode === "DARK") {
+      authStorage.removeColor();
+      setDarkMode(authStorage.getColor());
+    } else {
+      authStorage.storeColor("DARK");
+      setDarkMode(authStorage.getColor());
+    }
+    //  authStorage.removeColor();
+  };
   return (
     <ScrollView>
       <ImageBackground
@@ -40,7 +58,9 @@ const CarbonFootprints = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.iconContainer}>
-            <DarkMode />
+            <TouchableOpacity onPress={() => handleDark()}>
+              <DarkMode darkMode={darkMode} />
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate("Notification")}
             >
@@ -52,7 +72,10 @@ const CarbonFootprints = ({ navigation }) => {
 
       <View
         style={{
-          backgroundColor: "#ffff",
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.darkTheme_bg
+              : GlobalStyles.Color.white,
           // flex: 1,
           // marginBottom: "30%",
           // justifyContent: "flex-end",
@@ -62,54 +85,63 @@ const CarbonFootprints = ({ navigation }) => {
         }}
       >
         <ImageBackground
-          source={require("../assets/backgrounds/beach.jpg")}
+          source={
+            darkMode === "DARK"
+              ? require("../assets/dashboardDark/carbonbottom.jpg")
+              : require("../assets/backgrounds/spendingLimit.jpg")
+          }
           resizeMode="contain"
           imageStyle={{
-            bottom: "-95%", // Whatever offset you want from the bottom
+            bottom: "-90%", // Whatever offset you want from the bottom
           }}
           style={{
             zIndex: 10,
             width: "100%",
           }}
         >
-          <View style={{padding:"5%"}}>
-          <BlurView tint="light" intensity={60} style={styles.blurView}>
-            <CarbonSpendGraph isStyled={false} />
-          </BlurView>
-          <CarbonContainer
-            title="Carbon offset summary"
-            onNavigate={handleNavigation}
-          >
-            <ImageCardContainer />
-          </CarbonContainer>
-          <CarbonContainer title="Your virtual planet">
-            <View style={styles.center}>
-              <Image
-                resizeMode="contain"
-                source={require("../assets/Forest/1.png")}
-                style={{ width: 300, height: 173 }}
-              />
-            </View>
-          </CarbonContainer>
-          <CarbonContainer>
-            <View style={styles.center}>
-              <Image
-                resizeMode="contain"
-                source={require("../assets/Turtles/1.png")}
-                style={{ width: 300, height: 173 }}
-              />
-            </View>
-          </CarbonContainer>
-          <Tagline margin={false} />
+          <View style={{ padding: "5%" }}>
+            <BlurView tint="light" intensity={60} style={styles.blurView}>
+              <CarbonSpendGraph isStyled={false} />
+            </BlurView>
+            <CarbonContainer
+              title="Carbon offset summary"
+              onNavigate={handleNavigation}
+              darkMode={darkMode}
+            >
+              <ImageCardContainer />
+            </CarbonContainer>
+            <CarbonContainer title="Your virtual planet" darkMode={darkMode}>
+              <View style={styles.center}>
+                <Image
+                  resizeMode="contain"
+                  source={require("../assets/Forest/1.png")}
+                  style={{ width: 300, height: 173 }}
+                />
+              </View>
+            </CarbonContainer>
+            <CarbonContainer darkMode={darkMode}>
+              <View style={styles.center}>
+                <Image
+                  resizeMode="contain"
+                  source={require("../assets/Turtles/1.png")}
+                  style={{ width: 300, height: 173 }}
+                />
+              </View>
+            </CarbonContainer>
+            <Tagline margin={false} darkMode={darkMode} />
           </View>
         </ImageBackground>
       </View>
     </ScrollView>
   );
 };
-const DarkMode = () => (
+const DarkMode = ({ darkMode }) => (
   <View style={styles.iconStyle}>
-    <Ionicons name="moon" color="white" size={24} />
+    {darkMode === "DARK" ? (
+      <Ionicons name="ios-sunny-outline" color="white" size={24} />
+    ) : (
+      <Ionicons name="moon" color="white" size={24} />
+    )}
   </View>
 );
 const Notification = () => (
@@ -121,10 +153,12 @@ const Notification = () => (
   </View>
 );
 
-const CarbonContainer = ({ title, children, onNavigate }) => {
+const CarbonContainer = ({ title, children, onNavigate, darkMode }) => {
   return (
     <View style={styles.containerSpacing}>
-      <Text style={styles.header}>{title}</Text>
+      <Text style={darkMode === "DARK" ? styles.darkheader : styles.header}>
+        {title}
+      </Text>
       <View
         style={[
           styles.container,
@@ -261,6 +295,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
 
     color: GlobalStyles.Color.lightBlack,
+  },
+  darkheader: {
+    fontFamily: "Montserrat",
+    fontSize: 18,
+
+    color: GlobalStyles.Color.white,
   },
   itemSpacing: {
     marginTop: "2.5%",

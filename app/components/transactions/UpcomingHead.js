@@ -1,12 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import GlobalStyles from "../../../GlobalStyles";
-const UpcomingHead = ({ headerTitle = "Recent transactions" }) => {
+const UpcomingHead = ({ headerTitle = "Recent transactions", darkMode }) => {
   return (
     <View style={styles.transactionHeadContainer}>
       <View style={styles.spacing}>
         <View style={styles.headerTitleContainer}>
-          <Text style={[styles.headerText, styles.spacing]}>{headerTitle}</Text>
+          <Text
+            style={[
+              darkMode === "DARK" ? styles.darkheaderText : styles.headerText,
+              styles.spacing,
+            ]}
+          >
+            {headerTitle}
+          </Text>
         </View>
 
         <View style={styles.transactionContainer}>
@@ -34,6 +41,11 @@ const styles = StyleSheet.create({
   headerTitleContainer: { flex: 1 },
   headerText: {
     color: GlobalStyles.Color.lightBlack,
+    fontFamily: "Montserrat",
+    fontSize: 20,
+  },
+  darkheaderText: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     fontSize: 20,
   },

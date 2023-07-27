@@ -20,7 +20,7 @@ import {
   ImageBackground,
   Text,
 } from "react-native";
-
+import authStorage from "../auth/storage";
 import GlobalStyles from "../../GlobalStyles";
 import { LineChart } from "react-native-chart-kit";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -82,7 +82,7 @@ const Analytics = ({ navigation }) => {
   const [recentTransactions, setRecent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const authContext = useContext(AuthContext);
-  const { userID, accountID } = useContext(AuthContext);
+  const { userID, accountID, darkMode, setDarkMode } = useContext(AuthContext);
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const [carbonGraphData, setCarbonGraphData] = useState(null);
   const [name, setName] = useState([]);
@@ -171,6 +171,18 @@ const Analytics = ({ navigation }) => {
       </View>
     );
   }
+  const handleDark = async () => {
+    // const data=authStorage.removeColor();
+    // console.log(data, "this is a dark")
+    if (darkMode === "DARK") {
+      authStorage.removeColor();
+      setDarkMode(authStorage.getColor());
+    } else {
+      authStorage.storeColor("DARK");
+      setDarkMode(authStorage.getColor());
+    }
+    //  authStorage.removeColor();
+  };
 
   return (
     <ScrollView
@@ -180,7 +192,11 @@ const Analytics = ({ navigation }) => {
       }
     >
       <ImageBackground
-        source={require("../assets/backgrounds/beach.jpg")}
+        source={
+          darkMode === "DARK"
+            ? require("../assets/dashboardDark/dashboardTop.jpg")
+            : require("../assets/backgrounds/beach.jpg")
+        }
         style={styles.backgroundImage}
       >
         <View style={styles.header}>
@@ -189,13 +205,27 @@ const Analytics = ({ navigation }) => {
             <Text style={styles.welcomText}>Track & control your spending</Text>
           </View>
           <View style={styles.iconContainer}>
-            <DarkMode />
+            <TouchableOpacity onPress={() => handleDark()}>
+              <DarkMode darkMode={darkMode} />
+            </TouchableOpacity>
             <Notification />
           </View>
         </View>
       </ImageBackground>
-      <View style={styles.mainContainer}>
-        <BlurView tint="light" intensity={60} style={styles.innerContainer}>
+      <View
+        style={
+          darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+        }
+      >
+        <BlurView
+          tint="light"
+          intensity={darkMode === "DARK" ? 10 : 60}
+          style={
+            darkMode === "DARK"
+              ? styles.darkinnerContainer
+              : styles.innerContainer
+          }
+        >
           {/* <Text>
             Total Spent this {active}
           </Text> */}
@@ -227,6 +257,8 @@ const Analytics = ({ navigation }) => {
                         color:
                           active === tab.title
                             ? GlobalStyles.Color.gray_500
+                            : darkMode === "DARK"
+                            ? GlobalStyles.Color.white
                             : GlobalStyles.Color.lightBlack,
                       }}
                     >
@@ -263,7 +295,8 @@ const Analytics = ({ navigation }) => {
           </View> */}
           <View
             style={{
-              backgroundColor: GlobalStyles.Color.white,
+              backgroundColor:
+                darkMode === "DARK" ? "Transparent" : GlobalStyles.Color.white,
               paddingBottom: "5%",
               borderRadius: 10,
             }}
@@ -334,6 +367,10 @@ const Analytics = ({ navigation }) => {
                       width: "100%",
                       textAlign: "center",
                       marginLeft: "5%",
+                      color:
+                        darkMode === "DARK"
+                          ? GlobalStyles.Color.white
+                          : GlobalStyles.Color.black,
                     }}
                   >
                     Total Spend
@@ -344,7 +381,10 @@ const Analytics = ({ navigation }) => {
                       fontFamily: "Montserrat",
                       width: "100%",
                       textAlign: "center",
-                      color: GlobalStyles.Color.black,
+                      color:
+                        darkMode === "DARK"
+                          ? GlobalStyles.Color.white
+                          : GlobalStyles.Color.black,
                     }}
                   >
                     {/* {totalFootprint} */}£ {totalSpend.toFixed(2)}
@@ -352,13 +392,22 @@ const Analytics = ({ navigation }) => {
                 </View>
               </View>
             </View>
-            <View style={[styles.balanceContainer]}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkbalanceContainer
+                  : styles.balanceContainer
+              }
+            >
               <AppText
                 style={{
                   flex: 2,
                   fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 Money Spent
@@ -368,19 +417,31 @@ const Analytics = ({ navigation }) => {
                 style={{
                   fontFamily: "Montserrat",
                   fontSize: 16,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 £ {totalSpend.toFixed(2)}{" "}
               </AppText>
             </View>
-            <View style={[styles.balanceContainer]}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkbalanceContainer
+                  : [styles.balanceContainer]
+              }
+            >
               <AppText
                 style={{
                   flex: 2,
                   fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 Money Received
@@ -390,20 +451,32 @@ const Analytics = ({ navigation }) => {
                 style={{
                   fontFamily: "Montserrat",
                   fontSize: 16,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 {/* £ {totalSpend.toFixed(2)}{" "} */}
                 Coming soon..
               </AppText>
             </View>
-            <View style={[styles.balanceContainer]}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkbalanceContainer
+                  : [styles.balanceContainer]
+              }
+            >
               <AppText
                 style={{
                   flex: 2,
                   fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 No.of Payments
@@ -413,19 +486,31 @@ const Analytics = ({ navigation }) => {
                 style={{
                   fontFamily: "Montserrat",
                   fontSize: 16,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 {totalTransactions}
               </AppText>
             </View>
-            <View style={[styles.balanceContainer]}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkbalanceContainer
+                  : [styles.balanceContainer]
+              }
+            >
               <AppText
                 style={{
                   flex: 2,
                   fontFamily: "Montserrat-Medium",
                   fontSize: 14,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 Current Balance
@@ -435,7 +520,10 @@ const Analytics = ({ navigation }) => {
                 style={{
                   fontFamily: "Montserrat",
                   fontSize: 16,
-                  color: GlobalStyles.Color.lightBlack,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
                 }}
               >
                 £ {balance}
@@ -545,7 +633,14 @@ const Analytics = ({ navigation }) => {
             </AppText>
           </View> */}
 
-            <View style={[styles.carbonSpendingAnalysysDiv, styles.rounded]}>
+            <View
+              style={[
+                darkMode === "DARK"
+                  ? styles.darkcarbonSpendingAnalysysDiv
+                  : styles.carbonSpendingAnalysysDiv,
+                styles.rounded,
+              ]}
+            >
               {catNames.map((name, index) => {
                 return (
                   <Fragment key={`${name + index}`}>
@@ -599,7 +694,7 @@ const Analytics = ({ navigation }) => {
               { marginVertical: 40, borderRadius: 10 },
             ]}
           >
-            <UpcomingHead headerTitle="Upcoming spending" />
+            <UpcomingHead headerTitle="Upcoming spending" darkMode={darkMode}/>
             {data.map((transaction, index) => (
               <UpcomingTransactionBody
                 key={index}
@@ -608,6 +703,7 @@ const Analytics = ({ navigation }) => {
                 amount={transaction.amount}
                 credit={transaction.credit}
                 accountID={accountID}
+                darkMode={darkMode}
               />
             ))}
           </View>
@@ -624,12 +720,16 @@ const Analytics = ({ navigation }) => {
           zIndex: 10,
         }}
       >
-        <Tagline />
+        <Tagline darkMode={darkMode} />
       </View>
 
       <ImageBackground
         resizeMode="stretch"
-        source={require("../assets/backgrounds/replaceCard.jpg")}
+        source={
+          darkMode === "DARK"
+            ? require("../assets/dashboardDark/replaceCard.jpg")
+            : require("../assets/backgrounds/replaceCard.jpg")
+        }
         style={styles.container}
       />
 
@@ -641,9 +741,13 @@ const Analytics = ({ navigation }) => {
     </ScrollView>
   );
 };
-const DarkMode = () => (
+const DarkMode = ({ darkMode }) => (
   <View style={styles.iconStyle}>
-    <Ionicons name="moon" color={GlobalStyles.Color.white} size={24} />
+    {darkMode === "DARK" ? (
+      <Ionicons name="ios-sunny-outline" color="white" size={24} />
+    ) : (
+      <Ionicons name="moon" color="white" size={24} />
+    )}
   </View>
 );
 const Notification = () => (
@@ -783,6 +887,17 @@ const styles = StyleSheet.create({
     zIndex: 1,
     paddingHorizontal: "5%",
   },
+  darkmainContainer: {
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
+    height: GlobalStyles.DivContainer.height,
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: -20,
+    zIndex: 1,
+    paddingHorizontal: "5%",
+  },
   innerContainer: {
     backgroundColor: "rgba(255,255,255,0.5)",
     height: GlobalStyles.DivContainer.height,
@@ -792,6 +907,19 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderColor: "white",
     borderWidth: 0.5,
+    marginTop: -70,
+    zIndex: 10,
+    overflow: "hidden",
+  },
+  darkinnerContainer: {
+    backgroundColor: "rgba(255,255,255,0.5)",
+    height: GlobalStyles.DivContainer.height,
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderColor: "transparent",
+    borderWidth: 0,
     marginTop: -70,
     zIndex: 10,
     overflow: "hidden",
@@ -833,6 +961,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
     paddingVertical: "1%",
   },
+  darkbalanceContainer: {
+    width: "100%",
+    // marginLeft: "5%",
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    // borderRadius: 15,
+
+    alignItems: "center",
+    paddingHorizontal: "5%",
+    paddingVertical: "1%",
+  },
 
   money: {
     color: GlobalStyles.Color.blue_100,
@@ -845,7 +984,7 @@ const styles = StyleSheet.create({
     marginTop: "2.5%",
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
   },
-  containerSpacing: { paddingHorizontal: "0%" },
+  containerSpacing: { paddingHorizontal: "0%", zIndex: 2 },
   carbonSpendingAnalysysBarProgress: {
     height: "100%",
     borderRadius: 15,
@@ -855,6 +994,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "auto",
     backgroundColor: GlobalStyles.Color.white,
+    paddingHorizontal: "5%",
+    paddingVertical: "2%",
+    marginTop: "5%",
+  },
+  darkcarbonSpendingAnalysysDiv: {
+    width: "100%",
+    height: "auto",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     paddingHorizontal: "5%",
     paddingVertical: "2%",
     marginTop: "5%",
@@ -950,7 +1097,7 @@ const styles = StyleSheet.create({
     height: 300,
     // position: "absolute",
     bottom: 0,
-    zIndex: 0,
+    // zIndex: 0,
   },
   bottomText: {
     color: GlobalStyles.Color.white,
