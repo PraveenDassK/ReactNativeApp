@@ -166,8 +166,23 @@ const Analytics = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size={"large"}
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -208,7 +223,11 @@ const Analytics = ({ navigation }) => {
             <TouchableOpacity onPress={() => handleDark()}>
               <DarkMode darkMode={darkMode} />
             </TouchableOpacity>
-            <Notification />
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Notification")}
+            >
+              <Notification />
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -294,12 +313,9 @@ const Analytics = ({ navigation }) => {
             </AppText>
           </View> */}
           <View
-            style={{
-              backgroundColor:
-                darkMode === "DARK" ? "Transparent" : GlobalStyles.Color.white,
-              paddingBottom: "5%",
-              borderRadius: 10,
-            }}
+            style={
+              darkMode === "DARK" ? styles.darkcarbonChart : styles.carbonChart
+            }
           >
             <View
               style={{
@@ -644,11 +660,21 @@ const Analytics = ({ navigation }) => {
               {catNames.map((name, index) => {
                 return (
                   <Fragment key={`${name + index}`}>
-                    <AppText style={styles.subtitleText}>{name}</AppText>
+                    <AppText
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darksubtitleText
+                          : styles.subtitleText
+                      }
+                    >
+                      {name}
+                    </AppText>
 
                     <View
                       style={[
-                        styles.carbonSpendingAnalysysBarBackground,
+                        darkMode === "DARK"
+                          ? styles.darkcarbonSpendingAnalysysBarBackground
+                          : styles.carbonSpendingAnalysysBarBackground,
                         styles.rounded,
                       ]}
                     >
@@ -688,13 +714,8 @@ const Analytics = ({ navigation }) => {
               onSee={() => navigation.navigate("Transactions")}
             />
           </View> */}
-          <View
-            style={[
-              styles.containerSpacing,
-              { marginVertical: 40, borderRadius: 10 },
-            ]}
-          >
-            <UpcomingHead headerTitle="Upcoming spending" darkMode={darkMode}/>
+          <View style={[styles.containerSpacing, { marginTop: 40 }]}>
+            <UpcomingHead headerTitle="Upcoming spending" darkMode={darkMode} />
             {data.map((transaction, index) => (
               <UpcomingTransactionBody
                 key={index}
@@ -916,8 +937,9 @@ const styles = StyleSheet.create({
     height: GlobalStyles.DivContainer.height,
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    borderRadius: 20,
     borderColor: "transparent",
     borderWidth: 0,
     marginTop: -70,
@@ -984,6 +1006,12 @@ const styles = StyleSheet.create({
     marginTop: "2.5%",
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
   },
+  darkcarbonSpendingAnalysysBarBackground: {
+    width: "100%",
+    height: verticalScale(35),
+    marginTop: "2.5%",
+    backgroundColor: GlobalStyles.Color.lightBlack,
+  },
   containerSpacing: { paddingHorizontal: "0%", zIndex: 2 },
   carbonSpendingAnalysysBarProgress: {
     height: "100%",
@@ -1001,10 +1029,21 @@ const styles = StyleSheet.create({
   darkcarbonSpendingAnalysysDiv: {
     width: "100%",
     height: "auto",
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    backgroundColor: "transparent",
     paddingHorizontal: "5%",
     paddingVertical: "2%",
     marginTop: "5%",
+  },
+  carbonChart: {
+    backgroundColor: GlobalStyles.Color.white,
+    paddingBottom: "5%",
+    borderRadius: 10,
+  },
+  darkcarbonChart: {
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    paddingBottom: "5%",
+    borderRadius: 10,
+    marginTop: "1%",
   },
   barText: {
     left: 20,
@@ -1022,6 +1061,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "Montserrat-SemiBold",
     color: GlobalStyles.Color.lightBlack,
+  },
+  darksubtitleText: {
+    marginLeft: "0%",
+    marginTop: "2.5%",
+    fontSize: 15,
+    fontFamily: "Montserrat-SemiBold",
+    color: GlobalStyles.Color.white,
   },
 
   transactionBox: {

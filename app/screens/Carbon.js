@@ -12,7 +12,7 @@ import {
   SafeAreaView,
   ImageBackground,
   Text,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import * as Device from "expo-device";
 import { Canvas } from "@shopify/react-native-skia";
@@ -37,17 +37,17 @@ import colors from "../config/colors";
 import { BlurView } from "expo-blur";
 import CarbonFootprints from "./CarbonFootprints";
 
-const screenWidth = Dimensions.get("window").width
+const screenWidth = Dimensions.get("window").width;
 
 const Carbon = ({ route, navigation }) => {
   const { height, width } = useWindowDimensions();
   const [device, setDevice] = useState("");
-  const { accountID, cart, setCart } = useContext(AuthContext);
+  const { accountID, cart, setCart, darkMode } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [count, setCount] = useState(cart.length);
-  const [ visitedCarbon, setVisitedCarbon] = useState(false)
+  const [visitedCarbon, setVisitedCarbon] = useState(false);
 
   const [projects, setProjects] = useState([]);
 
@@ -126,26 +126,43 @@ const Carbon = ({ route, navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
 
-  if(visitedCarbon) {
-    return(
-      <CarbonFootprints navigation={navigation}/>
-    )
+  if (visitedCarbon) {
+    return <CarbonFootprints navigation={navigation} />;
   }
 
   return (
     <View style={{ flex: 1, backgroundColor: "grey" }}>
       <View>
-      <ImageBackground
-        resizeMode="cover"
-        style={{ width: screenWidth , height: screenWidth * 1, marginTop: -70 }}
-        source={require("../assets/backgrounds/carbonInside.png")}
-      />
+        <ImageBackground
+          resizeMode="cover"
+          style={{
+            width: screenWidth,
+            height: screenWidth * 1,
+            marginTop: -70,
+          }}
+          source={require("../assets/backgrounds/carbonInside.png")}
+        />
       </View>
       <View
         style={{
@@ -159,12 +176,8 @@ const Carbon = ({ route, navigation }) => {
           marginTop: -80,
         }}
       >
-        <BlurView
-          tint="light"
-          intensity={60}
-          style={styles.blurView}
-        >
-        <CarbonFeature/>
+        <BlurView tint="light" intensity={60} style={styles.blurView}>
+          <CarbonFeature />
         </BlurView>
         <Button
           title="Lets Go"
@@ -529,34 +542,57 @@ const Carbon = ({ route, navigation }) => {
 };
 
 const CarbonFeature = () => (
-  <View style={{flex:1}}>
-  <View style={{flex:1, paddingHorizontal: "15%", paddingTop: "15%"}}>
-    <Text style={{fontSize: 30, fontFamily: "Montserrat-Regular", color: 'white'}}>Embracing a <Text style={{fontFamily: "Montserrat"}}>Carbon-Neutral Lifestyle</Text></Text>
-  </View>
-  <View style={{flex:3, padding: "10%"}}>
-    <View style={{justifyContent: "center", alignItems: "center", marginBottom: "10%"}}>
-      <Image
-        source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
-        style={{ height: 200, width: 200 }}
-      />
-    </View>
-    <View>
-      <View>
-        <Text style={{fontFamily: "Montserrat", fontSize: 18, marginBottom: "10%"}}>
-          Track, Reduce, and Offset your daily CO2 Emisssions
+  <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, paddingHorizontal: "15%", paddingTop: "15%" }}>
+      <Text
+        style={{
+          fontSize: 30,
+          fontFamily: "Montserrat-Regular",
+          color: "white",
+        }}
+      >
+        Embracing a{" "}
+        <Text style={{ fontFamily: "Montserrat" }}>
+          Carbon-Neutral Lifestyle
         </Text>
+      </Text>
+    </View>
+    <View style={{ flex: 3, padding: "10%" }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "10%",
+        }}
+      >
+        <Image
+          source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
+          style={{ height: 200, width: 200 }}
+        />
       </View>
       <View>
-        <Text style={{fontFamily: "Montserrat-Regular", fontSize: 14}}>
-          With carbonyte app you can track and control your carbon
-          emisson from your daily life spendings and invest in nature
-          by offsetting in high quality nature-based verified projects
-        </Text>
+        <View>
+          <Text
+            style={{
+              fontFamily: "Montserrat",
+              fontSize: 18,
+              marginBottom: "10%",
+            }}
+          >
+            Track, Reduce, and Offset your daily CO2 Emisssions
+          </Text>
+        </View>
+        <View>
+          <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 14 }}>
+            With carbonyte app you can track and control your carbon emisson
+            from your daily life spendings and invest in nature by offsetting in
+            high quality nature-based verified projects
+          </Text>
+        </View>
       </View>
     </View>
   </View>
-</View>
-)
+);
 
 const styles = StyleSheet.create({
   boxShadow: {},
@@ -568,12 +604,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   blurView: {
-   
     borderRadius: 20,
     height: "120%",
     marginBottom: "5%",
     overflow: "hidden",
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 0.5,
   },
   container: {

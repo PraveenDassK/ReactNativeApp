@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
   transactionMainContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     padding: "3%",
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20,
+
     // height: moderateScale(50),
     // justifyContent: "center",
   },

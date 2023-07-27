@@ -62,6 +62,7 @@ const GlobalStyles = {
     lightTheme_bg:"#F7F6F9",
     gray_1800: "rgba(0, 0, 0, 0.87)",
     gray_1900: "rgba(0, 0, 0, 0)",
+    carbon_bg:"rgba(0,0,0.0.5)",
     gray_2000:"#505A63",
     gray_2100:"#888888",
     darkGray:"#999999", 
