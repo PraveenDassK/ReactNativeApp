@@ -149,22 +149,29 @@ export default function MyCards({ navigation }) {
   };
   const filterCards = (type) => {
     const filterCardsByType = (type) => {
-      
-        return false; // Invalid type, return an empty array
-
-      
+      return cardData.filter((card) => {
+        if (type === "physical") {
+          // return card.productCode === "MC_PHYSICAL";
+          //name changed for physical card
+          return card.productCode === "MC_CARD";
+        } else if (type === "virtual") {
+          return card.productCode === "MC_VIRTUAL";
+        } else {
+          return false; // Invalid type, return an empty array
+        }
+      });
     };
     // card status close filtering
-    // let filterCardBytype = filterCardsByType(type);
-    // let cardStatusFilter = filterCardBytype.filter(
-    //   (eachValue, index) => eachValue?.status != "CARD_CLOSED"
-    // );
+    let filterCardBytype = filterCardsByType(type);
+    let cardStatusFilter = filterCardBytype.filter(
+      (eachValue, index) => eachValue?.status != "CARD_CLOSED"
+    );
 
-    // setFilteredCards(cardStatusFilter);
-    // console.log(cardStatusFilter, "this is filtered");
+    setFilteredCards(cardStatusFilter);
+    console.log(cardStatusFilter, "this is filtered");
 
-    // setDataAbovecard(new Array(cardStatusFilter?.[0]));
-    // setCardCategory(type);
+    setDataAbovecard(new Array(cardStatusFilter?.[0]));
+    setCardCategory(type);
   };
 
   const handleTransactionFilter = (item) => {
@@ -297,8 +304,8 @@ export default function MyCards({ navigation }) {
             title={"freeze"}
             onSettingsPress={handleFreeze}
             isFrozen={isFrozen}
-          // filteredCards={filteredCards}
-          // selectedCardforFreeze={selectedCardforFreeze}
+            // filteredCards={filteredCards}
+            // selectedCardforFreeze={selectedCardforFreeze}
           />
         </View>
         <View style={{ marginTop: "5%" }}>
@@ -563,16 +570,18 @@ const CardCarousel = ({
                 >
                   <Text
                     style={{ color: "white", fontSize: 16 }}
-                  >{`Name on the card:  ${dataAbovecard?.[0]?.embossing?.firstName
+                  >{`Name on the card:  ${
+                    dataAbovecard?.[0]?.embossing?.firstName
                       ? dataAbovecard?.[0]?.embossing?.firstName
                       : "Name"
-                    }`}</Text>
+                  }`}</Text>
                   <Text
                     style={{ color: "white", fontSize: 16 }}
-                  >{`Card Number:   ****${dataAbovecard?.[0]?.maskedCardNumber
+                  >{`Card Number:   ****${
+                    dataAbovecard?.[0]?.maskedCardNumber
                       ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
                       : "4444"
-                    }`}</Text>
+                  }`}</Text>
                 </View>
               ) : null}
 
