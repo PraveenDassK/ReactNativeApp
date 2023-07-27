@@ -28,7 +28,7 @@ const CardSettings = ({ navigation, route }) => {
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
-  console.log(route.params, "this is route");
+
   let routeObj = route.params;
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
@@ -64,6 +64,7 @@ const CardSettings = ({ navigation, route }) => {
     setIsLoading(true);
     try {
       const cardSettings = await apiSettings.GetSettings(authContext.accountID);
+      console.log(cardSettings)
       const data = cardSettings;
       console.log(data);
       data.onlineTransactions ? setIsEnabled(true) : null;
@@ -80,14 +81,20 @@ const CardSettings = ({ navigation, route }) => {
   const sendRequest = async () => {
     setIsLoading(true);
     console.log("!");
-    const response = await apiSettings.SetToggles(
-      authContext.accountID,
-      isEnabled,
-      isEnabled1,
-      isEnabled2,
-      isEnabled3
-    );
-    setIsLoading(false);
+    try {
+      const response = await apiSettings.SetToggles(
+        authContext.accountID,
+        isEnabled,
+        isEnabled1,
+        isEnabled2,
+        isEnabled3
+      );
+      console.log(response)
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+    }
+
   };
 
   if (isLoading) {

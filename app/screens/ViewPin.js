@@ -35,7 +35,8 @@ const ViewPin = ({ navigation, route }) => {
   });
 
   const getCardDetails = async () => {
-    const cardDetails = GetCardDetails("734194812")
+    console.log("734194812")
+    const cardDetails = await GetCardDetails("734194812")
   }
 
   if (showPinModal) {
