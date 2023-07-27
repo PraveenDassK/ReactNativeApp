@@ -8,8 +8,9 @@ const SendMoneySuccessPage = ({ route, navigation }) => {
   const text = "You have sent £" + route.params.successObject.amount + " to " +route.params.successObject.name;
   const path = route?.params?.params?.finishScreen
     ? route.params.finishScreen
-    : "SendMoney";
+    : "Account";
   console.log(path);
+
   return (
     <Pressable
       style={styles.requested}

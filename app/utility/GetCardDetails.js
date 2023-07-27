@@ -5,7 +5,8 @@ import cardDetails from "../api/cardDetails";
  * @param cardID The Enfuse ID (this is a number string)
  * @returns The card details number, expiary and cvv
  */
-const getCardDetails = async (cardID) => {
+async function getCardDetails(cardID){
+  console.log(cardID,"ID")
   try {
     // Call the API to get the response details
     const responseDetails = await cardDetails.getCardResponse(cardID);
@@ -52,4 +53,4 @@ const getCardDetails = async (cardID) => {
   }
 };
 
-export default {getCardDetails}
+export default getCardDetails

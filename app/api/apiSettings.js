@@ -1,4 +1,5 @@
-import client from "./client";
+// import client from "./client";
+import { jwtClient as client } from './client'
 
 /**
  * @dev This gets the card settings 
