@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
@@ -35,7 +35,7 @@ import SendMoney from "../screens/SendMoney";
 import AddBeneficiary from "../screens/AddBeneficiary";
 import AddBeneficiaryContact from "../screens/AddBeneficiaryContact";
 import AddBeneficiaryRefrence from "../screens/AddBeneficiaryRefrence";
-import AddBeneficiarySuccess  from "../screens/AddBeneficiarySuccess"
+import AddBeneficiarySuccess from "../screens/AddBeneficiarySuccess";
 import BankTransferAmount from "../screens/BankTransferAmount";
 import GroupBeneficiaryMoney from "../screens/GroupSendMoney";
 //Generic
@@ -110,7 +110,7 @@ import Profile from "../assets/Dashboard/Profile.svg";
 import Send from "../assets/Dashboard/SendMoney.svg";
 import Home from "../assets/Dashboard/home.svg";
 import Analysis from "../assets/Dashboard/Analysis.svg";
-
+import AuthContext from "../auth/context";
 //Tabs and navs
 const Tab = createMaterialTopTabNavigator();
 
@@ -178,10 +178,10 @@ function MyTabBar({ state, descriptors, navigation, position }) {
         style={{
           ...Platform.select({
             ios: {
-              backgroundColor: 'transparent',
+              backgroundColor: "transparent",
             },
             android: {
-              backgroundColor: 'rgba(155, 155, 155, 0.3)',
+              backgroundColor: "rgba(155, 155, 155, 0.3)",
             },
           }),
 
@@ -300,6 +300,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 }
 
 const StackNavigator = () => {
+  const { darkMode } = useContext(AuthContext);
+  console.log(darkMode, "this is for header");
   return (
     <Stack.Navigator
       screenOptions={{
@@ -937,7 +939,7 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="AddNewCard"
         component={gestureHandlerRootHOC(AddNewCard)}
         options={{
@@ -977,7 +979,32 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Notification)}
         options={{
           title: "Notification",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
         }}
       />
 
@@ -1273,6 +1300,15 @@ const styles = StyleSheet.create({
   iconDropDownContainer: {
     marginLeft: "10%",
     backgroundColor: "lightgrey",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  darkiconDropDownContainer: {
+    marginLeft: "10%",
+    backgroundColor: GlobalStyles.Color.black,
     width: 40,
     height: 40,
     borderRadius: 20,

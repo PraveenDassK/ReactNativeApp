@@ -396,7 +396,7 @@ const Analytics = ({ navigation }) => {
               style={
                 darkMode === "DARK"
                   ? styles.darkbalanceContainer
-                  : [styles.balanceContainer]
+                  : styles.balanceContainer
               }
             >
               <AppText

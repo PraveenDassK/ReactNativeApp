@@ -131,7 +131,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           source={
             darkMode === "DARK"
               ? require("../assets/dashboardDark/dashboardTop.jpg")
-              : require("../assets/backgrounds/River.jpg")
+              : require("../assets/dashboardDark/dashboardTop.jpg")
           }
           style={styles.backgroundImage}
         >

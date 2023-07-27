@@ -17,42 +17,38 @@ import AuthContext from "../auth/context";
 
 import Icon from "../components/Icon";
 
-import apiBeneficiaries from "../api/apiBeneficiaries"
+import apiBeneficiaries from "../api/apiBeneficiaries";
 
 const validationSchema = Yup.object().shape({
   createGroup: Yup.string().required().min(1).max(30).label("Group name"),
 });
 
-const DATA = [
+const DATA = [];
 
-];
-
-const BENEFICIARY = [
-
-];
+const BENEFICIARY = [];
 const GroupBeneficiary = ({ navigation }) => {
   const [groupData, setGroupData] = useState(DATA);
   const [beneficiary, setBeneficiary] = useState(BENEFICIARY);
   const { userID, customerDetails } = useContext(AuthContext);
-
+  const [dropdownError, setDropDownError] = useState("");
   useEffect(() => {
-    loadData()
-  }, [])
+    loadData();
+  }, []);
 
   /**
    * @dev This loads the data of the user's beneficiary to add it to the list
    */
   const loadData = async () => {
-    const request = await apiBeneficiaries.GetUserBeneficiaries(userID)
-    console.log(request)
-    setBeneficiary(request)
-    await apiBeneficiaries.GetGroupBeneficiaries(customerDetails)
-  }
+    const request = await apiBeneficiaries.GetUserBeneficiaries(userID);
+    console.log(request);
+    setBeneficiary(request);
+    await apiBeneficiaries.GetGroupBeneficiaries(customerDetails);
+  };
 
   const handleSelect = (beneficiaryItem) => {
-    console.log(beneficiaryItem)
-    setGroupData(prevData => [...prevData,beneficiaryItem])
-  }
+    console.log(beneficiaryItem);
+    setGroupData((prevData) => [...prevData, beneficiaryItem]);
+  };
 
   const handleDelete = (flatIndex) => {
     setGroupData([
@@ -68,32 +64,33 @@ const GroupBeneficiary = ({ navigation }) => {
   };
 
   /**
-   * 
-   * @param {*} param0 
+   *
+   * @param {*} param0
    */
   const handleSubmit = async ({ createGroup }) => {
-    let beneficiaryData = []
-    groupData.forEach(beneficiary => {
+    let beneficiaryData = [];
+    groupData.forEach((beneficiary) => {
       beneficiaryData.push({
-        "beneficiariesId": beneficiary.id,
-        "beneficiariesName": beneficiary.name
-      })
-    })
-    const success = await apiBeneficiaries.CreateNewGroupBeneficiary(
-      {
-        "carbonyteId": customerDetails,
-        "groupName": createGroup,
-        "beneficiariesDetails": beneficiaryData
+        beneficiariesId: beneficiary.id,
+        beneficiariesName: beneficiary.name,
+      });
+    });
+    console.log(beneficiaryData, "this is data of group");
+    if (beneficiaryData.length === 0) {
+      return setDropDownError("Fiels is required*");
+    } else {
+      const success = await apiBeneficiaries.CreateNewGroupBeneficiary({
+        carbonyteId: customerDetails,
+        groupName: createGroup,
+        beneficiariesDetails: beneficiaryData,
+      });
+
+      if (success) {
+      } else {
       }
-    )
-
-    if(success){
-
-    }else{
-
+      alert("Your group has been made");
+      navigation.navigate("SendMoney");
     }
-    alert("Your group has been made")
-    navigation.navigate("SendMoney")
   };
 
   return (
@@ -135,11 +132,12 @@ const GroupBeneficiary = ({ navigation }) => {
                 placeholder={"Select"}
                 value={1}
                 onChange={(item) => {
-                  handleSelect(item)
+                  handleSelect(item);
                   // setStatus(item.value);
                   // setIsFocus(false);
                 }}
               />
+              <ErrorMessage error={dropdownError} visible={dropdownError} />
               <View>
                 {groupData && (
                   <FlatList
@@ -160,7 +158,6 @@ const GroupBeneficiary = ({ navigation }) => {
               </View>
             </View>
 
-
             <View style={styles.buttonContainer}>
               <Button
                 title="create group"
@@ -172,9 +169,6 @@ const GroupBeneficiary = ({ navigation }) => {
           </>
         )}
       </Formik>
-
-
-
     </View>
   );
 };
@@ -281,6 +275,5 @@ const styles = StyleSheet.create({
     opacity: 1,
     height: 50,
     marginTop: "2.5%",
-
   },
 });
