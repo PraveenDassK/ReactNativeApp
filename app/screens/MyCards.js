@@ -112,8 +112,9 @@ export default function MyCards({ navigation }) {
       (eachValue, index) => eachValue?.accountId === accountID
     );
     console.log(filterAccount, "this enfuse  ");
-    let EnfuseAccountId = filterAccount?.[0]?.enfuceAccountId;
-    setApiAccountId(filterAccount?.[0]?.enfuceAccountId);
+    let EnfuseAccountId = filterAccount[0]?.accountNo;
+    console.log(EnfuseAccountId,"ID")
+    setApiAccountId(EnfuseAccountId);
     //  setDataAbovecard()
     //api to get transaction
     const response = await apiCall.GetTransactions(
@@ -127,7 +128,7 @@ export default function MyCards({ navigation }) {
     // api to get card details using enfuse account ID
 
     const cards = await apiCall.GetCardByEnfuseAccountId(EnfuseAccountId);
-    // console.log(cards, "this is a test card");
+    console.log(cards, "this is a test card");
     setCardData(cards);
     setIsLoading(false);
 
@@ -149,7 +150,8 @@ export default function MyCards({ navigation }) {
   };
   const filterCards = (type) => {
     const filterCardsByType = (type) => {
-      return cardData.filter((card) => {
+      console.log(cardData)
+      return cardData?.filter((card) => {
         if (type === "physical") {
           // return card.productCode === "MC_PHYSICAL";
           //name changed for physical card
