@@ -166,7 +166,8 @@ const Carbon = ({ route, navigation }) => {
       </View>
       <View
         style={{
-          backgroundColor: "#F7F7F7",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : "#F7F7F7",
           flex: 1,
           padding: "5%",
           paddingBottom: "30%",
@@ -177,7 +178,7 @@ const Carbon = ({ route, navigation }) => {
         }}
       >
         <BlurView tint="light" intensity={60} style={styles.blurView}>
-          <CarbonFeature />
+          <CarbonFeature darkMode={darkMode} />
         </BlurView>
         <Button
           title="Lets Go"
@@ -541,7 +542,7 @@ const Carbon = ({ route, navigation }) => {
   );
 };
 
-const CarbonFeature = () => (
+const CarbonFeature = ({ darkMode }) => (
   <View style={{ flex: 1 }}>
     <View style={{ flex: 1, paddingHorizontal: "15%", paddingTop: "15%" }}>
       <Text
@@ -562,7 +563,7 @@ const CarbonFeature = () => (
         style={{
           justifyContent: "center",
           alignItems: "center",
-          marginBottom: "10%",
+          marginBottom: "0%",
         }}
       >
         <Image
@@ -576,14 +577,27 @@ const CarbonFeature = () => (
             style={{
               fontFamily: "Montserrat",
               fontSize: 18,
-              marginBottom: "10%",
+              marginBottom: "5%",
+              color:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.white
+                  : GlobalStyles.Color.lightBlack,
             }}
           >
             Track, Reduce, and Offset your daily CO2 Emisssions
           </Text>
         </View>
         <View>
-          <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 14 }}>
+          <Text
+            style={{
+              fontFamily: "Montserrat-Regular",
+              fontSize: 14,
+               color:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.white
+                  : GlobalStyles.Color.lightBlack,
+            }}
+          >
             With carbonyte app you can track and control your carbon emisson
             from your daily life spendings and invest in nature by offsetting in
             high quality nature-based verified projects

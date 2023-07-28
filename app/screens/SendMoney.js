@@ -28,7 +28,8 @@ const SendMoney = ({ navigation }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { userID, customerDetails, accountID } = useContext(AuthContext);
+  const { userID, customerDetails, accountID, darkMode } =
+    useContext(AuthContext);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -106,8 +107,23 @@ const SendMoney = ({ navigation }) => {
    */
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color={GlobalStyles.Color.black} />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -140,182 +156,322 @@ const SendMoney = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <ScrollView nestedScrollEnabled={true}>
-        <View style={{ marginTop: 47 }}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("AddBeneficiary")}
-            >
-              <View style={styles.buttonPayNew}>
-                <Ionicons
-                  name="add-circle-outline"
-                  size={20}
-                  color={GlobalStyles.Color.white}
-                />
-                <Text style={styles.buttonPayNewText}>Pay someone new</Text>
-              </View>
-            </TouchableOpacity>
+      {/* <ScrollView nestedScrollEnabled={true}> */}
+      {/* <View
+        style={{
+          marginTop: 47,
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("AddBeneficiary")}
+          >
+            <View style={styles.buttonPayNew}>
+              <Ionicons
+                name="add-circle-outline"
+                size={20}
+                color={GlobalStyles.Color.white}
+              />
+              <Text style={styles.buttonPayNewText}>Pay someone new</Text>
+            </View>
+          </TouchableOpacity>
 
-            <View
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: 312.33,
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
               style={{
-                display: "flex",
-                flexDirection: "row",
-                width: 312.33,
-                justifyContent: "space-between",
+                fontFamily: "Montserrat-Medium",
+                fontSize: 12,
+                color: GlobalStyles.Color.gray_2000,
+                marginBottom: 37,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "Montserrat-Medium",
-                  fontSize: 12,
-                  color: GlobalStyles.Color.gray_2000,
-                  marginBottom: 37,
-                }}
-              >
-                New payee account name check
-              </Text>
-              <Feather
-                name="info"
-                size={12}
-                color={GlobalStyles.Color.black}
-                onPress={() => setModalVisible(true)}
-              />
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
-              <View style={styles.buttonPaySelf}>
-                <Feather
-                  name="send"
-                  size={20}
-                  color={GlobalStyles.Color.lightBlack}
-                />
-                <Text style={styles.buttonPaySelfText}>To self account</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.payContainer}>
-          <View style={styles.payHeaderContainer}>
-            <Text style={styles.payMainHeading}>Pay an existing payee</Text>
-            <Text
-              onPress={() => setShowDelete(!showDelete)}
-              style={styles.paySideHeading}
-            >
-              Manage Beneficiary
+              New payee account name check
             </Text>
+            <Feather
+              name="info"
+              size={12}
+              color={GlobalStyles.Color.black}
+              onPress={() => setModalVisible(true)}
+            />
           </View>
-          <FlatList
-            data={beneficaryList}
-            keyExtractor={(beneficaryList, index) =>
-              `${beneficaryList.id}-${index}`
-            }
-            numColumns={4}
-            contentContainerStyle={styles.flatListContent}
-            renderItem={(beneficary) => {
-              return (
-                <View style={styles.itemContainer}>
-                  <UserIcon
-                    name={beneficary?.item.name}
-                    onPress={() => sendPayeeTrigger(beneficary.item)}
-                  />
-                  {showDelete && (
-                    <FadeInView
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: 15,
-                        height: 15,
-                        borderRadius: 7.5,
-                        backgroundColor: colors.danger,
-                        position: "absolute",
-                        zIndex: 5,
-                        top: 0,
-                        right: 15,
-                      }}
-                    >
-                      <AntDesign
-                        name="minus"
-                        size={10}
-                        onPress={() => handleBeneficiaryDelete(beneficary.item)}
-                      />
-                    </FadeInView>
-                  )}
-                </View>
-              );
-            }}
-          />
-        </View>
-        <View
-          style={{
-            backgroundColor: GlobalStyles.Color.white,
-            padding: 24,
-            marginBottom: 10,
-          }}
-        >
-          <View style={styles.payHeaderContainer}>
-            <Text style={styles.payMainHeading}>Pay an group payee</Text>
-            <View style={{ display: "flex", flexDirection: "row" }}>
-              <Ionicons
-                name="add"
-                size={12}
-                color={GlobalStyles.Color.gray_500}
-                style={{ marginRight: 3, marginTop: 1 }}
+          <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
+            <View style={styles.buttonPaySelf}>
+              <Feather
+                name="send"
+                size={20}
+                color={GlobalStyles.Color.lightBlack}
               />
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("GroupBeneficiary");
-                }}
-              >
-                <Text style={styles.paySideHeading}>Create Group</Text>
-              </TouchableOpacity>
+              <Text style={styles.buttonPaySelfText}>To self account</Text>
             </View>
-          </View>
-          <FlatList
-            data={groupBeneficaryList}
-            keyExtractor={(groupBeneficaryList, index) => index}
-            numColumns={4}
-            contentContainerStyle={styles.flatListContent}
-            renderItem={(beneficary) => {
-              return (
-                <View style={styles.itemContainer}>
-                  <UserIcon
-                    name={beneficary?.item.groupName}
-                    onPress={() => sendGroupPayeeTrigger(beneficary.item)}
-                  />
-                  {showDelete && (
-                    <FadeInView
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: 15,
-                        height: 15,
-                        borderRadius: 7.5,
-                        backgroundColor: colors.danger,
-                        position: "absolute",
-                        zIndex: 5,
-                        top: 0,
-                        right: 15,
-                      }}
-                    >
-                      <AntDesign
-                        name="minus"
-                        size={10}
-                        onPress={() => handleDelete(beneficary.item)}
-                      />
-                    </FadeInView>
-                  )}
-                </View>
-              );
-            }}
-          />
+          </TouchableOpacity>
         </View>
-        <Tagline />
+      </View> */}
+      <View
+        style={
+          darkMode === "DARK" ? styles.darkpayContainer : styles.payContainer
+        }
+      >
+        <FlatList
+          data={beneficaryList}
+          keyExtractor={(beneficaryList, index) =>
+            `${beneficaryList.id}-${index}`
+          }
+          numColumns={4}
+          contentContainerStyle={styles.flatListContent}
+          renderItem={(beneficary) => {
+            return (
+              <View style={styles.itemContainer}>
+                <UserIcon
+                  name={beneficary?.item.name}
+                  onPress={() => sendPayeeTrigger(beneficary.item)}
+                />
+                {showDelete && (
+                  <FadeInView
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 15,
+                      height: 15,
+                      borderRadius: 7.5,
+                      backgroundColor: colors.danger,
+                      position: "absolute",
+                      zIndex: 5,
+                      top: 0,
+                      right: 15,
+                    }}
+                  >
+                    <AntDesign
+                      name="minus"
+                      size={10}
+                      onPress={() => handleBeneficiaryDelete(beneficary.item)}
+                    />
+                  </FadeInView>
+                )}
+              </View>
+            );
+          }}
+          ListHeaderComponent={
+            <View
+              style={{
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.darkTheme_bg
+                    : GlobalStyles.Color.backgroundColorOg,
+                paddingTop: "5%",
+              }}
+            >
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("AddBeneficiary")}
+                >
+                  <View
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkbuttonPayNew
+                        : styles.buttonPayNew
+                    }
+                  >
+                    <Ionicons
+                      name="add-circle-outline"
+                      size={20}
+                      color={GlobalStyles.Color.white}
+                    />
+                    <Text style={styles.buttonPayNewText}>Pay someone new</Text>
+                  </View>
+                </TouchableOpacity>
 
-        <BeneficiaryPopup
-          setModalVisible={setModalVisible}
-          modalVisible={modalVisible}
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: 312.33,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Montserrat-Medium",
+                      fontSize: 12,
+                      color:
+                        darkMode === "DARK"
+                          ? GlobalStyles.Color.darkGray
+                          : GlobalStyles.Color.gray_2000,
+                      marginBottom: 37,
+                    }}
+                  >
+                    New payee account name check
+                  </Text>
+                  <Feather
+                    name="info"
+                    size={12}
+                    color={
+                      darkMode === "DARK"
+                        ? GlobalStyles.Color.darkGray
+                        : GlobalStyles.Color.black
+                    }
+                    onPress={() => setModalVisible(true)}
+                  />
+                </View>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("MoveMoney")}
+                >
+                  <View
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkbuttonPaySelf
+                        : styles.buttonPaySelf
+                    }
+                  >
+                    <Feather
+                      name="send"
+                      size={20}
+                      color={
+                        darkMode === "DARK"
+                          ? GlobalStyles.Color.skyblue
+                          : GlobalStyles.Color.lightBlack
+                      }
+                    />
+                    <Text
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darkbuttonPaySelfText
+                          : styles.buttonPaySelfText
+                      }
+                    >
+                      To self account
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={
+                  darkMode === "DARK"
+                    ? styles.darkpayHeaderContainer
+                    : styles.payHeaderContainer
+                }
+              >
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkpayMainHeading
+                      : styles.payMainHeading
+                  }
+                >
+                  Pay an existing payee
+                </Text>
+                <Text
+                  onPress={() => setShowDelete(!showDelete)}
+                  style={styles.paySideHeading}
+                >
+                  Manage Beneficiary
+                </Text>
+              </View>
+            </View>
+          }
+          ListFooterComponent={
+            <View
+              style={{
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.secondaryDarkTheme_bg
+                    : GlobalStyles.Color.white,
+                paddingVertical: 24,
+                marginBottom: 10,
+              }}
+            >
+              <View
+                style={
+                  darkMode === "DARK"
+                    ? styles.darkpaygroupHeaderContainer
+                    : styles.paygroupHeaderContainer
+                }
+              >
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkpayMainHeading
+                      : styles.payMainHeading
+                  }
+                >
+                  Pay an group payee
+                </Text>
+                <View style={{ display: "flex", flexDirection: "row" }}>
+                  <Ionicons
+                    name="add"
+                    size={12}
+                    color={GlobalStyles.Color.gray_500}
+                    style={{ marginRight: 3, marginTop: 1 }}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate("GroupBeneficiary");
+                    }}
+                  >
+                    <Text style={styles.paySideHeading}>Create Group</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <FlatList
+                data={groupBeneficaryList}
+                keyExtractor={(groupBeneficaryList, index) => index}
+                numColumns={4}
+                contentContainerStyle={styles.flatListContent}
+                renderItem={(beneficary) => {
+                  return (
+                    <View style={styles.itemContainer}>
+                      <UserIcon
+                        name={beneficary?.item.groupName}
+                        onPress={() => sendGroupPayeeTrigger(beneficary.item)}
+                      />
+                      {showDelete && (
+                        <FadeInView
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: 15,
+                            height: 15,
+                            borderRadius: 7.5,
+                            backgroundColor: colors.danger,
+                            position: "absolute",
+                            zIndex: 5,
+                            top: 0,
+                            right: 15,
+                          }}
+                        >
+                          <AntDesign
+                            name="minus"
+                            size={10}
+                            onPress={() => handleDelete(beneficary.item)}
+                          />
+                        </FadeInView>
+                      )}
+                    </View>
+                  );
+                }}
+              />
+            </View>
+          }
         />
-        {/* <View style={{ height: 400 }} /> */}
-      </ScrollView>
+      </View>
+
+      {/* <Tagline /> */}
+
+      <BeneficiaryPopup
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+        darkMode={darkMode}
+      />
+      {/* <View style={{ height: 400 }} /> */}
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
@@ -330,9 +486,21 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
+
   buttonPayNew: {
     borderRadius: 10,
     backgroundColor: GlobalStyles.Color.lightBlack,
+    height: 47,
+    width: 312.33,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  darkbuttonPayNew: {
+    borderRadius: 10,
+    backgroundColor: GlobalStyles.Color.gray_500,
     height: 47,
     width: 312.33,
     display: "flex",
@@ -361,18 +529,49 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
   },
+  darkbuttonPaySelf: {
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: GlobalStyles.Color.skyblue,
+    backgroundColor: "#0101FD05",
+    height: 47,
+    width: 312.33,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
   buttonPaySelfText: {
     color: GlobalStyles.Color.lightBlack,
     fontFamily: "Montserrat",
     fontSize: 14,
     marginLeft: 6,
   },
+  darkbuttonPaySelfText: {
+    color: GlobalStyles.Color.skyblue,
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    marginLeft: 6,
+  },
   payContainer: {
     backgroundColor: GlobalStyles.Color.white,
-    borderTopStartRadius: 20,
-    borderTopEndRadius: 20,
-    padding: 20,
-    marginTop: 30,
+
+    // borderTopStartRadius: 20,
+    // borderTopEndRadius: 20,
+    // padding: 20,
+    // marginTop: 30,
+    // paddingTop: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EBEBEB",
+  },
+  darkpayContainer: {
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    // borderTopStartRadius: 20,
+    // borderTopEndRadius: 20,
+    // padding: 20,
+    // marginTop: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#EBEBEB",
   },
@@ -380,11 +579,56 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 21,
+    // marginBottom: 21,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    backgroundColor: GlobalStyles.Color.white,
+    paddingVertical: 20,
+    paddingHorizontal: "5%",
+    marginTop: "10%",
+  },
+  paygroupHeaderContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // marginBottom: 21,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    backgroundColor: GlobalStyles.Color.white,
+    paddingVertical: 20,
+    paddingHorizontal: "5%",
+  },
+  darkpayHeaderContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // marginBottom: 21,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingVertical: 20,
+    paddingHorizontal: "5%",
+    marginTop: "10%",
+  },
+  darkpaygroupHeaderContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // marginBottom: 21,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingVertical: 20,
+    paddingHorizontal: "5%",
   },
   payMainHeading: {
     fontFamily: "Montserrat",
     color: GlobalStyles.Color.black,
+    fontSize: 14,
+  },
+  darkpayMainHeading: {
+    fontFamily: "Montserrat",
+    color: GlobalStyles.Color.white,
     fontSize: 14,
   },
   paySideHeading: {
@@ -397,7 +641,8 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     padding: "5%",
-    marginTop: "5%",
+    // marginTop: "5%",
+    // backgroundColor:GlobalStyles.Color.white,
   },
 });
 

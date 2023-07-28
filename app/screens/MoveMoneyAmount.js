@@ -84,13 +84,13 @@ const MoveMoneyAmount = ({ navigation, route }) => {
                 <Text style={styles.idText}>
                   {accountValue?.destination?.id}
                 </Text>
-                <Text style={styles.idText}>
+                {/* <Text style={styles.idText}>
                   {formatCurrency(
                     accountValue?.destination?.balance,
                     "GBP",
                     false
                   )}
-                </Text>
+                </Text> */}
               </View>
             </View>
           </View>

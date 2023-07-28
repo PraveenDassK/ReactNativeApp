@@ -16,16 +16,22 @@ import client from "./client";
     }
  */
 const sendMoney = async (obj) => {
-  const request = await client.post("https://api.carbonyte.io/walletmodule/SendMoney", obj);
-  return request
-}
+  const request = await client.post("https://api.carbonyte.io/walletmodule/Wallet/SendMoney", obj);
+  // const request = await client.post(
+  //   "https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
+  //   obj
+  // );
+
+  return request;
+};
 
 const sendToGroup = async (obj) => {
-  const sendToGroupRequest = await client.post(`https://api.carbonyte.io/walletmodule/Wallet/SendMoneyToGroupBeneficiaries`,
+  const sendToGroupRequest = await client.post(
+    `https://api.carbonyte.io/walletmodule/Wallet/SendMoneyToGroupBeneficiaries`,
     obj
-  )
-  return sendToGroupRequest
-}
+  );
+  return sendToGroupRequest;
+};
 /**
  * {
   "sourceAccountId": "string",
@@ -38,36 +44,36 @@ const sendToGroup = async (obj) => {
 
 const getPaymentLink = async () => {
   const obj = {
-    "paymentAmount": {
-      "currency": "GBP",
-      "value": 10
+    paymentAmount: {
+      currency: "GBP",
+      value: 10,
     },
-    "paymentReference": "Payment from Jack",
-    "destination": {
-      "type": "ACCOUNT",
-      "id": "A122HTHM",
-      "accountNumber": "03011666",
-      "sortCode": "000000",
-      "name": "Jack"
+    paymentReference: "Payment from Jack",
+    destination: {
+      type: "ACCOUNT",
+      id: "A122HTHM",
+      accountNumber: "03011666",
+      sortCode: "000000",
+      name: "Jack",
     },
-    "aspspId": "H120000001",
-    "paymentContext": {
-      "paymentContextCode": "",
-      "deliveryAddress": {
-        "addressLine1": "",
-        "addressLine2": "",
-        "postTown": "",
-        "postCode": "",
-        "country": ""
+    aspspId: "H120000001",
+    paymentContext: {
+      paymentContextCode: "",
+      deliveryAddress: {
+        addressLine1: "",
+        addressLine2: "",
+        postTown: "",
+        postCode: "",
+        country: "",
       },
-      "merchantCategoryCode": "",
-      "merchantCustomerIdentification": ""
-    }
-  }
-  const url = `https://api.carbonyte.io/walletmodule/InitiatePaymentFromASPSP`
-  const PaymentUrlRequest = await client.post(url, obj)
-  return PaymentUrlRequest.data.details.redirectUrl
-}
+      merchantCategoryCode: "",
+      merchantCustomerIdentification: "",
+    },
+  };
+  const url = `https://api.carbonyte.io/walletmodule/InitiatePaymentFromASPSP`;
+  const PaymentUrlRequest = await client.post(url, obj);
+  return PaymentUrlRequest.data.details.redirectUrl;
+};
 
 /**
  * @dev This gets x amount of transactions for the user
@@ -91,17 +97,17 @@ const GetTransactions = async (Id, amount, typeSelection) => {
 
     //Process the data
     let total = 0;
-    let transactions = []
+    let transactions = [];
     returnData?.content.forEach((transaction) => {
-      console.log(transaction.credit)
+      console.log(transaction.credit);
       total += transaction.amount;
-      
-      if(transaction.credit == false){
-        transactions.push(transaction)
+
+      if (transaction.credit == false) {
+        transactions.push(transaction);
       }
     });
-    console.log(transactions)
-  
+    console.log(transactions);
+
     return {
       transactions: transactions,
       total: total,
@@ -138,5 +144,5 @@ export default {
   sendToGroup,
   getPaymentLink,
   GetTransactions,
-  GetBalance
-}
+  GetBalance,
+};
