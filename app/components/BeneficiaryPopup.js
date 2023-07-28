@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Modal, Pressable } from "react-native";
 import React, { useState } from "react";
 import GlobalStyles from "../../GlobalStyles";
 
-const BeneficiaryPopup = ({ modalVisible, setModalVisible }) => {
+const BeneficiaryPopup = ({ modalVisible, setModalVisible, darkMode }) => {
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -14,17 +14,39 @@ const BeneficiaryPopup = ({ modalVisible, setModalVisible }) => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.modalMainView}>
+        <View
+          style={
+            darkMode === "DARK"
+              ? styles.darkmodalMainView
+              : styles.modalMainView
+          }
+        >
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>New payee account name</Text>
+            <Text
+              style={
+                darkMode === "DARK" ? styles.darkmodalText : styles.modalText
+              }
+            >
+              New payee account name
+            </Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>X</Text>
+              <Text
+                style={
+                  darkMode === "DARK" ? styles.darktextStyle : styles.textStyle
+                }
+              >
+                X
+              </Text>
             </Pressable>
           </View>
-          <Text style={styles.bottomText}>
+          <Text
+            style={
+              darkMode === "DARK" ? styles.darkbottomText : styles.bottomText
+            }
+          >
             For additional security and to help protect against fraud, we'll
             check the details you provide against the payee's account details,
             including the name on their account.
@@ -54,26 +76,48 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
   },
+  darkmodalMainView: {
+    backgroundColor: GlobalStyles.Color.lightBlack,
+    marginTop: "50%",
+    marginHorizontal: "8%",
+    padding: 20,
+    borderRadius: 10,
+  },
   modalView: {
     display: "flex",
     justifyContent: "space-between",
     alignContent: "center",
     flexDirection: "row",
-    paddingVertical:5,
+    paddingVertical: 5,
   },
-  modalText:{
-    fontFamily:"Montserrat",
-    fontSize:14,
-    color:GlobalStyles.Color.gray_2000,
+  modalText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.gray_2000,
   },
-  textStyle:{
-    color:GlobalStyles.Color.lightBlack,
-    fontSize:16,
-    fontFamily:"Montserrat"
+  darkmodalText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
-  bottomText:{
-    color:GlobalStyles.Color.gray_2000,
-    fontFamily:"Montserrat-Regular",
-    fontSize:12,
-  }
+  textStyle: {
+    color: GlobalStyles.Color.lightBlack,
+    fontSize: 16,
+    fontFamily: "Montserrat",
+  },
+  darktextStyle: {
+    color: GlobalStyles.Color.darkGray,
+    fontSize: 16,
+    fontFamily: "Montserrat",
+  },
+  bottomText: {
+    color: GlobalStyles.Color.gray_2000,
+    fontFamily: "Montserrat-Regular",
+    fontSize: 12,
+  },
+  darkbottomText: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Regular",
+    fontSize: 12,
+  },
 });

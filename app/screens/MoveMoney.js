@@ -44,15 +44,16 @@ const MoveMoney = ({ navigation }) => {
    * @dev This takes the selected destination account data and passes it to another screen
    */
   const selectAccount = (account) => {
+    console.log('selectAccount',account?.customerId)
     const requestObj = {
       sourceAccountId: "",
       destination: {
         type: "SCAN",
-        id: account.id,
-        accountNumber: account.identifiers[0].accountNumber,
-        sortCode: account.identifiers[0].sortCode,
-        balance: account.balance,
-        name: account.name,
+        id: account?.customerId,
+        accountNumber: account?.identifiers?.[0]?.accountNumber,
+        sortCode: account?.identifiers?.[0]?.sortCode,
+        // balance: account?.balance,
+        name: account?.name,
         phoneNumber: "",
       },
       currency: "GBP",
