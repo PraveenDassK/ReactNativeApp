@@ -135,6 +135,10 @@ const GetBalance = async (Id) => {
   return requestData;
 };
 
+const getSFTPTransactions = async (ID) => {
+  
+}
+
 export default {
   sendMoney,
   sendToGroup,

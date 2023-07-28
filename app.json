@@ -2,7 +2,7 @@
   "expo": {
     "name": "carbonyte",
     "slug": "carbonyte",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "orientation": "portrait",
     "icon": "./app/assets/logo-carbonyte.png",
     "userInterfaceStyle": "light",
@@ -20,14 +20,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.carbonyte.bankin",
-      "buildNumber": "1.1.29"
+      "buildNumber": "1.1.31"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 40,
+      "versionCode": 42,
       "package": "com.carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },
