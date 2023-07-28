@@ -33,6 +33,7 @@ const validationSchema = Yup.object().shape({
 const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
   const [name, setName] = useState("");
   const [isChecked, setChecked] = useState(false);
+  const [operationTime, setOperationTime] = useState("")
 
   const handleSubmit = () => {
     SaveDetails(null, "CompanyUsage");

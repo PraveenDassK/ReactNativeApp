@@ -6,7 +6,7 @@ import formatCurrency from "../utility/formatCurrency";
 import { LinearGradient } from "expo-linear-gradient";
 import Text from "./Text";
 import GlobalStyles from "../../GlobalStyles";
-import Logo from "../assets/Dashboard/Carbonytelogomark.svg";
+import Logo from "../assets/Dashboard/half-carbonyte-logo.svg";
 
 const CurrentDateComponent = () => {
   const [currentDate, setCurrentDate] = useState("");

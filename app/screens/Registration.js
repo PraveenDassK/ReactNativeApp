@@ -29,8 +29,6 @@ import colors from "../config/colors";
 import { add } from "react-native-reanimated";
 
 const Registration = ({ navigation }) => {
-
-
   //Personal details
   const [accountType, setPersonalBusiness] = useState(null);
   const [personalDetails, setPersonalDetails] = useState(null)
@@ -172,7 +170,9 @@ const Registration = ({ navigation }) => {
         // const callResult = true
         if (callResult === true) {
           //If successful
-          setScreenToShow("CompanyDirectors");
+          alert("Your business was registered");
+          navigation.navigate("Directororpartner")
+          // setScreenToShow("CompanyDirectors");
         } else {
           //If unsuccessful
           alert(callResult);
@@ -416,6 +416,7 @@ const Registration = ({ navigation }) => {
 
         "registered_office_address": {
           "country": "UK",
+          "countryCode": "GBR",
           "address_line_1": companyHouse.registered_office_address.address_line_1,
           "postal_code": companyHouse.registered_office_address.postal_code,
           "locality": companyHouse.registered_office_address.locality,
@@ -448,7 +449,7 @@ const Registration = ({ navigation }) => {
       if (!response.data.result) return response.data.resultMessage;
       console.log(response)
       // return false;
-      // return true;
+      return true;
     }
   }
 
