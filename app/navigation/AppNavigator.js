@@ -925,17 +925,34 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
           headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
             fontFamily: "Montserrat",
-            fontSize: 20,
+            fontSize: 30,
           },
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
             </View>
           ),
+
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 

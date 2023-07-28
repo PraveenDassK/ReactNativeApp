@@ -10,6 +10,8 @@ import {
   Alert,
 } from "react-native";
 import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
 import api from "../api/api_list";
@@ -273,7 +275,14 @@ const SendMoney = ({ navigation }) => {
                 <TouchableOpacity
                   onPress={() => navigation.navigate("AddBeneficiary")}
                 >
-                  <View
+                  <LinearGradient
+                    colors={
+                      darkMode === "DARK"
+                        ? ["#178BFF", "#0101FD"]
+                        : ["#212529", "#3A3A3A"]
+                    }
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
                     style={
                       darkMode === "DARK"
                         ? styles.darkbuttonPayNew
@@ -286,7 +295,7 @@ const SendMoney = ({ navigation }) => {
                       color={GlobalStyles.Color.white}
                     />
                     <Text style={styles.buttonPayNewText}>Pay someone new</Text>
-                  </View>
+                  </LinearGradient>
                 </TouchableOpacity>
 
                 <View
@@ -489,7 +498,7 @@ const styles = StyleSheet.create({
 
   buttonPayNew: {
     borderRadius: 10,
-    backgroundColor: GlobalStyles.Color.lightBlack,
+    // backgroundColor: GlobalStyles.Color.lightBlack,
     height: 47,
     width: 312.33,
     display: "flex",
@@ -500,7 +509,7 @@ const styles = StyleSheet.create({
   },
   darkbuttonPayNew: {
     borderRadius: 10,
-    backgroundColor: GlobalStyles.Color.gray_500,
+    // backgroundColor: GlobalStyles.Color.gray_500,
     height: 47,
     width: 312.33,
     display: "flex",

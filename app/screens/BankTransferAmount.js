@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import GlobalStyles from "../../GlobalStyles";
@@ -19,10 +19,7 @@ import apiTransaction from "../api/apiTransaction";
 import AuthContext from "../auth/context";
 import PinModal from "../components/PinModal";
 import UserIcon from "../components/UserIcon";
-import {
-  horizontalScale,
-  verticalScale
-} from "../config/scaling";
+import { horizontalScale, verticalScale } from "../config/scaling";
 import formatCurrency from "../utility/formatCurrency";
 
 const BankTransferAmount = ({ route, navigation }) => {
@@ -51,7 +48,8 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const [accountList, setAccountList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { userID, customerDetails, accountID } = useContext(AuthContext);
+  const { userID, customerDetails, accountID, darkMode } =
+    useContext(AuthContext);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
 
   const isFocused = useIsFocused();
@@ -110,14 +108,13 @@ const BankTransferAmount = ({ route, navigation }) => {
     const transferRequest = await apiTransaction.sendMoney(requestObj);
     const successObject = {
       amount: amount,
-      name: name
-    }
+      name: name,
+    };
 
-    
     setIsLoading(false);
 
     console.log(transferRequest, "this is transfer request");
-    navigation.navigate("sendmoneysuccess", { successObject })
+    navigation.navigate("sendmoneysuccess", { successObject });
   };
 
   /**
@@ -125,8 +122,23 @@ const BankTransferAmount = ({ route, navigation }) => {
    */
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -214,30 +226,85 @@ const BankTransferAmount = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.flatListContentContainer}>
+    <View
+      style={
+        darkMode === "DARK"
+          ? styles.darkflatListContentContainer
+          : styles.flatListContentContainer
+      }
+    >
       <FlatList
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
             <View style={styles.headerContainer}>
               <View>
-                <Text style={styles.headerHeading}>Group name</Text>
-                <Text style={styles.contentText}>{name}</Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkheaderHeading
+                      : styles.headerHeading
+                  }
+                >
+                  Group name
+                </Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcontentText
+                      : styles.contentText
+                  }
+                >
+                  {name}
+                </Text>
               </View>
               <View>
-                <Text style={styles.headerHeading}>Account number</Text>
-                <Text style={styles.contentText}>{accountNumber}</Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkheaderHeading
+                      : styles.headerHeading
+                  }
+                >
+                  Account number
+                </Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcontentText
+                      : styles.contentText
+                  }
+                >
+                  {accountNumber}
+                </Text>
               </View>
             </View>
-            <View style={styles.paymentContainer}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkpaymentContainer
+                  : styles.paymentContainer
+              }
+            >
               <View>
-                <Text style={styles.contentText}>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkheaderHeading
+                      : styles.headerHeading
+                  }
+                >
                   Enter the amount you want to send
                 </Text>
                 <TextInput
                   keyboardType="numeric"
-                  style={styles.inputBox}
+                  style={
+                    darkMode === "DARK" ? styles.darkinputBox : styles.inputBox
+                  }
                   placeholder="£0"
+                  placeholderTextColor={
+                    darkMode === "DARK" ? GlobalStyles.Color.white : null
+                  }
                   onChangeText={(text) => setAmount(text)}
                 />
               </View>
@@ -258,7 +325,7 @@ const BankTransferAmount = ({ route, navigation }) => {
                       >
                         <UserIcon
                           name={eachValue?.beneficiariesName}
-                        //   onPress={() => sendPayeeTrigger(beneficary.item)}
+                          //   onPress={() => sendPayeeTrigger(beneficary.item)}
                         />
                         {/* <View>
                             <Text>{eachValue?.beneficiariesName}</Text>
@@ -273,17 +340,33 @@ const BankTransferAmount = ({ route, navigation }) => {
               </View>
 
               <View>
-                <Text style={styles.contentText}>Send from</Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcontentText
+                      : styles.contentText
+                  }
+                >
+                  Send from
+                </Text>
               </View>
             </View>
           </>
         }
-        ListFooterComponent={FootComponent(selectAccount)}
+        ListFooterComponent={FootComponent(selectAccount, darkMode)}
         data={accountList}
         keyExtractor={(accountList, index) => accountList.id}
         renderItem={(account) => {
           return (
-            <TouchableOpacity onPress={() => setOneAccount(account.item)}>
+            <TouchableOpacity
+              onPress={() => setOneAccount(account.item)}
+              style={{
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.darkTheme_bg
+                    : GlobalStyles.Color.white,
+              }}
+            >
               <View style={styles.itemContainer}>
                 <Image
                   source={require("../assets/cardLion.png")}
@@ -291,8 +374,24 @@ const BankTransferAmount = ({ route, navigation }) => {
                   resizeMode="contain"
                 />
                 <View>
-                  <Text style={styles.itemContent}>{account.item.id}</Text>
-                  <Text style={styles.itemContent}>{account.item.balance}</Text>
+                  <Text
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkitemContent
+                        : styles.itemContent
+                    }
+                  >
+                    {account.item.id}
+                  </Text>
+                  <Text
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkitemContent
+                        : styles.itemContent
+                    }
+                  >
+                    {account.item.balance}
+                  </Text>
                 </View>
                 {oneselectedAccount?.id === account.item.id ? (
                   <View
@@ -310,21 +409,25 @@ const BankTransferAmount = ({ route, navigation }) => {
             </TouchableOpacity>
           );
         }}
+
+        // style={{backgroundColor:'transparent'}}
       />
     </View>
   );
 };
 
-const FootComponent = (selectAccount) => (
+const FootComponent = (selectAccount, darkMode) => (
   <View style={styles.buttonContainer}>
     <TouchableOpacity
       onPress={selectAccount}
-    // onPress={() => {
-    //   navigation.navigate("Success");
-    // }}
+      // onPress={() => {
+      //   navigation.navigate("Success");
+      // }}
     >
       <LinearGradient
-        colors={["#212529", "#3A3A3A"]}
+        colors={
+          darkMode === "DARK" ? ["#178BFF", "#0101FD"] : ["#212529", "#3A3A3A"]
+        }
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={styles.button}
@@ -352,18 +455,38 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Regular",
     fontSize: 14,
     color: GlobalStyles.Color.lightBlack,
-    fontWeight: "bold",
+  },
+  darkheaderHeading: {
+    fontFamily: "Montserrat-Regular",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
   contentText: {
     fontFamily: "Montserrat",
     fontSize: 14,
     color: GlobalStyles.Color.lightBlack,
   },
+  darkcontentText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
+  },
+
   paymentContainer: {
     backgroundColor: GlobalStyles.Color.white,
     paddingHorizontal: 20,
     paddingVertical: 34,
-    borderRadius: 20,
+    // borderTopStartRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  darkpaymentContainer: {
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingHorizontal: 20,
+    paddingVertical: 34,
+    // borderTopStartRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   inputBox: {
     width: 334,
@@ -379,6 +502,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 20,
   },
+  darkinputBox: {
+    width: 334,
+    height: 75,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: GlobalStyles.Color.darkGray,
+    paddingHorizontal: 26,
+    paddingVertical: 16,
+    fontSize: 35,
+    color: GlobalStyles.Color.green_total,
+    fontFamily: "Helvetica",
+    fontWeight: "bold",
+    marginVertical: 20,
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
+  },
   accountContainer: {
     marginVertical: 20,
     borderWidth: 1,
@@ -386,7 +524,7 @@ const styles = StyleSheet.create({
     borderColor: GlobalStyles.Color.borderColor,
   },
   flatListContent: {
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     paddingBottom: 10,
   },
   itemContainer: {
@@ -401,6 +539,11 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontSize: 14,
     color: GlobalStyles.Color.black,
+  },
+  darkitemContent: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
   buttonContainer: {
     display: "flex",
@@ -538,8 +681,15 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
   },
   flatListContentContainer: {
-    padding: "5%",
+    // paddingVertical: "5%",
     flex: 1,
+    // backgroundColor:"#FFFFFF",
+  },
+  darkflatListContentContainer: {
+    // paddingVertical: "5%",
+    flex: 1,
+    // backgroundColor:"#FFFFFF",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
   itemContainer: {
     paddingHorizontal: 22,
