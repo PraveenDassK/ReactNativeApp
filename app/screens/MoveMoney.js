@@ -18,7 +18,8 @@ import GlobalStyles from "../../GlobalStyles";
 const MoveMoney = ({ navigation }) => {
   const [accountList, setAccountList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { userID, customerDetails, accountID } = useContext(AuthContext);
+  const { userID, customerDetails, accountID, darkMode } =
+    useContext(AuthContext);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const MoveMoney = ({ navigation }) => {
    * @dev This takes the selected destination account data and passes it to another screen
    */
   const selectAccount = (account) => {
-    console.log('selectAccount',account?.customerId)
+    console.log("selectAccount", account?.customerId);
     const requestObj = {
       sourceAccountId: "",
       destination: {
@@ -69,8 +70,23 @@ const MoveMoney = ({ navigation }) => {
    */
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -79,12 +95,33 @@ const MoveMoney = ({ navigation }) => {
 
   return (
     <View>
-      <View>
+      <View
+        style={{
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.darkTheme_bg
+              : GlobalStyles.Color.backgroundColorOg,
+        }}
+      >
         {/* <CountdownBar pageCount={3} currentPage={1} /> */}
-        <StepProgress currentStep={1} />
+        <StepProgress currentStep={1} darkMode={darkMode} />
 
-        <View style={styles.overallAccountContainer}>
-          <Text style={styles.containerHeading}>Send to</Text>
+        <View
+          style={
+            darkMode === "DARK"
+              ? styles.darkoverallAccountContainer
+              : styles.overallAccountContainer
+          }
+        >
+          <Text
+            style={
+              darkMode === "DARK"
+                ? styles.darkcontainerHeading
+                : styles.containerHeading
+            }
+          >
+            Send to
+          </Text>
           <View>
             <FlatList
               data={accountList}
@@ -99,13 +136,24 @@ const MoveMoney = ({ navigation }) => {
                     width: "100%",
                     height: 1,
                     backgroundColor: GlobalStyles.Color.borderColor,
-                    color: GlobalStyles.Color.borderColor,
+                    color:
+                      darkMode === "DARK"
+                        ? GlobalStyles.Color.darkGray
+                        : GlobalStyles.Color.borderColor,
                   }}
                 />
               )}
               renderItem={(account) => {
                 return (
-                  <TouchableOpacity onPress={() => selectAccount(account.item)}>
+                  <TouchableOpacity
+                    onPress={() => selectAccount(account.item)}
+                    style={{
+                      backgroundColor:
+                        darkMode === "DARK"
+                          ? GlobalStyles.Color.darkTheme_bg
+                          : null,
+                    }}
+                  >
                     <View style={styles.itemContainer}>
                       <Image
                         source={require("../assets/cardLion.png")}
@@ -113,10 +161,22 @@ const MoveMoney = ({ navigation }) => {
                         resizeMode="contain"
                       />
                       <View>
-                        <Text style={styles.itemContent}>
+                        <Text
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkitemContent
+                              : styles.itemContent
+                          }
+                        >
                           {account.item.id}
                         </Text>
-                        <Text style={styles.itemContent}>
+                        <Text
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkitemContent
+                              : styles.itemContent
+                          }
+                        >
                           {account.item.balance}
                         </Text>
                       </View>
@@ -140,10 +200,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 27,
   },
+  darkoverallAccountContainer: {
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderRadius: 20,
+    marginVertical: 27,
+  },
   containerHeading: {
     fontFamily: "Montserrat",
     fontSize: 14,
     color: GlobalStyles.Color.black,
+  },
+  darkcontainerHeading: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
   accountContainer: {
     marginVertical: 20,
@@ -169,6 +241,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: GlobalStyles.Color.black,
   },
+  darkitemContent: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
+  },
+  
 });
 
 export default MoveMoney;
