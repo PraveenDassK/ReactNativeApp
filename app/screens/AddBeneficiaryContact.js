@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
+import { LinearGradient } from "expo-linear-gradient";
+
 import AuthContext from "../auth/context";
 import api from "../api/api_list";
 import apiBeneficiaries from "../api/apiBeneficiaries";
@@ -44,6 +46,8 @@ const AddBeneficiary = ({ navigation, route }) => {
   const [isManual, setManual] = useState(false);
   const [selectedCard, setSelectedCard] = useState();
   const [arrayData, setArrayData] = useState([]);
+  const { darkMode } = useContext(AuthContext);
+
   const handleSubmit = async ({
     phoneNumber,
     emailAddress,
@@ -136,135 +140,206 @@ const AddBeneficiary = ({ navigation, route }) => {
   return (
     <KeyboardAvoider>
       {/* <CountdownBar currentPage={2} /> */}
-      <StepProgress currentStep={2}/>
+      <View
+        style={{
+          height: "100%",
+          flex: 1,
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <StepProgress currentStep={2} />
 
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: 20,
-            paddingVertical: 24,
-            backgroundColor: GlobalStyles.Color.white,
-            marginTop: 27,
-            borderRadius: 20,
-          }}
-        >
-          <Formik
-            initialValues={{
-              phoneNumber: " ",
-              emailAddress: " ",
-              postcode: "HA9 0HZ",
-              address1: "",
-              postTown: "",
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 20,
+              paddingVertical: 24,
+              backgroundColor:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.secondaryDarkTheme_bg
+                  : GlobalStyles.Color.white,
+              marginTop: 27,
+              borderTopEndRadius: 20,
+              borderTopStartRadius: 20,
             }}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
           >
-            {({
-              handleChange,
-              handleSubmit,
-              errors,
-              setFieldTouched,
-              touched,
-            }) => (
-              <>
-                <View>
-                  {items.map((item, index) => (
-                    <View key={item.id}>
-                      {item.isManual ? (
-                        <View
-                          key={item.id}
-                          style={{
-                            width: "90%",
-                            marginLeft: "5%",
-                            marginBottom: "5%",
-                          }}
-                        >
-                          <Text style={styles.lable}>{item.label}</Text>
-                          <TextInput
-                            onBlur={() => setFieldTouched(item.initialValue)}
-                            onChangeText={handleChange(item.initialValue)}
-                            onChange={() => {
-                              if (item.label === "Postcode") {
-                                handleAddress(item.initialValue);
-                              }
+            <Formik
+              initialValues={{
+                phoneNumber: " ",
+                emailAddress: " ",
+                postcode: "HA9 0HZ",
+                address1: "",
+                postTown: "",
+              }}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({
+                handleChange,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                touched,
+              }) => (
+                <>
+                  <View>
+                    {items.map((item, index) => (
+                      <View key={item.id}>
+                        {item.isManual ? (
+                          <View
+                            key={item.id}
+                            style={{
+                              width: "90%",
+                              marginLeft: "5%",
+                              marginBottom: "5%",
                             }}
-                            // style={{ fontSize: 24, marginTop: "1%" }}
-                            style={styles.inputBox}
-                            placeholder={item.placeholder}
-                          />
+                          >
+                            <Text
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darklable
+                                  : styles.lable
+                              }
+                            >
+                              {item.label}
+                            </Text>
+                            <TextInput
+                              onBlur={() => setFieldTouched(item.initialValue)}
+                              onChangeText={handleChange(item.initialValue)}
+                              onChange={() => {
+                                if (item.label === "Postcode") {
+                                  handleAddress(item.initialValue);
+                                }
+                              }}
+                              // style={{ fontSize: 24, marginTop: "1%" }}
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkinputBox
+                                  : styles.inputBox
+                              }
+                              placeholder={item.placeholder}
+                              placeholderTextColor={
+                                darkMode === "DARK"
+                                  ? GlobalStyles.Color.white
+                                  : null
+                              }
+                            />
 
-                          <ErrorMessage
-                            error={errors[item.initialValue]}
-                            visible={touched[item.initialValue]}
-                          />
-                        </View>
-                      ) : null}
-                    </View>
-                  ))}
-                  {!isManual && (
-                    <View
-                      style={{
-                        width: "90%",
-                        marginLeft: "5%",
-                        marginBottom: "5%",
-                      }}
-                    >
-                      <Text style={styles.lable}>{"Address"}</Text>
+                            <ErrorMessage
+                              error={errors[item.initialValue]}
+                              visible={touched[item.initialValue]}
+                            />
+                          </View>
+                        ) : null}
+                      </View>
+                    ))}
+                    {!isManual && (
+                      <View
+                        style={{
+                          width: "90%",
+                          marginLeft: "5%",
+                          marginBottom: "5%",
+                        }}
+                      >
+                        <Text
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darklable
+                              : styles.lable
+                          }
+                        >
+                          {"Address"}
+                        </Text>
 
-                      <Dropdown
-                        data={arrayData}
-                        value={selectedCard}
-                        labelField="label"
-                        valueField="value"
-                        // defalutValue="Mr"
-                        onChange={(item) => {
-                          console.log(item, "thsis is item selected");
-                          setSelectedCard(item.value);
-                          // handleChange(item.value);
-                        }}
-                        style={styles.dropdown}
-                        containerStyle={styles.containerStyle}
-                        // renderRightIcon={() => (
-                        //   <AntDesign name="checkcircle" size={24} color="green" />
-                        // )}
-                        // renderItem={renderItem}
-                        placeholder="Select Address"
-                        autoScroll={false}
-                      />
-                    </View>
-                  )}
-                  <View style={{ marginVertical: 5 }}>
-                    {!isManual ? (
-                      <Text
-                        onPress={() => {
-                          setManual(true);
-                          setSelectedCard("");
-                        }}
-                        style={styles.manual}
-                      >
-                        Enter manually
-                      </Text>
-                    ) : (
-                      <Text
-                        onPress={() => setManual(false)}
-                        style={styles.manual}
-                      >
-                        Enter PostCode
-                      </Text>
+                        <Dropdown
+                          data={arrayData}
+                          value={selectedCard}
+                          labelField="label"
+                          valueField="value"
+                          // defalutValue="Mr"
+                          onChange={(item) => {
+                            console.log(item, "thsis is item selected");
+                            setSelectedCard(item.value);
+                            // handleChange(item.value);
+                          }}
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkdropdown
+                              : styles.dropdown
+                          }
+                          containerStyle={styles.containerStyle}
+                          // renderRightIcon={() => (
+                          //   <AntDesign name="checkcircle" size={24} color="green" />
+                          // )}
+                          // renderItem={renderItem}
+                          placeholder="Select Address"
+                          autoScroll={false}
+                          placeholderStyle={{
+                            color:
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.white
+                                : null,
+                          }}
+                          selectedTextStyle={{
+                            color:
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.white
+                                : null,
+                          }}
+                        />
+                      </View>
                     )}
+                    <View style={{ marginVertical: 5 }}>
+                      {!isManual ? (
+                        <Text
+                          onPress={() => {
+                            setManual(true);
+                            setSelectedCard("");
+                          }}
+                          style={styles.manual}
+                        >
+                          Enter manually
+                        </Text>
+                      ) : (
+                        <Text
+                          onPress={() => setManual(false)}
+                          style={styles.manual}
+                        >
+                          Enter PostCode
+                        </Text>
+                      )}
+                    </View>
                   </View>
-                </View>
-                <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
-                  <TouchableOpacity style={styles.button}>
-                    <Button title="Confirm" onPress={handleSubmit} />
-                  </TouchableOpacity>
-                </View>
-              </>
-            )}
-          </Formik>
-        </View>
-      </TouchableWithoutFeedback>
+                  <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
+                    <View style={styles.buttonContainer}>
+                      <TouchableOpacity onPress={handleSubmit}>
+                        <LinearGradient
+                          colors={
+                            darkMode === "DARK"
+                              ? ["#178BFF", "#0101FD"]
+                              : ["#212529", "#3A3A3A"]
+                          }
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkbuttonPayNew
+                              : styles.buttonPayNew
+                          }
+                        >
+                          <Text style={styles.buttonPayNewText}>Continue</Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </>
+              )}
+            </Formik>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     </KeyboardAvoider>
   );
 };
@@ -296,6 +371,20 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 14,
     color: GlobalStyles.Color.darkGray,
+    marginTop: 10,
+  },
+  darkinputBox: {
+    width: "100%",
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: GlobalStyles.Color.darkGray,
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
+    marginTop: 10,
   },
   manual: {
     color: GlobalStyles.Color.skyblue,
@@ -316,17 +405,69 @@ const styles = StyleSheet.create({
     height: 46,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor:  GlobalStyles.Color.borderColor,
+    borderColor: GlobalStyles.Color.borderColor,
     paddingHorizontal: 10,
     marginVertical: 5,
     paddingVertical: 14,
     fontSize: 14,
-    color:  GlobalStyles.Color.darkGray,
+    color: GlobalStyles.Color.darkGray,
+    marginTop:10,
+  },
+  darkdropdown: {
+    marginTop: 10,
+    width: "100%",
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: GlobalStyles.Color.darkGray,
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
   lable: {
     color: GlobalStyles.Color.black,
     fontFamily: "Montserrat",
     fontSize: 14,
+  },
+  darklable: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
+    fontSize: 14,
+  },
+  buttonContainer: {
+    width: "100%",
+    marginTop: "15%",
+  },
+  buttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.lightBlack,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  darkbuttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.gray_500,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  buttonPayNewText: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+    // marginLeft: 6,
   },
 });
 

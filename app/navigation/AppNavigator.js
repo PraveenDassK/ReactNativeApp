@@ -840,16 +840,33 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerTitleStyle: {
-            fontFamily: "Montserrat",
-            fontSize: 20,
-          },
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
             </View>
           ),
           headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 20,
+          },
         }}
       />
       <Stack.Screen
@@ -882,16 +899,33 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerTitleStyle: {
-            fontFamily: "Montserrat",
-            fontSize: 20,
-          },
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
             </View>
           ),
           headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 20,
+          },
         }}
       />
 
@@ -904,16 +938,33 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerTitleStyle: {
-            fontFamily: "Montserrat",
-            fontSize: 20,
-          },
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
             </View>
           ),
           headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 20,
+          },
         }}
       />
 
