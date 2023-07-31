@@ -182,9 +182,7 @@ const AddBeneficiary = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoider
-     darkMode={darkMode}
-    >
+    <KeyboardAvoider>
       {/* <CountdownBar /> */}
       <View
         style={{

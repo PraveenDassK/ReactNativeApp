@@ -18,7 +18,7 @@ const jwt = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWF
 export const jwtClient = create({
   baseURL: settings.apiUrl,
   headers: {
-    Accept: 'application/vnd.github.v3+json',
+    Accept: 'text/plain',
     Authorization: `Bearer ${jwt}`, // Add the JWT to the Authorization header
   },
 })
