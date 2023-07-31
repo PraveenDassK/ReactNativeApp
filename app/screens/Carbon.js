@@ -66,19 +66,24 @@ const Carbon = ({ route, navigation }) => {
 
   const loadData = async () => {
     setIsLoading(true);
-    const response = await apiCall.GetProjectList();
-    const responseProjects = response;
-    setProjects(
-      responseProjects.map((project) => {
-        return {
-          id: project.id,
-          displayName: project.displayName,
-          price: project.asset.displayAssetPriceWithMarkup,
-        };
-      })
-    );
-    setData(response);
-    setIsLoading(false);
+    try {
+      const response = await apiCall.GetProjectList();
+      const responseProjects = response;
+      setProjects(
+        responseProjects.map((project) => {
+          return {
+            id: project.id,
+            displayName: project.displayName,
+            price: project.asset.displayAssetPriceWithMarkup,
+          };
+        })
+      );
+      setData(response);
+      setIsLoading(false);
+
+    } catch {
+      setIsLoading(false);
+    }
   };
 
   const incrementCart = (item) => {
@@ -522,9 +527,9 @@ const Carbon = ({ route, navigation }) => {
                         index !== 0
                           ? styles.tagsContainer
                           : [
-                              styles.tagsContainer,
-                              { marginLeft: horizontalScale(0) },
-                            ]
+                            styles.tagsContainer,
+                            { marginLeft: horizontalScale(0) },
+                          ]
                       }
                     >
                       <Pressable onPress={() => copyToClipboard(tag)}>
@@ -592,7 +597,7 @@ const CarbonFeature = ({ darkMode }) => (
             style={{
               fontFamily: "Montserrat-Regular",
               fontSize: 14,
-               color:
+              color:
                 darkMode === "DARK"
                   ? GlobalStyles.Color.white
                   : GlobalStyles.Color.lightBlack,
