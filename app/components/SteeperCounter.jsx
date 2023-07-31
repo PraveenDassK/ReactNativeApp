@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import GlobalStyles from "../../GlobalStyles";
 
-const StepProgress = ({ currentStep }) => {
+const StepProgress = ({ currentStep, darkMode }) => {
   //   const [currentStep, setCurrentStep] = useState(1);
 
   const handleStepPress = (step) => {
@@ -21,7 +22,12 @@ const StepProgress = ({ currentStep }) => {
         </Text>
       </TouchableOpacity>
       <View
-        style={[styles.viewProgress, currentStep > 1 && styles.activeStepProgress]}
+        style={[
+          styles.viewProgress,
+          currentStep > 1 && darkMode === "DARK"
+            ? styles.darkactiveStepProgress
+            : styles.activeStepProgress,
+        ]}
       ></View>
 
       <TouchableOpacity
@@ -35,9 +41,11 @@ const StepProgress = ({ currentStep }) => {
         </Text>
       </TouchableOpacity>
       <View
-        style={[
+         style={[
           styles.viewProgress,
-          currentStep > 2 && styles.activeStepProgress,
+          currentStep > 1 && darkMode === "DARK"
+            ? styles.darkactiveStepProgress
+            : styles.activeStepProgress,
         ]}
       />
 
@@ -77,7 +85,13 @@ const styles = StyleSheet.create({
   activeStep: {
     backgroundColor: "#212529",
   },
+  darkactiveStep: {
+    backgroundColor: "#212529",
+  },
   activeStepText: {
+    color: "#fff",
+  },
+  darkactiveStepText: {
     color: "#fff",
   },
   viewProgress: {
@@ -89,6 +103,13 @@ const styles = StyleSheet.create({
   },
   activeStepProgress: {
     borderColor: "black",
+    borderWidth: 2,
+    width: 100,
+    height: 0,
+    top: "4%",
+  },
+  darkactiveStepProgress: {
+    borderColor: GlobalStyles.Color.secondaryDarkTheme_bg,
     borderWidth: 2,
     width: 100,
     height: 0,

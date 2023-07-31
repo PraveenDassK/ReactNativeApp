@@ -86,6 +86,7 @@ const items = [
 
 const AddBeneficiary = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState("personal");
+  const { darkMode } = useContext(AuthContext);
 
   const handleCheckboxChange = (value) => {
     setSelectedOption(value);
@@ -181,89 +182,181 @@ const AddBeneficiary = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoider>
+    <KeyboardAvoider
+     darkMode={darkMode}
+    >
       {/* <CountdownBar /> */}
-        <StepProgress currentStep={1} />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: 20,
-            paddingVertical: 24,
-            backgroundColor: GlobalStyles.Color.white,
-            marginTop: 27,
-            borderRadius: 20,
-          }}
-        >
-          <Formik
-            initialValues={{
-              firstName: "",
-              lastName: "",
-              sortCode: "",
-              accNum: "",
+      <View
+        style={{
+          height: "100%",
+          flex: 1,
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <StepProgress currentStep={1} darkMode={darkMode} />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 20,
+              paddingVertical: 24,
+              backgroundColor:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.secondaryDarkTheme_bg
+                  : GlobalStyles.Color.white,
+              marginTop: 27,
+              borderTopEndRadius: 20,
+              borderTopStartRadius: 20,
             }}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
           >
-            {({
-              handleChange,
-              handleSubmit,
-              errors,
-              setFieldTouched,
-              touched,
-            }) => (
-              <>
-                <View>
-                  <Text style={styles.formLabel}>Select account type</Text>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <CheckBox
-                      title="Personal"
-                      checked={selectedOption === "personal"}
-                      checkedColor="black"
-                      onPress={() => handleCheckboxChange("personal")}
-                    />
-                    <CheckBox
-                      title="Business"
-                      checked={selectedOption === "business"}
-                      checkedColor="black"
-                      onPress={() => handleCheckboxChange("business")}
-                    />
-                  </View>
-
-                  {items.map((item, index) => (
+            <Formik
+              initialValues={{
+                firstName: "",
+                lastName: "",
+                sortCode: "",
+                accNum: "",
+              }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({
+                handleChange,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                touched,
+              }) => (
+                <>
+                  <View>
+                    <Text
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darkformLabel
+                          : styles.formLabel
+                      }
+                    >
+                      Select account type
+                    </Text>
                     <View
-                      key={item.id}
                       style={{
-                        marginTop: 22,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        backgroundColor:
+                          darkMode === "DARK"
+                            ? GlobalStyles.Color.secondaryDarkTheme_bg
+                            : GlobalStyles.Color.white,
                       }}
                     >
-                      {console.log("item", item)}
-                      <Text style={styles.formLabel}>{item.label}</Text>
-                      <TextInput
-                        style={styles.inputBox}
-                        onChangeText={handleChange(item.initialValue)}
-                        placeholder={item.placeholder}
+                      <CheckBox
+                        title="Personal"
+                        checked={selectedOption === "personal"}
+                        checkedColor={darkMode === "DARK" ? "white" : "black"}
+                        onPress={() => handleCheckboxChange("personal")}
+                        containerStyle={{
+                          backgroundColor:
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.secondaryDarkTheme_bg
+                              : GlobalStyles.Color.white,
+                        }}
+                        textStyle={{
+                          color:
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.white
+                              : GlobalStyles.Color.secondaryDarkTheme_bg,
+                        }}
                       />
-                      <ErrorMessage
-                        error={errors[item.initialValue]}
-                        visible={touched[item.initialValue]}
+                      <CheckBox
+                        title="Business"
+                        checked={selectedOption === "business"}
+                        checkedColor={darkMode === "DARK" ? "white" : "black"}
+                        onPress={() => handleCheckboxChange("business")}
+                        containerStyle={{
+                          backgroundColor:
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.secondaryDarkTheme_bg
+                              : GlobalStyles.Color.white,
+                        }}
+                        textStyle={{
+                          color:
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.white
+                              : GlobalStyles.Color.secondaryDarkTheme_bg,
+                        }}
                       />
                     </View>
-                  ))}
-                </View>
 
-                <Button
-                  title="Continue"
-                  textColor={GlobalStyles.Color.white}
-                  color="black"
-                  style={styles.buttonColor}
-                  onPress={handleSubmit}
-                />
-              </>
-            )}
-          </Formik>
-        </View>
-      </TouchableWithoutFeedback>
+                    {items.map((item, index) => (
+                      <View
+                        key={item.id}
+                        style={{
+                          marginTop: 22,
+                        }}
+                      >
+                        {console.log("item", item)}
+                        <Text
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkformLabel
+                              : styles.formLabel
+                          }
+                        >
+                          {item.label}
+                        </Text>
+                        <TextInput
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkinputBox
+                              : styles.inputBox
+                          }
+                          onChangeText={handleChange(item.initialValue)}
+                          placeholder={item.placeholder}
+                          placeholderTextColor={
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.white
+                              : null
+                          }
+                        />
+                        <ErrorMessage
+                          error={errors[item.initialValue]}
+                          visible={touched[item.initialValue]}
+                        />
+                      </View>
+                    ))}
+                  </View>
+                  {/* <Button
+                      title="Continue"
+                      textColor={GlobalStyles.Color.white}
+                      color="black"
+                      style={styles.buttonColor}
+                      onPress={handleSubmit}
+                    /> */}
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={handleSubmit}>
+                      <LinearGradient
+                        colors={
+                          darkMode === "DARK"
+                            ? ["#178BFF", "#0101FD"]
+                            : ["#212529", "#3A3A3A"]
+                        }
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={
+                          darkMode === "DARK"
+                            ? styles.darkbuttonPayNew
+                            : styles.buttonPayNew
+                        }
+                      >
+                        <Text style={styles.buttonPayNewText}>Continue</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )}
+            </Formik>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     </KeyboardAvoider>
   );
 };
@@ -275,8 +368,14 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
   },
   formLabel: { fontSize: 14, fontFamily: "Montserrat", marginBottom: 5 },
+  darkformLabel: {
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    marginBottom: 5,
+    color: GlobalStyles.Color.white,
+  },
   inputBox: {
-    width: 332,
+    width: "95%",
     height: 46,
     borderRadius: 10,
     borderWidth: 1,
@@ -286,26 +385,64 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: GlobalStyles.Color.darkGray,
   },
+  darkinputBox: {
+    width: "95%",
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: GlobalStyles.Color.darkGray,
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
+  },
   buttonContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 50,
+    width: "100%",
+    marginTop: "15%",
   },
 
-  button: {
-    width: 331.08,
-    height: 47,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
+  // button: {
+  //   width: 331.08,
+  //   height: 47,
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   borderRadius: 5,
+  // },
   buttonText: {
     color: GlobalStyles.Color.white,
     fontSize: 14,
     fontFamily: "Montserrat",
+  },
+  buttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.lightBlack,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  darkbuttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.gray_500,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  buttonPayNewText: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+    // marginLeft: 6,
   },
 });
 

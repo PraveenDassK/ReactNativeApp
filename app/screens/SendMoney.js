@@ -235,6 +235,8 @@ const SendMoney = ({ navigation }) => {
                 <UserIcon
                   name={beneficary?.item.name}
                   onPress={() => sendPayeeTrigger(beneficary.item)}
+                  darkMode ={darkMode}
+
                 />
                 {showDelete && (
                   <FadeInView
@@ -440,6 +442,7 @@ const SendMoney = ({ navigation }) => {
                       <UserIcon
                         name={beneficary?.item.groupName}
                         onPress={() => sendGroupPayeeTrigger(beneficary.item)}
+                        darkMode ={darkMode}
                       />
                       {showDelete && (
                         <FadeInView
