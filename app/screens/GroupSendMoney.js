@@ -33,6 +33,7 @@ import apiBeneficiaries from "../api/apiBeneficiaries";
 import formatCurrency from "../utility/formatCurrency";
 import PinModal from "../components/PinModal";
 import apiTransaction from "../api/apiTransaction";
+import { G } from "react-native-svg";
 
 const GroupSendMoney = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
@@ -60,7 +61,8 @@ const GroupSendMoney = ({ route, navigation }) => {
 
   const [accountList, setAccountList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { userID, customerDetails, accountID } = useContext(AuthContext);
+  const { userID, customerDetails, accountID, darkMode } =
+    useContext(AuthContext);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
 
   const isFocused = useIsFocused();
@@ -95,48 +97,59 @@ const GroupSendMoney = ({ route, navigation }) => {
     (eachValue, id) => payeeDetails?.requestObj?.groupId === eachValue?.groupId
   );
 
-  console.log(groupValue[0]?.beneficiariesDetails, "this is groupValue ");
+  console.log(groupValue, "this is groupValue ");
 
   /**
    * @dev This takes the selected destination account data and passes it to another screen
    */
 
   const selectAccount = async (account) => {
-    
     setShowPinModal(true);
-
-   
 
     // navigation.navigate("Pin", requestObj);
   };
 
-  const handleSuccess =async () => {
+  const handleSuccess = async () => {
     setShowPinModal(false);
 
     const requestObj = payeeDetails.requestObj;
     requestObj.amount = amount;
     requestObj.sourceAccountId = oneselectedAccount?.id;
     console.log(requestObj, "this ois req obj");
-    setIsLoading(true)
+    setIsLoading(true);
     const transferRequest = await apiTransaction.sendToGroup(requestObj);
-    const successObject ={
-      amount:amount,
-      name:name
-    }
+    const successObject = {
+      amount: amount,
+      name: name,
+    };
     setIsLoading(false);
+    console.log(transferRequest, "this is transfer request api call");
 
-    navigation.navigate("sendmoneysuccess",{successObject})
-    console.log(transferRequest, "this is transfer request");
-    console.log(transferRequest,"this is transfer request");
-  }
+    navigation.navigate("sendmoneysuccess", { successObject });
+  };
 
   /**
    * @dev If the page is loading show the loading icon
    */
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -148,10 +161,7 @@ const GroupSendMoney = ({ route, navigation }) => {
         amount={10}
       /> */}
         {showPinModal ? (
-          <PinModal
-            title="Enter your PIN"
-            success={() => handleSuccess()}
-          />
+          <PinModal title="Enter your PIN" success={() => handleSuccess()} />
         ) : null}
       </View>
     );
@@ -227,30 +237,74 @@ const GroupSendMoney = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.flatListContentContainer}>
+    <View
+      style={
+        darkMode === "DARK"
+          ? styles.darkflatListContentContainer
+          : styles.flatListContentContainer
+      }
+    >
       <FlatList
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
-          <>
+          <View
+            style={{
+              backgroundColor:
+                darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+            }}
+          >
             <View style={styles.headerContainer}>
-              <View>
-                <Text style={styles.headerHeading}>Group name</Text>
-                <Text style={styles.contentText}>{name}</Text>
+              <View style={{ padding: "5%" }}>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkheaderHeading
+                      : styles.headerHeading
+                  }
+                >
+                  Group name
+                </Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcontentText
+                      : styles.contentText
+                  }
+                >
+                  {name}
+                </Text>
               </View>
               {/* <View>
                 <Text style={styles.headerHeading}>Account number</Text>
                 <Text style={styles.contentText}>{accountNumber}</Text>
               </View> */}
             </View>
-            <View style={styles.paymentContainer}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkpaymentContainer
+                  : styles.paymentContainer
+              }
+            >
               <View>
-                <Text style={styles.contentText}>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcontentText
+                      : styles.contentText
+                  }
+                >
                   Enter the amount you want to send
                 </Text>
                 <TextInput
                   keyboardType="numeric"
-                  style={styles.inputBox}
+                  style={
+                    darkMode === "DARK" ? styles.darkinputBox : styles.inputBox
+                  }
                   placeholder="£0"
+                  placeholderTextColor={
+                    darkMode === "DARK" ? GlobalStyles.Color.white : null
+                  }
                   onChangeText={(text) => setAmount(text)}
                 />
               </View>
@@ -272,6 +326,7 @@ const GroupSendMoney = ({ route, navigation }) => {
                         <UserIcon
                           name={eachValue?.beneficiariesName}
                           //   onPress={() => sendPayeeTrigger(beneficary.item)}
+                          darkMode={darkMode}
                         />
                         {/* <View>
                             <Text>{eachValue?.beneficiariesName}</Text>
@@ -286,7 +341,15 @@ const GroupSendMoney = ({ route, navigation }) => {
               </View>
 
               <View>
-                <Text style={styles.contentText}>Send from</Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcontentText
+                      : styles.contentText
+                  }
+                >
+                  Send from
+                </Text>
                 {/* <ScrollView style={{ flex: 1 }}>
                         <FlatList
                           data={accountList.slice(0, 10)} // Show only the first 6 items
@@ -336,14 +399,23 @@ const GroupSendMoney = ({ route, navigation }) => {
                       </ScrollView> */}
               </View>
             </View>
-          </>
+          </View>
         }
-        ListFooterComponent={FootComponent(selectAccount)}
+        ListFooterComponent={FootComponent(selectAccount, darkMode)}
         data={accountList}
         keyExtractor={(accountList, index) => accountList.id}
         renderItem={(account) => {
           return (
-            <TouchableOpacity onPress={() => setOneAccount(account.item)}>
+            <TouchableOpacity
+              onPress={() => setOneAccount(account.item)}
+              style={{
+                marginHorizontal: darkMode === "DARK" ? "5%" : 0,
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.darkTheme_bg
+                    : GlobalStyles.Color.white,
+              }}
+            >
               <View style={styles.itemContainer}>
                 <Image
                   source={require("../assets/cardLion.png")}
@@ -351,8 +423,24 @@ const GroupSendMoney = ({ route, navigation }) => {
                   resizeMode="contain"
                 />
                 <View>
-                  <Text style={styles.itemContent}>{account.item.id}</Text>
-                  <Text style={styles.itemContent}>{account.item.balance}</Text>
+                  <Text
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkitemContent
+                        : styles.itemContent
+                    }
+                  >
+                    {account.item.id}
+                  </Text>
+                  <Text
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkitemContent
+                        : styles.itemContent
+                    }
+                  >
+                    {account.item.balance}
+                  </Text>
                 </View>
                 {oneselectedAccount?.id === account.item.id ? (
                   <View
@@ -375,7 +463,7 @@ const GroupSendMoney = ({ route, navigation }) => {
   );
 };
 
-const FootComponent = (selectAccount) => (
+const FootComponent = (selectAccount, darkMode) => (
   <View style={styles.buttonContainer}>
     <TouchableOpacity
       onPress={selectAccount}
@@ -384,12 +472,16 @@ const FootComponent = (selectAccount) => (
       // }}
     >
       <LinearGradient
-        colors={["#212529", "#3A3A3A"]}
+        colors={
+          darkMode === "DARK" ? ["#178BFF", "#0101FD"] : ["#212529", "#3A3A3A"]
+        }
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={styles.button}
+        style={
+          darkMode === "DARK" ? styles.darkbuttonPayNew : styles.buttonPayNew
+        }
       >
-        <Text style={styles.buttonText}>Send</Text>
+        <Text style={styles.buttonPayNewText}>Continue</Text>
       </LinearGradient>
     </TouchableOpacity>
   </View>
@@ -405,7 +497,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
     marginVertical: 28,
   },
   headerHeading: {
@@ -413,19 +505,39 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: GlobalStyles.Color.lightBlack,
   },
+  darkheaderHeading: {
+    fontFamily: "Montserrat-Regular",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
+  },
   contentText: {
     fontFamily: "Montserrat",
     fontSize: 14,
     color: GlobalStyles.Color.lightBlack,
   },
+  darkcontentText: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
+  },
   paymentContainer: {
     backgroundColor: GlobalStyles.Color.white,
     paddingHorizontal: 20,
+    width: "100%",
     paddingVertical: 34,
-    borderRadius: 20,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+  },
+  darkpaymentContainer: {
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingHorizontal: 20,
+    width: "100%",
+    paddingVertical: 34,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
   },
   inputBox: {
-    width: 334,
+    width: "100%",
     height: 75,
     borderRadius: 10,
     borderWidth: 1,
@@ -434,6 +546,21 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     fontSize: 35,
     color: GlobalStyles.Color.green_total,
+    fontFamily: "Helvetica",
+    fontWeight: "bold",
+    marginVertical: 20,
+  },
+  darkinputBox: {
+    width: "100%",
+    height: 75,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    paddingHorizontal: 26,
+    paddingVertical: 16,
+    fontSize: 35,
+    color: GlobalStyles.Color.green_total,
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
     fontFamily: "Helvetica",
     fontWeight: "bold",
     marginVertical: 20,
@@ -461,15 +588,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: GlobalStyles.Color.black,
   },
+  darkitemContent: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
+  },
   buttonContainer: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
+    // flexDirection: "row",
+    // justifyContent: "center",
     marginTop: 50,
+    paddingHorizontal: "5%",
+    width: "100%",
   },
 
   button: {
-    width: 331.08,
+    width: "100%",
     height: 47,
     display: "flex",
     flexDirection: "column",
@@ -597,8 +731,13 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
   },
   flatListContentContainer: {
-    padding: "5%",
+    paddingBottom: "5%",
     flex: 1,
+  },
+  darkflatListContentContainer: {
+    paddingBottom: "5%",
+    flex: 1,
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
   },
   itemContainer: {
     paddingHorizontal: 22,
@@ -620,6 +759,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignContent: "center",
+  },
+  buttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.lightBlack,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  darkbuttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.gray_500,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  buttonPayNewText: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+    // marginLeft: 6,
   },
 });
 
