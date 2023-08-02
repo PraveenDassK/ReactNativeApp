@@ -42,13 +42,13 @@ const GroupBeneficiary = ({ navigation }) => {
    */
   const loadData = async () => {
     const request = await apiBeneficiaries.GetUserBeneficiaries(userID);
-    console.log(request);
+    
     setBeneficiary(request);
     await apiBeneficiaries.GetGroupBeneficiaries(customerDetails);
   };
 
   const handleSelect = (beneficiaryItem) => {
-    console.log(beneficiaryItem);
+    
     setGroupData((prevData) => [...prevData, beneficiaryItem]);
   };
 
@@ -58,11 +58,11 @@ const GroupBeneficiary = ({ navigation }) => {
         return index !== flatIndex;
       }),
     ]);
-    console.log("deleted");
+    
   };
 
   const handleSend = () => {
-    console.log("handleSent");
+    
   };
 
   /**
@@ -77,7 +77,7 @@ const GroupBeneficiary = ({ navigation }) => {
         beneficiariesName: beneficiary.name,
       });
     });
-    console.log(beneficiaryData, "this is data of group");
+    
     if (beneficiaryData.length === 0) {
       return setDropDownError("Beneficiary is required*");
     } else {

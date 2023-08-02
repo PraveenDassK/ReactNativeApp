@@ -303,7 +303,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
 const StackNavigator = () => {
   const { darkMode } = useContext(AuthContext);
-  console.log(darkMode, "this is for header");
+  
   return (
     <Stack.Navigator
       screenOptions={{

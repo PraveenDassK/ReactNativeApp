@@ -53,7 +53,7 @@ const Login = ({ navigation }) => {
   const handleSubmit = async ({ email, phoneNumber }) => {
     setIsLoading(true);
     phoneNumber = phoneNumber;
-    console.log(phoneNumber)
+    
     const request = await loginApi.Login({ email, phoneNumber });
     setIsLoading(false);
     setUser({ email, phoneNumber });

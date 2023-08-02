@@ -44,7 +44,7 @@ const SendMoney = ({ navigation }) => {
     const groupBeneficiaries = await apiBeneficiaries.GetGroupBeneficiaries(
       customerDetails
     );
-    console.log(groupBeneficiaries);
+    
     setGroup(groupBeneficiaries);
   };
   //Sending
@@ -60,11 +60,11 @@ const SendMoney = ({ navigation }) => {
     });
   };
   const deleteDetails = async (Id) => {
-    console.log(userID);
+    
     const details = benList[Id].id;
-    console.log(details);
+    
     const response = await api.DeleteBenificiary(userID, details);
-    console.log(response);
+    
     getSettings();
   };
   //Rendering

@@ -26,7 +26,6 @@ const Login = async ({ phoneNumber, email }) => {
       phoneNumber: phoneNumber,
     }
   );
-  console.log(request);
   return request.data;
 };
 
@@ -49,7 +48,7 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
       phoneOTP: phoneOTP,
     }
   );
-  console.log(request.data);
+  
   if (!request.data.result || request.status == 500) {
     return null;
   }
@@ -87,12 +86,12 @@ const GetCustomerDetails = async (Id) => {
  *          If the company number is correct then return the details
  */
 const GetCompanyByRegNo = async (Reg) => {
-  console.log("Getting res", Reg);
+  
   try {
     const response = await client.get(
       `https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`
     );
-    console.log(response?.data?.details,"this is a company search");
+    
     // if (!response.data.result) {
     //   return null;
     // }
@@ -107,10 +106,6 @@ const getCompanyRegNoByName = async (name) => {
   try {
     const response = await client.get(
       `https://api.carbonyte.io/authverifymodule/AdvanceCompanySearch?company_name_includes=${name}`
-    );
-    console.log(
-      response.data?.details,
-      "thsis is api Callallalalalal"
     );
     const returnData = response?.data?.details;
     return returnData;

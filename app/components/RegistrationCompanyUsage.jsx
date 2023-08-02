@@ -39,7 +39,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
     SaveDetails(null, "CompanyUsage");
   };
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("CompanyOperations");
   };
 

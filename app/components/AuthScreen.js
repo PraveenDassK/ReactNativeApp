@@ -10,7 +10,7 @@ import images from '../assets/login/images'
 
 
 const AuthScreen = ({handleBack,children, title, img, width = "100%", back=true}) => {
-  console.log("src", img)
+  
   return (
      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={{ flex: 1, justifyContent: "flex-end",  }}>

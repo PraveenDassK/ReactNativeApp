@@ -14,7 +14,7 @@ const DoughnutChart = ({ data, children }) => {
   useEffect(() => {
     const deviceType = async () => {
       const deviceSize= await Device.getDeviceTypeAsync();
-      console.log('DeviceSize', deviceSize)
+      
       setDevice(deviceSize)
     }
     deviceType()

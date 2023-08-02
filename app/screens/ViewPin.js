@@ -35,7 +35,7 @@ const ViewPin = ({ navigation, route }) => {
   });
 
   const getCardDetails = async () => {
-    console.log("734194812")
+    
     const cardDetails = await GetCardDetails("734194812")
   }
 

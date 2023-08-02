@@ -44,7 +44,6 @@ const GetGroupBeneficiaries = async (ID) => {
  * @returns True if the addition was a success
  */
 const CreateNewGroupBeneficiary = async (obj) => {
-  console.log(obj);
   const post = await client.post(
     `https://api.carbonyte.io/walletmodule/Wallet/NewGroupBeneficiary`,
     obj

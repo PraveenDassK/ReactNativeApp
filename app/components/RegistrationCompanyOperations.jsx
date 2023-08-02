@@ -41,10 +41,10 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("CompanyIncome");
   };
-  console.log(operationTime)
+  
 
   return (
     <AuthScreen

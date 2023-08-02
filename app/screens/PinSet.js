@@ -34,7 +34,7 @@ const Pin = ({ route, navigation }) => {
       <script>
         // JavaScript code in the header
         function myFunction() {
-          console.log("Hello from JavaScript!");
+          
           document.body.style.backgroundColor = 'green';
         }
       </script>
@@ -57,7 +57,7 @@ const Pin = ({ route, navigation }) => {
     const loadData = async () => {
       //cardDetails.getPlasticCards('715767812');
       const response = await pinControl.getAccessToken("46765612");
-      // console.log(
+      // 
       //   "Pinset Response: ",
       //   response.replace(/(src="\/pinweb\/)/g, `src="${baseURL}/pinweb/`)
       // );
@@ -71,9 +71,9 @@ const Pin = ({ route, navigation }) => {
       const regex = /requestPin\("([^"]+)"\)/;
       const match = response.match(regex);
 
-      console.log("here", match[1]);
-      console.log(updatedURL);
-      console.log(scriptTagsMatch)
+      
+      
+      
 
       setTags(scriptTagsMatch)
       setContentID(match[1]);
@@ -141,23 +141,23 @@ const Pin = ({ route, navigation }) => {
       document.body.style.backgroundColor = 'blue';
       setTimeout(function() { window.alert('hi') }, 2000);
       (function() {
-        console.log('Script executed!');
+        
     
         var number = 42;
-        console.log('The number is: ' + number);
+        
       })();
       true; // note: this is required, or you'll sometimes get silent failures
     `;
 
   const handleWebViewLoad = () => {
-  //   console.log(typeof contentID, contentID);
+  //   
   //   const injectedJavaScript = `
   //   setTimeout(function() {
   //     requestPin("${contentID}");
   //   }, 0);
   // `;
   //   webViewRef.current.injectJavaScript(injectedJavaScript);
-  console.log('cleaned\n',cleanedInjectedJavaScript)
+  
     setLoading(false);
   };
 
@@ -195,9 +195,9 @@ const Pin = ({ route, navigation }) => {
 
 //   Promise.all(scripts.map(loadScript))
 //     .then(function() {
-//       console.log('Script in the head section executed!');
+//       
 //       /*<![CDATA[*/
-//       console.log('window.onload event triggered!');
+//       
 //       requestPin("6e84bffc-6624-4a04-94ed-269428420b18");
 //       /*]]>*/
 //     });
@@ -230,7 +230,7 @@ const cleanedInjectedJavaScript = injectedJavaScript.replace(/\\"/g, '"');
           onLoadEnd={handleWebViewLoad}
           // onError={handleError}
           // onMessage={(event) => {
-          //   console.log('onMessage', event)
+          //   
           //   const { data } = event.nativeEvent;
           //   if (data === "platform_handler") {
           //     handlePlatformFunction();

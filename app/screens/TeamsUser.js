@@ -17,7 +17,7 @@ const TeamsUser = ({ navigation, route }) => {
     const [showPinModal, setShowPinModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const userData = route.params
-    console.log(route.params)
+    
 
     const deleteUser = () => {
         navigation.navigate("Teams")

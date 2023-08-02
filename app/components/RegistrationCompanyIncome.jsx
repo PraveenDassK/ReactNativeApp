@@ -82,7 +82,7 @@ const CompanyIncome = ({ SaveDetails, setScreenToShow }) => {
   }
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("CompanyInformation");
   };
   return (

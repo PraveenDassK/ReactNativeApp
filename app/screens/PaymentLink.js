@@ -36,7 +36,7 @@ const PaymentLink = () => {
   const [selectedLink, setSelectedLink] = useState("");
   const { darkMode } = useContext(AuthContext);
   const copyToClipboard = async () => {
-    console.log("clicked", link);
+    
     Vibration.vibrate();
     alert("Referral copied");
     await Clipboard.setStringAsync(link);

@@ -6,7 +6,7 @@ import cardDetails from "../api/cardDetails";
  * @returns The card details number, expiary and cvv
  */
 async function getCardDetails(cardID){
-  console.log(cardID,"ID")
+  
   try {
     // Call the API to get the response details
     const responseDetails = await cardDetails.getCardResponse(cardID);
@@ -42,9 +42,9 @@ async function getCardDetails(cardID){
     const cardInfo = extractCardInfo(cardText);
 
     // You can now access the card details individually or return the object
-    console.log("Card Number:", cardInfo.cardNumber);
-    console.log("Expiration Date:", cardInfo.expirationDate);
-    console.log("CVV:", cardInfo.cvv);
+    
+    
+    
 
     return cardInfo; // You can return the object if needed
   } catch (error) {

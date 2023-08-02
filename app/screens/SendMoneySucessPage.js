@@ -4,7 +4,7 @@ import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 
 const SendMoneySuccessPage = ({ route, navigation }) => {
-  console.log(route.params);
+  
   const text =
     "You have sent £" +
     route.params.successObject.amount +
@@ -13,7 +13,7 @@ const SendMoneySuccessPage = ({ route, navigation }) => {
   const path = route?.params?.params?.finishScreen
     ? route.params.finishScreen
     : "Account";
-  console.log(path);
+  
   const { darkMode } = React.useContext(AuthContext);
   return (
     <Pressable

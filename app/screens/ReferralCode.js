@@ -32,7 +32,7 @@ const PaymentLink = () => {
   const [selectedLink, setSelectedLink] = useState("")
 
   const copyToClipboard = async () => {
-    console.log("clicked", link);
+    
     Vibration.vibrate();
     alert("Referral copied");
     await Clipboard.setStringAsync(link);
@@ -47,7 +47,7 @@ const PaymentLink = () => {
     try {
       setIsLoading(true)
       const paymentLinkSelection = await apiReferral.getReferralCode({user:"CC1",type:"Business",name:"Friend"})
-      console.log(paymentLinkSelection)
+      
       setLink(paymentLinkSelection)
       setIsLoading(false);
     } catch {

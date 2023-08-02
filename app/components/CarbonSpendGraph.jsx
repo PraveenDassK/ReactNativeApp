@@ -29,7 +29,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
       return;
     }
   };
-  console.log(carbnonSpendData, "this is spend data");
+  
   const colorsArray = ["tomato", "orange", "gold", "cyan", "green"];
   function getRandomItem(arr, i) {
     // get random index value
@@ -40,7 +40,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
 
     return item;
   }
-  console.log();
+  
   let sumofValues = carbnonSpendData.reduce((n, { y }) => n + y, 0);
 
   if (isLoading) {
@@ -122,7 +122,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
       <View>
         {carbnonSpendData.map((eachValue, i) => {
           let value = eachValue?.y / sumofValues;
-          console.log(value, "this is value");
+          
           return (
             <View style={{ marginBottom: 10 }} key={i}>
               <View

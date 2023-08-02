@@ -32,7 +32,7 @@ const Pin = ({route,navigation}) => {
       setShowCompletedButton(false)
     }
   }, [enteredPin])
-  console.log(enteredPin)
+  
 
   /**
    * @

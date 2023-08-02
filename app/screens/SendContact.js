@@ -28,8 +28,8 @@ const SendContact = ({navigation}) => {
     const data = response.data.details.content[0]
     // const accountdata = accountresponse.data.details.accountDetails[0]
     const phonedata = accountresponse.data.details.phoneNumbers[0]
-    console.log(data)
-    console.log(accountresponse.data.details)
+    
+    
     setSortCode(data.identifiers[0].sortCode)
     setAccNum(data.identifiers[0].accountNumber)
     setName(data.name)
@@ -40,10 +40,10 @@ const SendContact = ({navigation}) => {
   } 
   let payment = (amount ? amount : 1).toString()
 
-  console.log(payment)
+  
 
   const sendContact = (amount) => {
-    console.log(amount)
+    
     navigation.navigate("SentMoney",{amount: amount,fullname: fullname})
   }
   let date = (payment? payment.createdDate: "0")

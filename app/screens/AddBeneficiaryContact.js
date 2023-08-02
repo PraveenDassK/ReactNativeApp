@@ -55,7 +55,7 @@ const AddBeneficiary = ({ navigation, route }) => {
     postTown,
     address1,
   }) => {
-    console.log("this is console", postTown, address1);
+    
 
     let requestObj = route.params;
     requestObj.address.postCode = postcode;
@@ -69,19 +69,19 @@ const AddBeneficiary = ({ navigation, route }) => {
     requestObj.address.postTown =
       selectedCard === "" ? postTown : selectedCard?.city;
 
-    console.log(requestObj, "this is requestObj");
-    console.log(phoneNumber, emailAddress, postcode, postTown, address1);
+    
+    
 
     navigation.navigate("AddBeneficiaryRefrence", requestObj);
   };
 
   const handleAddress = async (postCode) => {
     // const response = await apiLogin.GetAddressByPostCode(postcode)
-    // console.log(response)
+    // 
     // setAddressData(response)
 
     // Remove this on live
-    console.log(postCode, "this is postcode");
+    
     const dummyAddress = [
       {
         label: "Fake address",
@@ -98,7 +98,7 @@ const AddBeneficiary = ({ navigation, route }) => {
     setArrayData(dummyAddress);
   };
 
-  console.log(selectedCard, "this is addree");
+  
   const items = [
     {
       id: 2,
@@ -260,7 +260,7 @@ const AddBeneficiary = ({ navigation, route }) => {
                           valueField="value"
                           // defalutValue="Mr"
                           onChange={(item) => {
-                            console.log(item, "thsis is item selected");
+                            
                             setSelectedCard(item.value);
                             // handleChange(item.value);
                           }}

@@ -40,13 +40,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [userImpact, setUserImpact] = useState([]);
   const [userData, setuserData] = useState([]);
 
-  const { accountID, customerDetails, darkMode, setDarkMode } =
+  const { accountID, customerDetails, userID,darkMode, setDarkMode } =
     useContext(AuthContext);
-    console.log(accountID, customerDetails,"thsisn is dashboard data")
+    
   const [iconShow, setIconShow] = useState(false);
   useEffect(() => {
     loadData();
-  }, [accountID, customerDetails]);
+  }, [accountID, customerDetails,userID]);
 
   /**
    * @dev This loads the data from the Backend
@@ -56,7 +56,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
+      
       const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
+      
       const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
       let colorMode = await authStorage.getColor();
       setDarkMode(colorMode);
@@ -93,7 +95,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const handleDark = async () => {
     // const data=authStorage.removeColor();
-    // console.log(data, "this is a dark")
+    // 
     if (darkMode === "DARK") {
       authStorage.removeColor();
       setDarkMode(authStorage.getColor());
@@ -104,7 +106,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //  authStorage.removeColor();
   };
 
-  console.log(darkMode, "this is darkModeijh");
+  
   return (
     <ImageBackground
       source={

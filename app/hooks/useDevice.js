@@ -11,7 +11,7 @@ const useDevice = () => {
   useEffect(() => {
     const deviceType = async () => {
       const deviceSize = await Device.getDeviceTypeAsync();
-      console.log("DeviceSize", deviceSize);
+      
       setDevice(deviceSize);
     };
     deviceType();

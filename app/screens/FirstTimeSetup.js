@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Image,ScrollView, Pressable } from "react-nativ
 import GlobalStyles from "../../GlobalStyles";
 
 const FirsTimeSetup = ({navigation}) => {
-    console.log("missingAccountSetup")
+    
   return (
     <View>
         <Text>

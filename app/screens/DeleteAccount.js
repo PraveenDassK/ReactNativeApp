@@ -17,7 +17,7 @@ const DeleteAccount = ({navigation}) => {
    * @dev This handles the deletion of the current account
    */
   const handleDelete = async() =>{
-    console.log("Delete")
+    
     //apiAccount.DeleteAccount(userID)
   }
   

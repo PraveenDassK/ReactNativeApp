@@ -63,7 +63,6 @@ const GetCardFromID = async(ID) => {
     responseDetails?.data?.cardDataUrl,
     responseDetails?.data?.token
   );
-  console.log(responseDetails,cardText)
 
   const cardExpiry = cardText?.data?.substr(601 + 98, 5);
 
@@ -95,7 +94,7 @@ const getPlasticCards = async (id) => {
       password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
     }})
 
-  console.log('plastic cards', response.ok, prettyFormat(response.data),prettyFormat(response))
+  
 }
 
 export default {

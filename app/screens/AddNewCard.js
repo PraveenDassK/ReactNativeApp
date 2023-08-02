@@ -293,7 +293,6 @@ const AddNewCard = ({ navigation, route }) => {
 
     // Remove this on live
 
-    console.log(postcode, "this is postcode");
 
     const dummyAddress = [
       {

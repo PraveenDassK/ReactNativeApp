@@ -24,11 +24,11 @@ import authStorage from "../auth/storage";
 const CarbonFootprints = ({ navigation }) => {
   const handleNavigation = () => navigation.navigate("CarbonExplore");
   const { darkMode, setDarkMode } = useContext(AuthContext);
-  console.log("CarbonExplore", darkMode);
+  
 
   const handleDark = async () => {
     // const data=authStorage.removeColor();
-    // console.log(data, "this is a dark")
+    // 
     if (darkMode === "DARK") {
       authStorage.removeColor();
       setDarkMode(authStorage.getColor());

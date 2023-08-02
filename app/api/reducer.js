@@ -25,8 +25,8 @@ const AccountMain = ({navigation}) => {
     setData(data)
 
     //Verified calculation 
-    console.log(data)
+    
     setBalance(data.availableBalance)
 
   }
-  console.log(new Date().toLocaleString())
+  

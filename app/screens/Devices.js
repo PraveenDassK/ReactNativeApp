@@ -75,7 +75,7 @@ const Devices = ({ navigation }) => {
     setIsLoading(true);
     if (!customerDetails) return;
     const request = await apiDevices.GetDevices(customerDetails);
-    console.log("request");
+    
 
     const resDevices = request?.details;
 

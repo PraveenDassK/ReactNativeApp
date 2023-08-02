@@ -12,12 +12,12 @@ import GlobalStyles from "../../GlobalStyles";
 import { LinearGradient } from "expo-linear-gradient";
 
 const Success = ({ route, navigation }) => {
-  console.log(route?.params?.params?.successText);
+  
   const text = route?.params?.params?.successText;
   const path = route?.params?.params?.finishScreen
     ? route.params.finishScreen
     : "AccountTab";
-  console.log(path);
+  
   return (
     <Pressable
       style={styles.requested}

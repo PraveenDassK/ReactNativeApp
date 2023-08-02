@@ -30,12 +30,12 @@ const SwitchAccounts = ({ navigation, route }) => {
 
   const loadData = async () => {
     const response = await apiCall.GetAllAccounts(userID);
-    console.log(response);
+    
     setUserData(response);
   };
 
   const showUserAccounts = () => {
-    console.log(userData);
+    
 
     let accounts = [];
     userData?.forEach((element, i) => {
@@ -53,7 +53,7 @@ const SwitchAccounts = ({ navigation, route }) => {
   };
 
   const switchAccount = (Id) => {
-    console.log("Switch to " + Id);
+    
     setAccountID(Id);
     // navigation.navigate("Account")
   };

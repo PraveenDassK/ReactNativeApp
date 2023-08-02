@@ -102,7 +102,6 @@ const Analytics = ({ navigation }) => {
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
     const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
-    console.log(dataCall, "this is data call");
     setCarbonGraphData(carbonSpendDataBarGraph);
     setCatNames(carbonSpendDataBarGraph.labels);
     setDataPercentages(carbonSpendDataBarGraph.percentages);
@@ -188,7 +187,7 @@ const Analytics = ({ navigation }) => {
   }
   const handleDark = async () => {
     // const data=authStorage.removeColor();
-    // console.log(data, "this is a dark")
+    // 
     if (darkMode === "DARK") {
       authStorage.removeColor();
       setDarkMode(authStorage.getColor());

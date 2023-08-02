@@ -93,9 +93,9 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
       phoneOTP,
     });
 
-    console.log("what is login", result.ok, result.data);
+    
 
-    console.log({ email, phoneNumber, emailOTP, phoneOTP });
+    
 
     if (!result.ok) return alert("Could not verify otp");
     if (!result.data.result) return alert("Could not verify otp");
@@ -103,7 +103,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
     const currentUser = jwtDecode(result?.data?.details);
     setCurrentUser(currentUser);
     authStorage.storeToken(result?.data?.details);
-    console.log("authToken", currentUser);
+    
 
     // with navigate router
   };
@@ -113,7 +113,7 @@ const OTPVerificationPersonal2 = ({ navigation }) => {
     const phoneNumber = user.phoneNumber;
 
     // const result = await otpAPI.otp({ email, phoneNumber})
-    console.log(email, phoneNumber);
+    
   };
 
   useEffect(() => {

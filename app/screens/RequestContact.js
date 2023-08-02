@@ -24,7 +24,7 @@ const RequestContact = ({navigation}) => {
     const response = await api.GetAccountByCustomer(authContext.userID);
     const accountresponse = await api.GetCustomerDetails(authContext.accountID);
     const data = response.data.details.content[0]
-    console.log(data)
+    
     setSortCode(data.identifiers[0].sortCode)
     setAccNum(data.identifiers[0].accountNumber)
     setName(data.name)
@@ -34,7 +34,7 @@ const RequestContact = ({navigation}) => {
   let payment = (amount ? amount : 1).toString()
 
   const requestContact = (amount) => {
-    console.log(amount)
+    
     navigation.navigate("Requested",{amount: amount, name: fromName})
   }
 

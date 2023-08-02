@@ -38,7 +38,7 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
   const [birth, setBirth] = useState('');
 
   const handleSubmit = () => {
-    console.log(birth, nationality);
+    
     SaveDetails(
       {
         country: birth,
@@ -48,7 +48,7 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
     );
   };
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("EmailAndPhone");
   };
 
@@ -92,7 +92,7 @@ const Nationality = ({ SaveDetails, setScreenToShow }) => {
               show={showBirth}
               // when picker button press you will get the country object with dial code
               pickerButtonOnPress={(item) => {
-                console.log(item.name.en)
+                
                 setBirth(item.name.en);
                 setBirthShow(false);
               }}

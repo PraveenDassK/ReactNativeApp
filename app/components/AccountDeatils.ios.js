@@ -16,7 +16,6 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
       return { label: eachData?.id, value: eachData?.id };
     });
     setDropdownData(newArray);
-    console.log(newArray, "this is new array");
     setTitle(newArray?.[0]?.value);
     handleBalance(newArray?.[0]?.value);
   }, [userData]);

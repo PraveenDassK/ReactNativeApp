@@ -99,14 +99,12 @@ const GetTransactions = async (Id, amount, typeSelection) => {
     let total = 0;
     let transactions = [];
     returnData?.content.forEach((transaction) => {
-      console.log(transaction.credit);
       total += transaction.amount;
 
       if (transaction.credit == false) {
         transactions.push(transaction);
       }
     });
-    console.log(transactions);
 
     return {
       transactions: transactions,

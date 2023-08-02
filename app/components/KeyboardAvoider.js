@@ -40,7 +40,6 @@ const KeyboardAvoider = ({ yOffset = Platform.OS === 'ios' ? 200 : 0, children }
       onKeyboardHide
     );
     
-
     return () => {
       kbShow.remove();
       kbHide.remove();

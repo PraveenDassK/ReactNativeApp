@@ -118,7 +118,7 @@ const OTPVerificationPersonal = () => {
       phoneOTP,
       emailOTP,
     });
-    console.log(result);
+    
     if (!result){
       setIsLoading(false)
       return alert("Could not verify otp");
@@ -127,12 +127,12 @@ const OTPVerificationPersonal = () => {
     const IDs = await loginApi.GetIDs(result?.token);
 
     //If the account details cannot be found
-    // console.log(IDs)
-    // if(!IDs){
-    //   alert("Warning your account could not be authenticated")
-    //   return;
-    // }
-  console.log(IDs,"this is id at login")
+    
+    if(!IDs){
+      alert("Warning your account could not be authenticated")
+      return;
+    }
+  
     authStorage.storeToken(result?.token);
     setCurrentUser(IDs.token);
     setUserID(IDs.userID);
@@ -148,7 +148,7 @@ const OTPVerificationPersonal = () => {
       macAddress: "",
       operatingSystem: Device.osName,
     });
-    console.log(pushNotification);
+    
 
     //Turns off the loading
     setIsLoading(false);
@@ -159,7 +159,7 @@ const OTPVerificationPersonal = () => {
     const phoneNumber = user.phoneNumber;
 
     const result = await loginApi.Login({ email, phoneNumber });
-    console.log(email, phoneNumber, result);
+    
     setResetVisible(false);
     setCount(59);
   };

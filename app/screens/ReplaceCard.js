@@ -28,7 +28,7 @@ const ReplaceCard = ({ navigation }) =>
     }, []);
     const loadData = async () => {
       setCardname(authContext.accountID);
-      console.log(authContext.accountID);
+      
     };
 
     const dataOfLost = [

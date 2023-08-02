@@ -28,7 +28,7 @@ export async function registerForPushNotificationsAsync() {
     } else {
         alert('Must use physical device for Push Notifications');
     }
-    console.log("pushToken", token)
+    
 
     return token;
 }

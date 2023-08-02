@@ -46,12 +46,12 @@ const AddFunds = ({ navigation }) => {
   const loadData = async () => {
     setIsLoading(true);
     const response = await apiCall.GetAllAccounts(userID);
-    console.log("response", response);
+    
     setData(response);
 
     let accountList = [];
     response.forEach((account, i) => {
-      console.log(account);
+      
       accountList.push({
         label: account.name + " £" + account.balance,
         value: i,
@@ -118,9 +118,9 @@ const AddFunds = ({ navigation }) => {
       reference: "Transfer",
     };
 
-    console.log(requestObj);
+    
 
-    console.log(benData);
+    
     navigation.navigate("Pin", {
       amount: amount,
       name: benData.accountName,
@@ -207,7 +207,7 @@ const AddFunds = ({ navigation }) => {
           <View style={[{ width: "30%", left: "36%" }]}>
             <TouchableOpacity
               onPress={() => {
-                console.log("500000000000");
+                
                 setAmount("50");
               }}
             >
@@ -239,7 +239,7 @@ const AddFunds = ({ navigation }) => {
           >
             <TouchableOpacity
               onPress={() => {
-                console.log("1000000000000000");
+                
                 setAmount("100");
               }}
             >

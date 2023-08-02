@@ -56,7 +56,7 @@ const handleCheckboxChange = (value) => {
 };
 
 const handleSubmit = async ({ firstName, lastName, accNum, sortCode }) => {
-  console.log(firstName, lastName, accNum, sortCode);
+  
 };
 
 return (

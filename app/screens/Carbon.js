@@ -54,7 +54,7 @@ const Carbon = ({ route, navigation }) => {
   useEffect(() => {
     const deviceType = async () => {
       const deviceSize = await Device.getDeviceTypeAsync();
-      console.log("DeviceSize", deviceSize);
+      
       setDevice(deviceSize);
     };
     deviceType();
@@ -111,7 +111,7 @@ const Carbon = ({ route, navigation }) => {
   };
 
   const copyToClipboard = async (copy) => {
-    console.log("Copied", copy);
+    
     Vibration.vibrate();
     alert(`${copy} copied`);
     await Clipboard.setStringAsync(copy);

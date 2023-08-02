@@ -47,7 +47,7 @@ const PinModal = ({ title, success, failure = () => null, atempts }) => {
   const checkPin = async () => {
     // if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
     if (false) {
-      console.log(await authStorage.getPasscode())
+      
       alert("Pin is incorrect");
       pinView.current.clearAll();
       failure()

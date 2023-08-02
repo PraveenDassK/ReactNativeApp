@@ -46,15 +46,15 @@ const Pin = ({ route, navigation }) => {
       setShowCompletedButton(false);
     }
   }, [enteredPin]);
-  console.log(enteredPin);
-  console.log(route.params.beneficiaryData)
+  
+  
 
   /**
    * @dev Checks the pin and sends money when necissary
    * @returns 
    */
   const checkPin = async () => {
-    console.log(route);
+    
     if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
       alert("Pin is incorrect");
       pinView.current.clearAll();
@@ -68,7 +68,7 @@ const Pin = ({ route, navigation }) => {
     setLoading(false);
 
     // //Check if the sending was successful
-    console.log(transferRequest);
+    
     if (!transferRequest.data.result) {
       alert("Transaction unsuccessful");
       pinView.current.clearAll();

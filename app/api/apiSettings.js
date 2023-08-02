@@ -12,7 +12,7 @@ const GetSettings = async (Id) => {
       `/cardmodule/GetToggles?cardId=${Id}`
     );
     const requestData = response?.data?.details;
-    console.log(("getsettings", prettyFormat(response)));
+    
     return requestData;
   } catch {
     SetToggles(Id, false, false, false, false);

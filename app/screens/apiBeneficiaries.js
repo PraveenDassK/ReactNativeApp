@@ -15,14 +15,14 @@ const GetUserBeneficiaries = async(ID) => {
 
 const GetGroupBeneficiaries = async(ID) => {
     const request = await client.get(`https://api.carbonyte.io/walletmodule/Wallet/RetrieveGroupBeneficiariesByCarbonyteId?carbonyteId=${ID}`)
-    console.log(request.data)
+    
     //If the call failed
     if(!request.data.result) return ""
     return request
 }
 
 const CreateNewGroupBeneficiary = async(obj) => {
-    console.log(obj)
+    
     const post = await client.post(`https://api.carbonyte.io/walletmodule/Wallet/NewGroupBeneficiary`,
         obj
     )

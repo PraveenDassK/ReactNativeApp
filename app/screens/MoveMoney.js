@@ -33,7 +33,7 @@ const MoveMoney = ({ navigation }) => {
     try {
       setIsLoading(true);
       const accountDataResponse = await apiCall.GetAllAccounts(userID);
-      console.log(accountDataResponse);
+      
       setAccountList(accountDataResponse);
       setIsLoading(false);
     } catch {
@@ -45,7 +45,7 @@ const MoveMoney = ({ navigation }) => {
    * @dev This takes the selected destination account data and passes it to another screen
    */
   const selectAccount = (account) => {
-    console.log("selectAccount", account?.customerId);
+    
     const requestObj = {
       sourceAccountId: "",
       destination: {
@@ -61,7 +61,7 @@ const MoveMoney = ({ navigation }) => {
       amount: 0,
       reference: "Transfer",
     };
-    // console.log(requestObj);
+    // 
     navigation.navigate("MoveMoneyAmount", requestObj);
   };
 

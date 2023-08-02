@@ -29,7 +29,7 @@ const PersonalAddress = ({ navigation }) => {
   }) => {
     const address = `${buildOrHouseNo},${addressLine1},${addressLine2},${townOrCity}`;
     authContext.setUser((prev) => ({ ...prev, address }));
-    console.log(authContext.user);
+    
     navigation.navigate("DOB");
   };
 

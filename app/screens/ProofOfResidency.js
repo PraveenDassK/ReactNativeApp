@@ -62,7 +62,7 @@ const ProofOfResidency = ({ navigation, back = true }) => {
         base64: true,
       });
 
-      console.log(result.assets[0]);
+      
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
@@ -71,7 +71,7 @@ const ProofOfResidency = ({ navigation, back = true }) => {
         setDocumentType("ID3");
       }
     } catch (error) {
-      console.log("Error reading an image", error);
+      
     }
     setIsLoading(false);
   };

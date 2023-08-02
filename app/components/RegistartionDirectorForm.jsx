@@ -71,10 +71,7 @@ const RegistartionDirectorForm = ({
   const [occupationStatusError, setOccupatioinStatus] = useState("");
   const [employementValue, setEmployementValue] = useState("");
   const currentTime = new Date();
-  console.log(
-    moment(currentTime).format("MM-DD-YYYY"),
-    "this is the current time"
-  );
+
   const roleMenu = [{ label: role, value: role }];
   const genderMenu = [
     { label: "Male", value: "Male" },

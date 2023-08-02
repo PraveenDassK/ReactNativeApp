@@ -16,7 +16,7 @@ const PersonalOrBusiness = ({ navigation }) => {
 
   const handleBusiness = () => {
     setUser((prev) => ({ ...prev, accountType: "business" }));
-    console.log("navigate to business page g");
+    
     navigation.navigate("Name");
   };
 

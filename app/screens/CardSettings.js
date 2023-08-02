@@ -64,9 +64,9 @@ const CardSettings = ({ navigation, route }) => {
     setIsLoading(true);
     try {
       const cardSettings = await apiSettings.GetSettings(authContext.accountID);
-      console.log(cardSettings)
+      
       const data = cardSettings;
-      console.log(data);
+      
       data.onlineTransactions ? setIsEnabled(true) : null;
       data.swipePayments ? setIsEnabled1(true) : null;
       data.atmWithdrawals ? setIsEnabled2(true) : null;
@@ -80,7 +80,7 @@ const CardSettings = ({ navigation, route }) => {
 
   const sendRequest = async () => {
     setIsLoading(true);
-    console.log("!");
+    
     try {
       const response = await apiSettings.SetToggles(
         authContext.accountID,
@@ -89,7 +89,7 @@ const CardSettings = ({ navigation, route }) => {
         isEnabled2,
         isEnabled3
       );
-      console.log(response)
+      
       setIsLoading(false);
     } catch {
       setIsLoading(false);

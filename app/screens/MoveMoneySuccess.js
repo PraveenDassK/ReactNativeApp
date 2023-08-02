@@ -4,13 +4,13 @@ import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 
 const MoveMoneySuccess = ({ route, navigation }) => {
-  console.log(route.params);
+  
   const { darkMode } = React.useContext(AuthContext);
   const text = "You have sent £" + route.params.amount + " to yourself";
   const path = route?.params?.params?.finishScreen
     ? route.params.finishScreen
     : "SendMoney";
-  console.log(path);
+  
   return (
     <Pressable
       style={darkMode === "DARK" ? styles.darkrequested : styles.requested}

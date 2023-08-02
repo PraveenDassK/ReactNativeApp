@@ -19,7 +19,7 @@ const DirectororPartner = ({ navigation }) => {
   const [formView, setFormView] = useState(0);
   const [role, setRole] = useState("");
   const handleOnPress = (event) => {
-    console.log(event, "thois is event");
+    
     setRole(event);
     if (formView === 0) {
       setFormView(1);
@@ -27,12 +27,7 @@ const DirectororPartner = ({ navigation }) => {
       setFormView(0);
     }
   };
-  console.log(
-    directorData,
-    BeneficialownersData,
-    ControllingInterestsData,
-    "This is data"
-  );
+  
   return (
     <SafeAreaView style={styles.container}>
       {formView === 0 ? (

@@ -4,7 +4,7 @@ import { VictoryPie } from "victory-native";
 
 
 const SinglePie = ({ percent}) => {
-    console.log('single',percent)
+    
     return  <VictoryPie 
   
     style={{ labels: { fill: "black" } }}

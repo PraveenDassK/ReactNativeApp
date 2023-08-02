@@ -7,7 +7,7 @@ const VirtualPlanetCard = ({ data, handleVirtual, darkMode }) => {
   return (
     <>
       {data.map((eachValue, i) => {
-        console.log(eachValue);
+        
         return (
           <View style={styles.container} key={i}>
             <View style={{ paddingVertical: 10 }}>
@@ -76,7 +76,7 @@ const VirtualPlanetCard = ({ data, handleVirtual, darkMode }) => {
   );
 };
 const VirtualPlanet = ({ treeData, handleVirtual, darkMode }) => {
-  console.log(treeData?.totalAssets, "this is a virtual planet");
+  
   const data = [
     {
       title: "Virtual Forest",

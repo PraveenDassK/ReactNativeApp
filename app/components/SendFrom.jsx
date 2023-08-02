@@ -29,7 +29,7 @@ const SendFrom = ({
   //   const [isModal, setModal] = useState(false);
   //   const [accountList, setAccountList] = useState([]);
 
-  console.log(selectedAccount, "this ia account list");
+  
 
   return (
     <View style={{ backgroundColor: GlobalStyles.Color.white }}>

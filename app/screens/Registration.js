@@ -68,7 +68,7 @@ const Registration = ({ navigation }) => {
    * @param {String} type This is the choice of which account to use
    */
   const accountSelector = async (type) => {
-    console.log(type);
+    
     if (type == "Personal") {
       //Change this back to PersonalDetails once done
       setScreenToShow("PersonalDetails");
@@ -91,7 +91,7 @@ const Registration = ({ navigation }) => {
    * @param {Str} page This is the page that the information is coming from
    */
   const detailsSaver = async (details, page) => {
-    console.log(details);
+    
     switch (page) {
       case "PersonalDetails":
         setPersonalDetails(details);
@@ -442,12 +442,12 @@ const Registration = ({ navigation }) => {
         "acceptanceDateTime": "29-06-2023",
         "policyVersion": "1",
       }
-      console.log(newRegObject)
+      
       const response = await apiLogin.RegisterBusinessAccount(newRegObject, "AA")
-      console.log(response)
+      
 
       if (!response.data.result) return response.data.resultMessage;
-      console.log(response)
+      
       // return false;
       return true;
     }

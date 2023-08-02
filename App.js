@@ -131,7 +131,6 @@ export default function App() {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
     );
-    console.log(expoPushToken);
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);
@@ -139,7 +138,6 @@ export default function App() {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
       });
 
     return () => {
@@ -155,7 +153,6 @@ export default function App() {
       if (Device.isDevice || Platform.OS == "ios") authenticate();
     }
 
-    console.log("currentUser & isAuth on load", currentUser, isAuth);
   }, [currentUser, isAuth]);
 
   // use Effect and Function to set Dark theme
@@ -166,18 +163,17 @@ export default function App() {
 
   const loadDarkTheme = async () => {
     const darkTheme = await authStorage.getColor();
-    console.log(darkTheme, "this is global dark");
     setDarkMode(darkTheme);
   };
   useEffect(() => {
     restoreToken();
     restoreSignIn();
     versionChecker.compareVersion(version);
-    console.log(version);
+    
     // if (JailMonkey.isJailBroken()) {
     //   // Alternative behaviour for jail-broken/rooted devices.
     // }
-    // console.log(JailMonkey.isJailBroken(), "Broken")
+    // 
   }, []);
   // usePreventScreenCapture();
 
@@ -196,8 +192,6 @@ export default function App() {
     const device =
       await LocalAuthentication.supportedAuthenticationTypesAsync();
     if (result.success) {
-      // console.log('authenticated', device, authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${result.success}`})))
-      console.log("turn off authenticator", result.success);
       setIsAuth(false);
       setIsLoading(false);
     }
@@ -210,8 +204,7 @@ export default function App() {
 
   const handleAppStateChange = (nextAppState) => {
     if (nextAppState === "inactive") {
-      console.log("the app is closed");
-      console.log(currentUser);
+
       // setCurrent9User(null)
     }
   };
@@ -222,14 +215,12 @@ export default function App() {
    * @returns null if there is no token
    */
   const restoreToken = async () => {
-    console.log("trying for restore token");
     //Get the token from storage
     const token = await authStorage.removeToken();
     if (!token) {
       setIsLoading(false);
       return;
     }
-    console.log("token", token);
 
     //Get the IDs here
     const IDs = await apiLogin.GetIDs(token);
@@ -364,7 +355,6 @@ export async function registerForPushNotificationsAsync() {
   } else {
     alert("Must use physical device for Push Notifications");
   }
-  console.log("pushToken", token);
 
   return token;
 }
