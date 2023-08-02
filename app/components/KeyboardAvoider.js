@@ -5,7 +5,7 @@ import { StyleSheet, Keyboard, findNodeHandle,
 
 
 
-const KeyboardAvoider = ({ yOffset = 200, children }) => {
+const KeyboardAvoider = ({ yOffset = 0, children }) => {
   const ref = React.useRef(null);
   const [kbOffset, setKbOffset] = React.useState(0);
   const kbOffsetAnim = React.useRef(new Animated.Value(0)).current;

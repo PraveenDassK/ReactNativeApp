@@ -180,9 +180,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         > */}
         <View
           style={{
-            backgroundColor: `${
-              darkMode === "DARK" ? "transparent" : "transparent"
-            }`,
+            backgroundColor: `${darkMode === "DARK" ? "transparent" : "transparent"
+              }`,
           }}
         >
           {!iconShow && (
@@ -325,10 +324,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             <XeroDashboard darkMode={darkMode} />
           </View>
           <View style={{ margin: 25 }}>
-            <ReferNow />
+            <ReferNow navigation={navigation} />
           </View>
           <View style={{ margin: 25 }}>
-            <MarketPlace handleMarket={()=>navigation.navigate("Marketplace")}/>
+            <MarketPlace handleMarket={() => navigation.navigate("Marketplace")} />
           </View>
 
           <View style={{ display: "flex", alignItems: "center" }}>
