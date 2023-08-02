@@ -6,10 +6,11 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
-  FlatList,
+
   TouchableOpacity,
   Image,
 } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
 import CountdownBar from "../components/CountdownBar";
