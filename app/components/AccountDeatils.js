@@ -57,7 +57,7 @@ const AccountDeatils = ({
     setDropdownData(newArray);
     setTitle(newArray?.[0]?.value);
     handleBalance(newArray?.[0]?.value);
-  }, [userData]);
+  }, []);
 
   const handleBalance = async (balance) => {
     const dataForBalance = await apiCall.GetCustomerDetails(balance);

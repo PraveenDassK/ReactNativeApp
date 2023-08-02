@@ -1,23 +1,55 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import GlobalStyles from "../../../GlobalStyles";
 
-const TransactionHead = ({ headerTitle = "Recent transactions" }) => {
+const TransactionHead = ({ headerTitle = "Recent transactions", darkMode }) => {
   return (
     <View style={styles.transactionHeadContainer}>
       <View style={styles.spacing}>
         <View style={styles.headerTitleContainer}>
-          <Text style={[styles.headerText, styles.spacing]}>{headerTitle}</Text>
+          <Text
+            style={[
+              darkMode === "DARK" ? styles.darkheaderText : styles.headerText,
+              styles.spacing,
+            ]}
+          >
+            {headerTitle}
+          </Text>
         </View>
 
         <View style={styles.transactionContainer}>
           <View style={styles.transactionContainerTH}>
-            <Text style={styles.transactionText}>All</Text>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darktransactionText
+                  : styles.transactionText
+              }
+            >
+              All
+            </Text>
           </View>
           <View style={styles.dateContainerTH}>
-            <Text style={styles.transactionText}>Income</Text>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darktransactionText
+                  : styles.transactionText
+              }
+            >
+              Income
+            </Text>
           </View>
           <View style={styles.amountContainerTH}>
-            <Text style={styles.transactionText}>Expenses</Text>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darktransactionText
+                  : styles.transactionText
+              }
+            >
+              Expenses
+            </Text>
           </View>
         </View>
       </View>
@@ -25,7 +57,7 @@ const TransactionHead = ({ headerTitle = "Recent transactions" }) => {
   );
 };
 
-export default TransactionHead
+export default TransactionHead;
 
 const styles = StyleSheet.create({
   transactionHeadContainer: {
@@ -34,10 +66,16 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     paddingTop: 10,
     marginBottom: "1%",
-    paddingHorizontal: "3%"
+    paddingHorizontal: "3%",
   },
-  headerTitleContainer: { flex: 1, },
+  headerTitleContainer: { flex: 1 },
   headerText: { fontWeight: "700", fontSize: 20 },
+  darkheaderText: {
+    fontWeight: "700",
+    fontSize: 20,
+    color: GlobalStyles.Color.white,
+  },
+
   transactionContainer: {
     flexDirection: "row",
     // paddingHorizontal: "0.5%"
@@ -45,6 +83,8 @@ const styles = StyleSheet.create({
   transactionContainerTH: { flex: 4 },
   dateContainerTH: { flex: 2 },
   transactionText: { opacity: 0.4 },
+  darktransactionText: {  color: GlobalStyles.Color.white },
+
   amountContainerTH: { flex: 3, alignItems: "flex-end" },
-  spacing: { marginBottom: "5%" }
-})
+  spacing: { marginBottom: "5%" },
+});

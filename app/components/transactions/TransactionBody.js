@@ -11,6 +11,7 @@ const TransactionBody = ({
   amount,
   credit,
   token,
+  darkMode,
 }) => {
   return (
     <Pressable style={styles.transactionMainContainer}>
@@ -18,20 +19,36 @@ const TransactionBody = ({
         <View style={styles.iconContainer}>
           <View>
             <View style={styles.icon}>
-              <Text style={styles.displayText}>
+              <Text
+                style={
+                  darkMode === "DARK"
+                    ? styles.darkdisplayText
+                    : styles.displayText
+                }
+              >
                 {name.replace("Payment to ", "")[0]}
               </Text>
             </View>
           </View>
           <View style={styles.nameContainer}>
-            <Text style={styles.displayText}>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkdisplayText
+                  : styles.displayText
+              }
+            >
               {name.replace("Payment to ", "")}
             </Text>
           </View>
         </View>
 
         <View style={styles.dateContainer}>
-          <Text style={styles.displayText}>
+          <Text
+            style={
+              darkMode === "DARK" ? styles.darkdisplayText : styles.displayText
+            }
+          >
             {moment(date).format(" DD MMM, HH:MM")}
             {/* {moment(item.transactionDate).format(" DD MMM YY")} */}
           </Text>
@@ -40,12 +57,25 @@ const TransactionBody = ({
         <View style={styles.amountContainer}>
           {!token ? (
             <Text
-              style={[styles.displayText, { color: !credit ? "red" : "green" }]}
+              style={[
+                darkMode === "DARK"
+                  ? styles.darkdisplayText
+                  : styles.displayText,
+                { color: !credit ? "red" : "green" },
+              ]}
             >
               {!credit ? "-" : "+"}£{amount.toFixed(2)}
             </Text>
           ) : (
-            <Text style={styles.displayText}>{token}</Text>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkdisplayText
+                  : styles.displayText
+              }
+            >
+              {token}
+            </Text>
           )}
         </View>
       </View>
@@ -94,5 +124,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   iconContainer: { flex: 4, flexDirection: "row" },
-  displayText: { fontWeight: "600", textTransform: "capitalize"},
+  displayText: { fontWeight: "600", textTransform: "capitalize" },
+  darkdisplayText: {
+    fontWeight: "600",
+    textTransform: "capitalize",
+    color: GlobalStyles.Color.white,
+  },
 });

@@ -157,7 +157,7 @@ const SendMoney = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView >
       {/* <ScrollView nestedScrollEnabled={true}> */}
       {/* <View
         style={{
@@ -235,8 +235,7 @@ const SendMoney = ({ navigation }) => {
                 <UserIcon
                   name={beneficary?.item.name}
                   onPress={() => sendPayeeTrigger(beneficary.item)}
-                  darkMode ={darkMode}
-
+                  darkMode={darkMode}
                 />
                 {showDelete && (
                   <FadeInView
@@ -442,7 +441,7 @@ const SendMoney = ({ navigation }) => {
                       <UserIcon
                         name={beneficary?.item.groupName}
                         onPress={() => sendGroupPayeeTrigger(beneficary.item)}
-                        darkMode ={darkMode}
+                        darkMode={darkMode}
                       />
                       {showDelete && (
                         <FadeInView
@@ -586,6 +585,7 @@ const styles = StyleSheet.create({
     // marginTop: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#EBEBEB",
+    height:"100%"
   },
   payHeaderContainer: {
     display: "flex",

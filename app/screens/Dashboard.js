@@ -58,6 +58,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
+      console.log(customerDetails,"this is cc")
       const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
       setuserData(getUserID?.accountDetails);
       setbannerName(getUserID?.customerDetails);

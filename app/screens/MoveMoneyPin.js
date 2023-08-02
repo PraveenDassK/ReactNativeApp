@@ -57,9 +57,9 @@ const Pin = ({ route, navigation }) => {
     //If pin is correct then atempt to send
     setLoading(true);
     const requestObj = route.params;
-    
+      console.log(requestObj)
     const transferRequest = await apiTransaction.sendMoney(requestObj);
-    
+     console.log(transferRequest,"this is transfer request")
     setLoading(false);
 
     //Check if the sending was successful

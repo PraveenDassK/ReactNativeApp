@@ -31,7 +31,7 @@ const Settings = ({ navigation }) => {
   const [fullname, setName] = useState(null);
   const [plan, setPlan] = useState(null);
   const [balance, setBal] = useState(null);
-  const [currency, setCurrency] = useState(null);
+  const [currency, setCurrency] = useState("");
   const [initials, setInitals] = useState(null);
   const [iban, setIban] = useState(null);
   const [bic, setBIC] = useState(null);
@@ -77,14 +77,15 @@ const Settings = ({ navigation }) => {
 
     const data = userDetails;
     const accountdata = accountDetails;
-
-    setPlan(subscriptionDetails.subName);
-    setName(accountdata.customerName);
-    setBal(accountdata.balance);
-    setSortCode(accountdata.identifiers[0].sortCode);
-    setAccNum(accountdata.identifiers[0].accountNumber);
-    setCurrency(data.currency ? data.currency : "GBP");
-    setStatus(accountdata.status);
+   console.log(accountDetails,"this is data")
+    setPlan(subscriptionDetails?.subName);
+    setName(accountdata?.customerName);
+    setBal(accountdata?.balance);
+    setSortCode(accountdata?.identifiers[0]?.sortCode);
+    setAccNum(accountdata.identifiers[0]?.accountNumber);
+    // setCurrency(data?.currency ? data?.currency : "GBP");
+    setCurrency(accountdata?.currency ? accountdata?.currency :"GBP")
+    setStatus(accountdata?.status);
 
     if (accountdata.identifiers[0].iban === null) {
       setIban("Unavailable");

@@ -9,7 +9,7 @@ const MoveMoneySuccess = ({ route, navigation }) => {
   const text = "You have sent £" + route.params.amount + " to yourself";
   const path = route?.params?.params?.finishScreen
     ? route.params.finishScreen
-    : "SendMoney";
+    : "Account";
   
   return (
     <Pressable
