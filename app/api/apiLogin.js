@@ -244,6 +244,12 @@ const RegisterBusinessDirectors = async ({ businessId, obj }) => {
   return businessDirectorRegistrationCall;
 };
 
+const GetAccountByCustomer = async(Id) => {
+  const url = `https://api.carbonyte.io/walletmodule/GetAccountByCustomer/${Id}`
+  const accountRequest = await client.get(url)
+  return accountRequest.data.details
+}
+
 export default {
   Login,
   VerifyLogin,
@@ -258,4 +264,5 @@ export default {
   getCompanyRegNoByName,
   RegisterBusinessUsers,
   RegisterBusinessDirectors,
+  GetAccountByCustomer
 };

@@ -107,6 +107,16 @@ export default function App() {
   //App Pin
   const [pin, setPin] = useState("0000");
 
+  //A122HTHM
+  const [enfuseId, setEnfuseId] = useState("")
+  //C122BMS7
+  const [modulrId, setModulrId] = useState("")
+  //CC1120
+  const [carbonyteId, setCarbonyteId] = useState("")
+  
+  
+  const [accountDetails, setAccountDetails] = useState("")
+
   //Shopping card Details
   const [cart, setCart] = useState([]);
 
@@ -169,7 +179,7 @@ export default function App() {
     restoreToken();
     restoreSignIn();
     versionChecker.compareVersion(version);
-    
+
     // if (JailMonkey.isJailBroken()) {
     //   // Alternative behaviour for jail-broken/rooted devices.
     // }
