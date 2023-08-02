@@ -110,8 +110,8 @@ const MoveMoney = ({ navigation }) => {
         keyExtractor={(accountList, index) => accountList.id}
         // numColumns={1}
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={styles.flatListContent}
-        // style={styles.accountContainer}
+        contentContainerStyle={styles.flatListContent}
+        style={styles.accountContainer}
         ListHeaderComponent={
           <View
             style={{
@@ -142,23 +142,23 @@ const MoveMoney = ({ navigation }) => {
             </View>
           </View>
         }
-        // ItemSeparatorComponent={() => (
-        //   <View
-        //     style={{
-        //       // width: "100%",
-        //       height: 1,
-        //       backgroundColor:
-        //         darkMode === "DARK"
-        //           ? GlobalStyles.Color.darkGray
-        //           : GlobalStyles.Color.borderColor,
-        //       color:
-        //         darkMode === "DARK"
-        //           ? GlobalStyles.Color.darkGray
-        //           : GlobalStyles.Color.borderColor,
-        //       marginHorizontal: "5%",
-        //     }}
-        //   />
-        // )}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              // width: "100%",
+              height: 1,
+              backgroundColor:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.darkGray
+                  : GlobalStyles.Color.borderColor,
+              color:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.darkGray
+                  : GlobalStyles.Color.borderColor,
+              marginHorizontal: "5%",
+            }}
+          />
+        )}
         renderItem={(account) => {
           return (
             <TouchableOpacity
