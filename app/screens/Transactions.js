@@ -18,6 +18,7 @@ import {
 import GlobalStyles from "../../GlobalStyles";
 import { Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import Tagline from "../components/Tagline";
 import {
   horizontalScale,
@@ -51,7 +52,7 @@ const Transactions = ({ navigation, route }) => {
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
-  const { settings, accountID } = useContext(AuthContext);
+  const { settings, accountID, darkMode } = useContext(AuthContext);
 
   //Calls the API once during load
   useEffect(() => {
@@ -270,27 +271,64 @@ const Transactions = ({ navigation, route }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator color="black" size="large" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+          size="large"
+        />
       </View>
     );
   }
 
   return (
-    <AppScreen>
+    <AppScreen darkMode={darkMode}>
       <View style={styles.page}>
         <FlatList
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
             <View style={{ marginBottom: verticalScale(50) }}>
               {hide && (
-                <Button
-                  onPress={() => loadData()}
-                  title="Unhide Transactions"
-                />
+                // <Button
+                //   onPress={() => loadData()}
+                //   title="Unhide Transactions"
+                // />
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity onPress={() => loadData()}>
+                    <LinearGradient
+                      colors={
+                        darkMode === "DARK"
+                          ? ["#178BFF", "#0101FD"]
+                          : ["#212529", "#3A3A3A"]
+                      }
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darkbuttonPayNew
+                          : styles.buttonPayNew
+                      }
+                    >
+                      <Text style={styles.buttonPayNewText}>
+                        Unhide Transactions
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
               )}
               <View style={{ marginTop: "10%" }}>
-                <Tagline />
+                <Tagline darkMode={darkMode} />
               </View>
             </View>
           }
@@ -320,13 +358,22 @@ const Transactions = ({ navigation, route }) => {
 
             return (
               <>
-                <Animated.View key={index} style={{ transform: [{ scale }] }}>
+                <Animated.View
+                  key={index}
+                  style={{
+                    transform: [{ scale }],
+                  }}
+                >
                   <Swipeable
                     renderLeftActions={() => renderLeftActions(item.id)}
                     renderRightActions={() => renderRightActions(index)}
                   >
                     <Pressable
-                      style={[styles.transactionBox]}
+                      style={[
+                        darkMode === "DARK"
+                          ? styles.darktransactionBox
+                          : styles.transactionBox,
+                      ]}
                       onPress={() => showTransaction(index)}
                     >
                       <TransactionBody
@@ -337,6 +384,7 @@ const Transactions = ({ navigation, route }) => {
                         credit={item.credit}
                         index={index}
                         lastElement={transactionData.length - 1}
+                        darkMode={darkMode}
                       />
                     </Pressable>
                   </Swipeable>
@@ -435,6 +483,12 @@ const styles = StyleSheet.create({
 
     backgroundColor: "white",
   },
+  darktransactionBox: {
+    width: "100%",
+    height: 80,
+
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+  },
   modalText: {
     textAlign: "center",
   },
@@ -442,6 +496,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     top: verticalScale(50),
+  },
+  buttonContainer: {
+    width: "100%",
+    marginTop: "15%",
+  },
+  buttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.lightBlack,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  darkbuttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.gray_500,
+    height: 47,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  buttonPayNewText: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+    paddingRight: 10,
+    // marginLeft: 6,
   },
 });
 

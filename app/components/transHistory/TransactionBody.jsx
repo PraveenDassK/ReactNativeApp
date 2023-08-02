@@ -41,7 +41,7 @@ const TransactionBody = ({
         style={{
           flexDirection: "row",
           paddingHorizontal: "5%",
-          paddingVertical: "2.5%",
+          paddingVertical: "5%",
           justifyContent: "space-between",
           borderBottomLeftRadius: index == -1 ? 10 : 0,
         }}

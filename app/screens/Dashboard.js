@@ -42,6 +42,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const { accountID, customerDetails, darkMode, setDarkMode } =
     useContext(AuthContext);
+    console.log(accountID, customerDetails,"thsisn is dashboard data")
   const [iconShow, setIconShow] = useState(false);
   useEffect(() => {
     loadData();

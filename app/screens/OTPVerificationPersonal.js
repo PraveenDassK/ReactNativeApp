@@ -132,7 +132,7 @@ const OTPVerificationPersonal = () => {
     //   alert("Warning your account could not be authenticated")
     //   return;
     // }
-
+  console.log(IDs,"this is id at login")
     authStorage.storeToken(result?.token);
     setCurrentUser(IDs.token);
     setUserID(IDs.userID);
