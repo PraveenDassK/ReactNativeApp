@@ -7,7 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Text from "./Text";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../assets/Dashboard/half-carbonyte-logo.svg";
-
+import apiCall from "../api/apiCall";
 const CurrentDateComponent = () => {
   const [currentDate, setCurrentDate] = useState("");
 
@@ -32,7 +32,7 @@ const CurrentDateComponent = () => {
       style={{
         color: GlobalStyles.Color.white,
         fontFamily: "Montserrat-Regular",
-        fontSize:12
+        fontSize: 12,
       }}
     >
       {currentDate}
@@ -40,13 +40,19 @@ const CurrentDateComponent = () => {
   );
 };
 
-const AccountDeatils = ({ userData, userImpact, handlePress }) => {
+const AccountDeatils = ({
+  userData,
+  userImpact,
+  handlePress,
+  setBalance,
+  accountBalance,
+}) => {
+  console.log(userData, "this is userData");
   const [title, setTitle] = useState("");
-  const [accountBalance, setBalance] = useState([]);
   const [dropdownData, setDropdownData] = useState([{ label: "", value: "" }]);
   useEffect(() => {
     let newArray = userData?.map((eachData, i) => {
-      return { label: eachData?.id, value: eachData?.id };
+      return { label: eachData?.accountId, value: eachData?.accountId };
     });
     setDropdownData(newArray);
     console.log(newArray, "this is new array");
@@ -54,12 +60,18 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
     handleBalance(newArray?.[0]?.value);
   }, [userData]);
 
-  const handleBalance = (balance) => {
-    let newBalance = userData?.filter(
-      (eachValue, i) => eachValue?.id === balance
-    );
-    setBalance(newBalance);
+  const handleBalance = async (balance) => {
+    const dataForBalance = await apiCall.GetCustomerDetails(balance);
+
+    console.log(dataForBalance, "This is the api for get balance");
+
+    // let newBalance = userData?.filter(
+    //   (eachValue, i) => eachValue?.accountId === balance
+    // );
+    // console.log(dataForBalance,"this is a new balance")
+    setBalance(dataForBalance);
   };
+  console.log(accountBalance, "this is a new balance");
   return (
     <View style={styles.border}>
       <LinearGradient
@@ -112,7 +124,7 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
             <View>
               <Text style={styles.totalTitle}>Total Balance</Text>
               <Text style={styles.totalAmount}>
-                {formatCurrency(accountBalance[0]?.balance, "GBP", false)}
+                {formatCurrency(accountBalance?.balance, "GBP", false)}
               </Text>
             </View>
             <CurrentDateComponent />

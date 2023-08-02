@@ -33,16 +33,19 @@ import MarketPlace from "../components/MarketPlaceComing";
 import colors from "../config/colors";
 import Tagline from "../components/Tagline";
 import authStorage from "../auth/storage";
+import apiLogin from "../api/apiLogin";
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);
-
+  const [accountBalance, setBalance] = useState([]);
+  const [bannerName, setbannerName] = useState();
   const [userImpact, setUserImpact] = useState([]);
   const [userData, setuserData] = useState([]);
 
-  const { accountID, customerDetails, darkMode, setDarkMode } =
+  const { accountID, customerDetails, darkMode, setDarkMode, getToken } =
     useContext(AuthContext);
-    console.log(accountID, customerDetails,"thsisn is dashboard data")
+  console.log(accountID, customerDetails, "thsisn is dashboard data");
+  console.log(getToken, "this is token from dashboard");
   const [iconShow, setIconShow] = useState(false);
   useEffect(() => {
     loadData();
@@ -56,11 +59,16 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
+      console.log(customerDetails, "this is custome details");
+      const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
+      console.log(getUserID?.customerDetails, "this is user ID");
+      setuserData(getUserID?.accountDetails);
+      setbannerName(getUserID?.customerDetails);
+      // const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
       const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
       let colorMode = await authStorage.getColor();
       setDarkMode(colorMode);
-      setuserData(userDataReturn);
+      // setuserData(userDataReturn);
       setUserImpact(userImpactReturn);
       setIsLoading(false);
     } catch {
@@ -104,7 +112,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //  authStorage.removeColor();
   };
 
-  console.log(darkMode, "this is darkModeijh");
+  console.log(bannerName, "this is darkModeijh");
   return (
     <ImageBackground
       source={
@@ -139,9 +147,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={styles.header}>
             <View>
               <Text style={styles.welcomText}>Welcome back,</Text>
-              <Text style={styles.nameText}>
-                {userData?.[0]?.customerName} !
-              </Text>
+              <Text style={styles.nameText}>{`${bannerName?.firstName} ${bannerName?.lastName}`} !</Text>
             </View>
             <View style={styles.iconContainer}>
               <TouchableOpacity onPress={() => handleDark()}>
@@ -161,6 +167,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             userData={userData}
             userImpact={userImpact}
             handlePress={() => navigation.navigate("SendMoney")}
+            accountBalance={accountBalance}
+            setBalance={setBalance}
           />
         </View>
 
@@ -329,7 +337,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             <ReferNow />
           </View>
           <View style={{ margin: 25 }}>
-            <MarketPlace handleMarket={()=>navigation.navigate("Marketplace")}/>
+            <MarketPlace
+              handleMarket={() => navigation.navigate("Marketplace")}
+            />
           </View>
 
           <View style={{ display: "flex", alignItems: "center" }}>
