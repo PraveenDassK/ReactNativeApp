@@ -40,7 +40,7 @@ const MoveMoneyFromAccount = ({ navigation, route }) => {
         let requestObj = route.params
         requestObj.sourceAccountId = account.id
 
-        // console.log(requestObj)
+        // 
         navigation.navigate("MoveMoneyAmount", requestObj)
     }
 

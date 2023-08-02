@@ -31,7 +31,7 @@ const CarbonProject = ({ navigation, route }) => {
     const response = await apiCall.GetSingleProject(route.params.Id);
     setIsLoading(false);
     setData(response);
-    console.log(route.params.Id);
+    
   };
 
   let projects = [];

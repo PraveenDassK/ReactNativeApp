@@ -59,7 +59,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
         base64: true,
       });
 
-      console.log(result.assets[0]);
+      
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
@@ -67,7 +67,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
         setDocumentType(document);
       }
     } catch (error) {
-      console.log("Error reading an image", error);
+      
     }
     setIsLoading(false);
   };
@@ -80,14 +80,14 @@ const ProofOfFace = ({ navigation, back = true }) => {
         base64: true,
       });
 
-      console.log(result.assets[0]);
+      
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
         setBackImage(result.assets[0].base64);
       }
     } catch (error) {
-      console.log("Error reading an image", error);
+      
     }
     setIsLoading(false);
   };

@@ -81,9 +81,9 @@ const AddBeneficiary = ({ navigation, route }) => {
   const [showPinModal, setShowPinModal] = useState(false);
   let requestObj = route.params;
   const { darkMode } = useContext(AuthContext);
-  console.log(authContext.userID);
+  
   const handleSubmit = async ({ iban, bic, currency, refrence }) => {
-    console.log();
+    
     if (!selectedCard) {
       setCurrencyError("Need to Select Currency");
       return;
@@ -94,7 +94,7 @@ const AddBeneficiary = ({ navigation, route }) => {
     requestObj.destinationIdentifier.bic = bic;
     requestObj.destinationIdentifier.currency = selectedCard;
     requestObj.externalReference = refrence;
-    console.log(requestObj);
+    
 
     const checkRequestObj = {
       paymentAccountId: "A122HTHM",
@@ -131,12 +131,12 @@ const AddBeneficiary = ({ navigation, route }) => {
   const handleSuccess = async () => {
     setShowPinModal(false);
     setIsLoading(true);
-    console.log(requestObj, "This is from api after pin");
+    
     const checkCall = await apiBeneficiaries.checkBeneficary(
       authContext.userId,
       requestObj
     );
-    console.log(checkCall, "this is call");
+    
     // if (checkCall.result.code == "MATCHED") {
     // }
 
@@ -145,8 +145,8 @@ const AddBeneficiary = ({ navigation, route }) => {
       requestObj
     );
 
-    console.log(beneficaryCall, "this ass call");
-    console.log(beneficaryCall.data, "Final data");
+    
+    
     //If the payee is a duplicate don't add them
     if (
       beneficaryCall.data.resultMessage ==
@@ -300,7 +300,7 @@ const AddBeneficiary = ({ navigation, route }) => {
                               valueField="value"
                               // defalutValue="Mr"
                               onChange={(item) => {
-                                console.log(item, "thsis is item selected");
+                                
                                 setSelectedCard(item.value);
                                 handleChange(item.value);
                               }}

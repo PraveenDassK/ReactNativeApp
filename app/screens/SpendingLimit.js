@@ -64,7 +64,7 @@ const SpendingLimit = ({ navigation, route }) => {
 
     const cards = await apiCall.GetCardByAccount("686283112");
     const accountApi = await apiCall.GetAllAccounts(userID);
-    console.log(accountApi, "this is cards that");
+    
     setDropDownValue(cards);
     setMonLim(monthlyAmount);
     setAccountData(accountApi);
@@ -98,13 +98,13 @@ const SpendingLimit = ({ navigation, route }) => {
     if (validCheck) {
       //If it is do this
       const response = await api.SetLimit(selectedCard, amount);
-      console.log(response);
-      console.log(selectedCard);
+      
+      
       setIsToggled(false);
       loadData();
     } else {
       //If it isn't show an error message here
-      console.log("Invalid");
+      
     }
   };
   let newAccountArray = accountData.map((eachData, i) => {
@@ -119,14 +119,14 @@ const SpendingLimit = ({ navigation, route }) => {
     if (isEnabled) {
       const amount = "3000";
       const response = await api.SetLimit(selectedCard, amount);
-      console.log("setLimit", response);
+      
       setIsEnabled(false);
       loadData();
     } else {
       setIsEnabled(true);
       storage.storeLimits(true);
       // navigation.navigate("SetLimit");
-      console.log(setIsEnabled);
+      
     }
   };
 
@@ -141,7 +141,7 @@ const SpendingLimit = ({ navigation, route }) => {
     const newElemet = accountData.filter(
       (eachValue, index) => index === item._index
     );
-    console.log(newElemet, "thsisi");
+    
 
     return (
       <View style={styles.dropDownarrayitem}>
@@ -162,7 +162,7 @@ const SpendingLimit = ({ navigation, route }) => {
       </View>
     );
   };
-  console.log(selectedCard);
+  
   return (
     <KeyboardAvoider>
       <ImageBackground
@@ -191,7 +191,7 @@ const SpendingLimit = ({ navigation, route }) => {
                 valueField="value"
                 // defalutValue="Mr"
                 onChange={(item) => {
-                  console.log(item, "thsis is item selected");
+                  
                   setSelectedCard(item.value);
                   loadData();
                 }}

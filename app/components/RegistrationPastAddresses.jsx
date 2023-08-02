@@ -77,7 +77,6 @@ const PastAddresses = ({ SaveDetails, setScreenToShow }) => {
           <Text>{`${addresses[0].postcode} `}</Text>
         </>
       ) : null}
-      {console.log(addresses)}
       {isAdding ? (
         <PostCode AddAddress={addAddress} />
       ) : (

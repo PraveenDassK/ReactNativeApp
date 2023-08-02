@@ -23,7 +23,7 @@ const height = Dimensions.get("window").height;
 const TerminatedCard = ({ navigation }) => {
   const [animationProgress, setAnimationProgress] = useState(true);
   function ratingCompleted(rating) {
-    console.log("Rating is: " + rating);
+    
   }
   return (
     <View style={styles.terminatedCard}>

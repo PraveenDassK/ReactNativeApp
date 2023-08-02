@@ -21,7 +21,7 @@ const ProofOfResidencyListA1 = () => {
         base64: true
       })
 
-      console.log(result)
+      
      
       if (!result.canceled) {
         setImageUri(result.assets[0].uri)
@@ -29,7 +29,7 @@ const ProofOfResidencyListA1 = () => {
       }
 
     } catch (error) {
-      console.log("Error reading an image", error)
+      
     }
   }
 

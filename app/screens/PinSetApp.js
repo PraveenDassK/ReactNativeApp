@@ -52,8 +52,8 @@ const Pin = ({ route, navigation }) => {
    * @returns Null If pin is incorrect
    */
   const checkPin = async () => {
-    console.log(await authStorage.getPasscode())
-    console.log(enteredPin)
+    
+    
 
     //Old pin checker
     if (pinCheck == false) {

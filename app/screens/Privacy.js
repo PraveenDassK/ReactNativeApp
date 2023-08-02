@@ -26,7 +26,7 @@ const TermsAndConditions = ({ route, navigation }) => {
     navigation.navigate("SignUpPersonalScreen");
   };
 
-  console.log(dateTime);
+  
   return (
     <ScrollView>
       <Text style={[styles.myCards1, styles.historyTypo]}>Privacy policy</Text>

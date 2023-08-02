@@ -21,13 +21,13 @@ const SendAccountSelection = ({ navigation }) => {
     const data = response.data.details.content[0];
     const accountdata = accountresponse.data.details.accountDetails[0];
     const phonedata = accountresponse.data.details.phoneNumbers[0];
-    console.log(data);
+    
     setName(data.name);
     setnumber(phonedata.phoneNo);
     setAccNum(data.identifiers[0].accountNumber);
     setPlan(accountdata.accountType);
   };
-  console.log(authContext.userID);
+  
   return (
     <View style={styles.sendAccountSelection}>
       <View style={styles.groupParent}>

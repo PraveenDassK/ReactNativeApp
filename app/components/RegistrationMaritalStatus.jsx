@@ -55,7 +55,7 @@ const MaritalStatus = ({ SaveDetails, setScreenToShow }) => {
     SaveDetails(status, "MaritalStatus");
   };
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("PastAddresses");
   };
 

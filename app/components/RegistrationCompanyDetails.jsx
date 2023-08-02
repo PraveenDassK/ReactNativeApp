@@ -37,13 +37,13 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   const [visible, setVisible] = useState(false);
 
   const handleSubmit = ({ incomeDetails }) => {
-    console.log(incomeDetails)
-    console.log(type)
+    
+    
     const currencyPattern = /^\$?\d+(,\d{3})*(\.\d{2})?$/;
 
     //If currency isn't correct
-    console.log(currencyPattern.test(incomeDetails))
-    console.log(!type)
+    
+    
 
     if (!currencyPattern.test(incomeDetails)) {
       return alert("Please enter a valid amount")
@@ -65,7 +65,7 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("RegistrationNumber");
   };
 

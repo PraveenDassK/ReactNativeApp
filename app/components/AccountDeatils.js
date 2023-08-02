@@ -55,7 +55,6 @@ const AccountDeatils = ({
       return { label: eachData?.accountId, value: eachData?.accountId };
     });
     setDropdownData(newArray);
-    console.log(newArray, "this is new array");
     setTitle(newArray?.[0]?.value);
     handleBalance(newArray?.[0]?.value);
   }, [userData]);

@@ -11,7 +11,7 @@ import * as Clipboard from 'expo-clipboard';
 
 const Referral = ({ refCode = 9090 }) => {
   const copyReferral = async () => {
-    console.log("clicked", refCode);
+    
     Vibration.vibrate();
     alert("Referral copied");
     await Clipboard.setStringAsync(`${refCode}`);

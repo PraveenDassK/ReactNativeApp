@@ -26,30 +26,30 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
     if (regName == "") return Alert.alert("Nothing entered");
     setLoading(true);
     const regNumber = await apiLoginRegister.getCompanyRegNoByName(regName);
-    console.log(regNumber, "this is company by name");
+    
     if (regNumber == null) {
       setLoading(false);
       return Alert.alert("The companay could not be found");
     }
     newArray.push(regNumber);
-    console.log(newArray?.[0]?.items, "this is company by name array");
+    
     let newData = newArray?.[0]?.items?.map((eachData, i) => {
-      console.log(eachData, "this is each Data");
+      
       return {
         label: eachData?.company_name,
         value: eachData?.company_number,
       };
     });
-    console.log(newData, "this is new data");
+    
     setDropdownData(newData);
     // const request = await apiLoginRegister.GetCompanyByRegNo(regNumber);
-    // console.log(request,"this is result")
+    // 
     setDropdownShow(true);
     setLoading(false);
     // if (request === null) return Alert.alert("Invalid business address");
 
     // const sicCode = SICCodes.filter(SICCodes => +request?.sic_codes?.[0].includes(SICCodes.sic_code))[0].section;
-    // console.log(sicCode)
+    // 
     // setSicCode(sicCode)
 
     // setCompanyDetails(request);
@@ -57,7 +57,7 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
 
   const handleDropDown = async (value) => {
     const request = await apiLoginRegister.GetCompanyByRegNo(value);
-    console.log(request, "this is result");
+    
     setCompanyDetails(request);
   };
 
@@ -66,7 +66,7 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("");
   };
 

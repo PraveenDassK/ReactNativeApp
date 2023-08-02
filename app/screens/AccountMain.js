@@ -161,7 +161,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
     const transactionCall = await apiCall.GetTransactions(accountID);
 
-    console.log(resposeData);
+    
     const carbonSpendData = await apiCarbon.GetBarGraphData();
     setCatNames(carbonSpendData.labels);
     setDataPercentages(carbonSpendData.percentages);

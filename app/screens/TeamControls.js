@@ -7,7 +7,7 @@ import itemObj from '../api/apiMarket'
 const Marketplace = () => {
 
   useEffect(() => {
-console.log('object', itemObj.id)
+
   },[])
   
   return (

@@ -27,7 +27,7 @@ const RegistrationCompanyDBCDetails = ({setIsAdding, userType, setDirectors,setO
   const [id, setID] = useState(0)
 
   const handleSubmit = ({ firstName, lastName }) => {
-    console.log(firstName, lastName);
+    
     setID(prevCount => prevCount + 1);
 
     const obj =   {
@@ -55,22 +55,22 @@ const RegistrationCompanyDBCDetails = ({setIsAdding, userType, setDirectors,setO
     switch (userType) {
       case "Dir":
         // Code to execute for case "Dir"
-        console.log("Processing as 'Dir'");
+        
         setDirectors(prevData => [...prevData, obj]);
         break;
       case "Con":
         // Code to execute for case "Con"
-        console.log("Processing as 'Con'");
+        
         setIntrests(prevData => [...prevData, obj]);
         break;
       case "Ben":
         // Code to execute for case "Ben"
-        console.log("Processing as 'Ben'");
+        
         setOwners(prevData => [...prevData, obj]);
         break;
       default:
         // Code to execute for any other case
-        console.log("Unknown keyword");
+        
         break;
     }
 

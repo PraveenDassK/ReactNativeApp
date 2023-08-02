@@ -76,7 +76,6 @@ const getUsersNFTs = async (address) => {
 };
 
 const GetTransactions = async (Id, amount, fromDate, toDate) => {
-  console.log("running");
   let toGet = amount ? amount : 10;
   const request = await client.get(
     "https://api.carbonyte.io/walletmodule/GetTransactions/" +
@@ -213,8 +212,7 @@ const GetCardByEnfuseAccountId = async (accountId) => {
     `https://api.carbonyte.io/walletmodule/Enfuce/GetCardByAccount?accountId=${accountId}`
   );
   const requestData = request?.data?.details;
-  console.log(accountId)
-  console.log(request)
+
   return requestData;
 };
 

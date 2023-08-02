@@ -24,7 +24,7 @@ const TestEnviro = ({ navigation }) => {
   const [devices, setDevices] = useState([]);
 
   const renderItem = ({ item }) => {
-    console.log("item", item);
+    
     return (
       <View>
         <Text>{item.name}</Text>
@@ -42,7 +42,7 @@ const TestEnviro = ({ navigation }) => {
    *          The return should only be for devlopment only
    */
   const loadData = async () => {
-    console.log("load");
+    
     if (!customerDetails) return;
     const request = await apiDevices.GetDevices(customerDetails);
     request.details.forEach((device, i) => {

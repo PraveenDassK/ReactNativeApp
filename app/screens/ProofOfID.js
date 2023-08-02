@@ -62,7 +62,7 @@ const ProofOfID = ({ navigation, back = true }) => {
         base64: true,
       });
 
-      console.log(result.assets[0]);
+      
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
@@ -71,7 +71,7 @@ const ProofOfID = ({ navigation, back = true }) => {
         setDocumentType("ID3");
       }
     } catch (error) {
-      console.log("Error reading an image", error);
+      
     }
     setIsLoading(false);
   };
@@ -84,14 +84,14 @@ const ProofOfID = ({ navigation, back = true }) => {
   //       base64: true,
   //     });
 
-  //     console.log(result.assets[0]);
+  //     
 
   //     if (!result.canceled) {
   //       setImageUri(result.assets[0].uri);
   //       setBackImage(result.assets[0].base64);
   //     }
   //   } catch (error) {
-  //     console.log("Error reading an image", error);
+  //     
   //   }
   //   setIsLoading(false);
   // };
@@ -110,7 +110,7 @@ const ProofOfID = ({ navigation, back = true }) => {
     //   backImage
     // );
 
-    // console.log("what is this", result.ok, result.data[0].result);
+    // 
 
     // if (!result.ok || !result.data[0].result)
     //   return alert("Could not verify documents");
@@ -643,9 +643,9 @@ export default ProofOfID;
 //     try {
 //     const {  status } = Camera.requestCameraPermissionsAsync()
 //     setPermission(status === "granted");
-//     console.log("status",status)
+//     
 //     } catch (e) {
-//       console.log('errpr',e)
+//       
 //     }
 //   };
 
@@ -695,7 +695,7 @@ export default ProofOfID;
 
 //   const handleFaceDetected = ({ faces}) => {
 //     setFaceData(faces);
-//     console.log(faces[0]);
+//     
 //   };
 
 //   const handleCapture = () => {

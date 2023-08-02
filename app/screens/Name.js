@@ -21,7 +21,7 @@ const Name = ({ navigation }) => {
 
   const handleSubmit = ({ firstName, lastName }) => {
     setUser((prev) => ({ ...prev, firstName, lastName }));
-    console.log(user);
+    
     navigation.navigate("ProofOfResidency");
   };
 

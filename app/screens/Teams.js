@@ -37,7 +37,7 @@ const Teams = ({ navigation }) => {
   }, []);
 
   const onSuccess = () => {
-    console.log("Success!");
+    
     setShowPinModal(false);
   };
 

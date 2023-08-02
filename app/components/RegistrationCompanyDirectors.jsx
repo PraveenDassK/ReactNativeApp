@@ -42,7 +42,7 @@ const CompanyDirectors = ({ SaveDetails, setScreenToShow, companyType, companyNu
     const handleSubmit = async() => {
         let detailSubmission = []
         directors.forEach(person => {
-            console.log(person)
+            
             detailSubmission.push({
                 "emails": [
                     {
@@ -78,13 +78,13 @@ const CompanyDirectors = ({ SaveDetails, setScreenToShow, companyType, companyNu
                 "marketingChoices": ""
             })
         })
-        console.log(detailSubmission)
+        
         //SaveDetails(details, "CompanyDirectors")
         const response = await apiLogin.RegisterBusinessUsers(detailSubmission)
-        console.log(response.data)
+        
     }
     const handleBack = () => {
-        console.log("!")
+        
         setScreenToShow("CompanyUsage")
     }
 

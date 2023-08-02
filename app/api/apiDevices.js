@@ -18,7 +18,7 @@ const DeleteDevice = async (customerId, deviceId) => {
       return response.ok;
     }
   } catch (error) {
-    console.log("Error:", error);
+    
   }
 };
 

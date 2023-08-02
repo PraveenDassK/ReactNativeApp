@@ -18,7 +18,7 @@ const ConfirmDetailsBusiness = ({ SaveDetails, setScreenToShow, data}) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("CompanyUsage");
   };
 

@@ -43,7 +43,7 @@ const Terminate = ({ navigation, route }) => {
 
   const [modalVisible, setModalVisible] = useState(true);
 
-  console.log(route.params, "this is terminate");
+  
 
   // useEffect(() => {
 
@@ -78,13 +78,13 @@ const Terminate = ({ navigation, route }) => {
   }, []);
 
   const navigate = () => {
-    console.log("function");
+    
     navigation.navigate("CardSettings");
   };
   const handleYes = async () => {
     const ID = route?.params?.cardID;
     const result = await apiCall.FreezeUpdateCard(ID, "CARD_CLOSED");
-    console.log(result, "this is terminate api call");
+    
     terminateAnimation();
     setModalVisible(!modalVisible);
 

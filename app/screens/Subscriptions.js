@@ -57,12 +57,12 @@ const ChooseCardsElite = ({ navigation }) => {
     setIsLoading(true);
     const response = await apiCall.GetSubscriptions();
     setData(response);
-    console.log("benefits", response[2]["benefits"][0]);
+    
     const currentSub = await apiCall.GetUsersSubscriptions("CC1");
     setCurrentSubscription(currentSub.subID);
     setIsLoading(false);
-    console.log(currentSub.subID);
-    console.log(response[0].id);
+    
+    
   };
   const changePlan = async () => {
     const Id = subscriptionToChange
@@ -83,7 +83,7 @@ const ChooseCardsElite = ({ navigation }) => {
         },
       },
     ]);
-    console.log(change);
+    
     if (change) {
     }
   };

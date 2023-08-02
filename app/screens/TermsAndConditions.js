@@ -11,7 +11,7 @@ const TermsAndConditions = ({route,navigation}) => {
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date+' '+time;
  
-console.log(dateTime)
+
 
     return(
     <ScrollView>

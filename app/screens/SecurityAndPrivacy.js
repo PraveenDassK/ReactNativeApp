@@ -28,7 +28,7 @@ const SecurityAndPrivacy = ({ navigation }) => {
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
 
-  console.log(settings);
+  
 
   useEffect(() => {
     restoreSignIn();
@@ -39,21 +39,21 @@ const SecurityAndPrivacy = ({ navigation }) => {
   //     authStorage.storeSignInSetting(
   //       JSON.stringify({ signedIn: `${isEnabled}` })
   //     );
-  //     console.log("isEnabled", isEnabled);
+  //     
   //     // potential authenticate()
   //   }
   //   if (isEnabled === false) {
   //     authStorage.storeSignInSetting(
   //       JSON.stringify({ signedIn: `${isEnabled}` })
   //     );
-  //     console.log("isNotEnabled", isEnabled);
+  //     
   //   }
   // }, []);
 
   const restoreSignIn = async () => {
     const token = await authStorage.getSignInSettings();
     if (!token) return;
-    console.log("restore token found in security", token.includes("true"));
+    
     // setIsEnabled(token.includes("true"));
   };
 
@@ -63,7 +63,7 @@ const SecurityAndPrivacy = ({ navigation }) => {
   }, []);
 
   const setToggles = () => {
-    console.log(settings);
+    
     settings.hideBalance ? setIsEnabled1(true) : null;
     settings.contactAccess ? setIsEnabled3(true) : null;
     settings.transactionSharing ? setIsEnabled2(true) : null;

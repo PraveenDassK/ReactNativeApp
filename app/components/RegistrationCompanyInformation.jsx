@@ -35,11 +35,11 @@ const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
     if(details.length < 1){
       return;
     }
-    console.log(details)
+    
     SaveDetails(details, "CompanyInformation");
   };
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("CompanyAddress");
   };
   return (

@@ -30,14 +30,7 @@ const getAccessToken = async (plasticId) => {
 
     const { pinURL, id } = response.data;
 
-    console.log(
-      "getToken",
-      response.ok,
-      response.status,
-      prettyFormat(response.data),
-      prettyFormat(pinURL)
-    );
-
+  
     const formData = qs.stringify({ controlId: id });
 
     const headers = {
@@ -50,19 +43,19 @@ const getAccessToken = async (plasticId) => {
       {controlId: id},
       { headers }
     );
-    console.log("pinURLRes", prettyFormat(pinURLResponse ));
+    
 
     return pinURLResponse.data
 
     // const { id, pinURL, pinFrameURL } = response.data;
-    // console.log('pin response',id, pinURL, pinFrameURL)
+    // 
     // Handle the response and perform the necessary actions
     // For mobile webview, instruct the device to make a POST call to pinURL
     // For desktop browser flow, open the pinFrameURL and handle the iframe behavior
     // You can store the 'id', 'pinURL', and 'pinFrameURL' in your component's state or context for later use
 
     // const pinURLResponse = await api.post(pinURL)
-    // console.log('pinURLRes',pinURLResponse)
+    // 
 
     return;
   } catch (error) {

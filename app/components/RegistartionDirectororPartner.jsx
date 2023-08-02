@@ -56,12 +56,12 @@ const RegistrationDirectororPartner = ({
 
 }) => {
   const handleSubmit = async (type) => {
-    console.log(type);
+    
     // SaveDetails(type)
     // navigation.navigate("Directororpartner");
   };
   const handleBack = () => {
-    console.log("!");
+    
     navigation.navigate("SplashAnimation");
   };
   const DATA = [
@@ -87,7 +87,7 @@ const RegistrationDirectororPartner = ({
     },
   ];
   const handleDelete =(index,name)=>{
-    console.log(index,name,"this is index");
+    
    
     switch(name){
       case "Director":

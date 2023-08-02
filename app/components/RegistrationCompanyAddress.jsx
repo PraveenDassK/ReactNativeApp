@@ -77,7 +77,6 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
     setScreenToShow("CompanyDetails");
   };
   return (

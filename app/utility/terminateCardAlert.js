@@ -14,7 +14,7 @@ export default terminateCardAlert = (terminateFn) =>
       {
         text: "Yes",
         onPress: () => {
-          console.log("OK Pressed: Terminated!!!");
+          
           terminateFn();
         },
       },
@@ -22,5 +22,5 @@ export default terminateCardAlert = (terminateFn) =>
   );
 
   export const handleTerminate =()=> {
-    console.log("handle Terminated")
+    
 }

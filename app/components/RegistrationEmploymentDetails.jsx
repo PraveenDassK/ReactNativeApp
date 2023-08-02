@@ -42,7 +42,7 @@ const EmploymentDetails = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("MaritalStatus");
   };
 

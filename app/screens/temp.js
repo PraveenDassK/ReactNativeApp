@@ -31,7 +31,7 @@ const ChooseCardsStandard5 = ({navigation}) => {
       let projects = []
       for(let i=0; i < 4; i++){
         projects.push(assets[i])
-        console.log(assets[i])
+        
       }
       setProjects(projects)
       setTrees(trees)

@@ -58,7 +58,7 @@ const Registration = ({ navigation }) => {
       setScreenToShow("BusinessRegNumber");
       setPersonalBusiness(type);
     }
-    console.log(type);
+    
   };
 
   /**

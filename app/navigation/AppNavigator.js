@@ -105,6 +105,8 @@ import Teams from "../screens/Teams";
 import TeamsUser from "../screens/TeamsUser";
 import TeamsUserAdd from "../screens/TeamsUserAdd";
 
+import ReferralCode from "../screens/ReferralCode";
+
 import C02 from "../assets/Dashboard/CO2.svg";
 import Profile from "../assets/Dashboard/Profile.svg";
 import Send from "../assets/Dashboard/SendMoney.svg";
@@ -205,8 +207,8 @@ function MyTabBar({ state, descriptors, navigation, position }) {
             options.tabBarLabel !== undefined
               ? options.tabBarLabel
               : options.title !== undefined
-              ? options.title
-              : route.name;
+                ? options.title
+                : route.name;
 
           const isFocused = state.index === index;
 
@@ -301,7 +303,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
 const StackNavigator = () => {
   const { darkMode } = useContext(AuthContext);
-  console.log(darkMode, "this is for header");
+  
   return (
     <Stack.Navigator
       screenOptions={{
@@ -422,6 +424,25 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
+        }}
+      />
+
+
+      <Stack.Screen
+        name="ReferralCode"
+        component={ReferralCode}
+        options={{
+          title: "Referral Code",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View style={styles.iconDropDownContainer}>
+              <MaterialCommunityIcons name="arrow-left" size={30} />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -1569,13 +1590,13 @@ const AppNavigator = () => {
           animationTypeForReplace: "push",
           animation: "slide_from_left",
         }}
-        // listeners={({ navigation, route }) => ({
-        //   focus: () => {
+      // listeners={({ navigation, route }) => ({
+      //   focus: () => {
 
-        //     // Do something with the `navigation` object
-        //     navigation.navigate('AccountTab');
-        //   },
-        // })}
+      //     // Do something with the `navigation` object
+      //     navigation.navigate('AccountTab');
+      //   },
+      // })}
       />
     </Tab.Navigator>
   );

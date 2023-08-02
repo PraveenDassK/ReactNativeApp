@@ -86,12 +86,12 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
     //Users must be over 18
     const difference = Math.abs(moment(birthday).diff(moment()) / 1000);
     const age = Math.floor(difference / 86400 / 365);
-    console.log(age);
+    
     if (age < 18) {
       //alert("Must be 18 or over")
       //return;
     }
-    console.log("!");
+    
     SaveDetails(
       {
         firstName: firstName,
@@ -106,7 +106,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   };
 
   const handleBack = () => {
-    console.log(accountType);
+    
     if (accountType == "Business") {
       setScreenToShow("CompanyDirectors");
       return;
@@ -118,7 +118,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
-  console.log(String(date));
+  
 
   const showMode = (currentMode) => {
     setShow(true);
@@ -219,7 +219,7 @@ const PersonalDetails = ({ SaveDetails, setScreenToShow, accountType }) => {
                 onChange={(item) => {
                   setGender(item.value);
                   setIsFocus(false);
-                  console.log(item);
+                  
                 }}
               />
               <Text>Date of Birth</Text>

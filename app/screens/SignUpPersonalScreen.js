@@ -58,7 +58,7 @@ const SignUpPersonalScreen = ({ navigation }) => {
     const result = await otpApi.otp({ email, phoneNumber });
     setUser({ email, phoneNumber });
 
-    console.log(result.data);
+    
     if (!result.ok) return alert("Could not send otp");
     // alert('Success')
 
@@ -71,15 +71,15 @@ const SignUpPersonalScreen = ({ navigation }) => {
 
   const swipeUpGestureHandler = useAnimatedGestureHandler({
     onStart: () => {
-      console.log("On Start");
+      
     },
     onActive: (event) => {
-      console.log("On Active");
+      
       y.value = event.translationY;
     },
     onEnd: (event) => {
       "worklet";
-      console.log("On End", event.velocityY);
+      
       if (y.value < -height / 2 || event.velocityY < -500) {
         runOnJS(fn)();
         y.value = withTiming(0, { easing: Easing.linear });

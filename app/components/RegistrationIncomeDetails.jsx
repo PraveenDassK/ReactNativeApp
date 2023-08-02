@@ -51,7 +51,7 @@ const Income = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("EmploymentDetails");
   };
   return (

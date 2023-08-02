@@ -46,7 +46,7 @@ const RegistrationEmailAndPhone = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("PersonalDetails");
   };
 

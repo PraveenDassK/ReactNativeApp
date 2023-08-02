@@ -88,7 +88,6 @@ const RegistrationDirectorsPartners = ({ SaveDetails}) => {
     ]
 
     const registration = await apiLogin.RegisterBusinessDirectors("12870376",obj)
-    console.log(registration)
 
     //handleNext()
   }

@@ -113,7 +113,7 @@ const ScheduledPayment = () => {
     fromAccount,
     timePeriod,
   }) => {
-    console.log(title, amount, toAccount, fromAccount, timePeriod);
+    
 
     const obj = {
       individualOrGroupType: 0,

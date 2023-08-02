@@ -21,12 +21,10 @@ const validationSchema = Yup.object().shape({
 const PersonalOrBusiness = ({SaveDetails,navigation}) => {
 
     const handleSubmit = async (type) => {
-        console.log(type)
         SaveDetails(type)
         // navigation.navigate("Directororpartner")
     }
     const handleBack = () =>{
-        console.log("!")
         navigation.navigate("SplashAnimation")
       }
     return (

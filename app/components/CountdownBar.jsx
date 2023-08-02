@@ -8,7 +8,7 @@ const CountdownBar = ({ pageCount = 3, currentPage = 1 }) => {
     const buttonIcons = [];
     for (let i = 1; i <= pageCount; i++) {
       const isCurrentPage = i === currentPage;
-      console.log(isCurrentPage);
+      
       if (isCurrentPage) {
         buttonIcons.push(
           <ButtonIcon

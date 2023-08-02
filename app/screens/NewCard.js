@@ -45,7 +45,7 @@ export default function NewCard() {
         <Icon
           title={"freeze"}
           onSettingsPress={() => {
-            console.log("freeze");
+            
             setFrozen(!isFrozen);
           }}
           isFrozen={!isFrozen}

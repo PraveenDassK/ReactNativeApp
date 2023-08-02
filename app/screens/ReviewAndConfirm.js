@@ -4,7 +4,7 @@ import { Text, StyleSheet, View, Image, Pressable } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const ReviewAndConfirm = ({navigation,route}) => {
-  console.log(route.params.amount)
+  
   let amount = route.params.amount
   const [fee, setFee] = useState(null)
     // const [plan, setPlan] = useState(null)

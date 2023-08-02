@@ -114,28 +114,28 @@ const Settings = ({ navigation }) => {
    * @todo Consolidate into one function
    */
   const copyAccount = async () => {
-    console.log("Copied");
+    
     Vibration.vibrate();
     alert("Account code copied");
     await Clipboard.setStringAsync(account);
   };
 
   const copySort = async () => {
-    console.log("Copied");
+    
     Vibration.vibrate();
     alert("Sort code copied");
     await Clipboard.setStringAsync(sortcode);
   };
 
   const copyIban = async () => {
-    console.log("Copied");
+    
     Vibration.vibrate();
     alert("IBAN copied");
     await Clipboard.setStringAsync(iban);
   };
 
   const copyBIC = async () => {
-    console.log("Copied");
+    
     Vibration.vibrate();
     alert("BIC copied");
     await Clipboard.setStringAsync(bic);
@@ -148,10 +148,10 @@ const Settings = ({ navigation }) => {
   }, [navigation]);
 
   const onRefresh = useCallback(() => {
-    console.log("1st refresh");
+    
     setRefreshing(true);
     setTimeout(() => {
-      console.log("2nd refresh");
+      
       loadData();
       setRefreshing(false);
     }, 2000);

@@ -23,7 +23,7 @@ const Notification = ({ navigation }) =>
     const [viewMore, setViewMore] = useState(false);
     const authContext = useContext(AuthContext);
     const darkMode = AuthContext._currentValue.darkMode;
-    console.log(AuthContext._currentValue.darkMode, "darkmoode");
+    
     //Calls the API once during load
     useEffect(() => {
       const unsubscribe = navigation.addListener("focus", () => {
@@ -32,7 +32,7 @@ const Notification = ({ navigation }) =>
     }, []);
     const loadData = async () => {
       setCardname(authContext.accountID);
-      console.log(authContext.accountID);
+      
     };
 
     const dataOfLost = [

@@ -38,7 +38,7 @@ const Postcode = ({ AddAddress }) => {
    */
   const handleSubmit = async ({ postcode }) => {
     // const response = await apiLogin.GetAddressByPostCode(postcode)
-    // console.log(response)
+    // 
     // setAddressData(response)
 
     // Remove this on live
@@ -61,7 +61,7 @@ const Postcode = ({ AddAddress }) => {
   const sendData = () => {
     AddAddress(address);
   };
-  console.log(address);
+  
 
   return (
     <>

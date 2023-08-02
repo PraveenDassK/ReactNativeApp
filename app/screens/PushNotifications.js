@@ -5,7 +5,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const PushNotification = ({navigation}) => {
   const navigate = () => {
-    console.log("Function")
+    
     navigation.navigate("Settings")
   }
   return (

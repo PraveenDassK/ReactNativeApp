@@ -42,14 +42,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [userImpact, setUserImpact] = useState([]);
   const [userData, setuserData] = useState([]);
 
-  const { accountID, customerDetails, darkMode, setDarkMode, getToken } =
+  const { accountID, customerDetails, userID,darkMode, setDarkMode } =
     useContext(AuthContext);
-  console.log(accountID, customerDetails, "thsisn is dashboard data");
-  console.log(getToken, "this is token from dashboard");
+    
   const [iconShow, setIconShow] = useState(false);
   useEffect(() => {
     loadData();
-  }, [accountID, customerDetails]);
+  }, [accountID, customerDetails,userID]);
 
   /**
    * @dev This loads the data from the Backend
@@ -59,9 +58,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      console.log(customerDetails, "this is custome details");
       const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
-      console.log(getUserID?.customerDetails, "this is user ID");
       setuserData(getUserID?.accountDetails);
       setbannerName(getUserID?.customerDetails);
       // const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
@@ -101,7 +98,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const handleDark = async () => {
     // const data=authStorage.removeColor();
-    // console.log(data, "this is a dark")
+    // 
     if (darkMode === "DARK") {
       authStorage.removeColor();
       setDarkMode(authStorage.getColor());
@@ -112,7 +109,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //  authStorage.removeColor();
   };
 
-  console.log(bannerName, "this is darkModeijh");
+  
   return (
     <ImageBackground
       source={
@@ -189,9 +186,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         > */}
         <View
           style={{
-            backgroundColor: `${
-              darkMode === "DARK" ? "transparent" : "transparent"
-            }`,
+            backgroundColor: `${darkMode === "DARK" ? "transparent" : "transparent"
+              }`,
           }}
         >
           {!iconShow && (
@@ -334,7 +330,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             <XeroDashboard darkMode={darkMode} />
           </View>
           <View style={{ margin: 25 }}>
-            <ReferNow />
+            <ReferNow navigation={navigation} />
           </View>
           <View style={{ margin: 25 }}>
             <MarketPlace

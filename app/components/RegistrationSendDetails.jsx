@@ -45,10 +45,10 @@ const ConfirmDetails = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    console.log("!");
+    
     setScreenToShow("Income");
   };
-  console.log(loading)
+  
   return (
     <AuthScreen title="Confirm registration" img="turtleCard" handleBack={handleBack}>
       {loading ?

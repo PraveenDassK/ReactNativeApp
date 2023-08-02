@@ -27,9 +27,9 @@ const ChooseCardsStandard5 = ({ navigation }) => {
   //Gets the data for the user
   const loadData = async () => {
     let response = await apiCall.GetUserImpact(customerDetails);
-    console.log(response)
+    
     const assets = response.assets;
-    console.log(assets)
+    
     let trees = 0;
     let carbon = 0;
     assets.forEach((element) => {
@@ -39,7 +39,7 @@ const ChooseCardsStandard5 = ({ navigation }) => {
     let projects = [];
     for (let i = 0; i < 4; i++) {
       projects.push(assets[i]);
-      console.log(assets[i]);
+      
     }
     setProjects(projects);
     setTrees(trees);

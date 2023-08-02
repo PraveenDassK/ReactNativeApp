@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable, Image, } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import GlobalStyles from "../../GlobalStyles";
-const ReferNow = () => {
+const ReferNow = ({navigation}) => {
 
   return (
     <View>
@@ -45,7 +45,7 @@ const ReferNow = () => {
           <View
             style={{ width: "100%", display: "flex", alignItems: "center" }}
           >
-            <Pressable style={styles.sendButton}>
+            <Pressable style={styles.sendButton} onPress={() => {navigation.navigate ("ReferralCode")}}>
               <Text style={styles.sendButtonText}>Know more</Text>
             </Pressable>
           </View>
