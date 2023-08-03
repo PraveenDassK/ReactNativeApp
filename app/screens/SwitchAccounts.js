@@ -21,7 +21,7 @@ import {
 
 const SwitchAccounts = ({ navigation, route }) => {
   const [userData, setUserData] = useState([]);
-  const { userID, setAccountID, accountID } = useContext(AuthContext);
+  const { userID, setAccountID, accountID, darkMode } = useContext(AuthContext);
 
   //Calls the API once during load
   useEffect(() => {
@@ -30,20 +30,26 @@ const SwitchAccounts = ({ navigation, route }) => {
 
   const loadData = async () => {
     const response = await apiCall.GetAllAccounts(userID);
-    
+
     setUserData(response);
   };
 
   const showUserAccounts = () => {
-    
-
     let accounts = [];
     userData?.forEach((element, i) => {
       accounts.push(
         <TouchableOpacity key={i} onPress={() => switchAccount(element.id)}>
           <View style={[styles.benBoxCon]}>
             <View style={styles.accountTextDiv}>
-              <Text style={styles.accountName}>{element.id}</Text>
+              <Text
+                style={
+                  darkMode === "DARK"
+                    ? styles.darkaccountName
+                    : styles.accountName
+                }
+              >
+                {element.id}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -53,24 +59,38 @@ const SwitchAccounts = ({ navigation, route }) => {
   };
 
   const switchAccount = (Id) => {
-    
     setAccountID(Id);
     // navigation.navigate("Account")
   };
 
   return (
-    <ScrollView>
-      <View style={styles.page}>
+    <ScrollView
+      style={{
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.white,
+      }}
+    >
+      <View style={darkMode === "DARK" ? styles.darkpage : styles.page}>
         {/* <View style={styles.titleTextRow}>
                 <Text style={styles.titleText}>Switch Account</Text>
             </View>    */}
 
         <View style={styles.subTextDiv}>
-          <Text style={styles.subText}>Selected Account: {accountID}</Text>
+          <Text
+            style={darkMode === "DARK" ? styles.darksubText : styles.subText}
+          >
+            Selected Account: {accountID}
+          </Text>
         </View>
 
         <View style={styles.subTextDiv}>
-          <Text style={styles.subText}>Accounts:</Text>
+          <Text
+            style={darkMode === "DARK" ? styles.darksubText : styles.subText}
+          >
+            Accounts:
+          </Text>
         </View>
 
         {showUserAccounts()}
@@ -97,6 +117,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
   },
+  darkaccountName: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: GlobalStyles.Color.white,
+  },
   accountTextDiv: {
     flex: 6,
     alignSelf: "center",
@@ -109,6 +134,13 @@ const styles = StyleSheet.create({
     width: "80%",
     left: "10%",
     marginTop: "2.5%",
+  },
+  darkpage: {
+    flex: 1,
+    width: "100%",
+    // left: "10%",
+    // marginTop: "2.5%",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
   accountContainter: {
     width: "100%",
@@ -137,6 +169,10 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 14,
     color: "rgba(153, 153, 153, 0.75)",
+  },
+  darksubText: {
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
 
   titleTextRow: {

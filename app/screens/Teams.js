@@ -12,7 +12,8 @@ import { moderateScale } from "../config/scaling";
 import PinModal from "../components/PinModal";
 import UserIcon from "../components/UserIcon";
 import Button from "../components/AppButton";
-
+import AuthContext from "../auth/context";
+import GlobalStyles from "../../GlobalStyles";
 const PROXY_TEAM_DATA = [
   {
     name: "Ava Bel",
@@ -30,14 +31,13 @@ const PROXY_TEAM_DATA = [
 const Teams = ({ navigation }) => {
   const [showPinModal, setShowPinModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const { darkMode } = useContext(AuthContext);
   const [teamData, setTeamData] = useState(PROXY_TEAM_DATA);
-  useEffect(() => {
-    // loadData()
-  }, []);
+  // useEffect(() => {
+  //   // loadData()
+  // }, []);
 
   const onSuccess = () => {
-    
     setShowPinModal(false);
   };
 
@@ -52,13 +52,19 @@ const Teams = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.mainContainer}>
+    <View
+      style={
+        darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+      }
+    >
       {/* <RecentTransactions
                 amount={10}
             /> */}
       <View style={{ marginTop: "20%" }}>
         <View style={{ marginBottom: "5%" }}>
-          <Text style={styles.heading}>
+          <Text
+            style={darkMode === "DARK" ? styles.darkheading : styles.heading}
+          >
             Your current team
           </Text>
         </View>
@@ -70,6 +76,7 @@ const Teams = ({ navigation }) => {
                 <UserIcon
                   name={item.name}
                   onPress={() => navigation.navigate("TeamsUser", item)}
+                  darkMode={darkMode}
                 />
               </View>
             )}
@@ -84,6 +91,7 @@ const Teams = ({ navigation }) => {
         title="Add another user"
         onPress={() => navigation.navigate("TeamsUserAdd")}
       />
+      
     </View>
   );
 };
@@ -98,11 +106,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   heading: { fontSize: 22, fontWeight: "700" },
+  darkheading: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: GlobalStyles.Color.white,
+  },
+
   mainContainer: {
     flex: 1,
     justifyContent: "space-between",
     alignContent: "center",
     padding: "5%",
+  },
+  darkmainContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignContent: "center",
+    padding: "5%",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
   flatListContent: {
     justifyContent: "space-between",

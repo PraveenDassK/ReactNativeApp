@@ -7,7 +7,6 @@ const VirtualPlanetCard = ({ data, handleVirtual, darkMode }) => {
   return (
     <>
       {data.map((eachValue, i) => {
-        
         return (
           <View style={styles.container} key={i}>
             <View style={{ paddingVertical: 10 }}>
@@ -76,12 +75,13 @@ const VirtualPlanetCard = ({ data, handleVirtual, darkMode }) => {
   );
 };
 const VirtualPlanet = ({ treeData, handleVirtual, darkMode }) => {
-  
   const data = [
     {
       title: "Virtual Forest",
       image:
-        treeData?.totalAssets > 50
+        treeData?.totalAssets === 0
+          ? treeImages[0]?.image
+          : treeData?.totalAssets > 50
           ? treeImages[49]?.image
           : treeImages[treeData?.totalAssets - 1]?.image,
       total: treeData?.totalAssets,
@@ -90,7 +90,9 @@ const VirtualPlanet = ({ treeData, handleVirtual, darkMode }) => {
     {
       title: "Virtual Ocean",
       image:
-        treeData?.totalAssets > 50
+        treeData?.totalAssets === 0
+          ? turtleImages[0]?.image
+          : treeData?.totalAssets > 50
           ? turtleImages[49]?.image
           : turtleImages[treeData?.totalAssets - 1]?.image,
       total: treeData?.totalAssets,
