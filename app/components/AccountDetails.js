@@ -45,11 +45,11 @@ const AccountDeatils = ({
   userImpact,
   handlePress,
   setBalance,
-  accountBalance,
+  accountBalance
 }) => {
-  console.log(userData, "this is userData");
   const [title, setTitle] = useState("");
   const [dropdownData, setDropdownData] = useState([{ label: "", value: "" }]);
+  
   useEffect(() => {
     let newArray = userData?.map((eachData, i) => {
       return { label: eachData?.accountId, value: eachData?.accountId };
@@ -57,12 +57,11 @@ const AccountDeatils = ({
     setDropdownData(newArray);
     setTitle(newArray?.[0]?.value);
     handleBalance(newArray?.[0]?.value);
-  }, [userData]);
+  }, []);
 
   const handleBalance = async (balance) => {
     const dataForBalance = await apiCall.GetCustomerDetails(balance);
 
-    console.log(dataForBalance, "This is the api for get balance");
 
     // let newBalance = userData?.filter(
     //   (eachValue, i) => eachValue?.accountId === balance
@@ -70,7 +69,6 @@ const AccountDeatils = ({
     // console.log(dataForBalance,"this is a new balance")
     setBalance(dataForBalance);
   };
-  console.log(accountBalance, "this is a new balance");
   return (
     <View style={styles.border}>
       <LinearGradient

@@ -315,6 +315,7 @@ export default function App() {
         setIntrests,
         version,
         setVersion,
+        accountDetails, setAccountDetails,
       }}
     >
       <NavigationContainer>

@@ -212,6 +212,7 @@ const GetIDs = async (JWT) => {
       accountID: accountData.accountDetails[0]?.accountId,
       cardID: accountData.accountDetails[0]?.accountNo,
       customerDetails: accountID,
+      accountData: accountData,
     };
   } catch {
     return null;

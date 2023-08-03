@@ -21,7 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
-import AccountDeatils from "../components/AccountDeatils";
+import AccountDeatils from "../components/AccountDetails";
 import SquareIcon from "../components/ButtonIcon";
 import GlobalStyles from "../../GlobalStyles";
 import RecentTransactions from "../components/RecentTransactions";
@@ -42,7 +42,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [userImpact, setUserImpact] = useState([]);
   const [userData, setuserData] = useState([]);
 
-  const { accountID, customerDetails, userID,darkMode, setDarkMode } =
+  const { accountID, customerDetails, userID,darkMode, setDarkMode, accountDetails } =
     useContext(AuthContext);
     
   const [iconShow, setIconShow] = useState(false);
@@ -166,6 +166,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             handlePress={() => navigation.navigate("SendMoney")}
             accountBalance={accountBalance}
             setBalance={setBalance}
+            accountDetails = {accountDetails}
           />
         </View>
 

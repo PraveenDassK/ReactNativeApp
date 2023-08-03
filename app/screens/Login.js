@@ -48,6 +48,8 @@ const Login = ({ navigation }) => {
     setCardID,
     expoPushToken,
     setCustomerDetails,
+    accountDetails, 
+    setAccountDetails
   } = useContext(AuthContext);
 
   const handleSubmit = async ({ email, phoneNumber }) => {
@@ -68,7 +70,7 @@ const Login = ({ navigation }) => {
 
     const token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJEYXRhIjoie1wiQ3VzdG9tZXJJZFwiOlwiQ0MxXCIsXCJFbWFpbFwiOlwiamFjay5oQGNhcmJvbnl0ZS5pb1wiLFwiUGhvbmVOdW1iZXJcIjpcIjc5MjcyMDE2NDlcIn0iLCJleHAiOjE2ODY5MDY3MzIsImlzcyI6IkNhcmJvbnl0ZSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDMifQ.qAg1FhCF1gyycVP4kXEIbHqLYPpXIkr0iWPfl_2eNcGdKR5-RoADme5jj8_m8oqLtkykpEuzIsQsgmCxOKi_fQ"
     const altToken = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJEYXRhIjoie1wiQ3VzdG9tZXJJZFwiOlwiQ0MxMTIwXCIsXCJFbWFpbFwiOlwicmVudmljay5mQGNhcmJvbnl0ZS5pb1wiLFwiUGhvbmVOdW1iZXJcIjpcIjc3OTg2ODE2OTBcIn0iLCJleHAiOjE2OTEwNTE0NTEsImlzcyI6IkNhcmJvbnl0ZSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDMifQ.UA3CV4oequvo-XTs2ZjO0e-mCYb4rxHT8wFbdq42JqUXlWht3x3aX4VRDUpL2WeTjir69IEwDc81mHDDCEA6yg"
-    const IDs = await loginApi.GetIDs(altToken);
+    const IDs = await loginApi.GetIDs(token);
 
     authStorage.storeToken(altToken);
     setCurrentUser(IDs.token);
@@ -76,6 +78,8 @@ const Login = ({ navigation }) => {
     setAccountID(IDs.accountID);
     setCardID(IDs.cardID);
     setCustomerDetails(IDs.customerDetails);
+    console.log(IDs.customerDetails)
+    setAccountDetails(IDs.accountData)
 
     //Turns off the loading
     setIsLoading(false);
