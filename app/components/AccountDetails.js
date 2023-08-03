@@ -45,23 +45,29 @@ const AccountDeatils = ({
   userImpact,
   handlePress,
   setBalance,
-  accountBalance
+  accountBalance,
+  accountId,
 }) => {
   const [title, setTitle] = useState("");
-  const [dropdownData, setDropdownData] = useState([{ label: "", value: "" }]);
-  
+  const [dropdownData, setDropdownData] = useState();
+  console.log(accountBalance, "this is a new account");
   useEffect(() => {
-    let newArray = userData?.map((eachData, i) => {
-      return { label: eachData?.accountId, value: eachData?.accountId };
-    });
-    setDropdownData(newArray);
-    setTitle(newArray?.[0]?.value);
-    handleBalance(newArray?.[0]?.value);
+    const newStateArray = [];
+  console.log(userData,"this is user data");
+    userData?.map((eachData, i) =>
+      newStateArray.push({
+        label: eachData?.accountId,
+        value: eachData?.accountId,
+      })
+    );
+    console.log(newStateArray, "thsis is state");
+    setDropdownData(newStateArray);
+    setTitle(newStateArray?.[0]?.value);
+    handleBalance(accountId);
   }, []);
 
   const handleBalance = async (balance) => {
     const dataForBalance = await apiCall.GetCustomerDetails(balance);
-
 
     // let newBalance = userData?.filter(
     //   (eachValue, i) => eachValue?.accountId === balance
@@ -133,7 +139,7 @@ const AccountDeatils = ({
               {accountBalance[0]?.income ? (
                 <Text style={styles.incomeAmount}>
                   <AntDesign name="arrowup" size={20} />
-                  {formatCurrency(accountBalance[0]?.income, "GBP", false)}
+                  {formatCurrency(accountBalance?.income, "GBP", false)}
                 </Text>
               ) : (
                 // <Text style={styles.incomeAmount}>Coming soon..</Text>
@@ -145,7 +151,7 @@ const AccountDeatils = ({
             </View>
             <View>
               <Text style={styles.incometext}>Expenses</Text>
-              {accountBalance[0]?.expenses ? (
+              {accountBalance?.expenses ? (
                 <Text style={styles.incomeAmount}>
                   <AntDesign name="arrowdown" size={20} />
                   {formatCurrency(accountBalance[0]?.expenses, "GBP", false)}

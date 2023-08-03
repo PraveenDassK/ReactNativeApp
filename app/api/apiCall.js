@@ -21,13 +21,29 @@ const GetCustomerDetails = async (Id) => {
   );
   const requestData = request?.data?.details;
   const data = {
-    name: requestData.name,
-    accountId: requestData.id,
-    customerId: requestData.customerId,
-    status: requestData.status,
-    balance: requestData.balance,
+    name: requestData?.name,
+    accountId: requestData?.id,
+    customerId: requestData?.customerId,
+    status: requestData?.status,
+    balance: requestData?.balance,
   };
   return data;
+};
+const GetCustomerDetails1 = async (Id) => {
+  console.log(Id)
+  const request = await client.get(
+    `https://api.carbonyte.io/walletmodule/GetAccount/${Id}`
+  );
+  const requestData = request?.data?.details;
+  console.log(requestData, "time of api calla");
+  // const data = {
+  //   name: requestData?.name,
+  //   accountId: requestData?.id,
+  //   customerId: requestData?.customerId,
+  //   status: requestData?.status,
+  //   balance: requestData?.balance,
+  // };
+  return requestData;
 };
 
 /**
@@ -308,7 +324,6 @@ const GetAllCardDetails = async (Id) => {
  * @returns Bool True if successful
  */
 const FreezeCard = async (Id, freeze) => {
-  
   const request = await client.patch(
     `https://api.carbonyte.io/walletmodule/Enfuce/UpdateVirtualCard?cardId=${Id}`,
     {
@@ -458,7 +473,7 @@ const GetUserImpact = async (Id) => {
     const request = await client.get(
       `https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/${Id}`
     );
-    
+
     const returnData = request.data.details;
     return {
       totalOffset: returnData.data.totalOffsetInTonnes.toFixed(1),
@@ -519,7 +534,6 @@ const GetTransactionsYear = async (Id) => {
 
   //This function will get the date for the end of the month first
   const endOfMonth = moment().endOf("month");
-  
 
   requestData?.content?.forEach((element) => {
     if (element.credit == true) {
@@ -602,7 +616,7 @@ const GetTransactionsWeek = async (Id) => {
   let data = new Array(7).fill(0);
 
   //Calculates the y axis
-  
+
   requestData.details.content?.forEach((element) => {
     total += element.amount;
     let category = moment().diff(element.transactionDate, "days");
@@ -646,7 +660,6 @@ const GetLimits = async (Id) => {
     };
   }
 
-  
   const requestData = request?.data?.details;
   return {
     spend: spend,
@@ -661,7 +674,7 @@ const SetLimit = async (enfuceid, amount) => {
       "&periodType=monthly&amount=" +
       amount
   );
-  
+
   return request;
 };
 
@@ -792,7 +805,6 @@ const SendFunds = (
   address,
   reference
 ) => {
-  
   let responseText = reference ? reference : "Transfer";
   const request = client.post(
     "https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
@@ -879,7 +891,7 @@ const ReportTransaction = async (accountID, transactionId) => {
   const request = await client.post(
     `https://api.carbonyte.io/transactionmodule/DisputeTransaction?accountId=${accountID}&transactionId=${transactionId}`
   );
-  
+
   return request.data;
 };
 //A122HTHM
@@ -898,6 +910,7 @@ export default {
   GetProjectList,
   GetProject,
   GetUserImpact,
+  GetCustomerDetails1,
   GetTransactions,
   SendFunds,
   GetCustomersAccounts,
@@ -925,5 +938,5 @@ export default {
   GetScheduledPayments,
   FreezeCard,
   TerminateCard,
-  FreezeUpdateCard
+  FreezeUpdateCard,
 };

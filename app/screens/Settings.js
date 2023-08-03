@@ -10,10 +10,12 @@ import {
   ScrollView,
   ActivityIndicator,
   Vibration,
+  ImageBackground,
 } from "react-native";
-
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import * as Clipboard from "expo-clipboard";
-
+import LinearAccountButton from "../components/LinearAccountButton";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/apiCall";
 import AuthContext from "../auth/context";
@@ -23,6 +25,8 @@ import { verticalScale } from "../config/metrics";
 import AppText from "../components/Text";
 import colors from "../config/colors";
 import Tagline from "../components/Tagline";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +42,8 @@ const Settings = ({ navigation }) => {
   const [status, setStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const { userID, accountID, setCurrentUser } = useContext(AuthContext);
+  const { userID, accountID, setCurrentUser, darkMode, setDarkMode } =
+    useContext(AuthContext);
 
   /**
    * @dev Loads the data once
@@ -61,6 +66,19 @@ const Settings = ({ navigation }) => {
     setCurrentUser(null);
   };
 
+  const handleDark = async () => {
+    // const data=authStorage.removeColor();
+    //
+    if (darkMode === "DARK") {
+      authStorage.removeColor();
+      setDarkMode(authStorage.getColor());
+    } else {
+      authStorage.storeColor("DARK");
+      setDarkMode(authStorage.getColor());
+    }
+    //  authStorage.removeColor();
+  };
+
   /**
    * @dev This loads all of the data for this page
    * @todo Add validation here to check if the data exists
@@ -74,17 +92,16 @@ const Settings = ({ navigation }) => {
     const accountDetails = await api.GetAccount(accountID);
     const subscriptionDetails = await api.GetUsersSubscriptions("CC1");
 
-
     const data = userDetails;
     const accountdata = accountDetails;
-   console.log(accountDetails,"this is data")
+    console.log(accountDetails, "this is data");
     setPlan(subscriptionDetails?.subName);
     setName(accountdata?.customerName);
     setBal(accountdata?.balance);
     setSortCode(accountdata?.identifiers[0]?.sortCode);
     setAccNum(accountdata.identifiers[0]?.accountNumber);
     // setCurrency(data?.currency ? data?.currency : "GBP");
-    setCurrency(accountdata?.currency ? accountdata?.currency :"GBP")
+    setCurrency(accountdata?.currency ? accountdata?.currency : "GBP");
     setStatus(accountdata?.status);
 
     if (accountdata.identifiers[0].iban === null) {
@@ -115,28 +132,24 @@ const Settings = ({ navigation }) => {
    * @todo Consolidate into one function
    */
   const copyAccount = async () => {
-    
     Vibration.vibrate();
     alert("Account code copied");
     await Clipboard.setStringAsync(account);
   };
 
   const copySort = async () => {
-    
     Vibration.vibrate();
     alert("Sort code copied");
     await Clipboard.setStringAsync(sortcode);
   };
 
   const copyIban = async () => {
-    
     Vibration.vibrate();
     alert("IBAN copied");
     await Clipboard.setStringAsync(iban);
   };
 
   const copyBIC = async () => {
-    
     Vibration.vibrate();
     alert("BIC copied");
     await Clipboard.setStringAsync(bic);
@@ -149,10 +162,8 @@ const Settings = ({ navigation }) => {
   }, [navigation]);
 
   const onRefresh = useCallback(() => {
-    
     setRefreshing(true);
     setTimeout(() => {
-      
       loadData();
       setRefreshing(false);
     }, 2000);
@@ -160,8 +171,23 @@ const Settings = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -172,89 +198,81 @@ const Settings = ({ navigation }) => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
+      style={{
+        backgroundColor:
+          darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+      }}
     >
-      <View style={styles.mainContainer}>
-        <View style={[styles.titleTextRow, { flex: 1, flexDirection: "row" }]}>
-          <View style={[{ justifyContent: "center" }]}>
-            <AppText style={[styles.titleText, styles.customTitle]}>
-              {fullname}
-            </AppText>
-            <AppText
+      <ImageBackground
+        style={{ height: 280 }}
+        source={require("../assets/backgrounds/carbonInside.png")}
+      >
+        <View style={styles.TopImageheader}>
+          <View style={styles.backgroundTextContainer}>
+            <Text style={styles.backgroundFont}> {fullname}</Text>
+            <Text
               style={[
-                styles.subText,
-                styles.customTitle,
-                { marginTop: verticalScale(1), opacity: 0.4 },
+                styles.backgroundFont,
+                styles.backgroundSub,
+                { marginTop: "1.5%" },
               ]}
             >
               {plan} Subscription
-            </AppText>
+            </Text>
           </View>
-          <View
-            style={[
-              { flex: 1, justifyContent: "center", alignItems: "flex-end" },
-            ]}
-          >
-            <View
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={() => handleDark()}>
+              <DarkMode darkMode={darkMode} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Notification")}
+            >
+              <Notification />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+      <View
+        style={{
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.darkTheme_bg
+              : GlobalStyles.Color.white,
+          // flex: 1,
+          // marginBottom: "30%",
+          // justifyContent: "flex-end",
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          marginTop: -20,
+        }}
+      >
+        <View style={{ padding: "5%" }}>
+          <BlurView tint="light" intensity={60} style={styles.blurView}>
+            <AppText
               style={[
-                {
-                  width: 80,
-                  height: 80,
-                  borderRadius: 40,
-                  backgroundColor: "white",
-                  justifyContent: "center",
-                  alignItems: "center",
-                },
+                styles.subText,
+                darkMode === "DARK"
+                  ? styles.darkcustomTitle1
+                  : styles.customTitle1,
               ]}
             >
-              <AppText style={[{ fontSize: 28 }]}>{initials}</AppText>
-            </View>
-          </View>
-        </View>
+              Account Details
+            </AppText>
+            <View style={styles.accountDetailsRow}>
+              <View style={{ flex: 1 }}>
+                <AppText
+                  style={[
+                    styles.divStart,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  Currency
+                </AppText>
+              </View>
 
-        <View style={styles.subTextRow}>
-          <AppText
-            style={[
-              styles.subText,
-              styles.customTitle,
-            ]}
-          >
-            Account Details
-          </AppText>
-        </View>
-
-        <View style={[styles.accountDetailsDiv]}>
-          <View style={styles.accountDetailsRow}>
-            <View style={{ flex: 1 }}>
-              <AppText style={[styles.divStart, styles.customTitle]}>
-                Currency
-              </AppText>
-            </View>
-
-            <View style={[styles.splitDiv]}>
-              <Image
-                style={{
-                  resizeMode: "contain",
-                  height: "50%",
-                  width: 30,
-                  marginRight: "5%",
-                }}
-                source={require("../assets/image-ukflag.png")}
-              />
-              <AppText style={[styles.divEnd, styles.customTitle]}>
-                {currency}
-              </AppText>
-            </View>
-          </View>
-
-          <View style={styles.accountDetailsRow}>
-            <View style={{ flex: 1 }}>
-              <AppText style={[styles.divStart, styles.customTitle]}>
-                Account
-              </AppText>
-            </View>
-
-            <View style={[styles.splitDiv]}>
-              <Pressable style={styles.helloParent} onPress={copyAccount}>
+              <View style={[styles.splitDiv]}>
                 <Image
                   style={{
                     resizeMode: "contain",
@@ -262,131 +280,49 @@ const Settings = ({ navigation }) => {
                     width: 30,
                     marginRight: "5%",
                   }}
-                  source={require("../assets/icon-materialcontentcopy.png")}
+                  source={require("../assets/image-ukflag.png")}
                 />
-              </Pressable>
+                <AppText
+                  style={[
+                    styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  {currency}
+                </AppText>
+              </View>
             </View>
 
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <AppText style={[styles.divEnd, styles.customTitle]}>
-                {account}
-              </AppText>
-            </View>
-          </View>
+            <View style={styles.accountDetailsRow}>
+              <View style={{ flex: 1 }}>
+                <AppText
+                  style={[
+                    styles.divStart,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  Account
+                </AppText>
+              </View>
 
-          <View style={styles.accountDetailsRow}>
-            <View style={{ flex: 1 }}>
-              <AppText style={[styles.divStart, styles.customTitle]}>
-                Sort Code
-              </AppText>
-            </View>
+              <View style={[styles.splitDiv]}>
+                <Pressable style={styles.helloParent} onPress={copyAccount}>
+                  <Image
+                    style={{
+                      resizeMode: "contain",
+                      height: "50%",
+                      width: 30,
+                      marginRight: "5%",
+                    }}
+                    source={require("../assets/icon-materialcontentcopy.png")}
+                  />
+                </Pressable>
+              </View>
 
-            <View style={styles.splitDiv}>
-              <Pressable style={styles.helloParent} onPress={copySort}>
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    height: "50%",
-                    width: 30,
-                    marginRight: "5%",
-                  }}
-                  source={require("../assets/icon-materialcontentcopy.png")}
-                />
-              </Pressable>
-            </View>
-
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <AppText style={[styles.divEnd, styles.customTitle]}>
-                {sortcode}
-              </AppText>
-            </View>
-          </View>
-
-          <View style={styles.accountDetailsRow}>
-            <View style={{ flex: 1 }}>
-              <AppText style={[styles.divStart, styles.customTitle]}>
-                IBAN
-              </AppText>
-            </View>
-
-            <View style={styles.splitDiv}>
-              <Pressable style={styles.helloParent} onPress={copyIban}>
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    height: "50%",
-                    width: 30,
-                    marginRight: "5%",
-                  }}
-                  source={require("../assets/icon-materialcontentcopy.png")}
-                />
-              </Pressable>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <AppText style={[styles.divEnd, styles.customTitle]}>
-                {iban}
-              </AppText>
-            </View>
-          </View>
-
-          <View style={styles.accountDetailsRow}>
-            <View style={{ flex: 1 }}>
-              <AppText style={[styles.divStart, styles.customTitle]}>
-                BIC
-              </AppText>
-            </View>
-
-            <View style={styles.splitDiv}>
-              <Pressable style={styles.helloParent} onPress={copyBIC}>
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    height: "50%",
-                    width: 30,
-                    marginRight: "5%",
-                  }}
-                  source={require("../assets/icon-materialcontentcopy.png")}
-                />
-              </Pressable>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <AppText style={[styles.divEnd, styles.customTitle]}>
-                {bic}
-              </AppText>
-            </View>
-          </View>
-
-          <View style={styles.accountDetailsRow}>
-            <View style={{ flex: 1 }}>
-              <AppText style={[styles.divStart, styles.customTitle]}>
-                Status
-              </AppText>
-            </View>
-            <View style={styles.splitDiv}>
               <View
                 style={{
                   flex: 1,
@@ -394,72 +330,257 @@ const Settings = ({ navigation }) => {
                   alignItems: "flex-end",
                 }}
               >
-                <AppText style={[styles.divEnd, styles.customTitle]}>
-                  {status}
+                <AppText
+                  style={[
+                    styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  {account}
                 </AppText>
               </View>
             </View>
-          </View>
+
+            <View style={styles.accountDetailsRow}>
+              <View style={{ flex: 1 }}>
+                <AppText
+                  style={[
+                    styles.divStart,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  Sort Code
+                </AppText>
+              </View>
+
+              <View style={styles.splitDiv}>
+                <Pressable style={styles.helloParent} onPress={copySort}>
+                  <Image
+                    style={{
+                      resizeMode: "contain",
+                      height: "50%",
+                      width: 30,
+                      marginRight: "5%",
+                    }}
+                    source={require("../assets/icon-materialcontentcopy.png")}
+                  />
+                </Pressable>
+              </View>
+
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+              >
+                <AppText
+                  style={[
+                    styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  {sortcode}
+                </AppText>
+              </View>
+            </View>
+
+            <View style={styles.accountDetailsRow}>
+              <View style={{ flex: 1 }}>
+                <AppText
+                  style={[
+                    styles.divStart,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  IBAN
+                </AppText>
+              </View>
+
+              <View style={styles.splitDiv}>
+                <Pressable style={styles.helloParent} onPress={copyIban}>
+                  <Image
+                    style={{
+                      resizeMode: "contain",
+                      height: "50%",
+                      width: 30,
+                      marginRight: "5%",
+                    }}
+                    source={require("../assets/icon-materialcontentcopy.png")}
+                  />
+                </Pressable>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+              >
+                <AppText
+                  style={[
+                    styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  {iban}
+                </AppText>
+              </View>
+            </View>
+
+            <View style={styles.accountDetailsRow}>
+              <View style={{ flex: 1 }}>
+                <AppText
+                  style={[
+                    styles.divStart,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  BIC
+                </AppText>
+              </View>
+
+              <View style={styles.splitDiv}>
+                <Pressable style={styles.helloParent} onPress={copyBIC}>
+                  <Image
+                    style={{
+                      resizeMode: "contain",
+                      height: "50%",
+                      width: 30,
+                      marginRight: "5%",
+                    }}
+                    source={require("../assets/icon-materialcontentcopy.png")}
+                  />
+                </Pressable>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+              >
+                <AppText
+                  style={[
+                    styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  {bic}
+                </AppText>
+              </View>
+            </View>
+
+            <View style={styles.accountDetailsRow}>
+              <View style={{ flex: 1 }}>
+                <AppText
+                  style={[
+                    styles.divStart,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  Status
+                </AppText>
+              </View>
+              <View style={styles.splitDiv}>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "flex-end",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <AppText
+                    style={[
+                      styles.divEnd,
+                      darkMode === "DARK"
+                        ? styles.darkcustomTitle
+                        : styles.customTitle,
+                    ]}
+                  >
+                    {status}
+                  </AppText>
+                </View>
+              </View>
+            </View>
+          </BlurView>
         </View>
         <TouchableOpacity style={styles.button}>
-          <Button
+          <LinearAccountButton
             title="Account"
-            style={styles.boxShadow}
+            // style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AccountSettings")}
+            darkMode={darkMode}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Button
+          <LinearAccountButton
             title="Settings"
-            style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
+            darkMode={darkMode}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Button
+          <LinearAccountButton
             title="Carbonyte labs"
-            style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("CarbonyteLabs")}
+            darkMode={darkMode}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Button
+          <LinearAccountButton
             title="Devices"
-            style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("Devices")}
+            darkMode={darkMode}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Button
+          <LinearAccountButton
             title="Marketplace"
-            style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("Marketplace")}
+            darkMode={darkMode}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Button
+          <LinearAccountButton
             title="Contact us"
-            style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AboutUs")}
+            darkMode={darkMode}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Button
+          <LinearAccountButton
             title="FAQs"
-            style={styles.boxShadow}
             textTransform="none"
             onPress={() => navigation.navigate("Faq")}
+            darkMode={darkMode}
           />
         </TouchableOpacity>
 
@@ -509,10 +630,27 @@ const Settings = ({ navigation }) => {
           <AppText style={{ color: "blue" }}>Terms & Conditions</AppText>
         </Pressable>
       </View>
-      <Tagline/>
+      <Tagline darkMode={darkMode} />
     </ScrollView>
   );
 };
+const DarkMode = ({ darkMode }) => (
+  <View style={styles.iconStyle}>
+    {darkMode === "DARK" ? (
+      <Ionicons name="ios-sunny-outline" color="white" size={24} />
+    ) : (
+      <Ionicons name="moon" color="white" size={24} />
+    )}
+  </View>
+);
+const Notification = () => (
+  <View style={styles.iconStyle}>
+    <View style={styles.iconBadgeContainer}>
+      <Text style={styles.iconBadgeNumber}>1</Text>
+    </View>
+    <MaterialCommunityIcons name="bell-outline" color="white" size={24} />
+  </View>
+);
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -523,8 +661,25 @@ const styles = StyleSheet.create({
   },
   customTitle: {
     // fontWeight: Platform.OS === "android" ? "normal" : "700",
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+    color: GlobalStyles.Color.secondaryDarkTheme_bg,
+  },
+  darkcustomTitle: {
+    // fontWeight: Platform.OS === "android" ? "normal" : "700",
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
+  },
+  customTitle1: {
     fontFamily: "Montserrat",
-    color: "black",
+    fontSize: 14,
+    color: GlobalStyles.Color.secondaryDarkTheme_bg,
+  },
+  darkcustomTitle1: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
   titleTextRow: {
     marginTop: GlobalStyles.Title.marginTop,
@@ -590,6 +745,174 @@ const styles = StyleSheet.create({
     width: "90%",
     marginLeft: "5%",
     height: "auto",
+    marginVertical: "1%",
+  },
+  blurView: {
+    backgroundColor: "transparent",
+    borderRadius: 20,
+    marginBottom: "0%",
+    overflow: "hidden",
+    marginTop: "-30%",
+    paddingHorizontal: "4%",
+    paddingTop: "7%",
+  },
+  bottomBorder: {
+    borderBottomWidth: 0.2,
+    borderColor: GlobalStyles.Color.darkGray,
+  },
+  backgroundFont: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
+    fontSize: 18,
+  },
+  backgroundTextContainer: {
+    // marginTop: "15%",
+    // paddingHorizontal: "5%",
+    width: "70%",
+  },
+  backgroundSub: {
+    fontFamily: "Montserrat-Regular",
+    fontSize: 14,
+  },
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  containerSpacing: {
+    marginVertical: "5%",
+  },
+  container: {
+    backgroundColor: colors.white,
+    borderRadius: 20,
+    width: "100%",
+    padding: "5%",
+  },
+  containerHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: "5%",
+  },
+  containerHeaderText: {
+    color: GlobalStyles.Color.green_total,
+    fontSize: 24,
+    fontFamily: "Montserrat",
+    lineHeight: 40,
+  },
+  containerItems: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  header: {
+    fontFamily: "Montserrat",
+    fontSize: 18,
+
+    color: GlobalStyles.Color.lightBlack,
+  },
+  darkheader: {
+    fontFamily: "Montserrat",
+    fontSize: 18,
+
+    color: GlobalStyles.Color.white,
+  },
+  itemSpacing: {
+    marginTop: "2.5%",
+  },
+  navigateContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  navigateText: {
+    color: GlobalStyles.Color.skyblue,
+    fontSize: 14,
+    fontFamily: "Montserrat",
+  },
+  projectContainer: {
+    flexDirection: "row",
+    paddingBottom: "5%",
+  },
+  projectImage: {
+    height: 74,
+    width: 110,
+    borderRadius: 10,
+  },
+  projectHeader: {
+    color: GlobalStyles.Color.darkGray,
+    fontSize: 10,
+  },
+  subHeader: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+  },
+  iconContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 5,
+  },
+  TopImageheader: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+    marginTop: "10%",
+  },
+  iconStyle: {
+    height: 40,
+    width: 40,
+    // borderWidth: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    borderRadius: 20,
+    backgroundColor: "rgba(0, 0, 0, .25)",
+  },
+  iconBadgeContainer: {
+    position: "absolute",
+    backgroundColor: "red",
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    right: 8,
+    top: 8,
+    zIndex: 5,
+  },
+  iconBadgeNumber: {
+    fontSize: 6,
+    color: colors.white,
+    fontWeight: "900",
+  },
+  buttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.lightBlack,
+    height: 47,
+    width: 312.33,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  darkbuttonPayNew: {
+    borderRadius: 10,
+    // backgroundColor: GlobalStyles.Color.gray_500,
+    height: 47,
+    width: 312.33,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  buttonPayNewText: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+    marginLeft: 6,
   },
 });
 

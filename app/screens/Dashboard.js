@@ -168,6 +168,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             accountBalance={accountBalance}
             setBalance={setBalance}
             accountDetails = {accountDetails}
+            accountId={accountID}
           />
         </View>
 

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   View,
   Image,
+  ImageBackground,
   TouchableOpacity,
 } from "react-native";
 
@@ -45,7 +46,7 @@ const AccountSettings = ({ navigation }) => {
   const [balance, setBalance] = useState(0);
   const [subscriptions, setSubscriptions] = useState(null);
 
-  const { settings, accountID, version } = useContext(AuthContext);
+  const { settings, accountID, version, darkMode } = useContext(AuthContext);
 
   const insets = useSafeAreaInsets();
 
@@ -70,43 +71,68 @@ const AccountSettings = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size={"large"}
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
 
   return (
-    <View
-      style={[
-        styles.accountContainer,
-        {
-          paddingTop: insets.top,
-          paddingBottom: insets.bottom,
-          paddingLeft: insets.left,
-          paddingRight: insets.right,
-        },
-      ]}
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/carbonbottom.png")
+          : require("../assets/backgrounds/spendingLimit.jpg")
+      }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-65%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        flex: 1,
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+      }}
     >
-      <View style={styles.nameBalanceContainer}>
-        <View style={[styles.nameBalanceItem, { flex: 2 }]}>
-          <AppText style={{ fontSize: 20 }}>{name}</AppText>
-        </View>
-        <View style={[styles.nameBalanceItem, { alignItems: "flex-end" }]}>
-          <AppText style={{ fontSize: 20, color: "blue" }}>£{balance}</AppText>
-        </View>
-      </View>
+      <View style={{ padding: "8%" }}>
+        <View
+          style={
+            darkMode === "DARK"
+              ? styles.darkitemsContainer
+              : styles.itemsContainer
+          }
+        >
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginVertical: "10%",
+            }}
+          >
+            <AppText style={{ fontSize: 40, color: "blue" }}>
+              £{balance}
+            </AppText>
+          </View>
 
-      <View style={styles.accountTypeContainer}>
-        <AppText style={{ opacity: 0.3 }}>{subscriptions} subscription</AppText>
-        <AppText style={{ fontSize: 10, color: "black" }}>
-          App version {version}
-        </AppText>
-      </View>
-
-      <View style={styles.managementContainer}>
-        <AppText style={{ opacity: 0.5 }}>Management</AppText>
-        <View style={styles.itemsContainer}>
           <FlatList
             data={ITEMS}
             keyExtractor={(item) => item.id}
@@ -117,7 +143,17 @@ const AccountSettings = ({ navigation }) => {
                 >
                   <View style={styles.item}>
                     <View style={styles.itemTitle}>
-                      <AppText style={{ textTransform: "capitalize" }}>
+                      <AppText
+                        style={{
+                          textTransform: "capitalize",
+                          fontFamily: "Montserrat",
+                          color:
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.white
+                              : GlobalStyles.Color.darkTheme_bg,
+                          fontSize: 14,
+                        }}
+                      >
                         {item.title}
                       </AppText>
                     </View>
@@ -145,7 +181,7 @@ const AccountSettings = ({ navigation }) => {
           />
         </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -166,15 +202,20 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "transparent",
     width: "100%",
-    height: 50,
+    height: 60,
     flexDirection: "row",
+    borderTopColor: GlobalStyles.Color.borderColor,
+    borderTopWidth: 1,
   },
   itemsContainer: {
     backgroundColor: "white",
     width: "100%",
     borderRadius: 15,
-
-    marginTop: 15,
+  },
+  darkitemsContainer: {
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    width: "100%",
+    borderRadius: 15,
   },
   itemTitle: {
     flex: 2,
@@ -193,12 +234,6 @@ const styles = StyleSheet.create({
   },
   nameBalanceItem: {
     flex: 1,
-  },
-  managementContainer: {
-    marginTop: 100,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    width: "80%",
   },
 });
 
