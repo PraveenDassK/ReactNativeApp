@@ -53,7 +53,7 @@ const AccountDeatils = ({
   console.log(accountBalance, "this is a new account");
   useEffect(() => {
     const newStateArray = [];
-  console.log(userData,"this is user data");
+    console.log(userData, "this is user data");
     userData?.map((eachData, i) =>
       newStateArray.push({
         label: eachData?.accountId,
@@ -64,7 +64,7 @@ const AccountDeatils = ({
     setDropdownData(newStateArray);
     setTitle(newStateArray?.[0]?.value);
     handleBalance(accountId);
-  }, []);
+  }, [userData]);
 
   const handleBalance = async (balance) => {
     const dataForBalance = await apiCall.GetCustomerDetails(balance);
