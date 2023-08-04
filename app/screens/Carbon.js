@@ -207,7 +207,7 @@ const CarbonFeature = ({ darkMode, height }) => {
       <View style={{ flex: 1, paddingHorizontal: "15%", paddingTop: "15%" }}>
         <Text
           style={{
-            fontSize: isSmallDevice ? 12 : 30,
+            fontSize: isSmallDevice ? 20 : 30,
             fontFamily: "Montserrat-Regular",
             color: "white",
           }}
