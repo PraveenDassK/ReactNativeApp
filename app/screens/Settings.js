@@ -28,7 +28,6 @@ import Tagline from "../components/Tagline";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-
 const Settings = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [account, setAccNum] = useState(null);
@@ -193,6 +192,8 @@ const Settings = ({ navigation }) => {
     );
   }
 
+  const clipBoardSpacing = (iban) => iban?.length > 12 ? 2 : 1
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -326,7 +327,7 @@ const Settings = ({ navigation }) => {
 
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -374,7 +375,7 @@ const Settings = ({ navigation }) => {
 
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -419,9 +420,10 @@ const Settings = ({ navigation }) => {
                   />
                 </Pressable>
               </View>
+
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -432,11 +434,13 @@ const Settings = ({ navigation }) => {
                     darkMode === "DARK"
                       ? styles.darkcustomTitle
                       : styles.customTitle,
+                     
                   ]}
                 >
                   {iban}
                 </AppText>
               </View>
+              
             </View>
 
             <View style={styles.accountDetailsRow}>
@@ -468,7 +472,7 @@ const Settings = ({ navigation }) => {
               </View>
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -727,7 +731,7 @@ const styles = StyleSheet.create({
 
   splitDiv: {
     flexDirection: "row",
-    flex: 2,
+    flex: 1,
     justifyContent: "flex-end",
 
     height: "100%",
