@@ -69,6 +69,7 @@ const AccountDeatils = ({
     // let newBalance = userData?.filter(
     //   (eachValue, i) => eachValue?.accountId === balance
     // );
+    // console.log(dataForBalance,"this is a new balance")
     setBalance(dataForBalance);
   };
   return (

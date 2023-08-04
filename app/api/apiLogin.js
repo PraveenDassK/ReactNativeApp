@@ -48,7 +48,7 @@ const VerifyLogin = async ({ email, phoneNumber, emailOTP, phoneOTP }) => {
       phoneOTP: phoneOTP,
     }
   );
-  
+
   if (!request.data.result || request.status == 500) {
     return null;
   }
@@ -76,6 +76,7 @@ const GetCustomerDetails = async (Id) => {
   const request = await client.get(
     `https://api.carbonyte.io/regmodule/GetCustomerDetails?customerId=${Id}`
   );
+
   const returnData = request?.data?.details;
   return returnData;
 };
@@ -86,12 +87,11 @@ const GetCustomerDetails = async (Id) => {
  *          If the company number is correct then return the details
  */
 const GetCompanyByRegNo = async (Reg) => {
-  
   try {
     const response = await client.get(
       `https://api.carbonyte.io/authverifymodule/GetCompanySearch/${Reg}`
     );
-    
+
     // if (!response.data.result) {
     //   return null;
     // }
@@ -245,11 +245,11 @@ const RegisterBusinessDirectors = async ({ businessId, obj }) => {
   return businessDirectorRegistrationCall;
 };
 
-const GetAccountByCustomer = async(Id) => {
-  const url = `https://api.carbonyte.io/walletmodule/GetAccountByCustomer/${Id}`
-  const accountRequest = await client.get(url)
-  return accountRequest.data.details
-}
+const GetAccountByCustomer = async (Id) => {
+  const url = `https://api.carbonyte.io/walletmodule/GetAccountByCustomer/${Id}`;
+  const accountRequest = await client.get(url);
+  return accountRequest.data.details;
+};
 
 export default {
   Login,
@@ -265,5 +265,5 @@ export default {
   getCompanyRegNoByName,
   RegisterBusinessUsers,
   RegisterBusinessDirectors,
-  GetAccountByCustomer
+  GetAccountByCustomer,
 };
