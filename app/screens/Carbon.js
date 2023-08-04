@@ -52,7 +52,7 @@ const Carbon = ({ route, navigation }) => {
   const [visitedCarbon, setVisitedCarbon] = useState(false);
   const [projects, setProjects] = useState([]);
 
-  console.log(height, width);
+ 
 
   useEffect(() => {
     const deviceType = async () => {
@@ -198,12 +198,16 @@ const Carbon = ({ route, navigation }) => {
 
 const CarbonFeature = ({ darkMode, height }) => {
   console.log(height, smallDevice.height, height < smallDevice.height);
+
+  const isSmallDevice = height < smallDevice.height
+
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, paddingHorizontal: "15%", paddingTop: "15%" }}>
         <Text
           style={{
-            fontSize: 30,
+            fontSize: isSmallDevice ? 12 : 30,
             fontFamily: "Montserrat-Regular",
             color: "white",
           }}
@@ -215,7 +219,7 @@ const CarbonFeature = ({ darkMode, height }) => {
         </Text>
       </View>
 
-      {height > smallDevice.height && (
+      
         <View style={{ flex: 3, padding: "10%" }}>
           <View
             style={{
@@ -229,7 +233,7 @@ const CarbonFeature = ({ darkMode, height }) => {
               style={{ height: 200, width: 200 }}
             />
           </View>
-          <View>
+          {!isSmallDevice && <View>
             <View>
               <Text
                 style={{
@@ -261,9 +265,9 @@ const CarbonFeature = ({ darkMode, height }) => {
                 offsetting in high quality nature-based verified projects
               </Text>
             </View>
-          </View>
+          </View>}
         </View>
-      )}
+      
     </View>
   );
 };
