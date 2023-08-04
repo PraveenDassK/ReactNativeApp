@@ -52,8 +52,6 @@ const Carbon = ({ route, navigation }) => {
   const [visitedCarbon, setVisitedCarbon] = useState(false);
   const [projects, setProjects] = useState([]);
 
- 
-
   useEffect(() => {
     const deviceType = async () => {
       const deviceSize = await Device.getDeviceTypeAsync();
@@ -197,10 +195,7 @@ const Carbon = ({ route, navigation }) => {
 };
 
 const CarbonFeature = ({ darkMode, height }) => {
-  console.log(height, smallDevice.height, height < smallDevice.height);
-
-  const isSmallDevice = height < smallDevice.height
-
+  const isSmallDevice = height < smallDevice.height;
 
   return (
     <View style={{ flex: 1 }}>
@@ -219,21 +214,27 @@ const CarbonFeature = ({ darkMode, height }) => {
         </Text>
       </View>
 
-      
-        <View style={{ flex: 3, padding: "10%", paddingTop: isSmallDevice ? 0 : "10%"}}>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              marginBottom: "0%",
-            }}
-          >
-            <Image
-              source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
-              style={{ height: 200, width: 200 }}
-            />
-          </View>
-          {!isSmallDevice && <View>
+      <View
+        style={{
+          flex: 3,
+          padding: "10%",
+          paddingTop: isSmallDevice ? 0 : "10%",
+        }}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "0%",
+          }}
+        >
+          <Image
+            source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
+            style={{ height: 200, width: 200 }}
+          />
+        </View>
+        {!isSmallDevice && (
+          <View>
             <View>
               <Text
                 style={{
@@ -265,9 +266,9 @@ const CarbonFeature = ({ darkMode, height }) => {
                 offsetting in high quality nature-based verified projects
               </Text>
             </View>
-          </View>}
-        </View>
-      
+          </View>
+        )}
+      </View>
     </View>
   );
 };
