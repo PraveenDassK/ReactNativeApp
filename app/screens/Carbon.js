@@ -196,74 +196,77 @@ const Carbon = ({ route, navigation }) => {
   );
 };
 
-const CarbonFeature = ({ darkMode, height }) => (
-  <View style={{ flex: 1 }}>
-    <View style={{ flex: 1, paddingHorizontal: "15%", paddingTop: "15%" }}>
-      <Text
-        style={{
-          fontSize: 30,
-          fontFamily: "Montserrat-Regular",
-          color: "white",
-        }}
-      >
-        Embracing a{" "}
-        <Text style={{ fontFamily: "Montserrat" }}>
-          Carbon-Neutral Lifestyle
-        </Text>
-      </Text>
-    </View>
-
-    {height < smallDevice.height && (
-      <View style={{ flex: 3, padding: "10%" }}>
-        <View
+const CarbonFeature = ({ darkMode, height }) => {
+  console.log(height, smallDevice.height, height < smallDevice.height);
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingHorizontal: "15%", paddingTop: "15%" }}>
+        <Text
           style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "0%",
+            fontSize: 30,
+            fontFamily: "Montserrat-Regular",
+            color: "white",
           }}
         >
-          <Image
-            source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
-            style={{ height: 200, width: 200 }}
-          />
-        </View>
-        <View>
-          <View>
-            <Text
-              style={{
-                fontFamily: "Montserrat",
-                fontSize: 18,
-                marginBottom: "5%",
-                color:
-                  darkMode === "DARK"
-                    ? GlobalStyles.Color.white
-                    : GlobalStyles.Color.lightBlack,
-              }}
-            >
-              Track, Reduce, and Offset your daily CO2 Emisssions
-            </Text>
-          </View>
-          <View>
-            <Text
-              style={{
-                fontFamily: "Montserrat-Regular",
-                fontSize: 14,
-                color:
-                  darkMode === "DARK"
-                    ? GlobalStyles.Color.white
-                    : GlobalStyles.Color.lightBlack,
-              }}
-            >
-              With carbonyte app you can track and control your carbon emisson
-              from your daily life spendings and invest in nature by offsetting
-              in high quality nature-based verified projects
-            </Text>
-          </View>
-        </View>
+          Embracing a{" "}
+          <Text style={{ fontFamily: "Montserrat" }}>
+            Carbon-Neutral Lifestyle
+          </Text>
+        </Text>
       </View>
-    )}
-  </View>
-);
+
+      {height > smallDevice.height && (
+        <View style={{ flex: 3, padding: "10%" }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: "0%",
+            }}
+          >
+            <Image
+              source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
+              style={{ height: 200, width: 200 }}
+            />
+          </View>
+          <View>
+            <View>
+              <Text
+                style={{
+                  fontFamily: "Montserrat",
+                  fontSize: 18,
+                  marginBottom: "5%",
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
+                }}
+              >
+                Track, Reduce, and Offset your daily CO2 Emisssions
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontFamily: "Montserrat-Regular",
+                  fontSize: 14,
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.lightBlack,
+                }}
+              >
+                With carbonyte app you can track and control your carbon emisson
+                from your daily life spendings and invest in nature by
+                offsetting in high quality nature-based verified projects
+              </Text>
+            </View>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   boxShadow: {},
