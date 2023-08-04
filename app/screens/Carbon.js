@@ -220,7 +220,7 @@ const CarbonFeature = ({ darkMode, height }) => {
       </View>
 
       
-        <View style={{ flex: 3, paddingBottom: "10%" }}>
+        <View style={{ flex: 3, padding: "10%", paddingTop: isSmallDevice ? 0 : "10%"}}>
           <View
             style={{
               justifyContent: "center",
