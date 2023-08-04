@@ -21,7 +21,7 @@ import api from "../api/apiCall";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import Button from "../components/AppButton";
-import { verticalScale } from "../config/metrics";
+import { verticalScale, moderateScale } from "../config/metrics";
 import AppText from "../components/Text";
 import colors from "../config/colors";
 import Tagline from "../components/Tagline";
@@ -192,6 +192,8 @@ const Settings = ({ navigation }) => {
     );
   }
 
+  const clipBoardSpacing = (iban) => iban?.length > 12 ? 2 : 1
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -325,7 +327,7 @@ const Settings = ({ navigation }) => {
 
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -373,7 +375,7 @@ const Settings = ({ navigation }) => {
 
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -418,9 +420,10 @@ const Settings = ({ navigation }) => {
                   />
                 </Pressable>
               </View>
+
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -431,11 +434,13 @@ const Settings = ({ navigation }) => {
                     darkMode === "DARK"
                       ? styles.darkcustomTitle
                       : styles.customTitle,
+                     
                   ]}
                 >
                   {iban}
                 </AppText>
               </View>
+              
             </View>
 
             <View style={styles.accountDetailsRow}>
@@ -467,7 +472,7 @@ const Settings = ({ navigation }) => {
               </View>
               <View
                 style={{
-                  flex: 1,
+                  flex: clipBoardSpacing(iban),
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
@@ -662,23 +667,23 @@ const styles = StyleSheet.create({
   customTitle: {
     // fontWeight: Platform.OS === "android" ? "normal" : "700",
     fontFamily: "Montserrat-Medium",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: GlobalStyles.Color.secondaryDarkTheme_bg,
   },
   darkcustomTitle: {
     // fontWeight: Platform.OS === "android" ? "normal" : "700",
     fontFamily: "Montserrat-Medium",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: GlobalStyles.Color.white,
   },
   customTitle1: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: GlobalStyles.Color.secondaryDarkTheme_bg,
   },
   darkcustomTitle1: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: GlobalStyles.Color.white,
   },
   titleTextRow: {
@@ -688,12 +693,12 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontSize: GlobalStyles.Title.fontSize,
+    fontSize: moderateScale(GlobalStyles.Title.fontSize),
     // fontWeight: GlobalStyles.Title.fontWeight,
   },
 
   subText: {
-    fontSize: GlobalStyles.RowText.fontSize,
+    fontSize: moderateScale(GlobalStyles.RowText.fontSize),
     // fontWeight: GlobalStyles.RowText.fontWeight,
   },
 
@@ -726,7 +731,7 @@ const styles = StyleSheet.create({
 
   splitDiv: {
     flexDirection: "row",
-    flex: 2,
+    flex: 1,
     justifyContent: "flex-end",
 
     height: "100%",
@@ -763,7 +768,7 @@ const styles = StyleSheet.create({
   backgroundFont: {
     color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
   backgroundTextContainer: {
     // marginTop: "15%",
@@ -772,7 +777,7 @@ const styles = StyleSheet.create({
   },
   backgroundSub: {
     fontFamily: "Montserrat-Regular",
-    fontSize: 14,
+    fontSize: moderateScale(14),
   },
   center: {
     justifyContent: "center",
@@ -794,7 +799,7 @@ const styles = StyleSheet.create({
   },
   containerHeaderText: {
     color: GlobalStyles.Color.green_total,
-    fontSize: 24,
+    fontSize: moderateScale(24),
     fontFamily: "Montserrat",
     lineHeight: 40,
   },
@@ -805,13 +810,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontFamily: "Montserrat",
-    fontSize: 18,
+    fontSize: moderateScale(18),
 
     color: GlobalStyles.Color.lightBlack,
   },
   darkheader: {
     fontFamily: "Montserrat",
-    fontSize: 18,
+    fontSize: moderateScale(18),
 
     color: GlobalStyles.Color.white,
   },
@@ -824,7 +829,7 @@ const styles = StyleSheet.create({
   },
   navigateText: {
     color: GlobalStyles.Color.skyblue,
-    fontSize: 14,
+    fontSize: moderateScale(14),
     fontFamily: "Montserrat",
   },
   projectContainer: {
@@ -838,11 +843,11 @@ const styles = StyleSheet.create({
   },
   projectHeader: {
     color: GlobalStyles.Color.darkGray,
-    fontSize: 10,
+    fontSize: moderateScale(10),
   },
   subHeader: {
     fontFamily: "Montserrat",
-    fontSize: 14,
+    fontSize: moderateScale(14),
   },
   iconContainer: {
     display: "flex",
@@ -882,7 +887,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   iconBadgeNumber: {
-    fontSize: 6,
+    fontSize: moderateScale(6),
     color: colors.white,
     fontWeight: "900",
   },
@@ -911,7 +916,7 @@ const styles = StyleSheet.create({
   buttonPayNewText: {
     color: GlobalStyles.Color.white,
     fontFamily: "Montserrat-Medium",
-    fontSize: 14,
+    fontSize: moderateScale(14),
     marginLeft: 6,
   },
 });
