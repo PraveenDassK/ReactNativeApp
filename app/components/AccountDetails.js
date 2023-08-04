@@ -50,17 +50,14 @@ const AccountDeatils = ({
 }) => {
   const [title, setTitle] = useState("");
   const [dropdownData, setDropdownData] = useState();
-  console.log(accountBalance, "this is a new account");
   useEffect(() => {
     const newStateArray = [];
-    console.log(userData, "this is user data");
     userData?.map((eachData, i) =>
       newStateArray.push({
         label: eachData?.accountId,
         value: eachData?.accountId,
       })
     );
-    console.log(newStateArray, "thsis is state");
     setDropdownData(newStateArray);
     setTitle(newStateArray?.[0]?.value);
     handleBalance(accountId);
@@ -72,7 +69,6 @@ const AccountDeatils = ({
     // let newBalance = userData?.filter(
     //   (eachValue, i) => eachValue?.accountId === balance
     // );
-    // console.log(dataForBalance,"this is a new balance")
     setBalance(dataForBalance);
   };
   return (

@@ -42,13 +42,19 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [userImpact, setUserImpact] = useState([]);
   const [userData, setuserData] = useState([]);
 
-  const { accountID, customerDetails, userID,darkMode, setDarkMode, accountDetails } =
-    useContext(AuthContext);
-    
+  const {
+    accountID,
+    customerDetails,
+    userID,
+    darkMode,
+    setDarkMode,
+    accountDetails,
+  } = useContext(AuthContext);
+
   const [iconShow, setIconShow] = useState(false);
   useEffect(() => {
     loadData();
-  }, [accountID, customerDetails,userID]);
+  }, [accountID, customerDetails, userID]);
 
   /**
    * @dev This loads the data from the Backend
@@ -58,13 +64,13 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      console.log(customerDetails,"this is cc")
       const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
-      setuserData(getUserID?.accountDetails);
-      setbannerName(getUserID?.customerDetails);
+
       // const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
       const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
       let colorMode = await authStorage.getColor();
+      setuserData(getUserID?.accountDetails);
+      setbannerName(getUserID?.customerDetails);
       setDarkMode(colorMode);
       // setuserData(userDataReturn);
       setUserImpact(userImpactReturn);
@@ -99,7 +105,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
 
   const handleDark = async () => {
     // const data=authStorage.removeColor();
-    // 
+    //
     if (darkMode === "DARK") {
       authStorage.removeColor();
       setDarkMode(authStorage.getColor());
@@ -110,7 +116,6 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     //  authStorage.removeColor();
   };
 
-  
   return (
     <ImageBackground
       source={
@@ -145,7 +150,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           <View style={styles.header}>
             <View>
               <Text style={styles.welcomText}>Welcome back,</Text>
-              <Text style={styles.nameText}>{`${bannerName?.firstName} ${bannerName?.lastName}`} !</Text>
+              <Text style={styles.nameText}>
+                {`${bannerName?.firstName} ${bannerName?.lastName}`} !
+              </Text>
             </View>
             <View style={styles.iconContainer}>
               <TouchableOpacity onPress={() => handleDark()}>
@@ -167,7 +174,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             handlePress={() => navigation.navigate("SendMoney")}
             accountBalance={accountBalance}
             setBalance={setBalance}
-            accountDetails = {accountDetails}
+            accountDetails={accountDetails}
             accountId={accountID}
           />
         </View>
@@ -189,8 +196,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         > */}
         <View
           style={{
-            backgroundColor: `${darkMode === "DARK" ? "transparent" : "transparent"
-              }`,
+            backgroundColor: `${
+              darkMode === "DARK" ? "transparent" : "transparent"
+            }`,
           }}
         >
           {!iconShow && (

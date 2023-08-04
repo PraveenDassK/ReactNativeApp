@@ -13,20 +13,23 @@ import {
   ScrollView,
   ActivityIndicator,
   Switch,
+  ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
-
+import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/AppButton";
-
+import { BlurView } from "expo-blur";
 import apiDevices from "../api/apiDevices";
 import AuthContext from "../auth/context";
 import AppSwitch from "../components/AppSwitch";
-
+import { LinearGradient } from "expo-linear-gradient";
+import LinearAccountButton from "../components/LinearAccountButton";
 const DEVICES = ["cellphone", "tablet-android"];
 const COLORS = ["orange", "blue", "red"];
 
 const Devices = ({ navigation }) => {
-  const { customerDetails } = useContext(AuthContext);
+  const { customerDetails, darkMode } = useContext(AuthContext);
   const [devices, setDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -75,7 +78,6 @@ const Devices = ({ navigation }) => {
     setIsLoading(true);
     if (!customerDetails) return;
     const request = await apiDevices.GetDevices(customerDetails);
-    
 
     const resDevices = request?.details;
 
@@ -110,83 +112,172 @@ const Devices = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
 
   return (
-    <ScrollView
-      style={styles.container}
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/carbonbottom.png")
+          : require("../assets/backgrounds/spendingLimit.jpg")
       }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-65%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        flex: 1,
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+      }}
     >
-      <View style={styles.headerContainer}>
-        <View style={styles.headerItem}>
-          <MaterialCommunityIcons name="security" color="blue" size={60} />
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <View style={styles.headerContainer}>
+          <View style={styles.headerItem}>
+            <MaterialCommunityIcons name="security" color="blue" size={60} />
+          </View>
+          <View style={styles.headerItem}>
+            <Text
+              style={[
+                darkMode === "DARK" ? styles.darkheaderText : styles.headerText,
+                styles.headerTitle,
+              ]}
+            >
+              Manage access and devices
+            </Text>
+          </View>
+          <View style={styles.headerItem}>
+            <Text
+              style={
+                darkMode === "DARK" ? styles.darkheaderText : styles.headerText
+              }
+            >
+              These signed in devices have recently been active on this account.
+              You can sign out any unfamiliar devices or change your password
+              for added security
+            </Text>
+          </View>
         </View>
-        <View style={styles.headerItem}>
-          <Text style={[styles.headerText, styles.headerTitle]}>
-            Manage access and devices
-          </Text>
-        </View>
-        <View style={styles.headerItem}>
-          <Text style={styles.headerText}>
-            These signed in devices have recently been active on this account.
-            You can sign out any unfamiliar devices or change your password for
-            added security
-          </Text>
-        </View>
-      </View>
-      <View style={styles.containerHeader}>
-        <Text>Signed-in devices</Text>
-      </View>
-      <View style={styles.mainContainer}>
-        {devices &&
-          devices.map((device, index) => {
-            return (
-              <Fragment key={device.deviceId}>
-                <Device
-                  name={device.deviceName}
-                  os={device.operatingSystem}
-                  date={device.createdDate}
-                  index={index}
-                  onSignout={(index) => handleSignout(index, device.deviceId)}
-                />
-              </Fragment>
-            );
-          })}
-      </View>
-      <View style={styles.footerContainer}>
         <View style={styles.containerHeader}>
-          <Text>Notifications</Text>
+          <Text
+            style={
+              darkMode === "DARK" ? styles.darkheaderText : styles.headerText
+            }
+          >
+            Signed-in devices
+          </Text>
         </View>
-        <View style={styles.deviceContainer}>
-          {NOTIFICATIONS.map((notification) => (
-            <View key={notification.id} style={{ marginBottom: "2%"}}>
-              <AppSwitch
-                title={notification.title}
-                onValueChange={notification.toggleSwitch}
-                value={notification.value}
-              />
-            </View>
-          ))}
+        <View style={styles.mainContainer}>
+          {devices &&
+            devices.map((device, index) => {
+              return (
+                <Fragment key={device.deviceId}>
+                  <Device
+                    name={device.deviceName}
+                    os={device.operatingSystem}
+                    date={device.createdDate}
+                    index={index}
+                    onSignout={(index) => handleSignout(index, device.deviceId)}
+                    darkMode={darkMode}
+                  />
+                </Fragment>
+              );
+            })}
         </View>
-      </View>
-    </ScrollView>
+        <View style={styles.footerContainer}>
+          <View style={styles.containerHeader}>
+            <Text>Notifications</Text>
+          </View>
+          <BlurView
+            style={
+              darkMode === "DARK"
+                ? styles.darkdeviceContainer
+                : styles.deviceContainer
+            }
+          >
+            {NOTIFICATIONS.map((notification) => (
+              <View key={notification.id} style={{ marginBottom: "2%" }}>
+                <AppSwitch
+                  title={notification.title}
+                  onValueChange={notification.toggleSwitch}
+                  value={notification.value}
+                  darkMode={darkMode}
+                />
+              </View>
+            ))}
+          </BlurView>
+        </View>
+        <View style={{ height: 100 }} />
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
-const Device = ({ name, os, date, index, onSignout }) => {
+const Device = ({ name, os, date, index, onSignout, darkMode }) => {
   return (
-    <View style={[styles.deviceContainer]}>
+    // <View
+    //   style={[
+    //     darkMode === "DARK"
+    //       ? styles.darkdeviceContainer
+    //       : styles.deviceContainer,
+    //   ]}
+    // >
+    <BlurView
+      style={
+        darkMode === "DARK"
+          ? styles.darkdeviceContainer
+          : styles.deviceContainer
+      }
+    >
       <View style={styles.deviceItemContainer}>
-        <MaterialCommunityIcons name={DEVICES[0]} size={18} />
+        <MaterialCommunityIcons
+          name={DEVICES[0]}
+          size={18}
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.secondaryDarkTheme_bg
+          }
+        />
         <View style={styles.deviceTextContainer}>
-          <Text style={styles.deviceHeaderText}>
+          <Text
+            style={{
+              fontFamily: "Montserrat-SemiBold",
+              fontSize: 14,
+              color:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.white
+                  : GlobalStyles.Color.secondaryDarkTheme_bg,
+            }}
+          >
             {os !== "Android" ? "Apple iPhone" : "Android Phone"}{" "}
           </Text>
         </View>
@@ -197,19 +288,53 @@ const Device = ({ name, os, date, index, onSignout }) => {
           color={COLORS[index % COLORS.length]}
         />
         <View style={styles.deviceTextContainer}>
-          <Text>{name} (Device name) </Text>
+          <Text
+            style={{
+              fontFamily: "Montserrat-SemiBold",
+              fontSize: 14,
+              color:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.white
+                  : GlobalStyles.Color.secondaryDarkTheme_bg,
+            }}
+          >
+            {name} (Device name){" "}
+          </Text>
         </View>
       </View>
       <View style={styles.deviceItemContainer}>
-        <MaterialCommunityIcons name="clock-time-nine-outline" />
+        <MaterialCommunityIcons
+          name="clock-time-nine-outline"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.secondaryDarkTheme_bg
+          }
+        />
         <View style={styles.deviceTextContainer}>
-          <Text>{date} </Text>
+          <Text
+            style={{
+              fontFamily: "Montserrat-Regular",
+              fontSize: 12,
+              color:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.darkGray
+                  : GlobalStyles.Color.darkGray,
+            }}
+          >
+            {date}{" "}
+          </Text>
         </View>
       </View>
-      <View style={styles.deviceItemContainer}>
-        <Button title="Sign out" onPress={() => onSignout(index)} />
+      <View style={styles.deviceItemContainer1}>
+        <LinearAccountButton
+          title="Sign out"
+          onPress={() => onSignout(index)}
+          darkMode={darkMode}
+        />
       </View>
-    </View>
+    </BlurView>
+    // </View>
   );
 };
 
@@ -228,6 +353,13 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: "4%",
   },
+  darkdeviceContainer: {
+    borderRadius: 10,
+    backgroundColor: "transparent",
+    padding: "4%",
+    width: "100%",
+    marginBottom: "4%",
+  },
   deviceHeaderText: {
     fontSize: 18,
     fontWeight: "500",
@@ -237,8 +369,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: "4%",
   },
+  deviceItemContainer1: {
+    marginVertical: "4%",
+  },
   deviceTextContainer: {
     marginLeft: "2%",
+  },
+  darkdeviceTextContainer: {
+    marginLeft: "2%",
+    color: GlobalStyles.Color.white,
   },
   footerContainer: {
     marginBottom: "15%",
@@ -255,9 +394,18 @@ const styles = StyleSheet.create({
   headerText: {
     textAlign: "center",
   },
+  darkheaderText: {
+    textAlign: "center",
+    color: GlobalStyles.Color.white,
+  },
   headerTitle: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  darkheaderTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: GlobalStyles.Color.white,
   },
   mainContainer: {
     flex: 3,

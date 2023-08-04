@@ -10,13 +10,15 @@ import {
   Linking,
   Platform,
   Alert,
+  ImageBackground,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
-
+import { BlurView } from "expo-blur";
 const AboutUs = ({ navigation }) => {
-  const { setIsAuth, settings, setSettings } = useContext(AuthContext);
+  const { setIsAuth, settings, setSettings, darkMode } =
+    useContext(AuthContext);
 
   const navigateAlert = (onPress) =>
     Alert.alert(null, "You are about to navigate away from the application", [
@@ -107,99 +109,151 @@ const AboutUs = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <View
-        style={{
-          width: "90%",
-          backgroundColor: "white",
-          height: "auto",
-          borderRadius: 15,
-          marginTop: "5%",
-          marginLeft: "5%",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() =>
-            navigateAlert(() =>
-              handlePress(Platform.OS === "ios" ? urlAppStore : urlAndroid)
-            )
-          }
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/carbonbottom.png")
+          : require("../assets/backgrounds/spendingLimit.jpg")
+      }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-65%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        flex: 1,
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+      }}
+    >
+      <View>
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: darkMode === "DARK" ? "transparent" : "white",
+            height: "auto",
+            borderRadius: 15,
+            marginTop: "5%",
+            marginLeft: "5%",
+          }}
         >
-          <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              resizeMode="contain"
-              source={require("../assets/blueStar.png")}
-            />
-            <Text style={styles.iconText}>{`Rate us on the ${
-              Platform.OS === "ios" ? "App" : "Google Play"
-            } Store`}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigateAlert(() => handlePress(urlImprove))}
+          <BlurView style={{ borderRadius: 15 }}>
+            <TouchableOpacity
+              onPress={() =>
+                navigateAlert(() =>
+                  handlePress(Platform.OS === "ios" ? urlAppStore : urlAndroid)
+                )
+              }
+            >
+              <View style={styles.row}>
+                <Image
+                  style={styles.icon}
+                  resizeMode="contain"
+                  source={require("../assets/blueStar.png")}
+                />
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkiconText : styles.iconText
+                  }
+                >{`Rate us on the ${
+                  Platform.OS === "ios" ? "App" : "Google Play"
+                } Store`}</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigateAlert(() => handlePress(urlImprove))}
+            >
+              <View style={styles.row}>
+                <Image
+                  style={styles.icon}
+                  resizeMode="contain"
+                  source={require("../assets/blueImprove.png")}
+                />
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkiconText : styles.iconText
+                  }
+                >
+                  Tell us how to improve
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </BlurView>
+        </View>
+
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: darkMode === "DARK" ? "transparent" : "white",
+            height: "auto",
+            borderRadius: 15,
+            marginTop: "5%",
+            marginLeft: "5%",
+          }}
         >
-          <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              resizeMode="contain"
-              source={require("../assets/blueImprove.png")}
-            />
-            <Text style={styles.iconText}>Tell us how to improve</Text>
-          </View>
-        </TouchableOpacity>
+          <BlurView style={{ borderRadius: 15 }}>
+            <TouchableOpacity
+              onPress={() => navigateAlert(() => handlePress(urlBlog))}
+            >
+              <View style={styles.row}>
+                <Image
+                  style={styles.icon}
+                  resizeMode="contain"
+                  source={require("../assets/blueBlog.png")}
+                />
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkiconText : styles.iconText
+                  }
+                >
+                  Our blog
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigateAlert(() => handlePress(urlTwitter))}
+            >
+              <View style={styles.row}>
+                <Image
+                  style={styles.icon}
+                  resizeMode="contain"
+                  source={require("../assets/blueTwitter.png")}
+                />
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkiconText : styles.iconText
+                  }
+                >
+                  Follow us on Twitter
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigateAlert(() => handlePress(urlFacebook))}
+            >
+              <View style={styles.row}>
+                <Image
+                  style={styles.icon}
+                  resizeMode="contain"
+                  source={require("../assets/blueFacebook.png")}
+                />
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkiconText : styles.iconText
+                  }
+                >
+                  Like us on Facebook
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </BlurView>
+        </View>
       </View>
-
-      <View
-        style={{
-          width: "90%",
-          backgroundColor: "white",
-          height: "auto",
-          borderRadius: 15,
-          marginTop: "5%",
-          marginLeft: "5%",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigateAlert(() => handlePress(urlBlog))}
-        >
-          <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              resizeMode="contain"
-              source={require("../assets/blueBlog.png")}
-            />
-            <Text style={styles.iconText}>Our blog</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigateAlert(() => handlePress(urlTwitter))}
-        >
-          <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              resizeMode="contain"
-              source={require("../assets/blueTwitter.png")}
-            />
-            <Text style={styles.iconText}>Follow us on Twitter</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigateAlert(() => handlePress(urlFacebook))}
-        >
-          <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              resizeMode="contain"
-              source={require("../assets/blueFacebook.png")}
-            />
-            <Text style={styles.iconText}>Like us on Facebook</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -250,6 +304,10 @@ const styles = StyleSheet.create({
 
   iconText: {
     flex: 8,
+  },
+  darkiconText: {
+    flex: 8,
+    color: GlobalStyles.Color.white,
   },
 });
 

@@ -1,14 +1,33 @@
 import { StyleSheet, Text, View, Switch } from "react-native";
 import React from "react";
 import colors from "../config/colors";
+import GlobalStyles from "../../GlobalStyles";
 
-const AppSwitch = ({ title, onValueChange, value }) => {
+const AppSwitch = ({ title, onValueChange, value, darkMode }) => {
   return (
     <View style={styles.notoficationRowContainer}>
-      <Text>{title}</Text>
+      <Text
+        style={{
+          color:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.secondaryDarkTheme_bg,
+        }}
+      >
+        {title}
+      </Text>
       <Switch
-        trackColor={{ false: colors.black, true: colors.blue }}
-        thumbColor={value ? colors.white : colors.black}
+        trackColor={{
+          false: darkMode === "DARK" ? GlobalStyles.Color.white : colors.black,
+          true: colors.blue,
+        }}
+        thumbColor={
+          value
+            ? darkMode === "DARK"
+              ? GlobalStyles.Color.black
+              : colors.white
+            : colors.black
+        }
         onValueChange={onValueChange}
         value={value}
       />
