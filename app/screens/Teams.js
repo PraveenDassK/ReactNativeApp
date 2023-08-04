@@ -6,9 +6,10 @@ import {
   View,
   ActivityIndicator,
   FlatList,
+  ImageBackground,
 } from "react-native";
 import { moderateScale } from "../config/scaling";
-
+import LinearAccountButton from "../components/LinearAccountButton";
 import PinModal from "../components/PinModal";
 import UserIcon from "../components/UserIcon";
 import Button from "../components/AppButton";
@@ -52,47 +53,75 @@ const Teams = ({ navigation }) => {
   }
 
   return (
-    <View
-      style={
-        darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/DashboardBottom.jpg")
+          : require("../assets/backgrounds/Dashboard.jpg")
       }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        flex: 1,
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+      }}
     >
-      {/* <RecentTransactions
+      <View
+        // style={
+        //   darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+        // }
+        style={{ padding: "6%" }}
+      >
+        {/* <RecentTransactions
                 amount={10}
             /> */}
-      <View style={{ marginTop: "20%" }}>
-        <View style={{ marginBottom: "5%" }}>
-          <Text
-            style={darkMode === "DARK" ? styles.darkheading : styles.heading}
-          >
-            Your current team
-          </Text>
+        <View
+          style={{
+            marginVertical: "10%",
+            backgroundColor: darkMode ==="DARK"?"rgba(255,255,255,0.2)":"white",
+            padding: "7%",
+            borderRadius: 20,
+          }}
+        >
+          <View style={{ marginBottom: "5%" }}>
+            <Text
+              style={darkMode === "DARK" ? styles.darkheading : styles.heading}
+            >
+              Your current team
+            </Text>
+          </View>
+          {teamData && (
+            <FlatList
+              data={teamData}
+              renderItem={({ item, index }) => (
+                <View style={styles.itemContainer}>
+                  <UserIcon
+                    name={item.name}
+                    onPress={() => navigation.navigate("TeamsUser", item)}
+                    darkMode={darkMode}
+                  />
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+              showsHorizontalScrollIndicator={false}
+              numColumns={4}
+              contentContainerStyle={styles.flatListContent}
+            />
+          )}
         </View>
-        {teamData && (
-          <FlatList
-            data={teamData}
-            renderItem={({ item, index }) => (
-              <View style={styles.itemContainer}>
-                <UserIcon
-                  name={item.name}
-                  onPress={() => navigation.navigate("TeamsUser", item)}
-                  darkMode={darkMode}
-                />
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-            showsHorizontalScrollIndicator={false}
-            numColumns={4}
-            contentContainerStyle={styles.flatListContent}
-          />
-        )}
+        <LinearAccountButton
+          title="Add New Team Member"
+          onPress={() => navigation.navigate("TeamsUserAdd")}
+          darkMode={darkMode}
+        />
       </View>
-      <Button
-        title="Add another user"
-        onPress={() => navigation.navigate("TeamsUserAdd")}
-      />
-      
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -105,10 +134,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  heading: { fontSize: 22, fontWeight: "700" },
+  heading: { fontSize: 18, fontFamily: "Montserrat" },
   darkheading: {
-    fontSize: 22,
-    fontWeight: "700",
+    fontSize: 18,
+    fontFamily: "Montserrat",
     color: GlobalStyles.Color.white,
   },
 

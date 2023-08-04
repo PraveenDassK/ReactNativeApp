@@ -71,6 +71,7 @@ const GlobalStyles = {
     blue_100: "#0101FD",
     dark_orange:"#FF0000",
     indigo_100: "#00003d",
+    name_textGray:"#303233",
     white: "#fff",
     black: "#000", 
     skyblue: "#178BFF",

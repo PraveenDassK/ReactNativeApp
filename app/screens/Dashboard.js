@@ -54,7 +54,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [iconShow, setIconShow] = useState(false);
   useEffect(() => {
     loadData();
-  }, [accountID, customerDetails, userID]);
+  }, [customerDetails, accountID]);
 
   /**
    * @dev This loads the data from the Backend
@@ -64,13 +64,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
 
       // const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
       const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
+      const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
+      const details = getUserID;
+      setuserData(details?.accountDetails);
+      setbannerName(details?.customerDetails);
       let colorMode = await authStorage.getColor();
-      setuserData(getUserID?.accountDetails);
-      setbannerName(getUserID?.customerDetails);
       setDarkMode(colorMode);
       // setuserData(userDataReturn);
       setUserImpact(userImpactReturn);

@@ -7,7 +7,13 @@ import Icon from "react-native-vector-icons/Ionicons";
 import AuthContext from "../auth/context";
 import api from "../api/apiCall";
 
-const UserIcon = ({ name = "Default", size = 50, onPress, darkMode }) => {
+const UserIcon = ({
+  name = "Default",
+  size = 50,
+  onPress,
+  darkMode,
+  showName = true,
+}) => {
   const [initals, setInitals] = useState("");
   const [colour, setColour] = useState("");
 
@@ -31,14 +37,16 @@ const UserIcon = ({ name = "Default", size = 50, onPress, darkMode }) => {
         <View style={styles.icon} backgroundColor={colour}>
           <Text style={styles.initials}>{initals}</Text>
         </View>
-        <View style={styles.textContainer}>
-          <Text
-            style={darkMode === "DARK" ? styles.darkname : styles.name}
-            numberOfLines={1}
-          >
-            {name}
-          </Text>
-        </View>
+        {showName ? (
+          <View style={styles.textContainer}>
+            <Text
+              style={darkMode === "DARK" ? styles.darkname : styles.name}
+              numberOfLines={1}
+            >
+              {name}
+            </Text>
+          </View>
+        ) : null}
       </View>
     </TouchableOpacity>
   );
