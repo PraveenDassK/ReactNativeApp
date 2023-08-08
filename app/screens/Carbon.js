@@ -13,11 +13,12 @@ import {
   ImageBackground,
   Text,
   Dimensions,
+  Platform,
 } from "react-native";
 import * as Device from "expo-device";
 import { Canvas } from "@shopify/react-native-skia";
 import GlobalStyles from "../../GlobalStyles";
-
+import LinearAccountButton from "../components/LinearAccountButton";
 import {
   horizontalScale,
   moderateScale,
@@ -39,7 +40,7 @@ import CarbonFootprints from "./CarbonFootprints";
 
 const screenWidth = Dimensions.get("window").width;
 
-const smallDevice = { height: 600 };
+const smallDevice = { height: 650 };
 
 const Carbon = ({ route, navigation }) => {
   const { height, width } = useWindowDimensions();
@@ -64,7 +65,7 @@ const Carbon = ({ route, navigation }) => {
   useEffect(() => {
     loadData();
   }, [accountID]);
-
+  console.log(Platform.OS, "jsjsj");
   const loadData = async () => {
     setIsLoading(true);
     try {
@@ -184,11 +185,14 @@ const Carbon = ({ route, navigation }) => {
         <BlurView tint="light" intensity={60} style={styles.blurView}>
           <CarbonFeature darkMode={darkMode} height={height} />
         </BlurView>
-        <Button
-          title="Lets Go"
-          onPress={() => setVisitedCarbon(true)}
-          isNavigate={true}
-        />
+        <View style={{ marginTop: "3%" }}>
+          <LinearAccountButton
+            title="Lets Go"
+            onPress={() => setVisitedCarbon(true)}
+            isNavigate={true}
+            darkMode={darkMode}
+          />
+        </View>
       </View>
     </View>
   );
@@ -198,11 +202,24 @@ const CarbonFeature = ({ darkMode, height }) => {
   const isSmallDevice = height < smallDevice.height;
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, paddingHorizontal: "15%", paddingTop: "15%" }}>
+    <View
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexDirection: "column",
+        flex: 1,
+      }}
+    >
+      <View
+        style={{
+          paddingHorizontal: isSmallDevice ? "10%" : "15%",
+          paddingTop: "7%",
+        }}
+      >
         <Text
           style={{
-            fontSize: isSmallDevice ? 15 : 30,
+            fontSize: isSmallDevice ? 20 : 30,
             fontFamily: "Montserrat-Regular",
             color: "white",
           }}
@@ -216,7 +233,6 @@ const CarbonFeature = ({ darkMode, height }) => {
 
       <View
         style={{
-          flex: 3,
           padding: "10%",
           paddingTop: isSmallDevice ? 0 : "10%",
         }}
@@ -230,26 +246,29 @@ const CarbonFeature = ({ darkMode, height }) => {
         >
           <Image
             source={require("../assets/newAssets/Carbon-TreeAnimation.gif")}
-            style={{ height: 200, width: 200 }}
+            style={{
+              height: isSmallDevice ? 150 : 150,
+              width: isSmallDevice ? 150 : 200,
+            }}
           />
         </View>
-        {!isSmallDevice && (
+        <View>
           <View>
-            <View>
-              <Text
-                style={{
-                  fontFamily: "Montserrat",
-                  fontSize: 18,
-                  marginBottom: "5%",
-                  color:
-                    darkMode === "DARK"
-                      ? GlobalStyles.Color.white
-                      : GlobalStyles.Color.lightBlack,
-                }}
-              >
-                Track, Reduce, and Offset your daily CO2 Emisssions
-              </Text>
-            </View>
+            <Text
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: 18,
+                marginBottom: "5%",
+                color:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.white
+                    : GlobalStyles.Color.lightBlack,
+              }}
+            >
+              Track, Reduce, and Offset your daily CO2 Emisssions
+            </Text>
+          </View>
+          {!isSmallDevice && (
             <View>
               <Text
                 style={{
@@ -266,8 +285,8 @@ const CarbonFeature = ({ darkMode, height }) => {
                 offsetting in high quality nature-based verified projects
               </Text>
             </View>
-          </View>
-        )}
+          )}
+        </View>
       </View>
     </View>
   );

@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-
+const height = Dimensions.get("window").height;
+const smallDevice = { height: 650 };
+const isSmallDevice = height < smallDevice.height;
 const StepProgress = ({ currentStep, darkMode }) => {
   //   const [currentStep, setCurrentStep] = useState(1);
 
@@ -41,7 +49,7 @@ const StepProgress = ({ currentStep, darkMode }) => {
         </Text>
       </TouchableOpacity>
       <View
-         style={[
+        style={[
           styles.viewProgress,
           currentStep > 1 && darkMode === "DARK"
             ? styles.darkactiveStepProgress
@@ -67,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 20,
+    marginVertical: isSmallDevice ? 10 : 20,
     marginHorizontal: 50,
   },
   step: {

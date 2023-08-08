@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  Dimensions,
   ImageBackground,
 } from "react-native";
 import { moderateScale } from "../config/scaling";
@@ -25,6 +26,9 @@ import * as Yup from "yup";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import AuthContext from "../auth/context";
 import LinearAccountButton from "../components/LinearAccountButton";
+const height = Dimensions.get("window").height;
+const smallDevice = { height: 650 };
+const isSmallDevice = height < smallDevice.height;
 const items = [
   {
     id: 2,
@@ -116,17 +120,17 @@ const TeamsUserAdd = ({ navigation }) => {
           style={{
             width: "100%",
             paddingHorizontal: "5%",
-            paddingTop: "5%",
+            paddingTop: isSmallDevice ? "0%" : "5%",
             flex: 1,
           }}
         >
           <View
             style={{
-              paddingHorizontal: 20,
+              // paddingHorizontal: 20,
               paddingTop: 24,
               backgroundColor:
                 darkMode === "DARK" ? "rgba(255,255,255,0.2)" : "#FFFFFF",
-              marginTop: 27,
+              marginTop: isSmallDevice ? 10 : 27,
               borderRadius: 20,
               width: "100%",
               flex: 0.8,
@@ -151,8 +155,7 @@ const TeamsUserAdd = ({ navigation }) => {
                 touched,
               }) => (
                 <View style={styles.mainContainer}>
-                  <View>
-                    {/* <Text
+                  {/* <Text
                       style={
                         darkMode === "DARK"
                           ? styles.darkformLabel
@@ -162,53 +165,48 @@ const TeamsUserAdd = ({ navigation }) => {
                       Select account type
                     </Text> */}
 
-                    {items.map((item, index) => (
-                      <View
-                        key={item.id}
-                        style={{
-                          width: "90%",
-                          marginLeft: "5%",
-                          marginBottom: "5%",
-                        }}
+                  {items.map((item, index) => (
+                    <View
+                      key={item.id}
+                      style={{
+                        width: "100%",
+                        marginHorizontal: "3%",
+                        marginBottom: "5%",
+                      }}
+                    >
+                      <Text
+                        style={
+                          darkMode === "DARK" ? styles.darklable : styles.lable
+                        }
                       >
-                        <Text
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darklable
-                              : styles.lable
+                        {item.label}
+                      </Text>
+                      <TextInput
+                        onBlur={() => setFieldTouched(item.initialValue)}
+                        onChangeText={handleChange(item.initialValue)}
+                        onChange={() => {
+                          if (item.label === "Postcode") {
+                            handleAddress(item.initialValue);
                           }
-                        >
-                          {item.label}
-                        </Text>
-                        <TextInput
-                          onBlur={() => setFieldTouched(item.initialValue)}
-                          onChangeText={handleChange(item.initialValue)}
-                          onChange={() => {
-                            if (item.label === "Postcode") {
-                              handleAddress(item.initialValue);
-                            }
-                          }}
-                          // style={{ fontSize: 24, marginTop: "1%" }}
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darkinputBox
-                              : styles.inputBox
-                          }
-                          placeholder={item.placeholder}
-                          placeholderTextColor={
-                            darkMode === "DARK"
-                              ? GlobalStyles.Color.white
-                              : null
-                          }
-                        />
+                        }}
+                        // style={{ fontSize: 24, marginTop: "1%" }}
+                        style={
+                          darkMode === "DARK"
+                            ? styles.darkinputBox
+                            : styles.inputBox
+                        }
+                        placeholder={item.placeholder}
+                        placeholderTextColor={
+                          darkMode === "DARK" ? GlobalStyles.Color.white : null
+                        }
+                      />
 
-                        <ErrorMessage
-                          error={errors[item.initialValue]}
-                          visible={touched[item.initialValue]}
-                        />
-                      </View>
-                    ))}
-                  </View>
+                      <ErrorMessage
+                        error={errors[item.initialValue]}
+                        visible={touched[item.initialValue]}
+                      />
+                    </View>
+                  ))}
                   <View style={{ marginTop: "5%" }}>
                     <LinearAccountButton
                       title="Continue"
@@ -275,9 +273,7 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
   },
   mainContainer: {
-    flex: 0.5,
-    justifyContent: "space-between",
-    alignContent: "center",
+    width: "100%",
   },
   darkinputBox: {
     width: "100%",

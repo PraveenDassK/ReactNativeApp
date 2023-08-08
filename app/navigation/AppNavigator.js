@@ -1720,7 +1720,7 @@ const StackNavigator = () => {
         name="SecurityAndPrivacy"
         component={gestureHandlerRootHOC(SecurityAndPrivacy)}
         options={{
-          title: "Security & Privacy",
+          title: "Settings",
           headerStyle: {
             backgroundColor:
               darkMode === "DARK"
@@ -1731,6 +1731,8 @@ const StackNavigator = () => {
             color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
             fontFamily: "Montserrat",
             fontSize: 25,
+            marginLeft:"20%",
+
           },
           headerBackImage: () => (
             <View

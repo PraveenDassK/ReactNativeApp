@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
@@ -184,177 +185,184 @@ const AddBeneficiary = ({ navigation }) => {
   return (
     <KeyboardAvoider>
       {/* <CountdownBar /> */}
-      <View
+      <ScrollView
         style={{
-          height: "100%",
-          flex: 1,
           backgroundColor:
             darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
         }}
       >
-        <StepProgress currentStep={1} darkMode={darkMode} />
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
-            style={{
-              flex: 1,
-              paddingHorizontal: 20,
-              paddingVertical: 24,
-              backgroundColor:
-                darkMode === "DARK"
-                  ? GlobalStyles.Color.secondaryDarkTheme_bg
-                  : GlobalStyles.Color.white,
-              marginTop: 27,
-              borderTopEndRadius: 20,
-              borderTopStartRadius: 20,
-            }}
-          >
-            <Formik
-              initialValues={{
-                firstName: "",
-                lastName: "",
-                sortCode: "",
-                accNum: "",
+        <View
+          style={{
+            height: "100%",
+            flex: 1,
+            backgroundColor:
+              darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+          }}
+        >
+          <StepProgress currentStep={1} darkMode={darkMode} />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View
+              style={{
+                flex: 1,
+                paddingHorizontal: 20,
+                paddingVertical: 24,
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.secondaryDarkTheme_bg
+                    : GlobalStyles.Color.white,
+                marginTop: 27,
+                borderTopEndRadius: 20,
+                borderTopStartRadius: 20,
               }}
-              onSubmit={handleSubmit}
-              validationSchema={validationSchema}
             >
-              {({
-                handleChange,
-                handleSubmit,
-                errors,
-                setFieldTouched,
-                touched,
-              }) => (
-                <>
-                  <View>
-                    <Text
-                      style={
-                        darkMode === "DARK"
-                          ? styles.darkformLabel
-                          : styles.formLabel
-                      }
-                    >
-                      Select account type
-                    </Text>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        backgroundColor:
+              <Formik
+                initialValues={{
+                  firstName: "",
+                  lastName: "",
+                  sortCode: "",
+                  accNum: "",
+                }}
+                onSubmit={handleSubmit}
+                validationSchema={validationSchema}
+              >
+                {({
+                  handleChange,
+                  handleSubmit,
+                  errors,
+                  setFieldTouched,
+                  touched,
+                }) => (
+                  <>
+                    <View>
+                      <Text
+                        style={
                           darkMode === "DARK"
-                            ? GlobalStyles.Color.secondaryDarkTheme_bg
-                            : GlobalStyles.Color.white,
-                      }}
-                    >
-                      <CheckBox
-                        title="Personal"
-                        checked={selectedOption === "personal"}
-                        checkedColor={darkMode === "DARK" ? "white" : "black"}
-                        onPress={() => handleCheckboxChange("personal")}
-                        containerStyle={{
-                          backgroundColor:
-                            darkMode === "DARK"
-                              ? GlobalStyles.Color.secondaryDarkTheme_bg
-                              : GlobalStyles.Color.white,
-                        }}
-                        textStyle={{
-                          color:
-                            darkMode === "DARK"
-                              ? GlobalStyles.Color.white
-                              : GlobalStyles.Color.secondaryDarkTheme_bg,
-                        }}
-                      />
-                      <CheckBox
-                        title="Business"
-                        checked={selectedOption === "business"}
-                        checkedColor={darkMode === "DARK" ? "white" : "black"}
-                        onPress={() => handleCheckboxChange("business")}
-                        containerStyle={{
-                          backgroundColor:
-                            darkMode === "DARK"
-                              ? GlobalStyles.Color.secondaryDarkTheme_bg
-                              : GlobalStyles.Color.white,
-                        }}
-                        textStyle={{
-                          color:
-                            darkMode === "DARK"
-                              ? GlobalStyles.Color.white
-                              : GlobalStyles.Color.secondaryDarkTheme_bg,
-                        }}
-                      />
-                    </View>
-
-                    {items.map((item, index) => (
+                            ? styles.darkformLabel
+                            : styles.formLabel
+                        }
+                      >
+                        Select account type
+                      </Text>
                       <View
-                        key={item.id}
                         style={{
-                          marginTop: 22,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          backgroundColor:
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.secondaryDarkTheme_bg
+                              : GlobalStyles.Color.white,
                         }}
                       >
-                        {console.log("item", item)}
-                        <Text
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darkformLabel
-                              : styles.formLabel
-                          }
-                        >
-                          {item.label}
-                        </Text>
-                        <TextInput
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darkinputBox
-                              : styles.inputBox
-                          }
-                          onChangeText={handleChange(item.initialValue)}
-                          placeholder={item.placeholder}
-                          placeholderTextColor={
-                            darkMode === "DARK"
-                              ? GlobalStyles.Color.white
-                              : null
-                          }
+                        <CheckBox
+                          title="Personal"
+                          checked={selectedOption === "personal"}
+                          checkedColor={darkMode === "DARK" ? "white" : "black"}
+                          onPress={() => handleCheckboxChange("personal")}
+                          containerStyle={{
+                            backgroundColor:
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.secondaryDarkTheme_bg
+                                : GlobalStyles.Color.white,
+                          }}
+                          textStyle={{
+                            color:
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.white
+                                : GlobalStyles.Color.secondaryDarkTheme_bg,
+                          }}
                         />
-                        <ErrorMessage
-                          error={errors[item.initialValue]}
-                          visible={touched[item.initialValue]}
+                        <CheckBox
+                          title="Business"
+                          checked={selectedOption === "business"}
+                          checkedColor={darkMode === "DARK" ? "white" : "black"}
+                          onPress={() => handleCheckboxChange("business")}
+                          containerStyle={{
+                            backgroundColor:
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.secondaryDarkTheme_bg
+                                : GlobalStyles.Color.white,
+                          }}
+                          textStyle={{
+                            color:
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.white
+                                : GlobalStyles.Color.secondaryDarkTheme_bg,
+                          }}
                         />
                       </View>
-                    ))}
-                  </View>
-                  {/* <Button
+
+                      {items.map((item, index) => (
+                        <View
+                          key={item.id}
+                          style={{
+                            marginTop: 22,
+                          }}
+                        >
+                          {console.log("item", item)}
+                          <Text
+                            style={
+                              darkMode === "DARK"
+                                ? styles.darkformLabel
+                                : styles.formLabel
+                            }
+                          >
+                            {item.label}
+                          </Text>
+                          <TextInput
+                            style={
+                              darkMode === "DARK"
+                                ? styles.darkinputBox
+                                : styles.inputBox
+                            }
+                            onChangeText={handleChange(item.initialValue)}
+                            placeholder={item.placeholder}
+                            placeholderTextColor={
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.white
+                                : null
+                            }
+                          />
+                          <ErrorMessage
+                            error={errors[item.initialValue]}
+                            visible={touched[item.initialValue]}
+                          />
+                        </View>
+                      ))}
+                    </View>
+                    {/* <Button
                       title="Continue"
                       textColor={GlobalStyles.Color.white}
                       color="black"
                       style={styles.buttonColor}
                       onPress={handleSubmit}
                     /> */}
-                  <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <LinearGradient
-                        colors={
-                          darkMode === "DARK"
-                            ? ["#178BFF", "#0101FD"]
-                            : ["#212529", "#3A3A3A"]
-                        }
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={
-                          darkMode === "DARK"
-                            ? styles.darkbuttonPayNew
-                            : styles.buttonPayNew
-                        }
-                      >
-                        <Text style={styles.buttonPayNewText}>Continue</Text>
-                      </LinearGradient>
-                    </TouchableOpacity>
-                  </View>
-                </>
-              )}
-            </Formik>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+                    <View style={styles.buttonContainer}>
+                      <TouchableOpacity onPress={handleSubmit}>
+                        <LinearGradient
+                          colors={
+                            darkMode === "DARK"
+                              ? ["#178BFF", "#0101FD"]
+                              : ["#212529", "#3A3A3A"]
+                          }
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkbuttonPayNew
+                              : styles.buttonPayNew
+                          }
+                        >
+                          <Text style={styles.buttonPayNewText}>Continue</Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
+                  </>
+                )}
+              </Formik>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </ScrollView>
     </KeyboardAvoider>
   );
 };

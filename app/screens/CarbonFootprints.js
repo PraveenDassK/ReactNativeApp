@@ -24,11 +24,10 @@ import authStorage from "../auth/storage";
 const CarbonFootprints = ({ navigation }) => {
   const handleNavigation = () => navigation.navigate("CarbonExplore");
   const { darkMode, setDarkMode } = useContext(AuthContext);
-  
 
   const handleDark = async () => {
     // const data=authStorage.removeColor();
-    // 
+    //
     if (darkMode === "DARK") {
       authStorage.removeColor();
       setDarkMode(authStorage.getColor());
@@ -108,7 +107,7 @@ const CarbonFootprints = ({ navigation }) => {
               onNavigate={handleNavigation}
               darkMode={darkMode}
             >
-              <ImageCardContainer />
+              <ImageCardContainer darkMode={darkMode} />
             </CarbonContainer>
             <CarbonContainer title="Your virtual planet" darkMode={darkMode}>
               <View style={styles.center}>
@@ -161,7 +160,7 @@ const CarbonContainer = ({ title, children, onNavigate, darkMode }) => {
       </Text>
       <View
         style={[
-          styles.container,
+          darkMode === "DARK" ? styles.darkcontainer : styles.container,
           title ? styles.containerSpacing : { marginTop: "-10%" },
         ]}
       >
@@ -176,13 +175,37 @@ const CarbonContainer = ({ title, children, onNavigate, darkMode }) => {
             ]}
           >
             <Text style={styles.containerHeaderText}>10</Text>
-            <Text style={styles.subHeader}>Purchased </Text>
-            <Text style={styles.subHeader}>Projects </Text>
+            <Text
+              style={
+                darkMode === "DARK" ? styles.darksubHeader : styles.subHeader
+              }
+            >
+              Purchased{" "}
+            </Text>
+            <Text
+              style={
+                darkMode === "DARK" ? styles.darksubHeader : styles.subHeader
+              }
+            >
+              Projects{" "}
+            </Text>
           </View>
           <View style={styles.containerItems}>
             <Text style={styles.containerHeaderText}>250kg</Text>
-            <Text style={styles.subHeader}>Carbon </Text>
-            <Text style={styles.subHeader}>Offset </Text>
+            <Text
+              style={
+                darkMode === "DARK" ? styles.darksubHeader : styles.subHeader
+              }
+            >
+              Carbon{" "}
+            </Text>
+            <Text
+              style={
+                darkMode === "DARK" ? styles.darksubHeader : styles.subHeader
+              }
+            >
+              Offset{" "}
+            </Text>
           </View>
         </View>
         <View
@@ -208,11 +231,15 @@ const CarbonContainer = ({ title, children, onNavigate, darkMode }) => {
   );
 };
 
-const ImageCardContainer = () => {
+const ImageCardContainer = ({ darkMode }) => {
   return (
     <>
       <View style={styles.containerSpacing}>
-        <Text style={styles.subHeader}>My projects</Text>
+        <Text
+          style={darkMode === "DARK" ? styles.darksubHeader : styles.subHeader}
+        >
+          My projects
+        </Text>
       </View>
 
       <View style={[styles.projectContainer, styles.bottomBorder]}>
@@ -225,7 +252,13 @@ const ImageCardContainer = () => {
         <View style={{ flex: 2, justifyContent: "flex-start" }}>
           <Text style={styles.projectHeader}>Project Type: Forests</Text>
           <View style={styles.itemSpacing}>
-            <Text numberOfLines={3} style={styles.subHeader}>
+            <Text
+              numberOfLines={3}
+              style={[
+                darkMode === "DARK" ? styles.darksubHeader : styles.subHeader,
+                { paddingLeft: "10%" },
+              ]}
+            >
               Agroforestry-Tree Planting Initiative, Kenya
             </Text>
           </View>
@@ -270,6 +303,12 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.white,
+    borderRadius: 20,
+    width: "100%",
+    padding: "5%",
+  },
+  darkcontainer: {
+    backgroundColor: "rgba(255, 255, 255,0.2)",
     borderRadius: 20,
     width: "100%",
     padding: "5%",
@@ -326,10 +365,16 @@ const styles = StyleSheet.create({
   projectHeader: {
     color: GlobalStyles.Color.darkGray,
     fontSize: 10,
+    paddingLeft:"10%"
   },
   subHeader: {
     fontFamily: "Montserrat",
     fontSize: 14,
+  },
+  darksubHeader: {
+    fontFamily: "Montserrat",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
   iconContainer: {
     display: "flex",

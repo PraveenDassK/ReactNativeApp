@@ -47,11 +47,11 @@ const Pin = ({ route, navigation }) => {
    */
   const checkPin = async () => {
     
-    if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
-      alert("Pin is incorrect");
-      pinView.current.clearAll();
-      return;
-    }
+    // if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
+    //   alert("Pin is incorrect");
+    //   pinView.current.clearAll();
+    //   return;
+    // }
 
     //If it is a group send and
     //If pin is correct then atempt to send

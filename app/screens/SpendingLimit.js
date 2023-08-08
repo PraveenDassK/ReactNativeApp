@@ -64,7 +64,7 @@ const SpendingLimit = ({ navigation, route }) => {
 
     const cards = await apiCall.GetCardByAccount("686283112");
     const accountApi = await apiCall.GetAllAccounts(userID);
-    
+
     setDropDownValue(cards);
     setMonLim(monthlyAmount);
     setAccountData(accountApi);
@@ -98,13 +98,11 @@ const SpendingLimit = ({ navigation, route }) => {
     if (validCheck) {
       //If it is do this
       const response = await api.SetLimit(selectedCard, amount);
-      
-      
+
       setIsToggled(false);
       loadData();
     } else {
       //If it isn't show an error message here
-      
     }
   };
   let newAccountArray = accountData.map((eachData, i) => {
@@ -119,14 +117,13 @@ const SpendingLimit = ({ navigation, route }) => {
     if (isEnabled) {
       const amount = "3000";
       const response = await api.SetLimit(selectedCard, amount);
-      
+
       setIsEnabled(false);
       loadData();
     } else {
       setIsEnabled(true);
       storage.storeLimits(true);
       // navigation.navigate("SetLimit");
-      
     }
   };
 
@@ -141,7 +138,6 @@ const SpendingLimit = ({ navigation, route }) => {
     const newElemet = accountData.filter(
       (eachValue, index) => index === item._index
     );
-    
 
     return (
       <View style={styles.dropDownarrayitem}>
@@ -162,7 +158,7 @@ const SpendingLimit = ({ navigation, route }) => {
       </View>
     );
   };
-  
+
   return (
     <KeyboardAvoider>
       <ImageBackground
@@ -191,7 +187,6 @@ const SpendingLimit = ({ navigation, route }) => {
                 valueField="value"
                 // defalutValue="Mr"
                 onChange={(item) => {
-                  
                   setSelectedCard(item.value);
                   loadData();
                 }}
@@ -263,7 +258,7 @@ const SpendingLimit = ({ navigation, route }) => {
                           style={{
                             fontSize: 28,
                             color: "blue",
-                            fontFamily:"Montserrat-Bold",
+                            fontFamily: "Montserrat-Bold",
                           }}
                         >
                           {" "}
@@ -275,7 +270,7 @@ const SpendingLimit = ({ navigation, route }) => {
                             fontSize: 28,
                             marginTop: "2.5%",
                             color: "red",
-                            fontFamily:"Montserrat-Bold",
+                            fontFamily: "Montserrat-Bold",
                           }}
                         >
                           {" "}
@@ -286,9 +281,9 @@ const SpendingLimit = ({ navigation, route }) => {
                         style={{
                           fontSize: 16,
                           marginTop: "1%",
-                          fontFamily:"Montserrat",
+                          fontFamily: "Montserrat",
                           // opacity: 0.3,
-                          color:GlobalStyles.Color.gray_2100
+                          color: GlobalStyles.Color.gray_2100,
                         }}
                       >
                         Spent this month
@@ -394,18 +389,8 @@ const SpendingLimit = ({ navigation, route }) => {
             </View>
             <View style={{ width: "100%", height: 35 }} />
           </View>
-        </ScrollView>
-        <View
-          style={{
-            position: "absolute",
-            bottom: "-15%",
-            width: "100%",
-            paddingHorizontal: 10,
-            zIndex: 10,
-          }}
-        >
           <Tagline />
-        </View>
+        </ScrollView>
       </ImageBackground>
     </KeyboardAvoider>
   );

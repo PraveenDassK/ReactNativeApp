@@ -9,6 +9,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Alert,
+  Dimensions,
 } from "react-native";
 import { moderateScale } from "../config/scaling";
 import GlobalStyles from "../../GlobalStyles";
@@ -20,7 +21,9 @@ import UserIcon from "../components/UserIcon";
 import moment from "moment";
 import formatCurrency from "../utility/formatCurrency";
 import { MaterialIcons } from "@expo/vector-icons";
-
+const height = Dimensions.get("window").height;
+const smallDevice = { height: 650 };
+const isSmallDevice = height < smallDevice.height;
 const TeamsUser = ({ navigation, route }) => {
   const [showPinModal, setShowPinModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -94,7 +97,7 @@ const TeamsUser = ({ navigation, route }) => {
             /> */}
         <View
           style={{
-            marginVertical: "10%",
+            marginVertical: isSmallDevice ? "2%" : "10%",
             backgroundColor:
               darkMode === "DARK" ? "rgba(255,255,255,0.2)" : "white",
             padding: "7%",
@@ -249,7 +252,7 @@ const TransactionsBody = ({ formattedDate, darkMode, transactionData }) => {
     <>
       {transactionData?.map((eachTrans, i) => {
         return (
-          <View style={{ marginVertical: "5%" }} key={i}>
+          <View style={{ marginVertical: isSmallDevice ? "0%" : "5%" }} key={i}>
             <View
               style={{ justifyContent: "space-between", flexDirection: "row" }}
             >

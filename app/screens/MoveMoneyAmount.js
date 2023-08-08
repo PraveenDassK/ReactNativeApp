@@ -7,7 +7,9 @@ import {
   ActivityIndicator,
   TextInput,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  useWindowDimensions,
+  Dimensions,
 } from "react-native";
 import apiCall from "../api/apiCall";
 import CountdownBar from "../components/CountdownBar";
@@ -19,6 +21,10 @@ import SendFrom from "../components/SendFrom";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Device from "expo-device";
+const height = Dimensions.get("window").height;
+const smallDevice = { height: 650 };
+const isSmallDevice = height < smallDevice.height;
 
 const MoveMoneyAmount = ({ navigation, route }) => {
   const [isModal, setModal] = useState(false);
@@ -29,12 +35,22 @@ const MoveMoneyAmount = ({ navigation, route }) => {
   const [amountPay, setAmountPay] = useState("");
   const [selectedAccount, setSelectedAccount] = useState([]);
   let requestObj = route.params;
-
+  const { height, width } = useWindowDimensions();
+  const [device, setDevice] = useState("");
+  const smallDevice = { height: 650 };
   useEffect(() => {
     loadData();
     setModal(false);
   }, []);
+  useEffect(() => {
+    const deviceType = async () => {
+      const deviceSize = await Device.getDeviceTypeAsync();
 
+      setDevice(deviceSize);
+    };
+    deviceType();
+  }, [height, width]);
+  const isSmallDevice = height < smallDevice.height;
   /**
    * @dev This loads the account data
    */
@@ -173,9 +189,7 @@ const MoveMoneyAmount = ({ navigation, route }) => {
                     underlineColorAndroid="transparent"
                     placeholder="Enter the message(optional)"
                     placeholderTextColor={
-                      darkMode === "DARK"
-                        ? GlobalStyles.Color.white
-                        : null
+                      darkMode === "DARK" ? GlobalStyles.Color.white : null
                     }
                   />
                   {/* <Button
@@ -201,7 +215,9 @@ const MoveMoneyAmount = ({ navigation, route }) => {
                             : styles.buttonPayNew
                         }
                       >
-                        <Text style={styles.buttonPayNewText}>Processed to send</Text>
+                        <Text style={styles.buttonPayNewText}>
+                          Processed to send
+                        </Text>
                       </LinearGradient>
                     </TouchableOpacity>
                   </View>
@@ -268,7 +284,7 @@ const styles = StyleSheet.create({
   },
   amountInput: {
     width: "100%",
-    paddingVertical: 25,
+    paddingVertical: isSmallDevice ? 10 : 25,
     paddingHorizontal: 10,
     fontSize: 30,
     color: GlobalStyles.Color.green_total,
@@ -280,7 +296,7 @@ const styles = StyleSheet.create({
   },
   darkamountInput: {
     width: "100%",
-    paddingVertical: 25,
+    paddingVertical: isSmallDevice ? 10 : 25,
     paddingHorizontal: 10,
     fontSize: 30,
     color: GlobalStyles.Color.green_total,
@@ -297,10 +313,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     fontSize: 16,
     borderColor: GlobalStyles.Color.borderColor,
-    marginVertical: 20,
+    marginVertical: isSmallDevice ? 5 : 20,
     paddingVertical: 5,
     paddingHorizontal: 5,
-    height: 200,
+    height: isSmallDevice ? "20%" : 200,
     borderRadius: 10,
   },
   darkmessageText: {
@@ -311,10 +327,10 @@ const styles = StyleSheet.create({
     borderColor: GlobalStyles.Color.secondaryDarkTheme_bg,
     backgroundColor: GlobalStyles.Color.darkTheme_bg,
     color: GlobalStyles.Color.white,
-    marginVertical: 20,
+    marginVertical: isSmallDevice ? 5 : 20,
     paddingVertical: 5,
     paddingHorizontal: 5,
-    height: 200,
+    height: isSmallDevice ? "20%" : 200,
     borderRadius: 10,
   },
   mainContainer: {

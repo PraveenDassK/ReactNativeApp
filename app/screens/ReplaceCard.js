@@ -7,19 +7,23 @@ import {
   Pressable,
   Image,
   ImageBackground,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import Screen from "../components/Screen";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import api from "../api/api_list";
- let height = Dimensions.get("window").height;
+import Tagline from "../components/Tagline";
+let height = Dimensions.get("window").height;
+const smallDevice = { height: 650 };
+const isSmallDevice = height < smallDevice.height;
 const ReplaceCard = ({ navigation }) =>
   //Comment
   // const cardName = "Carbonyte Standard - 7761"
   {
     const [cardname, setCardname] = useState(null);
     const authContext = useContext(AuthContext);
+    const { darkMode } = useContext(AuthContext);
     //Calls the API once during load
     useEffect(() => {
       const unsubscribe = navigation.addListener("focus", () => {
@@ -28,7 +32,6 @@ const ReplaceCard = ({ navigation }) =>
     }, []);
     const loadData = async () => {
       setCardname(authContext.accountID);
-      
     };
 
     const dataOfLost = [
@@ -47,7 +50,25 @@ const ReplaceCard = ({ navigation }) =>
     ];
 
     return (
-      <Screen>
+      <ImageBackground
+        source={
+          darkMode === "DARK"
+            ? require("../assets/dashboardDark/DashboardBottom.jpg")
+            : require("../assets/backgrounds/replaceCard.jpg")
+        }
+        resizeMode="contain"
+        imageStyle={{
+          bottom: "-70%", // Whatever offset you want from the bottom
+        }}
+        style={{
+          width: "100%",
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.darkTheme_bg
+              : GlobalStyles.Color.lightTheme_bg,
+          flex: 1,
+        }}
+      >
         <View style={styles.replaceCard}>
           <View>
             <View style={styles.topContainer}>
@@ -100,28 +121,14 @@ const ReplaceCard = ({ navigation }) =>
               );
             })}
           </View>
+          <Tagline darkMode={darkMode} />
         </View>
-        <ImageBackground
+        {/* <ImageBackground
           resizeMode="stretch"
           source={require("../assets/backgrounds/replaceCard.jpg")}
           style={styles.container}
-        />
-        <View
-          style={{
-            position: "absolute",
-            bottom: "10%",
-            width: "100%",
-            paddingHorizontal: 10,
-            left: "10%",
-          }}
-        >
-          <Text style={styles.bottomText}>
-            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-            <Text style={styles.bottomTextBold}>Choice</Text>
-          </Text>
-        </View>
-      </Screen>
+        /> */}
+      </ImageBackground>
     );
   };
 
@@ -137,13 +144,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   title: {
-    color:GlobalStyles.Color.lightBlack,
+    color: GlobalStyles.Color.lightBlack,
     fontFamily: "Montserrat",
     fontSize: 16,
     marginVertical: 15,
   },
   buttonStyle: {
-    backgroundColor:GlobalStyles.Color.white,
+    backgroundColor: GlobalStyles.Color.white,
     borderColor: "gray",
     padding: 5,
     display: "flex",
@@ -154,7 +161,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   lostTextColor: {
-    color: GlobalStyles.Color. gray_1300,
+    color: GlobalStyles.Color.gray_1300,
     fontFamily: "Montserrat",
     fontSize: 16,
   },
@@ -183,13 +190,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingLeft: GlobalStyles.Padding.padding_7xs,
-    paddingTop: GlobalStyles.Padding.padding_xl,
+    paddingTop: isSmallDevice ? 3 : GlobalStyles.Padding.padding_xl,
     paddingRight: GlobalStyles.Padding.padding_8xs,
-    backgroundColor: GlobalStyles.Color.gray_100,
+    // backgroundColor: GlobalStyles.Color.gray_100,
   },
   container: {
     width: "100%",
-    height: height/2.6,
+    // height: isSmallDevice ? height / 3 : height / 2.6,
     // position: "absolute",
     bottom: 0,
     zIndex: 0,
@@ -200,7 +207,7 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Regular",
   },
   bottomTextBold: {
-    color:  GlobalStyles.Color.white,
+    color: GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat",
   },

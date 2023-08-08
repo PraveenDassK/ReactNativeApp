@@ -10,6 +10,7 @@ import {
   Keyboard,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
@@ -81,9 +82,8 @@ const AddBeneficiary = ({ navigation, route }) => {
   const [showPinModal, setShowPinModal] = useState(false);
   let requestObj = route.params;
   const { darkMode } = useContext(AuthContext);
-  
+
   const handleSubmit = async ({ iban, bic, currency, refrence }) => {
-    
     if (!selectedCard) {
       setCurrencyError("Need to Select Currency");
       return;
@@ -94,7 +94,6 @@ const AddBeneficiary = ({ navigation, route }) => {
     requestObj.destinationIdentifier.bic = bic;
     requestObj.destinationIdentifier.currency = selectedCard;
     requestObj.externalReference = refrence;
-    
 
     const checkRequestObj = {
       paymentAccountId: "A122HTHM",
@@ -131,12 +130,12 @@ const AddBeneficiary = ({ navigation, route }) => {
   const handleSuccess = async () => {
     setShowPinModal(false);
     setIsLoading(true);
-    
+
     const checkCall = await apiBeneficiaries.checkBeneficary(
       authContext.userId,
       requestObj
     );
-    
+
     // if (checkCall.result.code == "MATCHED") {
     // }
 
@@ -145,8 +144,6 @@ const AddBeneficiary = ({ navigation, route }) => {
       requestObj
     );
 
-    
-    
     //If the payee is a duplicate don't add them
     if (
       beneficaryCall.data.resultMessage ==
@@ -229,164 +226,170 @@ const AddBeneficiary = ({ navigation, route }) => {
   return (
     <KeyboardAvoider>
       {/* <CountdownBar currentPage={3} /> */}
-      <View
+      <ScrollView
         style={{
-          height: "100%",
-          flex: 1,
           backgroundColor:
             darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
         }}
       >
-        <StepProgress currentStep={3} darkMode={darkMode}/>
+        <View
+          style={{
+            height: "100%",
+            flex: 1,
+            backgroundColor:
+              darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+          }}
+        >
+          <StepProgress currentStep={3} darkMode={darkMode} />
 
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
-            style={{
-              flex: 1,
-              paddingHorizontal: 20,
-              paddingVertical: 24,
-              backgroundColor:
-                darkMode === "DARK"
-                  ? GlobalStyles.Color.secondaryDarkTheme_bg
-                  : GlobalStyles.Color.white,
-              marginTop: 27,
-              borderTopEndRadius: 20,
-              borderTopStartRadius: 20,
-            }}
-          >
-            <Formik
-              initialValues={{
-                iban: "",
-                bic: "",
-                currency: "GBP",
-                refrence: "Friend",
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View
+              style={{
+                flex: 1,
+                paddingHorizontal: 20,
+                paddingVertical: 24,
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.secondaryDarkTheme_bg
+                    : GlobalStyles.Color.white,
+                marginTop: 27,
+                borderTopEndRadius: 20,
+                borderTopStartRadius: 20,
               }}
-              onSubmit={handleSubmit}
-              validationSchema={validationSchema}
             >
-              {({
-                handleChange,
-                handleSubmit,
-                errors,
-                setFieldTouched,
-                touched,
-              }) => (
-                <>
-                  <View>
-                    {items.map((item, index) => (
-                      <View
-                        key={item.id}
-                        style={{
-                          width: "90%",
-                          marginLeft: "5%",
-                          marginBottom: "5%",
-                        }}
-                      >
-                        <Text
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darklable
-                              : styles.lable
-                          }
+              <Formik
+                initialValues={{
+                  iban: "",
+                  bic: "",
+                  currency: "GBP",
+                  refrence: "Friend",
+                }}
+                onSubmit={handleSubmit}
+                validationSchema={validationSchema}
+              >
+                {({
+                  handleChange,
+                  handleSubmit,
+                  errors,
+                  setFieldTouched,
+                  touched,
+                }) => (
+                  <>
+                    <View>
+                      {items.map((item, index) => (
+                        <View
+                          key={item.id}
+                          style={{
+                            width: "90%",
+                            marginLeft: "5%",
+                            marginBottom: "5%",
+                          }}
                         >
-                          {item.label}
-                        </Text>
-                        {item.label === "Currency" ? (
-                          <View>
-                            <Dropdown
-                              data={arrayData}
-                              value={selectedCard}
-                              labelField="label"
-                              valueField="value"
-                              // defalutValue="Mr"
-                              onChange={(item) => {
-                                
-                                setSelectedCard(item.value);
-                                handleChange(item.value);
-                              }}
-                              style={
-                                darkMode === "DARK"
-                                  ? styles.darkdropdown
-                                  : styles.dropdown
-                              }
-                              containerStyle={styles.containerStyle}
-                              // renderRightIcon={() => (
-                              //   <AntDesign name="checkcircle" size={24} color="green" />
-                              // )}
-                              renderItem={renderItem}
-                              placeholder="Select Currency"
-                              autoScroll={false}
-                              placeholderStyle={{
-                                color:
-                                  darkMode === "DARK"
-                                    ? GlobalStyles.Color.white
-                                    : null,
-                              }}
-                              selectedTextStyle={{
-                                color:
-                                  darkMode === "DARK"
-                                    ? GlobalStyles.Color.white
-                                    : null,
-                              }}
-                            />
-                            <ErrorMessage
-                              error={currencyError}
-                              visible={currencyError}
-                            />
-                          </View>
-                        ) : (
-                          <TextInput
-                            onBlur={() => setFieldTouched(item.initialValue)}
-                            onChangeText={handleChange(item.initialValue)}
+                          <Text
                             style={
                               darkMode === "DARK"
-                                ? styles.darkinputBox
-                                : styles.inputBox
+                                ? styles.darklable
+                                : styles.lable
                             }
-                            placeholder={item.placeholder}
-                            placeholderTextColor={
-                              darkMode === "DARK"
-                                ? GlobalStyles.Color.white
-                                : null
-                            }
-                          />
-                        )}
+                          >
+                            {item.label}
+                          </Text>
+                          {item.label === "Currency" ? (
+                            <View>
+                              <Dropdown
+                                data={arrayData}
+                                value={selectedCard}
+                                labelField="label"
+                                valueField="value"
+                                // defalutValue="Mr"
+                                onChange={(item) => {
+                                  setSelectedCard(item.value);
+                                  handleChange(item.value);
+                                }}
+                                style={
+                                  darkMode === "DARK"
+                                    ? styles.darkdropdown
+                                    : styles.dropdown
+                                }
+                                containerStyle={styles.containerStyle}
+                                // renderRightIcon={() => (
+                                //   <AntDesign name="checkcircle" size={24} color="green" />
+                                // )}
+                                renderItem={renderItem}
+                                placeholder="Select Currency"
+                                autoScroll={false}
+                                placeholderStyle={{
+                                  color:
+                                    darkMode === "DARK"
+                                      ? GlobalStyles.Color.white
+                                      : null,
+                                }}
+                                selectedTextStyle={{
+                                  color:
+                                    darkMode === "DARK"
+                                      ? GlobalStyles.Color.white
+                                      : null,
+                                }}
+                              />
+                              <ErrorMessage
+                                error={currencyError}
+                                visible={currencyError}
+                              />
+                            </View>
+                          ) : (
+                            <TextInput
+                              onBlur={() => setFieldTouched(item.initialValue)}
+                              onChangeText={handleChange(item.initialValue)}
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkinputBox
+                                  : styles.inputBox
+                              }
+                              placeholder={item.placeholder}
+                              placeholderTextColor={
+                                darkMode === "DARK"
+                                  ? GlobalStyles.Color.white
+                                  : null
+                              }
+                            />
+                          )}
 
-                        <ErrorMessage
-                          error={errors[item.initialValue]}
-                          visible={touched[item.initialValue]}
-                        />
-                      </View>
-                    ))}
-                  </View>
-                  <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
-                    <View style={styles.buttonContainer}>
-                      <TouchableOpacity onPress={handleSubmit}>
-                        <LinearGradient
-                          colors={
-                            darkMode === "DARK"
-                              ? ["#178BFF", "#0101FD"]
-                              : ["#212529", "#3A3A3A"]
-                          }
-                          start={{ x: 0, y: 0 }}
-                          end={{ x: 1, y: 0 }}
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darkbuttonPayNew
-                              : styles.buttonPayNew
-                          }
-                        >
-                          <Text style={styles.buttonPayNewText}>Confirm</Text>
-                        </LinearGradient>
-                      </TouchableOpacity>
+                          <ErrorMessage
+                            error={errors[item.initialValue]}
+                            visible={touched[item.initialValue]}
+                          />
+                        </View>
+                      ))}
                     </View>
-                  </View>
-                </>
-              )}
-            </Formik>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+                    <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
+                      <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={handleSubmit}>
+                          <LinearGradient
+                            colors={
+                              darkMode === "DARK"
+                                ? ["#178BFF", "#0101FD"]
+                                : ["#212529", "#3A3A3A"]
+                            }
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={
+                              darkMode === "DARK"
+                                ? styles.darkbuttonPayNew
+                                : styles.buttonPayNew
+                            }
+                          >
+                            <Text style={styles.buttonPayNewText}>Confirm</Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </>
+                )}
+              </Formik>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </ScrollView>
     </KeyboardAvoider>
   );
 };

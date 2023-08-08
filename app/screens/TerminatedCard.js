@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Image,
   StyleSheet,
@@ -18,16 +18,38 @@ import {
 import { Rating, AirbnbRating } from "react-native-ratings";
 import BrokenCard from "../assets/TerminateCard/brokencardBottom.svg";
 import BrokenTop from "../assets/TerminateCard/brokencard.svg";
-const height = Dimensions.get("window").height;
+import AuthContext from "../auth/context";
+import Tagline from "../components/Tagline";
 
+const height = Dimensions.get("window").height;
+const smallDevice = { height: 650 };
+const isSmallDevice = height < smallDevice.height;
 const TerminatedCard = ({ navigation }) => {
   const [animationProgress, setAnimationProgress] = useState(true);
-  function ratingCompleted(rating) {
-    
-  }
+  const { darkMode } = useContext(AuthContext);
+  function ratingCompleted(rating) {}
   return (
-    <View style={styles.terminatedCard}>
-      {/* <View
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/DashboardBottom.jpg")
+          : require("../assets/backgrounds/terminatecard.jpg")
+      }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+        flex: 1,
+      }}
+    >
+      <View style={styles.terminatedCard}>
+        {/* <View
           style={{
             // position: "absolute",
             zIndex: 10,
@@ -44,65 +66,68 @@ const TerminatedCard = ({ navigation }) => {
             <BrokenCard height="100%" />
           </View>
         </View> */}
-      <View style={styles.brokenCreditCardParent}>
-        <Image
-          style={[styles.brokenCreditCardIcon, styles.groupParentPosition]}
-          resizeMode="contain"
-          source={require("../assets/brokencreditcard.png")}
-        />
-        <Text style={[styles.hello, styles.helloTypo]}>
-          <Text style={styles.yourCardHas}>Your card has been </Text>
-          <Text style={styles.yourCardHas}>terminated.</Text>
-        </Text>
-        <Text style={styles.useCard}>
-          You will not be able to use this card.
-        </Text>
-      </View>
-
+        <View style={styles.brokenCreditCardParent}>
+          <Image
+            style={[styles.brokenCreditCardIcon, styles.groupParentPosition]}
+            resizeMode="contain"
+            source={require("../assets/brokencreditcard.png")}
+          />
+          <Text style={[styles.hello, styles.helloTypo]}>
+            <Text style={styles.yourCardHas}>Your card has been </Text>
+            <Text style={styles.yourCardHas}>terminated.</Text>
+          </Text>
+          <Text style={styles.useCard}>
+            You will not be able to use this card.
+          </Text>
+        </View>
+        {/* 
       <ImageBackground
         resizeMode="stretch"
         source={require("../assets/backgrounds/terminatecard.jpg")}
         style={styles.container}
-      />
-      <View
-        style={{
-          position: "absolute",
-          bottom: "20%",
-          width: "100%",
-          paddingHorizontal: 10,
-        }}
-      >
-        <View style={styles.brokenBottomCreditCardParent}>
-          <Text style={styles.sadText}>Sad to see you go!</Text>
-          <Text style={styles.sadTextNormal}>
-            The planet is in danger! We can make it better{"\n"}.Stay connect
-            with us:
-            <Text
-              style={styles.sadText}
-              onPress={() => Linking.openURL("https://carbonyte.io/")}
-            >
-              {" "}
-              www.carbonyte.io
+      /> */}
+        <View
+          style={{
+            width: "100%",
+            paddingHorizontal: 10,
+            marginVertical: "10%",
+          }}
+        >
+          <View style={styles.brokenBottomCreditCardParent}>
+            <Text style={styles.sadText}>Sad to see you go!</Text>
+            <Text style={styles.sadTextNormal}>
+              The planet is in danger! We can make it better{"\n"}.Stay connect
+              with us:
+              <Text
+                style={styles.sadText}
+                onPress={() => Linking.openURL("https://carbonyte.io/")}
+              >
+                {" "}
+                www.carbonyte.io
+              </Text>
             </Text>
-          </Text>
-          <Text style={styles.happytohelp}>Happy to hear your feedback. </Text>
-          <Rating
-            type="star"
-            ratingCount={5}
-            imageSize={50}
-            showRating={false}
-            onFinishRating={ratingCompleted}
-            style={{ width: "100%", marginVertical: 5 }}
-          />
-        </View>
+            <Text style={styles.happytohelp}>
+              Happy to hear your feedback.{" "}
+            </Text>
+            <Rating
+              type="star"
+              ratingCount={5}
+              imageSize={50}
+              showRating={false}
+              onFinishRating={ratingCompleted}
+              style={{ width: "100%", marginVertical: 5 }}
+            />
+          </View>
 
-        <Text style={styles.bottomText}>
-          Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
-          <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
-          <Text style={styles.bottomTextBold}>Choice</Text>
-        </Text>
+          {/* <Text style={styles.bottomText}>
+            Your <Text style={styles.bottomTextBold}> Money </Text>• Your{" "}
+            <Text style={styles.bottomTextBold}>Planet</Text> • Your{" "}
+            <Text style={styles.bottomTextBold}>Choice</Text>
+          </Text> */}
+        </View>
+        <Tagline darkMode={darkMode} />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -190,7 +215,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   terminatedCard: {
-    backgroundColor: GlobalStyles.Color.gray_100,
+    // backgroundColor: GlobalStyles.Color.gray_100,
     flex: 1,
     height: "100%",
     width: "100%",

@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { LinearGradient } from "expo-linear-gradient";
@@ -55,8 +56,6 @@ const AddBeneficiary = ({ navigation, route }) => {
     postTown,
     address1,
   }) => {
-    
-
     let requestObj = route.params;
     requestObj.address.postCode = postcode;
     requestObj.emailAddress = emailAddress;
@@ -69,19 +68,16 @@ const AddBeneficiary = ({ navigation, route }) => {
     requestObj.address.postTown =
       selectedCard === "" ? postTown : selectedCard?.city;
 
-    
-    
-
     navigation.navigate("AddBeneficiaryRefrence", requestObj);
   };
 
   const handleAddress = async (postCode) => {
     // const response = await apiLogin.GetAddressByPostCode(postcode)
-    // 
+    //
     // setAddressData(response)
 
     // Remove this on live
-    
+
     const dummyAddress = [
       {
         label: "Fake address",
@@ -98,7 +94,6 @@ const AddBeneficiary = ({ navigation, route }) => {
     setArrayData(dummyAddress);
   };
 
-  
   const items = [
     {
       id: 2,
@@ -140,206 +135,216 @@ const AddBeneficiary = ({ navigation, route }) => {
   return (
     <KeyboardAvoider>
       {/* <CountdownBar currentPage={2} /> */}
-      <View
+      <ScrollView
         style={{
-          height: "100%",
-          flex: 1,
           backgroundColor:
             darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
         }}
       >
-        <StepProgress currentStep={2} />
+        <View
+          style={{
+            height: "100%",
+            flex: 1,
+            backgroundColor:
+              darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+          }}
+        >
+          <StepProgress currentStep={2} />
 
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
-            style={{
-              flex: 1,
-              paddingHorizontal: 20,
-              paddingVertical: 24,
-              backgroundColor:
-                darkMode === "DARK"
-                  ? GlobalStyles.Color.secondaryDarkTheme_bg
-                  : GlobalStyles.Color.white,
-              marginTop: 27,
-              borderTopEndRadius: 20,
-              borderTopStartRadius: 20,
-            }}
-          >
-            <Formik
-              initialValues={{
-                phoneNumber: " ",
-                emailAddress: " ",
-                postcode: "HA9 0HZ",
-                address1: "",
-                postTown: "",
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View
+              style={{
+                flex: 1,
+                paddingHorizontal: 20,
+                paddingVertical: 24,
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.secondaryDarkTheme_bg
+                    : GlobalStyles.Color.white,
+                marginTop: 27,
+                borderTopEndRadius: 20,
+                borderTopStartRadius: 20,
               }}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
             >
-              {({
-                handleChange,
-                handleSubmit,
-                errors,
-                setFieldTouched,
-                touched,
-              }) => (
-                <>
-                  <View>
-                    {items.map((item, index) => (
-                      <View key={item.id}>
-                        {item.isManual ? (
-                          <View
-                            key={item.id}
-                            style={{
-                              width: "90%",
-                              marginLeft: "5%",
-                              marginBottom: "5%",
-                            }}
-                          >
-                            <Text
-                              style={
-                                darkMode === "DARK"
-                                  ? styles.darklable
-                                  : styles.lable
-                              }
-                            >
-                              {item.label}
-                            </Text>
-                            <TextInput
-                              onBlur={() => setFieldTouched(item.initialValue)}
-                              onChangeText={handleChange(item.initialValue)}
-                              onChange={() => {
-                                if (item.label === "Postcode") {
-                                  handleAddress(item.initialValue);
-                                }
+              <Formik
+                initialValues={{
+                  phoneNumber: " ",
+                  emailAddress: " ",
+                  postcode: "HA9 0HZ",
+                  address1: "",
+                  postTown: "",
+                }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({
+                  handleChange,
+                  handleSubmit,
+                  errors,
+                  setFieldTouched,
+                  touched,
+                }) => (
+                  <>
+                    <View>
+                      {items.map((item, index) => (
+                        <View key={item.id}>
+                          {item.isManual ? (
+                            <View
+                              key={item.id}
+                              style={{
+                                width: "90%",
+                                marginLeft: "5%",
+                                marginBottom: "5%",
                               }}
-                              // style={{ fontSize: 24, marginTop: "1%" }}
-                              style={
-                                darkMode === "DARK"
-                                  ? styles.darkinputBox
-                                  : styles.inputBox
-                              }
-                              placeholder={item.placeholder}
-                              placeholderTextColor={
+                            >
+                              <Text
+                                style={
+                                  darkMode === "DARK"
+                                    ? styles.darklable
+                                    : styles.lable
+                                }
+                              >
+                                {item.label}
+                              </Text>
+                              <TextInput
+                                onBlur={() =>
+                                  setFieldTouched(item.initialValue)
+                                }
+                                onChangeText={handleChange(item.initialValue)}
+                                onChange={() => {
+                                  if (item.label === "Postcode") {
+                                    handleAddress(item.initialValue);
+                                  }
+                                }}
+                                // style={{ fontSize: 24, marginTop: "1%" }}
+                                style={
+                                  darkMode === "DARK"
+                                    ? styles.darkinputBox
+                                    : styles.inputBox
+                                }
+                                placeholder={item.placeholder}
+                                placeholderTextColor={
+                                  darkMode === "DARK"
+                                    ? GlobalStyles.Color.white
+                                    : null
+                                }
+                              />
+
+                              <ErrorMessage
+                                error={errors[item.initialValue]}
+                                visible={touched[item.initialValue]}
+                              />
+                            </View>
+                          ) : null}
+                        </View>
+                      ))}
+                      {!isManual && (
+                        <View
+                          style={{
+                            width: "90%",
+                            marginLeft: "5%",
+                            marginBottom: "5%",
+                          }}
+                        >
+                          <Text
+                            style={
+                              darkMode === "DARK"
+                                ? styles.darklable
+                                : styles.lable
+                            }
+                          >
+                            {"Address"}
+                          </Text>
+
+                          <Dropdown
+                            data={arrayData}
+                            value={selectedCard}
+                            labelField="label"
+                            valueField="value"
+                            // defalutValue="Mr"
+                            onChange={(item) => {
+                              setSelectedCard(item.value);
+                              // handleChange(item.value);
+                            }}
+                            style={
+                              darkMode === "DARK"
+                                ? styles.darkdropdown
+                                : styles.dropdown
+                            }
+                            containerStyle={styles.containerStyle}
+                            // renderRightIcon={() => (
+                            //   <AntDesign name="checkcircle" size={24} color="green" />
+                            // )}
+                            // renderItem={renderItem}
+                            placeholder="Select Address"
+                            autoScroll={false}
+                            placeholderStyle={{
+                              color:
                                 darkMode === "DARK"
                                   ? GlobalStyles.Color.white
-                                  : null
-                              }
-                            />
-
-                            <ErrorMessage
-                              error={errors[item.initialValue]}
-                              visible={touched[item.initialValue]}
-                            />
-                          </View>
-                        ) : null}
-                      </View>
-                    ))}
-                    {!isManual && (
-                      <View
-                        style={{
-                          width: "90%",
-                          marginLeft: "5%",
-                          marginBottom: "5%",
-                        }}
-                      >
-                        <Text
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darklable
-                              : styles.lable
-                          }
-                        >
-                          {"Address"}
-                        </Text>
-
-                        <Dropdown
-                          data={arrayData}
-                          value={selectedCard}
-                          labelField="label"
-                          valueField="value"
-                          // defalutValue="Mr"
-                          onChange={(item) => {
-                            
-                            setSelectedCard(item.value);
-                            // handleChange(item.value);
-                          }}
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darkdropdown
-                              : styles.dropdown
-                          }
-                          containerStyle={styles.containerStyle}
-                          // renderRightIcon={() => (
-                          //   <AntDesign name="checkcircle" size={24} color="green" />
-                          // )}
-                          // renderItem={renderItem}
-                          placeholder="Select Address"
-                          autoScroll={false}
-                          placeholderStyle={{
-                            color:
-                              darkMode === "DARK"
-                                ? GlobalStyles.Color.white
-                                : null,
-                          }}
-                          selectedTextStyle={{
-                            color:
-                              darkMode === "DARK"
-                                ? GlobalStyles.Color.white
-                                : null,
-                          }}
-                        />
-                      </View>
-                    )}
-                    <View style={{ marginVertical: 5 }}>
-                      {!isManual ? (
-                        <Text
-                          onPress={() => {
-                            setManual(true);
-                            setSelectedCard("");
-                          }}
-                          style={styles.manual}
-                        >
-                          Enter manually
-                        </Text>
-                      ) : (
-                        <Text
-                          onPress={() => setManual(false)}
-                          style={styles.manual}
-                        >
-                          Enter PostCode
-                        </Text>
+                                  : null,
+                            }}
+                            selectedTextStyle={{
+                              color:
+                                darkMode === "DARK"
+                                  ? GlobalStyles.Color.white
+                                  : null,
+                            }}
+                          />
+                        </View>
                       )}
+                      <View style={{ marginVertical: 5 }}>
+                        {!isManual ? (
+                          <Text
+                            onPress={() => {
+                              setManual(true);
+                              setSelectedCard("");
+                            }}
+                            style={styles.manual}
+                          >
+                            Enter manually
+                          </Text>
+                        ) : (
+                          <Text
+                            onPress={() => setManual(false)}
+                            style={styles.manual}
+                          >
+                            Enter PostCode
+                          </Text>
+                        )}
+                      </View>
                     </View>
-                  </View>
-                  <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
-                    <View style={styles.buttonContainer}>
-                      <TouchableOpacity onPress={handleSubmit}>
-                        <LinearGradient
-                          colors={
-                            darkMode === "DARK"
-                              ? ["#178BFF", "#0101FD"]
-                              : ["#212529", "#3A3A3A"]
-                          }
-                          start={{ x: 0, y: 0 }}
-                          end={{ x: 1, y: 0 }}
-                          style={
-                            darkMode === "DARK"
-                              ? styles.darkbuttonPayNew
-                              : styles.buttonPayNew
-                          }
-                        >
-                          <Text style={styles.buttonPayNewText}>Continue</Text>
-                        </LinearGradient>
-                      </TouchableOpacity>
+                    <View style={[{ flex: 1, justifyContent: "flex-end" }]}>
+                      <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={handleSubmit}>
+                          <LinearGradient
+                            colors={
+                              darkMode === "DARK"
+                                ? ["#178BFF", "#0101FD"]
+                                : ["#212529", "#3A3A3A"]
+                            }
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={
+                              darkMode === "DARK"
+                                ? styles.darkbuttonPayNew
+                                : styles.buttonPayNew
+                            }
+                          >
+                            <Text style={styles.buttonPayNewText}>
+                              Continue
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                  </View>
-                </>
-              )}
-            </Formik>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+                  </>
+                )}
+              </Formik>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </ScrollView>
     </KeyboardAvoider>
   );
 };
@@ -411,7 +416,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 14,
     color: GlobalStyles.Color.darkGray,
-    marginTop:10,
+    marginTop: 10,
   },
   darkdropdown: {
     marginTop: 10,

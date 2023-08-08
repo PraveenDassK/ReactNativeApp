@@ -1,10 +1,18 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
-
+const height = Dimensions.get("window").height;
+const smallDevice = { height: 650 };
+const isSmallDevice = height < smallDevice.height;
 const SendMoneySuccessPage = ({ route, navigation }) => {
-  
   const text =
     "You have sent £" +
     route.params.successObject.amount +
@@ -13,7 +21,7 @@ const SendMoneySuccessPage = ({ route, navigation }) => {
   const path = route?.params?.params?.finishScreen
     ? route.params.finishScreen
     : "Account";
-  
+
   const { darkMode } = React.useContext(AuthContext);
   return (
     <Pressable
@@ -54,7 +62,7 @@ const SendMoneySuccessPage = ({ route, navigation }) => {
             width: "100%",
             fontWeight: "700",
             textAlign: "center",
-            marginTop: "15%",
+            marginTop: isSmallDevice ? "5%" : "15%",
             color:
               darkMode === "DARK"
                 ? GlobalStyles.Color.white
