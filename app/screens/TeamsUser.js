@@ -21,6 +21,7 @@ import UserIcon from "../components/UserIcon";
 import moment from "moment";
 import formatCurrency from "../utility/formatCurrency";
 import { MaterialIcons } from "@expo/vector-icons";
+import Tagline from "../components/Tagline";
 const height = Dimensions.get("window").height;
 const smallDevice = { height: 650 };
 const isSmallDevice = height < smallDevice.height;
@@ -242,6 +243,7 @@ const TeamsUser = ({ navigation, route }) => {
           </TouchableWithoutFeedback>
         </View>
       </View>
+      <Tagline darkMode={darkMode} />
     </ImageBackground>
   );
 };

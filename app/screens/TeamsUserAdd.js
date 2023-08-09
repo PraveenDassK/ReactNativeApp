@@ -27,6 +27,7 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import AuthContext from "../auth/context";
 import LinearAccountButton from "../components/LinearAccountButton";
 import { ScrollView } from "react-native-gesture-handler";
+import Tagline from "../components/Tagline";
 const height = Dimensions.get("window").height;
 const smallDevice = { height: 650 };
 const isSmallDevice = height < smallDevice.height;
@@ -45,7 +46,7 @@ const items = [
   },
   {
     id: 4,
-    label: "Phone no.",
+    label: "Phone no",
     placeholder: "Enter phone number",
     initialValue: "phonenumber",
   },
@@ -191,6 +192,9 @@ const TeamsUserAdd = ({ navigation }) => {
                               handleAddress(item.initialValue);
                             }
                           }}
+                          keyboardType={
+                            item.label === "Phone no" ? "numeric" : "default"
+                          }
                           // style={{ fontSize: 24, marginTop: "1%" }}
                           style={
                             darkMode === "DARK"
@@ -223,6 +227,7 @@ const TeamsUserAdd = ({ navigation }) => {
               </Formik>
             </View>
           </View>
+          <Tagline darkMode={darkMode} />
         </ScrollView>
         {/* </TouchableWithoutFeedback> */}
       </ImageBackground>

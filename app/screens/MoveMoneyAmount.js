@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   Dimensions,
+  TouchableWithoutFeedback,
+  Pressable,
 } from "react-native";
 import apiCall from "../api/apiCall";
 import CountdownBar from "../components/CountdownBar";
@@ -22,6 +24,7 @@ import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Device from "expo-device";
+import { Keyboard } from "react-native";
 const height = Dimensions.get("window").height;
 const smallDevice = { height: 650 };
 const isSmallDevice = height < smallDevice.height;
@@ -89,9 +92,10 @@ const MoveMoneyAmount = ({ navigation, route }) => {
           : styles.blurMainContainer,
       ]}
     >
-      <View>
+      <Pressable onPress={Keyboard.dismiss}>
+        <>
         {/* <CountdownBar pageCount={3} currentPage={3} /> */}
-        <StepProgress currentStep={2} />
+        <StepProgress currentStep={1} darkMode={darkMode} />
 
         <View
           style={[
@@ -120,7 +124,11 @@ const MoveMoneyAmount = ({ navigation, route }) => {
                 resizeMode="contain"
               />
               <View>
-                <Text style={styles.idText}>
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkidText : styles.idText
+                  }
+                >
                   {accountValue?.destination?.id}
                 </Text>
                 {/* <Text style={styles.idText}>
@@ -237,7 +245,8 @@ const MoveMoneyAmount = ({ navigation, route }) => {
           handleSendMoney={handleSendMoney}
           darkMode={darkMode}
         />
-      </View>
+        </>
+      </Pressable>
     </View>
   );
 };
@@ -279,6 +288,11 @@ const styles = StyleSheet.create({
   },
   idText: {
     color: GlobalStyles.Color.black,
+    fontSize: 16,
+    fontFamily: "Montserrat-Medium",
+  },
+  darkidText: {
+    color: GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat-Medium",
   },

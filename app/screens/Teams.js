@@ -15,6 +15,7 @@ import UserIcon from "../components/UserIcon";
 import Button from "../components/AppButton";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
+import Tagline from "../components/Tagline";
 const PROXY_TEAM_DATA = [
   {
     name: "Ava Bel",
@@ -145,6 +146,7 @@ const Teams = ({ navigation }) => {
           darkMode={darkMode}
         />
       </View>
+      <Tagline darkMode={darkMode} />
     </ImageBackground>
   );
 };
