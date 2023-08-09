@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Pressable,
   FlatList,
+  ImageBackground,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -16,14 +17,14 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import AuthContext from "../auth/context";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "../components/Icon";
-
+import TransactionBody from "../components/transHistory/TransactionBody";
 import apiBeneficiaries from "../api/apiBeneficiaries";
-import {
-  TransactionBody,
-  TransactionHead,
-  TransactionFooter,
-} from "../components/transactions";
-
+// import {
+//   TransactionBody,
+//   TransactionHead,
+//   TransactionFooter,
+// } from "../components/transactions";
+import Tagline from "../components/Tagline";
 import { moderateScale } from "../config/scaling";
 import GlobalStyles from "../../GlobalStyles";
 
@@ -33,6 +34,25 @@ const DirectDebits = ({ navigation }) => {
       name: "Netflix",
       date: "1687339",
       amount: 5,
+      description: "HHwe",
+    },
+    {
+      name: "Netflix",
+      date: "1687339",
+      amount: 5,
+      description: "HHwe",
+    },
+    {
+      name: "Netflix",
+      date: "1687339",
+      amount: 5,
+      description: "HHwe",
+    },
+    {
+      name: "Netflix",
+      date: "1687339",
+      amount: 5,
+      description: "HHwe",
     },
   ]);
   const { darkMode } = useContext(AuthContext);
@@ -41,13 +61,27 @@ const DirectDebits = ({ navigation }) => {
   }, []);
 
   return (
-    <View
-      style={
-        darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/DashboardBottom.jpg")
+          : require("../assets/backgrounds/Dashboard.jpg")
       }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+        flex: 1,
+      }}
     >
-      <View>
-        <Text
+      <View style={styles.mainContainer}>
+        {/* <Text
           style={{
             color:
               darkMode === "DARK"
@@ -56,62 +90,79 @@ const DirectDebits = ({ navigation }) => {
           }}
         >
           Direct debits
-        </Text>
-        <View style={styles.containerSpacing}>
-          <TransactionHead
+        </Text> */}
+        <View
+          style={{
+            backgroundColor:
+              darkMode === "DARK"
+                ? "rgba(255,255,255,0.2)"
+                : GlobalStyles.Color.white,
+            // paddingVertical: "10%",
+            borderRadius: 30,
+            width: "100%",
+            marginVertical: "5%",
+          }}
+        >
+          {/* <TransactionHead
             headerTitle="Carbon transactions"
             darkMode={darkMode}
-          />
-          {directDebits?.map(({ name, date, amount }) => (
+          /> */}
+          {directDebits?.map(({ name, date, amount, description }, index) => (
             <TransactionBody
+              key={index}
               name={`${name}`}
+              index={index}
               date={date}
               token={amount}
+              amount={amount}
               darkMode={darkMode}
+              lastElement={directDebits.length - 1}
+              description={name}
             />
           ))}
-          <TransactionFooter
+          {/* <TransactionFooter
             number={directDebits.length}
             total={5}
             // onSee={() => navigation.navigate("VirtualEcoSystem")}
-          />
+          /> */}
         </View>
-      </View>
 
-      <View style={styles.buttonContainer}>
-        {/* <Button
+        <View style={styles.buttonContainer}>
+          {/* <Button
           title={"Make a new direct debit"}
           onPress={() => navigation.navigate("DirectDebitForm")}
         /> */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate("DirectDebitForm")}
-        >
-          <LinearGradient
-            colors={
-              darkMode === "DARK"
-                ? ["#178BFF", "#0101FD"]
-                : ["#212529", "#3A3A3A"]
-            }
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={
-              darkMode === "DARK"
-                ? styles.darkbuttonPayNew
-                : styles.buttonPayNew
-            }
+          <TouchableOpacity
+            onPress={() => navigation.navigate("DirectDebitForm")}
           >
-            {/* <Ionicons
+            <LinearGradient
+              colors={
+                darkMode === "DARK"
+                  ? ["#178BFF", "#0101FD"]
+                  : ["#212529", "#3A3A3A"]
+              }
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={
+                darkMode === "DARK"
+                  ? styles.darkbuttonPayNew
+                  : styles.buttonPayNew
+              }
+            >
+              {/* <Ionicons
                                 name="add-circle-outline"
                                 size={20}
                                 color={GlobalStyles.Color.white}
                               /> */}
-            <Text style={styles.buttonPayNewText}>
-              Make a new direct debit"
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
+              <Text style={styles.buttonPayNewText}>
+                Setup new direct debit
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+      <Tagline darkMode={darkMode}/>
+    </ImageBackground>
   );
 };
 
@@ -126,20 +177,18 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
+    paddingHorizontal: 20,
+    width: "100%",
+    alignSelf: "flex-start",
   },
   darkmainContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
-    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
   buttonContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop:"5%"
+    marginTop: "5%",
   },
   buttonPayNew: {
     borderRadius: 10,

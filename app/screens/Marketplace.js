@@ -3,12 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
+  // FlatList,
   Image,
   TouchableOpacity,
   ScrollView,
   Alert
 } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Swiper from "react-native-swiper";
 import { moderateScale } from "../config/scaling";

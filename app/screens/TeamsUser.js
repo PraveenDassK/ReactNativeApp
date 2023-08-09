@@ -110,6 +110,7 @@ const TeamsUser = ({ navigation, route }) => {
               darkMode={darkMode}
               showName={false}
               size={80}
+              fontSize={30}
             />
           </View>
           <View
@@ -135,7 +136,7 @@ const TeamsUser = ({ navigation, route }) => {
                   darkMode === "DARK" ? styles.darkrightText : styles.rightText
                 }
               >
-                Ava Bel
+                {userData?.name}
               </Text>
             </View>
             <View

@@ -23,19 +23,21 @@ const TransactionBody = ({
   }
 
   return (
-    <BlurView
-      tint="light"
-      intensity={60}
-      style={{
-        backgroundColor:
-          darkMode === "DARK"
-            ? "rgba(255, 255, 255, 0.5) "
-            : "rgba(255, 255, 255, 0.5)",
-        borderColor: "transparent",
-
-        borderWidth: 0,
-      }}
-    >
+    // <BlurView
+    //   tint="light"
+    //   intensity={60}
+    //   style={{
+    //     backgroundColor:
+    //       darkMode === "DARK"
+    //         ? "rgba(255, 255, 255, 0.5) "
+    //         : "rgba(255, 255, 255, 0.5)",
+    //     borderColor: "transparent",
+    //     padding: "2%",
+    //     borderWidth: 0,
+    //     width: "100%",
+    //   }}
+    // >
+    <View>
       <Pressable
         onPress={onTransaction}
         style={{
@@ -105,7 +107,8 @@ const TransactionBody = ({
           borderBottomWidth: index == lastElement ? 0 : 3,
         }}
       />
-    </BlurView>
+    </View>
+    // </BlurView>
   );
 };
 

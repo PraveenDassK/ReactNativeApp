@@ -5,7 +5,7 @@ import TransactionHeader from "./TransactionHeader";
 import { TransactionFooter } from "../transactions";
 import TransactionBody from "./TransactionBody";
 import GlobalStyles from "../../../GlobalStyles";
-
+import { BlurView } from "expo-blur";
 const TransactionContainer = ({
   title = "Transactions",
   onTransaction,
@@ -28,21 +28,36 @@ const TransactionContainer = ({
       onTransactionFilter={(item) => onTransactionFilter(item)}
       darkMode={darkMode}
     />
-    {transactions.map(
-      ({ id, credit, description, transactionDate, amount }, index) => (
-        <TransactionBody
-          key={id}
-          onTransaction={onTransaction}
-          description={description}
-          date={transactionDate}
-          amount={amount}
-          credit={credit}
-          index={index}
-          lastElement={transactions.length - 1}
-          darkMode={darkMode}
-        />
-      )
-    )}
+    <BlurView
+      tint="light"
+      intensity={60}
+      style={{
+        backgroundColor:
+          darkMode === "DARK"
+            ? "rgba(255, 255, 255, 0.5) "
+            : "rgba(255, 255, 255, 0.5)",
+        borderColor: "transparent",
+        padding: "2%",
+        borderWidth: 0,
+        width: "100%",
+      }}
+    >
+      {transactions.map(
+        ({ id, credit, description, transactionDate, amount }, index) => (
+          <TransactionBody
+            key={id}
+            onTransaction={onTransaction}
+            description={description}
+            date={transactionDate}
+            amount={amount}
+            credit={credit}
+            index={index}
+            lastElement={transactions.length - 1}
+            darkMode={darkMode}
+          />
+        )
+      )}
+    </BlurView>
     <TransactionFooter navigate={false} />
   </View>
 );

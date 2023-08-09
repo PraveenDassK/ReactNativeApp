@@ -26,7 +26,28 @@ const PROXY_TEAM_DATA = [
   },
   {
     name: "Efy Fey",
-    id: "2",
+    id: "3",
+  },
+
+  {
+    name: "Eva Bel",
+    id: "5",
+  },
+  {
+    name: "Cal Peter",
+    id: "6",
+  },
+  {
+    name: "Eva Bel",
+    id: "7",
+  },
+  {
+    name: "Eva Bel",
+    id: "8",
+  },
+  {
+    name: "Ava Gel",
+    id: "9",
   },
 ];
 const Teams = ({ navigation }) => {
@@ -84,7 +105,8 @@ const Teams = ({ navigation }) => {
         <View
           style={{
             marginVertical: "10%",
-            backgroundColor: darkMode ==="DARK"?"rgba(255,255,255,0.2)":"white",
+            backgroundColor:
+              darkMode === "DARK" ? "rgba(255,255,255,0.2)" : "white",
             padding: "7%",
             borderRadius: 20,
           }}
@@ -105,12 +127,14 @@ const Teams = ({ navigation }) => {
                     name={item.name}
                     onPress={() => navigation.navigate("TeamsUser", item)}
                     darkMode={darkMode}
+                    size={70}
+                    fontSize={30}
                   />
                 </View>
               )}
               keyExtractor={(item) => item.id}
               showsHorizontalScrollIndicator={false}
-              numColumns={4}
+              numColumns={3}
               contentContainerStyle={styles.flatListContent}
             />
           )}
