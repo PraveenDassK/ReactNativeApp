@@ -6,7 +6,7 @@ import AppText from "../components/Text";
 import apiCarbon from "../api/apiCarbon";
 import * as Progress from "react-native-progress";
 import GlobalStyles from "../../GlobalStyles";
-
+import CarbonDatePicker from "./CarbonDatePicker";
 const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const { userID, accountID, darkMode } = useContext(AuthContext);
@@ -29,7 +29,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
       return;
     }
   };
-  
+
   const colorsArray = ["tomato", "orange", "gold", "cyan", "green"];
   function getRandomItem(arr, i) {
     // get random index value
@@ -40,7 +40,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
 
     return item;
   }
-  
+
   let sumofValues = carbnonSpendData.reduce((n, { y }) => n + y, 0);
 
   if (isLoading) {
@@ -55,9 +55,9 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 15,
   };
-
   return (
     <View style={[styles.container, isStyled ? styled : null]}>
+      <CarbonDatePicker darkMode={darkMode} />
       <DoughnutChart
         data={carbnonSpendData}
         children={
@@ -114,7 +114,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
           width: "30%",
           height: 5,
           backgroundColor: "#0000001A",
-          top: "63%",
+          top: "66%",
           borderRadius: 100,
         }}
       />
@@ -122,7 +122,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
       <View>
         {carbnonSpendData.map((eachValue, i) => {
           let value = eachValue?.y / sumofValues;
-          
+
           return (
             <View style={{ marginBottom: 10 }} key={i}>
               <View

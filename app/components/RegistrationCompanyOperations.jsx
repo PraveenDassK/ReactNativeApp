@@ -18,10 +18,10 @@ import { Formik, Field, Form } from "formik";
 import { Dropdown } from "react-native-element-dropdown";
 import { CheckBox } from "@rneui/themed";
 import AuthScreen from "./AuthScreen";
-
+import ErrorMessage from "./forms/ErrorMessage";
 const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
-
   const [operationTime, setOperationTime] = useState("");
+  const [error, setError] = useState("");
   const timeOptions = [
     { label: "New ownership", value: "New ownership" },
     { label: "0 - 6 Months", value: "0 - 6 Months" },
@@ -36,15 +36,14 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
    * @dev This sends the String of the item back
    */
   const sendDetails = () => {
-    if(!operationTime) return;
+    console.log(operationTime, "this is the time");
+    if (!operationTime) return setError("Select one option");
     SaveDetails(operationTime, "CompanyOperations");
   };
 
   const handleBack = () => {
-    
     setScreenToShow("CompanyIncome");
   };
-  
 
   return (
     <AuthScreen
@@ -70,6 +69,7 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
                 setOperationTime(item.value);
               }}
             />
+            <ErrorMessage visible={error} error={error} />
           </View>
         )}
       </Formik>

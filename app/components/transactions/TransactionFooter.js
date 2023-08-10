@@ -3,6 +3,7 @@ import React from "react";
 import colors from "../../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
+import GlobalStyles from "../../../GlobalStyles";
 const TransactionFooter = ({ navigate = true, onSee }) => {
   return (
     <View style={styles.transactionHeadContainer}>
@@ -51,8 +52,9 @@ const styles = StyleSheet.create({
   },
   headerText: { fontWeight: "600" },
   navigationText: {
-    fontWeight: "600",
-    color: colors.blue,
+    color: GlobalStyles.Color.skyblue,
+    fontFamily: "Montserrat",
+    fontSize: 15,
   },
   navaigationIcon: {
     paddingLeft: "2%",
