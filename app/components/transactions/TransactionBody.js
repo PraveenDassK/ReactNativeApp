@@ -12,71 +12,56 @@ const TransactionBody = ({
   credit,
   token,
   darkMode,
+  index,
+  transLength,
 }) => {
+  const textStyle =
+    darkMode === "DARK" ? styles.darkdisplayText : styles.displayText;
+
+  const transactionItem =
+    !transLength === 1
+      ? {
+          paddingTop: index === 0 ? 20 : null,
+          borderTopLeftRadius: index === 0 ? 20 : null,
+          borderTopRightRadius: index === 0 ? 20 : null,
+          paddingBottom: index === -1 ? 20 : null,
+          borderBottomRightRadius: index === -1 ? 20 : null,
+          borderBottomLeftRadius: index === -1 ? 20 : null,
+          borderBottomColor: "#D2D2D2",
+          borderBottomWidth: index === -1 ? null : 0.5,
+        }
+      : {
+          padding: 20,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          borderBottomRightRadius: 20,
+          borderBottomLeftRadius: 20,
+        };
+
   return (
-    <Pressable style={styles.transactionMainContainer}>
+    <Pressable style={[styles.transactionMainContainer, transactionItem, {}]}>
       <View style={styles.transactionContainer}>
-        <View style={styles.iconContainer}>
-          <View>
-            <View style={styles.icon}>
-              <Text
-                style={
-                  darkMode === "DARK"
-                    ? styles.darkdisplayText
-                    : styles.displayText
-                }
-              >
-                {name.replace("Payment to ", "")[0]}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.nameContainer}>
-            <Text
-              style={
-                darkMode === "DARK"
-                  ? styles.darkdisplayText
-                  : styles.displayText
-              }
-            >
-              {name.replace("Payment to ", "")}
+        <View style={styles.nameContainer}>
+          <Text style={textStyle}>{name.replace("Payment to ", "")}</Text>
+
+          <View style={styles.spacing}>
+            <Text style={[textStyle, styles.subText]}>
+              {moment(date).format("DD MMMM YYYY")}
             </Text>
           </View>
-        </View>
-
-        <View style={styles.dateContainer}>
-          <Text
-            style={
-              darkMode === "DARK" ? styles.darkdisplayText : styles.displayText
-            }
-          >
-            {moment(date).format(" DD MMM, HH:MM")}
-            {/* {moment(item.transactionDate).format(" DD MMM YY")} */}
-          </Text>
         </View>
 
         <View style={styles.amountContainer}>
           {!token ? (
-            <Text
-              style={[
-                darkMode === "DARK"
-                  ? styles.darkdisplayText
-                  : styles.displayText,
-                { color: !credit ? "red" : "green" },
-              ]}
-            >
-              {!credit ? "-" : "+"}£{amount.toFixed(2)}
+            <Text style={[textStyle, { color: !credit ? "red" : "green" }]}>
+              {!credit ? "-" : "+"} {amount}.00
             </Text>
           ) : (
-            <Text
-              style={
-                darkMode === "DARK"
-                  ? styles.darkdisplayText
-                  : styles.displayText
-              }
-            >
-              {token}
-            </Text>
+            <Text style={textStyle}>{token}</Text>
           )}
+          <View style={styles.spacing}>
+            <Text style={styles.subText}>Card **** 8986</Text>
+          </View>
         </View>
       </View>
     </Pressable>
@@ -87,7 +72,7 @@ export default TransactionBody;
 
 const styles = StyleSheet.create({
   amountContainer: {
-    flex: 3,
+    flex: 1,
     justifyContent: "space-evenly",
     alignItems: "flex-end",
   },
@@ -97,15 +82,14 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   nameContainer: {
-    flex: 2,
+    flex: 1,
     justifyContent: "center",
-    paddingLeft: "5%",
   },
 
   transactionMainContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     padding: "3%",
-    height: moderateScale(50),
+    // height: moderateScale(50),
     justifyContent: "center",
   },
   transactionContainer: {
@@ -127,7 +111,10 @@ const styles = StyleSheet.create({
   displayText: { fontWeight: "600", textTransform: "capitalize" },
   darkdisplayText: {
     fontWeight: "600",
+
     textTransform: "capitalize",
     color: GlobalStyles.Color.white,
   },
+  subText: { fontSize: 12, color: "#999999" },
+  spacing: { marginTop: "2%" },
 });
