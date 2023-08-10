@@ -438,11 +438,27 @@ const SendMoney = ({ navigation }) => {
                 renderItem={(beneficary) => {
                   return (
                     <View style={styles.itemContainer}>
-                      <UserIcon
-                        name={beneficary?.item.groupName}
-                        onPress={() => sendGroupPayeeTrigger(beneficary.item)}
-                        darkMode={darkMode}
-                      />
+                      <View style={{ zIndex: 10 }}>
+                        <UserIcon
+                          name={beneficary?.item.groupName}
+                          onPress={() => sendGroupPayeeTrigger(beneficary.item)}
+                          darkMode={darkMode}
+                        />
+                      </View>
+                      {beneficary.item.beneficiariesDetails.length > 1 ? (
+                        <>
+                          <GroupBackground
+                            beneficary={beneficary}
+                            darkMode={darkMode}
+                            right={"10%"}
+                          />
+                          <GroupBackground
+                            beneficary={beneficary}
+                            darkMode={darkMode}
+                            right={"15%"}
+                          />
+                        </>
+                      ) : null}
                       {showDelete && (
                         <FadeInView
                           style={{
@@ -484,6 +500,35 @@ const SendMoney = ({ navigation }) => {
       {/* <View style={{ height: 400 }} /> */}
       {/* </ScrollView> */}
     </SafeAreaView>
+  );
+};
+
+const GroupBackground = ({ beneficary, darkMode, right }) => {
+  return (
+    <View
+      style={{
+        position: "absolute",
+        right: right,
+        top: "0%",
+        zIndex: -5,
+      }}
+    >
+      <UserIcon
+        name={beneficary?.item.groupName}
+        onPress={() => sendGroupPayeeTrigger(beneficary.item)}
+        darkMode={darkMode}
+        showName={false}
+      />
+      {/* <View
+      style={{
+        right: "-50%",
+        top: "20%",
+        position: "absolute",
+      }}
+    >
+      <Text style={{ color: "white" }}>+2</Text>
+    </View> */}
+    </View>
   );
 };
 

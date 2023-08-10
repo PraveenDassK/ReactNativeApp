@@ -19,7 +19,6 @@ const CarbonDatePicker = ({ darkMode }) => {
   const goToPreviousMonth = () => {
     const prevMonth = new Date(date);
     prevMonth.setMonth(prevMonth.getMonth() - 1);
-    console.log(prevMonth, "this is the previous month");
     setDate(prevMonth);
   };
   const goToNextMonth = () => {
@@ -27,7 +26,6 @@ const CarbonDatePicker = ({ darkMode }) => {
     nextMonth.setMonth(nextMonth.getMonth() + 1);
     setDate(nextMonth);
   };
-  console.log(date, "this is date");
   return (
     <View style={styles.mainContainer}>
       <AntDesign

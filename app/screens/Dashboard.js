@@ -211,7 +211,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               />
               <SquareIcon
                 name={"Send money"}
-                image={"send-o"}
+                image={"send"}
                 onPress={() => navigation.navigate("SendMoney")}
               />
               <SquareIcon
