@@ -89,162 +89,162 @@ const MoveMoneyAmount = ({ navigation, route }) => {
       style={[
         darkMode === "DARK"
           ? styles.darkblurMainContainer
-          : styles.blurMainContainer,
+          : isModal && styles.blurMainContainer,
       ]}
     >
       <Pressable onPress={Keyboard.dismiss}>
         <>
-        {/* <CountdownBar pageCount={3} currentPage={3} /> */}
-        <StepProgress currentStep={1} darkMode={darkMode} />
+          {/* <CountdownBar pageCount={3} currentPage={3} /> */}
+          <StepProgress currentStep={1} darkMode={darkMode} />
 
-        <View
-          style={[
-            darkMode === "DARK"
-              ? styles.darkmainContainer
-              : styles.mainContainer,
-            isModal && styles.blurMainContainer,
-          ]}
-        >
-          <View style={styles.topSentTo}>
-            <View>
-              <Text
-                style={
-                  darkMode === "DARK"
-                    ? styles.darksendToText
-                    : styles.sendToText
-                }
-              >
-                Send to
-              </Text>
-            </View>
-            <View style={styles.sendTo}>
-              <Image
-                source={require("../assets/cardLion.png")}
-                style={{ height: 30, width: 30 }}
-                resizeMode="contain"
-              />
+          <View
+            style={[
+              darkMode === "DARK"
+                ? styles.darkmainContainer
+                : styles.mainContainer,
+              isModal && styles.blurMainContainer,
+            ]}
+          >
+            <View style={styles.topSentTo}>
               <View>
                 <Text
                   style={
-                    darkMode === "DARK" ? styles.darkidText : styles.idText
+                    darkMode === "DARK"
+                      ? styles.darksendToText
+                      : styles.sendToText
                   }
                 >
-                  {accountValue?.destination?.id}
+                  Send to
                 </Text>
-                {/* <Text style={styles.idText}>
+              </View>
+              <View style={styles.sendTo}>
+                <Image
+                  source={require("../assets/cardLion.png")}
+                  style={{ height: 30, width: 30 }}
+                  resizeMode="contain"
+                />
+                <View>
+                  <Text
+                    style={
+                      darkMode === "DARK" ? styles.darkidText : styles.idText
+                    }
+                  >
+                    {accountValue?.destination?.id}
+                  </Text>
+                  {/* <Text style={styles.idText}>
                   {formatCurrency(
                     accountValue?.destination?.balance,
                     "GBP",
                     false
                   )}
                 </Text> */}
+                </View>
               </View>
             </View>
-          </View>
 
-          <View
-            style={{
-              marginTop: 50,
-              width: "100%",
-              paddingHorizontal: 10,
-              paddingVertical: 20,
-            }}
-          >
-            <Formik
-              initialValues={{
-                amountToSend: "1",
-                message: "",
+            <View
+              style={{
+                marginTop: 50,
+                width: "100%",
+                paddingHorizontal: 10,
+                paddingVertical: 20,
               }}
-              onSubmit={handleSubmit}
             >
-              {({ handleChange, handleSubmit, setFieldTouched, values }) => (
-                <View style={{ width: "100%" }}>
-                  <Text
-                    style={
-                      darkMode === "DARK"
-                        ? styles.darksendToText
-                        : styles.sendToText
-                    }
-                  >
-                    Enter the amount you want to send
-                  </Text>
-                  <TextInput
-                    value={"£" + values.amountToSend}
-                    keyboardType="numeric"
-                    onBlur={() => setFieldTouched("amountToSend")}
-                    onChangeText={(text) =>
-                      handleChange("amountToSend")(text.replace(/^£/, ""))
-                    }
-                    style={
-                      darkMode === "DARK"
-                        ? styles.darkamountInput
-                        : styles.amountInput
-                    }
-                  />
+              <Formik
+                initialValues={{
+                  amountToSend: "1",
+                  message: "",
+                }}
+                onSubmit={handleSubmit}
+              >
+                {({ handleChange, handleSubmit, setFieldTouched, values }) => (
+                  <View style={{ width: "100%" }}>
+                    <Text
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darksendToText
+                          : styles.sendToText
+                      }
+                    >
+                      Enter the amount you want to send
+                    </Text>
+                    <TextInput
+                      value={"£" + values.amountToSend}
+                      keyboardType="numeric"
+                      onBlur={() => setFieldTouched("amountToSend")}
+                      onChangeText={(text) =>
+                        handleChange("amountToSend")(text.replace(/^£/, ""))
+                      }
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darkamountInput
+                          : styles.amountInput
+                      }
+                    />
 
-                  <TextInput
-                    value={values.message}
-                    onBlur={() => setFieldTouched("message")}
-                    onChangeText={(text) =>
-                      handleChange("message")(text.replace(/^£/, ""))
-                    }
-                    style={
-                      darkMode === "DARK"
-                        ? styles.darkmessageText
-                        : styles.messageText
-                    }
-                    multiline={true}
-                    underlineColorAndroid="transparent"
-                    placeholder="Enter the message(optional)"
-                    placeholderTextColor={
-                      darkMode === "DARK" ? GlobalStyles.Color.white : null
-                    }
-                  />
-                  {/* <Button
+                    <TextInput
+                      value={values.message}
+                      onBlur={() => setFieldTouched("message")}
+                      onChangeText={(text) =>
+                        handleChange("message")(text.replace(/^£/, ""))
+                      }
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darkmessageText
+                          : styles.messageText
+                      }
+                      multiline={true}
+                      underlineColorAndroid="transparent"
+                      placeholder="Enter the message(optional)"
+                      placeholderTextColor={
+                        darkMode === "DARK" ? GlobalStyles.Color.white : null
+                      }
+                    />
+                    {/* <Button
                     title="Proceed to send"
                     color="black"
                     textColor="white"
                     onPress={handleSubmit}
                     style={{ alignItems: "flex-end" }}
                   /> */}
-                  <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <LinearGradient
-                        colors={
-                          darkMode === "DARK"
-                            ? ["#178BFF", "#0101FD"]
-                            : ["#212529", "#3A3A3A"]
-                        }
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={
-                          darkMode === "DARK"
-                            ? styles.darkbuttonPayNew
-                            : styles.buttonPayNew
-                        }
-                      >
-                        <Text style={styles.buttonPayNewText}>
-                          Processed to send
-                        </Text>
-                      </LinearGradient>
-                    </TouchableOpacity>
+                    <View style={styles.buttonContainer}>
+                      <TouchableOpacity onPress={handleSubmit}>
+                        <LinearGradient
+                          colors={
+                            darkMode === "DARK"
+                              ? ["#178BFF", "#0101FD"]
+                              : ["#212529", "#3A3A3A"]
+                          }
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkbuttonPayNew
+                              : styles.buttonPayNew
+                          }
+                        >
+                          <Text style={styles.buttonPayNewText}>
+                            Processed to send
+                          </Text>
+                        </LinearGradient>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              )}
-            </Formik>
+                )}
+              </Formik>
+            </View>
+            <View></View>
           </View>
-          <View></View>
-        </View>
-        <SendFrom
-          setModal={setModal}
-          isModal={isModal}
-          accountList={accountList}
-          amountPay={amountPay}
-          handleAccount={handleAccount}
-          selectedAccount={selectedAccount}
-          handleSendMoney={handleSendMoney}
-          darkMode={darkMode}
-        />
+          <SendFrom
+            setModal={setModal}
+            isModal={isModal}
+            accountList={accountList}
+            amountPay={amountPay}
+            handleAccount={handleAccount}
+            selectedAccount={selectedAccount}
+            handleSendMoney={handleSendMoney}
+            darkMode={darkMode}
+          />
         </>
       </Pressable>
     </View>

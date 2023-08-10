@@ -21,6 +21,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
     try {
       setIsLoading(true);
       const carbonSpendData = await apiCarbon.GetCarbonSpending();
+      console.log(carbnonSpendData,"this is from api")
       setCarbonSpendData(carbonSpendData.chartData);
       setTotalFootprint(carbonSpendData.total);
       setIsLoading(false);
@@ -55,7 +56,7 @@ const CarbonSpendGraph = ({ handleViewMore, isStyled = true }) => {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 15,
   };
-
+ console.log(carbnonSpendData,"this is carbon data")
   return (
     <View style={[styles.container, isStyled ? styled : null]}>
       <DoughnutChart

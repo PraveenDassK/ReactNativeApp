@@ -12,7 +12,7 @@ const transactionDisplayItems = [
 
 import { TransactionContainer } from "./transHistory";
 
-const RecentTransactions = ({ amount }) => {
+const RecentTransactions = ({ amount, handleOnSee }) => {
   const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [filterTransactions, setFilterTransactions] = useState([
@@ -22,7 +22,7 @@ const RecentTransactions = ({ amount }) => {
   //All Income Expense
   const [typeSelection, setTypeSelection] = useState("All");
 
-  const { accountID ,darkMode} = useContext(AuthContext);
+  const { accountID, darkMode } = useContext(AuthContext);
 
   useEffect(() => {
     loadData();
@@ -68,14 +68,13 @@ const RecentTransactions = ({ amount }) => {
         title="Transactions History"
         transactionDisplayItems={transactionDisplayItems}
         onTransaction={() => console.log("onTransaction")}
-        transactions={filterTransactions}
+        transactions={filterTransactions.slice(0, 5)}
         onTransactionFilter={(item) => handleTransactionFilter(item)}
         darkMode={darkMode}
+        handleOnSee={handleOnSee}
       />
     </View>
   );
-
 };
-
 
 export default RecentTransactions;

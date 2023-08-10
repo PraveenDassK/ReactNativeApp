@@ -297,7 +297,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             </View>
           )}
           <View style={styles.recentTransactionsContainer}>
-            <RecentTransactions />
+            <RecentTransactions
+              handleOnSee={() => navigation.navigate("Transactions")}
+            />
           </View>
           <View style={{ margin: 25 }}>
             <Text

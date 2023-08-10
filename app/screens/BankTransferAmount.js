@@ -21,6 +21,7 @@ import PinModal from "../components/PinModal";
 import UserIcon from "../components/UserIcon";
 import { horizontalScale, verticalScale } from "../config/scaling";
 import formatCurrency from "../utility/formatCurrency";
+import ErrorMessage from "../components/forms/ErrorMessage";
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
@@ -31,7 +32,6 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const payeeDetails = route.params;
   const destination = {};
-  
 
   const name = payeeDetails.payeeDetails.name;
   const accountNumber = route.params.requestObj.destination?.accountNumber;
@@ -51,7 +51,7 @@ const BankTransferAmount = ({ route, navigation }) => {
   const { userID, customerDetails, accountID, darkMode } =
     useContext(AuthContext);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
-
+  const [lessMoneyerror, setLessMoneyerror] = useState("");
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const BankTransferAmount = ({ route, navigation }) => {
       setIsLoading(false);
     }
   };
-  
+
   const handleSelectAccount = (selectedAccount) => {
     setSelectedAccount(selectedAccount);
   };
@@ -84,14 +84,24 @@ const BankTransferAmount = ({ route, navigation }) => {
     (eachValue, id) => payeeDetails?.requestObj?.groupId === eachValue?.groupId
   );
 
-  
-
   /**
    * @dev This takes the selected destination account data and passes it to another screen
    */
 
   const selectAccount = async (account) => {
-    setShowPinModal(true);
+    //
+    console.log(
+      Math.fround(oneselectedAccount?.balance),
+      amount,
+      "this is selected"
+    );
+    if (oneselectedAccount?.balance >= Number(amount)) {
+      setLessMoneyerror("");
+      setShowPinModal(true);
+    } else {
+      setLessMoneyerror("Insufficient Fund ,Choose a different amount ");
+      setShowPinModal(false);
+    }
 
     // navigation.navigate("Pin", requestObj);
   };
@@ -102,7 +112,7 @@ const BankTransferAmount = ({ route, navigation }) => {
     const requestObj = payeeDetails.requestObj;
     requestObj.amount = amount;
     requestObj.sourceAccountId = oneselectedAccount?.id;
-    
+
     setIsLoading(true);
 
     const transferRequest = await apiTransaction.sendMoney(requestObj);
@@ -113,7 +123,6 @@ const BankTransferAmount = ({ route, navigation }) => {
 
     setIsLoading(false);
 
-    
     navigation.navigate("sendmoneysuccess", { successObject });
   };
 
@@ -181,7 +190,6 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   const handleSave = () => {
     // Do something with the saved reference
-    
     // ...
   };
 
@@ -210,7 +218,6 @@ const BankTransferAmount = ({ route, navigation }) => {
     }
     route.params.requestObj.amount = amount;
     route.params.requestObj.reference = "Transfer";
-    
 
     navigation.navigate("Pin", {
       amount: amount,
@@ -305,6 +312,7 @@ const BankTransferAmount = ({ route, navigation }) => {
                   }
                   onChangeText={(text) => setAmount(text)}
                 />
+                <ErrorMessage error={lessMoneyerror} visible={lessMoneyerror} />
               </View>
               <View
                 style={{

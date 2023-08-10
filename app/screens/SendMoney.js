@@ -157,7 +157,7 @@ const SendMoney = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       {/* <ScrollView nestedScrollEnabled={true}> */}
       {/* <View
         style={{
@@ -218,9 +218,9 @@ const SendMoney = ({ navigation }) => {
         </View>
       </View> */}
       <View
-        style={
-          darkMode === "DARK" ? styles.darkpayContainer : styles.payContainer
-        }
+        style={[
+          darkMode === "DARK" ? styles.darkpayContainer : styles.payContainer,
+        ]}
       >
         <FlatList
           data={beneficaryList}
@@ -269,7 +269,7 @@ const SendMoney = ({ navigation }) => {
                   darkMode === "DARK"
                     ? GlobalStyles.Color.darkTheme_bg
                     : GlobalStyles.Color.backgroundColorOg,
-                paddingTop: "5%",
+                paddingTop: "15%",
               }}
             >
               <View style={styles.buttonContainer}>
@@ -585,7 +585,7 @@ const styles = StyleSheet.create({
     // marginTop: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#EBEBEB",
-    height:"100%"
+    height: "100%",
   },
   payHeaderContainer: {
     display: "flex",
