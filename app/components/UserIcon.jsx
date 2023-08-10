@@ -13,6 +13,7 @@ const UserIcon = ({
   onPress,
   darkMode,
   showName = true,
+  fontSize = 12,
 }) => {
   const [initals, setInitals] = useState("");
   const [colour, setColour] = useState("");
@@ -35,12 +36,14 @@ const UserIcon = ({
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.container, { width: size, height: size }]}>
         <View style={styles.icon} backgroundColor={colour}>
-          <Text style={styles.initials}>{initals}</Text>
+          <Text style={[styles.initials, { fontSize: fontSize }]}>
+            {initals}
+          </Text>
         </View>
         {showName ? (
           <View style={styles.textContainer}>
             <Text
-              style={darkMode === "DARK" ? styles.darkname : styles.name}
+              style={[darkMode === "DARK" ? styles.darkname : styles.name]}
               numberOfLines={1}
             >
               {name}
@@ -142,13 +145,13 @@ const styles = StyleSheet.create({
     width: "140%",
   },
   name: {
-    fontSize: 12,
+    // fontSize: 12,
     color: GlobalStyles.Color.black,
     textAlign: "center",
     fontFamily: "Montserrat-Medium",
   },
   darkname: {
-    fontSize: 12,
+    // fontSize: 12,
     color: GlobalStyles.Color.white,
     textAlign: "center",
     fontFamily: "Montserrat-Medium",

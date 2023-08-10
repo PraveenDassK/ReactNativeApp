@@ -46,7 +46,6 @@ const Pin = ({ route, navigation }) => {
    * @returns
    */
   const checkPin = async () => {
-    
     // if ('"' + enteredPin + '"' != (await authStorage.getPasscode())) {
     //   alert("Pin is incorrect");
     //   pinView.current.clearAll();
@@ -57,14 +56,15 @@ const Pin = ({ route, navigation }) => {
     //If pin is correct then atempt to send
     setLoading(true);
     const requestObj = route.params;
-      console.log(requestObj)
+    console.log(requestObj);
     const transferRequest = await apiTransaction.sendMoney(requestObj);
-     console.log(transferRequest,"this is transfer request")
+    console.log(transferRequest, "this is transfer request");
     setLoading(false);
 
     //Check if the sending was successful
     if (!transferRequest.data.result) {
       alert("Transaction unsuccessful");
+      // alert(transferRequest?.data?.resultMessage?.errorReason);
       pinView.current.clearAll();
       return;
     }

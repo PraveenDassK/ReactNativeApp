@@ -26,6 +26,8 @@ import * as Yup from "yup";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import AuthContext from "../auth/context";
 import LinearAccountButton from "../components/LinearAccountButton";
+import { ScrollView } from "react-native-gesture-handler";
+import Tagline from "../components/Tagline";
 const height = Dimensions.get("window").height;
 const smallDevice = { height: 650 };
 const isSmallDevice = height < smallDevice.height;
@@ -44,7 +46,7 @@ const items = [
   },
   {
     id: 4,
-    label: "Phone no.",
+    label: "Phone no",
     placeholder: "Enter phone number",
     initialValue: "phonenumber",
   },
@@ -99,7 +101,7 @@ const TeamsUserAdd = ({ navigation }) => {
       <ImageBackground
         source={
           darkMode === "DARK"
-            ? require("../assets/dashboardDark/DashboardBottom.jpg")
+            ? require("../assets/dashboardDark/notification.jpg")
             : require("../assets/backgrounds/Dashboard.jpg")
         }
         resizeMode="contain"
@@ -115,47 +117,47 @@ const TeamsUserAdd = ({ navigation }) => {
               : GlobalStyles.Color.lightTheme_bg,
         }}
       >
-        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-        <View
-          style={{
-            width: "100%",
-            paddingHorizontal: "5%",
-            paddingTop: isSmallDevice ? "0%" : "5%",
-            flex: 1,
-          }}
-        >
+        <ScrollView>
+          {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
           <View
             style={{
-              // paddingHorizontal: 20,
-              paddingTop: 24,
-              backgroundColor:
-                darkMode === "DARK" ? "rgba(255,255,255,0.2)" : "#FFFFFF",
-              marginTop: isSmallDevice ? 10 : 27,
-              borderRadius: 20,
               width: "100%",
-              flex: 0.8,
+              paddingHorizontal: "5%",
+              paddingTop: isSmallDevice ? "0%" : "5%",
+              flex: 1,
             }}
           >
-            <Formik
-              initialValues={{
-                name: "",
-                email: "",
-                postcode: "",
-                city: "",
-                phonenumber: "",
+            <View
+              style={{
+                paddingHorizontal: "3%",
+                paddingTop: 24,
+                backgroundColor:
+                  darkMode === "DARK" ? "rgba(255,255,255,0.2)" : "#FFFFFF",
+                marginTop: isSmallDevice ? 10 : 27,
+                borderRadius: 20,
+                width: "100%",
               }}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
             >
-              {({
-                handleChange,
-                handleSubmit,
-                errors,
-                setFieldTouched,
-                touched,
-              }) => (
-                <View style={styles.mainContainer}>
-                  {/* <Text
+              <Formik
+                initialValues={{
+                  name: "",
+                  email: "",
+                  postcode: "",
+                  city: "",
+                  phonenumber: "",
+                }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({
+                  handleChange,
+                  handleSubmit,
+                  errors,
+                  setFieldTouched,
+                  touched,
+                }) => (
+                  <View style={styles.mainContainer}>
+                    {/* <Text
                       style={
                         darkMode === "DARK"
                           ? styles.darkformLabel
@@ -165,60 +167,68 @@ const TeamsUserAdd = ({ navigation }) => {
                       Select account type
                     </Text> */}
 
-                  {items.map((item, index) => (
-                    <View
-                      key={item.id}
-                      style={{
-                        width: "100%",
-                        marginHorizontal: "3%",
-                        marginBottom: "5%",
-                      }}
-                    >
-                      <Text
-                        style={
-                          darkMode === "DARK" ? styles.darklable : styles.lable
-                        }
-                      >
-                        {item.label}
-                      </Text>
-                      <TextInput
-                        onBlur={() => setFieldTouched(item.initialValue)}
-                        onChangeText={handleChange(item.initialValue)}
-                        onChange={() => {
-                          if (item.label === "Postcode") {
-                            handleAddress(item.initialValue);
-                          }
+                    {items.map((item, index) => (
+                      <View
+                        key={item.id}
+                        style={{
+                          width: "100%",
+                          marginBottom: "5%",
                         }}
-                        // style={{ fontSize: 24, marginTop: "1%" }}
-                        style={
-                          darkMode === "DARK"
-                            ? styles.darkinputBox
-                            : styles.inputBox
-                        }
-                        placeholder={item.placeholder}
-                        placeholderTextColor={
-                          darkMode === "DARK" ? GlobalStyles.Color.white : null
-                        }
-                      />
+                      >
+                        <Text
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darklable
+                              : styles.lable
+                          }
+                        >
+                          {item.label}
+                        </Text>
+                        <TextInput
+                          onBlur={() => setFieldTouched(item.initialValue)}
+                          onChangeText={handleChange(item.initialValue)}
+                          onChange={() => {
+                            if (item.label === "Postcode") {
+                              handleAddress(item.initialValue);
+                            }
+                          }}
+                          keyboardType={
+                            item.label === "Phone no" ? "numeric" : "default"
+                          }
+                          // style={{ fontSize: 24, marginTop: "1%" }}
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkinputBox
+                              : styles.inputBox
+                          }
+                          placeholder={item.placeholder}
+                          placeholderTextColor={
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.white
+                              : null
+                          }
+                        />
 
-                      <ErrorMessage
-                        error={errors[item.initialValue]}
-                        visible={touched[item.initialValue]}
+                        <ErrorMessage
+                          error={errors[item.initialValue]}
+                          visible={touched[item.initialValue]}
+                        />
+                      </View>
+                    ))}
+                    <View style={{ marginTop: "5%" }}>
+                      <LinearAccountButton
+                        title="Confirm"
+                        onPress={handleSubmit}
+                        darkMode={darkMode}
                       />
                     </View>
-                  ))}
-                  <View style={{ marginTop: "5%" }}>
-                    <LinearAccountButton
-                      title="Continue"
-                      onPress={handleSubmit}
-                      darkMode={darkMode}
-                    />
                   </View>
-                </View>
-              )}
-            </Formik>
+                )}
+              </Formik>
+            </View>
           </View>
-        </View>
+          <Tagline darkMode={darkMode} />
+        </ScrollView>
         {/* </TouchableWithoutFeedback> */}
       </ImageBackground>
     </KeyboardAvoider>
@@ -241,13 +251,13 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.white,
   },
   inputBox: {
-    width: 332,
+    width: isSmallDevice ? 280 : 332,
     height: 46,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#EBEBEB",
     paddingHorizontal: 20,
-    paddingVertical: 14,
+    paddingVertical: isSmallDevice ? 1 : 14,
     fontSize: 14,
     color: "#999999",
   },
@@ -272,11 +282,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Montserrat",
   },
-  mainContainer: {
-    width: "100%",
-  },
+  // mainContainer: {
+  //   width: "100%",
+  // },
   darkinputBox: {
-    width: "100%",
+    width: isSmallDevice ? 280 : "100%",
     height: 46,
     borderRadius: 10,
     borderWidth: 1,

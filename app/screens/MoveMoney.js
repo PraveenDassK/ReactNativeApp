@@ -122,7 +122,7 @@ const MoveMoney = ({ navigation }) => {
               paddingTop: 20,
             }}
           >
-            <StepProgress currentStep={1} darkMode={darkMode} />
+            <StepProgress currentStep={0} darkMode={darkMode} />
             <View
               style={
                 darkMode === "DARK"

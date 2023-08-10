@@ -852,6 +852,7 @@ const StackNavigator = () => {
             color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
             fontFamily: "Montserrat",
             fontSize: 25,
+            marginLeft: "25%",
           },
         }}
       />
@@ -859,7 +860,7 @@ const StackNavigator = () => {
         name="TeamsUser"
         component={gestureHandlerRootHOC(TeamsUser)}
         options={{
-          title: "Teams user",
+          title: "Teams member",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
@@ -896,7 +897,7 @@ const StackNavigator = () => {
         name="TeamsUserAdd"
         component={gestureHandlerRootHOC(TeamsUserAdd)}
         options={{
-          title: "Teams add",
+          title: "Add Team Member",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
@@ -925,7 +926,7 @@ const StackNavigator = () => {
           headerTitleStyle: {
             color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
             fontFamily: "Montserrat",
-            fontSize: 25,
+            fontSize: 23,
           },
         }}
       />
@@ -1731,8 +1732,7 @@ const StackNavigator = () => {
             color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
             fontFamily: "Montserrat",
             fontSize: 25,
-            marginLeft:"20%",
-
+            marginLeft: "20%",
           },
           headerBackImage: () => (
             <View
