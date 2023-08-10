@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   Pressable,
   FlatList,
+  ImageBackground,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Dropdown } from "react-native-element-dropdown";
+
+import Tagline from "../components/Tagline";
 import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import AuthContext from "../auth/context";
@@ -36,44 +39,57 @@ const Invoice = ({ navigation }) => {
     },
   ]);
   const { darkMode } = useContext(AuthContext);
+
   useEffect(() => {
     //loadData()
   }, []);
 
+  const textStyle =
+    darkMode === "DARK"
+      ? GlobalStyles.Color.white
+      : GlobalStyles.Color.secondaryDarkTheme_bg;
+
+  const containerStyle =
+    darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer;
+
   return (
-    <View
-      style={
-        darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/DashboardBottom.jpg")
+          : require("../assets/backgrounds/Dashboard.jpg")
       }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        padding: "5%",
+        flex: 1,
+        justifyContent: "space-between",
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+      }}
     >
+      {directDebits?.map(({ name, date, amount }, index) => (
+        <TransactionBody
+          key={index}
+          name={`${name}`}
+          date={date}
+          amount={amount}
+          credit={true}
+          darkMode={darkMode}
+          index={index}
+          transLength={directDebits.length}
+        />
+      ))}
       <View>
-        <Text
-          style={{
-            color:
-              darkMode === "DARK"
-                ? GlobalStyles.Color.white
-                : GlobalStyles.Color.secondaryDarkTheme_bg,
-          }}
-        >
-          Account payments
-        </Text>
-        <View style={styles.containerSpacing}>
-          <TransactionHead
-            headerTitle="Carbon transactions"
-            darkMode={darkMode}
-          />
-          {directDebits?.map(({ name, date, amount }, index) => (
-            <TransactionBody
-              key={index}
-              name={`${name}`}
-              date={date}
-              token={amount}
-              darkMode={darkMode}
-            />
-          ))}
-        </View>
+        <Button title={"Download"} />
+        <Tagline darkMode={darkMode} />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -88,12 +104,12 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignContent: "center",
   },
   darkmainContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex=start",
     alignContent: "center",
     backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
