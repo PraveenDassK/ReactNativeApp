@@ -208,8 +208,8 @@ const Analytics = ({ navigation }) => {
       <ImageBackground
         source={
           darkMode === "DARK"
-            ? require("../assets/dashboardDark/dashboardTop.jpg")
-            : require("../assets/backgrounds/beach.jpg")
+            ? require("../assets/backgrounds/Analysis.png")
+            : require("../assets/backgrounds/Analysis.png")
         }
         style={styles.backgroundImage}
       >

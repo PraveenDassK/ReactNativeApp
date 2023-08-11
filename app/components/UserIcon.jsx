@@ -64,7 +64,17 @@ const UserIcon = ({
           <IconGroup offset={2} />
           <IconGroup offset={3} />
           <View style={{ marginLeft: 30 }}>
-            <Text> +{groupSize}</Text>
+            <Text
+              style={{
+                color:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.white
+                    : GlobalStyles.Color.secondaryDarkTheme_bg,
+              }}
+            >
+              {" "}
+              +{groupSize}
+            </Text>
           </View>
         </>
       ) : null}
