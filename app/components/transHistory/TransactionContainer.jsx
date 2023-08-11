@@ -59,7 +59,11 @@ const TransactionContainer = ({
         )
       )}
     </BlurView>
-    <TransactionFooter navigate={true} onSee={handleOnSee} />
+    {transactions.length === 0 ? (
+      <TransactionFooter navigate={false} onSee={handleOnSee} />
+    ) : (
+      <TransactionFooter navigate={true} onSee={handleOnSee} />
+    )}
   </View>
 );
 

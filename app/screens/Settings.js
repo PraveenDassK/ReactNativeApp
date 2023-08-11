@@ -192,7 +192,7 @@ const Settings = ({ navigation }) => {
     );
   }
 
-  const clipBoardSpacing = (iban) => iban?.length > 12 ? 2 : 1
+  const clipBoardSpacing = (iban) => (iban?.length > 12 ? 2 : 1);
 
   return (
     <ScrollView
@@ -207,7 +207,11 @@ const Settings = ({ navigation }) => {
     >
       <ImageBackground
         style={{ height: 280 }}
-        source={require("../assets/backgrounds/carbonInside.png")}
+        source={
+          darkMode === "DARK"
+            ? require("../assets/backgrounds/profilepage/Profile-banner1.png")
+            : require("../assets/backgrounds/profilepage/Profile-banner1.png")
+        }
       >
         <View style={styles.TopImageheader}>
           <View style={styles.backgroundTextContainer}>
@@ -253,9 +257,7 @@ const Settings = ({ navigation }) => {
             <AppText
               style={[
                 styles.subText,
-                darkMode === "DARK"
-                  ? styles.darkcustomTitle1
-                  : styles.customTitle1,
+                darkMode === "DARK" ? styles.customTitle1 : styles.customTitle1,
               ]}
             >
               Account Details
@@ -434,13 +436,11 @@ const Settings = ({ navigation }) => {
                     darkMode === "DARK"
                       ? styles.darkcustomTitle
                       : styles.customTitle,
-                     
                   ]}
                 >
                   {iban}
                 </AppText>
               </View>
-              
             </View>
 
             <View style={styles.accountDetailsRow}>

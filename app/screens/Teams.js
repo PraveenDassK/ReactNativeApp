@@ -78,8 +78,8 @@ const Teams = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/DashboardBottom.jpg")
-          : require("../assets/backgrounds/Dashboard.jpg")
+          ? require("../assets/backgrounds/teams/Teams-dark.png")
+          : require("../assets/backgrounds/teams/Teams-white.png")
       }
       resizeMode="contain"
       imageStyle={{

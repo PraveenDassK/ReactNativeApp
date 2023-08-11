@@ -21,7 +21,7 @@ import AuthContext from "../auth/context";
 
 import GlobalStyles from "../../GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
-
+import Tagline from "../components/Tagline";
 const ITEMS = [
   {
     id: 1,
@@ -96,8 +96,8 @@ const AccountSettings = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/carbonbottom.png")
-          : require("../assets/backgrounds/spendingLimit.jpg")
+          ? require("../assets/backgrounds/profilepage/spendingLimit-dark.png")
+          : require("../assets/backgrounds/profilepage/spendingLimit-white.png")
       }
       resizeMode="contain"
       imageStyle={{
@@ -128,7 +128,9 @@ const AccountSettings = ({ navigation }) => {
               marginVertical: "10%",
             }}
           >
-            <AppText style={{ fontSize: 40, color: "blue" }}>
+            <AppText
+              style={{ fontSize: 40, color: GlobalStyles.Color.skyblue }}
+            >
               £{balance}
             </AppText>
           </View>
@@ -181,6 +183,7 @@ const AccountSettings = ({ navigation }) => {
           />
         </View>
       </View>
+      <Tagline darkMode={darkMode} />
     </ImageBackground>
   );
 };

@@ -187,7 +187,7 @@ const Analytics = ({ navigation }) => {
   }
   const handleDark = async () => {
     // const data=authStorage.removeColor();
-    // 
+    //
     if (darkMode === "DARK") {
       authStorage.removeColor();
       setDarkMode(authStorage.getColor());
@@ -747,8 +747,8 @@ const Analytics = ({ navigation }) => {
         resizeMode="stretch"
         source={
           darkMode === "DARK"
-            ? require("../assets/dashboardDark/replaceCard.jpg")
-            : require("../assets/backgrounds/replaceCard.jpg")
+            ? require("../assets/backgrounds/anylisispagelight/Analysisblack.png")
+            : require("../assets/backgrounds/anylisispagelight/Analysiswhite.png")
         }
         style={styles.container}
       />
