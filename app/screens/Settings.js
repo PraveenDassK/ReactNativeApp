@@ -616,7 +616,9 @@ const Settings = ({ navigation }) => {
             resizeMode="cover"
             source={require("../assets/icon-openaccountlogout.png")}
           />
-          <AppText style={{ marginLeft: "2.5%", color: "blue" }}>
+          <AppText
+            style={{ marginLeft: "2.5%", color: GlobalStyles.Color.skyblue }}
+          >
             Log out
           </AppText>
         </Pressable>
@@ -632,7 +634,9 @@ const Settings = ({ navigation }) => {
           }}
           onPress={() => navigation.navigate("TermsAndConditions")}
         >
-          <AppText style={{ color: "blue" }}>Terms & Conditions</AppText>
+          <AppText style={{ color: GlobalStyles.Color.skyblue }}>
+            Terms & Conditions
+          </AppText>
         </Pressable>
       </View>
       <Tagline darkMode={darkMode} />

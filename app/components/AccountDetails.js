@@ -231,8 +231,9 @@ const styles = StyleSheet.create({
   border: {
     borderColor: GlobalStyles.Color.white,
     borderRadius: 20,
-    borderTopWidth: 0.5,
-    borderLeftWidth: 0.5,
+    // borderColor:'none',
+    borderTopWidth: 0.15,
+    borderLeftWidth: 0.15,
   },
   totalTitle: {
     fontSize: 16,

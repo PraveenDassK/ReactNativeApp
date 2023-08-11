@@ -851,9 +851,9 @@ const Bazier = ({ graphData }) => {
             <View>
               <Svg>
                 <Rect
-                  x={tooltipPos.x - 30}
+                  x={tooltipPos.x - 50}
                   y={tooltipPos.y + 8}
-                  width={60}
+                  width={100}
                   height={30}
                   fill="#179424"
                   rx={15}
@@ -867,7 +867,7 @@ const Bazier = ({ graphData }) => {
                   fontWeight="bold"
                   textAnchor="middle"
                 >
-                  {`£ ${tooltipPos.value.toFixed(2)}`}
+                  {`£ ${tooltipPos.value.toFixed(2)} | 10.00PM `}
                 </TextSVG>
               </Svg>
             </View>
