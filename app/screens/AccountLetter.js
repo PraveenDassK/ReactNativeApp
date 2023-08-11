@@ -12,9 +12,11 @@ const AccountLetter = ({ navigation }) => {
   const [email, setemail] = useState(null);
   const authContext = useContext(AuthContext);
   const { darkMode } = useContext(AuthContext);
+
   useEffect(() => {
     loadData();
   }, []);
+  
   const loadData = async () => {
     const customer = await api.GetCustomer(authContext.userID);
     const data = customer.data.details;
