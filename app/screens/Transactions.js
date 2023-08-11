@@ -20,6 +20,8 @@ import { Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import Tagline from "../components/Tagline";
+import TransactionHeader from "../components/transHistory/TransHeaderwithoutBlur";
+
 import {
   horizontalScale,
   moderateScale,
@@ -49,10 +51,25 @@ const Transactions = ({ navigation, route }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [hide, setHide] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-
+  const [filterTransactions, setFilterTransactions] = useState([
+    ...transactionData,
+  ]);
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
   const { settings, accountID, darkMode } = useContext(AuthContext);
+  const handleTransactionFilter = (item) => {
+    if (item == "income") {
+      setFilterTransactions(
+        transactionData.filter(({ credit }) => credit !== false)
+      );
+    } else if (item == "expenses") {
+      setFilterTransactions(
+        transactionData.filter(({ credit }) => credit === false)
+      );
+    } else {
+      setFilterTransactions(transactionData);
+    }
+  };
 
   //Calls the API once during load
   useEffect(() => {
@@ -71,7 +88,7 @@ const Transactions = ({ navigation, route }) => {
     const response = await api.GetTransactions(accountID, 10);
     const transactions = response.data.details.content;
     setTransactionData(transactions);
-    console.log(transactions);
+    setFilterTransactions(transactions);
     setHide(false);
     setIsLoading(false);
   };
@@ -82,7 +99,6 @@ const Transactions = ({ navigation, route }) => {
   };
 
   const reportTransaction = async (Id) => {
-    console.log("Reported");
 
     Alert.alert("Alert", "Report This Transaction", [
       {
@@ -165,7 +181,6 @@ const Transactions = ({ navigation, route }) => {
 
   const modal = (Id) => {
     let transaction = transactionData[modalId];
-    console.log(transaction);
     return (
       <Modal
         animationType="none"
@@ -297,6 +312,13 @@ const Transactions = ({ navigation, route }) => {
       <View style={styles.page}>
         <FlatList
           showsVerticalScrollIndicator={false}
+          ListHeaderComponent={
+            <TransactionHeader
+              onTransactionFilter={(item) => handleTransactionFilter(item)}
+              darkMode={darkMode}
+              theme={true}
+            />
+          }
           ListFooterComponent={
             <View style={{ marginBottom: verticalScale(50) }}>
               {hide && (
@@ -335,7 +357,7 @@ const Transactions = ({ navigation, route }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          data={transactionData}
+          data={filterTransactions}
           // onScroll={Animated.event(
           //   [{ nativeEvent: {contentOffset: {y: scrollY}}}],
           //   {useNativeDriver: true }
@@ -373,6 +395,12 @@ const Transactions = ({ navigation, route }) => {
                         darkMode === "DARK"
                           ? styles.darktransactionBox
                           : styles.transactionBox,
+                        {
+                          borderBottomLeftRadius:
+                            index === filterTransactions.length - 1 ? 20 : 0,
+                          borderBottomRightRadius:
+                            index === filterTransactions.length - 1 ? 20 : 0,
+                        },
                       ]}
                       onPress={() => showTransaction(index)}
                     >
@@ -487,7 +515,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 80,
 
-    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
+    backgroundColor: "rgba(255,255,255,0.1)",
   },
   modalText: {
     textAlign: "center",

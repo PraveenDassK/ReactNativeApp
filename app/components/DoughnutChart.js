@@ -23,8 +23,8 @@ const DoughnutChart = ({ data, children }) => {
       <VictoryPie
         style={{ labels: { fill: "black" } }}
         colorScale={["tomato", "orange", "gold", "cyan", "green"]}
-        innerRadius={device == 1 ? 120 : 300}
-        labelRadius={device == 1 ? (isSmallDevice ? 126 : 132) : 320}
+        innerRadius={device == 1 ? 120 : 100}
+        labelRadius={device == 1 ? (isSmallDevice ? 126 : 132) : 120}
         padAngle={1}
         // labels={({ datum }) => `${datum.x[0]}`}
         labels={({ datum }) => `${datum.x[0]}`}

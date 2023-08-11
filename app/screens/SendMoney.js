@@ -159,9 +159,9 @@ const SendMoney = ({ navigation }) => {
   return (
     <SafeAreaView >
       <View
-        style={
-          darkMode === "DARK" ? styles.darkpayContainer : styles.payContainer
-        }
+        style={[
+          darkMode === "DARK" ? styles.darkpayContainer : styles.payContainer,
+        ]}
       >
         <FlatList
           data={beneficaryList}
@@ -210,7 +210,7 @@ const SendMoney = ({ navigation }) => {
                   darkMode === "DARK"
                     ? GlobalStyles.Color.darkTheme_bg
                     : GlobalStyles.Color.backgroundColorOg,
-                paddingTop: "5%",
+                paddingTop: "15%",
               }}
             >
               <View style={styles.buttonContainer}>
@@ -432,6 +432,35 @@ const SendMoney = ({ navigation }) => {
   );
 };
 
+const GroupBackground = ({ beneficary, darkMode, right }) => {
+  return (
+    <View
+      style={{
+        position: "absolute",
+        right: right,
+        top: "0%",
+        zIndex: -5,
+      }}
+    >
+      <UserIcon
+        name={beneficary?.item.groupName}
+        onPress={() => sendGroupPayeeTrigger(beneficary.item)}
+        darkMode={darkMode}
+        showName={false}
+      />
+      {/* <View
+      style={{
+        right: "-50%",
+        top: "20%",
+        position: "absolute",
+      }}
+    >
+      <Text style={{ color: "white" }}>+2</Text>
+    </View> */}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -530,7 +559,7 @@ const styles = StyleSheet.create({
     // marginTop: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#EBEBEB",
-    height:"100%"
+    height: "100%",
   },
   payHeaderContainer: {
     display: "flex",

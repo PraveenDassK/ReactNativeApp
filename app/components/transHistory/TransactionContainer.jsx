@@ -12,6 +12,7 @@ const TransactionContainer = ({
   transactions,
   onTransactionFilter,
   darkMode,
+  handleOnSee,
 }) => (
   <View style={styles.transactionContainer}>
     <Text
@@ -58,7 +59,7 @@ const TransactionContainer = ({
         )
       )}
     </BlurView>
-    <TransactionFooter navigate={false} />
+    <TransactionFooter navigate={true} onSee={handleOnSee} />
   </View>
 );
 

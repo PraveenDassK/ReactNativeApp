@@ -211,7 +211,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               />
               <SquareIcon
                 name={"Send money"}
-                image={"send-o"}
+                image={"send"}
                 onPress={() => navigation.navigate("SendMoney")}
               />
               <SquareIcon
@@ -297,7 +297,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             </View>
           )}
           <View style={styles.recentTransactionsContainer}>
-            <RecentTransactions />
+            <RecentTransactions
+              handleOnSee={() => navigation.navigate("Transactions")}
+            />
           </View>
           <View style={{ margin: 25 }}>
             <Text
