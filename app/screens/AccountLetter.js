@@ -11,23 +11,25 @@ import { BlurView } from "expo-blur";
 const AccountLetter = ({ navigation }) => {
   const [email, setemail] = useState(null);
   const authContext = useContext(AuthContext);
-  const { darkMode } = useContext(AuthContext);
-
+  const { darkMode,userID } = useContext(AuthContext);
+  console.log(userID)
   useEffect(() => {
     loadData();
   }, []);
   
   const loadData = async () => {
-    const customer = await api.GetCustomer(authContext.userID);
-    const data = customer.data.details;
-    setemail(data.associates[0].email);
+    const customer = await api.GetCustomer(userID);
+    console.log(customer)
+    // const data = customer.data.details;
+    // console.log(data,"this is data")
+    // setemail(data.associates[0].email);
   };
   return (
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/carbonbottom.png")
-          : require("../assets/backgrounds/spendingLimit.jpg")
+          ? require("../assets/backgrounds/profilepage/AccounVerificationLetter-dark.png")
+          : require("../assets/backgrounds/profilepage/AccounVerificationLetter-white.png")
       }
       resizeMode="contain"
       imageStyle={{

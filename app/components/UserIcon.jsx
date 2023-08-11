@@ -13,10 +13,14 @@ const UserIcon = ({
   onPress,
   darkMode,
   showName = true,
-  fontSize = 12,
+  fontSize = 14,
+  groupSize,
+  group = false,
 }) => {
   const [initals, setInitals] = useState("");
   const [colour, setColour] = useState("");
+
+  //console.log(staticColors[Math.random()])
 
   /**
    * @dev Loads the data once
@@ -33,27 +37,67 @@ const UserIcon = ({
     setColour(iconColour(name));
   };
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[styles.container, { width: size, height: size }]}>
-        <View style={styles.icon} backgroundColor={colour}>
-          <Text style={[styles.initials, { fontSize: fontSize }]}>
-            {initals}
-          </Text>
-        </View>
-        {showName ? (
-          <View style={styles.textContainer}>
-            <Text
-              style={[darkMode === "DARK" ? styles.darkname : styles.name]}
-              numberOfLines={1}
-            >
-              {name}
+    <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity onPress={onPress}>
+        <View style={[styles.container, { width: size, height: size }]}>
+          <View style={styles.icon} backgroundColor={colour}>
+            <Text style={[styles.initials, { fontSize: fontSize }]}>
+              {initals}
             </Text>
           </View>
-        ) : null}
-      </View>
-    </TouchableOpacity>
+          {showName ? (
+            <View style={styles.textContainer}>
+              <Text
+                style={[darkMode === "DARK" ? styles.darkname : styles.name]}
+                numberOfLines={1}
+              >
+                {name}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+      </TouchableOpacity>
+
+      {group ? (
+        <>
+          <IconGroup />
+          <IconGroup offset={2} />
+          <IconGroup offset={3} />
+          <View style={{ marginLeft: 30 }}>
+            <Text> +{groupSize}</Text>
+          </View>
+        </>
+      ) : null}
+    </View>
   );
 };
+
+const IconGroup = ({ offset = 1 }) => (
+  <View
+    style={[
+      styles.container,
+      {
+        width: 50,
+        height: 50,
+        position: "absolute",
+        left: offset * 10,
+        zIndex: offset * -1,
+      },
+    ]}
+  >
+    <View
+      style={styles.icon}
+      backgroundColor={
+        staticColors[Math.floor(Math.random() * staticColors.length)]
+      }
+    >
+      <Text style={[styles.initials]}></Text>
+    </View>
+    <View style={styles.textContainer}>
+      <Text></Text>
+    </View>
+  </View>
+);
 
 const staticColors = [
   "#FFB4B4", // 255, 180, 180
@@ -133,12 +177,13 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5,
+    borderRadius: 10,
   },
   initials: {
     fontSize: 15,
-    fontWeight: "bold",
-    color: "black",
+    // fontWeight: "bold",
+    // color: "black",
+    fontFamily: "Montserrat-SemiBold",
   },
   textContainer: {
     height: 30, // Set a fixed height for the text container
@@ -146,7 +191,7 @@ const styles = StyleSheet.create({
   },
   name: {
     // fontSize: 12,
-    color: GlobalStyles.Color.black,
+    color: GlobalStyles.Color.iconBlack,
     textAlign: "center",
     fontFamily: "Montserrat-Medium",
   },

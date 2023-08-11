@@ -28,8 +28,8 @@ const Faq = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/carbonbottom.png")
-          : require("../assets/backgrounds/spendingLimit.jpg")
+          ? require("../assets/backgrounds/profilepage/FAQs-dark.png")
+          : require("../assets/backgrounds/profilepage/FAQs-white.png")
       }
       resizeMode="contain"
       imageStyle={{
@@ -620,7 +620,7 @@ const Faq = ({ navigation }) => {
           </Collapse>
           <View style={{ width: "100%", height: 30 }} />
         </View>
-        <View style={{ height: 150 }} />
+        <View style={{ height: 180 }} />
       </ScrollView>
     </ImageBackground>
   );
@@ -631,6 +631,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    paddingVertical:"3%"
   },
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,

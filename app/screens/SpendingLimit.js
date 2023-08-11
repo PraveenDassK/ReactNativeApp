@@ -23,6 +23,8 @@ import storage from "../auth/storage";
 import KeyboardAvoider from "../components/KeyboardAvoider";
 import { Dropdown } from "react-native-element-dropdown";
 import Tagline from "../components/Tagline";
+import apiLogin from "../api/apiLogin";
+
 const SpendingLimit = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -37,7 +39,7 @@ const SpendingLimit = ({ navigation, route }) => {
   const [isToggled, setIsToggled] = useState(false);
   const [validCheck, setValidator] = useState(false);
   const [amount, setAmount] = useState("0");
-  const { userID } = useContext(AuthContext);
+  const { userID, customerDetails } = useContext(AuthContext);
   useEffect(() => {}, []);
 
   //Calls the API once during load
@@ -59,15 +61,16 @@ const SpendingLimit = ({ navigation, route }) => {
     //Gets the data from the api
     setIsLoading(true);
     const response = await apiCall.GetLimits(selectedCard);
-    const spendTotal = response === null ? 0 : response.spend;
-    const monthlyAmount = response === null ? 0 : response.monthlyAmount;
-
+    console.log(response,"this is the response");
+    const spendTotal = response === null ? 0 : response?.spend;
+    const monthlyAmount = response === null ? 0 : response?.monthlyAmount;
     const cards = await apiCall.GetCardByAccount("686283112");
-    const accountApi = await apiCall.GetAllAccounts(userID);
-
+    // const accountApi = await apiCall.GetAllAccounts(userID);
+    const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
+    const details = getUserID;
     setDropDownValue(cards);
     setMonLim(monthlyAmount);
-    setAccountData(accountApi);
+    setAccountData(details?.accountDetails);
     setSpend(spendTotal);
     setPercent(spendTotal / monthlyAmount);
     setIsLoading(false);
@@ -98,15 +101,14 @@ const SpendingLimit = ({ navigation, route }) => {
     if (validCheck) {
       //If it is do this
       const response = await api.SetLimit(selectedCard, amount);
-
       setIsToggled(false);
       loadData();
     } else {
       //If it isn't show an error message here
     }
   };
-  let newAccountArray = accountData.map((eachData, i) => {
-    return { label: eachData?.id, value: eachData?.id };
+  let newAccountArray = accountData?.map((eachData, i) => {
+    return { label: eachData?.accountId, value: eachData?.accountId };
   });
 
   /**
@@ -138,7 +140,7 @@ const SpendingLimit = ({ navigation, route }) => {
     const newElemet = accountData.filter(
       (eachValue, index) => index === item._index
     );
-
+    console.log(newElemet);
     return (
       <View style={styles.dropDownarrayitem}>
         <Image
@@ -152,7 +154,7 @@ const SpendingLimit = ({ navigation, route }) => {
             flexDirection: "column",
           }}
         >
-          <Text>{` ${newElemet[0]?.customerName}`}</Text>
+          {/* <Text>{` ${newElemet[0]?.customerName}`}</Text> */}
           <Text style={styles.textItem}>{item.label}</Text>
         </View>
       </View>

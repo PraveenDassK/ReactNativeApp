@@ -105,12 +105,12 @@ const SecurityAndPrivacy = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/carbonbottom.png")
-          : require("../assets/backgrounds/spendingLimit.jpg")
+          ? require("../assets/backgrounds/profilepage/CarbonyteLab-dark.png")
+          : require("../assets/backgrounds/profilepage/CarbonyteLab-white.png")
       }
       resizeMode="contain"
       imageStyle={{
-        bottom: "-65%", // Whatever offset you want from the bottom
+        bottom: "-60%", // Whatever offset you want from the bottom
       }}
       style={{
         width: "100%",

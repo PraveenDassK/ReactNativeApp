@@ -64,8 +64,8 @@ const DirectDebits = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/DashboardBottom.jpg")
-          : require("../assets/backgrounds/Dashboard.jpg")
+          ? require("../assets/backgrounds/directdebit/DirectDebitBlack.png")
+          : require("../assets/backgrounds/directdebit/DirectDebitWhite.png")
       }
       resizeMode="contain"
       imageStyle={{

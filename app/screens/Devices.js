@@ -137,8 +137,8 @@ const Devices = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/carbonbottom.png")
-          : require("../assets/backgrounds/spendingLimit.jpg")
+          ? require("../assets/backgrounds/profilepage/Devices-dark.png")
+          : require("../assets/backgrounds/profilepage/Devices-white.png")
       }
       resizeMode="contain"
       imageStyle={{
@@ -162,7 +162,11 @@ const Devices = ({ navigation }) => {
       >
         <View style={styles.headerContainer}>
           <View style={styles.headerItem}>
-            <MaterialCommunityIcons name="security" color="blue" size={60} />
+            <MaterialCommunityIcons
+              name="cellphone-information"
+              color="blue"
+              size={60}
+            />
           </View>
           <View style={styles.headerItem}>
             <Text

@@ -16,6 +16,7 @@ import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import { BlurView } from "expo-blur";
+import Tagline from "../components/Tagline";
 const AboutUs = ({ navigation }) => {
   const { setIsAuth, settings, setSettings, darkMode } =
     useContext(AuthContext);
@@ -112,8 +113,8 @@ const AboutUs = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/carbonbottom.png")
-          : require("../assets/backgrounds/spendingLimit.jpg")
+          ? require("../assets/backgrounds/profilepage/ContactUs-dark.png")
+          : require("../assets/backgrounds/profilepage/ContactUs-white.png")
       }
       resizeMode="contain"
       imageStyle={{
@@ -139,7 +140,7 @@ const AboutUs = ({ navigation }) => {
             marginLeft: "5%",
           }}
         >
-          <BlurView style={{ borderRadius: 15 }}>
+          <BlurView style={{ borderRadius: 20,paddingVertical:"3%" }}>
             <TouchableOpacity
               onPress={() =>
                 navigateAlert(() =>
@@ -193,7 +194,7 @@ const AboutUs = ({ navigation }) => {
             marginLeft: "5%",
           }}
         >
-          <BlurView style={{ borderRadius: 15 }}>
+          <BlurView style={{ borderRadius: 15 ,paddingVertical:"3%"}}>
             <TouchableOpacity
               onPress={() => navigateAlert(() => handlePress(urlBlog))}
             >
@@ -251,6 +252,9 @@ const AboutUs = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </BlurView>
+          <View style={{ marginTop: "10%" }}>
+            <Tagline darkMode={darkMode} />
+          </View>
         </View>
       </View>
     </ImageBackground>

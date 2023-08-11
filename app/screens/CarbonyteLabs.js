@@ -81,8 +81,8 @@ const CarbonyteLabs = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/carbonbottom.png")
-          : require("../assets/backgrounds/spendingLimit.jpg")
+          ? require("../assets/backgrounds/profilepage/CarbonyteLab-dark.png")
+          : require("../assets/backgrounds/profilepage/CarbonyteLab-white.png")
       }
       resizeMode="contain"
       imageStyle={{

@@ -65,7 +65,6 @@ const Carbon = ({ route, navigation }) => {
   useEffect(() => {
     loadData();
   }, [accountID]);
-  console.log(Platform.OS, "jsjsj");
   const loadData = async () => {
     setIsLoading(true);
     try {

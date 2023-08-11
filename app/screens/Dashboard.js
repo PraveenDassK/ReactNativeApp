@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   Vibration,
   useWindowDimensions,
+  Appearance,
   ImageBackground,
 } from "react-native";
 
