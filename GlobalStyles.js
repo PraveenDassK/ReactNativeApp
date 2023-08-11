@@ -74,6 +74,7 @@ const GlobalStyles = {
     name_textGray:"#303233",
     white: "#fff",
     black: "#000", 
+    iconBlack: '#505A63',
     skyblue: "#178BFF",
     lightBlack:"#212529",
     darkBlack:"#000000",
