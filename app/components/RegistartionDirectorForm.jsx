@@ -39,7 +39,6 @@ const RegistartionDirectorForm = ({
   setBeneficialownersData,
   setControllingInterestsData,
 }) => {
-  console.log(role, "this is role");
   const [date, setDate] = useState(new Date());
   const [birthdate, setBirthDate] = useState(new Date());
   const [birthError, setBirthError] = useState("");
@@ -107,11 +106,9 @@ const RegistartionDirectorForm = ({
    */
   const handleAddress = async (postCode) => {
     // const response = await apiLogin.GetAddressByPostCode(postcode)
-    // console.log(response)
     // setAddressData(response)
 
     // Remove this on live
-    console.log(postCode, "this is postcode");
     const dummyAddress = [
       {
         label: "Fake address",
@@ -159,7 +156,6 @@ const RegistartionDirectorForm = ({
       return false; // DOB is not valid or person is under 18 years old
     }
   }
-  console.log(countryCode, "this is countryCode");
   const data = [
     { label: "Mr", value: "Mr" },
     { label: "Mrs", value: "Mrs" },
@@ -319,9 +315,7 @@ const RegistartionDirectorForm = ({
         },
       ];
       const response = await apiLogin.RegisterPersonalAccount(dataObj);
-      console.log(response, "this is dataObj");
       const ID = `CC${id}`;
-      console.log(ID, "this is idfield");
       const getResponse = await apiLogin.GetCustomerDetails(ID);
       
       switch (role) {
@@ -483,7 +477,6 @@ const RegistartionDirectorForm = ({
                         valueField="value"
                         defalutValue="Mr"
                         onChange={(item) => {
-                          console.log(item, "thsis is item selected");
                           setTitle(item.value);
                         }}
                         style={styles.dropdown}
@@ -575,7 +568,6 @@ const RegistartionDirectorForm = ({
                       valueField="value"
                       placeholder="Please enter your Gender"
                       onChange={(item) => {
-                        console.log(item, "thsis is item selected");
                         setGenderValue(item.value, { shouldValidate: true });
                       }}
                       style={styles.addressDropdown}
@@ -595,7 +587,6 @@ const RegistartionDirectorForm = ({
                       valueField="value"
                       placeholder="Please enter your Marital Status"
                       onChange={(item) => {
-                        console.log(item, "thsis is item selected");
                         setMartialValue(item.value, { shouldValidate: true });
                         handleChange("maritalStatus")(item.value);
                       }}
@@ -619,7 +610,6 @@ const RegistartionDirectorForm = ({
                       valueField="value"
                       placeholder="Please enter your Employement Details"
                       onChange={(item) => {
-                        console.log(item, "thsis is item selected");
                         setEmployementValue(item.value);
                       }}
                       style={styles.addressDropdown}
@@ -741,7 +731,6 @@ const RegistartionDirectorForm = ({
                         labelField="label"
                         valueField="value"
                         onChange={(item) => {
-                          console.log(item, "thsis is item selected");
                           setAPIAddress(item.value);
                         }}
                         style={styles.addressDropdown}
@@ -764,7 +753,6 @@ const RegistartionDirectorForm = ({
                       labelField="label"
                       valueField="value"
                       onChange={(item) => {
-                        console.log(item, "thsis is item selected");
                         setTitle(item.value);
                       }}
                       style={styles.addressDropdown}
@@ -839,7 +827,6 @@ const RegistartionDirectorForm = ({
                       show={show}
                       // when picker button press you will get the country object with dial code
                       pickerButtonOnPress={(item) => {
-                        console.log(item.name.en, "this is country");
                         setCountryCode(item);
                         setShow(false);
                         handleChange("country");
@@ -859,7 +846,6 @@ const RegistartionDirectorForm = ({
                       valueField="value"
                       placeholder="Please enter the Nationality"
                       onChange={(item) => {
-                        console.log(item, "thsis is item selected");
                         setNationallity(item.value);
                       }}
                       style={styles.addressDropdown}

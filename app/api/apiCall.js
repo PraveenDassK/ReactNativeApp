@@ -30,12 +30,10 @@ const GetCustomerDetails = async (Id) => {
   return data;
 };
 const GetCustomerDetails1 = async (Id) => {
-  console.log(Id)
   const request = await client.get(
     `https://api.carbonyte.io/walletmodule/GetAccount/${Id}`
   );
   const requestData = request?.data?.details;
-  console.log(requestData, "time of api calla");
   // const data = {
   //   name: requestData?.name,
   //   accountId: requestData?.id,

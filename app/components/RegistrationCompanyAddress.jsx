@@ -35,7 +35,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
-  console.log(companyAddresses)
   const [addresses, setAddresses] = useState([]);
   const [isAdding, setAdding] = useState(false);
   const [add, setAdd] = useState(null);
@@ -65,7 +64,6 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
       ]);
     }
   }, [isChecked]);
-  console.log(add)
   /**
    * @dev This sets the is adding to false which will show the past addresses page when used
    * @notice This does not validate data, validate the data on entry
@@ -94,7 +92,6 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
           <Text>{`${addresses[0].postcode} `}</Text>
         </>
       ) : null}
-      {console.log(addresses)}
       {isAdding ? (
         <PostCode AddAddress={addAddress} />
       ) : (

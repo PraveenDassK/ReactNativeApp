@@ -89,12 +89,6 @@ const BankTransferAmount = ({ route, navigation }) => {
    */
 
   const selectAccount = async (account) => {
-    //
-    console.log(
-      Math.fround(oneselectedAccount?.balance),
-      amount,
-      "this is selected"
-    );
     if (oneselectedAccount?.balance >= Number(amount)) {
       setLessMoneyerror("");
       setShowPinModal(true);

@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import AuthContext from "../auth/context";
@@ -94,8 +94,6 @@ const AddBeneficiary = ({ navigation }) => {
   };
 
   const handleSubmit = async ({ firstName, lastName, accNum, sortCode }) => {
-    console.log(firstName, lastName, accNum, sortCode);
-
     const requestObj = {
       externalReference: "",
       name: firstName + " " + lastName,
@@ -169,7 +167,6 @@ const AddBeneficiary = ({ navigation }) => {
       },
       qualifier: "",
     };
-    console.log(requestObj);
 
     navigation.navigate("AddBeneficiaryContact", requestObj);
 
@@ -298,7 +295,6 @@ const AddBeneficiary = ({ navigation }) => {
                             marginTop: 22,
                           }}
                         >
-                          {console.log("item", item)}
                           <Text
                             style={
                               darkMode === "DARK"
