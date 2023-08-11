@@ -158,65 +158,6 @@ const SendMoney = ({ navigation }) => {
 
   return (
     <SafeAreaView >
-      {/* <ScrollView nestedScrollEnabled={true}> */}
-      {/* <View
-        style={{
-          marginTop: 47,
-          backgroundColor:
-            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
-        }}
-      >
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("AddBeneficiary")}
-          >
-            <View style={styles.buttonPayNew}>
-              <Ionicons
-                name="add-circle-outline"
-                size={20}
-                color={GlobalStyles.Color.white}
-              />
-              <Text style={styles.buttonPayNewText}>Pay someone new</Text>
-            </View>
-          </TouchableOpacity>
-
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: 312.33,
-              justifyContent: "space-between",
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: "Montserrat-Medium",
-                fontSize: 12,
-                color: GlobalStyles.Color.gray_2000,
-                marginBottom: 37,
-              }}
-            >
-              New payee account name check
-            </Text>
-            <Feather
-              name="info"
-              size={12}
-              color={GlobalStyles.Color.black}
-              onPress={() => setModalVisible(true)}
-            />
-          </View>
-          <TouchableOpacity onPress={() => navigation.navigate("MoveMoney")}>
-            <View style={styles.buttonPaySelf}>
-              <Feather
-                name="send"
-                size={20}
-                color={GlobalStyles.Color.lightBlack}
-              />
-              <Text style={styles.buttonPaySelfText}>To self account</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View> */}
       <View
         style={
           darkMode === "DARK" ? styles.darkpayContainer : styles.payContainer
@@ -412,7 +353,7 @@ const SendMoney = ({ navigation }) => {
                       : styles.payMainHeading
                   }
                 >
-                  Pay an group payee
+                  Pay an existing group payee
                 </Text>
                 <View style={{ display: "flex", flexDirection: "row" }}>
                   <Ionicons
@@ -433,15 +374,19 @@ const SendMoney = ({ navigation }) => {
               <FlatList
                 data={groupBeneficaryList}
                 keyExtractor={(groupBeneficaryList, index) => index}
-                numColumns={4}
+                numColumns={3}
                 contentContainerStyle={styles.flatListContent}
                 renderItem={(beneficary) => {
+                  console.log('eben', beneficary.item.beneficiariesDetails.length)
                   return (
                     <View style={styles.itemContainer}>
                       <UserIcon
                         name={beneficary?.item.groupName}
                         onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                         darkMode={darkMode}
+                        groupSize={ beneficary.item.beneficiariesDetails.length}
+                        group={true}
+                       
                       />
                       {showDelete && (
                         <FadeInView
