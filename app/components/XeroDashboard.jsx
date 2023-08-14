@@ -3,7 +3,7 @@ import React from "react";
 import GlobalStyles from "../../GlobalStyles";
 import Svg, { Use, Image } from "react-native-svg";
 import LogoImage from "../assets/Dashboard/Carbonyte-Xero-full.svg"
-const XeroDashboard = ({ darkMode }) => {
+const XeroDashboard = ({ darkMode ,handleXero}) => {
   return (
     <View style={styles.container}>
       <View>
@@ -27,7 +27,7 @@ const XeroDashboard = ({ darkMode }) => {
         </Text>
       </View>
       <View style={{ width: "100%", display: "flex", alignItems: "center" }}>
-        <Pressable style={styles.sendButton}>
+        <Pressable style={styles.sendButton} onPress={handleXero}>
           <Text style={styles.sendButtonText}>Know more</Text>
         </Pressable>
       </View>

@@ -10,7 +10,7 @@ import {
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import XeroPage from "../screens/XeroPage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AddNewCard from "../screens/AddNewCard";
 import AccountMain from "../screens/AccountMain";
@@ -1235,6 +1235,39 @@ const StackNavigator = () => {
           ),
         }}
       />
+      <Stack.Screen
+        name="Xeropage"
+        component={gestureHandlerRootHOC(XeroPage)}
+        options={{
+          title: "Carbonyte + Xero",
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 23,
+          },
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
+        }}
+      />
 
       <Stack.Screen
         name="Success"
@@ -1959,7 +1992,6 @@ const AppNavigator = () => {
           headerShown: false,
           presentation: "modal",
           animationTypeForReplace: "push",
-
         }}
       />
       <Tab.Screen

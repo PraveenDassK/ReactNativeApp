@@ -342,7 +342,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             >
               Carbonyte + Xero
             </Text>
-            <XeroDashboard darkMode={darkMode} />
+            <XeroDashboard darkMode={darkMode} handleXero={() => navigation.navigate("Xeropage")} />
           </View>
           <View style={{ margin: 25 }}>
             <ReferNow navigation={navigation} />
