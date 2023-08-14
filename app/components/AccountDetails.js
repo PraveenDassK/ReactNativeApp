@@ -8,6 +8,7 @@ import Text from "./Text";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../assets/Dashboard/half-carbonyte-logo.svg";
 import apiCall from "../api/apiCall";
+
 const CurrentDateComponent = () => {
   const [currentDate, setCurrentDate] = useState("");
 
@@ -69,7 +70,8 @@ const AccountDeatils = ({
     // let newBalance = userData?.filter(
     //   (eachValue, i) => eachValue?.accountId === balance
     // );
-    setBalance(dataForBalance);8
+    setBalance(dataForBalance);
+    8;
   };
   return (
     <View style={styles.border}>

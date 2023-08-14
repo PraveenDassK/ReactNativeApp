@@ -22,7 +22,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AuthContext from "../auth/context";
 import apiCall from "../api/apiCall";
-import AccountDeatils from "../components/AccountDetails";
+import AccountDetails from "../components/AccountDetails";
 import SquareIcon from "../components/ButtonIcon";
 import GlobalStyles from "../../GlobalStyles";
 import RecentTransactions from "../components/RecentTransactions";
@@ -170,7 +170,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         </ImageBackground>
 
         <View style={styles.AccountDetailsCard}>
-          <AccountDeatils
+          <AccountDetails
             userData={userData}
             userImpact={userImpact}
             handlePress={() => navigation.navigate("SendMoney")}

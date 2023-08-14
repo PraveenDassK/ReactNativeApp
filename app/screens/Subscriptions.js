@@ -211,8 +211,9 @@ const ChooseCardsElite = ({ navigation }) => {
                                   {benefit.name}
                                 </Text>
                               </View>
-                              {benefit.benefits.map((benefit) => (
+                              {benefit.benefits.map((benefit, index) => (
                                 <Text
+                                  key={`${item}-${index}`}
                                   style={{
                                     marginBottom: "2.5%",
                                     marginLeft: "10%",

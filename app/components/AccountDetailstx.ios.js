@@ -7,24 +7,70 @@ import { LinearGradient } from "expo-linear-gradient";
 import Text from "./Text";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../assets/Dashboard/Carbonytelogomark.svg";
-const AccountDeatils = ({ userData, userImpact, handlePress }) => {
-  const [title, setTitle] = useState("");
-  const [accountBalance, setBalance] = useState([]);
-  const [dropdownData, setDropdownData] = useState([{ label: "", value: "" }]);
+
+const CurrentDateComponent = () => {
+  const [currentDate, setCurrentDate] = useState("");
+
   useEffect(() => {
-    let newArray = userData?.map((eachData, i) => {
-      return { label: eachData?.id, value: eachData?.id };
-    });
-    setDropdownData(newArray);
-    setTitle(newArray?.[0]?.value);
-    handleBalance(newArray?.[0]?.value);
+    // Function to format the date as "June 6, 2023"
+    const formatDate = (date) => {
+      return new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(date);
+    };
+
+    // Get the current date
+    const now = new Date();
+    const formattedDate = formatDate(now);
+    setCurrentDate(formattedDate);
+  }, []);
+
+  return (
+    <Text
+      style={{
+        color: GlobalStyles.Color.white,
+        fontFamily: "Montserrat-Regular",
+        fontSize: 12,
+      }}
+    >
+      {currentDate}
+    </Text>
+  );
+};
+
+const AccountDeatils = ({
+  userData,
+  userImpact,
+  handlePress,
+  setBalance,
+  accountBalance,
+  accountId,
+}) => {
+  const [title, setTitle] = useState("");
+  const [dropdownData, setDropdownData] = useState();
+  useEffect(() => {
+    const newStateArray = [];
+    userData?.map((eachData, i) =>
+      newStateArray.push({
+        label: eachData?.accountId,
+        value: eachData?.accountId,
+      })
+    );
+    setDropdownData(newStateArray);
+    setTitle(newStateArray?.[0]?.value);
+    handleBalance(accountId);
   }, [userData]);
 
-  const handleBalance = (balance) => {
-    let newBalance = userData?.filter(
-      (eachValue, i) => eachValue?.id === balance
-    );
-    setBalance(newBalance);
+  const handleBalance = async (balance) => {
+    const dataForBalance = await apiCall.GetCustomerDetails(balance);
+
+    // let newBalance = userData?.filter(
+    //   (eachValue, i) => eachValue?.accountId === balance
+    // );
+    setBalance(dataForBalance);
+    8;
   };
   return (
     <View style={styles.border}>
@@ -33,7 +79,12 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
         style={styles.cardContainer}
       >
         <View
-         style={{position: "absolute", right: -40, bottom: -20, opacity: 0.3}}
+          style={{
+            position: "absolute",
+            right: -40,
+            bottom: -20,
+            opacity: 0.3,
+          }}
         >
           <Logo width={140} height={160} />
         </View>
@@ -67,12 +118,18 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
           </View>
         </View>
         <View style={styles.bottomCardContainer}>
-          <View>
-            <Text style={styles.totalTitle}>Total Balance</Text>
-            <Text style={styles.totalAmount}>
-              {formatCurrency(accountBalance[0]?.balance, "GBP", false)}
-            </Text>
+        <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View>
+              <Text style={styles.totalTitle}>Total Balance</Text>
+              <Text style={styles.totalAmount}>
+                {formatCurrency(accountBalance?.balance, "GBP", false)}
+              </Text>
+            </View>
+            <CurrentDateComponent />
           </View>
+          
           <View style={styles.bottomCard}>
             <View>
               <Text style={styles.incometext}>Income</Text>
@@ -99,9 +156,9 @@ const AccountDeatils = ({ userData, userImpact, handlePress }) => {
               ) : (
                 // <Text style={styles.incomeAmount}>Coming soon..</Text>
                 <Text style={styles.incomeAmount}>
-                <AntDesign name="arrowdown" size={20} />
-                {formatCurrency(100, "GBP", false)}
-              </Text>
+                  <AntDesign name="arrowdown" size={20} />
+                  {formatCurrency(100, "GBP", false)}
+                </Text>
               )}
             </View>
             <View>
@@ -173,10 +230,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   border: {
-    borderColor: GlobalStyles.Color.white,
+    borderColor: "#178BFF",
     borderRadius: 20,
-    borderTopWidth: 0.5,
-    borderLeftWidth: 0.5,
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
   },
   totalTitle: {
     fontSize: 16,

@@ -620,6 +620,7 @@ const CardCarousel = ({
           borderColor: GlobalStyles.Color.black,
           borderStyle: "dashed",
           borderWidth: 1,
+          borderRadius: 10,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
