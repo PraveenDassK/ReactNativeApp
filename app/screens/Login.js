@@ -76,11 +76,9 @@ const Login = ({ navigation }) => {
     authStorage.storeToken(altToken);
     setCurrentUser(IDs.token);
     setUserID(IDs.userID);
-    console.log(IDs.userID)
     setAccountID(IDs.accountID);
     setCardID(IDs.cardID);
     setCustomerDetails(IDs.customerDetails);
-    console.log(IDs.customerDetails);
     setAccountDetails(IDs.accountData);
 
     //Turns off the loading

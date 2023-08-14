@@ -44,8 +44,6 @@ const GroupSendMoney = ({ route, navigation }) => {
 
   const payeeDetails = route.params;
   const destination = {};
-  console.log(payeeDetails, "this is patDetails");
-
   const name = payeeDetails.payeeDetails.name;
   const accountNumber = route.params.requestObj.destination?.accountNumber;
 
@@ -88,7 +86,6 @@ const GroupSendMoney = ({ route, navigation }) => {
       setIsLoading(false);
     }
   };
-  console.log(groupBeneficaryList, "this is a new group");
   const handleSelectAccount = (selectedAccount) => {
     setSelectedAccount(selectedAccount);
   };
@@ -96,8 +93,6 @@ const GroupSendMoney = ({ route, navigation }) => {
   const groupValue = groupBeneficaryList.filter(
     (eachValue, id) => payeeDetails?.requestObj?.groupId === eachValue?.groupId
   );
-
-  console.log(groupValue, "this is groupValue ");
 
   /**
    * @dev This takes the selected destination account data and passes it to another screen
@@ -115,7 +110,6 @@ const GroupSendMoney = ({ route, navigation }) => {
     const requestObj = payeeDetails.requestObj;
     requestObj.amount = amount;
     requestObj.sourceAccountId = oneselectedAccount?.id;
-    console.log(requestObj, "this ois req obj");
     setIsLoading(true);
     const transferRequest = await apiTransaction.sendToGroup(requestObj);
     const successObject = {
@@ -123,8 +117,6 @@ const GroupSendMoney = ({ route, navigation }) => {
       name: name,
     };
     setIsLoading(false);
-    console.log(transferRequest, "this is transfer request api call");
-
     navigation.navigate("sendmoneysuccess", { successObject });
   };
 
@@ -221,10 +213,6 @@ const GroupSendMoney = ({ route, navigation }) => {
     }
     route.params.requestObj.amount = amount;
     route.params.requestObj.reference = "Transfer";
-    console.log(
-      "Transfer to " + payeeDetails.name + " of £" + amount + " successful"
-    );
-
     navigation.navigate("Pin", {
       amount: amount,
       refrence: reference,

@@ -20,7 +20,6 @@ const UserIcon = ({
   const [initals, setInitals] = useState("");
   const [colour, setColour] = useState("");
 
-  //console.log(staticColors[Math.random()])
 
   /**
    * @dev Loads the data once

@@ -110,7 +110,6 @@ const AddNewCard = ({ navigation, route }) => {
   //getting card category from route
 
   const cardCategory = route.params;
-  console.log(cardCategory, "this is a card category");
 
   //validation for firstName and lastName
   const validationSchema = Yup.object().shape({
@@ -152,16 +151,11 @@ const AddNewCard = ({ navigation, route }) => {
   const loadData = async () => {
     const response = await api_list.GetCustomerDetailsForCard(customerDetails);
     const listedAccount = response?.data?.details?.accountDetails;
-    console.log(accountID, "this is accountId");
     const filterAccount = listedAccount.filter(
       (eachValue, index) => eachValue?.accountId === accountID
     );
-    console.log(filterAccount?.[0]?.enfuceAccountId, "this enfuse account Id ");
     setApiAccountId(filterAccount?.[0]?.enfuceAccountId);
-    console.log(
-      response?.data?.details?.enfuceCustomerId,
-      "this is enfuseCustomerId"
-    );
+
     setApiCustomerid(response?.data?.details?.enfuceCustomerId);
   };
   // array for input fields
@@ -189,14 +183,7 @@ const AddNewCard = ({ navigation, route }) => {
   // form submit to set req Obj
   const handleSubmit = async ({ firstName, lastName, postcode }) => {
     // handleAddress(postcode);
-    console.log(
-      firstName,
-      lastName,
-      selectedCard,
-      postcode,
-      selectedAddress,
-      "this is data"
-    );
+  
     requestObj.embossing.firstName = firstName;
     requestObj.embossing.lastName = lastName;
     physicalCardObj.embossing.firstName = firstName;
@@ -214,8 +201,6 @@ const AddNewCard = ({ navigation, route }) => {
   const handleSuccess = async () => {
     setShowPinModal(false);
     setIsLoading(true);
-    console.log(requestObj, "This is from api after pin");
-    console.log(physicalCardObj, "this is physical obj");
     if (cardCategory === "virtual") {
       let response = await apiVirtualCard.getNewVirtualCard(
         apiCustomerid,
@@ -240,11 +225,8 @@ const AddNewCard = ({ navigation, route }) => {
       );
       if (response?.data?.status === 201) {
         alert("Your new card has been ordered  successfully");
-        console.log(response?.data, "this is a new physical card");
-
         navigation.navigate("MyCards");
       } else {
-        console.log(response, "this is error");
         alert(response?.data?.message);
         setIsLoading(false);
       }
@@ -288,11 +270,9 @@ const AddNewCard = ({ navigation, route }) => {
   //getting address from postcode
   const handleAddress = async (postcode) => {
     // const response = await apiLogin.GetAddressByPostCode(postcode)
-    // console.log(response)
     // setAddressData(response)
 
     // Remove this on live
-
 
     const dummyAddress = [
       {
@@ -373,7 +353,6 @@ const AddNewCard = ({ navigation, route }) => {
                             onChangeText={(text) => {
                               // Update the firstName field with the new value entered in the TextInput
                               setFieldValue(item.initialValue, text);
-                              console.log(text, "this is the new value");
                               const updatedFirstName = values.postcode;
                               if (item.label === "Postcode") {
                                 handleAddress(text);
@@ -434,7 +413,6 @@ const AddNewCard = ({ navigation, route }) => {
                             onChangeText={(text) => {
                               // Update the firstName field with the new value entered in the TextInput
                               setFieldValue("postcode", text);
-                              console.log(text, "this is the new value");
                               handleAddress(text);
                             }}
                             placeholder={"Enter your postcode"}

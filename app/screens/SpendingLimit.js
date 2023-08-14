@@ -61,7 +61,6 @@ const SpendingLimit = ({ navigation, route }) => {
     //Gets the data from the api
     setIsLoading(true);
     const response = await apiCall.GetLimits(selectedCard);
-    console.log(response,"this is the response");
     const spendTotal = response === null ? 0 : response?.spend;
     const monthlyAmount = response === null ? 0 : response?.monthlyAmount;
     const cards = await apiCall.GetCardByAccount("686283112");
@@ -140,7 +139,6 @@ const SpendingLimit = ({ navigation, route }) => {
     const newElemet = accountData.filter(
       (eachValue, index) => index === item._index
     );
-    console.log(newElemet);
     return (
       <View style={styles.dropDownarrayitem}>
         <Image

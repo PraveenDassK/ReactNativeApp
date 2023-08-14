@@ -12,16 +12,13 @@ const AccountLetter = ({ navigation }) => {
   const [email, setemail] = useState(null);
   const authContext = useContext(AuthContext);
   const { darkMode,userID } = useContext(AuthContext);
-  console.log(userID)
   useEffect(() => {
     loadData();
   }, []);
   
   const loadData = async () => {
     const customer = await api.GetCustomer(userID);
-    console.log(customer)
     // const data = customer.data.details;
-    // console.log(data,"this is data")
     // setemail(data.associates[0].email);
   };
   return (

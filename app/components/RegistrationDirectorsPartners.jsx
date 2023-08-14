@@ -32,11 +32,9 @@ const RegistrationDirectorsPartners = ({ SaveDetails}) => {
   };
 
   const handleAdd = (name) => {
-    console.log("!")
     setIsAdding(true)
   }
   const handleNext = () => {
-    console.log("!")
     SaveDetails(null, "CompanyDirectors");
   }
 
@@ -148,7 +146,6 @@ const RegistrationDirectorsPartners = ({ SaveDetails}) => {
 };
 
 const DirectorPartnerItems = ({ items, onDelete, title, setIsAdding, }) => {
-  console.log(setIsAdding)
   return (
     <View>
       <RegistrationInputSelect
@@ -171,7 +168,6 @@ const DirectorPartnerItems = ({ items, onDelete, title, setIsAdding, }) => {
 };
 
 const RegistrationInputSelect = ({ name, onAdd }) => {
-  console.log(onAdd)
   return (
     <View style={styles.inputContainer}>
       <View style={styles.inputTextContainer}>

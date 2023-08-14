@@ -247,6 +247,17 @@ const Analytics = ({ navigation }) => {
           {/* <Text>
             Total Spent this {active}
           </Text> */}
+          <Text
+            style={{
+              textAlign: "center",
+              fontFamily: "Montserrat-SemiBold",
+              color: GlobalStyles.Color.white,
+              fontSize: 16,
+              marginVertical:20
+            }}
+          >
+            Your Spendings Details
+          </Text>
           {graphData && <Bazier graphData={graphData} />}
           {graphData && (
             <View
@@ -851,9 +862,9 @@ const Bazier = ({ graphData }) => {
             <View>
               <Svg>
                 <Rect
-                  x={tooltipPos.x - 50}
+                  x={tooltipPos.x - 30}
                   y={tooltipPos.y + 8}
-                  width={100}
+                  width={60}
                   height={30}
                   fill="#179424"
                   rx={15}
@@ -867,7 +878,7 @@ const Bazier = ({ graphData }) => {
                   fontWeight="bold"
                   textAnchor="middle"
                 >
-                  {`£ ${tooltipPos.value.toFixed(2)} | 10.00PM `}
+                  {`£ ${tooltipPos.value.toFixed(2)} `}
                 </TextSVG>
               </Svg>
             </View>
