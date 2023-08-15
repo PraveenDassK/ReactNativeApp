@@ -206,14 +206,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
           {!iconShow && (
             <View style={styles.buttonContainer}>
               <SquareIcon
-                name={"Move money"}
-                image={"bank-transfer"}
-                onPress={() => navigation.navigate("MoveMoney")}
-              />
-              <SquareIcon
                 name={"Send money"}
                 image={"send"}
                 onPress={() => navigation.navigate("SendMoney")}
+              />
+              <SquareIcon
+                name={"Move money"}
+                image={"bank-transfer"}
+                onPress={() => navigation.navigate("MoveMoney")}
               />
               <SquareIcon
                 name={"Cards"}
@@ -231,14 +231,14 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             <View>
               <View style={styles.buttonContainer}>
                 <SquareIcon
-                  name={"Move money"}
-                  image={"bank-transfer"}
-                  onPress={() => navigation.navigate("MoveMoney")}
-                />
-                <SquareIcon
                   name={"Send money"}
                   image={"send"}
                   onPress={() => navigation.navigate("SendMoney")}
+                />
+                <SquareIcon
+                  name={"Move money"}
+                  image={"bank-transfer"}
+                  onPress={() => navigation.navigate("MoveMoney")}
                 />
                 <SquareIcon
                   name={"Cards"}
@@ -246,43 +246,21 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   onPress={() => navigation.navigate("MyCards")}
                 />
                 <SquareIcon
-                  name={"Switch accounts"}
-                  image={"account-switch"}
-                  onPress={() => navigation.navigate("SwitchAccounts")}
-                />
-              </View>
-              <View style={styles.buttonContainer}>
-                <SquareIcon
                   name={"Payment link"}
                   image={"link-variant"}
                   onPress={() => navigation.navigate("PaymentLink")}
                 />
+              </View>
+              <View style={styles.buttonContainer}>
                 <SquareIcon
                   name={"Subscriptions"}
                   image={"newspaper-variant-outline"}
                   onPress={() => navigation.navigate("Subscriptions")}
                 />
                 <SquareIcon
-                  name={"Set limits"}
-                  image={"car-speed-limiter"}
-                  onPress={() => navigation.navigate("SpendingLimit")}
-                />
-                <SquareIcon
-                  name={"Transactions"}
-                  image={"bank-outline"}
-                  onPress={() => navigation.navigate("Transactions")}
-                />
-              </View>
-              <View style={styles.buttonContainer}>
-                <SquareIcon
                   name={"Teams"}
                   image={"account-group"}
                   onPress={() => navigation.navigate("Teams")}
-                />
-                <SquareIcon
-                  name={"Invoices"}
-                  image={"file-document-multiple"}
-                  onPress={() => navigation.navigate("Invoices")}
                 />
                 <SquareIcon
                   name={"Direct debits"}
@@ -342,7 +320,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             >
               Carbonyte + Xero
             </Text>
-            <XeroDashboard darkMode={darkMode} handleXero={() => navigation.navigate("Xeropage")} />
+            <XeroDashboard
+              darkMode={darkMode}
+              handleXero={() => navigation.navigate("Xeropage")}
+            />
           </View>
           <View style={{ margin: 25 }}>
             <ReferNow navigation={navigation} />

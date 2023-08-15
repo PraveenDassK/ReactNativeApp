@@ -50,7 +50,7 @@ const ButtonIcon = ({
           )}
         </View>
         <View style={styles.textContainer}>
-          <Text style={darkMode === "DARK" ? styles.darkName : styles.name}>
+          <Text style={darkMode === "DARK" ? styles.darkName : styles.name} numberOfLines={2}>
             {name}
           </Text>
         </View>
