@@ -400,7 +400,7 @@ const SendMoney = ({ navigation }) => {
                             position: "absolute",
                             zIndex: 5,
                             top: 0,
-                            right: 15,
+                            right: 65,
                           }}
                         >
                           <AntDesign
