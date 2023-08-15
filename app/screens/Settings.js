@@ -630,6 +630,7 @@ const Settings = ({ navigation }) => {
             alignItems: "center",
             width: "90%",
             marginLeft: "5%",
+            marginBottom: "25%"
           }}
           onPress={() => navigation.navigate("TermsAndConditions")}
         >
@@ -638,7 +639,7 @@ const Settings = ({ navigation }) => {
           </AppText>
         </Pressable>
       </View>
-      <Tagline darkMode={darkMode} />
+    
     </ScrollView>
   );
 };
