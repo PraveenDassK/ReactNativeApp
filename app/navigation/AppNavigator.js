@@ -18,7 +18,7 @@ import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import CarbonExplore from "../screens/CarbonExplore";
 import Settings from "../screens/Settings";
-
+import DirectDebitDetails from "../screens/DirectDebitDetails";
 import AccountDummy from "../screens/AccountDummy";
 import AccountDummy2 from "../screens/AccountDummy2";
 import DashBoard from "../screens/Dashboard";
@@ -99,6 +99,7 @@ import PaymentLink from "../screens/PaymentLink";
 import Invoices from "../screens/Invoices";
 import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
+import DirectDebitSucessPage from "../screens/DirectDebitSucessPage";
 import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
 
 import Teams from "../screens/Teams";
@@ -968,6 +969,80 @@ const StackNavigator = () => {
           },
         }}
       />
+      <Stack.Screen
+        name="DirectDebitDetails"
+        component={gestureHandlerRootHOC(DirectDebitDetails)}
+        options={{
+          title: "Direct Debit Details",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 22,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="DirectDebitSucess"
+        component={gestureHandlerRootHOC(DirectDebitSucessPage)}
+        options={{
+          title: "Direct Debit Sucess",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 20,
+          },
+        }}
+      />
 
       <Stack.Screen
         name="PaymentLink"
@@ -1462,13 +1537,34 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-down" size={30} />
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
             </View>
           ),
+
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -1495,7 +1591,32 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CardSettings)}
         options={{
           title: "Settings",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
         }}
       />
       <Stack.Screen
@@ -1545,7 +1666,32 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(SpendingLimit)}
         options={{
           title: "Spending Limit",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
         }}
       />
       <Stack.Screen

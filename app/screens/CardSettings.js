@@ -48,7 +48,7 @@ const CardSettings = ({ navigation, route }) => {
     sendRequest();
   };
   const authContext = useContext(AuthContext);
-
+  const { darkMode } = useContext(AuthContext);
   useEffect(() => {
     getSettings();
   }, []);
@@ -64,9 +64,9 @@ const CardSettings = ({ navigation, route }) => {
     setIsLoading(true);
     try {
       const cardSettings = await apiSettings.GetSettings(authContext.accountID);
-      
+
       const data = cardSettings;
-      
+
       data.onlineTransactions ? setIsEnabled(true) : null;
       data.swipePayments ? setIsEnabled1(true) : null;
       data.atmWithdrawals ? setIsEnabled2(true) : null;
@@ -80,7 +80,7 @@ const CardSettings = ({ navigation, route }) => {
 
   const sendRequest = async () => {
     setIsLoading(true);
-    
+
     try {
       const response = await apiSettings.SetToggles(
         authContext.accountID,
@@ -89,49 +89,93 @@ const CardSettings = ({ navigation, route }) => {
         isEnabled2,
         isEnabled3
       );
-      
+
       setIsLoading(false);
     } catch {
       setIsLoading(false);
     }
-
   };
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
 
   return (
-    <ScrollView>
-      <View style={styles.mainContainer}>
-        {/* <View style={styles.titleTextRow}>
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/backgrounds/cardsettings-dark.jpg")
+          : require("../assets/backgrounds/cardsettings.jpg")
+      }
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+      }}
+    >
+      <ScrollView>
+        <View
+          style={
+            darkMode === "DARK"
+              ? styles.darkmainContainer
+              : styles.mainContainer
+          }
+        >
+          {/* <View style={styles.titleTextRow}>
           <AppText style={styles.titleText}>Settings</AppText>
         </View> */}
-        <Pressable
-          style={[styles.boxShadow]}
-          onPress={() => navigation.navigate("viewpin", routeObj)}
-        >
-          <View
-            style={[
-              {
-                width: "90%",
-                marginLeft: "5%",
-                borderRadius: 15,
-                marginTop: "5%",
-                backgroundColor: GlobalStyles.Color.white,
-                // height: 60,
-                paddingVertical: "5%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              },
-            ]}
+          <Pressable
+            style={[styles.boxShadow]}
+            onPress={() => navigation.navigate("viewpin", routeObj)}
           >
-            {/* <Image
+            <View
+              style={[
+                {
+                  width: "90%",
+                  marginLeft: "5%",
+                  borderRadius: 15,
+                  marginTop: "5%",
+                  backgroundColor:
+                    darkMode === "DARK"
+                      ? "rgba(255,255,255,0.2)"
+                      : GlobalStyles.Color.white,
+                  // height: 60,
+                  paddingVertical: "5%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderColor:
+                    darkMode === "DARK" ? GlobalStyles.Color.white : null,
+                  borderWidth: darkMode === "DARK" ? 0.3 : 0,
+                },
+              ]}
+            >
+              {/* <Image
               style={{
                 height: "60%",
                 resizeMode: "contain",
@@ -141,41 +185,73 @@ const CardSettings = ({ navigation, route }) => {
               }}
               source={require("../assets/newAssets/reset.png")}
             /> */}
-            <View style={{ marginLeft: "5%" }}>
-              <FontAwesome name="lock" size={24} color="black" />
+              <View style={{ marginLeft: "5%" }}>
+                <FontAwesome
+                  name="lock"
+                  size={24}
+                  color={
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.secondaryDarkTheme_bg
+                  }
+                />
+              </View>
+              <View
+                style={{
+                  flex: 9,
+                  justifyContent: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardHeading
+                      : styles.cardHeading
+                  }
+                >
+                  View Pin
+                </AppText>
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardSubHeading
+                      : styles.cardSubHeading
+                  }
+                >
+                  View your security PIN number
+                </AppText>
+              </View>
             </View>
-            <View
-              style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
-            >
-              <AppText style={styles.cardHeading}>View Pin</AppText>
-              <AppText style={styles.cardSubHeading}>
-                View your security PIN number
-              </AppText>
-            </View>
-          </View>
-        </Pressable>
+          </Pressable>
 
-        <Pressable
-          style={[styles.boxShadow]}
-          onPress={() => navigation.navigate("SpendingLimit")}
-        >
-          <View
-            style={[
-              {
-                width: "90%",
-                marginLeft: "5%",
-                borderRadius: 15,
-                marginTop: "5%",
-                backgroundColor: GlobalStyles.Color.white,
-                // height: 60,
-                paddingVertical: "5%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              },
-            ]}
+          <Pressable
+            style={[styles.boxShadow]}
+            onPress={() => navigation.navigate("SpendingLimit")}
           >
-            {/* <Image
+            <View
+              style={[
+                {
+                  width: "90%",
+                  marginLeft: "5%",
+                  borderRadius: 15,
+                  marginTop: "5%",
+                  backgroundColor:
+                    darkMode === "DARK"
+                      ? "rgba(255,255,255,0.2)"
+                      : GlobalStyles.Color.white,
+                  // height: 60,
+                  paddingVertical: "5%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderColor:
+                    darkMode === "DARK" ? GlobalStyles.Color.white : null,
+                  borderWidth: darkMode === "DARK" ? 0.3 : 0,
+                },
+              ]}
+            >
+              {/* <Image
               style={{
                 height: "60%",
                 resizeMode: "contain",
@@ -185,58 +261,90 @@ const CardSettings = ({ navigation, route }) => {
               }}
               source={require("../assets/newAssets/meter.png")}
             /> */}
-            <View style={{ marginLeft: "5%" }}>
-              <SimpleLineIcons name="speedometer" size={24} />
+              <View style={{ marginLeft: "5%" }}>
+                <SimpleLineIcons
+                  name="speedometer"
+                  size={24}
+                  color={
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.secondaryDarkTheme_bg
+                  }
+                />
+              </View>
+              <View
+                style={{
+                  flex: 9,
+                  justifyContent: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardHeading
+                      : styles.cardHeading
+                  }
+                >
+                  Spending Limit
+                </AppText>
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardSubHeading
+                      : styles.cardSubHeading
+                  }
+                >
+                  Set you monthly spending limit
+                </AppText>
+              </View>
             </View>
-            <View
-              style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
-            >
-              <AppText style={styles.cardHeading}>Spending Limit</AppText>
-              <AppText style={styles.cardSubHeading}>
-                Set you monthly spending limit
-              </AppText>
-            </View>
-          </View>
-        </Pressable>
+          </Pressable>
 
-        <AppText
-          style={{
-            marginLeft: "10%",
-            marginTop: "5%",
-            fontSize: 14,
-            fontFamily: "Montserrat",
-            color: GlobalStyles.Color.gray_2100,
-          }}
-        >
-          Security
-        </AppText>
-
-        <View
-          style={[
-            {
-              width: "90%",
-              marginLeft: "5%",
-              borderRadius: 15,
-              marginTop: "5%",
-              backgroundColor: GlobalStyles.Color.white,
-              height: "auto",
-              paddingRight: "2.5%",
-            },
-          ]}
-        >
-          <View
+          <AppText
             style={{
-              width: "100%",
-              // height: 60,
-              paddingVertical: "5%",
-              borderRadius: 15,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              // alignItems: "center",
+              marginLeft: "10%",
+              marginTop: "5%",
+              fontSize: 14,
+              fontFamily: "Montserrat",
+              color: GlobalStyles.Color.gray_2100,
             }}
           >
-            {/* <Image
+            Security
+          </AppText>
+
+          <View
+            style={[
+              {
+                width: "90%",
+                marginLeft: "5%",
+                borderRadius: 15,
+                marginTop: "5%",
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? "rgba(255,255,255,0.2)"
+                    : GlobalStyles.Color.white,
+                height: "auto",
+                paddingRight: "2.5%",
+                borderColor:
+                  darkMode === "DARK" ? GlobalStyles.Color.white : null,
+                borderWidth: darkMode === "DARK" ? 0.3 : 0,
+              },
+            ]}
+          >
+            <View
+              style={{
+                width: "100%",
+                // height: 60,
+                paddingVertical: "5%",
+                borderRadius: 15,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // alignItems: "center",
+              }}
+            >
+              {/* <Image
               style={{
                 height: 22,
                 resizeMode: "contain",
@@ -246,181 +354,68 @@ const CardSettings = ({ navigation, route }) => {
               }}
               source={require("../assets/newAssets/globe.png")}
             /> */}
-            <View style={{ marginLeft: "5%" }}>
-              <Ionicons name="ios-globe-outline" size={24} color="black" />
+              <View style={{ marginLeft: "5%" }}>
+                <Ionicons
+                  name="ios-globe-outline"
+                  size={24}
+                  color={
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.secondaryDarkTheme_bg
+                  }
+                />
+              </View>
+              <View
+                style={{
+                  flex: 7,
+                  justifyContent: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardHeading
+                      : styles.cardHeading
+                  }
+                >
+                  Online Transactions
+                </AppText>
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardSubHeading
+                      : styles.cardSubHeading
+                  }
+                >
+                  Internet based transactions are generally high-risk. You can
+                  switch them off for extra security. Payments you make using
+                  mobile wallets like Apple Pay won’t be affected.
+                </AppText>
+              </View>
+              <Switch
+                trackColor={{
+                  false: GlobalStyles.Color.gray_600,
+                  true: GlobalStyles.Color.blue_100,
+                }}
+                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
             </View>
-            <View
-              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
-            >
-              <AppText style={styles.cardHeading}>Online Transactions</AppText>
-              <AppText style={styles.cardSubHeading}>
-                Internet based transactions are generally high-risk. You can
-                switch them off for extra security. Payments you make using
-                mobile wallets like Apple Pay won’t be affected.
-              </AppText>
-            </View>
-            <Switch
-              trackColor={{
-                false: GlobalStyles.Color.gray_600,
-                true: GlobalStyles.Color.blue_100,
-              }}
-              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
-          </View>
 
-          <View
-            style={[
-              {
-                width: "100%",
-                // height: 60,
-                paddingVertical: "5%",
-                borderRadius: 15,
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                height: "50%",
-                resizeMode: "contain",
-                // flex: 1,
-                alignSelf: "center",
-                marginLeft: "5%",
-              }}
-              source={require("../assets/newAssets/swipe-card.png")}
-            />
             <View
-              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
-            >
-              <AppText style={styles.cardHeading}>Swipe Payments</AppText>
-              <AppText style={styles.cardSubHeading}>
-                Sometimes cards can be cloned, you can turn of the magnetic
-                stripe here
-              </AppText>
-            </View>
-            <Switch
-              trackColor={{
-                false: GlobalStyles.Color.gray_600,
-                true: GlobalStyles.Color.blue_100,
-              }}
-              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-              onValueChange={toggleSwitch1}
-              value={isEnabled1}
-            />
-          </View>
-
-          <View
-            style={[
-              {
-                width: "100%",
-                // height: 60,
-                paddingVertical: "5%",
-                borderRadius: 15,
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                height: "50%",
-                resizeMode: "contain",
-                // flex: 1,
-                alignSelf: "center",
-                marginLeft: "5%",
-              }}
-              source={require("../assets/newAssets/ATM-withdrawals.png")}
-            />
-            <View
-              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
-            >
-              <AppText style={styles.cardHeading}>ATM Withdrawals</AppText>
-              <AppText style={styles.cardSubHeading}>
-                Turn off ATM Withdrawals here
-              </AppText>
-            </View>
-            <Switch
-              trackColor={{
-                false: GlobalStyles.Color.gray_600,
-                true: GlobalStyles.Color.blue_100,
-              }}
-              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-              onValueChange={toggleSwitch2}
-              value={isEnabled2}
-            />
-          </View>
-
-          <View
-            style={[
-              {
-                width: "100%",
-                // height: 60,
-                paddingVertical: "5%",
-                borderRadius: 15,
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                height: "50%",
-                resizeMode: "contain",
-                // flex: 1,
-                alignSelf: "center",
-                marginLeft: "5%",
-              }}
-              source={require("../assets/newAssets/contactless.png")}
-            />
-            <View
-              style={{ flex: 7, justifyContent: "center", marginLeft: "2.5%" }}
-            >
-              <AppText style={styles.cardHeading}>Contactless Payments</AppText>
-              <AppText style={styles.cardSubHeading}>
-                Turn off contactless functionality
-              </AppText>
-            </View>
-            <Switch
-              trackColor={{
-                false: GlobalStyles.Color.gray_600,
-                true: GlobalStyles.Color.blue_100,
-              }}
-              thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-              onValueChange={toggleSwitch3}
-              value={isEnabled3}
-            />
-          </View>
-        </View>
-
-        <View
-          style={[
-            {
-              width: "90%",
-              marginLeft: "5%",
-              borderRadius: 15,
-              marginTop: "5%",
-              backgroundColor: GlobalStyles.Color.white,
-              height: "auto",
-            },
-          ]}
-        >
-          <Pressable onPress={() => navigation.navigate("ReplaceCard")}>
-            <View
-              style={{
-                width: "100%",
-                // height: 60,
-                // height: 60,
-                paddingVertical: "5%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
+              style={[
+                {
+                  width: "100%",
+                  // height: 60,
+                  paddingVertical: "5%",
+                  borderRadius: 15,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                },
+              ]}
             >
               <Image
                 style={{
@@ -430,36 +425,249 @@ const CardSettings = ({ navigation, route }) => {
                   alignSelf: "center",
                   marginLeft: "5%",
                 }}
-                source={require("../assets/newAssets/reset.png")}
+                source={require("../assets/newAssets/swipe-card.png")}
               />
               <View
                 style={{
-                  flex: 9,
+                  flex: 7,
                   justifyContent: "center",
                   marginLeft: "2.5%",
                 }}
               >
-                <AppText style={styles.cardHeading}>Replace Card</AppText>
-                <AppText style={styles.cardSubHeading}>
-                  Lost, Stolen, Not Delivered
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardHeading
+                      : styles.cardHeading
+                  }
+                >
+                  Swipe Payments
+                </AppText>
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardSubHeading
+                      : styles.cardSubHeading
+                  }
+                >
+                  Sometimes cards can be cloned, you can turn of the magnetic
+                  stripe here
                 </AppText>
               </View>
+              <Switch
+                trackColor={{
+                  false: GlobalStyles.Color.gray_600,
+                  true: GlobalStyles.Color.blue_100,
+                }}
+                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                onValueChange={toggleSwitch1}
+                value={isEnabled1}
+              />
             </View>
-          </Pressable>
-          <Pressable
-            onPress={() => navigation.navigate("Terminate", routeObj)}
-          >
+
             <View
-              style={{
-                width: "100%",
-                // height: 60,
-                paddingVertical: "5%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
+              style={[
+                {
+                  width: "100%",
+                  // height: 60,
+                  paddingVertical: "5%",
+                  borderRadius: 15,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                },
+              ]}
             >
-              {/* <Image
+              <Image
+                style={{
+                  height: "50%",
+                  resizeMode: "contain",
+                  // flex: 1,
+                  alignSelf: "center",
+                  marginLeft: "5%",
+                }}
+                source={require("../assets/newAssets/ATM-withdrawals.png")}
+              />
+              <View
+                style={{
+                  flex: 7,
+                  justifyContent: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardHeading
+                      : styles.cardHeading
+                  }
+                >
+                  ATM Withdrawals
+                </AppText>
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardSubHeading
+                      : styles.cardSubHeading
+                  }
+                >
+                  Turn off ATM Withdrawals here
+                </AppText>
+              </View>
+              <Switch
+                trackColor={{
+                  false: GlobalStyles.Color.gray_600,
+                  true: GlobalStyles.Color.blue_100,
+                }}
+                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                onValueChange={toggleSwitch2}
+                value={isEnabled2}
+              />
+            </View>
+
+            <View
+              style={[
+                {
+                  width: "100%",
+                  // height: 60,
+                  paddingVertical: "5%",
+                  borderRadius: 15,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  height: "50%",
+                  resizeMode: "contain",
+                  // flex: 1,
+                  alignSelf: "center",
+                  marginLeft: "5%",
+                }}
+                source={require("../assets/newAssets/contactless.png")}
+              />
+              <View
+                style={{
+                  flex: 7,
+                  justifyContent: "center",
+                  marginLeft: "2.5%",
+                }}
+              >
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardHeading
+                      : styles.cardHeading
+                  }
+                >
+                  Contactless Payments
+                </AppText>
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardSubHeading
+                      : styles.cardSubHeading
+                  }
+                >
+                  Turn off contactless functionality
+                </AppText>
+              </View>
+              <Switch
+                trackColor={{
+                  false: GlobalStyles.Color.gray_600,
+                  true: GlobalStyles.Color.blue_100,
+                }}
+                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                onValueChange={toggleSwitch3}
+                value={isEnabled3}
+              />
+            </View>
+          </View>
+
+          <View
+            style={[
+              {
+                width: "90%",
+                marginLeft: "5%",
+                borderRadius: 15,
+                marginTop: "5%",
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? "rgba(255,255,255,0.2)"
+                    : GlobalStyles.Color.white,
+                height: "auto",
+                borderColor:
+                  darkMode === "DARK" ? GlobalStyles.Color.white : null,
+                borderWidth: darkMode === "DARK" ? 0.3 : 0,
+              },
+            ]}
+          >
+            <Pressable onPress={() => navigation.navigate("ReplaceCard")}>
+              <View
+                style={{
+                  width: "100%",
+                  // height: 60,
+                  // height: 60,
+                  paddingVertical: "5%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Image
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                  source={require("../assets/newAssets/reset.png")}
+                />
+                <View
+                  style={{
+                    flex: 9,
+                    justifyContent: "center",
+                    marginLeft: "2.5%",
+                  }}
+                >
+                  <AppText
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkcardHeading
+                        : styles.cardHeading
+                    }
+                  >
+                    Replace Card
+                  </AppText>
+                  <AppText
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkcardSubHeading
+                        : styles.cardSubHeading
+                    }
+                  >
+                    Lost, Stolen, Not Delivered
+                  </AppText>
+                </View>
+              </View>
+            </Pressable>
+            <Pressable
+              onPress={() => navigation.navigate("Terminate", routeObj)}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  // height: 60,
+                  paddingVertical: "5%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                {/* <Image
                 style={{
                   height: "60%",
                   resizeMode: "contain",
@@ -469,9 +677,82 @@ const CardSettings = ({ navigation, route }) => {
                 }}
                 source={require("../assets/newAssets/delete.png")}
               /> */}
-              <View style={{ marginLeft: "5%" }}>
-                <MaterialCommunityIcons name="delete" size={24} color="black" />
+                <View style={{ marginLeft: "5%" }}>
+                  <MaterialCommunityIcons
+                    name="delete"
+                    size={24}
+                    color={
+                      darkMode === "DARK"
+                        ? GlobalStyles.Color.white
+                        : GlobalStyles.Color.secondaryDarkTheme_bg
+                    }
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 9,
+                    justifyContent: "center",
+                    marginLeft: "2.5%",
+                  }}
+                >
+                  <AppText
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkcardHeading
+                        : styles.cardHeading
+                    }
+                  >
+                    Terminate Card
+                  </AppText>
+                  <AppText
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkcardSubHeading
+                        : styles.cardSubHeading
+                    }
+                  >
+                    This card will be permanently terminated
+                  </AppText>
+                </View>
               </View>
+            </Pressable>
+          </View>
+
+          <Pressable
+            style={[styles.groupChild]}
+            onPress={() => navigation.navigate("Subscriptions")}
+          >
+            <View
+              style={[
+                {
+                  width: "90%",
+                  marginLeft: "5%",
+                  borderRadius: 15,
+                  marginTop: "5%",
+                  backgroundColor:
+                    darkMode === "DARK"
+                      ? "rgba(255,255,255,0.2)"
+                      : GlobalStyles.Color.white, // height: 60,
+                  paddingVertical: "5%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderColor:
+                    darkMode === "DARK" ? GlobalStyles.Color.white : null,
+                  borderWidth: darkMode === "DARK" ? 0.3 : 0,
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  height: "50%",
+                  resizeMode: "contain",
+                  // flex: 1,
+                  alignSelf: "center",
+                  marginLeft: "5%",
+                }}
+                source={require("../assets/newAssets/upgrade.png")}
+              />
               <View
                 style={{
                   flex: 9,
@@ -479,73 +760,38 @@ const CardSettings = ({ navigation, route }) => {
                   marginLeft: "2.5%",
                 }}
               >
-                <AppText style={styles.cardHeading}>Terminate Card</AppText>
-                <AppText style={styles.cardSubHeading}>
-                  This card will be permanently terminated
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardHeading
+                      : styles.cardHeading
+                  }
+                >
+                  Upgrade Card
+                </AppText>
+                <AppText
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkcardSubHeading
+                      : styles.cardSubHeading
+                  }
+                >
+                  Upgrade your card plan
                 </AppText>
               </View>
             </View>
           </Pressable>
         </View>
-
-        <Pressable
-          style={[styles.groupChild]}
-          onPress={() => navigation.navigate("Subscriptions")}
-        >
-          <View
-            style={[
-              {
-                width: "90%",
-                marginLeft: "5%",
-                borderRadius: 15,
-                marginTop: "5%",
-                backgroundColor: GlobalStyles.Color.white,
-                // height: 60,
-                paddingVertical: "5%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                height: "50%",
-                resizeMode: "contain",
-                // flex: 1,
-                alignSelf: "center",
-                marginLeft: "5%",
-              }}
-              source={require("../assets/newAssets/upgrade.png")}
-            />
-            <View
-              style={{ flex: 9, justifyContent: "center", marginLeft: "2.5%" }}
-            >
-              <AppText style={styles.cardHeading}>Upgrade Card</AppText>
-              <AppText style={styles.cardSubHeading}>
-                Upgrade your card plan
-              </AppText>
-            </View>
-          </View>
-        </Pressable>
-      </View>
-      <View
-        style={{
-          position: "absolute",
-          bottom: "0%",
-          width: "100%",
-          paddingHorizontal: 10,
-          zIndex: 10,
-        }}
-      >
-        <Tagline />
-      </View>
-      <ImageBackground
-        resizeMode="stretch"
-        source={require("../assets/backgrounds/cardsettings.jpg")}
-        style={styles.container}
-      />
-    </ScrollView>
+        <View style={{ marginTop: "10%" }}>
+          <Tagline darkMode={darkMode} />
+        </View>
+        {/* <ImageBackground
+          resizeMode="stretch"
+          source={require("../assets/backgrounds/cardsettings.jpg")}
+          style={styles.container}
+        /> */}
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -553,6 +799,13 @@ const styles = StyleSheet.create({
   boxShadow: {},
   mainContainer: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
+    height: "auto",
+    width: "100%",
+    flex: GlobalStyles.DivContainer.flex,
+    minHeight: 812,
+  },
+  darkmainContainer: {
+    backgroundColor: GlobalStyles.DivContainer.darkTheme_bg,
     height: "auto",
     width: "100%",
     flex: GlobalStyles.DivContainer.flex,
@@ -574,8 +827,18 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.gray_1400,
     fontSize: 14,
   },
+  darkcardHeading: {
+    fontFamily: "Montserrat",
+    color: GlobalStyles.Color.white,
+    fontSize: 14,
+  },
   cardSubHeading: {
     color: GlobalStyles.Color.gray_2100,
+    fontFamily: "Montserrat-Regular",
+    fontSize: 10,
+  },
+  darkcardSubHeading: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat-Regular",
     fontSize: 10,
   },

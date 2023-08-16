@@ -39,7 +39,7 @@ const GlobalStyles = {
   },
   /* Colors */
   Color: {
-    lightGrey: 'lightgrey',
+    lightGrey: "lightgrey",
     gray_100: "#f6f6f6",
     gray_200: "#f6f5f8",
     gray_300: "#f4f2f6",
@@ -57,28 +57,28 @@ const GlobalStyles = {
     gray_1500: "#232326",
     gray_1600: "#1f1f1f",
     gray_1700: "#1a1a1a",
-    buttonIconbg:"#D8EBF9",
-    darkTheme_bg:"#000000",
-    secondaryDarkTheme_bg:"#111111",
-    lightTheme_bg:"#F7F6F9",
+    buttonIconbg: "#D8EBF9",
+    darkTheme_bg: "#000000",
+    secondaryDarkTheme_bg: "#111111",
+    lightTheme_bg: "#F7F6F9",
     gray_1800: "rgba(0, 0, 0, 0.87)",
     gray_1900: "rgba(0, 0, 0, 0)",
-    carbon_bg:"rgba(0,0,0.0.5)",
-    gray_2000:"#505A63",
-    gray_2100:"#888888",
-    darkGray:"#999999", 
-    borderColor:"#EBEBEB",
+    carbon_bg: "rgba(0,0,0.0.5)",
+    gray_2000: "#505A63",
+    gray_2100: "#888888",
+    darkGray: "#999999",
+    borderColor: "#EBEBEB",
     blue_100: "#0101FD",
-    dark_orange:"#FF0000",
+    dark_orange: "#FF0000",
     indigo_100: "#00003d",
-    name_textGray:"#303233",
+    name_textGray: "#303233",
     white: "#fff",
-    black: "#000", 
-    iconBlack: '#505A63',
+    black: "#000",
+    iconBlack: "#505A63",
     skyblue: "#178BFF",
-    lightBlack:"#212529",
-    darkBlack:"#000000",
-    green_total:"#179424",
+    lightBlack: "#212529",
+    darkBlack: "#000000",
+    green_total: "#179424",
     green_100: "#5ac661",
     violet_100: "#dc85f5",
     violet_200: "#5888f5",
@@ -87,8 +87,9 @@ const GlobalStyles = {
     brown: "#ff4b4b",
     turquoise: "#27af7c",
     beige_100: "#fff1d4",
-    backgroundColor: 'rgba(0,0,0,0)',
-    backgroundColorOg: "#F6F5F8"
+    grayOnDD: "#989898",
+    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColorOg: "#F6F5F8",
   },
   /* Paddings */
   Padding: {
@@ -175,11 +176,11 @@ const GlobalStyles = {
   },
 
   Title: {
-  marginTop: "10%",
-  marginLeft: "10%",
-  width: "80%",
-  fontSize: 28,
-  fontWeight: "700",
+    marginTop: "10%",
+    marginLeft: "10%",
+    width: "80%",
+    fontSize: 28,
+    fontWeight: "700",
   },
 
   RowText: {
@@ -188,9 +189,8 @@ const GlobalStyles = {
     width: "100%",
     fontSize: 14,
     fontWeight: "300",
-    fontColor: "#999999"
+    fontColor: "#999999",
   },
-
 
   CenterRowText: {
     marginTop: "2.5%",
@@ -199,13 +199,13 @@ const GlobalStyles = {
     fontSize: 20,
     textAlign: "center",
     fontWeight: "700",
-    fontColor: "#00003D"
+    fontColor: "#00003D",
   },
 
   CenterRow: {
     marginLeft: "10%",
     width: "80%",
-    fontColor: "#00003D"
+    fontColor: "#00003D",
   },
 
   CenterRowSubText: {
@@ -215,9 +215,8 @@ const GlobalStyles = {
     fontSize: 16,
     textAlign: "center",
     fontWeight: "300",
-    fontColor: "#999999"
+    fontColor: "#999999",
   },
-
 
   DivContainer: {
     backgroundColor: "#F6F5F8",
@@ -227,7 +226,7 @@ const GlobalStyles = {
     marginLeft: "5%",
     marginTop: "2.5%",
     flex: 1,
-    borderRadius: 15
+    borderRadius: 15,
   },
 
   imageBox: {
@@ -239,15 +238,14 @@ const GlobalStyles = {
     fontSize: 14,
     textAlign: "center",
     fontWeight: "700",
-    fontColor: "#000000"
+    fontColor: "#000000",
   },
 
   NavBarBottomText: {
     fontSize: 14,
-        textAlign: "center",
-        fontWeight: "300",
-        fontColor: "#000000"
-  }
-
-  };
+    textAlign: "center",
+    fontWeight: "300",
+    fontColor: "#000000",
+  },
+};
 export default GlobalStyles;

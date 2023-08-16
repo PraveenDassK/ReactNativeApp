@@ -24,6 +24,7 @@ import KeyboardAvoider from "../components/KeyboardAvoider";
 import { Dropdown } from "react-native-element-dropdown";
 import Tagline from "../components/Tagline";
 import apiLogin from "../api/apiLogin";
+import LinearAccountButton from "../components/LinearAccountButton";
 
 const SpendingLimit = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +40,7 @@ const SpendingLimit = ({ navigation, route }) => {
   const [isToggled, setIsToggled] = useState(false);
   const [validCheck, setValidator] = useState(false);
   const [amount, setAmount] = useState("0");
-  const { userID, customerDetails } = useContext(AuthContext);
+  const { userID, customerDetails, darkMode } = useContext(AuthContext);
   useEffect(() => {}, []);
 
   //Calls the API once during load
@@ -130,8 +131,23 @@ const SpendingLimit = ({ navigation, route }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -162,234 +178,278 @@ const SpendingLimit = ({ navigation, route }) => {
   return (
     <KeyboardAvoider>
       <ImageBackground
-        source={require("../assets/backgrounds/cardsettings.jpg")}
+        source={
+          darkMode === "DARK"
+            ? require("../assets/dashboardDark/DashboardBottom.jpg")
+            : require("../assets/backgrounds/Dashboard.jpg")
+        }
         // style={{  width: "100%" }}
         resizeMode="contain"
         imageStyle={{
           top: "60%", // Whatever offset you want from the bottom
         }}
-        style={styles.mainContainer}
+        style={{
+          width: "100%",
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.darkTheme_bg
+              : GlobalStyles.Color.lightTheme_bg,
+          flex: 1,
+        }}
       >
         <ScrollView>
-          <View>
-            <View style={styles.subTextRow}>
-              <Text style={styles.subText}>
-                The limit determines the amount that can be spent or withdrawn
-                using this card per month
-              </Text>
-            </View>
-            <View style={styles.subTextRow}>
-              <Text style={styles.subText}>Select Card</Text>
-              <Dropdown
-                data={newAccountArray}
-                value={selectedCard}
-                labelField="label"
-                valueField="value"
-                // defalutValue="Mr"
-                onChange={(item) => {
-                  setSelectedCard(item.value);
-                  loadData();
-                }}
-                style={styles.dropdown}
-                containerStyle={styles.containerStyle}
-                renderRightIcon={() => (
-                  <AntDesign name="checkcircle" size={24} color="green" />
-                )}
-                renderItem={renderItem}
-                placeholder="Select Card"
-                autoScroll={false}
-              />
-            </View>
-
-            <View
-              style={{
-                width: "90%",
-                marginLeft: "5%",
-                backgroundColor: "white",
-                borderRadius: 15,
-                marginTop: "5%",
-              }}
+          <View style={styles.subTextRow}>
+            <Text
+              style={darkMode === "DARK" ? styles.darksubText : styles.subText}
             >
-              {isToggled ? (
-                <View style={{ padding: "10%" }}>
-                  <Text>Set a monthly limit</Text>
-                  <TextInput
-                    style={styles.textInput}
-                    placeholder={"£"}
-                    keyboardType="numeric"
-                    onChangeText={(newText) => checkText(newText)}
-                  />
-                  <Pressable style={styles.button}>
-                    <Text onPress={() => navigate()} style={styles.buttonText}>
-                      Set Limit
-                    </Text>
-                  </Pressable>
-                </View>
-              ) : (
-                <>
+              The limit determines the amount that can be spent or withdrawn
+              using this card per month
+            </Text>
+          </View>
+          <View style={styles.subTextRow}>
+            <Text
+              style={darkMode === "DARK" ? styles.darksubText : styles.subText}
+            >
+              Select Card
+            </Text>
+            <Dropdown
+              data={newAccountArray}
+              value={selectedCard}
+              labelField="label"
+              valueField="value"
+              // defalutValue="Mr"
+              onChange={(item) => {
+                setSelectedCard(item.value);
+                loadData();
+              }}
+              style={
+                darkMode === "DARK" ? styles.darkdropdown : styles.dropdown
+              }
+              containerStyle={styles.containerStyle}
+              renderRightIcon={() => (
+                <AntDesign name="checkcircle" size={24} color="green" />
+              )}
+              renderItem={renderItem}
+              placeholder="Select Card"
+              selectedTextStyle={{
+                color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+              }}
+              placeholderStyle={{
+                color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+              }}
+              autoScroll={false}
+            />
+          </View>
+
+          <View
+            style={{
+              width: "90%",
+              marginLeft: "5%",
+              backgroundColor:
+                darkMode === "DARK" ? "rgba(255,255,255,0.2)" : "white",
+              borderRadius: 15,
+              marginTop: "5%",
+            }}
+          >
+            {isToggled ? (
+              <View style={{ padding: "10%" }}>
+                <Text>Set a monthly limit</Text>
+                <TextInput
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darktextInput
+                      : styles.textInput
+                  }
+                  placeholder={"£"}
+                  keyboardType="numeric"
+                  onChangeText={(newText) => checkText(newText)}
+                />
+                <LinearAccountButton
+                  darkMode={darkMode}
+                  title="Continue"
+                  onPress={() => navigate()}
+                />
+              </View>
+            ) : (
+              <>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {monthLim - spend && percent >= 0 ? (
+                    <View style={{ marginTop: "5%" }}>
+                      <SinglePie percent={percent} />
+                    </View>
+                  ) : (
+                    <View>
+                      <SinglePie percent={percent} />
+                    </View>
+                  )}
+
                   <View
                     style={{
+                      position: "absolute",
                       flex: 1,
                       justifyContent: "center",
                       alignItems: "center",
+                      top: 150,
                     }}
                   >
-                    {monthLim - spend && percent >= 0 ? (
-                      <View style={{ marginTop: "5%" }}>
-                        <SinglePie percent={percent} />
-                      </View>
+                    {monthLim - spend >= 0 ? (
+                      <Text
+                        style={{
+                          fontSize: 28,
+                          color:
+                            darkMode === "DARK"
+                              ? GlobalStyles.Color.white
+                              : "blue",
+                          fontFamily: "Montserrat-Bold",
+                        }}
+                      >
+                        {" "}
+                        £{(monthLim - spend).toFixed(2)}
+                      </Text>
                     ) : (
-                      <View>
-                        <SinglePie percent={percent} />
-                      </View>
+                      <Text
+                        style={{
+                          fontSize: 28,
+                          marginTop: "2.5%",
+                          color: "red",
+                          fontFamily: "Montserrat-Bold",
+                        }}
+                      >
+                        {" "}
+                        £{(monthLim - spend).toFixed(2)}
+                      </Text>
                     )}
-
-                    <View
+                    <Text
                       style={{
-                        position: "absolute",
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        top: 150,
+                        fontSize: 16,
+                        marginTop: "1%",
+                        fontFamily: "Montserrat",
+                        // opacity: 0.3,
+                        color:
+                          darkMode === "DARK"
+                            ? GlobalStyles.Color.white
+                            : GlobalStyles.Color.gray_2100,
                       }}
                     >
-                      {monthLim - spend >= 0 ? (
-                        <Text
-                          style={{
-                            fontSize: 28,
-                            color: "blue",
-                            fontFamily: "Montserrat-Bold",
-                          }}
-                        >
-                          {" "}
-                          £{(monthLim - spend).toFixed(2)}
-                        </Text>
-                      ) : (
-                        <Text
-                          style={{
-                            fontSize: 28,
-                            marginTop: "2.5%",
-                            color: "red",
-                            fontFamily: "Montserrat-Bold",
-                          }}
-                        >
-                          {" "}
-                          £{(monthLim - spend).toFixed(2)}
-                        </Text>
-                      )}
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          marginTop: "1%",
-                          fontFamily: "Montserrat",
-                          // opacity: 0.3,
-                          color: GlobalStyles.Color.gray_2100,
-                        }}
-                      >
-                        Spent this month
-                      </Text>
-                    </View>
+                      Spent this month
+                    </Text>
                   </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      width: "100%",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      height: 60,
-                      paddingHorizontal: "5%",
-                    }}
-                  >
-                    <Image
-                      style={{ flex: 2, height: 35, width: 35 }}
-                      resizeMode="contain"
-                      source={require("../assets/meter-1.png")}
-                    />
-                    <View style={{ flex: 6, marginLeft: "5%" }}>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontFamily: "Montserrat",
-                          color: GlobalStyles.Color.gray_1400,
-                        }}
-                      >
-                        Card Spending limit
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          fontFamily: "Montserrat-Regular",
-                          color: GlobalStyles.Color.gray_2100,
-                        }}
-                      >
-                        The spend & withdrawal cap
-                      </Text>
-                    </View>
-                    <Pressable
-                      style={{ height: 50, width: "auto" }}
-                      onPress={() => console.log("?")}
-                      title="Set Limit"
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: "100%",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    height: 60,
+                    paddingHorizontal: "5%",
+                  }}
+                >
+                  <Image
+                    style={{ flex: 2, height: 35, width: 35 }}
+                    resizeMode="contain"
+                    source={require("../assets/meter-1.png")}
+                  />
+                  <View style={{ flex: 6, marginLeft: "5%" }}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: "Montserrat",
+                        color:
+                          darkMode === "DARK"
+                            ? GlobalStyles.Color.white
+                            : GlobalStyles.Color.gray_1400,
+                      }}
                     >
-                      <Switch
-                        style={{ flex: 2 }}
-                        trackColor={{
-                          false: GlobalStyles.Color.gray_600,
-                          true: GlobalStyles.Color.blue_100,
-                        }}
-                        thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-                        onValueChange={spendingToggle}
-                        value={isEnabled}
-                      />
-                    </Pressable>
+                      Card Spending limit
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 10,
+                        fontFamily: "Montserrat-Regular",
+                        color:
+                          darkMode === "DARK"
+                            ? GlobalStyles.Color.white
+                            : GlobalStyles.Color.gray_2100,
+                      }}
+                    >
+                      The spend & withdrawal cap
+                    </Text>
                   </View>
-                  <View
-                    style={{
-                      width: "100%",
-                      flex: 1,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "5%",
-                      flexDirection: "row",
-                      gap: 3,
-                    }}
+                  <Pressable
+                    style={{ height: 50, width: "auto" }}
+                    onPress={() => console.log("?")}
+                    title="Set Limit"
                   >
-                    <Image
-                      style={{ height: 15, width: 15 }}
-                      resizeMode="contain"
-                      source={require("../assets/card.png")}
+                    <Switch
+                      style={{ flex: 2 }}
+                      trackColor={{
+                        false: GlobalStyles.Color.gray_600,
+                        true: GlobalStyles.Color.blue_100,
+                      }}
+                      thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                      onValueChange={spendingToggle}
+                      value={isEnabled}
                     />
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    width: "100%",
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "5%",
+                    flexDirection: "row",
+                    gap: 3,
+                  }}
+                >
+                  <Image
+                    style={{ height: 15, width: 15 }}
+                    resizeMode="contain"
+                    source={require("../assets/card.png")}
+                  />
 
-                    <View style={{ flexDirection: "row", gap: 2 }}>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          fontFamily: "Montserrat-Regular",
-                          color: GlobalStyles.Color.lightBlack,
-                          opacity: 0.3,
-                          marginRight: "1%",
-                        }}
-                      >
-                        Limit is £{monthLim.toFixed(2)}
-                      </Text>
-                      <Text
-                        onPress={() => setIsToggled(true)}
-                        style={{
-                          fontSize: 10,
-                          fontFamily: "Montserrat",
-                          color: GlobalStyles.Color.skyblue,
-                          opacity: 1,
-                        }}
-                      >
-                        Change limit
-                      </Text>
-                    </View>
+                  <View style={{ flexDirection: "row", gap: 2 }}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontFamily: "Montserrat-Regular",
+                        color:
+                          darkMode === "DARK"
+                            ? GlobalStyles.Color.white
+                            : GlobalStyles.Color.lightBlack,
+                        opacity: darkMode === "DARK" ? 1 : 0.3,
+                        marginRight: "1%",
+                      }}
+                    >
+                      Limit is £{monthLim.toFixed(2)}
+                    </Text>
+                    <Text
+                      onPress={() => setIsToggled(true)}
+                      style={{
+                        fontSize: 10,
+                        fontFamily: "Montserrat",
+                        color: GlobalStyles.Color.skyblue,
+                        opacity: 1,
+                      }}
+                    >
+                      Change limit
+                    </Text>
                   </View>
-                </>
-              )}
-            </View>
-            <View style={{ width: "100%", height: 35 }} />
+                </View>
+              </>
+            )}
           </View>
-          <Tagline />
+          <View style={{ marginTop: "10%" }}>
+            <Tagline darkMode={darkMode} />
+          </View>
         </ScrollView>
       </ImageBackground>
     </KeyboardAvoider>
@@ -419,6 +479,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Montserrat-Regular",
     color: GlobalStyles.Color.gray_1000,
+  },
+  darksubText: {
+    fontSize: 14,
+    fontFamily: "Montserrat-Regular",
+    color: GlobalStyles.Color.white,
   },
 
   subTextRow: {
@@ -451,6 +516,19 @@ const styles = StyleSheet.create({
     marginTop: "2.5%",
     opacity: 1,
     backgroundColor: GlobalStyles.Color.white,
+  },
+  darkdropdown: {
+    borderColor: GlobalStyles.Color.borderColor,
+    borderRadius: 10,
+    width: "100%",
+    padding: 10,
+    fontSize: 16,
+    paddingLeft: 20,
+    borderWidth: 0.3,
+    marginBottom: "5%",
+    marginTop: "2.5%",
+    opacity: 1,
+    backgroundColor: "rgba(255,255,255,0.2)",
   },
   dropdownContainer: {
     borderBottomEndRadius: 10,
@@ -501,6 +579,18 @@ const styles = StyleSheet.create({
     paddingVertical: "5%",
     fontSize: 15,
     marginVertical: "10%",
+    borderRadius: 5,
+  },
+  darktextInput: {
+    borderColor: GlobalStyles.Color.borderColor,
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
+    borderWidth: 0.2,
+    paddingHorizontal: "7%",
+    paddingVertical: "5%",
+    fontSize: 15,
+    borderRadius: 5,
+    marginVertical: "10%",
+    color: "white",
   },
   button: {
     paddingVertical: 20,

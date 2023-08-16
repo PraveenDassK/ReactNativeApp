@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  ActivityIndicator,
   FlatList,
   ImageBackground,
 } from "react-native";
@@ -17,8 +18,12 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import AuthContext from "../auth/context";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "../components/Icon";
-import TransactionBody from "../components/transHistory/TransactionBody";
+import TransactionBody from "../components/transHistory/DDTransactionBody";
 import apiBeneficiaries from "../api/apiBeneficiaries";
+import AccountDetails from "../components/AccountDetails";
+import apiCall from "../api/apiCall";
+import apiLogin from "../api/apiLogin";
+import apiDDMandate from "../api/apiDDMandate";
 // import {
 //   TransactionBody,
 //   TransactionHead,
@@ -29,36 +34,87 @@ import { moderateScale } from "../config/scaling";
 import GlobalStyles from "../../GlobalStyles";
 
 const DirectDebits = ({ navigation }) => {
-  const [directDebits, setDirectDebits] = useState([
-    {
-      name: "Netflix",
-      date: "1687339",
-      amount: 5,
-      description: "HHwe",
-    },
-    {
-      name: "Netflix",
-      date: "1687339",
-      amount: 5,
-      description: "HHwe",
-    },
-    {
-      name: "Netflix",
-      date: "1687339",
-      amount: 5,
-      description: "HHwe",
-    },
-    {
-      name: "Netflix",
-      date: "1687339",
-      amount: 5,
-      description: "HHwe",
-    },
-  ]);
-  const { darkMode } = useContext(AuthContext);
+  const [accountBalance, setBalance] = useState([]);
+  const [bannerName, setbannerName] = useState();
+  const [userImpact, setUserImpact] = useState([]);
+  const [userData, setuserData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [directDebits, setDirectDebits] = useState([]);
+  const { darkMode, accountDetails, accountID, customerDetails } =
+    useContext(AuthContext);
   useEffect(() => {
-    //loadData()
+    loadData();
   }, []);
+  var dummyData = [
+    {
+      mandateId: "string",
+      merchantNumber: "76544334",
+      merchantName: "Netflix",
+      merchantAccountNumber: "string",
+      merchantSortCode: "string",
+      mandateStatus: "string",
+      auddisIndicator: "A",
+      setupDate: "string",
+      mandateReference: "1234567",
+    },
+    {
+      mandateId: "string",
+      merchantNumber: "123456",
+      merchantName: "Amazon prime",
+      merchantAccountNumber: "string",
+      merchantSortCode: "string",
+      mandateStatus: "string",
+      auddisIndicator: "A",
+      setupDate: "string",
+      mandateReference: "5672323",
+    },
+  ];
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+
+      // const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
+      const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
+      const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
+      const details = getUserID;
+      setuserData(details?.accountDetails);
+      // setuserData(userDataReturn);
+      setUserImpact(userImpactReturn);
+      console.log(accountID, "this is account");
+      const apiDataforDD = await apiDDMandate.GetOutBound(
+        accountBalance?.accountId
+      );
+      console.log(apiDataforDD, "this is after api call");
+      setDirectDebits(apiDataforDD > 1 ? apiDataforDD : dummyData);
+
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+      return;
+    }
+  };
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
@@ -91,6 +147,18 @@ const DirectDebits = ({ navigation }) => {
         >
           Direct debits
         </Text> */}
+        <View style={{ marginVertical: "5%" }}>
+          <AccountDetails
+            userData={userData}
+            userImpact={userImpact}
+            handlePress={() => navigation.navigate("SendMoney")}
+            accountBalance={accountBalance}
+            setBalance={setBalance}
+            accountDetails={accountDetails}
+            accountId={accountID}
+            isVisible={false}
+          />
+        </View>
         <View
           style={{
             backgroundColor:
@@ -98,28 +166,33 @@ const DirectDebits = ({ navigation }) => {
                 ? "rgba(255,255,255,0.2)"
                 : GlobalStyles.Color.white,
             // paddingVertical: "10%",
-            borderRadius: 30,
+            borderRadius: 20,
             width: "100%",
-            marginVertical: "5%",
           }}
         >
           {/* <TransactionHead
             headerTitle="Carbon transactions"
             darkMode={darkMode}
           /> */}
-          {directDebits?.map(({ name, date, amount, description }, index) => (
-            <TransactionBody
-              key={index}
-              name={`${name}`}
-              index={index}
-              date={date}
-              token={amount}
-              amount={amount}
-              darkMode={darkMode}
-              lastElement={directDebits.length - 1}
-              description={name}
-            />
-          ))}
+
+          <View style={{ paddingVertical: "3%" }}>
+            {directDebits?.map(({ merchantName, mandateReference }, index) => (
+              <TransactionBody
+                key={index}
+                name={`${merchantName}`}
+                index={index}
+                date={mandateReference}
+                token={5}
+                amount={5}
+                darkMode={darkMode}
+                lastElement={directDebits.length - 1}
+                description={merchantName}
+                onTransaction={() =>
+                  navigation.navigate("DirectDebitDetails", directDebits[index])
+                }
+              />
+            ))}
+          </View>
           {/* <TransactionFooter
             number={directDebits.length}
             total={5}
@@ -132,7 +205,7 @@ const DirectDebits = ({ navigation }) => {
           title={"Make a new direct debit"}
           onPress={() => navigation.navigate("DirectDebitForm")}
         /> */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate("DirectDebitForm")}
           >
             <LinearGradient
@@ -149,19 +222,14 @@ const DirectDebits = ({ navigation }) => {
                   : styles.buttonPayNew
               }
             >
-              {/* <Ionicons
-                                name="add-circle-outline"
-                                size={20}
-                                color={GlobalStyles.Color.white}
-                              /> */}
               <Text style={styles.buttonPayNewText}>
                 Setup new direct debit
               </Text>
             </LinearGradient>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
-      <Tagline darkMode={darkMode}/>
+      <Tagline darkMode={darkMode} />
     </ImageBackground>
   );
 };

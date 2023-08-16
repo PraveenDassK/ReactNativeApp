@@ -66,7 +66,7 @@ const transactionDisplayItems = [
 const numOfTransactions = 4;
 
 export default function MyCards({ navigation }) {
-  const { accountID, customerDetails } = useContext(AuthContext);
+  const { accountID, customerDetails, darkMode } = useContext(AuthContext);
   const [isFrozen, setFrozen] = useState("");
   const [transactions, setTransactions] = useState([]);
   const [filterTransactions, setFilterTransactions] = useState([
@@ -102,7 +102,6 @@ export default function MyCards({ navigation }) {
   const loadData = async () => {
     setIsLoading(true);
     //api to get enfuse account id
-    
 
     const responseforgettingAccountId =
       await api_list.GetCustomerDetailsForCard(customerDetails);
@@ -111,9 +110,9 @@ export default function MyCards({ navigation }) {
     const filterAccount = await listedAccount.filter(
       (eachValue, index) => eachValue?.accountId === accountID
     );
-    
+
     let EnfuseAccountId = filterAccount[0]?.accountNo;
-    
+
     setApiAccountId(EnfuseAccountId);
     //  setDataAbovecard()
     //api to get transaction
@@ -126,13 +125,13 @@ export default function MyCards({ navigation }) {
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
     // api to get card details using enfuse account ID
-
+    console.log(EnfuseAccountId);
     const cards = await apiCall.GetCardByEnfuseAccountId(EnfuseAccountId);
-    
+    console.log(cards, "this is cards");
     setCardData(cards);
     setIsLoading(false);
 
-    // 
+    //
     //     const currentCard = cards[cardIndex];
     //     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
 
@@ -146,11 +145,10 @@ export default function MyCards({ navigation }) {
     //     setcardnumber(cardDetails.number);
     //     setfirstname("CVV " + cardDetails.cvv);
     //     setlastname(cardDetails.name);
-    //     
+    //
   };
   const filterCards = (type) => {
     const filterCardsByType = (type) => {
-      
       return cardData?.filter((card) => {
         if (type === "physical") {
           // return card.productCode === "MC_PHYSICAL";
@@ -170,7 +168,6 @@ export default function MyCards({ navigation }) {
     );
 
     setFilteredCards(cardStatusFilter);
-    
 
     setDataAbovecard(new Array(cardStatusFilter?.[0]));
     setCardCategory(type);
@@ -192,8 +189,23 @@ export default function MyCards({ navigation }) {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size={"large"}
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
@@ -204,22 +216,21 @@ export default function MyCards({ navigation }) {
       (eachValue, index) => index === selectedCardforFreeze
     );
     const freezeCardId = freezeCardData?.[0]?.id;
-    
+
     setDataAbovecard(freezeCardData);
     setFrozen(freezeCardData?.[0]?.status);
   };
   //function for freeze
   const handleFreeze = async () => {
-    
     let cardStatus;
     // const freezeCardData = filteredCards.filter(
     //   (eachValue, index) => index === selectedCardforFreeze
     // );
-    // 
-    // 
-    // 
+    //
+    //
+    //
 
-    // 
+    //
     const freezeCardId = dataAbovecard?.[0]?.id;
     if (dataAbovecard?.[0]?.status === "CARD_OK") {
       cardStatus = "CARD_BLOCKED";
@@ -227,7 +238,6 @@ export default function MyCards({ navigation }) {
       cardStatus = "CARD_OK";
     }
 
-    
     const freezeApi = await apiFreezeCall.FreezeUpdateCard(
       freezeCardId,
       cardStatus
@@ -242,18 +252,22 @@ export default function MyCards({ navigation }) {
     cardID: dataAbovecard?.[0]?.id,
     EnfuseAccountId: dataAbovecard?.[0]?.accountId,
   };
-  
+  console.log(filteredCards, "thsis is");
 
   return (
-    <AppScreen>
+    <AppScreen darkMode={darkMode}>
       <ScrollView>
-        <CardSelector onCardSelect={(card) => filterCards(card)} />
+        <CardSelector
+          onCardSelect={(card) => filterCards(card)}
+          darkMode={darkMode}
+        />
         <View style={styles.settingsPositioning}>
           <Icon
             title={"settings"}
             onSettingsPress={() =>
               navigation.navigate("CardSettings", requestObject)
             }
+            darkMode={darkMode}
           />
         </View>
 
@@ -261,9 +275,7 @@ export default function MyCards({ navigation }) {
           cards={filteredCards}
           onCardPress={() => console.log("pressed")}
           onPress={() => navigation.navigate("AddNewCard", cardCategory)}
-          onTopCard={(card) => {
-            
-          }}
+          onTopCard={(card) => {}}
           setSelectedCardForFreeze={setSelectedCardForFreeze}
           isFrozen={isFrozen}
           dataAbovecard={dataAbovecard}
@@ -273,7 +285,15 @@ export default function MyCards({ navigation }) {
 
         <View style={styles.settingsContainer}>
           <View>
-            <Text style={styles.currentBalance}>Current Balance</Text>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darkcurrentBalance
+                  : styles.currentBalance
+              }
+            >
+              Current Balance
+            </Text>
             <View style={{ flexDirection: "row" }}>
               {transactions && (
                 <Text
@@ -295,7 +315,10 @@ export default function MyCards({ navigation }) {
               style={{
                 lineHeight: 40,
                 fontFamily: "Montserrat-SemiBold",
-                color: GlobalStyles.Color.black,
+                color:
+                  darkMode === "DARK"
+                    ? GlobalStyles.Color.white
+                    : GlobalStyles.Color.black,
                 fontSize: 12,
               }}
             >
@@ -311,7 +334,7 @@ export default function MyCards({ navigation }) {
           />
         </View>
         <View style={{ marginTop: "5%" }}>
-          <IncomeExpense />
+          <IncomeExpense darkMode={darkMode} />
         </View>
 
         <View style={{ flex: 1 }}>
@@ -321,15 +344,17 @@ export default function MyCards({ navigation }) {
             onTransaction={() => console.log("onTransaction")}
             transactions={filterTransactions}
             onTransactionFilter={(item) => handleTransactionFilter(item)}
+            darkMode={darkMode}
+            handleOnSee={() => navigation.navigate("Transactions")}
           />
         </View>
-        <Tagline />
+        <Tagline darkMode={darkMode} />
       </ScrollView>
     </AppScreen>
   );
 }
 
-const IncomeExpense = () => (
+const IncomeExpense = ({ darkMode }) => (
   <View
     style={{
       marginHorizontal: "5%",
@@ -339,13 +364,13 @@ const IncomeExpense = () => (
     }}
   >
     <BlurView tint="light" intensity={20} style={styles.incomeExpenseContainer}>
-      <IncomeExpenseItem />
-      <IncomeExpenseItem isIncome={false} />
+      <IncomeExpenseItem darkMode={darkMode} />
+      <IncomeExpenseItem isIncome={false} darkMode={darkMode} />
     </BlurView>
   </View>
 );
 
-const IncomeExpenseItem = ({ isIncome = true }) => (
+const IncomeExpenseItem = ({ isIncome = true, darkMode }) => (
   <View
     style={{
       flex: 1,
@@ -371,7 +396,11 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
     </View>
 
     <View style={{ marginLeft: "5%" }}>
-      <Text style={styles.incomeText}>{isIncome ? "Income" : "Expenses"}</Text>
+      <Text
+        style={darkMode === "DARK" ? styles.darkincomeText : styles.incomeText}
+      >
+        {isIncome ? "Income" : "Expenses"}
+      </Text>
       <Text
         style={{
           color: isIncome ? "green" : "red",
@@ -387,7 +416,7 @@ const IncomeExpenseItem = ({ isIncome = true }) => (
   </View>
 );
 
-const CardSelector = ({ onCardSelect }) => {
+const CardSelector = ({ onCardSelect, darkMode }) => {
   const cards = [
     { id: 1, name: "virtual" },
     { id: 2, name: "physical" },
@@ -406,14 +435,19 @@ const CardSelector = ({ onCardSelect }) => {
 
   return (
     <View style={[styles.selectorContainer, styles.selectorPositioning]}>
-      {cards.map((card) => (
+      {cards?.map((card) => (
         <Pressable
           key={card.id}
           onPress={() => handleCardSelect(card.name)}
           style={[
             styles.selectorTextContainer,
             {
-              backgroundColor: card.name == isSelected ? colors.babyBlue : null,
+              backgroundColor:
+                card.name == isSelected
+                  ? darkMode === "DARK"
+                    ? GlobalStyles.Color.secondaryDarkTheme_bg
+                    : colors.babyBlue
+                  : null,
             },
           ]}
         >
@@ -422,6 +456,12 @@ const CardSelector = ({ onCardSelect }) => {
               textAlign: "center",
               textTransform: "capitalize",
               opacity: card.name == isSelected ? 1 : 0.5,
+              color:
+                card.name == isSelected
+                  ? darkMode === "DARK"
+                    ? GlobalStyles.Color.white
+                    : GlobalStyles.Color.secondaryDarkTheme_bg
+                  : null,
             }}
           >
             {card.name}
@@ -445,7 +485,7 @@ const CardCarousel = ({
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [showName, setShowName] = useState(true);
-  
+
   // const [frozen, setFrozen] = useState(false);
   let frozen = false;
   if (isFrozen === "CARD_BLOCKED") {
@@ -461,9 +501,9 @@ const CardCarousel = ({
       listener: (event) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
         const topCardIdx = Math.floor(scrollPosition / ITEM_WIDTH);
-        // 
+        //
         onTopCard(topCardIdx);
-        
+
         setSelectedCardForFreeze(topCardIdx);
         // You can use topCardIdx for any further processing or actions
       },
@@ -537,14 +577,12 @@ const CardCarousel = ({
                 clickable={true}
                 onFlipStart={(value) => {
                   //Ask for pin to flip
-                  
+
                   // setShowPinModal(true)
                   setFlipped(false);
                   setShowName(value);
                 }}
-                onFlipEnd={(isFlipEnd) => {
-                  
-                }}
+                onFlipEnd={(isFlipEnd) => {}}
               >
                 {/* Face Side */}
                 <Image
@@ -735,8 +773,7 @@ const TapContainer = () => (
   </View>
 );
 
-const Icon = ({ title, isFrozen, onSettingsPress }) => {
-  
+const Icon = ({ title, isFrozen, onSettingsPress, darkMode }) => {
   // const [frozen, setFrozen] = useState(false);
   let frozen = false;
   if (isFrozen === "CARD_BLOCKED") {
@@ -751,7 +788,11 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
     >
       <View
         style={{
-          backgroundColor: frozen ? GlobalStyles.Color.black : colors.babyBlue,
+          backgroundColor: frozen
+            ? GlobalStyles.Color.black
+            : darkMode === "DARK"
+            ? GlobalStyles.Color.secondaryDarkTheme_bg
+            : colors.babyBlue,
           height: 50,
           width: 50,
           justifyContent: "center",
@@ -767,13 +808,31 @@ const Icon = ({ title, isFrozen, onSettingsPress }) => {
             size={30}
           />
         ) : (
-          <Ionicons name="settings-sharp" size={30} />
+          <Ionicons
+            name="settings-sharp"
+            size={30}
+            color={
+              darkMode === "DARK"
+                ? GlobalStyles.Color.white
+                : GlobalStyles.Color.secondaryDarkTheme_bg
+            }
+          />
         )}
       </View>
       {!frozen ? (
-        <Text style={styles.settingTitle}>{title}</Text>
+        <Text
+          style={
+            darkMode === "DARK" ? styles.darksettingTitle : styles.settingTitle
+          }
+        >
+          {title}
+        </Text>
       ) : (
-        <Text style={styles.settingTitle}>{`Un${title}`}</Text>
+        <Text
+          style={
+            darkMode === "DARK" ? styles.darksettingTitle : styles.settingTitle
+          }
+        >{`Un${title}`}</Text>
       )}
     </TouchableOpacity>
   );
@@ -886,8 +945,18 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
     color: GlobalStyles.Color.black,
   },
+  darksettingTitle: {
+    textTransform: "capitalize",
+    fontFamily: "Montserrat-Medium",
+    color: GlobalStyles.Color.white,
+  },
   currentBalance: {
     color: GlobalStyles.Color.lightBlack,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 14,
+  },
+  darkcurrentBalance: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat-Medium",
     fontSize: 14,
   },
@@ -895,5 +964,10 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Medium",
     fontSize: 12,
     color: GlobalStyles.Color.black,
+  },
+  darkincomeText: {
+    fontFamily: "Montserrat-Medium",
+    fontSize: 12,
+    color: GlobalStyles.Color.white,
   },
 });
