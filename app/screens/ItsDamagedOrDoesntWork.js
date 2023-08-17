@@ -14,14 +14,30 @@ import terminateCardAlert, {
   handleTerminate,
 } from "../utility/terminateCardAlert";
 import Button from "../components/AppButton";
-
+import AuthContext from "../auth/context";
+import LinearAccountButton from "../components/LinearAccountButton";
 const ItsDamagedOrDoesntWork = ({ navigation }) => {
+  const { darkMode } = React.useContext(AuthContext);
+
   return (
-    <ScrollView>
+    <ScrollView
+      style={{
+        backgroundColor:
+          darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+      }}
+    >
       <Screen>
-        <View style={styles.itsDamagedOrDoesntWork}>
+        <View
+          style={
+            darkMode === "DARK"
+              ? styles.darkitsDamagedOrDoesntWork
+              : styles.itsDamagedOrDoesntWork
+          }
+        >
           <View style={styles.helloParent}>
-            <Text style={styles.hello}>{"It's damaged or doesn't work"}</Text>
+            <Text style={darkMode === "DARK" ? styles.darkhello : styles.hello}>
+              {"It's damaged or doesn't work"}
+            </Text>
             <View
               style={[
                 styles.groupParent,
@@ -29,9 +45,10 @@ const ItsDamagedOrDoesntWork = ({ navigation }) => {
                 styles.parentPosition,
               ]}
             >
-              <Button
+              <LinearAccountButton
                 title={`Terminate & Order card`}
                 onPress={() => navigation.navigate("TerminatedCard")}
+                darkMode={darkMode}
               />
             </View>
 
@@ -257,6 +274,16 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
+  darkhello: {
+    marginRight: -30,
+    fontSize: GlobalStyles.FontSize.size_7xl,
+    lineHeight: 30,
+    color: GlobalStyles.Color.white,
+    textAlign: "left",
+    fontWeight: "700",
+    top: 0,
+    position: "absolute",
+  },
   groupChild: {
     height: "100%",
     top: "0%",
@@ -367,6 +394,13 @@ const styles = StyleSheet.create({
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
+  },
+  darkitsDamagedOrDoesntWork: {
+    flex: 1,
+    paddingLeft: GlobalStyles.Padding.padding_7xs,
+    paddingRight: GlobalStyles.Padding.padding_8xs,
+    width: "100%",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
 });
 

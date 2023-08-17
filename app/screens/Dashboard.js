@@ -122,7 +122,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/DashboardBottom.jpg")
+          ? require("../assets/dashboardDark/DashboardBottom.png")
           : require("../assets/backgrounds/Dashboard.jpg")
       }
       resizeMode="contain"

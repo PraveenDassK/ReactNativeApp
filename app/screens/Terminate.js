@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Text,
   StyleSheet,
@@ -31,7 +31,7 @@ import Animated, {
   withSequence,
 } from "react-native-reanimated";
 import TerminatedCard from "./TerminatedCard";
-
+import AuthContext from "../auth/context";
 const SIZE = 100.0;
 
 const Terminate = ({ navigation, route }) => {
@@ -43,7 +43,7 @@ const Terminate = ({ navigation, route }) => {
 
   const [modalVisible, setModalVisible] = useState(true);
 
-  
+  const { darkMode } = useContext(AuthContext);
 
   // useEffect(() => {
 
@@ -78,13 +78,12 @@ const Terminate = ({ navigation, route }) => {
   }, []);
 
   const navigate = () => {
-    
     navigation.navigate("CardSettings");
   };
   const handleYes = async () => {
     const ID = route?.params?.cardID;
     const result = await apiCall.FreezeUpdateCard(ID, "CARD_CLOSED");
-    
+
     terminateAnimation();
     setModalVisible(!modalVisible);
 
@@ -102,7 +101,7 @@ const Terminate = ({ navigation, route }) => {
   if (terminate) return <TerminatedCard />;
 
   return (
-    <View style={styles.terminate}>
+    <View style={darkMode === "DARK" ? styles.darkterminate : styles.terminate}>
       <View
         style={{
           width: "100%",
@@ -132,16 +131,31 @@ const Terminate = ({ navigation, route }) => {
         }}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
+          <View
+            style={
+              darkMode === "DARK" ? styles.darkmodalView : styles.modalView
+            }
+          >
+            <Text
+              style={
+                darkMode === "DARK" ? styles.darkmodalText : styles.modalText
+              }
+            >
               Are your sure you want to{"\n"} terminate your card?
             </Text>
-            <View style={styles.buttonContaioner}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkbuttonContaioner
+                  : styles.buttonContaioner
+              }
+            >
               <View
                 style={{
                   width: "50%",
-                  borderRightColor: "grey",
-                  borderRightWidth: 0.5,
+                  borderRightColor:
+                    darkMode === "DARK" ? GlobalStyles.Color.black : "grey",
+                  borderRightWidth: darkMode === "DARK" ? 1 : 0.5,
                 }}
               >
                 <Pressable
@@ -171,7 +185,11 @@ const Terminate = ({ navigation, route }) => {
       </Modal>
       <ImageBackground
         resizeMode="stretch"
-        source={require("../assets/backgrounds/terminatecard.jpg")}
+        source={
+          darkMode === "DARK"
+            ? require("../assets/dashboardDark/terminatecard.jpg")
+            : require("../assets/backgrounds/terminatecard.jpg")
+        }
         style={styles.container}
       />
       <View style={{ position: "absolute", bottom: "20%", left: "15%" }}>
@@ -190,6 +208,11 @@ const styles = StyleSheet.create({
     position: "relative",
     height: "100%",
   },
+  darkterminate: {
+    position: "relative",
+    height: "100%",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
+  },
   centeredView: {
     position: "absolute",
     left: "10%",
@@ -204,8 +227,24 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.Color.white,
     opacity: 0.9,
   },
+  darkmodalView: {
+    borderColor: "#FFFFFF33",
+    borderWidth: 2,
+    width: "90%",
+    borderRadius: 20,
+    paddingVertical: 10,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    opacity: 0.9,
+  },
   modalText: {
     color: GlobalStyles.Color.lightBlack,
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    textAlign: "center",
+    marginVertical: 25,
+  },
+  darkmodalText: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     fontSize: 16,
     textAlign: "center",
@@ -216,6 +255,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderTopWidth: 0.5,
     borderTopColor: "grey",
+    flexDirection: "row",
+    alignItems: "center",
+    // marginTop:20,
+  },
+  darkbuttonContaioner: {
+    display: "flex",
+    justifyContent: "space-between",
+    borderTopWidth: 1,
+    borderTopColor: GlobalStyles.Color.black,
     flexDirection: "row",
     alignItems: "center",
     // marginTop:20,

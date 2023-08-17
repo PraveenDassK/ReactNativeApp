@@ -53,7 +53,7 @@ const ReplaceCard = ({ navigation }) =>
       <ImageBackground
         source={
           darkMode === "DARK"
-            ? require("../assets/dashboardDark/DashboardBottom.jpg")
+            ? require("../assets/dashboardDark/DashboardBottom.png")
             : require("../assets/backgrounds/replaceCard.jpg")
         }
         resizeMode="contain"
@@ -71,7 +71,13 @@ const ReplaceCard = ({ navigation }) =>
       >
         <View style={styles.replaceCard}>
           <View>
-            <View style={styles.topContainer}>
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darktopContainer
+                  : styles.topContainer
+              }
+            >
               <Image
                 style={styles.iconFeatherCreditCard}
                 resizeMode="contain"
@@ -86,17 +92,39 @@ const ReplaceCard = ({ navigation }) =>
                   alignItems: "baseline",
                 }}
               >
-                <Text style={styles.hello1Color}>Business Elite</Text>
-                <Text style={styles.textAccount}>{cardname}</Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkhello1Color
+                      : styles.hello1Color
+                  }
+                >
+                  Business Elite
+                </Text>
+                <Text
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darktextAccount
+                      : styles.textAccount
+                  }
+                >
+                  {cardname}
+                </Text>
               </View>
             </View>
-            <Text style={styles.title}>Why do you need a new card?</Text>
+            <Text style={darkMode === "DARK" ? styles.darktitle : styles.title}>
+              Why do you need a new card?
+            </Text>
             <Text style={styles.selectText}>Select the best option :</Text>
 
             {dataOfLost.map((eachValue, index) => {
               return (
                 <Pressable
-                  style={styles.buttonStyle}
+                  style={
+                    darkMode === "DARK"
+                      ? styles.darkbuttonStyle
+                      : styles.buttonStyle
+                  }
                   onPress={eachValue.navigate}
                   key={index}
                 >
@@ -110,7 +138,15 @@ const ReplaceCard = ({ navigation }) =>
                       padding: 10,
                     }}
                   >
-                    <Text style={styles.lostTextColor}>{eachValue.name}</Text>
+                    <Text
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darklostTextColor
+                          : styles.lostTextColor
+                      }
+                    >
+                      {eachValue.name}
+                    </Text>
                     <Image
                       resizeMode="contain"
                       style={{ height: 15, width: 15 }}
@@ -121,13 +157,13 @@ const ReplaceCard = ({ navigation }) =>
               );
             })}
           </View>
-          <Tagline darkMode={darkMode} />
         </View>
         {/* <ImageBackground
           resizeMode="stretch"
           source={require("../assets/backgrounds/replaceCard.jpg")}
           style={styles.container}
         /> */}
+        <Tagline darkMode={darkMode} />
       </ImageBackground>
     );
   };
@@ -143,8 +179,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
   },
+  darktopContainer: {
+    backgroundColor: "rgba(255,255,255,0.2)",
+    borderColor: "white",
+    borderWidth: 0.5,
+    padding: 10,
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+    borderRadius: 10,
+  },
   title: {
     color: GlobalStyles.Color.lightBlack,
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    marginVertical: 15,
+  },
+  darktitle: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     fontSize: 16,
     marginVertical: 15,
@@ -160,8 +213,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 10,
   },
+  darkbuttonStyle: {
+    backgroundColor: "rgba(255,255,255,0.2)",
+    borderColor: "white",
+    borderWidth: 0.5,
+    padding: 5,
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+    borderRadius: 10,
+    marginVertical: 10,
+  },
   lostTextColor: {
     color: GlobalStyles.Color.gray_1300,
+    fontFamily: "Montserrat",
+    fontSize: 16,
+  },
+  darklostTextColor: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     fontSize: 16,
   },
@@ -176,8 +246,18 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontSize: 16,
   },
+  darkhello1Color: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
+    fontSize: 16,
+  },
   textAccount: {
     color: GlobalStyles.Color.black,
+    fontFamily: "Montserrat",
+    fontSize: 16,
+  },
+  darktextAccount: {
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     fontSize: 16,
   },

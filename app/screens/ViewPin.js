@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Image,
   StyleSheet,
@@ -17,27 +17,25 @@ import {
 } from "../config/scaling";
 import PinModal from "../components/PinModal";
 import Tagline from "../components/Tagline";
-
+import AuthContext from "../auth/context";
 //Card details apir
 import cardDetails from "../api/cardDetails";
-import {GetCardDetails} from "../utility/GetCardDetails.js";
-
+import { GetCardDetails } from "../utility/GetCardDetails.js";
+import LinearAccountButton from "../components/LinearAccountButton";
 const height = Dimensions.get("window").height;
 
 const ViewPin = ({ navigation, route }) => {
-
   const [showPinModal, setShowPinModal] = useState(true);
-  const [pinDetails, setPinDetails] = useState("1234")
-  const [cardNumber, setCardNumber] = useState("1234 1234 1234 1234")
-
+  const [pinDetails, setPinDetails] = useState("1234");
+  const [cardNumber, setCardNumber] = useState("1234 1234 1234 1234");
+  const { darkMode } = useContext(AuthContext);
   useEffect(() => {
     getCardDetails();
   });
 
   const getCardDetails = async () => {
-    
-    const cardDetails = await GetCardDetails("734194812")
-  }
+    const cardDetails = await GetCardDetails("734194812");
+  };
 
   if (showPinModal) {
     return (
@@ -52,15 +50,23 @@ const ViewPin = ({ navigation, route }) => {
     );
   }
   return (
-    <View style={styles.terminatedCard}>
+    <View
+      style={
+        darkMode === "DARK" ? styles.darkterminatedCard : styles.terminatedCard
+      }
+    >
       <ImageBackground
-        source={require("../assets/backgrounds/viewpin.jpg")}
+        source={
+          darkMode === "DARK"
+            ? require("../assets/CardsettingsIcons/viewpin.jpg")
+            : require("../assets/backgrounds/viewpin.jpg")
+        }
         style={{ width: "100%", height: height / 2 }}
         resizeMode="cover"
         imageStyle={{
           top: "0%", // Whatever offset you want from the bottom
         }}
-      // style={styles.terminatedCard}
+        // style={styles.terminatedCard}
       />
       <View
         style={{
@@ -78,22 +84,29 @@ const ViewPin = ({ navigation, route }) => {
         >
           <View style={styles.brokenBottomCreditCardParent}>
             <Text style={styles.sadText}>Card {cardNumber}</Text>
-            <Text style={styles.sadTextNormal}>{pinDetails}</Text>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darksadTextNormal
+                  : styles.sadTextNormal
+              }
+            >
+              {pinDetails}
+            </Text>
             <Text style={styles.happytohelp}>
               Don't share your PIN with anyone{" "}
             </Text>
-            <Pressable style={styles.button}>
-              <Text
+            <View style={{ width: "100%", padding: "5%" }}>
+              <LinearAccountButton
+                title={"Return to card settings"}
                 onPress={() => navigation.navigate("CardSettings")}
-                style={styles.buttonText}
-              >
-                Return to card settings
-              </Text>
-            </Pressable>
+                darkMode={darkMode}
+              />
+            </View>
           </View>
         </View>
         <View style={{ marginTop: "60%" }}>
-          <Tagline />
+          <Tagline darkMode={darkMode} />
         </View>
       </View>
     </View>
@@ -182,10 +195,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 3,
-    paddingVertical: 5,
+    paddingVertical: "5%",
   },
   terminatedCard: {
     backgroundColor: GlobalStyles.Color.gray_100,
+    height: "100%",
+    width: "100%",
+    position: "relative",
+  },
+  darkterminatedCard: {
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
     height: "100%",
     width: "100%",
     position: "relative",
@@ -209,6 +228,12 @@ const styles = StyleSheet.create({
     fontSize: 80,
     letterSpacing: 20,
   },
+  darksadTextNormal: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
+    fontSize: 80,
+    letterSpacing: 20,
+  },
   happytohelp: {
     color: GlobalStyles.Color.gray_2100,
     fontFamily: "Montserrat-Regular",
@@ -226,7 +251,7 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.white,
     borderRadius: 10,
     width: "90%",
-    marginVertical: 10
+    marginVertical: 10,
   },
   buttonText: {
     color: GlobalStyles.Color.white,

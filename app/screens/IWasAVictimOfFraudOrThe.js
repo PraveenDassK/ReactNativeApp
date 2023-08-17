@@ -1,32 +1,58 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Screen from "../components/Screen";
-import terminateCardAlert, {handleTerminate} from "../utility/terminateCardAlert";
+import terminateCardAlert, {
+  handleTerminate,
+} from "../utility/terminateCardAlert";
 import Button from "../components/AppButton";
+import AuthContext from "../auth/context";
+import LinearAccountButton from "../components/LinearAccountButton";
+const IWasAVictimOfFraudOrThe = ({ navigation }) => {
+  const { darkMode } = React.useContext(AuthContext);
 
-const IWasAVictimOfFraudOrThe = ({navigation}) => {
   return (
-    <ScrollView>
-    <Screen>
-    <View style={styles.iWasAVictimOfFraudOrThe}>
-      <View style={styles.helloParent}>
-        <Text style={styles.hello}>
-          <Text style={styles.iWasA}>I was a victim of fraud or</Text>
-          <Text style={styles.iWasA}>{"\n"}theft</Text>
-        </Text>
-        <View style={[
-            styles.groupParent,
-            styles.groupParentPosition,
-            styles.parentPosition,
-          ]}>
-            <Button
-              title={`Terminate & Order card`}
-              onPress={() => navigation.navigate("TerminatedCard")}
-            />
-          </View>
+    <ScrollView
+      style={{
+        backgroundColor:
+          darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+      }}
+    >
+      <Screen>
+        <View
+          style={
+            darkMode === "DARK"
+              ? styles.darkiWasAVictimOfFraudOrThe
+              : styles.iWasAVictimOfFraudOrThe
+          }
+        >
+          <View style={styles.helloParent}>
+            <Text style={darkMode === "DARK" ? styles.darkhello : styles.hello}>
+              <Text style={styles.iWasA}>I was a victim of fraud or</Text>
+              <Text style={styles.iWasA}>{"\n"}theft</Text>
+            </Text>
+            <View
+              style={[
+                styles.groupParent,
+                styles.groupParentPosition,
+                styles.parentPosition,
+              ]}
+            >
+              <LinearAccountButton
+                title={`Terminate & Order card`}
+                onPress={() => navigation.navigate("TerminatedCard")}
+                darkMode={darkMode}
+              />
+            </View>
 
-        {/* <Pressable
+            {/* <Pressable
           style={[
             styles.groupParent,
             styles.groupParentPosition,
@@ -46,136 +72,166 @@ const IWasAVictimOfFraudOrThe = ({navigation}) => {
           </View>
           <Text style={styles.hello1}>{`Terminate & Order card`}</Text>
         </Pressable> */}
-        <View
-          style={[
-            styles.rectangleGroup,
-            styles.groupLayout,
-            styles.groupParentPosition,
-          ]}
-        >
-          <View
-            style={[styles.groupItem, styles.groupPosition, styles.groupLayout]}
-          />
-          <View
-            style={[
-              styles.yourCurrentCardWillBeTermWrapper,
-              styles.yourCardPosition1,
-            ]}
-          >
-            <Text
+            <View
               style={[
-                styles.yourCurrentCardWillBeTerm,
-                styles.yourCardPosition,
+                styles.rectangleGroup,
+                styles.groupLayout,
+                styles.groupParentPosition,
               ]}
             >
-              <Text style={styles.iWasA}>
-                <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
-                  Your current card will be terminated
+              <View
+                style={[
+                  styles.groupItem,
+                  styles.groupPosition,
+                  styles.groupLayout,
+                ]}
+              />
+              <View
+                style={[
+                  styles.yourCurrentCardWillBeTermWrapper,
+                  styles.yourCardPosition1,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.yourCurrentCardWillBeTerm,
+                    styles.yourCardPosition,
+                  ]}
+                >
+                  <Text style={styles.iWasA}>
+                    <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
+                      Your current card will be terminated
+                    </Text>
+                  </Text>
+                  <Text style={styles.iWasA}>
+                    <Text style={styles.toKeepYour}>
+                      {"\n"}To keep your account safe
+                    </Text>
+                  </Text>
                 </Text>
-              </Text>
-              <Text style={styles.iWasA}>
-                <Text style={styles.toKeepYour}>{"\n"}To keep your account safe</Text>
-              </Text>
-            </Text>
-          </View>
-          <Image
-            style={styles.groupInner}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.wrapper, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
-            >
-              1
-            </Text>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.rectangleContainer,
-            styles.groupPosition,
-            styles.groupLayout,
-          ]}
-        >
-          <View
-            style={[styles.groupItem, styles.groupPosition, styles.groupLayout]}
-          />
-          <View
-            style={[
-              styles.yourCurrentCardWillBeTermWrapper,
-              styles.yourCardPosition1,
-            ]}
-          >
-            <Text
+              </View>
+              <Image
+                style={styles.groupInner}
+                resizeMode="cover"
+                source={require("../assets/ellipse-3260.png")}
+              />
+              <View style={[styles.wrapper, styles.wrapperLayout]}>
+                <Text
+                  style={[
+                    styles.text,
+                    styles.yourCardTypo,
+                    styles.groupPosition,
+                  ]}
+                >
+                  1
+                </Text>
+              </View>
+            </View>
+            <View
               style={[
-                styles.yourCurrentCardWillBeTerm,
-                styles.yourCardPosition,
+                styles.rectangleContainer,
+                styles.groupPosition,
+                styles.groupLayout,
               ]}
             >
-              <Text style={styles.iWasA}>
-                <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
-                  Order a replacement card below
+              <View
+                style={[
+                  styles.groupItem,
+                  styles.groupPosition,
+                  styles.groupLayout,
+                ]}
+              />
+              <View
+                style={[
+                  styles.yourCurrentCardWillBeTermWrapper,
+                  styles.yourCardPosition1,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.yourCurrentCardWillBeTerm,
+                    styles.yourCardPosition,
+                  ]}
+                >
+                  <Text style={styles.iWasA}>
+                    <Text style={[styles.yourCurrentCard, styles.yourCardTypo]}>
+                      Order a replacement card below
+                    </Text>
+                  </Text>
+                  <Text style={styles.iWasA}>
+                    <Text style={styles.toKeepYour}>
+                      {"\n"}You may be charged for the new card
+                    </Text>
+                  </Text>
                 </Text>
-              </Text>
-              <Text style={styles.iWasA}>
-                <Text style={styles.toKeepYour}>
-                {"\n"}You may be charged for the new card
+              </View>
+              <Image
+                style={styles.groupInner}
+                resizeMode="cover"
+                source={require("../assets/ellipse-3260.png")}
+              />
+              <View style={[styles.container, styles.wrapperLayout]}>
+                <Text
+                  style={[
+                    styles.text,
+                    styles.yourCardTypo,
+                    styles.groupPosition,
+                  ]}
+                >
+                  2
                 </Text>
-              </Text>
-            </Text>
-          </View>
-          <Image
-            style={styles.groupInner}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.container, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
-            >
-              2
-            </Text>
-          </View>
-        </View>
-        <View
-          style={[styles.groupView, styles.groupPosition, styles.groupLayout]}
-        >
-          <View
-            style={[styles.groupItem, styles.groupPosition, styles.groupLayout]}
-          />
-          <View
-            style={[
-              styles.startUsingYourNewCardRighWrapper,
-              styles.yourCardPosition1,
-            ]}
-          >
-            <Text
+              </View>
+            </View>
+            <View
               style={[
-                styles.startUsingYourNewCardRigh,
-                styles.yourCardTypo,
-                styles.yourCardPosition,
+                styles.groupView,
+                styles.groupPosition,
+                styles.groupLayout,
               ]}
             >
-              Start using your new card right away with Apple Pay
-            </Text>
-          </View>
-          <Image
-            style={styles.groupInner}
-            resizeMode="cover"
-            source={require("../assets/ellipse-3260.png")}
-          />
-          <View style={[styles.container, styles.wrapperLayout]}>
-            <Text
-              style={[styles.text, styles.yourCardTypo, styles.groupPosition]}
-            >
-              3
-            </Text>
+              <View
+                style={[
+                  styles.groupItem,
+                  styles.groupPosition,
+                  styles.groupLayout,
+                ]}
+              />
+              <View
+                style={[
+                  styles.startUsingYourNewCardRighWrapper,
+                  styles.yourCardPosition1,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.startUsingYourNewCardRigh,
+                    styles.yourCardTypo,
+                    styles.yourCardPosition,
+                  ]}
+                >
+                  Start using your new card right away with Apple Pay
+                </Text>
+              </View>
+              <Image
+                style={styles.groupInner}
+                resizeMode="cover"
+                source={require("../assets/ellipse-3260.png")}
+              />
+              <View style={[styles.container, styles.wrapperLayout]}>
+                <Text
+                  style={[
+                    styles.text,
+                    styles.yourCardTypo,
+                    styles.groupPosition,
+                  ]}
+                >
+                  3
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-    </View>
-    </Screen>
+      </Screen>
     </ScrollView>
   );
 };
@@ -238,6 +294,16 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
+  darkhello: {
+    left: 2,
+    fontSize: GlobalStyles.FontSize.size_7xl,
+    lineHeight: 30,
+    color: GlobalStyles.Color.white,
+    textAlign: "left",
+    fontWeight: "700",
+    top: 0,
+    position: "absolute",
+  },
   groupChild: {
     height: "100%",
     top: "0%",
@@ -261,7 +327,7 @@ const styles = StyleSheet.create({
   hello1: {
     top: "38.33%",
     left: "50.00%",
-    marginLeft:-100,
+    marginLeft: -100,
     fontSize: GlobalStyles.FontSize.size_lg,
     textTransform: "uppercase",
     color: GlobalStyles.Color.white,
@@ -348,6 +414,13 @@ const styles = StyleSheet.create({
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
+  },
+  darkiWasAVictimOfFraudOrThe: {
+    flex: 1,
+    paddingLeft: GlobalStyles.Padding.padding_7xs,
+    paddingRight: GlobalStyles.Padding.padding_8xs,
+    width: "100%",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
 });
 

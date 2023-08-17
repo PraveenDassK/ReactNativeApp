@@ -32,12 +32,12 @@ const TerminatedCard = ({ navigation }) => {
     <ImageBackground
       source={
         darkMode === "DARK"
-          ? require("../assets/dashboardDark/DashboardBottom.jpg")
+          ? require("../assets/dashboardDark/terminatecard.jpg")
           : require("../assets/backgrounds/terminatecard.jpg")
       }
       resizeMode="contain"
       imageStyle={{
-        bottom: "-70%", // Whatever offset you want from the bottom
+        bottom: darkMode === "DARK" ? "-28%" : "-70%", // Whatever offset you want from the bottom
       }}
       style={{
         width: "100%",
@@ -66,13 +66,24 @@ const TerminatedCard = ({ navigation }) => {
             <BrokenCard height="100%" />
           </View>
         </View> */}
-        <View style={styles.brokenCreditCardParent}>
+        <View
+          style={
+            darkMode === "DARK"
+              ? styles.darkbrokenCreditCardParent
+              : styles.brokenCreditCardParent
+          }
+        >
           <Image
             style={[styles.brokenCreditCardIcon, styles.groupParentPosition]}
             resizeMode="contain"
             source={require("../assets/brokencreditcard.png")}
           />
-          <Text style={[styles.hello, styles.helloTypo]}>
+          <Text
+            style={[
+              darkMode === "DARK" ? styles.darkhello : styles.hello,
+              styles.helloTypo,
+            ]}
+          >
             <Text style={styles.yourCardHas}>Your card has been </Text>
             <Text style={styles.yourCardHas}>terminated.</Text>
           </Text>
@@ -90,10 +101,17 @@ const TerminatedCard = ({ navigation }) => {
           style={{
             width: "100%",
             paddingHorizontal: 10,
-            marginVertical: "10%",
+            marginVertical: darkMode === "DARK" ? "0%" : "10%",
+            marginTop: darkMode === "DARK" ? "30%" : "0%",
           }}
         >
-          <View style={styles.brokenBottomCreditCardParent}>
+          <View
+            style={
+              darkMode === "DARK"
+                ? styles.darkbrokenBottomCreditCardParent
+                : styles.brokenBottomCreditCardParent
+            }
+          >
             <Text style={styles.sadText}>Sad to see you go!</Text>
             <Text style={styles.sadTextNormal}>
               The planet is in danger! We can make it better{"\n"}.Stay connect
@@ -125,8 +143,8 @@ const TerminatedCard = ({ navigation }) => {
             <Text style={styles.bottomTextBold}>Choice</Text>
           </Text> */}
         </View>
-        <Tagline darkMode={darkMode} />
       </View>
+      <Tagline darkMode={darkMode} />
     </ImageBackground>
   );
 };
@@ -154,6 +172,14 @@ const styles = StyleSheet.create({
   hello: {
     fontSize: 18,
     color: GlobalStyles.Color.indigo_100,
+    fontFamily: "Montserrat",
+    textAlign: "center",
+    width: "100%",
+    top: "55%",
+  },
+  darkhello: {
+    fontSize: 18,
+    color: GlobalStyles.Color.white,
     fontFamily: "Montserrat",
     textAlign: "center",
     width: "100%",
@@ -202,9 +228,30 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: "5%",
   },
+  darkbrokenCreditCardParent: {
+    width: "90%",
+    height: 180,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    borderColor: "#FFFFFF3",
+    borderRadius: 20,
+    marginTop: 30,
+    marginLeft: "5%",
+  },
   brokenBottomCreditCardParent: {
     width: "100%",
     backgroundColor: "rgba(0,0,0, 0.5)",
+    opacity: 1,
+    borderColor: "#FFFFFF3",
+    borderRadius: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 3,
+    paddingVertical: 5,
+  },
+  darkbrokenBottomCreditCardParent: {
+    width: "100%",
+    backgroundColor: "rgba(255,255,255, 0.2)",
     opacity: 1,
     borderColor: "#FFFFFF3",
     borderRadius: 20,
