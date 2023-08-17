@@ -109,7 +109,11 @@ const CarbonFootprints = ({ navigation }) => {
             >
               <ImageCardContainer darkMode={darkMode} />
             </CarbonContainer>
-            <CarbonContainer title="Your virtual planet" darkMode={darkMode}>
+            <CarbonContainer
+              title="Your virtual planet"
+              darkMode={darkMode}
+              onNavigate={handleNavigation}
+            >
               <View style={styles.center}>
                 <Image
                   resizeMode="contain"
@@ -118,7 +122,7 @@ const CarbonFootprints = ({ navigation }) => {
                 />
               </View>
             </CarbonContainer>
-            <CarbonContainer darkMode={darkMode}>
+            <CarbonContainer darkMode={darkMode} onNavigate={handleNavigation}>
               <View style={styles.center}>
                 <Image
                   resizeMode="contain"
@@ -365,7 +369,7 @@ const styles = StyleSheet.create({
   projectHeader: {
     color: GlobalStyles.Color.darkGray,
     fontSize: 10,
-    paddingLeft:"10%"
+    paddingLeft: "10%",
   },
   subHeader: {
     fontFamily: "Montserrat",

@@ -25,6 +25,7 @@ import SwipePaymentsImage from "../assets/CardsettingsIcons/swipecarddark.svg";
 import ATMwidthdrawal from "../assets/CardsettingsIcons/ATM.svg";
 import Contactless from "../assets/CardsettingsIcons/Contactless.svg";
 import ReplaceCard from "../assets/CardsettingsIcons/Replacecard.svg";
+import UpgradeCard from "../assets/CardsettingsIcons/Upgradecard.svg";
 const CardSettings = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -831,16 +832,28 @@ const CardSettings = ({ navigation, route }) => {
                 },
               ]}
             >
-              <Image
-                style={{
-                  height: "50%",
-                  resizeMode: "contain",
-                  // flex: 1,
-                  alignSelf: "center",
-                  marginLeft: "5%",
-                }}
-                source={require("../assets/newAssets/upgrade.png")}
-              />
+              {darkMode === "DARK" ? (
+                <UpgradeCard
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                  source={require("../assets/newAssets/upgrade.png")}
+                />
+              )}
               <View
                 style={{
                   flex: 9,

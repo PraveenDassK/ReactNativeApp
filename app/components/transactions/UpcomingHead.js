@@ -18,7 +18,15 @@ const UpcomingHead = ({ headerTitle = "Recent transactions", darkMode }) => {
 
         <View style={styles.transactionContainer}>
           <View style={{ textAlign: "center", width: "100%" }}>
-            <Text style={styles.transactionText}>Today</Text>
+            <Text
+              style={
+                darkMode === "DARK"
+                  ? styles.darktransactionText
+                  : styles.transactionText
+              }
+            >
+              Today
+            </Text>
           </View>
         </View>
       </View>
@@ -60,6 +68,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Montserrat-Regular",
     fontSize: 14,
+  },
+  darktransactionText: {
+    // opacity: 0.4,
+    textAlign: "center",
+    fontFamily: "Montserrat-Regular",
+    fontSize: 14,
+    color: GlobalStyles.Color.white,
   },
   amountContainerTH: { flex: 3, alignItems: "flex-end" },
   spacing: { marginBottom: "5%" },

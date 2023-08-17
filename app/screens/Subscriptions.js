@@ -234,8 +234,12 @@ const ChooseCardsElite = ({ navigation }) => {
                           <Button
                             title="Current plan"
                             disabled={true}
-                            color="white"
-                            textColor="black"
+                            color={
+                              darkMode === "DARK"
+                                ? GlobalStyles.Color.secondaryDarkTheme_bg
+                                : "white"
+                            }
+                            textColor={darkMode === "DARK" ? "white" : "black"}
                           />
                         ) : (
                           // <Button
