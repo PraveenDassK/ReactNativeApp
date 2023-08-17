@@ -10,7 +10,7 @@ import {
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import XeroPage from "../screens/XeroPage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AddNewCard from "../screens/AddNewCard";
 import AccountMain from "../screens/AccountMain";
@@ -18,7 +18,7 @@ import Analytics from "../screens/Analytics";
 import Carbon from "../screens/Carbon";
 import CarbonExplore from "../screens/CarbonExplore";
 import Settings from "../screens/Settings";
-
+import DirectDebitDetails from "../screens/DirectDebitDetails";
 import AccountDummy from "../screens/AccountDummy";
 import AccountDummy2 from "../screens/AccountDummy2";
 import DashBoard from "../screens/Dashboard";
@@ -99,6 +99,7 @@ import PaymentLink from "../screens/PaymentLink";
 import Invoices from "../screens/Invoices";
 import DirectDebits from "../screens/DirectDebits";
 import DirectDebitForm from "../screens/DirectDebitForm";
+import DirectDebitSucessPage from "../screens/DirectDebitSucessPage";
 import MoveMoneyFromAccount from "../screens/MoveMoneyFromAccount";
 
 import Teams from "../screens/Teams";
@@ -157,118 +158,120 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
   return (
     <BlurView
-      tint="light"
-      intensity={60}
-      style={{
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 70 + insets.bottom,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "rgba(255, 255, 255, 0.2)",
-        borderTopRightRadius: 20,
-        borderTopLeftRadius: 20,
-        overflow: "hidden",
-      }}
-    >
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+tint="light"
+intensity={60}
+style={{
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 70 + insets.bottom,
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "rgba(255, 255, 255, 0.2)",
+  borderTopRightRadius: 20,
+  borderTopLeftRadius: 20,
+  overflow: "hidden",
+}}
+>
+  
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
+              ? options.title
+              : route.name;
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        const onPress = () => {
-          setSelectedTab(route);
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-            canPreventDefault: true,
+          const onPress = () => {
+            setSelectedTab(route);
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate({ name: route.name, merge: true });
+            }
+          };
+
+          const onLongPress = () => {
+            navigation.emit({
+              type: "tabLongPress",
+              target: route.key,
+            });
+          };
+
+          const inputRange = state.routes.map((_, i) => i);
+          const opacity = position.interpolate({
+            inputRange,
+            outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
           });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate({ name: route.name, merge: true });
+          // Define the image source for each tab
+          let imageSource;
+          switch (index) {
+            case 0:
+              imageSource = <C02 width={30} height={30} />;
+              break;
+            case 1:
+              imageSource = <Home width={30} height={30} />;
+              break;
+            case 2:
+              imageSource = <Analysis width={30} height={30} />;
+              break;
+            case 3:
+              imageSource = <Send width={50} height={50} />;
+              break;
+            case 4:
+              imageSource = <C02 width={40} height={40} />;
+              break;
+            case 5:
+              imageSource = <Profile width={30} height={30} />;
+              break;
+            // Add cases for other tabs
+            default:
+              imageSource = <C02 width={30} height={30} />; // Set a default image source if needed
+              break;
           }
-        };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key,
-          });
-        };
-
-        const inputRange = state.routes.map((_, i) => i);
-        const opacity = position.interpolate({
-          inputRange,
-          outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
-        });
-
-        // Define the image source for each tab
-        let imageSource;
-        switch (index) {
-          case 0:
-            imageSource = <C02 width={30} height={30} />;
-            break;
-          case 1:
-            imageSource = <Home width={30} height={30} />;
-            break;
-          case 2:
-            imageSource = <Analysis width={30} height={30} />;
-            break;
-          case 3:
-            imageSource = <Send width={50} height={50} />;
-            break;
-          case 4:
-            imageSource = <C02 width={40} height={40} />;
-            break;
-          case 5:
-            imageSource = <Profile width={30} height={30} />;
-            break;
-          // Add cases for other tabs
-          default:
-            imageSource = <C02 width={30} height={30} />; // Set a default image source if needed
-            break;
-        }
-
-        return (
-          <React.Fragment key={route.name.toString()}>
-            {index === 6 || index === 0 ? null : (
-              <TouchableOpacity
-                key={route.name.toString()}
-                accessibilityRole="button"
-                accessibilityState={isFocused ? { selected: true } : {}}
-                accessibilityLabel={options.tabBarAccessibilityLabel}
-                testID={options.tabBarTestID}
-                onPress={onPress}
-                onLongPress={onLongPress}
-                style={{ flex: 1 }}
-              >
-                <Animated.View
-                  style={{
-                    paddingVertical: 0,
-                    marginLeft: index !== 3 ? "33%" : "20%",
-                  }}
+          return (
+            <React.Fragment key={route.name.toString()}>
+              {index === 6 || index === 0 ? null : (
+                <TouchableOpacity
+                  key={route.name.toString()}
+                  accessibilityRole="button"
+                  accessibilityState={isFocused ? { selected: true } : {}}
+                  accessibilityLabel={options.tabBarAccessibilityLabel}
+                  testID={options.tabBarTestID}
+                  onPress={onPress}
+                  onLongPress={onLongPress}
+                  style={{ flex: 1 }}
                 >
-                  {imageSource}
-                  {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
+                  <Animated.View
+                    style={{
+                      paddingVertical: 0,
+                      marginLeft: index !== 3 ? "33%" : "20%",
+                    }}
+                  >
+                    {imageSource}
+                    {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
                     name={imageSource}
                     size={40}
                     color={isFocused ? colors.blue : colors.black}
                   />: <C02 width={40} height={40}/> } */}
-                </Animated.View>
-              </TouchableOpacity>
-            )}
-          </React.Fragment>
-        );
-      })}
+                  </Animated.View>
+                </TouchableOpacity>
+              )}
+            </React.Fragment>
+          );
+        })}
+   
     </BlurView>
   );
 }
@@ -940,6 +943,80 @@ const StackNavigator = () => {
           },
         }}
       />
+      <Stack.Screen
+        name="DirectDebitDetails"
+        component={gestureHandlerRootHOC(DirectDebitDetails)}
+        options={{
+          title: "Direct Debit Details",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 22,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="DirectDebitSucess"
+        component={gestureHandlerRootHOC(DirectDebitSucessPage)}
+        options={{
+          title: "Direct Debit Sucess",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 20,
+          },
+        }}
+      />
 
       <Stack.Screen
         name="PaymentLink"
@@ -1207,6 +1284,39 @@ const StackNavigator = () => {
           ),
         }}
       />
+      <Stack.Screen
+        name="Xeropage"
+        component={gestureHandlerRootHOC(XeroPage)}
+        options={{
+          title: "Carbonyte + Xero",
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 23,
+          },
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
+        }}
+      />
 
       <Stack.Screen
         name="Success"
@@ -1401,13 +1511,34 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-down" size={30} />
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
             </View>
           ),
+
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -1434,7 +1565,32 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CardSettings)}
         options={{
           title: "Settings",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
         }}
       />
       <Stack.Screen
@@ -1484,7 +1640,32 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(SpendingLimit)}
         options={{
           title: "Spending Limit",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => (
+            <View
+              style={
+                darkMode === "DARK"
+                  ? styles.darkiconDropDownContainer
+                  : styles.iconDropDownContainer
+              }
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
+              />
+            </View>
+          ),
         }}
       />
       <Stack.Screen
