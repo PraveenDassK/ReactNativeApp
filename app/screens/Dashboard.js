@@ -252,10 +252,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.buttonContainer}>
-                <SquareIcon
-                  name={"Subscriptions"}
-                  image={"newspaper-variant-outline"}
-                  onPress={() => navigation.navigate("Subscriptions")}
+              <SquareIcon
+                  name={"Invoices"}
+                  image={"file-document-multiple"}
+                  onPress={() => navigation.navigate("Invoices")}
                 />
                 <SquareIcon
                   name={"Teams"}
