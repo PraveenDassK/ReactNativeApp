@@ -21,7 +21,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import SwipePaymentsImage from "../assets/CardsettingsIcons/swipecarddark.svg";
+import ATMwidthdrawal from "../assets/CardsettingsIcons/ATM.svg";
+import Contactless from "../assets/CardsettingsIcons/Contactless.svg";
+import ReplaceCard from "../assets/CardsettingsIcons/Replacecard.svg";
 const CardSettings = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -395,10 +398,19 @@ const CardSettings = ({ navigation, route }) => {
               </View>
               <Switch
                 trackColor={{
-                  false: GlobalStyles.Color.gray_600,
+                  false:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.darkTheme_bg
+                      : GlobalStyles.Color.gray_600,
                   true: GlobalStyles.Color.blue_100,
                 }}
-                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                thumbColor={
+                  isEnabled
+                    ? "#f4f3f4"
+                    : darkMode === "DARK"
+                    ? GlobalStyles.Color.gray_1200
+                    : "#f4f3f4"
+                }
                 onValueChange={toggleSwitch}
                 value={isEnabled}
               />
@@ -417,16 +429,28 @@ const CardSettings = ({ navigation, route }) => {
                 },
               ]}
             >
-              <Image
-                style={{
-                  height: "50%",
-                  resizeMode: "contain",
-                  // flex: 1,
-                  alignSelf: "center",
-                  marginLeft: "5%",
-                }}
-                source={require("../assets/newAssets/swipe-card.png")}
-              />
+              {darkMode === "DARK" ? (
+                <SwipePaymentsImage
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                  source={require("../assets/newAssets/swipe-card.png")}
+                />
+              )}
               <View
                 style={{
                   flex: 7,
@@ -456,10 +480,19 @@ const CardSettings = ({ navigation, route }) => {
               </View>
               <Switch
                 trackColor={{
-                  false: GlobalStyles.Color.gray_600,
+                  false:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.darkTheme_bg
+                      : GlobalStyles.Color.gray_600,
                   true: GlobalStyles.Color.blue_100,
                 }}
-                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                thumbColor={
+                  isEnabled
+                    ? "#f4f3f4"
+                    : darkMode === "DARK"
+                    ? GlobalStyles.Color.gray_1200
+                    : "#f4f3f4"
+                }
                 onValueChange={toggleSwitch1}
                 value={isEnabled1}
               />
@@ -478,16 +511,28 @@ const CardSettings = ({ navigation, route }) => {
                 },
               ]}
             >
-              <Image
-                style={{
-                  height: "50%",
-                  resizeMode: "contain",
-                  // flex: 1,
-                  alignSelf: "center",
-                  marginLeft: "5%",
-                }}
-                source={require("../assets/newAssets/ATM-withdrawals.png")}
-              />
+              {darkMode === "DARK" ? (
+                <ATMwidthdrawal
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                  source={require("../assets/newAssets/ATM-withdrawals.png")}
+                />
+              )}
               <View
                 style={{
                   flex: 7,
@@ -516,10 +561,19 @@ const CardSettings = ({ navigation, route }) => {
               </View>
               <Switch
                 trackColor={{
-                  false: GlobalStyles.Color.gray_600,
+                  false:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.darkTheme_bg
+                      : GlobalStyles.Color.gray_600,
                   true: GlobalStyles.Color.blue_100,
                 }}
-                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                thumbColor={
+                  isEnabled
+                    ? "#f4f3f4"
+                    : darkMode === "DARK"
+                    ? GlobalStyles.Color.gray_1200
+                    : "#f4f3f4"
+                }
                 onValueChange={toggleSwitch2}
                 value={isEnabled2}
               />
@@ -538,16 +592,28 @@ const CardSettings = ({ navigation, route }) => {
                 },
               ]}
             >
-              <Image
-                style={{
-                  height: "50%",
-                  resizeMode: "contain",
-                  // flex: 1,
-                  alignSelf: "center",
-                  marginLeft: "5%",
-                }}
-                source={require("../assets/newAssets/contactless.png")}
-              />
+              {darkMode === "DARK" ? (
+                <Contactless
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    height: "50%",
+                    resizeMode: "contain",
+                    // flex: 1,
+                    alignSelf: "center",
+                    marginLeft: "5%",
+                  }}
+                  source={require("../assets/newAssets/contactless.png")}
+                />
+              )}
               <View
                 style={{
                   flex: 7,
@@ -576,10 +642,19 @@ const CardSettings = ({ navigation, route }) => {
               </View>
               <Switch
                 trackColor={{
-                  false: GlobalStyles.Color.gray_600,
+                  false:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.darkTheme_bg
+                      : GlobalStyles.Color.gray_600,
                   true: GlobalStyles.Color.blue_100,
                 }}
-                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                thumbColor={
+                  isEnabled
+                    ? "#f4f3f4"
+                    : darkMode === "DARK"
+                    ? GlobalStyles.Color.gray_1200
+                    : "#f4f3f4"
+                }
                 onValueChange={toggleSwitch3}
                 value={isEnabled3}
               />
@@ -616,16 +691,29 @@ const CardSettings = ({ navigation, route }) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Image
-                  style={{
-                    height: "50%",
-                    resizeMode: "contain",
-                    // flex: 1,
-                    alignSelf: "center",
-                    marginLeft: "5%",
-                  }}
-                  source={require("../assets/newAssets/reset.png")}
-                />
+                {darkMode === "DARK" ? (
+                  <ReplaceCard
+                    style={{
+                      height: "50%",
+                      resizeMode: "contain",
+                      // flex: 1,
+                      alignSelf: "center",
+                      marginLeft: "5%",
+                    }}
+                  />
+                ) : (
+                  <Image
+                    style={{
+                      height: "50%",
+                      resizeMode: "contain",
+                      // flex: 1,
+                      alignSelf: "center",
+                      marginLeft: "5%",
+                    }}
+                    source={require("../assets/newAssets/reset.png")}
+                  />
+                )}
+
                 <View
                   style={{
                     flex: 9,

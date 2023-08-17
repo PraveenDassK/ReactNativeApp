@@ -180,13 +180,13 @@ const SpendingLimit = ({ navigation, route }) => {
       <ImageBackground
         source={
           darkMode === "DARK"
-            ? require("../assets/dashboardDark/DashboardBottom.jpg")
-            : require("../assets/backgrounds/Dashboard.jpg")
+            ? require("../assets/CardsettingsIcons/spendingLimitblack.jpg")
+            : require("../assets/backgrounds/spendingLimit.jpg")
         }
         // style={{  width: "100%" }}
         resizeMode="contain"
         imageStyle={{
-          top: "60%", // Whatever offset you want from the bottom
+          top: "65%", // Whatever offset you want from the bottom
         }}
         style={{
           width: "100%",

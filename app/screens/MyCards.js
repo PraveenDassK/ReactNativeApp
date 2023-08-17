@@ -279,6 +279,7 @@ export default function MyCards({ navigation }) {
           setSelectedCardForFreeze={setSelectedCardForFreeze}
           isFrozen={isFrozen}
           dataAbovecard={dataAbovecard}
+          darkMode={darkMode}
         />
 
         <TapContainer />
@@ -480,6 +481,7 @@ const CardCarousel = ({
   setSelectedCardForFreeze,
   isFrozen,
   dataAbovecard,
+  darkMode,
 }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
@@ -655,7 +657,10 @@ const CardCarousel = ({
           height: ITEM_HEIGHT,
           marginLeft: OFFSET + 35,
           marginRight: OFFSET - 1,
-          borderColor: GlobalStyles.Color.black,
+          borderColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black,
           borderStyle: "dashed",
           borderWidth: 1,
           borderRadius: 10,
@@ -665,7 +670,15 @@ const CardCarousel = ({
         }}
         onPress={onPress}
       >
-        <AntDesign name="plus" size={44} color="black" />
+        <AntDesign
+          name="plus"
+          size={44}
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
         <Text
           style={{
             color: GlobalStyles.Color.black,

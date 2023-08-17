@@ -8,17 +8,28 @@ import {
   Pressable,
 } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import terminateCardAlert, {handleTerminate} from "../utility/terminateCardAlert";
+import terminateCardAlert, {
+  handleTerminate,
+} from "../utility/terminateCardAlert";
 import Button from "../components/AppButton";
-
+import AuthContext from "../auth/context";
+import LinearAccountButton from "../components/LinearAccountButton";
 const ItWasLost = ({ navigation }) => {
-
-  
+  const { darkMode } = React.useContext(AuthContext);
   return (
-    <ScrollView>
-      <View style={styles.itWasLost}>
+    <ScrollView
+      style={{
+        backgroundColor:
+          darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+      }}
+    >
+      <View
+        style={darkMode === "DARK" ? styles.darkitWasLost : styles.itWasLost}
+      >
         <View style={styles.helloParent}>
-          <Text style={styles.hello}>It was lost</Text>
+          <Text style={darkMode === "DARK" ? styles.darkhello : styles.hello}>
+            It was lost
+          </Text>
           <View
             style={[
               styles.rectangleParent,
@@ -178,9 +189,10 @@ const ItWasLost = ({ navigation }) => {
             </View>
           </View>
           <View style={[styles.groupParent, styles.groupPosition]}>
-            <Button
+            <LinearAccountButton
               title={`Terminate & Order card`}
               onPress={() => navigation.navigate("TerminatedCard")}
+              darkMode={darkMode}
             />
           </View>
         </View>
@@ -243,10 +255,24 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
+  darkhello: {
+    left: 2,
+    fontSize: GlobalStyles.FontSize.size_7xl,
+    color: GlobalStyles.Color.white,
+    textAlign: "left",
+    fontWeight: "700",
+    top: 0,
+    position: "absolute",
+  },
   groupChild: {
     marginTop: -31.5,
     borderRadius: GlobalStyles.Border.br_2xl,
     backgroundColor: GlobalStyles.Color.white,
+  },
+  darkgroupChild: {
+    marginTop: -31.5,
+    borderRadius: GlobalStyles.Border.br_2xl,
+    backgroundColor: "rgba(255,255,255,0.2)",
   },
   yourCurrentCard: {
     fontWeight: "700",
@@ -355,6 +381,14 @@ const styles = StyleSheet.create({
     paddingRight: GlobalStyles.Padding.padding_8xs,
     width: "100%",
     backgroundColor: GlobalStyles.Color.gray_100,
+  },
+  darkitWasLost: {
+    flex: 1,
+    paddingLeft: GlobalStyles.Padding.padding_7xs,
+    paddingTop: GlobalStyles.Padding.padding_8xs,
+    paddingRight: GlobalStyles.Padding.padding_8xs,
+    width: "100%",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
 });
 

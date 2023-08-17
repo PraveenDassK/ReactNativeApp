@@ -86,7 +86,7 @@ const CarbonFootprints = ({ navigation }) => {
         <ImageBackground
           source={
             darkMode === "DARK"
-              ? require("../assets/dashboardDark/carbonbottom.jpg")
+              ? require("../assets/dashboardDark/carbonbottom.png")
               : require("../assets/backgrounds/spendingLimit.jpg")
           }
           resizeMode="contain"
