@@ -5,6 +5,7 @@ import TransactionHeader from "./TransactionHeader";
 import { TransactionFooter } from "../transactions";
 import TransactionBody from "./TransactionBody";
 import GlobalStyles from "../../../GlobalStyles";
+
 import { BlurView } from "expo-blur";
 const TransactionContainer = ({
   title = "Transactions",

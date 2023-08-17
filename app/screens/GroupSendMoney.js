@@ -33,7 +33,6 @@ import apiBeneficiaries from "../api/apiBeneficiaries";
 import formatCurrency from "../utility/formatCurrency";
 import PinModal from "../components/PinModal";
 import apiTransaction from "../api/apiTransaction";
-import { G } from "react-native-svg";
 
 const GroupSendMoney = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");

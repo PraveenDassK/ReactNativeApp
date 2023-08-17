@@ -48,6 +48,7 @@ const AccountDeatils = ({
   setBalance,
   accountBalance,
   accountId,
+  isVisible = true,
 }) => {
   const [title, setTitle] = useState("");
   const [dropdownData, setDropdownData] = useState();
@@ -79,16 +80,18 @@ const AccountDeatils = ({
         colors={["#00005F", "#5888F5"]}
         style={styles.cardContainer}
       >
-        <View
-          style={{
-            position: "absolute",
-            right: 0,
-            bottom: -2,
-            opacity: 0.3,
-          }}
-        >
-          <Logo width={140} height={160} />
-        </View>
+        {isVisible && (
+          <View
+            style={{
+              position: "absolute",
+              right: 0,
+              bottom: -2,
+              opacity: 0.3,
+            }}
+          >
+            <Logo width={140} height={160} />
+          </View>
+        )}
         <View style={styles.accountContainer}>
           <Text style={styles.accountName}>Account</Text>
           <View style={styles.accountNumberStyle}>
@@ -130,54 +133,57 @@ const AccountDeatils = ({
             </View>
             <CurrentDateComponent />
           </View>
-
-          <View style={styles.bottomCard}>
-            <View>
-              <Text style={styles.incometext}>Income</Text>
-              {accountBalance[0]?.income ? (
+          {isVisible && (
+            <View style={styles.bottomCard}>
+              <View>
+                <Text style={styles.incometext}>Income</Text>
+                {accountBalance[0]?.income ? (
+                  <Text style={styles.incomeAmount}>
+                    <AntDesign name="arrowup" size={20} />
+                    {formatCurrency(accountBalance?.income, "GBP", false)}
+                  </Text>
+                ) : (
+                  // <Text style={styles.incomeAmount}>Coming soon..</Text>
+                  <Text style={styles.incomeAmount}>
+                    <AntDesign name="arrowup" size={20} />
+                    {formatCurrency(200, "GBP", false)}
+                  </Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.incometext}>Expenses</Text>
+                {accountBalance?.expenses ? (
+                  <Text style={styles.incomeAmount}>
+                    <AntDesign name="arrowdown" size={20} />
+                    {formatCurrency(accountBalance[0]?.expenses, "GBP", false)}
+                  </Text>
+                ) : (
+                  // <Text style={styles.incomeAmount}>Coming soon..</Text>
+                  <Text style={styles.incomeAmount}>
+                    <AntDesign name="arrowdown" size={20} />
+                    {formatCurrency(100, "GBP", false)}
+                  </Text>
+                )}
+              </View>
+              <View>
+                <Text style={styles.incometext}>CO{"\u2082"} spending</Text>
                 <Text style={styles.incomeAmount}>
-                  <AntDesign name="arrowup" size={20} />
-                  {formatCurrency(accountBalance?.income, "GBP", false)}
+                  {userImpact?.totalAssets} kg
                 </Text>
-              ) : (
-                // <Text style={styles.incomeAmount}>Coming soon..</Text>
-                <Text style={styles.incomeAmount}>
-                  <AntDesign name="arrowup" size={20} />
-                  {formatCurrency(200, "GBP", false)}
-                </Text>
-              )}
+              </View>
             </View>
-            <View>
-              <Text style={styles.incometext}>Expenses</Text>
-              {accountBalance?.expenses ? (
-                <Text style={styles.incomeAmount}>
-                  <AntDesign name="arrowdown" size={20} />
-                  {formatCurrency(accountBalance[0]?.expenses, "GBP", false)}
-                </Text>
-              ) : (
-                // <Text style={styles.incomeAmount}>Coming soon..</Text>
-                <Text style={styles.incomeAmount}>
-                  <AntDesign name="arrowdown" size={20} />
-                  {formatCurrency(100, "GBP", false)}
-                </Text>
-              )}
-            </View>
-            <View>
-              <Text style={styles.incometext}>CO{"\u2082"} spending</Text>
-              <Text style={styles.incomeAmount}>
-                {userImpact?.totalAssets} kg
-              </Text>
-            </View>
-          </View>
+          )}
         </View>
       </LinearGradient>
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.sendButton} onPress={handlePress}>
-          <Text style={styles.sendButtonText}>
-            <AntDesign name="plus" size={14} /> Add funds
-          </Text>
-        </Pressable>
-      </View>
+      {isVisible && (
+        <View style={styles.buttonContainer}>
+          <Pressable style={styles.sendButton} onPress={handlePress}>
+            <Text style={styles.sendButtonText}>
+              <AntDesign name="plus" size={14} /> Add funds
+            </Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };

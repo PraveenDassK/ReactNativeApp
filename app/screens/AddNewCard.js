@@ -154,6 +154,7 @@ const AddNewCard = ({ navigation, route }) => {
     const filterAccount = listedAccount.filter(
       (eachValue, index) => eachValue?.accountId === accountID
     );
+    console.log(filterAccount)
     setApiAccountId(filterAccount?.[0]?.enfuceAccountId);
 
     setApiCustomerid(response?.data?.details?.enfuceCustomerId);
@@ -208,6 +209,7 @@ const AddNewCard = ({ navigation, route }) => {
         selectedCard,
         requestObj
       );
+      console.log(requestObj,"this is a virtual card")
       if (response?.data?.status === 201) {
         alert("Your new card has been made successfully");
 
@@ -223,6 +225,8 @@ const AddNewCard = ({ navigation, route }) => {
         selectedCard,
         physicalCardObj
       );
+      console.log(physicalCardObj,"this is a virtual card")
+
       if (response?.data?.status === 201) {
         alert("Your new card has been ordered  successfully");
         navigation.navigate("MyCards");

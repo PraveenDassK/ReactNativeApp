@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
 import GlobalStyles from "../../GlobalStyles";
-import Svg, { Use, Image } from "react-native-svg";
-import LogoImage from "../assets/Dashboard/Carbonyte-Xero-full.svg"
-const XeroDashboard = ({ darkMode ,handleXero}) => {
+import LogoImage from "../assets/Dashboard/Carbonyte-Xero-full.svg";
+const XeroDashboard = ({ darkMode, handleXero }) => {
   return (
     <View style={styles.container}>
       <View>
-      <LogoImage style={{ height: 100, width: 100 }}/>
+        <LogoImage style={{ height: 100, width: 100 }} />
       </View>
       <View>
         <Text
