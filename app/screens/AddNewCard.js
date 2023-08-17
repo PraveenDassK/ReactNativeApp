@@ -25,10 +25,12 @@ import apiVirtualCard from "../api/apiVirtualCard";
 import Tagline from "../components/Tagline";
 import api_list from "../api/api_list";
 import PinModal from "../components/PinModal";
+import LinearAccountButton from "../components/LinearAccountButton";
+import { ScrollView } from "react-native-gesture-handler";
 
 const AddNewCard = ({ navigation, route }) => {
   const [selectedCard, setSelectedCard] = useState();
-  const { accountID, userID, carbonyteID, cardID, customerDetails } =
+  const { accountID, userID, carbonyteID, cardID, customerDetails, darkMode } =
     useContext(AuthContext);
   const [selectedAddress, setSelectedAddress] = useState();
   const ref = useRef();
@@ -154,7 +156,7 @@ const AddNewCard = ({ navigation, route }) => {
     const filterAccount = listedAccount.filter(
       (eachValue, index) => eachValue?.accountId === accountID
     );
-    console.log(filterAccount)
+    console.log(filterAccount);
     setApiAccountId(filterAccount?.[0]?.enfuceAccountId);
 
     setApiCustomerid(response?.data?.details?.enfuceCustomerId);
@@ -184,7 +186,7 @@ const AddNewCard = ({ navigation, route }) => {
   // form submit to set req Obj
   const handleSubmit = async ({ firstName, lastName, postcode }) => {
     // handleAddress(postcode);
-  
+
     requestObj.embossing.firstName = firstName;
     requestObj.embossing.lastName = lastName;
     physicalCardObj.embossing.firstName = firstName;
@@ -209,7 +211,7 @@ const AddNewCard = ({ navigation, route }) => {
         selectedCard,
         requestObj
       );
-      console.log(requestObj,"this is a virtual card")
+      console.log(requestObj, "this is a virtual card");
       if (response?.data?.status === 201) {
         alert("Your new card has been made successfully");
 
@@ -225,7 +227,7 @@ const AddNewCard = ({ navigation, route }) => {
         selectedCard,
         physicalCardObj
       );
-      console.log(physicalCardObj,"this is a virtual card")
+      console.log(physicalCardObj, "this is a virtual card");
 
       if (response?.data?.status === 201) {
         alert("Your new card has been ordered  successfully");
@@ -296,188 +298,246 @@ const AddNewCard = ({ navigation, route }) => {
   };
 
   return (
-    <KeyboardAvoider>
-      {/* <StepProgress currentStep={1} /> */}
+    <ImageBackground
+      source={
+        darkMode === "DARK"
+          ? require("../assets/dashboardDark/DashboardBottom.png")
+          : require("../assets/backgrounds/Dashboard.jpg")
+      }
+      // style={{  width: "100%" }}
+      resizeMode="contain"
+      imageStyle={{
+        bottom: "-70%", // Whatever offset you want from the bottom
+      }}
+      style={{
+        width: "100%",
+        flex: 1,
+        backgroundColor:
+          darkMode === "DARK"
+            ? GlobalStyles.Color.darkTheme_bg
+            : GlobalStyles.Color.lightTheme_bg,
+      }}
+    >
+      <ScrollView>
+        <KeyboardAvoider>
+          {/* <StepProgress currentStep={1} /> */}
 
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View
-          style={{
-            flex: 1,
-            paddingVertical: 24,
-            backgroundColor: GlobalStyles.Color.white,
-            marginTop: 27,
-            borderRadius: 20,
-          }}
-        >
-          <ImageBackground
-            source={require("../assets/backgrounds/Dashboard.jpg")}
-            // style={{  width: "100%" }}
-            resizeMode="contain"
-            imageStyle={{
-              bottom: "-70%", // Whatever offset you want from the bottom
-            }}
-            style={{
-              width: "100%",
-              flex: 1,
-            }}
-          >
-            <Formik
-              initialValues={{
-                firstName: "",
-                lastName: "",
-                postcode: "HA9 0HZ",
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View
+              style={{
+                paddingVertical: 24,
+                backgroundColor:
+                  darkMode === "DARK"
+                    ? "rgba(255, 255, 255,0.2)"
+                    : GlobalStyles.Color.white,
+                marginTop: 27,
+                borderRadius: 20,
               }}
-              onSubmit={handleSubmit}
-              validationSchema={validationSchema}
             >
-              {({
-                handleChange,
-                setFieldValue,
-                handleSubmit,
-                errors,
-                setFieldTouched,
-                values,
-                touched,
-              }) => (
-                <>
-                  <View style={{ paddingHorizontal: 40 }}>
-                    {items?.map((item, index) => {
-                      return (
-                        <View
-                          key={item.id}
-                          style={{
-                            marginTop: 22,
-                          }}
-                        >
-                          <Text style={styles.formLabel}>{item.label}</Text>
-
-                          <TextInput
-                            style={styles.inputBox}
-                            onBlur={() => setFieldTouched(item.initialValue)}
-                            onChangeText={(text) => {
-                              // Update the firstName field with the new value entered in the TextInput
-                              setFieldValue(item.initialValue, text);
-                              const updatedFirstName = values.postcode;
-                              if (item.label === "Postcode") {
-                                handleAddress(text);
-                              }
+              <Formik
+                initialValues={{
+                  firstName: "",
+                  lastName: "",
+                  postcode: "HA9 0HZ",
+                }}
+                onSubmit={handleSubmit}
+                validationSchema={validationSchema}
+              >
+                {({
+                  handleChange,
+                  setFieldValue,
+                  handleSubmit,
+                  errors,
+                  setFieldTouched,
+                  values,
+                  touched,
+                }) => (
+                  <>
+                    <View style={{ paddingHorizontal: 40 }}>
+                      {items?.map((item, index) => {
+                        return (
+                          <View
+                            key={item.id}
+                            style={{
+                              marginTop: 22,
                             }}
-                            placeholder={item.placeholder}
-                            // value={values}
-                          />
+                          >
+                            <Text
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkformLabel
+                                  : styles.formLabel
+                              }
+                            >
+                              {item.label}
+                            </Text>
 
-                          <ErrorMessage
-                            error={errors[item.initialValue]}
-                            visible={touched[item.initialValue]}
-                          />
-                        </View>
-                      );
-                    })}
+                            <TextInput
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkinputBox
+                                  : styles.inputBox
+                              }
+                              onBlur={() => setFieldTouched(item.initialValue)}
+                              onChangeText={(text) => {
+                                // Update the firstName field with the new value entered in the TextInput
+                                setFieldValue(item.initialValue, text);
+                                const updatedFirstName = values.postcode;
+                                if (item.label === "Postcode") {
+                                  handleAddress(text);
+                                }
+                              }}
+                              placeholder={item.placeholder}
+                              // value={values}
+                            />
+
+                            <ErrorMessage
+                              error={errors[item.initialValue]}
+                              visible={touched[item.initialValue]}
+                            />
+                          </View>
+                        );
+                      })}
+                      <View
+                        style={{
+                          width: "100%",
+                          marginVertical: "5%",
+                        }}
+                      >
+                        <Text
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkformLabel
+                              : styles.formLabel
+                          }
+                        >
+                          {"Cardtype"}
+                        </Text>
+
+                        <Dropdown
+                          data={arrayData}
+                          value={selectedCard}
+                          labelField="label"
+                          valueField="value"
+                          // defalutValue="Mr"
+                          onChange={(item) => {
+                            setSelectedCard(item.value);
+                            // handleChange(item.value);
+                          }}
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkdropdown
+                              : styles.dropdown
+                          }
+                          containerStyle={styles.containerStyle}
+                          // renderRightIcon={() => (
+                          //   <AntDesign name="checkcircle" size={24} color="green" />
+                          // )}
+                          // renderItem={renderItem}
+                          placeholder="Select CardType"
+                          autoScroll={false}
+                        />
+                      </View>
+                      {/* Show postcode and address  if category not virtual */}
+                      {cardCategory !== "virtual" ? (
+                        <>
+                          <View
+                            style={{
+                              marginTop: 22,
+                            }}
+                          >
+                            <Text
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkformLabel
+                                  : styles.formLabel
+                              }
+                            >
+                              {"PostCode"}
+                            </Text>
+
+                            <TextInput
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkinputBox
+                                  : styles.inputBox
+                              }
+                              onBlur={() => setFieldTouched("postcode")}
+                              onChangeText={(text) => {
+                                // Update the firstName field with the new value entered in the TextInput
+                                setFieldValue("postcode", text);
+                                handleAddress(text);
+                              }}
+                              placeholder={"Enter your postcode"}
+                              // value={values}
+                            />
+
+                            <ErrorMessage
+                              error={errors["postcode"]}
+                              visible={touched["postcode"]}
+                            />
+                          </View>
+
+                          <View
+                            style={{
+                              width: "100%",
+                              marginVertical: "5%",
+                            }}
+                          >
+                            <Text
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkformLabel
+                                  : styles.formLabel
+                              }
+                            >
+                              {"Address"}
+                            </Text>
+
+                            <Dropdown
+                              data={addressData}
+                              value={selectedAddress}
+                              labelField="label"
+                              valueField="value"
+                              onChange={(item) => {
+                                setSelectedAddress(item.value);
+                              }}
+                              style={
+                                darkMode === "DARK"
+                                  ? styles.darkdropdown
+                                  : styles.dropdown
+                              }
+                              containerStyle={styles.containerStyle}
+                              placeholder="Select Address"
+                              autoScroll={false}
+                            />
+                          </View>
+                        </>
+                      ) : null}
+                    </View>
                     <View
                       style={{
-                        width: "100%",
-                        marginVertical: "5%",
+                        justifyContent: "flex-end",
+                        paddingHorizontal: 40,
                       }}
                     >
-                      <Text style={styles.formLabel}>{"Cardtype"}</Text>
-
-                      <Dropdown
-                        data={arrayData}
-                        value={selectedCard}
-                        labelField="label"
-                        valueField="value"
-                        // defalutValue="Mr"
-                        onChange={(item) => {
-                          setSelectedCard(item.value);
-                          // handleChange(item.value);
-                        }}
-                        style={styles.dropdown}
-                        containerStyle={styles.containerStyle}
-                        // renderRightIcon={() => (
-                        //   <AntDesign name="checkcircle" size={24} color="green" />
-                        // )}
-                        // renderItem={renderItem}
-                        placeholder="Select CardType"
-                        autoScroll={false}
+                      <LinearAccountButton
+                        title="Continue"
+                        onPress={handleSubmit}
+                        darkMode={darkMode}
                       />
                     </View>
-                    {/* Show postcode and address  if category not virtual */}
-                    {cardCategory !== "virtual" ? (
-                      <>
-                        <View
-                          style={{
-                            marginTop: 22,
-                          }}
-                        >
-                          <Text style={styles.formLabel}>{"PostCode"}</Text>
-
-                          <TextInput
-                            style={styles.inputBox}
-                            onBlur={() => setFieldTouched("postcode")}
-                            onChangeText={(text) => {
-                              // Update the firstName field with the new value entered in the TextInput
-                              setFieldValue("postcode", text);
-                              handleAddress(text);
-                            }}
-                            placeholder={"Enter your postcode"}
-                            // value={values}
-                          />
-
-                          <ErrorMessage
-                            error={errors["postcode"]}
-                            visible={touched["postcode"]}
-                          />
-                        </View>
-
-                        <View
-                          style={{
-                            width: "100%",
-                            marginVertical: "5%",
-                          }}
-                        >
-                          <Text style={styles.lable}>{"Address"}</Text>
-
-                          <Dropdown
-                            data={addressData}
-                            value={selectedAddress}
-                            labelField="label"
-                            valueField="value"
-                            onChange={(item) => {
-                              setSelectedAddress(item.value);
-                            }}
-                            style={styles.dropdown}
-                            containerStyle={styles.containerStyle}
-                            placeholder="Select Address"
-                            autoScroll={false}
-                          />
-                        </View>
-                      </>
-                    ) : null}
-                  </View>
-                  <View
-                    style={{
-                      justifyContent: "flex-end",
-                      paddingHorizontal: 40,
-                    }}
-                  >
-                    <Button
-                      title="Continue"
-                      textColor={GlobalStyles.Color.white}
-                      color="black"
-                      style={styles.buttonColor}
-                      onPress={handleSubmit}
-                    />
-                  </View>
-                </>
-              )}
-            </Formik>
-            <View style={{ marginTop: "20%" }}>
-              <Tagline />
+                  </>
+                )}
+              </Formik>
             </View>
-          </ImageBackground>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoider>
+          </TouchableWithoutFeedback>
+          <View style={{ marginTop: "20%" }}>
+            <Tagline darkMode={darkMode} />
+          </View>
+        </KeyboardAvoider>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -485,6 +545,13 @@ export default AddNewCard;
 
 const styles = StyleSheet.create({
   formLabel: { fontSize: 14, fontFamily: "Montserrat", marginBottom: 5 },
+  darkformLabel: {
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    marginBottom: 5,
+    color: GlobalStyles.Color.white,
+  },
+
   inputBox: {
     width: 332,
     height: 46,
@@ -495,6 +562,18 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 14,
     color: GlobalStyles.Color.darkGray,
+  },
+  darkinputBox: {
+    width: 332,
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 0.4,
+    borderColor: GlobalStyles.Color.white,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: GlobalStyles.Color.darkTheme_bg,
+    backgroundColor: GlobalStyles.Color.white,
   },
   dropdown: {
     width: "100%",
@@ -507,6 +586,19 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 14,
     color: GlobalStyles.Color.darkGray,
+  },
+  darkdropdown: {
+    width: "100%",
+    height: 46,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: GlobalStyles.Color.black,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 14,
+    fontSize: 14,
+    color: GlobalStyles.Color.darkGray,
+    backgroundColor: GlobalStyles.Color.white,
   },
   containerStyle: {
     borderBottomEndRadius: 10,
