@@ -35,23 +35,24 @@ import * as Clipboard from "expo-clipboard";
 import colors from "../config/colors";
 import { BlurView } from "expo-blur";
 import CarbonFootprints from "./CarbonFootprints";
+import LinearAccountButton from "../components/LinearAccountButton";
 
-const CarbonExplore = ({route, navigation}) => {
+const CarbonExplore = ({ route, navigation }) => {
   const { height, width } = useWindowDimensions();
   const [device, setDevice] = useState("");
-  const { accountID, cart, setCart } = useContext(AuthContext);
+  const { accountID, cart, setCart, darkMode } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [count, setCount] = useState(cart.length);
-  const [ visitedCarbon, setVisitedCarbon] = useState(false)
+  const [visitedCarbon, setVisitedCarbon] = useState(false);
 
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     const deviceType = async () => {
       const deviceSize = await Device.getDeviceTypeAsync();
-      
+
       setDevice(deviceSize);
     };
     deviceType();
@@ -82,6 +83,7 @@ const CarbonExplore = ({route, navigation}) => {
     let incCount = cart.length;
     setCount((incCount += 1));
     const incrementProject = projects.find((project) => project.id == item.id);
+    console.log(incrementProject,"this is projects")
     setCart([...cart, incrementProject]);
   };
 
@@ -103,7 +105,6 @@ const CarbonExplore = ({route, navigation}) => {
   };
 
   const copyToClipboard = async (copy) => {
-    
     Vibration.vibrate();
     alert(`${copy} copied`);
     await Clipboard.setStringAsync(copy);
@@ -123,14 +124,33 @@ const CarbonExplore = ({route, navigation}) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="black" />
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor:
+            darkMode === "DARK" ? GlobalStyles.Color.darkTheme_bg : null,
+        }}
+      >
+        <ActivityIndicator
+          size="large"
+          color={
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.black
+          }
+        />
       </View>
     );
   }
   return (
     <SafeAreaView>
-      <View style={styles.mainContainer}>
+      <View
+        style={
+          darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+        }
+      >
         {cart && cart.length ? (
           <Pressable
             style={{ position: "absolute", zIndex: 5, bottom: 50, right: 0 }}
@@ -168,8 +188,16 @@ const CarbonExplore = ({route, navigation}) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           ListHeaderComponent={
-            <View style={styles.container}>
-              <View style={styles.titleTextRow}>
+            <View>
+              <ImageBackground
+                source={
+                  darkMode === "DARK"
+                    ? require("../assets/dashboardDark/dashboardTop.jpg")
+                    : require("../assets/dashboardDark/dashboardTop.jpg")
+                }
+                style={styles.backgroundImage}
+              />
+              {/* <View style={styles.titleTextRow}>
                 <AppText
                   style={[
                     styles.titleText,
@@ -188,8 +216,8 @@ const CarbonExplore = ({route, navigation}) => {
                 >
                   Restore Nature
                 </AppText>
-              </View>
-              <FadeInView>
+              </View> */}
+              {/* <FadeInView>
                 <View style={styles.treeContainer}>
                   <Image
                     style={styles.treeImage}
@@ -197,11 +225,11 @@ const CarbonExplore = ({route, navigation}) => {
                     source={require("../assets/leafTree.png")}
                   />
                 </View>
-              </FadeInView>
+              </FadeInView> */}
               {/* <AppText>
                 At Carbonyte we help you to track, reduce and calvulate your C0<AppText style={{fontSize: 15, lineHeight: 37}}>2</AppText>emission from your daily transcation
             </AppText> */}
-
+              {/* 
               <Button
                 title="CALCULATE CARBON FOOTPRINT"
                 color="white"
@@ -215,31 +243,87 @@ const CarbonExplore = ({route, navigation}) => {
                   {"\u2082"}
                   emission from your daily transaction
                 </AppText>
-              </View>
-              <View style={[styles.subTitle, { marginTop: verticalScale(40) }]}>
+              </View> */}
+              <View
+                style={[
+                  darkMode === "DARK" ? styles.darksubTitle1 : styles.subTitle1,
+                  {
+                    marginTop: verticalScale(-100),
+                    paddingVertical: "5%",
+                    paddingHorizontal: "10%",
+                    gap: 10,
+                  },
+                ]}
+              >
                 <View style={styles.investNature}>
                   <AppText style={[styles.titleText, styles.customTitle]}>
-                    Invest in
-                  </AppText>
-                  <AppText style={[styles.titleText, styles.customTitle]}>
-                    Nature
+                    Invest in Nature
                   </AppText>
                 </View>
-                <View
-                  style={{ alignItems: "flex-start", justifyContent: "center" }}
-                >
+                <View>
                   <Image
                     resizeMode="contain"
                     style={{
                       width: horizontalScale(120),
                       height: verticalScale(120),
-                      marginLeft: horizontalScale(100),
                     }}
                     source={require("../assets/image-twotrees.png")}
                   />
                 </View>
+                <View>
+                  <LinearAccountButton
+                    title="VISIT YOUR VIRTUAL FOREST"
+                    onPress={() => navigation.navigate("VirtualEcoSystem")}
+                    darkMode={darkMode}
+                  />
+                  <View>
+                    <AppText
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darkdescription
+                          : styles.description
+                      }
+                    >
+                      Remove your carbon footprint and restore nature in seconds
+                      with our revolutionary instant purchase platform. Just
+                      choose what you want to balance - personal, business or
+                      travel impact - then go climate positive
+                    </AppText>
+                    <AppText
+                      style={
+                        darkMode === "DARK"
+                          ? styles.darkdescription
+                          : styles.description
+                      }
+                    >
+                      We only profile high-quality projects that meet our
+                      minimum standards in relation to carbon + biodiversity +
+                      social benefits
+                    </AppText>
+                  </View>
+                </View>
+
+                {/* {cart && cart.length ? (
+                  <Button
+                    color="white"
+                    textColor="black"
+                    title="Visit Your Cart"
+                    style={[{ height: device == 1 ? 50 : 55 }]}
+                    onPress={() => navigation.navigate("CarbonCart", cart)}
+                  />
+                ) : (
+                  <Button
+                    title="Visit Your Cart"
+                    style={styles.boxShadow}
+                    onPress={() =>
+                      alert(
+                        "Your cart is empty, please add some items to your basket"
+                      )
+                    }
+                  />
+                )} */}
               </View>
-              <View style={{ marginTop: verticalScale(20) }}>
+              {/* <View style={{ marginTop: verticalScale(20) }}>
                 <View style={styles.doubleButtonDiv}>
                   <LargeButton
                     style={{
@@ -262,43 +346,13 @@ const CarbonExplore = ({route, navigation}) => {
                     onPress={() => navigation.navigate("ChooseCardsStandard5")}
                   />
                 </View>
-              </View>
+              </View> */}
 
-              <View style={{ marginBottom: "5%", textAlign: "center" }}>
-                <AppText style={styles.description}>
-                  Remove your carbon footprint and restore nature in seconds
-                  with our revolutionary instant purchase platform. Just choose
-                  what you want to balance - personal, business or travel impact
-                  - then go climate positive
-                </AppText>
-                <AppText style={styles.description}>
-                  We only profile high-quality projects that meet our minimum
-                  standards in relation to carbon + biodiversity + social
-                  benefits
-                </AppText>
-              </View>
-
-              {cart && cart.length ? (
-                <Button
-                  color="white"
-                  textColor="black"
-                  title="Visit Your Cart"
-                  style={[{ height: device == 1 ? 50 : 55 }]}
-                  onPress={() => navigation.navigate("CarbonCart", cart)}
-                />
-              ) : (
-                <Button
-                  title="Visit Your Cart"
-                  style={styles.boxShadow}
-                  onPress={() =>
-                    alert(
-                      "Your cart is empty, please add some items to your basket"
-                    )
-                  }
-                />
-              )}
               <AppText
-                style={[styles.textSub, { marginTop: verticalScale(50) }]}
+                style={[
+                  darkMode === "DARK" ? styles.darktextSub1 : styles.textSub1,
+                  { marginTop: verticalScale(50), marginLeft: "6%" },
+                ]}
               >
                 Select your project
               </AppText>
@@ -307,171 +361,228 @@ const CarbonExplore = ({route, navigation}) => {
           data={data}
           keyExtractor={(data) => data.id.toString()}
           renderItem={({ item, index }) => (
-            <View style={[styles.listItems]}>
-              {device == 1 ? (
-                <>
-                  <Image
-                    resizeMode={item.image !== "" ? "contain" : "contain"}
-                    style={[
-                      styles.listImage,
-                      {
-                        width: horizontalScale(300),
-                        height: verticalScale(180),
-                        resizeMode: "stretch",
-                      },
-                    ]}
-                    source={
-                      item.image != ""
-                        ? { uri: item.image }
-                        : require("../assets/BearWithUs.png")
-                    }
-                  />
-
-                  <View style={styles.subTitle}>
-                    <View style={styles.subTitleText}>
-                      <AppText style={styles.textSub}>
-                        {item.displayName}
-                      </AppText>
-                    </View>
-                    <View style={styles.subTitlePrice}>
-                      <AppText style={[styles.priceSub, { color: "black" }]}>
-                        £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
-                      </AppText>
-                      <AppText
-                        style={[
-                          styles.tree,
-                          {
-                            color: "black",
-                            textTransform:
-                              item.asset.type == "LAND" ? "none" : "capitalize",
-                          },
-                        ]}
-                      >
-                        /
-                        {item.asset.type == "LAND"
-                          ? "tCO\u2082e"
-                          : item.asset.type}
-                      </AppText>
-                    </View>
-                  </View>
-                  <View style={{ width: "100%", alignItems: "flex-start" }}>
-                    <AppText style={styles.description}>
-                      {item.description
-                        .replace(/<[^>]*>/g, "")
-                        .substring(0, 200)
-                        .trim()}
-                      ...
-                    </AppText>
-                  </View>
-                </>
-              ) : (
-                <>
-                  <View style={styles.tabletImageTextContainer}>
-                    <View style={{ flex: 1 }}>
-                      <Image
-                        resizeMode={item.image !== "" ? "contain" : "contain"}
-                        style={[
-                          styles.listImage,
-                          {
-                            width: horizontalScale(140),
-                            height: verticalScale(180),
-                            resizeMode: "stretch",
-                          },
-                        ]}
-                        source={
-                          item.image != ""
-                            ? { uri: item.image }
-                            : require("../assets/BearWithUs.png")
-                        }
-                      />
-                    </View>
-                    <View style={{ flex: 1, alignItems: "flex-start" }}>
-                      <AppText>
-                        {item.description
-                          .replace(/<[^>]*>/g, "")
-                          .substring(0, 650)
-                          .trim()}
-                        ...
-                      </AppText>
-                    </View>
-                  </View>
-
-                  <View style={styles.subTitle}>
-                    <View style={styles.subTitleText}>
-                      <AppText style={styles.textSub}>
-                        {item.displayName}
-                      </AppText>
-                    </View>
-                    <View style={styles.subTitlePrice}>
-                      <AppText style={[styles.priceSub, { color: "black" }]}>
-                        £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
-                      </AppText>
-                      <AppText
-                        style={[
-                          styles.tree,
-                          {
-                            color: "black",
-                            textTransform:
-                              item.asset.type == "LAND" ? "none" : "capitalize",
-                          },
-                        ]}
-                      >
-                        /
-                        {item.asset.type == "LAND"
-                          ? "tCO\u2082e"
-                          : item.asset.type}
-                      </AppText>
-                    </View>
-                  </View>
-                </>
-              )}
-
-              <View style={styles.doubleButtonDiv}>
-                <Button
-                  disabled={true}
-                  counter={true}
-                  style={{ width: "49%", height: device == 1 ? 50 : 55 }}
-                  title="ADD TO CART"
-                  // onPress={() => addToCart(item)}
-                  onDelete={() => decrementCart(item, index)}
-                  onAdd={() => incrementCart(item, index)}
-                />
-                <Button
-                  style={{ width: "49%", height: device == 1 ? 50 : 55 }}
-                  title="Learn More"
-                  onPress={() =>
-                    navigation.navigate("CarbonProject", { Id: item.id })
-                  }
-                />
-              </View>
-
-              <View style={styles.benifitsContainer}>
-                {item.tags.length ? (
-                  <View>
-                    <AppText style={[styles.tags, styles.tree]}>
-                      Co-benefits
-                    </AppText>
-                  </View>
-                ) : null}
-                <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-                  {item.tags.map((tag, index) => (
-                    <View
-                      key={index}
-                      style={
-                        index !== 0
-                          ? styles.tagsContainer
-                          : [
-                              styles.tagsContainer,
-                              { marginLeft: horizontalScale(0) },
-                            ]
+            <View style={{ paddingHorizontal: "5%" }}>
+              <View
+                style={[
+                  darkMode === "DARK" ? styles.darklistItems : styles.listItems,
+                ]}
+              >
+                {device == 1 ? (
+                  <>
+                    <Image
+                      resizeMode={item.image !== "" ? "contain" : "contain"}
+                      style={[
+                        styles.listImage,
+                        {
+                          width: horizontalScale(300),
+                          height: verticalScale(180),
+                          resizeMode: "stretch",
+                        },
+                      ]}
+                      source={
+                        item.image != ""
+                          ? { uri: item.image }
+                          : require("../assets/BearWithUs.png")
                       }
+                    />
+                    <View
+                      style={{
+                        paddingHorizontal: "10%",
+                        paddingVertical: "3%",
+                      }}
                     >
-                      <Pressable onPress={() => copyToClipboard(tag)}>
-                        <AppText style={styles.tags}>{tag}</AppText>
-                      </Pressable>
+                      <View style={styles.subTitle}>
+                        <View style={styles.subTitleText}>
+                          <AppText
+                            style={
+                              darkMode === "DARK"
+                                ? styles.darktextSub
+                                : styles.textSub
+                            }
+                          >
+                            {item.displayName}
+                          </AppText>
+                        </View>
+                        <View style={styles.subTitlePrice}>
+                          <AppText
+                            style={[
+                              styles.priceSub,
+                              {
+                                color:
+                                  darkMode === "DARK"
+                                    ? GlobalStyles.Color.skyblue
+                                    : "black",
+                              },
+                            ]}
+                          >
+                            £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
+                          </AppText>
+                          <AppText
+                            style={[
+                              styles.tree,
+                              {
+                                color:
+                                  darkMode === "DARK"
+                                    ? GlobalStyles.Color.skyblue
+                                    : "black",
+                                textTransform:
+                                  item.asset.type == "LAND"
+                                    ? "none"
+                                    : "capitalize",
+                              },
+                            ]}
+                          >
+                            /
+                            {item.asset.type == "LAND"
+                              ? "tCO\u2082e"
+                              : item.asset.type}
+                          </AppText>
+                        </View>
+                      </View>
+                      <View style={{ width: "100%", alignItems: "flex-start" }}>
+                        <AppText
+                          style={
+                            darkMode === "DARK"
+                              ? styles.darkdescription
+                              : styles.description
+                          }
+                        >
+                          {item.description
+                            .replace(/<[^>]*>/g, "")
+                            .substring(0, 200)
+                            .trim()}
+                          ...
+                          <Text
+                            style={{
+                              fontFamily: "Montserrat-Regular",
+                              fontSize: 14,
+                              color: GlobalStyles.Color.skyblue,
+                              marginLeft: "2%",
+                            }}
+                            onPress={() =>
+                              navigation.navigate("CarbonProject", {
+                                Id: item.id,
+                              })
+                            }
+                          >
+                            ReadMore
+                          </Text>
+                        </AppText>
+                      </View>
                     </View>
-                  ))}
+                  </>
+                ) : (
+                  <>
+                    <View style={styles.tabletImageTextContainer}>
+                      <View style={{ flex: 1 }}>
+                        <Image
+                          resizeMode={item.image !== "" ? "contain" : "contain"}
+                          style={[
+                            styles.listImage,
+                            {
+                              width: horizontalScale(140),
+                              height: verticalScale(180),
+                              resizeMode: "stretch",
+                            },
+                          ]}
+                          source={
+                            item.image != ""
+                              ? { uri: item.image }
+                              : require("../assets/BearWithUs.png")
+                          }
+                        />
+                      </View>
+                      <View style={{ flex: 1, alignItems: "flex-start" }}>
+                        <AppText>
+                          {item.description
+                            .replace(/<[^>]*>/g, "")
+                            .substring(0, 650)
+                            .trim()}
+                          ...
+                        </AppText>
+                      </View>
+                    </View>
+
+                    <View style={styles.subTitle}>
+                      <View style={styles.subTitleText}>
+                        <AppText style={styles.textSub}>
+                          {item.displayName}
+                        </AppText>
+                      </View>
+                      <View style={styles.subTitlePrice}>
+                        <AppText style={[styles.priceSub, { color: "black" }]}>
+                          £{item.asset.displayAssetPriceWithMarkup.toFixed(2)}
+                        </AppText>
+                        <AppText
+                          style={[
+                            styles.tree,
+                            {
+                              color: "black",
+                              textTransform:
+                                item.asset.type == "LAND"
+                                  ? "none"
+                                  : "capitalize",
+                            },
+                          ]}
+                        >
+                          /
+                          {item.asset.type == "LAND"
+                            ? "tCO\u2082e"
+                            : item.asset.type}
+                        </AppText>
+                      </View>
+                    </View>
+                  </>
+                )}
+
+                <View style={{ width: "80%", paddingVertical: "3%" }}>
+                  <LinearAccountButton
+                    disabled={true}
+                    counter={true}
+                    style={{ width: "49%", height: device == 1 ? 50 : 55 }}
+                    title="ADD TO CART"
+                    // onPress={() => addToCart(item)}
+                    onDelete={() => decrementCart(item, index)}
+                    onPress={() => incrementCart(item, index)}
+                    darkMode={darkMode}
+                  />
+                  {/* <Button
+                    style={{ width: "49%", height: device == 1 ? 50 : 55 }}
+                    title="Learn More"
+                    onPress={() =>
+                      navigation.navigate("CarbonProject", { Id: item.id })
+                    }
+                  /> */}
                 </View>
+
+                {/* <View style={styles.benifitsContainer}>
+                  {item.tags.length ? (
+                    <View>
+                      <AppText style={[styles.tags, styles.tree]}>
+                        Co-benefits
+                      </AppText>
+                    </View>
+                  ) : null}
+                  <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
+                    {item.tags.map((tag, index) => (
+                      <View
+                        key={index}
+                        style={
+                          index !== 0
+                            ? styles.tagsContainer
+                            : [
+                                styles.tagsContainer,
+                                { marginLeft: horizontalScale(0) },
+                              ]
+                        }
+                      >
+                        <Pressable onPress={() => copyToClipboard(tag)}>
+                          <AppText style={styles.tags}>{tag}</AppText>
+                        </Pressable>
+                      </View>
+                    ))}
+                  </View>
+                </View> */}
               </View>
             </View>
           )}
@@ -479,9 +590,9 @@ const CarbonExplore = ({route, navigation}) => {
       </View>
     </SafeAreaView>
   );
-}
+};
 
-export default CarbonExplore
+export default CarbonExplore;
 
 const styles = StyleSheet.create({
   boxShadow: {},
@@ -508,14 +619,20 @@ const styles = StyleSheet.create({
     color: "black",
   },
   description: {
-    color: "grey",
+    color: GlobalStyles.Color.black,
     marginTop: verticalScale(10),
-    textAlign: "center",
+    textAlign: "left",
+    fontFamily: "Montserrat-Regular",
+    fontSize: 14,
   },
-  investNature: {
-    alignItems: "flex-start",
-    justifyContent: "center",
+  darkdescription: {
+    color: GlobalStyles.Color.white,
+    marginTop: verticalScale(10),
+    textAlign: "left",
+    fontFamily: "Montserrat-Regular",
+    fontSize: 14,
   },
+
   listImage: {
     borderRadius: moderateScale(15),
   },
@@ -526,18 +643,31 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(20),
     borderRadius: moderateScale(15),
     paddingVertical: verticalScale(20),
-    paddingHorizontal: horizontalScale(14),
+    // paddingHorizontal: horizontalScale(14),
     backgroundColor: "white",
     width: "100%",
     alignItems: "center",
   },
+  darklistItems: {
+    marginTop: verticalScale(20),
+    borderRadius: moderateScale(15),
+    paddingVertical: verticalScale(20),
+    // paddingHorizontal: horizontalScale(14),
+    backgroundColor: "rgba(255,255,255,0.2)",
+    width: "100%",
+    alignItems: "center",
+  },
   mainContainer: {
-    paddingHorizontal: horizontalScale(25),
-    paddingVertical: verticalScale(25),
+    // paddingHorizontal: "20%",
+    // paddingVertical: verticalScale(25),
+    // zIndex: 10,
+  },
+  darkmainContainer: {
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
   priceSub: {
-    fontSize: moderateScale(30),
-    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: "Montserrat",
   },
   tabletImageTextContainer: {
     flex: 1,
@@ -562,9 +692,24 @@ const styles = StyleSheet.create({
     color: "black",
   },
   textSub: {
-    fontWeight: "bold",
-    textAlign: "left",
+    fontFamily: "Montserrat",
+    fontSize: 14,
     color: "black",
+  },
+  darktextSub: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
+    fontSize: 14,
+  },
+  textSub1: {
+    fontFamily: "Montserrat",
+    fontSize: 20,
+    color: "black",
+  },
+  darktextSub1: {
+    color: GlobalStyles.Color.white,
+    fontFamily: "Montserrat",
+    fontSize: 20,
   },
   title: {
     fontSize: moderateScale(30),
@@ -583,6 +728,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: verticalScale(10),
   },
+  subTitle1: {
+    flexDirection: "column",
+    // top: "15%",
+    // position: "absolute",
+    marginTop: 0,
+    alignItems: "center",
+    backgroundColor: GlobalStyles.Color.white,
+    marginHorizontal: "5%",
+    borderRadius: 20,
+  },
+  darksubTitle1: {
+    flexDirection: "column",
+    // top: "15%",
+    // position: "absolute",
+    marginTop: 0,
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255,0.3)",
+    marginHorizontal: "5%",
+    borderRadius: 20,
+    borderColor: GlobalStyles.Color.white,
+    borderWidth: 0.3,
+  },
   subContainer: {
     marginTop: verticalScale(20),
     borderRadius: moderateScale(15),
@@ -592,7 +759,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   subTitleText: {
-    flex: 1,
+    flex: 2,
     fontWeight: "bold",
   },
   subTitlePrice: {
@@ -615,14 +782,18 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontSize: GlobalStyles.Title.fontSize,
-    fontWeight: GlobalStyles.Title.fontWeight,
-    color: GlobalStyles.NavBarBottomText.fontColor,
+    fontSize: 26,
+    color: GlobalStyles.Color.darkTheme_bg,
+    fontFamily: "Montserrat-SemiBold",
   },
 
   doubleButtonDiv: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
+  },
+  backgroundImage: {
+    height: 270,
+    width: "100%",
   },
 });
