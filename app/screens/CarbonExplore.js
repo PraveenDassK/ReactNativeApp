@@ -36,6 +36,7 @@ import colors from "../config/colors";
 import { BlurView } from "expo-blur";
 import CarbonFootprints from "./CarbonFootprints";
 import LinearAccountButton from "../components/LinearAccountButton";
+import ButtonIcon from "../components/ButtonIcon";
 
 const CarbonExplore = ({ route, navigation }) => {
   const { height, width } = useWindowDimensions();
@@ -83,7 +84,6 @@ const CarbonExplore = ({ route, navigation }) => {
     let incCount = cart.length;
     setCount((incCount += 1));
     const incrementProject = projects.find((project) => project.id == item.id);
-    console.log(incrementProject,"this is projects")
     setCart([...cart, incrementProject]);
   };
 
@@ -104,6 +104,7 @@ const CarbonExplore = ({ route, navigation }) => {
     }
   };
 
+  console.log(cart);
   const copyToClipboard = async (copy) => {
     Vibration.vibrate();
     alert(`${copy} copied`);
@@ -369,22 +370,26 @@ const CarbonExplore = ({ route, navigation }) => {
               >
                 {device == 1 ? (
                   <>
-                    <Image
-                      resizeMode={item.image !== "" ? "contain" : "contain"}
-                      style={[
-                        styles.listImage,
-                        {
-                          width: horizontalScale(300),
-                          height: verticalScale(180),
-                          resizeMode: "stretch",
-                        },
-                      ]}
-                      source={
-                        item.image != ""
-                          ? { uri: item.image }
-                          : require("../assets/BearWithUs.png")
-                      }
-                    />
+                    <View
+                      style={{ justifyContent: "center", alignItems: "center" }}
+                    >
+                      <Image
+                        resizeMode={item.image !== "" ? "contain" : "contain"}
+                        style={[
+                          styles.listImage,
+                          {
+                            width: horizontalScale(300),
+                            height: verticalScale(180),
+                            resizeMode: "stretch",
+                          },
+                        ]}
+                        source={
+                          item.image != ""
+                            ? { uri: item.image }
+                            : require("../assets/BearWithUs.png")
+                        }
+                      />
+                    </View>
                     <View
                       style={{
                         paddingHorizontal: "10%",
@@ -439,7 +444,7 @@ const CarbonExplore = ({ route, navigation }) => {
                           </AppText>
                         </View>
                       </View>
-                      <View style={{ width: "100%", alignItems: "flex-start" }}>
+                      <View style={{ width: "100%" }}>
                         <AppText
                           style={
                             darkMode === "DARK"
@@ -535,15 +540,25 @@ const CarbonExplore = ({ route, navigation }) => {
                   </>
                 )}
 
-                <View style={{ width: "80%", paddingVertical: "3%" }}>
+                <View
+                  style={{
+                    width: "100%",
+                    paddingVertical: "3%",
+                    paddingHorizontal: "5%",
+                    // alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <LinearAccountButton
                     disabled={true}
                     counter={true}
                     style={{ width: "49%", height: device == 1 ? 50 : 55 }}
-                    title="ADD TO CART"
+                    title={"ADD TO CART"}
+                    // title={count}
+                    count={count}
                     // onPress={() => addToCart(item)}
                     onDelete={() => decrementCart(item, index)}
-                    onPress={() => incrementCart(item, index)}
+                    onAdd={() => incrementCart(item, index)}
                     darkMode={darkMode}
                   />
                   {/* <Button
@@ -646,7 +661,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: horizontalScale(14),
     backgroundColor: "white",
     width: "100%",
-    alignItems: "center",
+    // alignItems: "center",
   },
   darklistItems: {
     marginTop: verticalScale(20),
@@ -655,7 +670,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: horizontalScale(14),
     backgroundColor: "rgba(255,255,255,0.2)",
     width: "100%",
-    alignItems: "center",
+    // alignItems: "center",
   },
   mainContainer: {
     // paddingHorizontal: "20%",

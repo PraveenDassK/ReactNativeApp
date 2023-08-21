@@ -2,7 +2,17 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import GlobalStyles from "../../GlobalStyles";
-const LinearAccountButton = ({ onPress, darkMode, title }) => {
+import Icon from "react-native-vector-icons/FontAwesome";
+
+const LinearAccountButton = ({
+  onPress,
+  darkMode,
+  title,
+  onDelete,
+  onAdd,
+  counter = false,
+  count,
+}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <LinearGradient
@@ -20,7 +30,35 @@ const LinearAccountButton = ({ onPress, darkMode, title }) => {
         size={20}
         color={GlobalStyles.Color.white}
       /> */}
+        {counter && (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onPress={onDelete}
+          >
+            <Icon name="minus" color="white" />
+            {/* <Text style={{color: "white"}}>-</Text> */}
+          </TouchableOpacity>
+        )}
         <Text style={styles.buttonPayNewText}>{title}</Text>
+        {counter && (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onPress={onAdd}
+          >
+            <Icon name="plus" color="white" />
+            {/* <Text style={{color: "white"}}>+</Text> */}
+          </TouchableOpacity>
+        )}
       </LinearGradient>
     </TouchableOpacity>
   );
