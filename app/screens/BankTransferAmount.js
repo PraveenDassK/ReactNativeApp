@@ -109,14 +109,22 @@ const BankTransferAmount = ({ route, navigation }) => {
     setIsLoading(true);
 
     const transferRequest = await apiTransaction.sendMoney(requestObj);
-    const successObject = {
-      amount: amount,
-      name: name,
-    };
+    //Checks if the return is ok
+    if (transferRequest.data.result) {
+      const successObject = {
+        amount: amount,
+        name: name,
+      };
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    navigation.navigate("sendmoneysuccess", { successObject });
+      navigation.navigate("sendmoneysuccess", { successObject });
+    } else {
+      //Do if not ok
+      alert(transferRequest.data.resultMessage)
+      setIsLoading(false);
+    }
+
   };
 
   /**
@@ -333,7 +341,7 @@ const BankTransferAmount = ({ route, navigation }) => {
                       >
                         <UserIcon
                           name={eachValue?.beneficiariesName}
-                          //   onPress={() => sendPayeeTrigger(beneficary.item)}
+                        //   onPress={() => sendPayeeTrigger(beneficary.item)}
                         />
                         {/* <View>
                             <Text>{eachValue?.beneficiariesName}</Text>
@@ -418,7 +426,7 @@ const BankTransferAmount = ({ route, navigation }) => {
           );
         }}
 
-        // style={{backgroundColor:'transparent'}}
+      // style={{backgroundColor:'transparent'}}
       />
     </View>
   );
@@ -428,9 +436,9 @@ const FootComponent = (selectAccount, darkMode) => (
   <View style={styles.buttonContainer}>
     <TouchableOpacity
       onPress={selectAccount}
-      // onPress={() => {
-      //   navigation.navigate("Success");
-      // }}
+    // onPress={() => {
+    //   navigation.navigate("Success");
+    // }}
     >
       <LinearGradient
         colors={

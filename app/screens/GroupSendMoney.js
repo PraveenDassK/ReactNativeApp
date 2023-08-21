@@ -111,12 +111,20 @@ const GroupSendMoney = ({ route, navigation }) => {
     requestObj.sourceAccountId = oneselectedAccount?.id;
     setIsLoading(true);
     const transferRequest = await apiTransaction.sendToGroup(requestObj);
-    const successObject = {
-      amount: amount,
-      name: name,
-    };
-    setIsLoading(false);
-    navigation.navigate("sendmoneysuccess", { successObject });
+
+    if (transferRequest.data.result) {
+      console.log(transferRequest)
+      const successObject = {
+        amount: amount,
+        name: name,
+      };
+      setIsLoading(false);
+      navigation.navigate("sendmoneysuccess", { successObject });
+    } else {
+      //Do if not ok
+      alert(transferRequest.data.resultMessage)
+      setIsLoading(false);
+    }
   };
 
   /**

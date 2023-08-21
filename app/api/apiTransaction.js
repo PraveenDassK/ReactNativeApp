@@ -17,6 +17,7 @@ import client from "./client";
  */
 const sendMoney = async (obj) => {
   const request = await client.post("https://api.carbonyte.io/walletmodule/Wallet/SendMoney", obj);
+  console.log(request)
   // const request = await client.post(
   //   "https://api.carbonyte.io/walletmodule/SendMoneyProcedureImplementation",
   //   obj
