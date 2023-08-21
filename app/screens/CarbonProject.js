@@ -58,7 +58,7 @@ const CarbonProject = ({ navigation, route }) => {
       displayName: data.displayName,
       price: data.asset.displayAssetPriceWithMarkup,
     };
-    console.log(incrementProject)
+    console.log(incrementProject);
     setCart([...cart, incrementProject]);
   };
   let projects = [];
@@ -276,10 +276,12 @@ const styles = StyleSheet.create({
   mainPage: {
     backgroundColor: GlobalStyles.DivContainer.backgroundColor,
     width: "100%",
+    flex: 1,
   },
   darkmainPage: {
     backgroundColor: GlobalStyles.Color.darkTheme_bg,
     width: "100%",
+    flex: 1,
   },
   mainContainer: {
     height: GlobalStyles.DivContainer.height,
