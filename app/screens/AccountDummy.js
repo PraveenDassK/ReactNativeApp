@@ -8,7 +8,7 @@ const AccountDummy = ({navigation}) => {
 
   useLayoutEffect(() => {
     unsubscribe = navigation.addListener('focus', () => {
-      navigation.navigate("AccountTab")
+      navigation.navigate("Dashboard")
     });
   },[])
 

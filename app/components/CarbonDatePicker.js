@@ -65,7 +65,7 @@ const CarbonDatePicker = ({ darkMode }) => {
         }
         onPress={goToNextMonth}
       />
-      {show && (
+      {/* {show && (
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
@@ -74,7 +74,7 @@ const CarbonDatePicker = ({ darkMode }) => {
           display="spinner"
           onChange={onChange}
         />
-      )}
+      )} */}
     </View>
   );
 };
