@@ -99,7 +99,6 @@ const BankTransferAmount = ({ route, navigation }) => {
 
     // navigation.navigate("Pin", requestObj);
   };
-
   const handleSuccess = async () => {
     setShowPinModal(false);
 
@@ -148,12 +147,21 @@ const BankTransferAmount = ({ route, navigation }) => {
 
   if (showPinModal) {
     return (
-      <View style={styles.mainContainer}>
+      <View
+        style={
+          darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+        }
+      >
         {/* <RecentTransactions
         amount={10}
       /> */}
         {showPinModal ? (
-          <PinModal title="Enter your PIN" success={() => handleSuccess()} />
+          <PinModal
+            title="Enter your PIN"
+            success={() => handleSuccess()}
+            pindata={payeeDetails}
+            amount={amount}
+          />
         ) : null}
       </View>
     );
@@ -711,6 +719,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignContent: "center",
+  },
+  darkmainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
 });
 

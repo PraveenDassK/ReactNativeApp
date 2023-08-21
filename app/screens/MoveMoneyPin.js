@@ -15,10 +15,11 @@ import AuthContext from "../auth/context";
 import api from "../api/apiCall";
 import apiTransaction from "../api/apiTransaction";
 import authStorage from "../auth/storage";
-
+import formatCurrency from "../utility/formatCurrency";
 const Pin = ({ route, navigation }) => {
   let title = route.params.title ? route.params.title : "Enter Pin";
-
+  const pindata = route.params;
+  const amount = 10;
   const pinView = useRef(null);
   const [isLoading, setLoading] = useState(false);
   const [showRemoveButton, setShowRemoveButton] = useState(false);
@@ -56,7 +57,9 @@ const Pin = ({ route, navigation }) => {
     //If pin is correct then atempt to send
     setLoading(true);
     const requestObj = route.params;
+    console.log(requestObj)
     const transferRequest = await apiTransaction.sendMoney(requestObj);
+    console.log(transferRequest)
     setLoading(false);
 
     //Check if the sending was successful
@@ -93,11 +96,82 @@ const Pin = ({ route, navigation }) => {
   }
 
   return (
-    <View style={[styles.sendEnterPin1, styles.sendEnterPin1Child]}>
-      <Text style={[styles.hello, styles.mt_615]}>{title}</Text>
+    <View
+      style={[
+        darkMode === "DARK" ? styles.darksendEnterPin1 : styles.sendEnterPin1,
+        darkMode === "DARK"
+          ? styles.darksendEnterPin1Child
+          : styles.sendEnterPin1Child,
+      ]}
+    >
+      {pindata && (
+        <View
+          style={{
+            width: "100%",
+            gap: 10,
+            paddingTop: "5%",
+          }}
+        >
+          <View style={styles.nameContainer}>
+            <Text
+              style={[
+                darkMode === "DARK"
+                  ? styles.darktopLeftText
+                  : styles.topLeftText,
+              ]}
+            >
+              Send to
+            </Text>
+            <Text
+              style={[
+                darkMode === "DARK"
+                  ? styles.darktopRightText
+                  : styles.topRightText,
+              ]}
+            >
+              {pindata?.destination?.accountNumber}
+            </Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text
+              style={[
+                darkMode === "DARK"
+                  ? styles.darktopLeftText
+                  : styles.topLeftText,
+              ]}
+            >
+              Amout
+            </Text>
+            <Text
+              style={[
+                darkMode === "DARK"
+                  ? styles.darktopRightText
+                  : styles.topRightText,
+              ]}
+            >
+              {formatCurrency(pindata?.amount, "GBP", false)}
+            </Text>
+          </View>
+        </View>
+      )}
+      {!pindata && (
+        <Text
+          style={[
+            darkMode === "DARK" ? styles.darkhello : styles.hello,
+            styles.mt_615,
+          ]}
+        >
+          {title}
+        </Text>
+      )}
       <ReactNativePinView
         disabled={isLoading}
-        style={[styles.sendEnterPin12, styles.sendEnterPin1Child]}
+        style={[
+          darkMode === "DARK"
+            ? styles.darksendEnterPin12
+            : styles.sendEnterPin12,
+          // styles.sendEnterPin1Child,
+        ]}
         inputSize={12}
         ref={pinView}
         pinLength={4}
@@ -112,13 +186,22 @@ const Pin = ({ route, navigation }) => {
         inputViewEmptyStyle={{
           backgroundColor: "transparent",
           borderWidth: 1,
-          borderColor: GlobalStyles.Color.indigo_100,
+          borderColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.indigo_100,
         }}
         inputViewFilledStyle={{
-          backgroundColor: GlobalStyles.Color.indigo_100,
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.indigo_100,
         }}
         buttonTextStyle={{
-          color: GlobalStyles.Color.indigo_100,
+          color:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.white
+              : GlobalStyles.Color.indigo_100,
         }}
         onButtonPress={(key) => {
           if (key === "custom_left") {
@@ -133,14 +216,27 @@ const Pin = ({ route, navigation }) => {
             <Icon
               name={"ios-backspace"}
               size={36}
-              color={GlobalStyles.Color.indigo_100}
+              color={
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.white
+                  : GlobalStyles.Color.indigo_100
+              }
             />
           ) : undefined
         }
         customRightButton={
           showCompletedButton ? (
             <View>
-              <Text>Enter</Text>
+              <Text
+                style={{
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.secondaryDarkTheme_bg,
+                }}
+              >
+                Enter
+              </Text>
             </View>
           ) : undefined
         }
@@ -187,7 +283,12 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.indigo_100,
   },
   sendEnterPin1Child: {
-    backgroundColor: GlobalStyles.Color.gray_200,
+    backgroundColor: GlobalStyles.Color.gray_10,
+    width: "100%",
+    height: 812,
+  },
+  darksendEnterPin1Child: {
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
     width: "100%",
     height: 812,
   },
@@ -195,6 +296,11 @@ const styles = StyleSheet.create({
     fontSize: GlobalStyles.FontSize.size_base,
     textAlign: "left",
     color: GlobalStyles.Color.indigo_100,
+  },
+  darkhello: {
+    fontSize: GlobalStyles.FontSize.size_base,
+    textAlign: "left",
+    color: GlobalStyles.Color.white,
   },
   hello1: {
     top: 0,
@@ -242,17 +348,61 @@ const styles = StyleSheet.create({
     height: 14,
   },
   sendEnterPin12: {
-    backgroundColor: GlobalStyles.Color.gray_100,
+    backgroundColor: GlobalStyles.Color.white,
     flex: 1,
     width: "100%",
     alignItems: "center",
     marginTop: 50,
+    paddingTop: "3%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
-  sendEnterPin1: {
-    backgroundColor: GlobalStyles.Color.gray_100,
+  darksendEnterPin12: {
+    backgroundColor: GlobalStyles.Color.secondaryDarkTheme_bg,
     flex: 1,
     width: "100%",
     alignItems: "center",
+    marginTop: 50,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingTop: "3%",
+  },
+  sendEnterPin1: {
+    backgroundColor: GlobalStyles.Color.white,
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+  },
+  darksendEnterPin1: {
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+  },
+  nameContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  topLeftText: {
+    fontFamily: "Montserrat-Regular",
+    fontSize: 16,
+    color: GlobalStyles.Color.black,
+  },
+  darktopLeftText: {
+    fontFamily: "Montserrat-Regular",
+    fontSize: 16,
+    color: GlobalStyles.Color.white,
+  },
+  topRightText: {
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    color: GlobalStyles.Color.secondaryDarkTheme_bg,
+  },
+  darktopRightText: {
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    color: GlobalStyles.Color.white,
   },
 });
 

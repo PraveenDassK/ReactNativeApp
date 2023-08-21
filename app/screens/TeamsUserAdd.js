@@ -72,6 +72,7 @@ const TeamsUserAdd = ({ navigation }) => {
 
   const handleSubmit = async ({ name, email, phonenumber, postcode, city }) => {
     console.log(name, email, phonenumber, postcode, city);
+    navigation.navigate("Teams")
   };
   const validationSchema = Yup.object().shape({
     phonenumber: Yup.string()
