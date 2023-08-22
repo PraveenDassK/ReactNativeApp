@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -30,6 +30,8 @@ import PhoneInput from "react-native-phone-number-input";
 import GetPostCode from "../components/RegistrationPostCode";
 import apiLogin from "../api/apiLogin";
 import moment from "moment";
+import * as Device from "expo-device";
+
 const RegistartionDirectorForm = ({
   back = true,
   role,
@@ -101,6 +103,20 @@ const RegistartionDirectorForm = ({
     { label: "Separated", value: "Separated" },
     { label: "Divorced", value: "Divorced" },
   ];
+
+  // finding small Device
+  const { height, width } = useWindowDimensions();
+  const [device, setDevice] = useState("");
+  const smallDevice = { height: 650 };
+  useEffect(() => {
+    const deviceType = async () => {
+      const deviceSize = await Device.getDeviceTypeAsync();
+
+      setDevice(deviceSize);
+    };
+    deviceType();
+  }, [height, width]);
+  const isSmallDevice = height < smallDevice.height;
   /**
    * @dev This finds the correct postcodes
    */
@@ -314,41 +330,46 @@ const RegistartionDirectorForm = ({
           policyVersion: "1",
         },
       ];
-      const response = await apiLogin.RegisterPersonalAccount(dataObj);
+      console.log(dataObj, "this is object");
+      const IDs = "12814316";
+      const response = await apiLogin.RegisterPersonalDirectorAccount(
+        dataObj,
+        IDs
+      );
+      console.log(response);
       const ID = `CC${id}`;
       const getResponse = await apiLogin.GetCustomerDetails(ID);
-      
+      console.log(getResponse, "this is get");
       switch (role) {
         case "Director":
-           setDirectorData((directorData) => [
+          setDirectorData((directorData) => [
             ...directorData,
-            getResponse.customerDetails.firstName +
-              getResponse.customerDetails.lastName,
-          ])
-          break
+            getResponse?.customerDetails?.firstName +
+              getResponse?.customerDetails?.lastName,
+          ]);
+          break;
         case "Beneficial owners":
-           setBeneficialownersData((directorData) => [
+          setBeneficialownersData((directorData) => [
             ...directorData,
-            getResponse.customerDetails.firstName +
-              getResponse.customerDetails.lastName,
+            getResponse?.customerDetails?.firstName +
+              getResponse?.customerDetails?.lastName,
           ]);
-          break
+          break;
         case "Controlling Interests":
-           setControllingInterestsData((directorData) => [
+          setControllingInterestsData((directorData) => [
             ...directorData,
-            getResponse.customerDetails.firstName +
-              getResponse.customerDetails.lastName,
+            getResponse?.customerDetails?.firstName +
+              getResponse?.customerDetails?.lastName,
           ]);
-          break
-          // default:
-          //   return setDirectorData((directorData) => [
-          //     ...directorData,
-          //     getResponse.customerDetails.firstName +
-          //       getResponse.customerDetails.lastName,
-          //   ]);
-          }
-          setFormView(0);
-
+          break;
+        // default:
+        //   return setDirectorData((directorData) => [
+        //     ...directorData,
+        //     getResponse.customerDetails.firstName +
+        //       getResponse.customerDetails.lastName,
+        //   ]);
+      }
+      setFormView(0);
     }
   };
 
@@ -396,7 +417,9 @@ const RegistartionDirectorForm = ({
             borderTopRightRadius: 20,
           }}
         >
-          <Text style={styles.header}>Directors or Partners</Text>
+          <Text style={isSmallDevice ? styles.smallheader : styles.header}>
+            Directors or Partners
+          </Text>
         </View>
         {/* <ScrollView> */}
         <View
@@ -417,7 +440,7 @@ const RegistartionDirectorForm = ({
             style={{
               textAlign: "center",
               color: "#212529",
-              fontSize: 16,
+              fontSize: isSmallDevice ? 14 : 16,
               letterSpacing: 0.4,
             }}
           >
@@ -467,7 +490,8 @@ const RegistartionDirectorForm = ({
                         width: "100%",
                         display: "flex",
                         flexDirection: "row",
-                        gap: 2,
+                        alignItems: "center",
+                        gap: 10,
                       }}
                     >
                       <Dropdown
@@ -484,7 +508,12 @@ const RegistartionDirectorForm = ({
                       />
                       <TextInput
                         style={styles.firtNameText}
-                        placeholder="Enter the FirstName"
+                        placeholder={
+                          isSmallDevice
+                            ? "Enter FirstName"
+                            : "Enter the FirstName"
+                        }
+                        placeholderStyle={{ fontSize: isSmallDevice ? 10 : 14 }}
                         onChangeText={handleChange("firstName")}
                       />
                     </View>
@@ -608,7 +637,11 @@ const RegistartionDirectorForm = ({
                       value={employementValue}
                       labelField="label"
                       valueField="value"
-                      placeholder="Please enter your Employement Details"
+                      placeholder={
+                        isSmallDevice
+                          ? "Employement Details"
+                          : "Please enter your Employement Details"
+                      }
                       onChange={(item) => {
                         setEmployementValue(item.value);
                       }}
@@ -632,7 +665,11 @@ const RegistartionDirectorForm = ({
                     </Text>
                     <TextInput
                       style={styles.textInuput}
-                      placeholder="Enter your National Insurance No"
+                      placeholder={
+                        isSmallDevice
+                          ? "National Insurance No"
+                          : "Enter your National Insurance No"
+                      }
                       onChangeText={handleChange("id")}
                     />
                     <ErrorMessage error={errors.id} visible={touched.id} />
@@ -695,7 +732,6 @@ const RegistartionDirectorForm = ({
                           visible={touched.city}
                         />
                       </View>
-
                     </View>
                   )}
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
@@ -816,7 +852,7 @@ const RegistartionDirectorForm = ({
                         <Text
                           style={{
                             color: "#999999",
-                            fontSize: 20,
+                            fontSize: isSmallDevice ? 14 : 20,
                           }}
                         >
                           Select the Country of residence{" "}
@@ -945,7 +981,7 @@ const RegistartionDirectorForm = ({
                             <Text
                               style={{
                                 color: "#0101FD",
-                                fontSize: 16,
+                                fontSize: isSmallDevice ? 14 : 16,
                                 fontWeight: "bold",
                               }}
                             >
@@ -960,7 +996,7 @@ const RegistartionDirectorForm = ({
                             <Text
                               style={{
                                 color: "#0101FD",
-                                fontSize: 16,
+                                fontSize: isSmallDevice ? 14 : 16,
                                 fontWeight: "bold",
                               }}
                             >
@@ -973,7 +1009,7 @@ const RegistartionDirectorForm = ({
                             <Text
                               style={{
                                 color: "#0101FD",
-                                fontSize: 16,
+                                fontSize: isSmallDevice ? 14 : 16,
                                 fontWeight: "bold",
                               }}
                             >
@@ -990,7 +1026,7 @@ const RegistartionDirectorForm = ({
                             <Text
                               style={{
                                 color: "#0101FD",
-                                fontSize: 16,
+                                fontSize: isSmallDevice ? 14 : 16,
                                 fontWeight: "bold",
                               }}
                             >
@@ -1003,11 +1039,11 @@ const RegistartionDirectorForm = ({
                             <Text
                               style={{
                                 color: "#0101FD",
-                                fontSize: 16,
+                                fontSize: isSmallDevice ? 14 : 16,
                                 fontWeight: "bold",
                               }}
                             >
-                              Right to appoint & remove directors
+                              Right to appoint &{"/n"} remove directors
                             </Text>
                           </View>
                           <View style={styles.percentageContainer}>
@@ -1053,36 +1089,40 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#212529",
   },
+  smallheader: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#212529",
+  },
   textInuput: {
     borderColor: "#EBEBEB",
-    borderRadius: 5,
-    height: 70,
+    borderRadius: 10,
+    height: 50,
     width: "100%",
     padding: 5,
     paddingLeft: 20,
-    borderWidth: 4,
+    borderWidth: 2,
     marginTop: 10,
     fontSize: 20,
   },
   textCountryInuput: {
     borderColor: "#EBEBEB",
-    borderRadius: 5,
-    height: 65,
+    borderRadius: 10,
+    height: 50,
     width: "100%",
-    paddingHorizontal: 10,
-    paddingTop: 15,
-    borderWidth: 4,
+    padding: 10,
+    borderWidth: 2,
     marginTop: 10,
     fontSize: 20,
   },
   firtNameText: {
     borderColor: "#EBEBEB",
-    borderRadius: 5,
-    height: 70,
+    borderRadius: 10,
+    height: 50,
     width: "70%",
     padding: 5,
     paddingLeft: 20,
-    borderWidth: 4,
+    borderWidth: 2,
     marginTop: 10,
     fontSize: 20,
   },
@@ -1093,15 +1133,14 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     borderColor: "#EBEBEB",
-    borderRadius: 5,
-    height: 70,
-    width: "30%",
+    borderRadius: 10,
+    height: 50,
+    width: "28%",
     padding: 1,
     fontSize: 16,
-
     paddingLeft: 20,
-    borderWidth: 4,
-    marginBottom: "5%",
+    borderWidth: 2,
+    // marginBottom: "5%",
     marginTop: "2.5%",
     opacity: 1,
   },
@@ -1117,14 +1156,14 @@ const styles = StyleSheet.create({
   },
   addressDropdown: {
     borderColor: "#EBEBEB",
-    borderRadius: 5,
-    height: 70,
+    borderRadius: 10,
+    height: 50,
     width: "100%",
-    padding: 5,
+    // padding: 4,
     fontSize: 16,
 
     paddingLeft: 20,
-    borderWidth: 4,
+    borderWidth: 2,
     marginBottom: "5%",
     marginTop: "2.5%",
     opacity: 1,
@@ -1173,10 +1212,10 @@ const styles = StyleSheet.create({
   },
   textPhoneInuput: {
     borderColor: "#EBEBEB",
-    borderRadius: 5,
-    height: 70,
+    borderRadius: 10,
+    height: 60,
     width: "100%",
-    borderWidth: 4,
+    borderWidth: 2,
     marginTop: 10,
     fontSize: 20,
     elevation: 0,

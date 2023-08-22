@@ -152,6 +152,14 @@ const RegisterPersonalAccount = async (regData) => {
   );
   return response;
 };
+const RegisterPersonalDirectorAccount = async (regData, ID) => {
+  const device = Device.osInternalBuildId;
+  const response = await client.post(
+    `https://api.carbonyte.io/regmodule/SaveCustomerAccountDetails?typeOfAccount=Business&businessId=${ID}`,
+    regData
+  );
+  return response;
+};
 
 const RegisterBusinessAccount = async (regData, pushToken) => {
   const response = await client.post(
@@ -256,6 +264,7 @@ export default {
   VerifyLogin,
   GetCompanyByRegNo,
   RegisterPersonalAccount,
+  RegisterPersonalDirectorAccount,
   RegisterBusinessAccount,
   GetAddressByPostCode,
   GetCustomerDetails,
