@@ -28,6 +28,7 @@ import {
   moderateScale,
 } from "../config/scaling";
 import authStorage from "../auth/storage";
+import { ScrollView } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -86,165 +87,173 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <Screen style={{ backgroundColor: "white" }}>
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Image
-            style={{ width: "100%" }}
-            resizeMode="contain"
-            source={require("../assets/login/LoginAnimalFull.png")}
-          />
-        </View>
-
-        <View
-          style={{
-            backgroundColor: colors.light,
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-          }}
-        >
+    <ScrollView>
+      <Screen style={{ backgroundColor: "white" }}>
+        <View style={{ flex: 1, justifyContent: "flex-end" }}>
           <View
             style={{
+              flex: 1,
               justifyContent: "center",
               alignItems: "center",
-              marginVertical: 30,
             }}
           >
-            <Text style={{ fontSize: 30 }}>Log in to your account</Text>
-            <Text style={[styles.otp]}>
-              OTP will be sent to verify your number and email ID.
-            </Text>
+            <Image
+              style={{ width: "100%", height: 300 }}
+              resizeMode="contain"
+              source={require("../assets/login/LoginAnimalFull.png")}
+            />
           </View>
 
-          <Formik
-            initialValues={{ email: "", phoneNumber: "" }}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
+          <View
+            style={{
+              backgroundColor: colors.light,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+            }}
           >
-            {({
-              handleChange,
-              handleSubmit,
-              errors,
-              setFieldTouched,
-              touched,
-            }) => (
-              <>
-                <View
-                  style={{
-                    paddingHorizontal: 30,
-                    paddingVertical: 50,
-                    backgroundColor: "white",
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                  }}
-                >
-                  <Text>Mobile number</Text>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginVertical: 30,
+              }}
+            >
+              <Text style={{ fontSize: 30 }}>Log in to your account</Text>
+              <Text style={[styles.otp]}>
+                OTP will be sent to verify your number and email ID.
+              </Text>
+            </View>
+
+            <Formik
+              initialValues={{ email: "", phoneNumber: "" }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({
+                handleChange,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                touched,
+              }) => (
+                <>
                   <View
-                    style={[
-                      styles.component1981,
-                      styles.mt14,
-                      { marginLeft: horizontalScale(10) },
-                    ]}
+                    style={{
+                      paddingHorizontal: 30,
+                      paddingVertical: 50,
+                      backgroundColor: "white",
+                      borderTopLeftRadius: 20,
+                      borderTopRightRadius: 20,
+                    }}
                   >
-                    <TextInput
-                      keyboardType="numeric"
-                      onBlur={() => setFieldTouched("phoneNumber")}
-                      onChangeText={handleChange("phoneNumber")}
+                    <Text>Mobile number</Text>
+                    <View
                       style={[
-                        styles.component1981Child,
+                        styles.component1981,
+                        styles.mt14,
+                        { marginLeft: horizontalScale(10) },
+                      ]}
+                    >
+                      <TextInput
+                        keyboardType="numeric"
+                        onBlur={() => setFieldTouched("phoneNumber")}
+                        onChangeText={handleChange("phoneNumber")}
+                        style={[
+                          styles.component1981Child,
+                          styles.childBorder,
+                          { padding: 10 },
+                        ]}
+                      />
+                    </View>
+                    <View
+                      style={[styles.component1971, styles.mt_850, styles.ml24]}
+                    >
+                      <View
+                        style={[styles.component1971Child, styles.childBorder]}
+                      />
+                      <Text
+                        style={[
+                          styles.text1,
+                          styles.networkPosition,
+                          styles.text1Typo,
+                        ]}
+                      >
+                        +44
+                      </Text>
+                      <Image
+                        style={[styles.maskGroup288, styles.keysPosition]}
+                        resizeMode="cover"
+                        source={require("../assets/image-ukflag.png")}
+                      />
+                    </View>
+                    <ErrorMessage
+                      error={errors.phoneNumber}
+                      visible={touched.phoneNumber}
+                    />
+                    <Text
+                      style={[
+                        styles.enterYourEmailId,
+                        styles.mt27,
+                        styles.ml25,
+                        styles.enterColor,
+                      ]}
+                    >
+                      Email ID
+                    </Text>
+                    <TextInput
+                      autoCapitalize="none"
+                      textContentType="emailAddress"
+                      keyboardType="email-address"
+                      onBlur={() => setFieldTouched("email")}
+                      onChangeText={handleChange("email")}
+                      style={[
+                        styles.signUpPersonalItem,
+                        styles.mt9,
+                        styles.ml24,
                         styles.childBorder,
                         { padding: 10 },
                       ]}
                     />
-                  </View>
-                  <View
-                    style={[styles.component1971, styles.mt_850, styles.ml24]}
-                  >
-                    <View
-                      style={[styles.component1971Child, styles.childBorder]}
+                    <ErrorMessage
+                      error={errors.email}
+                      visible={touched.email}
                     />
-                    <Text
-                      style={[
-                        styles.text1,
-                        styles.networkPosition,
-                        styles.text1Typo,
-                      ]}
-                    >
-                      +44
-                    </Text>
-                    <Image
-                      style={[styles.maskGroup288, styles.keysPosition]}
-                      resizeMode="cover"
-                      source={require("../assets/image-ukflag.png")}
+
+                    <Button
+                      title="Next"
+                      textColor="white"
+                      color="black"
+                      onPress={handleSubmit}
+                      visible={isLoading}
+                      disabled={isLoading}
+                    />
+
+                    <Button
+                      title="Test Login"
+                      textColor="white"
+                      color="black"
+                      onPress={dummyLogin}
+                      visible={isLoading}
+                      disabled={isLoading}
                     />
                   </View>
-                  <ErrorMessage
-                    error={errors.phoneNumber}
-                    visible={touched.phoneNumber}
-                  />
-                  <Text
-                    style={[
-                      styles.enterYourEmailId,
-                      styles.mt27,
-                      styles.ml25,
-                      styles.enterColor,
-                    ]}
-                  >
-                    Email ID
-                  </Text>
-                  <TextInput
-                    autoCapitalize="none"
-                    textContentType="emailAddress"
-                    keyboardType="email-address"
-                    onBlur={() => setFieldTouched("email")}
-                    onChangeText={handleChange("email")}
-                    style={[
-                      styles.signUpPersonalItem,
-                      styles.mt9,
-                      styles.ml24,
-                      styles.childBorder,
-                      { padding: 10 },
-                    ]}
-                  />
-                  <ErrorMessage error={errors.email} visible={touched.email} />
-
-                  <Button
-                    title="Next"
-                    textColor="white"
-                    color="black"
-                    onPress={handleSubmit}
-                    visible={isLoading}
-                    disabled={isLoading}
-                  />
-
-                  <Button
-                    title="Test Login"
-                    textColor="white"
-                    color="black"
-                    onPress={dummyLogin}
-                    visible={isLoading}
-                    disabled={isLoading}
-                  />
-                </View>
-                {/* <View style={styles.button}>
+                  {/* <View style={styles.button}>
 
         <Button title="Continue"   onPress={handleSubmit} />
       </View> */}
-              </>
-            )}
-          </Formik>
+                </>
+              )}
+            </Formik>
 
-          {/* <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
+            {/* <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 20,
           borderTopRightRadius: 20,}}>
           <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />
           <Button title="Login" textColor="black" color="white" onPress={() => navigation.navigate("Login")} />
         </View>  */}
+          </View>
         </View>
-      </View>
 
-      {/* <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
+        {/* <View style={[styles.signUpPersonal,  {marginTop: 26}]}>
         <View style={[styles.helloParent, styles.mt10, styles.ml25]}>
           <View style={[styles.hello1, styles.enterColor]}>
             <Text style={[styles.getStartedWith, styles.enterColor]}>Log in to your account</Text>
@@ -329,7 +338,8 @@ const Login = ({ navigation }) => {
     
 
       </View> */}
-    </Screen>
+      </Screen>
+    </ScrollView>
   );
 };
 

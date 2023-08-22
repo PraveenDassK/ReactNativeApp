@@ -1,47 +1,83 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
-import { Image, StyleSheet, Text, View, Pressable, Animated } from "react-native";
-import { horizontalScale, verticalScale, moderateScale } from "../config/scaling"
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Animated,
+} from "react-native";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 
 import GlobalStyles from "../../GlobalStyles";
 
 import FadeInView from "../components/fadeInview";
-import Button from "../components/AppButton"
+import Button from "../components/AppButton";
 import colors from "../config/colors";
 
 import AuthContext from "../auth/context";
 
-const SplashAnimation = ({navigation}) => {
+const SplashAnimation = ({ navigation }) => {
   const { version } = useContext(AuthContext);
 
   return (
-   
-      
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center", }}>
-      <FadeInView style={{width:"100%"}}>
-         <Image
-          style={{width: "100%"}} 
-          resizeMode="contain"
-          source={require("../assets/login/LoginAnimal0.png")}
-         />
-      </FadeInView>
+    <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <FadeInView style={{ width: "100%" }}>
+          <Image
+            style={{ width: "100%" }}
+            resizeMode="contain"
+            source={require("../assets/login/LoginAnimal0.png")}
+          />
+        </FadeInView>
       </View>
-      
-      <View style={{  backgroundColor: colors.light,  borderTopLeftRadius: 25,borderTopRightRadius: 25,}}>
-        <View style={{justifyContent: "center", alignItems: "center", marginVertical: 30}}>
-            <Text style={{fontSize: 30}}>Welcome to Carbonyte</Text>
 
-        </View> 
-       
+      <View
+        style={{
+          backgroundColor: colors.light,
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,
+        }}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 30,
+          }}
+        >
+          <Text style={{ fontSize: 30 }}>Welcome to Carbonyte</Text>
+        </View>
+
         <Text>Version {version}</Text>
-        <View style={{paddingHorizontal: 30, paddingVertical: 50, backgroundColor: 'white',  borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,}}>
-          <Button title="Signup" textColor="white" color="black" onPress={() => navigation.navigate("Registration")} />
-          <Button title="Login" textColor="black" color="white" onPress={() => navigation.navigate("Login")} />
-        </View> 
-        </View> 
+        <View
+          style={{
+            paddingHorizontal: 30,
+            paddingVertical: 50,
+            backgroundColor: "white",
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+          }}
+        >
+          <Button
+            title="Signup"
+            textColor="white"
+            color="black"
+            onPress={() => navigation.navigate("Registration")}
+          />
+          <Button
+            title="Login"
+            textColor="black"
+            color="white"
+            onPress={() => navigation.navigate("Login")}
+          />
+        </View>
       </View>
-
+    </View>
   );
 };
 
@@ -49,8 +85,8 @@ const styles = StyleSheet.create({
   maskGroupLayout: {
     overflow: "hidden",
     maxWidth: "100%",
-    width:"100%",
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   helloFlexBox: {
     textAlign: "center",
@@ -70,7 +106,6 @@ const styles = StyleSheet.create({
     height: verticalScale(136),
     top: "50%",
     position: "absolute",
-
   },
   hello: {
     textAlign: "center",
@@ -92,7 +127,7 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(-140.5),
     height: verticalScale(337),
     top: "50%",
-    width:"100%"
+    width: "100%",
   },
   maskGroup261Parent: {
     width: "100%",
