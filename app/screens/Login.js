@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useRef,
+} from "react";
 import {
   StyleSheet,
   View,
@@ -8,6 +14,7 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   Keyboard,
+  useWindowDimensions,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -15,7 +22,7 @@ import * as Yup from "yup";
 import AuthContext from "../auth/context";
 import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
-
+import * as Device from "expo-device";
 import GlobalStyles from "../../GlobalStyles";
 import loginApi from "../api/apiLogin";
 import Screen from "../components/Screen";
@@ -37,6 +44,7 @@ const validationSchema = Yup.object().shape({
 
 const Login = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const refScrollView = useRef(null);
 
   const {
     user,
@@ -63,6 +71,18 @@ const Login = ({ navigation }) => {
 
     navigation.navigate("OTPVerificationPersonal", { registration: true });
   };
+  const { height, width } = useWindowDimensions();
+  const [device, setDevice] = useState("");
+  const smallDevice = { height: 650 };
+  useEffect(() => {
+    const deviceType = async () => {
+      const deviceSize = await Device.getDeviceTypeAsync();
+
+      setDevice(deviceSize);
+    };
+    deviceType();
+  }, [height, width]);
+  const isSmallDevice = height < smallDevice.height;
 
   const dummyLogin = async () => {
     //This sets the loading icon and disables the button
@@ -85,9 +105,16 @@ const Login = ({ navigation }) => {
     //Turns off the loading
     setIsLoading(false);
   };
-
+  useEffect(() => {
+    moveTo();
+  }, []);
+  const moveTo = () => {
+    refScrollView.current.scrollTo({ y: isSmallDevice ? 300 : 50 });
+    // or just refScrollView.current.scrollTo({x: value1}); if you want to scroll horizontally
+    // or just refScrollView.current.scrollTo({y: value2}); if you want to scroll vertically
+  };
   return (
-    <ScrollView>
+    <ScrollView ref={refScrollView}>
       <Screen style={{ backgroundColor: "white" }}>
         <View style={{ flex: 1, justifyContent: "flex-end" }}>
           <View
