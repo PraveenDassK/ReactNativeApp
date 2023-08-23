@@ -569,6 +569,15 @@ const Settings = ({ navigation }) => {
             darkMode={darkMode}
           />
         </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.button}>
+          <LinearAccountButton
+            title="Invoices"
+            transform={{ textTransform: "none" }}
+            onPress={() => navigation.navigate("Invoices")}
+            darkMode={darkMode}
+          />
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
           <LinearAccountButton
@@ -630,7 +639,7 @@ const Settings = ({ navigation }) => {
             alignItems: "center",
             width: "90%",
             marginLeft: "5%",
-            marginBottom: "25%"
+            marginBottom: "25%",
           }}
           onPress={() => navigation.navigate("TermsAndConditions")}
         >
@@ -639,7 +648,6 @@ const Settings = ({ navigation }) => {
           </AppText>
         </Pressable>
       </View>
-    
     </ScrollView>
   );
 };
