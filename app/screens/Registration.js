@@ -388,7 +388,7 @@ const Registration = ({ navigation }) => {
     } else {
       //Business registration
       const newRegObject = {
-        "type": "LPARTNRSHP",//companyHouse.type,
+        "type": companyHouse.type, //"LPARTNRSHP",
         "company_status": companyHouse.company_status,
         "etag": companyHouse.etag,
         "aboutBusiness": companyInformation,
