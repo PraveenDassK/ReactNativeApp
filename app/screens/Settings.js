@@ -214,7 +214,7 @@ const Settings = ({ navigation }) => {
       >
         <View style={styles.TopImageheader}>
           <View style={styles.backgroundTextContainer}>
-            <Text style={styles.backgroundFont}> {fullname}</Text>
+            <Text style={styles.backgroundFont}>{fullname}</Text>
             <Text
               style={[
                 styles.backgroundFont,
