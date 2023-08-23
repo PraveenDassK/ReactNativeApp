@@ -176,7 +176,7 @@ const CarbonProject = ({ navigation, route }) => {
           <View style={{ width: "100%" }}>
             <LinearAccountButton
               disabled={true}
-              counter={true}
+              counter={false}
               style={{ width: "49%", height: device == 1 ? 50 : 55 }}
               title="ADD TO CART"
               // onPress={() => addToCart(item)}
