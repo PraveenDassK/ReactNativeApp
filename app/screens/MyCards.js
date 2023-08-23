@@ -110,9 +110,8 @@ export default function MyCards({ navigation }) {
     const filterAccount = await listedAccount.filter(
       (eachValue, index) => eachValue?.accountId === accountID
     );
-
-    let EnfuseAccountId = filterAccount[0]?.accountNo;
-
+    //get enfuce ID from first account
+    let EnfuseAccountId = filterAccount[0]?.enfuceAccountId;
     setApiAccountId(EnfuseAccountId);
     //  setDataAbovecard()
     //api to get transaction
@@ -125,9 +124,8 @@ export default function MyCards({ navigation }) {
     setTransactions(transactionRes);
     setFilterTransactions(transactionRes);
     // api to get card details using enfuse account ID
-    console.log(EnfuseAccountId);
+
     const cards = await apiCall.GetCardByEnfuseAccountId(EnfuseAccountId);
-    console.log(cards, "this is cards");
     setCardData(cards);
     setIsLoading(false);
 
