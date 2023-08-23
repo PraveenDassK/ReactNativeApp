@@ -563,9 +563,9 @@ const Settings = ({ navigation }) => {
 
         <TouchableOpacity style={styles.button}>
           <LinearAccountButton
-            title="Marketplace"
+            title="Subscriptions"
             transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("Marketplace")}
+            onPress={() => navigation.navigate("Subscriptions")}
             darkMode={darkMode}
           />
         </TouchableOpacity>
