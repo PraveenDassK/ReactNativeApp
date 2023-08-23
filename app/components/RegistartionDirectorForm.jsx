@@ -16,6 +16,7 @@ import {
   FlatList,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { CheckBox } from "@rneui/themed";
 import Button from "./AppButton";
@@ -483,7 +484,7 @@ const RegistartionDirectorForm = ({
                     style={{
                       width: "100%",
                       paddingHorizontal: 10,
-                      marginTop: 10,
+                      marginVertical: 10,
                     }}
                   >
                     <Text style={styles.textStyle}>First Name</Text>
@@ -528,7 +529,7 @@ const RegistartionDirectorForm = ({
                     style={{
                       width: "100%",
                       paddingHorizontal: 10,
-                      marginTop: 10,
+                      marginVertical: 10,
                     }}
                   >
                     <Text style={styles.textStyle}>Last Name</Text>
@@ -563,8 +564,8 @@ const RegistartionDirectorForm = ({
                   <View
                     style={{
                       width: "100%",
-                      paddingHorizontal: 10,
-                      marginTop: 10,
+                      padding: 10,
+                      marginVertical: 10,
                     }}
                   >
                     <Text style={styles.textStyle}>Phone Number</Text>
@@ -590,7 +591,7 @@ const RegistartionDirectorForm = ({
                       visible={touched.phone}
                     />
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View style={{ width: "100%", padding: 10, marginTop: 0 }}>
                     <Text style={styles.textStyle}>Gender</Text>
                     <Dropdown
                       data={genderMenu}
@@ -609,7 +610,7 @@ const RegistartionDirectorForm = ({
                       visible={genderStatusError}
                     />
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View style={{ width: "100%", padding: 10, marginTop: 0 }}>
                     <Text style={styles.textStyle}>Marital Status</Text>
                     <Dropdown
                       data={martialMenu}
@@ -632,7 +633,7 @@ const RegistartionDirectorForm = ({
                       <Text>{errors.maritalStatus}</Text>
                     )} */}
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View style={{ width: "100%", padding: 10, marginTop: 0 }}>
                     <Text style={styles.textStyle}>Employement Details</Text>
                     <Dropdown
                       data={employementMenu}
@@ -658,8 +659,8 @@ const RegistartionDirectorForm = ({
                   <View
                     style={{
                       width: "100%",
-                      paddingHorizontal: 10,
-                      marginTop: 10,
+                      padding: 10,
+                      marginTop: 0,
                     }}
                   >
                     <Text style={styles.textStyle}>
@@ -797,22 +798,41 @@ const RegistartionDirectorForm = ({
                       containerStyle={styles.containerStyle}
                     />
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View
+                    style={{
+                      width: "100%",
+                      paddingHorizontal: 10,
+                      marginTop: 0,
+                    }}
+                  >
                     <Text style={styles.textStyle}>Date of Birth </Text>
                     <TouchableOpacity
                       onPress={() => setBirthShow(true)}
                       style={styles.textCountryInuput}
                     >
                       {birthdate && (
-                        <Text
+                        <View
                           style={{
-                            color: "#212529",
-                            fontSize: 22,
-                            fontWeight: "bold",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
                           }}
                         >
-                          {`${birthdate.toLocaleDateString("en-US")}`}
-                        </Text>
+                          <Text
+                            style={{
+                              color: "#212529",
+                              fontSize: 20,
+                              fontFamily: "Montserrat-Regular",
+                            }}
+                          >
+                            {`${birthdate.toLocaleDateString("en-US")}`}
+                          </Text>
+                          <MaterialIcons
+                            name="date-range"
+                            size={26}
+                            color="#999999"
+                          />
+                        </View>
                       )}
                     </TouchableOpacity>
                     {birthShow && (
@@ -843,8 +863,8 @@ const RegistartionDirectorForm = ({
                         <Text
                           style={{
                             color: "#212529",
-                            fontSize: 22,
-                            fontWeight: "bold",
+                            fontSize: 20,
+                            fontFamily: "Montserrat-Regular",
                           }}
                         >
                           {`  ${countryCode?.name?.en}`}
@@ -895,22 +915,41 @@ const RegistartionDirectorForm = ({
                     />
                   </View>
 
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View
+                    style={{
+                      width: "100%",
+                      paddingHorizontal: 10,
+                      marginTop: 0,
+                    }}
+                  >
                     <Text style={styles.textStyle}>Appointed on </Text>
                     <TouchableOpacity
                       onPress={() => setDateShow(true)}
                       style={styles.textCountryInuput}
                     >
                       {date && (
-                        <Text
+                        <View
                           style={{
-                            color: "#212529",
-                            fontSize: 22,
-                            fontWeight: "bold",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
                           }}
                         >
-                          {`${date.toLocaleDateString("en-US")}`}
-                        </Text>
+                          <Text
+                            style={{
+                              color: "#212529",
+                              fontSize: 20,
+                              fontFamily: "Montserrat-Regular",
+                            }}
+                          >
+                            {`${date.toLocaleDateString("en-US")}`}
+                          </Text>
+                          <MaterialIcons
+                            name="date-range"
+                            size={26}
+                            color="#999999"
+                          />
+                        </View>
                       )}
                     </TouchableOpacity>
                     {isDisplayDate && (
@@ -928,7 +967,7 @@ const RegistartionDirectorForm = ({
                   <View
                     style={{
                       width: "100%",
-                      paddingHorizontal: 10,
+                      padding: 10,
                       marginTop: 10,
                     }}
                   >
@@ -1133,9 +1172,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textStyle: {
-    color: "#000000",
-    fontSize: 16,
-    fontWeight: "bold",
+    color: "#212529",
+    fontSize: 14,
+    fontFamily: "Montserrat-Regular",
   },
   dropdown: {
     borderColor: "#EBEBEB",
