@@ -3,7 +3,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import {
   ActivityIndicator,
-  Text,
+  Text, 
   StyleSheet,
   ScrollView,
   View,
@@ -111,7 +111,8 @@ const GroupSendMoney = ({ route, navigation }) => {
     requestObj.sourceAccountId = oneselectedAccount?.id;
     setIsLoading(true);
     const transferRequest = await apiTransaction.sendToGroup(requestObj);
-
+    console.log(requestObj)
+    console.log(transferRequest)
     if (transferRequest.data.result) {
       console.log(transferRequest)
       const successObject = {

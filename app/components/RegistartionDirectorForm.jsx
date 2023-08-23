@@ -16,6 +16,7 @@ import {
   FlatList,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { CheckBox } from "@rneui/themed";
 import Button from "./AppButton";
@@ -31,6 +32,7 @@ import GetPostCode from "../components/RegistrationPostCode";
 import apiLogin from "../api/apiLogin";
 import moment from "moment";
 import * as Device from "expo-device";
+import CountryPickerModal from 'react-native-country-codes-picker';
 
 const RegistartionDirectorForm = ({
   back = true,
@@ -50,7 +52,7 @@ const RegistartionDirectorForm = ({
   const [displaymode, setMode] = useState("date");
   const [isDisplayDate, setDateShow] = useState(false);
   const [show, setShow] = useState(false);
-  const [countryCode, setCountryCode] = useState();
+  const [countryCode, setCountryCode] = useState({ "code": "GB", "dial_code": "+44", "flag": "🇬🇧", "name": { "bg": "Великобритания", "by": "Злучанае Каралеўства", "cn": "英国", "cz": "Spojené království", "de": "Vereinigtes Königreich", "ee": "Ühendkuningriik", "el": "Ηνωμένο Βασίλειο", "en": "United Kingdom", "es": "Reino Unido", "fr": "Royaume-Uni", "he": "הממלכה המאוחדת", "it": "Regno Unito", "jp": "イギリス", "nl": "Verenigd Koningkrijk", "pl": "Zjednoczone Królestwo", "pt": "Reino Unido", "ro": "Regatul Unit", "ru": "Объединенное Королевство", "ua": "Об'єднане Королівство", "zh": "英國" } });
   const [manualView, setManualView] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const [formCheck, setIsFormCheck] = useState(false);
@@ -375,6 +377,15 @@ const RegistartionDirectorForm = ({
     }
   };
 
+  //For the country picker
+  const sortCountries = (countries) => {
+    const ukIndex = countries.findIndex(country => country.code === 'GB');
+    const ukCountry = countries.splice(ukIndex, 1)[0];
+    countries.sort((a, b) => a.name.localeCompare(b.name));
+    countries.unshift(ukCountry);
+    return countries;
+  };
+
   return (
     <ScrollView>
       <View style={{ backgroundColor: "#ffffff" }}>
@@ -483,7 +494,7 @@ const RegistartionDirectorForm = ({
                     style={{
                       width: "100%",
                       paddingHorizontal: 10,
-                      marginTop: 10,
+                      marginVertical: 10,
                     }}
                   >
                     <Text style={styles.textStyle}>First Name</Text>
@@ -528,7 +539,7 @@ const RegistartionDirectorForm = ({
                     style={{
                       width: "100%",
                       paddingHorizontal: 10,
-                      marginTop: 10,
+                      marginVertical: 10,
                     }}
                   >
                     <Text style={styles.textStyle}>Last Name</Text>
@@ -563,8 +574,8 @@ const RegistartionDirectorForm = ({
                   <View
                     style={{
                       width: "100%",
-                      paddingHorizontal: 10,
-                      marginTop: 10,
+                      padding: 10,
+                      marginVertical: 10,
                     }}
                   >
                     <Text style={styles.textStyle}>Phone Number</Text>
@@ -590,7 +601,7 @@ const RegistartionDirectorForm = ({
                       visible={touched.phone}
                     />
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View style={{ width: "100%", padding: 10, marginTop: 0 }}>
                     <Text style={styles.textStyle}>Gender</Text>
                     <Dropdown
                       data={genderMenu}
@@ -609,7 +620,7 @@ const RegistartionDirectorForm = ({
                       visible={genderStatusError}
                     />
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View style={{ width: "100%", padding: 10, marginTop: 0 }}>
                     <Text style={styles.textStyle}>Marital Status</Text>
                     <Dropdown
                       data={martialMenu}
@@ -632,7 +643,7 @@ const RegistartionDirectorForm = ({
                       <Text>{errors.maritalStatus}</Text>
                     )} */}
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View style={{ width: "100%", padding: 10, marginTop: 0 }}>
                     <Text style={styles.textStyle}>Employement Details</Text>
                     <Dropdown
                       data={employementMenu}
@@ -658,8 +669,8 @@ const RegistartionDirectorForm = ({
                   <View
                     style={{
                       width: "100%",
-                      paddingHorizontal: 10,
-                      marginTop: 10,
+                      padding: 10,
+                      marginTop: 0,
                     }}
                   >
                     <Text style={styles.textStyle}>
@@ -797,22 +808,41 @@ const RegistartionDirectorForm = ({
                       containerStyle={styles.containerStyle}
                     />
                   </View>
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View
+                    style={{
+                      width: "100%",
+                      paddingHorizontal: 10,
+                      marginTop: 0,
+                    }}
+                  >
                     <Text style={styles.textStyle}>Date of Birth </Text>
                     <TouchableOpacity
                       onPress={() => setBirthShow(true)}
                       style={styles.textCountryInuput}
                     >
                       {birthdate && (
-                        <Text
+                        <View
                           style={{
-                            color: "#212529",
-                            fontSize: 22,
-                            fontWeight: "bold",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
                           }}
                         >
-                          {`${birthdate.toLocaleDateString("en-US")}`}
-                        </Text>
+                          <Text
+                            style={{
+                              color: "#212529",
+                              fontSize: 20,
+                              fontFamily: "Montserrat-Regular",
+                            }}
+                          >
+                            {`${birthdate.toLocaleDateString("en-US")}`}
+                          </Text>
+                          <MaterialIcons
+                            name="date-range"
+                            size={26}
+                            color="#999999"
+                          />
+                        </View>
                       )}
                     </TouchableOpacity>
                     {birthShow && (
@@ -843,8 +873,8 @@ const RegistartionDirectorForm = ({
                         <Text
                           style={{
                             color: "#212529",
-                            fontSize: 22,
-                            fontWeight: "bold",
+                            fontSize: 20,
+                            fontFamily: "Montserrat-Regular",
                           }}
                         >
                           {`  ${countryCode?.name?.en}`}
@@ -895,22 +925,41 @@ const RegistartionDirectorForm = ({
                     />
                   </View>
 
-                  <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                  <View
+                    style={{
+                      width: "100%",
+                      paddingHorizontal: 10,
+                      marginTop: 0,
+                    }}
+                  >
                     <Text style={styles.textStyle}>Appointed on </Text>
                     <TouchableOpacity
                       onPress={() => setDateShow(true)}
                       style={styles.textCountryInuput}
                     >
                       {date && (
-                        <Text
+                        <View
                           style={{
-                            color: "#212529",
-                            fontSize: 22,
-                            fontWeight: "bold",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
                           }}
                         >
-                          {`${date.toLocaleDateString("en-US")}`}
-                        </Text>
+                          <Text
+                            style={{
+                              color: "#212529",
+                              fontSize: 20,
+                              fontFamily: "Montserrat-Regular",
+                            }}
+                          >
+                            {`${date.toLocaleDateString("en-US")}`}
+                          </Text>
+                          <MaterialIcons
+                            name="date-range"
+                            size={26}
+                            color="#999999"
+                          />
+                        </View>
                       )}
                     </TouchableOpacity>
                     {isDisplayDate && (
@@ -928,7 +977,7 @@ const RegistartionDirectorForm = ({
                   <View
                     style={{
                       width: "100%",
-                      paddingHorizontal: 10,
+                      padding: 10,
                       marginTop: 10,
                     }}
                   >
@@ -1133,9 +1182,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textStyle: {
-    color: "#000000",
-    fontSize: 16,
-    fontWeight: "bold",
+    color: "#212529",
+    fontSize: 14,
+    fontFamily: "Montserrat-Regular",
   },
   dropdown: {
     borderColor: "#EBEBEB",
