@@ -253,9 +253,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
               </View>
               <View style={styles.buttonContainer}>
               <SquareIcon
-                  name={"Invoices"}
-                  image={"file-document-multiple"}
-                  onPress={() => navigation.navigate("Invoices")}
+                  name={"Marketplace"}
+                  image={"basket"}
+                  onPress={() => navigation.navigate("Marketplace")}
                 />
                 <SquareIcon
                   name={"Teams"}
