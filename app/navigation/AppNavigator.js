@@ -139,7 +139,10 @@ import MoveMoneyAmount from "../screens/MoveMoneyAmount";
 import MoveMoneyPin from "../screens/MoveMoneyPin";
 import MoveMoneySuccess from "../screens/MoveMoneySuccess";
 import SendMoneySuccessPage from "../screens/SendMoneySucessPage";
-import { HeaderBackButton, HeaderBackButtonWithCustomAction } from "../components/header";
+import {
+  HeaderBackButton,
+  HeaderBackButtonWithCustomAction,
+} from "../components/header";
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTab, setSelectedTab] = useState("");
 
@@ -520,11 +523,11 @@ const StackNavigator = () => {
         name="sendmoneysuccess"
         component={SendMoneySuccessPage}
         options={{
-          title: "Send Money",
+          title: "Send Moneyy",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => <HeaderBackButton direction="down" />,
+          headerBackImage: () => <HeaderBackButtonWithCustomAction />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:

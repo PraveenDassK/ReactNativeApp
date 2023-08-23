@@ -140,17 +140,9 @@ import MoveMoneyPin from "../screens/MoveMoneyPin";
 import MoveMoneySuccess from "../screens/MoveMoneySuccess";
 import SendMoneySuccessPage from "../screens/SendMoneySucessPage";
 import {
-  BackdropBlur,
-  Blur,
-  BlurMask,
-  Canvas,
-  Circle,
-  Fill,
-  Group,
-  Paint,
-  rect,
-  Rect,
-} from "@shopify/react-native-skia";
+  HeaderBackButton,
+  HeaderBackButtonWithCustomAction,
+} from "../components/header";
 function MyTabBar({ state, descriptors, navigation, position }) {
   const [selectedTab, setSelectedTab] = useState("");
 
@@ -158,120 +150,118 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
   return (
     <BlurView
-tint="light"
-intensity={60}
-style={{
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  right: 0,
-  height: 70 + insets.bottom,
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "rgba(255, 255, 255, 0.2)",
-  borderTopRightRadius: 20,
-  borderTopLeftRadius: 20,
-  overflow: "hidden",
-}}
->
-  
-        {state.routes.map((route, index) => {
-          const { options } = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
+      tint="light"
+      intensity={60}
+      style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 70 + insets.bottom,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(255, 255, 255, 0.2)",
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        overflow: "hidden",
+      }}
+    >
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
 
-          const isFocused = state.index === index;
+        const isFocused = state.index === index;
 
-          const onPress = () => {
-            setSelectedTab(route);
-            const event = navigation.emit({
-              type: "tabPress",
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate({ name: route.name, merge: true });
-            }
-          };
-
-          const onLongPress = () => {
-            navigation.emit({
-              type: "tabLongPress",
-              target: route.key,
-            });
-          };
-
-          const inputRange = state.routes.map((_, i) => i);
-          const opacity = position.interpolate({
-            inputRange,
-            outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
+        const onPress = () => {
+          setSelectedTab(route);
+          const event = navigation.emit({
+            type: "tabPress",
+            target: route.key,
+            canPreventDefault: true,
           });
 
-          // Define the image source for each tab
-          let imageSource;
-          switch (index) {
-            case 0:
-              imageSource = <C02 width={30} height={30} />;
-              break;
-            case 1:
-              imageSource = <Home width={30} height={30} />;
-              break;
-            case 2:
-              imageSource = <Analysis width={30} height={30} />;
-              break;
-            case 3:
-              imageSource = <Send width={50} height={50} />;
-              break;
-            case 4:
-              imageSource = <C02 width={40} height={40} />;
-              break;
-            case 5:
-              imageSource = <Profile width={30} height={30} />;
-              break;
-            // Add cases for other tabs
-            default:
-              imageSource = <C02 width={30} height={30} />; // Set a default image source if needed
-              break;
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate({ name: route.name, merge: true });
           }
+        };
 
-          return (
-            <React.Fragment key={route.name.toString()}>
-              {index === 6 || index === 0 ? null : (
-                <TouchableOpacity
-                  key={route.name.toString()}
-                  accessibilityRole="button"
-                  accessibilityState={isFocused ? { selected: true } : {}}
-                  accessibilityLabel={options.tabBarAccessibilityLabel}
-                  testID={options.tabBarTestID}
-                  onPress={onPress}
-                  onLongPress={onLongPress}
-                  style={{ flex: 1 }}
+        const onLongPress = () => {
+          navigation.emit({
+            type: "tabLongPress",
+            target: route.key,
+          });
+        };
+
+        const inputRange = state.routes.map((_, i) => i);
+        const opacity = position.interpolate({
+          inputRange,
+          outputRange: inputRange.map((i) => (i === index ? 1 : 0.5)),
+        });
+
+        // Define the image source for each tab
+        let imageSource;
+        switch (index) {
+          case 0:
+            imageSource = <C02 width={30} height={30} />;
+            break;
+          case 1:
+            imageSource = <Home width={30} height={30} />;
+            break;
+          case 2:
+            imageSource = <Analysis width={30} height={30} />;
+            break;
+          case 3:
+            imageSource = <Send width={50} height={50} />;
+            break;
+          case 4:
+            imageSource = <C02 width={40} height={40} />;
+            break;
+          case 5:
+            imageSource = <Profile width={30} height={30} />;
+            break;
+          // Add cases for other tabs
+          default:
+            imageSource = <C02 width={30} height={30} />; // Set a default image source if needed
+            break;
+        }
+
+        return (
+          <React.Fragment key={route.name.toString()}>
+            {index === 6 || index === 0 ? null : (
+              <TouchableOpacity
+                key={route.name.toString()}
+                accessibilityRole="button"
+                accessibilityState={isFocused ? { selected: true } : {}}
+                accessibilityLabel={options.tabBarAccessibilityLabel}
+                testID={options.tabBarTestID}
+                onPress={onPress}
+                onLongPress={onLongPress}
+                style={{ flex: 1 }}
+              >
+                <Animated.View
+                  style={{
+                    paddingVertical: 0,
+                    marginLeft: index !== 3 ? "33%" : "20%",
+                  }}
                 >
-                  <Animated.View
-                    style={{
-                      paddingVertical: 0,
-                      marginLeft: index !== 3 ? "33%" : "20%",
-                    }}
-                  >
-                    {imageSource}
-                    {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
+                  {imageSource}
+                  {/* {imageSource !== 'molecule-co2' ?<MaterialCommunityIcons
                     name={imageSource}
                     size={40}
                     color={isFocused ? colors.blue : colors.black}
                   />: <C02 width={40} height={40}/> } */}
-                  </Animated.View>
-                </TouchableOpacity>
-              )}
-            </React.Fragment>
-          );
-        })}
-   
+                </Animated.View>
+              </TouchableOpacity>
+            )}
+          </React.Fragment>
+        );
+      })}
     </BlurView>
   );
 }
@@ -347,21 +337,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 20,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -373,11 +349,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-down" size={30} />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
@@ -391,21 +363,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -447,21 +405,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -485,21 +429,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -523,21 +453,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -560,21 +476,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -593,25 +495,11 @@ const StackNavigator = () => {
         name="sendmoneysuccess"
         component={SendMoneySuccessPage}
         options={{
-          title: "Send Money",
+          title: "Send Moneyy",
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButtonWithCustomAction />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -634,21 +522,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -671,11 +545,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-down" size={30} />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
@@ -689,11 +559,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-down" size={30} />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
@@ -725,21 +591,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -763,21 +615,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -801,21 +639,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -839,21 +663,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -876,21 +686,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -914,21 +710,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -951,21 +733,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -988,21 +756,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -1026,21 +780,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -1064,11 +804,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-down" size={30} />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: GlobalStyles.Color.backgroundColor,
@@ -1092,21 +828,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -1127,21 +849,7 @@ const StackNavigator = () => {
             fontSize: 30,
             left: "50%",
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1160,21 +868,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -1198,21 +892,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -1241,6 +921,20 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(PinCart)}
         options={{
           title: "PinCart",
+          headerBackImage: () => <HeaderBackButton />,
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 25,
+            marginLeft: "25%",
+          },
         }}
       />
       <Stack.Screen
@@ -1267,21 +961,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 25,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1300,21 +980,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 23,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -1335,21 +1001,7 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -1373,16 +1025,19 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
+          headerBackImage: () => <HeaderBackButton />,
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
           headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
             fontFamily: "Montserrat",
             fontSize: 20,
           },
-          headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
-            </View>
-          ),
-          headerBackTitleVisible: false,
         }}
       />
       <Stack.Screen
@@ -1394,21 +1049,7 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -1433,21 +1074,7 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor:
@@ -1482,21 +1109,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
 
           headerBackTitleVisible: false,
         }}
@@ -1522,21 +1135,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
 
           headerBackTitleVisible: false,
         }}
@@ -1550,13 +1149,19 @@ const StackNavigator = () => {
           headerShown: true,
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
-            </View>
-          ),
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => <HeaderBackButton />,
           headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
 
@@ -1576,21 +1181,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1598,7 +1189,18 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(ViewPin)}
         options={{
           title: "Your security PIN",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 23,
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1617,21 +1219,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -1651,21 +1239,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1685,21 +1259,7 @@ const StackNavigator = () => {
             fontSize: 30,
             left: "20%",
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -1717,7 +1277,18 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(ReplaceCard)}
         options={{
           title: "Replace Card",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -1725,8 +1296,20 @@ const StackNavigator = () => {
         name="ItsDamagedOrDoesntWork"
         component={gestureHandlerRootHOC(ItsDamagedOrDoesntWork)}
         options={{
-          title: "",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          title: "Damaged",
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+            paddingLeft: "10%",
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1734,7 +1317,19 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(ItWasLost)}
         options={{
           title: "Lost",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+            paddingLeft: "20%",
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1742,7 +1337,19 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(IWasAVictimOfFraudOrThe)}
         options={{
           title: "Report",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+            paddingLeft: "10%",
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1750,7 +1357,18 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(Terminate)}
         options={{
           title: "Terminate card",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 25,
+          },
+          headerLeft: () => <HeaderBackButtonWithCustomAction />,
         }}
       />
       <Stack.Screen
@@ -1758,7 +1376,19 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(TerminatedCard)}
         options={{
           title: "Terminated Card",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 25,
+          },
+
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -1767,7 +1397,18 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CarbonCart)}
         options={{
           title: "Cart",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 25,
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1775,7 +1416,18 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CarbonProject)}
         options={{
           title: "Carbon Project",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 25,
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1783,7 +1435,8 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(CarbonExplore)}
         options={{
           title: "",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerShown: false,
+          // headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
       <Stack.Screen
@@ -1820,21 +1473,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1853,21 +1492,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 20,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1887,21 +1512,7 @@ const StackNavigator = () => {
             fontSize: 25,
             marginLeft: "20%",
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1920,21 +1531,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1942,7 +1539,18 @@ const StackNavigator = () => {
         component={gestureHandlerRootHOC(PinSetApp)}
         options={{
           title: "Passcode reset",
-          headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 25,
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1961,21 +1569,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 20,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
@@ -1994,21 +1588,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 25,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
 
@@ -2031,21 +1611,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => (
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkiconDropDownContainer
-                  : styles.iconDropDownContainer
-              }
-            >
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={30}
-                color={darkMode === "DARK" ? GlobalStyles.Color.white : null}
-              />
-            </View>
-          ),
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
       <Stack.Screen
