@@ -208,7 +208,7 @@ const AddNewCard = ({ navigation, route }) => {
       let response = await apiVirtualCard.getNewVirtualCard(
         apiCustomerid,
         apiAccountId,
-        selectedCard,
+        // selectedCard,
         requestObj
       );
       console.log(requestObj, "this is a virtual card");
@@ -224,7 +224,7 @@ const AddNewCard = ({ navigation, route }) => {
       let response = await apiVirtualCard.getNewPhysicalCard(
         apiCustomerid,
         apiAccountId,
-        selectedCard,
+        // selectedCard,
         physicalCardObj
       );
       console.log(physicalCardObj, "this is a virtual card");
@@ -398,7 +398,7 @@ const AddNewCard = ({ navigation, route }) => {
                           </View>
                         );
                       })}
-                      <View
+                      {/* <View
                         style={{
                           width: "100%",
                           marginVertical: "5%",
@@ -437,7 +437,7 @@ const AddNewCard = ({ navigation, route }) => {
                           placeholder="Select CardType"
                           autoScroll={false}
                         />
-                      </View>
+                      </View> */}
                       {/* Show postcode and address  if category not virtual */}
                       {cardCategory !== "virtual" ? (
                         <>

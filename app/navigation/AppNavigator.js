@@ -1163,7 +1163,7 @@ const StackNavigator = () => {
             fontFamily: "Montserrat",
             fontSize: 30,
           },
-          headerBackImage: () => <HeaderBackButton direction="down" />,
+          headerBackImage: () => <HeaderBackButton direction="left" />,
 
           headerBackTitleVisible: false,
         }}

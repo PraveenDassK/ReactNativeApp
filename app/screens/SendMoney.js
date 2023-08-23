@@ -23,13 +23,17 @@ import BeneficiaryPopup from "../components/BeneficiaryPopup";
 import GlobalStyles from "../../GlobalStyles";
 import colors from "../config/colors";
 import FadeInView from "../components/fadeInview";
+import PinModal from "../components/PinModal";
+
 const SendMoney = ({ navigation }) => {
   const [beneficaryList, setBeneficary] = useState([]);
   const [groupBeneficaryList, setGroupBeneficary] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [deleteId, setDeleteId] = useState();
+  const [apiType, setType] = useState();
   const { userID, customerDetails, accountID, darkMode } =
     useContext(AuthContext);
   const isFocused = useIsFocused();
@@ -136,12 +140,44 @@ const SendMoney = ({ navigation }) => {
       {
         text: "Delete",
         onPress: async () => {
-          await apiBeneficiaries.DeleteGroupBenificiary(id.groupId);
-          loadData();
+          setShowPinModal(true);
+          setDeleteId(id);
+          setType("group");
         },
       },
     ]);
   };
+  const handleSuccess = async () => {
+    setShowPinModal(false);
+    if (apiType === "group") {
+      await apiBeneficiaries.DeleteGroupBenificiary(deleteId.groupId);
+      loadData();
+      setDeleteId();
+      setType();
+    } else {
+      await apiBeneficiaries.DeleteBenificiary(userID, deleteId.id);
+      loadData();
+      setDeleteId();
+      setType();
+    }
+  };
+
+  if (showPinModal) {
+    return (
+      <View
+        style={
+          darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+        }
+      >
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal title="Enter your PIN" success={() => handleSuccess()} />
+        ) : null}
+      </View>
+    );
+  }
 
   const handleBeneficiaryDelete = async (beneficaryid) => {
     Alert.alert("Are you sure you want to delete payee?", null, [
@@ -149,15 +185,16 @@ const SendMoney = ({ navigation }) => {
       {
         text: "Delete",
         onPress: async () => {
-          await apiBeneficiaries.DeleteBenificiary(userID, beneficaryid.id);
-          loadData();
+          setShowPinModal(true)
+          setDeleteId(beneficaryid);
+          setType("Single");
         },
       },
     ]);
   };
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <View
         style={[
           darkMode === "DARK" ? styles.darkpayContainer : styles.payContainer,
@@ -377,16 +414,14 @@ const SendMoney = ({ navigation }) => {
                 numColumns={3}
                 contentContainerStyle={styles.flatListContent}
                 renderItem={(beneficary) => {
-                 
                   return (
                     <View style={styles.itemContainer}>
                       <UserIcon
                         name={beneficary?.item.groupName}
                         onPress={() => sendGroupPayeeTrigger(beneficary.item)}
                         darkMode={darkMode}
-                        groupSize={ beneficary.item.beneficiariesDetails.length}
+                        groupSize={beneficary.item.beneficiariesDetails.length}
                         group={true}
-                       
                       />
                       {showDelete && (
                         <FadeInView
@@ -629,6 +664,17 @@ const styles = StyleSheet.create({
     padding: "5%",
     // marginTop: "5%",
     // backgroundColor:GlobalStyles.Color.white,
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  darkmainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
 });
 
