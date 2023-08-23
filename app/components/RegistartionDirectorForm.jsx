@@ -31,6 +31,7 @@ import GetPostCode from "../components/RegistrationPostCode";
 import apiLogin from "../api/apiLogin";
 import moment from "moment";
 import * as Device from "expo-device";
+import CountryPickerModal from 'react-native-country-codes-picker';
 
 const RegistartionDirectorForm = ({
   back = true,
@@ -50,7 +51,7 @@ const RegistartionDirectorForm = ({
   const [displaymode, setMode] = useState("date");
   const [isDisplayDate, setDateShow] = useState(false);
   const [show, setShow] = useState(false);
-  const [countryCode, setCountryCode] = useState();
+  const [countryCode, setCountryCode] = useState({ "code": "GB", "dial_code": "+44", "flag": "🇬🇧", "name": { "bg": "Великобритания", "by": "Злучанае Каралеўства", "cn": "英国", "cz": "Spojené království", "de": "Vereinigtes Königreich", "ee": "Ühendkuningriik", "el": "Ηνωμένο Βασίλειο", "en": "United Kingdom", "es": "Reino Unido", "fr": "Royaume-Uni", "he": "הממלכה המאוחדת", "it": "Regno Unito", "jp": "イギリス", "nl": "Verenigd Koningkrijk", "pl": "Zjednoczone Królestwo", "pt": "Reino Unido", "ro": "Regatul Unit", "ru": "Объединенное Королевство", "ua": "Об'єднане Королівство", "zh": "英國" } });
   const [manualView, setManualView] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const [formCheck, setIsFormCheck] = useState(false);
@@ -373,6 +374,15 @@ const RegistartionDirectorForm = ({
       }
       setFormView(0);
     }
+  };
+
+  //For the country picker
+  const sortCountries = (countries) => {
+    const ukIndex = countries.findIndex(country => country.code === 'GB');
+    const ukCountry = countries.splice(ukIndex, 1)[0];
+    countries.sort((a, b) => a.name.localeCompare(b.name));
+    countries.unshift(ukCountry);
+    return countries;
   };
 
   return (
