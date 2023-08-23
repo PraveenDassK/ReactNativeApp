@@ -13,7 +13,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import Screen from "./Screen";
 import AuthContext from "../auth/context";
@@ -32,9 +32,9 @@ import AuthScreen from "./AuthScreen";
 import RegistartionDirectorForm from "./RegistartionDirectorForm";
 import { AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import images from '../assets/login/images'
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-
+import images from "../assets/login/images";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import apiLogin from "../api/apiLogin";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -46,22 +46,34 @@ const RegistrationDirectororPartner = ({
   navigation,
   onPress,
   setRole,
-  back=true,
+  back = true,
   directorData,
   BeneficialownersData,
   ControllingInterestsData,
   setDirectorData,
   setBeneficialownersData,
-  setControllingInterestsData
-
+  setControllingInterestsData,
 }) => {
   const handleSubmit = async (type) => {
-    
     // SaveDetails(type)
     // navigation.navigate("Directororpartner");
   };
+  const handleApi = async () => {
+    let newArray = [];
+    let value = newArray.push(
+      ...directorData,
+      ...BeneficialownersData,
+      ...ControllingInterestsData
+    );
+    console.log(newArray, "this is submit");
+    const IDs = "FC015105";
+    const response = await apiLogin.RegisterPersonalDirectorAccount(
+      newArray,
+      IDs
+    );
+    console.log(response, "this is a response");
+  };
   const handleBack = () => {
-    
     navigation.navigate("SplashAnimation");
   };
   const DATA = [
@@ -86,29 +98,38 @@ const RegistrationDirectororPartner = ({
       title: "Vijay",
     },
   ];
-  const handleDelete =(index,name)=>{
-    
-   
-    switch(name){
+  const handleDelete = (index, name) => {
+    switch (name) {
       case "Director":
-        let value =directorData.filter((value,i)=> i !== index);
+        let value = directorData.filter((value, i) => i !== index);
         setDirectorData(value);
-        break
-        case "Beneficial owners":
-          let valueBeneficial =BeneficialownersData.filter((value,i)=> i !== index);
+        break;
+      case "Beneficial owners":
+        let valueBeneficial = BeneficialownersData.filter(
+          (value, i) => i !== index
+        );
         setBeneficialownersData(valueBeneficial);
-        break
-        case "Controlling Interests":
-          let valueControlling =ControllingInterestsData.filter((value,i)=> i !== index);
+        break;
+      case "Controlling Interests":
+        let valueControlling = ControllingInterestsData.filter(
+          (value, i) => i !== index
+        );
         setControllingInterestsData(valueControlling);
-        break
+        break;
     }
-    }
-  
-  const Item = ({ title ,index,name}) => (
+  };
+  console.log(directorData, "this is");
+  const Item = ({ title, index, name }) => (
     <View style={styles.item}>
-      <Text style={{fontWeight:"bold",fontSize:24}}>{title} {index}</Text>
-      <AntDesign name="delete" size={24} color="red" onPress={()=>handleDelete(index,name)}/>
+      <Text style={{ fontWeight: "bold", fontSize: 24 }}>
+        {title} {index}
+      </Text>
+      <AntDesign
+        name="delete"
+        size={24}
+        color="red"
+        onPress={() => handleDelete(index, name)}
+      />
     </View>
   );
   return (
@@ -152,7 +173,7 @@ const RegistrationDirectororPartner = ({
               }}
             >
               <Image
-                style={{ width :"100%",height:400}}
+                style={{ width: "100%", height: 400 }}
                 resizeMode="contain"
                 source={images["penguinCard"]}
               />
@@ -213,9 +234,18 @@ const RegistrationDirectororPartner = ({
               keyExtractor={(item) => item.id}
               nestedScrollEnabled
             /> */}
-                  {directorData?.map((item,index) => {
-                    
-                    return <Item title={item} index={index} name={"Director"}/>;
+                  {directorData?.map((item, index) => {
+                    console.log(item, "this is on director form");
+                    return (
+                      <Item
+                        title={
+                          item?.customerDetails?.firstName +
+                          item?.customerDetails?.lastName
+                        }
+                        index={index}
+                        name={"Director"}
+                      />
+                    );
                   })}
                 </View>
                 <View style={styles.buttonContainer}>
@@ -240,8 +270,17 @@ const RegistrationDirectororPartner = ({
               keyExtractor={(item) => item.id}
               nestedScrollEnabled
             /> */}
-                  {BeneficialownersData?.map((item,index) => {
-                    return <Item title={item} index={index} name={"Beneficial owners"}/>;
+                  {BeneficialownersData?.map((item, index) => {
+                    return (
+                      <Item
+                        title={
+                          item?.customerDetails?.firstName +
+                          item?.customerDetails?.lastName
+                        }
+                        index={index}
+                        name={"Beneficial owners"}
+                      />
+                    );
                   })}
                 </View>
                 <View style={styles.buttonContainer}>
@@ -266,9 +305,27 @@ const RegistrationDirectororPartner = ({
               keyExtractor={(item) => item.id}
               nestedScrollEnabled
             /> */}
-                  {ControllingInterestsData?.map((item,index) => {
-                    return <Item title={item} index={index} name={"Controlling Interests"}/>;
+                  {ControllingInterestsData?.map((item, index) => {
+                    return (
+                      <Item
+                        title={
+                          item?.customerDetails?.firstName +
+                          item?.customerDetails?.lastName
+                        }
+                        index={index}
+                        name={"Controlling Interests"}
+                      />
+                    );
                   })}
+                </View>
+                <View style={{ marginVertical: 20 }}>
+                  <Button
+                    title="Continue"
+                    textColor="white"
+                    color="#212529"
+                    style={styles.bottombuttonColor}
+                    onPress={handleApi}
+                  />
                 </View>
               </View>
             </View>
@@ -285,6 +342,10 @@ const styles = StyleSheet.create({
   buttonColor: {
     backgroundColor: "#212529",
     width: "80%",
+  },
+  bottombuttonColor: {
+    backgroundColor: "#212529",
+    width: "100%",
   },
   buttonContainer: {
     display: "flex",
@@ -310,7 +371,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical:10,
+    marginVertical: 10,
   },
 });
 

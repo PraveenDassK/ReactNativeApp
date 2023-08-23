@@ -66,6 +66,7 @@ const RegistartionDirectorForm = ({
   const [martialValue, setMartialValue] = useState("");
   const [maritalStatusError, setMartialStatus] = useState("");
   const [genderStatusError, setGenderStatus] = useState("");
+  const [owenershipShares, setOwnweShipError] = useState("");
   const [employmentStatus, setEmploymentStatus] = useState("");
   const [countryStatusError, setCountryStatus] = useState("");
   const [nationallityStatusError, setNationallityStatus] = useState("");
@@ -189,6 +190,7 @@ const RegistartionDirectorForm = ({
     { label: "Lady", value: "Lady" },
     { label: "Esq", value: "Esq" },
   ];
+  console.log(role, "this is a role");
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -240,6 +242,7 @@ const RegistartionDirectorForm = ({
     totalIncome,
     savings,
   }) => {
+    console.log(role, "this is a role");
     if (!martialValue) {
       setMartialStatus("MartialValue is required ");
     } else if (!genderValue) {
@@ -252,6 +255,8 @@ const RegistartionDirectorForm = ({
       setNationallityStatus("Nationality is required ");
     } else if (validateDOB(birthdate) === false) {
       setBirthError("Age must be above 18yrs");
+    } else if (role === "Beneficial owners" && !owenershipShares) {
+      setOwnweShipError("Ownership shares is required");
     } else {
       setEmploymentStatus("");
       setGenderStatus(" ");
@@ -261,105 +266,102 @@ const RegistartionDirectorForm = ({
       setEmploymentStatus("");
       setCountryStatus("");
       setBirthError("");
-      const dataObj = [
-        {
-          id: 0,
-          customerId: "",
-          emails: [
-            {
-              emailId: email,
-            },
-          ],
-
-          phoneNumbers: [
-            {
-              phoneNo: phone,
-            },
-          ],
-
-          customerDetails: {
-            documentNo: "",
-
-            documentType: "",
-            address: !address ? apiAddress.address1 : `${address} ${street}`,
-
-            firstName: firstName,
-
-            dob: moment(birthdate).format("MM-DD-YYYY"),
-
-            nationalId: id,
-
-            lastName: lastName,
-
-            postCode: !address ? apiAddress.postcode : postCode,
-
-            postTown: !address ? apiAddress.area : city,
-
-            country: countryCode?.name?.en,
-
-            countryCode: "GBR",
-
-            locale: !address ? apiAddress.locale : "en_GB",
-
-            salutation: title,
-            gender: genderValue,
-            maritalStatus: martialValue,
-            employmentDetails: employementValue,
+      const dataObj = {
+        id: 0,
+        customerId: "",
+        emails: [
+          {
+            emailId: email,
           },
-          income: {
-            totalIncome: totalIncome,
+        ],
 
-            savings: savings,
-
-            taxResidency: nationallityValue,
-
-            incomeSources: ["Salary"],
+        phoneNumbers: [
+          {
+            phoneNo: phone,
           },
+        ],
 
-          key: "",
+        customerDetails: {
+          documentNo: "",
 
-          role: role,
-          isApplicant: false,
+          documentType: "",
+          address: !address ? apiAddress.address1 : `${address} ${street}`,
 
-          ownershipPercentage: owenershipShares,
+          firstName: firstName,
 
-          marketingChoices: "string",
+          dob: moment(birthdate).format("MM-DD-YYYY"),
 
-          acceptanceDateTime: moment(currentTime).format("MM-DD-YYYY"),
+          nationalId: id,
 
-          policyVersion: "1",
+          lastName: lastName,
+
+          postCode: !address ? apiAddress.postcode : postCode,
+
+          postTown: !address ? apiAddress.area : city,
+
+          country: countryCode?.name?.en,
+
+          countryCode: "GBR",
+
+          locale: !address ? apiAddress.locale : "en_GB",
+
+          salutation: title,
+          gender: genderValue,
+          maritalStatus: martialValue,
+          employmentDetails: employementValue,
         },
-      ];
+        income: {
+          totalIncome: totalIncome,
+
+          savings: savings,
+
+          taxResidency: nationallityValue,
+
+          incomeSources: ["Salary"],
+        },
+
+        key: "",
+
+        role: role,
+        isApplicant: false,
+
+        ownershipPercentage: owenershipShares,
+
+        marketingChoices: "string",
+
+        acceptanceDateTime: moment(currentTime).format("MM-DD-YYYY"),
+
+        policyVersion: "1",
+      };
+
       console.log(dataObj, "this is object");
       const IDs = "12814316";
-      const response = await apiLogin.RegisterPersonalDirectorAccount(
-        dataObj,
-        IDs
-      );
-      console.log(response);
-      const ID = `CC${id}`;
-      const getResponse = await apiLogin.GetCustomerDetails(ID);
-      console.log(getResponse, "this is get");
+      // const response = await apiLogin.RegisterPersonalDirectorAccount(
+      //   dataObj,
+      //   IDs
+      // );
+      // console.log(response);
+      // const ID = `CC${id}`;
+      // const getResponse = await apiLogin.GetCustomerDetails(ID);
+      // console.log(getResponse, "this is get");
       switch (role) {
         case "Director":
-          setDirectorData((directorData) => [
-            ...directorData,
-            getResponse?.customerDetails?.firstName +
-              getResponse?.customerDetails?.lastName,
-          ]);
+          setDirectorData((directorData) => [...directorData, dataObj]);
           break;
         case "Beneficial owners":
           setBeneficialownersData((directorData) => [
             ...directorData,
-            getResponse?.customerDetails?.firstName +
-              getResponse?.customerDetails?.lastName,
+            // getResponse?.customerDetails?.firstName +
+            //   getResponse?.customerDetails?.lastName,
+            dataObj,
           ]);
           break;
         case "Controlling Interests":
           setControllingInterestsData((directorData) => [
             ...directorData,
-            getResponse?.customerDetails?.firstName +
-              getResponse?.customerDetails?.lastName,
+            // getResponse?.customerDetails?.firstName +
+            //   getResponse?.customerDetails?.lastName,
+            dataObj,
           ]);
           break;
         // default:
@@ -968,6 +970,10 @@ const RegistartionDirectorForm = ({
                       checked={isChecked}
                       onPress={() => setChecked(!isChecked)}
                       textStyle={{ fontSize: 16, color: "#212529" }}
+                    />
+                    <ErrorMessage
+                      error={owenershipShares}
+                      visible={owenershipShares}
                     />
                   </View>
                   {isChecked && (
