@@ -388,9 +388,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
-            </View>
+            <HeaderBackButton direction="down"/>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
@@ -574,9 +572,7 @@ const StackNavigator = () => {
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
           headerBackImage: () => (
-            <View style={styles.iconDropDownContainer}>
-              <MaterialCommunityIcons name="arrow-left" size={30} />
-            </View>
+            <HeaderBackButton direction="down"/>
           ),
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },

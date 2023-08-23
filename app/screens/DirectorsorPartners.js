@@ -11,11 +11,19 @@ import RegistrationDirectororPartner from "../components/RegistartionDirectororP
 import RegistartionDirectorForm from "../components/RegistartionDirectorForm";
 import Button from "../components/AppButton";
 
+import { getCompanyType } from "../utility/companyTypeRefrence";
+
 const DirectororPartner = ({ navigation }) => {
   const [directorData, setDirectorData] = useState([]);
   const [BeneficialownersData, setBeneficialownersData] = useState([]);
   const [ControllingInterestsData, setControllingInterestsData] = useState([]);
 
+  const [registrationData, setRegistrationData] = useState({
+    businessId: "CBFC015105",
+    businessType: getCompanyType("oversea-company"),
+  })
+  console.log(registrationData.businessType)
+  
   const [formView, setFormView] = useState(0);
   const [role, setRole] = useState("");
   const handleOnPress = (event) => {

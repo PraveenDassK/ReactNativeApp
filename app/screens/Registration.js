@@ -381,15 +381,15 @@ const Registration = ({ navigation }) => {
     } else {
       //Business registration
       const newRegObject = {
-        type: "LPARTNRSHP", //companyHouse.type,
-        company_status: companyHouse.company_status,
-        etag: companyHouse.etag,
-        aboutBusiness: companyInformation,
-        incomeSources: ["Sales revenue"],
-        operationTime: companyOperations,
-        targetCustomer: "People",
-        customerOutOfUk: "True",
-        sic_codes: companyHouse.sic_codes,
+        "type": "LPARTNRSHP",//companyHouse.type, 
+        "company_status": companyHouse.company_status,
+        "etag": companyHouse.etag,
+        "aboutBusiness": companyInformation,
+        "incomeSources": ["Sales revenue"],
+        "operationTime": companyOperations,
+        "targetCustomer": "People",
+        "customerOutOfUk": "True",
+        "sic_codes": companyHouse.sic_codes,
 
         sic_category: "A",
         expectedMonthlySpendings: 0,
