@@ -102,16 +102,15 @@ export default function MyCards({ navigation }) {
   const loadData = async () => {
     setIsLoading(true);
     //api to get enfuse account id
-
     const responseforgettingAccountId =
       await api_list.GetCustomerDetailsForCard(customerDetails);
-    const listedAccount =
-      responseforgettingAccountId?.data?.details?.accountDetails;
+    const listedAccount = await responseforgettingAccountId?.data?.details
+      ?.accountDetails;
     const filterAccount = await listedAccount.filter(
       (eachValue, index) => eachValue?.accountId === accountID
     );
     //get enfuce ID from first account
-    let EnfuseAccountId = filterAccount?.[0]?.enfuceAccountId;
+    let EnfuseAccountId = await filterAccount?.[0]?.enfuceAccountId;
     setApiAccountId(EnfuseAccountId);
     //  setDataAbovecard()
     //api to get transaction
@@ -166,7 +165,6 @@ export default function MyCards({ navigation }) {
     );
 
     setFilteredCards(cardStatusFilter);
-
     setDataAbovecard(new Array(cardStatusFilter?.[0]));
     setCardCategory(type);
   };
@@ -214,7 +212,6 @@ export default function MyCards({ navigation }) {
       (eachValue, index) => index === selectedCardforFreeze
     );
     const freezeCardId = freezeCardData?.[0]?.id;
-
     setDataAbovecard(freezeCardData);
     setFrozen(freezeCardData?.[0]?.status);
   };
@@ -224,11 +221,6 @@ export default function MyCards({ navigation }) {
     // const freezeCardData = filteredCards.filter(
     //   (eachValue, index) => index === selectedCardforFreeze
     // );
-    //
-    //
-    //
-
-    //
     const freezeCardId = dataAbovecard?.[0]?.id;
     if (dataAbovecard?.[0]?.status === "CARD_OK") {
       cardStatus = "CARD_BLOCKED";
@@ -241,16 +233,14 @@ export default function MyCards({ navigation }) {
       cardStatus
     );
     // setFrozen(!isFrozen);
-
     loadData();
-    cardFreezed();
+    // cardFreezed();
   };
   const requestObject = {
     accountID: accountID,
     cardID: dataAbovecard?.[0]?.id,
     EnfuseAccountId: dataAbovecard?.[0]?.accountId,
   };
-  console.log(filteredCards, "thsis is");
 
   return (
     <AppScreen darkMode={darkMode}>
@@ -277,6 +267,7 @@ export default function MyCards({ navigation }) {
           setSelectedCardForFreeze={setSelectedCardForFreeze}
           isFrozen={isFrozen}
           dataAbovecard={dataAbovecard}
+          setDataAbovecard={setDataAbovecard}
           darkMode={darkMode}
         />
 
@@ -328,6 +319,8 @@ export default function MyCards({ navigation }) {
             title={"freeze"}
             onSettingsPress={handleFreeze}
             isFrozen={isFrozen}
+            dataAbovecard={dataAbovecard}
+            darkMode={darkMode}
             // filteredCards={filteredCards}
             // selectedCardforFreeze={selectedCardforFreeze}
           />
@@ -480,12 +473,12 @@ const CardCarousel = ({
   isFrozen,
   dataAbovecard,
   darkMode,
+  setDataAbovecard,
 }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [showName, setShowName] = useState(true);
-
   // const [frozen, setFrozen] = useState(false);
   let frozen = false;
   if (isFrozen === "CARD_BLOCKED") {
@@ -503,7 +496,10 @@ const CardCarousel = ({
         const topCardIdx = Math.floor(scrollPosition / ITEM_WIDTH);
         //
         onTopCard(topCardIdx);
-
+        const newAboveCard = cards.filter(
+          (card, index) => index === topCardIdx
+        );
+        setDataAbovecard(newAboveCard);
         setSelectedCardForFreeze(topCardIdx);
         // You can use topCardIdx for any further processing or actions
       },
@@ -580,13 +576,19 @@ const CardCarousel = ({
 
                   // setShowPinModal(true)
                   setFlipped(false);
-                  setShowName(value);
+                  if (!value) {
+                    setShowName(value);
+                  } else {
+                    setTimeout(() => {
+                      setShowName(value);
+                    }, 500);
+                  }
                 }}
                 onFlipEnd={(isFlipEnd) => {}}
               >
                 {/* Face Side */}
                 <Image
-                  source={require("../assets/cardLion.png")}
+                  source={require("../assets/cards/Card-Eagle.png")}
                   style={{
                     flex: 1,
                     // marginLeft: "25%",
@@ -596,7 +598,7 @@ const CardCarousel = ({
 
                 {/* Back Side */}
 
-                <CardBackSide />
+                <CardBackSide dataAbovecard={dataAbovecard} />
               </FlipCard>
               {showName ? (
                 <View
@@ -604,20 +606,25 @@ const CardCarousel = ({
                     position: "absolute",
                     height: "93%",
                     width: ITEM_WIDTH,
-                    top: "50%",
-                    left: 15,
+                    top: "87%",
+                    left: "50%",
                   }}
                 >
-                  <Text
+                  {/* <Text
                     style={{ color: "white", fontSize: 16 }}
                   >{`Name on the card:  ${
                     dataAbovecard?.[0]?.embossing?.firstName
                       ? dataAbovecard?.[0]?.embossing?.firstName
                       : "Name"
-                  }`}</Text>
+                  }`}</Text> */}
                   <Text
-                    style={{ color: "white", fontSize: 16 }}
-                  >{`Card Number:   ****${
+                    style={{
+                      color: "white",
+                      fontSize: 10,
+                      opacity: 0.8,
+                      fontFamily: "Montserrat-Medium",
+                    }}
+                  >{`**** **** **** ${
                     dataAbovecard?.[0]?.maskedCardNumber
                       ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
                       : "4444"
@@ -625,14 +632,14 @@ const CardCarousel = ({
                 </View>
               ) : null}
 
-              {frozen ? (
+              {dataAbovecard?.[0]?.status === "CARD_BLOCKED" ? (
                 <View
                   style={{
                     position: "absolute",
-                    height: "93%",
+                    height: "80%",
                     width: ITEM_WIDTH,
-                    top: 12,
-                    left: 15,
+                    bottom: 30,
+                    left: 10,
                   }}
                 >
                   <Image
@@ -691,7 +698,7 @@ const CardCarousel = ({
   );
 };
 
-const CardBackSide = () => {
+const CardBackSide = ({ dataAbovecard }) => {
   const cardBackOBJ = {
     firstName: "Jack",
     lastName: "Huang",
@@ -702,8 +709,16 @@ const CardBackSide = () => {
 
   return (
     <View style={styles.backCardContainer}>
-      <Text style={[styles.backCardText, styles.backCardHeader]}>BOB</Text>
-      <Text style={[styles.backCardText, styles.backCardHeader]}>DYLAN</Text>
+      <Text style={[styles.backCardText, styles.backCardHeader]}>
+        {dataAbovecard?.[0]?.embossing?.firstName
+          ? dataAbovecard?.[0]?.embossing?.firstName
+          : "BOB"}
+      </Text>
+      <Text style={[styles.backCardText, styles.backCardHeader]}>
+        {dataAbovecard?.[0]?.embossing?.lastName
+          ? dataAbovecard?.[0]?.embossing?.lastName
+          : "DYLAN"}
+      </Text>
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText}>4234</Text>
@@ -784,7 +799,13 @@ const TapContainer = () => (
   </View>
 );
 
-const Icon = ({ title, isFrozen, onSettingsPress, darkMode }) => {
+const Icon = ({
+  title,
+  isFrozen,
+  onSettingsPress,
+  darkMode,
+  dataAbovecard,
+}) => {
   // const [frozen, setFrozen] = useState(false);
   let frozen = false;
   if (isFrozen === "CARD_BLOCKED") {
@@ -799,11 +820,12 @@ const Icon = ({ title, isFrozen, onSettingsPress, darkMode }) => {
     >
       <View
         style={{
-          backgroundColor: frozen
-            ? GlobalStyles.Color.black
-            : darkMode === "DARK"
-            ? GlobalStyles.Color.secondaryDarkTheme_bg
-            : colors.babyBlue,
+          backgroundColor:
+            dataAbovecard?.[0]?.status === "CARD_BLOCKED"
+              ? GlobalStyles.Color.black
+              : darkMode === "DARK"
+              ? GlobalStyles.Color.secondaryDarkTheme_bg
+              : colors.babyBlue,
           height: 50,
           width: 50,
           justifyContent: "center",
@@ -814,8 +836,18 @@ const Icon = ({ title, isFrozen, onSettingsPress, darkMode }) => {
       >
         {title !== "settings" ? (
           <MaterialCommunityIcons
-            name={!frozen ? "snowflake" : "snowflake-off"}
-            color={frozen ? colors.babyBlue : GlobalStyles.Color.black}
+            name={
+              dataAbovecard?.[0]?.status != "CARD_BLOCKED"
+                ? "snowflake"
+                : "snowflake-off"
+            }
+            color={
+              dataAbovecard?.[0]?.status != "CARD_BLOCKED"
+                ? darkMode === "DARK"
+                  ? GlobalStyles.Color.white
+                  : GlobalStyles.Color.black
+                : GlobalStyles.Color.white
+            }
             size={30}
           />
         ) : (
@@ -830,7 +862,7 @@ const Icon = ({ title, isFrozen, onSettingsPress, darkMode }) => {
           />
         )}
       </View>
-      {!frozen ? (
+      {dataAbovecard?.[0]?.status != "CARD_BLOCKED" ? (
         <Text
           style={
             darkMode === "DARK" ? styles.darksettingTitle : styles.settingTitle
@@ -843,7 +875,9 @@ const Icon = ({ title, isFrozen, onSettingsPress, darkMode }) => {
           style={
             darkMode === "DARK" ? styles.darksettingTitle : styles.settingTitle
           }
-        >{`Un${title}`}</Text>
+        >
+          {`Un${title}`}
+        </Text>
       )}
     </TouchableOpacity>
   );
