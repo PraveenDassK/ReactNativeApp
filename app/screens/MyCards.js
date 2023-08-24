@@ -101,7 +101,6 @@ export default function MyCards({ navigation }) {
     setCurrentCardDataShow(obj);
   };
 
-
   const loadData = async () => {
     setIsLoading(true);
     //api to get enfuse account id
@@ -130,7 +129,6 @@ export default function MyCards({ navigation }) {
     const cards = await apiCall.GetCardByEnfuseAccountId(EnfuseAccountId);
     setCardData(cards);
     setIsLoading(false);
-
   };
 
   const filterCards = (type) => {
@@ -252,7 +250,7 @@ export default function MyCards({ navigation }) {
           cards={filteredCards}
           onCardPress={() => console.log("pressed")}
           onPress={() => navigation.navigate("AddNewCard", cardCategory)}
-          onTopCard={(card) => { }}
+          onTopCard={(card) => {}}
           setSelectedCardForFreeze={setSelectedCardForFreeze}
           isFrozen={isFrozen}
           dataAbovecard={dataAbovecard}
@@ -310,8 +308,8 @@ export default function MyCards({ navigation }) {
             isFrozen={isFrozen}
             dataAbovecard={dataAbovecard}
             darkMode={darkMode}
-          // filteredCards={filteredCards}
-          // selectedCardforFreeze={selectedCardforFreeze}
+            // filteredCards={filteredCards}
+            // selectedCardforFreeze={selectedCardforFreeze}
           />
         </View>
         <View style={{ marginTop: "5%" }}>
@@ -573,7 +571,7 @@ const CardCarousel = ({
                     }, 500);
                   }
                 }}
-                onFlipEnd={(isFlipEnd) => { }}
+                onFlipEnd={(isFlipEnd) => {}}
               >
                 {/* Face Side */}
                 <Image
@@ -613,10 +611,11 @@ const CardCarousel = ({
                       opacity: 0.8,
                       fontFamily: "Montserrat-Medium",
                     }}
-                  >{`**** **** **** ${dataAbovecard?.[0]?.maskedCardNumber
-                    ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
-                    : "4444"
-                    }`}</Text>
+                  >{`**** **** **** ${
+                    dataAbovecard?.[0]?.maskedCardNumber
+                      ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
+                      : "4444"
+                  }`}</Text>
                 </View>
               ) : null}
 
@@ -674,7 +673,10 @@ const CardCarousel = ({
         />
         <Text
           style={{
-            color: GlobalStyles.Color.black,
+            color:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.white
+                : GlobalStyles.Color.black,
             fontSize: 20,
             fontFamily: "Montserrat",
           }}
@@ -695,7 +697,7 @@ const CardBackSide = ({ dataAbovecard }) => {
     cvc: "000",
   };
 
-  const [cardBackObj, setCardBackObject] = useState(null)
+  const [cardBackObj, setCardBackObject] = useState(null);
   const groupedDigits = cardBackObj?.cardNumber?.match(/.{1,5}/g);
 
   useEffect(() => {
@@ -704,16 +706,18 @@ const CardBackSide = ({ dataAbovecard }) => {
 
   const loadData = async () => {
     try {
-      const cardRequestReturnData = await cardDetails.GetCardFromID(dataAbovecard[0].id)
-      setCardBackObject(cardRequestReturnData)
+      const cardRequestReturnData = await cardDetails.GetCardFromID(
+        dataAbovecard[0].id
+      );
+      setCardBackObject(cardRequestReturnData);
       //customerID 238712312
       //accountID 718917912
       //Id 735544112
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
-  console.log(dataAbovecard[0].id)
+  };
+  console.log(dataAbovecard[0].id);
 
   return (
     <View style={styles.backCardContainer}>
@@ -730,7 +734,9 @@ const CardBackSide = ({ dataAbovecard }) => {
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />
       {groupedDigits?.map((group, index) => (
-        <Text key={index} style={styles.backCardText}>{group}</Text>
+        <Text key={index} style={styles.backCardText}>
+          {group}
+        </Text>
       ))}
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />
@@ -765,7 +771,6 @@ const CardBackSide = ({ dataAbovecard }) => {
         </View>
         <Text style={[styles.backCardText, styles.backCardSmallNumber]}>
           {cardBackObj?.cvv}
-
         </Text>
       </View>
       <Text style={styles.backCardText} />
@@ -832,8 +837,8 @@ const Icon = ({
             dataAbovecard?.[0]?.status === "CARD_BLOCKED"
               ? GlobalStyles.Color.black
               : darkMode === "DARK"
-                ? GlobalStyles.Color.secondaryDarkTheme_bg
-                : colors.babyBlue,
+              ? GlobalStyles.Color.secondaryDarkTheme_bg
+              : colors.babyBlue,
           height: 50,
           width: 50,
           justifyContent: "center",
