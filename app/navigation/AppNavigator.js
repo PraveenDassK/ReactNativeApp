@@ -415,9 +415,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-           <HeaderBackButton direction="down"/>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
@@ -599,9 +597,7 @@ const StackNavigator = () => {
           presentation: "modal",
           gestureEnabled: true,
           ...TransitionPresets.ModalTransition,
-          headerBackImage: () => (
-           <HeaderBackButton direction="down"/>
-          ),
+          headerBackImage: () => <HeaderBackButton direction="down" />,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
@@ -1697,7 +1693,7 @@ const AppNavigator = () => {
 
       <Tab.Screen
         name="SendMoneyTab"
-        component={gestureHandlerRootHOC(SendMoney)}
+        component={gestureHandlerRootHOC(Marketplace)}
         options={{
           headerShown: false,
           presentation: "modal",

@@ -624,9 +624,9 @@ const CardCarousel = ({
                 <View
                   style={{
                     position: "absolute",
-                    height: "80%",
+                    height: "85%",
                     width: ITEM_WIDTH,
-                    bottom: 30,
+                    bottom: 28,
                     left: 10,
                   }}
                 >
