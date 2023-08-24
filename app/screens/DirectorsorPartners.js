@@ -20,14 +20,23 @@ const DirectororPartner = ({ navigation }) => {
 
   const [registrationData, setRegistrationData] = useState({
     businessId: "CBFC015105",
-    businessType: getCompanyType("oversea-company"),
+    businessType: "SOLE TRADER",
   })
-  console.log(registrationData.businessType)
   
+  const businessTypes = [
+    "LIMITED COMPANY", //D B C S
+    "SOLE TRADER", //D C
+    "ORDINARY PARTNERSHIP", //DD C S
+    "LIMITED PARTNERSHIP", //DD B C S
+    "LIMITED LIABILITY PARTNERSHIP" //DD B C S
+  ]
+
+  console.log(registrationData.businessType)
+
   const [formView, setFormView] = useState(0);
   const [role, setRole] = useState("");
   const handleOnPress = (event) => {
-    
+
     setRole(event);
     if (formView === 0) {
       setFormView(1);
@@ -35,7 +44,7 @@ const DirectororPartner = ({ navigation }) => {
       setFormView(0);
     }
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       {formView === 0 ? (
@@ -48,6 +57,7 @@ const DirectororPartner = ({ navigation }) => {
           setDirectorData={setDirectorData}
           setBeneficialownersData={setBeneficialownersData}
           setControllingInterestsData={setControllingInterestsData}
+          businessType={registrationData.businessType}
 
         />
       ) : (

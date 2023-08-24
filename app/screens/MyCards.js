@@ -31,6 +31,8 @@ import PinModal from "../components/PinModal";
 import { AntDesign } from "@expo/vector-icons";
 import api_list from "../api/api_list";
 
+import cardDetails from "../api/cardDetails";
+
 const OFFSET = 75;
 const ITEM_WIDTH = Dimensions.get("window").width - OFFSET * 3;
 const ITEM_HEIGHT = 350;
@@ -99,6 +101,7 @@ export default function MyCards({ navigation }) {
     setCurrentCardDataShow(obj);
   };
 
+
   const loadData = async () => {
     setIsLoading(true);
     //api to get enfuse account id
@@ -128,22 +131,8 @@ export default function MyCards({ navigation }) {
     setCardData(cards);
     setIsLoading(false);
 
-    //
-    //     const currentCard = cards[cardIndex];
-    //     currentCard.status != "CARD_OK" ? setFrozen(true) : setFrozen(false);
-
-    //     setRole(currentCard.cardRole);
-    //     setInitals(
-    //       currentCard.embossing.firstName[0] + currentCard.embossing.lastName[0]
-    //     );
-    //     setIsLoading(false);
-    //     setType(currentCard.productCode);
-
-    //     setcardnumber(cardDetails.number);
-    //     setfirstname("CVV " + cardDetails.cvv);
-    //     setlastname(cardDetails.name);
-    //
   };
+
   const filterCards = (type) => {
     const filterCardsByType = (type) => {
       return cardData?.filter((card) => {
@@ -263,7 +252,7 @@ export default function MyCards({ navigation }) {
           cards={filteredCards}
           onCardPress={() => console.log("pressed")}
           onPress={() => navigation.navigate("AddNewCard", cardCategory)}
-          onTopCard={(card) => {}}
+          onTopCard={(card) => { }}
           setSelectedCardForFreeze={setSelectedCardForFreeze}
           isFrozen={isFrozen}
           dataAbovecard={dataAbovecard}
@@ -321,8 +310,8 @@ export default function MyCards({ navigation }) {
             isFrozen={isFrozen}
             dataAbovecard={dataAbovecard}
             darkMode={darkMode}
-            // filteredCards={filteredCards}
-            // selectedCardforFreeze={selectedCardforFreeze}
+          // filteredCards={filteredCards}
+          // selectedCardforFreeze={selectedCardforFreeze}
           />
         </View>
         <View style={{ marginTop: "5%" }}>
@@ -584,7 +573,7 @@ const CardCarousel = ({
                     }, 500);
                   }
                 }}
-                onFlipEnd={(isFlipEnd) => {}}
+                onFlipEnd={(isFlipEnd) => { }}
               >
                 {/* Face Side */}
                 <Image
@@ -624,11 +613,10 @@ const CardCarousel = ({
                       opacity: 0.8,
                       fontFamily: "Montserrat-Medium",
                     }}
-                  >{`**** **** **** ${
-                    dataAbovecard?.[0]?.maskedCardNumber
-                      ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
-                      : "4444"
-                  }`}</Text>
+                  >{`**** **** **** ${dataAbovecard?.[0]?.maskedCardNumber
+                    ? dataAbovecard?.[0]?.maskedCardNumber.slice(-4)
+                    : "4444"
+                    }`}</Text>
                 </View>
               ) : null}
 
@@ -704,8 +692,28 @@ const CardBackSide = ({ dataAbovecard }) => {
     lastName: "Huang",
     cardNumber: "1234123412341234",
     expiaryDate: "01/01",
-    cvv: "000",
+    cvc: "000",
   };
+
+  const [cardBackObj, setCardBackObject] = useState(null)
+  const groupedDigits = cardBackObj?.cardNumber?.match(/.{1,5}/g);
+
+  useEffect(() => {
+    loadData();
+  }, [dataAbovecard]);
+
+  const loadData = async () => {
+    try {
+      const cardRequestReturnData = await cardDetails.GetCardFromID(dataAbovecard[0].id)
+      setCardBackObject(cardRequestReturnData)
+      //customerID 238712312
+      //accountID 718917912
+      //Id 735544112
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  console.log(dataAbovecard[0].id)
 
   return (
     <View style={styles.backCardContainer}>
@@ -721,10 +729,9 @@ const CardBackSide = ({ dataAbovecard }) => {
       </Text>
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />
-      <Text style={styles.backCardText}>4234</Text>
-      <Text style={styles.backCardText}>1234</Text>
-      <Text style={styles.backCardText}>1434</Text>
-      <Text style={styles.backCardText}>4567</Text>
+      {groupedDigits?.map((group, index) => (
+        <Text key={index} style={styles.backCardText}>{group}</Text>
+      ))}
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />
       <View
@@ -743,7 +750,7 @@ const CardBackSide = ({ dataAbovecard }) => {
           </Text>
         </View>
         <Text style={[styles.backCardText, styles.backCardSmallNumber]}>
-          10/25
+          {cardBackObj?.expiaryDate}
         </Text>
       </View>
 
@@ -757,7 +764,8 @@ const CardBackSide = ({ dataAbovecard }) => {
           </Text>
         </View>
         <Text style={[styles.backCardText, styles.backCardSmallNumber]}>
-          123
+          {cardBackObj?.cvv}
+
         </Text>
       </View>
       <Text style={styles.backCardText} />
@@ -824,8 +832,8 @@ const Icon = ({
             dataAbovecard?.[0]?.status === "CARD_BLOCKED"
               ? GlobalStyles.Color.black
               : darkMode === "DARK"
-              ? GlobalStyles.Color.secondaryDarkTheme_bg
-              : colors.babyBlue,
+                ? GlobalStyles.Color.secondaryDarkTheme_bg
+                : colors.babyBlue,
           height: 50,
           width: 50,
           justifyContent: "center",

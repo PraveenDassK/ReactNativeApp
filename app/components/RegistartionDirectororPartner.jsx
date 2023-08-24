@@ -53,11 +53,26 @@ const RegistrationDirectororPartner = ({
   setDirectorData,
   setBeneficialownersData,
   setControllingInterestsData,
+  businessType
 }) => {
+
+  const businessTypes = [
+    "LIMITED COMPANY", //D B C S
+    "SOLE TRADER", //D C
+    "ORDINARY PARTNERSHIP", //DD C S
+    "LIMITED PARTNERSHIP", //DD B C S
+    "LIMITED LIABILITY PARTNERSHIP" //DD B C S
+  ]
+  console.log(directorData.length)
+  const MAX_DIRECTORS = 2
+
   const handleSubmit = async (type) => {
+
     // SaveDetails(type)
     // navigation.navigate("Directororpartner");
   };
+
+
   const handleApi = async () => {
     let newArray = [];
     let value = newArray.push(
@@ -76,28 +91,7 @@ const RegistrationDirectororPartner = ({
   const handleBack = () => {
     navigation.navigate("SplashAnimation");
   };
-  const DATA = [
-    {
-      id: "1",
-      title: "Kumar",
-    },
-    {
-      id: "2",
-      title: "Anbu",
-    },
-    {
-      id: "3",
-      title: "Velan",
-    },
-    {
-      id: "4",
-      title: "Rajan",
-    },
-    {
-      id: "5",
-      title: "Vijay",
-    },
-  ];
+
   const handleDelete = (index, name) => {
     switch (name) {
       case "Director":
@@ -210,79 +204,93 @@ const RegistrationDirectororPartner = ({
                     usually the Directors or Partners
                   </Text>
                 </View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    title="Director"
-                    textColor="white"
-                    color="#212529"
-                    style={styles.buttonColor}
-                    onPress={() => console.log("Director")}
-                  />
-                  <Pressable
-                    style={styles.plusButton}
-                    onPress={() => {
-                      onPress("Director");
-                    }}
-                  >
-                    <Text style={{ fontSize: 30, fontWeight: "bold" }}>+</Text>
-                  </Pressable>
-                </View>
+
                 <View>
-                  {/* <FlatList
-              data={DATA}
-              renderItem={({ item }) => <Item title={item.title} />}
-              keyExtractor={(item) => item.id}
-              nestedScrollEnabled
-            /> */}
-                  {directorData?.map((item, index) => {
-                    console.log(item, "this is on director form");
-                    return (
-                      <Item
-                        title={
-                          item?.customerDetails?.firstName +
-                          item?.customerDetails?.lastName
-                        }
-                        index={index}
-                        name={"Director"}
+                  {/* Directors */}
+                  <View style={styles.buttonContainer}>
+                    <Button
+                      title="Directors"
+                      textColor="white"
+                      color="#212529"
+                      style={styles.buttonColor}
+                      onPress={() => {
+                        console.log("Director");
+                      }}
+                    />
+                    <Pressable
+                      style={styles.plusButton}
+                      onPress={() => {
+                        onPress("Director");
+                      }}
+                    >
+                      <Text style={{ fontSize: 30, fontWeight: "bold" }}>+</Text>
+                    </Pressable>
+                  </View>
+                  <View>
+                    {/* Show the counter only for specific business types */}
+                    {businessType === "ORDINARY PARTNERSHIP" ||
+                      businessType === "LIMITED PARTNERSHIP" ||
+                      businessType === "LIMITED LIABILITY PARTNERSHIP" ? (
+                      <Text>
+                        {directorData.length}/{MAX_DIRECTORS}
+                      </Text>
+                    ) : null}
+
+                    {/* Render the director data */}
+                    {directorData?.map((item, index) => {
+                      console.log(item, "this is on director form");
+                      return (
+                        <Item
+                          key={index}
+                          title={
+                            item?.customerDetails?.firstName +
+                            item?.customerDetails?.lastName
+                          }
+                          index={index}
+                          name={"Director"}
+                        />
+                      );
+                    })}
+                  </View>
+                </View>
+
+
+                {/* Benefical owner */}
+                {businessType !== "SOLE TRADER" && businessType !== "ORDINARY PARTNERSHIP" && (
+                  <View>
+                    <View style={styles.buttonContainer}>
+                      <Button
+                        title="Beneficial owners"
+                        textColor="white"
+                        color="#212529"
+                        style={styles.buttonColor}
+                        onPress={() => handleSubmit("Beneficial owners")}
                       />
-                    );
-                  })}
-                </View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    title="Beneficial owners"
-                    textColor="white"
-                    color="#212529"
-                    style={styles.buttonColor}
-                    onPress={() => handleSubmit("Beneficial owners")}
-                  />
-                  <Pressable
-                    style={styles.plusButton}
-                    onPress={() => onPress("Beneficial owners")}
-                  >
-                    <Text style={{ fontSize: 30, fontWeight: "bold" }}>+</Text>
-                  </Pressable>
-                </View>
-                <View>
-                  {/* <FlatList
-              data={DATA}
-              renderItem={({ item }) => <Item title={item.title} />}
-              keyExtractor={(item) => item.id}
-              nestedScrollEnabled
-            /> */}
-                  {BeneficialownersData?.map((item, index) => {
-                    return (
-                      <Item
-                        title={
-                          item?.customerDetails?.firstName +
-                          item?.customerDetails?.lastName
-                        }
-                        index={index}
-                        name={"Beneficial owners"}
-                      />
-                    );
-                  })}
-                </View>
+                      <Pressable
+                        style={styles.plusButton}
+                        onPress={() => onPress("Beneficial owners")}
+                      >
+                        <Text style={{ fontSize: 30, fontWeight: "bold" }}>+</Text>
+                      </Pressable>
+                    </View>
+                    <View>
+                      {BeneficialownersData?.map((item, index) => (
+                        <Item
+                          key={index} // Use a unique key for the list item
+                          title={
+                            item?.customerDetails?.firstName +
+                            item?.customerDetails?.lastName
+                          }
+                          index={index}
+                          name={"Beneficial owners"}
+                        />
+                      ))}
+                    </View>
+                  </View>
+                )}
+
+
+                {/* Controling intrest */}
                 <View style={styles.buttonContainer}>
                   <Button
                     title="Controlling Interests"
