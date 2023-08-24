@@ -111,7 +111,7 @@ export default function MyCards({ navigation }) {
       (eachValue, index) => eachValue?.accountId === accountID
     );
     //get enfuce ID from first account
-    let EnfuseAccountId = filterAccount[0]?.enfuceAccountId;
+    let EnfuseAccountId = filterAccount?.[0]?.enfuceAccountId;
     setApiAccountId(EnfuseAccountId);
     //  setDataAbovecard()
     //api to get transaction

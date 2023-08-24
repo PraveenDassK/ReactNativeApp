@@ -9,7 +9,7 @@ import {
   ImageBackground,
   Button,
 } from "react-native";
-
+import PinModal from "../components/PinModal";
 import GlobalStyles from "../../GlobalStyles";
 import {
   horizontalScale,
@@ -40,6 +40,7 @@ const Terminate = ({ navigation, route }) => {
   const rotation = useSharedValue(0);
 
   const [terminate, setTerminate] = useState(false);
+  const [showPinModal, setShowPinModal] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(true);
 
@@ -81,22 +82,41 @@ const Terminate = ({ navigation, route }) => {
     navigation.navigate("CardSettings");
   };
   const handleYes = async () => {
-    const ID = route?.params?.cardID;
-    const result = await apiCall.FreezeUpdateCard(ID, "CARD_CLOSED");
-
-    terminateAnimation();
+    setShowPinModal(true);
     setModalVisible(!modalVisible);
-
-    setTimeout(() => {
-      setTerminate(true);
-    }, 5000);
   };
-
   const terminateAnimation = () => {
     translateY.value = withTiming(70, { duration: 1000 });
     translateX.value = withTiming(50, { duration: 4000 });
     rotation.value = withTiming(-50, { duration: 3000 });
   };
+  const handleSuccess = async () => {
+    setShowPinModal(false);
+    const ID = route?.params?.cardID;
+    const result = await apiCall.FreezeUpdateCard(ID, "CARD_CLOSED");
+
+    terminateAnimation();
+
+    setTimeout(() => {
+      setTerminate(true);
+    }, 3000);
+  };
+  if (showPinModal) {
+    return (
+      <View
+        style={
+          darkMode === "DARK" ? styles.darkmainContainer : styles.mainContainer
+        }
+      >
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal title="Enter your PIN" success={() => handleSuccess()} />
+        ) : null}
+      </View>
+    );
+  }
 
   if (terminate) return <TerminatedCard />;
 
@@ -294,6 +314,17 @@ const styles = StyleSheet.create({
     color: GlobalStyles.Color.white,
     fontSize: 16,
     fontFamily: "Montserrat",
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  darkmainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    backgroundColor: GlobalStyles.Color.darkTheme_bg,
   },
 });
 
