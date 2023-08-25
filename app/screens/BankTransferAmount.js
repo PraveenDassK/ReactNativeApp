@@ -12,6 +12,9 @@ import {
   View,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
 import GlobalStyles from "../../GlobalStyles";
 import apiBeneficiaries from "../api/apiBeneficiaries";
 import apiCall from "../api/apiCall";
@@ -22,6 +25,17 @@ import UserIcon from "../components/UserIcon";
 import { horizontalScale, verticalScale } from "../config/scaling";
 import formatCurrency from "../utility/formatCurrency";
 import ErrorMessage from "../components/forms/ErrorMessage";
+
+const validationSchema = Yup.object().shape({
+  amount: Yup.number()
+    .typeError("Invalid amount")
+    .positive("Amount must be positive")
+    .test("decimal-places", "Invalid decimal places", (value) => {
+      if (!value) return true;
+      const [, decimalPart] = value.toString().split(".");
+      return !decimalPart || decimalPart.length <= 2;
+    }),
+});
 
 const BankTransferAmount = ({ route, navigation }) => {
   const [amount, setAmount] = useState("1");
@@ -121,10 +135,9 @@ const BankTransferAmount = ({ route, navigation }) => {
       navigation.navigate("sendmoneysuccess", { successObject });
     } else {
       //Do if not ok
-      alert(transferRequest.data.resultMessage)
+      alert(transferRequest.data.resultMessage);
       setIsLoading(false);
     }
-
   };
 
   /**
@@ -294,79 +307,109 @@ const BankTransferAmount = ({ route, navigation }) => {
                 </Text>
               </View>
             </View>
-            <View
-              style={
-                darkMode === "DARK"
-                  ? styles.darkpaymentContainer
-                  : styles.paymentContainer
-              }
+            <Formik
+              initialValues={{ amount: "" }}
+              onSubmit={() => console.log("submitted")}
+              validationSchema={validationSchema}
             >
-              <View>
-                <Text
-                  style={
-                    darkMode === "DARK"
-                      ? styles.darkheaderHeading
-                      : styles.headerHeading
-                  }
-                >
-                  Enter the amount you want to send
-                </Text>
-                <TextInput
-                  keyboardType="numeric"
-                  style={
-                    darkMode === "DARK" ? styles.darkinputBox : styles.inputBox
-                  }
-                  placeholder="£0"
-                  placeholderTextColor={
-                    darkMode === "DARK" ? GlobalStyles.Color.white : null
-                  }
-                  onChangeText={(text) => setAmount(text)}
-                />
-                <ErrorMessage error={lessMoneyerror} visible={lessMoneyerror} />
-              </View>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 20,
-                  marginVertical: 20,
-                }}
-              >
-                {groupValue[0]?.beneficiariesDetails?.map(
-                  (eachValue, index) => {
-                    return (
-                      <View
-                        key={index}
-                        style={{ display: "flex", flexDirection: "column" }}
+              {({
+                handleChange,
+                handleSubmit,
+                errors,
+                setFieldTouched,
+                touched,
+              }) => (
+                <>
+                  <View
+                    style={
+                      darkMode === "DARK"
+                        ? styles.darkpaymentContainer
+                        : styles.paymentContainer
+                    }
+                  >
+                    <View>
+                      <Text
+                        style={
+                          darkMode === "DARK"
+                            ? styles.darkheaderHeading
+                            : styles.headerHeading
+                        }
                       >
-                        <UserIcon
-                          name={eachValue?.beneficiariesName}
-                        //   onPress={() => sendPayeeTrigger(beneficary.item)}
-                        />
-                        {/* <View>
+                        Enter the amount you want to send
+                      </Text>
+                      <TextInput
+                        keyboardType="numeric"
+                        style={
+                          darkMode === "DARK"
+                            ? styles.darkinputBox
+                            : styles.inputBox
+                        }
+                        placeholder="£0"
+                        placeholderTextColor={
+                          darkMode === "DARK" ? GlobalStyles.Color.white : null
+                        }
+                        onChangeText={(text) => {
+                          handleChange("amount")(text); // Update amount and trigger Formik's handleChange
+                          setAmount(text); // Update local amount state
+                        }}
+                        // onChangeText={handleChange("amount")}
+                        onBlur={() => setFieldTouched("amount")}
+                      />
+                      <ErrorMessage
+                        error={errors.amount}
+                        visible={touched.amount}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: 20,
+                        marginVertical: 20,
+                      }}
+                    >
+                      {groupValue[0]?.beneficiariesDetails?.map(
+                        (eachValue, index) => {
+                          return (
+                            <View
+                              key={index}
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              <UserIcon
+                                name={eachValue?.beneficiariesName}
+                                onPress={handleSubmit}
+                                //   onPress={() => sendPayeeTrigger(beneficary.item)}
+                              />
+                              {/* <View>
                             <Text>{eachValue?.beneficiariesName}</Text>
                           </View> */}
-                        <Text style={styles.amountText}>
-                          {formatCurrency(amount, "GBP", false)}
-                        </Text>
-                      </View>
-                    );
-                  }
-                )}
-              </View>
+                              <Text style={styles.amountText}>
+                                {formatCurrency(amount, "GBP", false)}
+                              </Text>
+                            </View>
+                          );
+                        }
+                      )}
+                    </View>
 
-              <View>
-                <Text
-                  style={
-                    darkMode === "DARK"
-                      ? styles.darkcontentText
-                      : styles.contentText
-                  }
-                >
-                  Send from
-                </Text>
-              </View>
-            </View>
+                    <View>
+                      <Text
+                        style={
+                          darkMode === "DARK"
+                            ? styles.darkcontentText
+                            : styles.contentText
+                        }
+                      >
+                        Send from
+                      </Text>
+                    </View>
+                  </View>
+                </>
+              )}
+            </Formik>
           </>
         }
         ListFooterComponent={FootComponent(selectAccount, darkMode)}
@@ -426,7 +469,7 @@ const BankTransferAmount = ({ route, navigation }) => {
           );
         }}
 
-      // style={{backgroundColor:'transparent'}}
+        // style={{backgroundColor:'transparent'}}
       />
     </View>
   );
@@ -436,9 +479,9 @@ const FootComponent = (selectAccount, darkMode) => (
   <View style={styles.buttonContainer}>
     <TouchableOpacity
       onPress={selectAccount}
-    // onPress={() => {
-    //   navigation.navigate("Success");
-    // }}
+      // onPress={() => {
+      //   navigation.navigate("Success");
+      // }}
     >
       <LinearGradient
         colors={
