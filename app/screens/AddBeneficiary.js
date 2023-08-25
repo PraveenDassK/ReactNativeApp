@@ -317,6 +317,12 @@ const AddBeneficiary = ({ navigation }) => {
                                 ? GlobalStyles.Color.white
                                 : null
                             }
+                            keyboardType={
+                              item.label === "Account Number" ||
+                              item.label === "Sort Code"
+                                ? "numeric"
+                                : "default"
+                            }
                           />
                           <ErrorMessage
                             error={errors[item.initialValue]}

@@ -228,6 +228,11 @@ const AddBeneficiary = ({ navigation, route }) => {
                                     ? GlobalStyles.Color.white
                                     : null
                                 }
+                                keyboardType={
+                                  item.label === "Phone number"
+                                    ? "numeric"
+                                    : "default"
+                                }
                               />
 
                               <ErrorMessage

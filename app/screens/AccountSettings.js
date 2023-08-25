@@ -38,6 +38,16 @@ const ITEMS = [
     title: "verification",
     route: "AccountLetter",
   },
+  {
+    id: 4,
+    title: "subscription",
+    route: "Subscriptions",
+  },
+  {
+    id: 5,
+    title: "invoice",
+    route: "Invoices",
+  },
 ];
 
 const AccountSettings = ({ navigation }) => {

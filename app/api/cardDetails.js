@@ -1,19 +1,20 @@
-import { enfuceClient as client } from './client'
-import {format as prettyFormat} from 'pretty-format'; // development only
+import { enfuceClient as client } from "./client";
+import { format as prettyFormat } from "pretty-format"; // development only
 
-const getPinControlToken = async(id) => {
-    //https://integration-api-cat2.{{environment}}.ext.{{realm}}.cia.enfuce.com/pincontrol/v2/plastic/{plasticId}
-    const data = id
-    const cardId = id
-    const endpoint = `/pincontrol/v2/plastic/${id}?auditUser=`
-    
-    return await client.post(endpoint, data, {
-      auth: {
-        username: 'carbonyte_test_demo_apiuser',
-        password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
-      },
-    });}
-    
+const getPinControlToken = async (id) => {
+  //https://integration-api-cat2.{{environment}}.ext.{{realm}}.cia.enfuce.com/pincontrol/v2/plastic/{plasticId}
+  const data = id;
+  const cardId = id;
+  const endpoint = `/pincontrol/v2/plastic/${id}?auditUser=`;
+
+  return await client.post(endpoint, data, {
+    auth: {
+      username: "carbonyte_test_demo_apiuser",
+      password: "yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN",
+    },
+  });
+};
+
 /**
  * @dev This gets the token to request the card details
  * @todo Update the username and password in the payload to live when live
@@ -21,17 +22,17 @@ const getPinControlToken = async(id) => {
  * @returns The endpoint data and post data to pass to the endpoint
  */
 const getCardResponse = (id) => {
-  const data = id
-  const cardId = id
-  const endpoint = `/card/v4/card/${cardId}/controlToken?auditUser=`
-  
+  const data = id;
+  const cardId = id;
+  const endpoint = `/card/v4/card/${cardId}/controlToken?auditUser=`;
+
   return client.post(endpoint, data, {
     auth: {
-      username: 'carbonyte_test_demo_apiuser',
-      password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
+      username: "carbonyte_test_demo_apiuser",
+      password: "yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN",
     },
   });
-}
+};
 
 /**
  * @dev This gets the card details
@@ -40,16 +41,18 @@ const getCardResponse = (id) => {
  * @returns The unedited HTML return for the card details
  */
 const getCardDetails = (url, token) => {
-  client.setBaseURL(url)
-
+  client.setBaseURL(url);
 
   return client.any({
-    method: 'POST', params: { token }, data: {}, headers: {
-      'Accept': '*/*',
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }
-  })
-}
+    method: "POST",
+    params: { token },
+    data: {},
+    headers: {
+      Accept: "*/*",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+};
 
 /**
  * @dev Use this rather than the other two functions
@@ -57,15 +60,16 @@ const getCardDetails = (url, token) => {
  * @param {str} ID The user's account number
  * @returns An object with the extracted card details
  */
-const GetCardFromID = async(ID) => {
-  const responseDetails = await getCardResponse(ID)
+const GetCardFromID = async (ID) => {
+  const responseDetails = await getCardResponse(ID);
   const cardText = await getCardDetails(
     responseDetails?.data?.cardDataUrl,
     responseDetails?.data?.token
   );
-
+  // console.log(ID)
+  // console.log(responseDetails)
+  // console.log(cardText)
   const cardExpiry = cardText?.data?.substr(601 + 98, 5);
-
 
   const cardCVV = cardText?.data?.substr(637 + 97, 3);
 
@@ -73,34 +77,34 @@ const GetCardFromID = async(ID) => {
 
   const cardNumber = cardText?.data?.substr(548 + 97, 19);
 
-  return{
-    name: cardExpiry,
-    number: cardNumber,
+  return {
+    expiaryDate: cardExpiry,
+    cardNumber: cardNumber,
     image: image,
     cvv: cardCVV,
   };
-}
+};
 
 const getPlasticCards = async (id) => {
-  client.setBaseURL('https://integration-api-cat2.demo.ext.test.cia.enfuce.com')
-  const endpoint = `/card/v3/${id}/plastic?auditUser=`
+  client.setBaseURL(
+    "https://integration-api-cat2.demo.ext.test.cia.enfuce.com"
+  );
+  const endpoint = `/card/v3/${id}/plastic?auditUser=`;
 
-//const string = 'https://integration-api-cat2.demo.ext.test.cia.enfuce.com/card/v3/714613712/plastic?auditUser='
+  //const string = 'https://integration-api-cat2.demo.ext.test.cia.enfuce.com/card/v3/714613712/plastic?auditUser='
 
   const response = await client.get(endpoint, null, {
-    
     auth: {
-      username: 'carbonyte_test_demo_apiuser',
-      password: 'yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN'
-    }})
-
-  
-}
+      username: "carbonyte_test_demo_apiuser",
+      password: "yAo8dvc*B6pDgfGcYQae_z!Hgndhv.MN",
+    },
+  });
+};
 
 export default {
   getCardDetails,
   getCardResponse,
   GetCardFromID,
   getPinControlToken,
-  getPlasticCards
-}
+  getPlasticCards,
+};

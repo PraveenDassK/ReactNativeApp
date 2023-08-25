@@ -34,6 +34,9 @@ const CardSettings = ({ navigation, route }) => {
   const [isEnabled3, setIsEnabled3] = useState(false);
 
   let routeObj = route.params;
+  console.log("====================================");
+  console.log(routeObj);
+  console.log("====================================");
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
     sendRequest();

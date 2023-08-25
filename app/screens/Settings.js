@@ -543,7 +543,7 @@ const Settings = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        {/* <TouchableOpacity style={styles.button}>
           <LinearAccountButton
             title="Carbonyte labs"
             transform={{ textTransform: "none" }}
@@ -559,9 +559,9 @@ const Settings = ({ navigation }) => {
             onPress={() => navigation.navigate("Devices")}
             darkMode={darkMode}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TouchableOpacity style={styles.button}>
+        {/* <TouchableOpacity style={styles.button}>
           <LinearAccountButton
             title="Subscriptions"
             transform={{ textTransform: "none" }}
@@ -577,7 +577,7 @@ const Settings = ({ navigation }) => {
             onPress={() => navigation.navigate("Invoices")}
             darkMode={darkMode}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.button}>
           <LinearAccountButton
