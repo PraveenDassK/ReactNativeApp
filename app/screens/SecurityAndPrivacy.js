@@ -194,22 +194,33 @@ const SecurityAndPrivacy = ({ navigation }) => {
               value={isEnabled2}
             />
           </View>
-        </View>
-
-        <View
-          style={{
-            paddingHorizontal: "5%",
-            marginBottom: "10%",
-            justifyContent: "flex-end",
-          }}
-        >
-          <LinearAccountButton
-            title="Reset app passcode"
-            style={styles.boxShadow}
-            transform={{ textTransform: "none" }}
-            onPress={() => navigation.navigate("PinSetApp")}
-            darkMode={darkMode}
-          />
+          <View
+            style={{
+              paddingHorizontal: "5%",
+              marginVertical: "10%",
+              // justifyContent: "center",
+            }}
+          >
+            <LinearAccountButton
+              title="Devices"
+              transform={{ textTransform: "none" }}
+              onPress={() => navigation.navigate("Devices")}
+              darkMode={darkMode}
+            />
+            <LinearAccountButton
+              title="Carbonyte labs"
+              transform={{ textTransform: "none" }}
+              onPress={() => navigation.navigate("CarbonyteLabs")}
+              darkMode={darkMode}
+            />
+            <LinearAccountButton
+              title="Reset app passcode"
+              style={styles.boxShadow}
+              transform={{ textTransform: "none" }}
+              onPress={() => navigation.navigate("PinSetApp")}
+              darkMode={darkMode}
+            />
+          </View>
         </View>
       </View>
     </ImageBackground>

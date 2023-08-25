@@ -466,6 +466,7 @@ const CardCarousel = ({
   const [showPinModal, setShowPinModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [showName, setShowName] = useState(true);
+  const [getIndex, setIndex] = useState(0);
   // const [frozen, setFrozen] = useState(false);
   let frozen = false;
   if (isFrozen === "CARD_BLOCKED") {
@@ -488,6 +489,7 @@ const CardCarousel = ({
         );
         setDataAbovecard(newAboveCard);
         setSelectedCardForFreeze(topCardIdx);
+        setIndex(topCardIdx);
         // You can use topCardIdx for any further processing or actions
       },
       // You can add more configuration options for the Animated.event if needed
@@ -585,7 +587,10 @@ const CardCarousel = ({
 
                 {/* Back Side */}
 
-                <CardBackSide dataAbovecard={dataAbovecard} />
+                <CardBackSide
+                  dataAbovecard={dataAbovecard}
+                  newData={cards[idx]}
+                />
               </FlipCard>
               {showName ? (
                 <View
@@ -688,7 +693,7 @@ const CardCarousel = ({
   );
 };
 
-const CardBackSide = ({ dataAbovecard }) => {
+const CardBackSide = ({ dataAbovecard, newData }) => {
   const cardBackOBJ = {
     firstName: "Jack",
     lastName: "Huang",
@@ -700,14 +705,14 @@ const CardBackSide = ({ dataAbovecard }) => {
   const [cardBackObj, setCardBackObject] = useState(null);
   const groupedDigits = cardBackObj?.cardNumber?.match(/.{1,5}/g);
 
+  console.log(newData?.id);
   useEffect(() => {
     loadData();
-  }, [dataAbovecard]);
-
+  }, [newData]);
   const loadData = async () => {
     try {
       const cardRequestReturnData = await cardDetails.GetCardFromID(
-        dataAbovecard[0].id
+        newData?.id
       );
       setCardBackObject(cardRequestReturnData);
       //customerID 238712312
@@ -717,19 +722,14 @@ const CardBackSide = ({ dataAbovecard }) => {
       console.log(e);
     }
   };
-  console.log(dataAbovecard[0].id);
 
   return (
     <View style={styles.backCardContainer}>
       <Text style={[styles.backCardText, styles.backCardHeader]}>
-        {dataAbovecard?.[0]?.embossing?.firstName
-          ? dataAbovecard?.[0]?.embossing?.firstName
-          : "BOB"}
+        {newData.embossing?.firstName ? newData.embossing?.firstName : "BOB"}
       </Text>
       <Text style={[styles.backCardText, styles.backCardHeader]}>
-        {dataAbovecard?.[0]?.embossing?.lastName
-          ? dataAbovecard?.[0]?.embossing?.lastName
-          : "DYLAN"}
+        {newData?.embossing?.lastName ? newData?.embossing?.lastName : "DYLAN"}
       </Text>
       <Text style={styles.backCardText} />
       <Text style={styles.backCardText} />

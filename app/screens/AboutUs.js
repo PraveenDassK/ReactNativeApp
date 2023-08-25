@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   Image,
+  Vibration,
   TouchableOpacity,
   Switch,
   Button,
@@ -17,6 +18,10 @@ import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import { BlurView } from "expo-blur";
 import Tagline from "../components/Tagline";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
+
 const AboutUs = ({ navigation }) => {
   const { setIsAuth, settings, setSettings, darkMode } =
     useContext(AuthContext);
@@ -35,7 +40,6 @@ const AboutUs = ({ navigation }) => {
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
   const [isEnabled3, setIsEnabled3] = useState(false);
-
 
   useEffect(() => {
     restoreSignIn();
@@ -78,6 +82,8 @@ const AboutUs = ({ navigation }) => {
   const urlAndroid = "https://play.google.com/";
   const urlImprove = "https://play.google.com/";
   const urlBlog = "https://carbonyte.io/";
+  const urlEmail = "mailto:" + "hello@carbonyte.io";
+  const physicalAddress = `83 Integer House Bre Innovation Campus,Bucknalls Lane,Watford, Hertfordshire,England.\n- WD25 9XX`;
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const toggleSwitch1 = () => {
@@ -100,6 +106,11 @@ const AboutUs = ({ navigation }) => {
     Linking.canOpenURL(url).then((supported) => {
       return Linking.openURL(url);
     });
+  };
+  const copyToClipboard = async (copy) => {
+    Vibration.vibrate();
+    alert(`Address copied`);
+    await Clipboard.setStringAsync(copy);
   };
 
   return (
@@ -133,7 +144,7 @@ const AboutUs = ({ navigation }) => {
             marginLeft: "5%",
           }}
         >
-          <BlurView style={{ borderRadius: 20,paddingVertical:"3%" }}>
+          <BlurView style={{ borderRadius: 20, paddingVertical: "3%" }}>
             <TouchableOpacity
               onPress={() =>
                 navigateAlert(() =>
@@ -187,7 +198,7 @@ const AboutUs = ({ navigation }) => {
             marginLeft: "5%",
           }}
         >
-          <BlurView style={{ borderRadius: 15 ,paddingVertical:"3%"}}>
+          <BlurView style={{ borderRadius: 15, paddingVertical: "3%" }}>
             <TouchableOpacity
               onPress={() => navigateAlert(() => handlePress(urlBlog))}
             >
@@ -245,9 +256,62 @@ const AboutUs = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </BlurView>
-          <View style={{ marginTop: "10%" }}>
-            <Tagline darkMode={darkMode} />
-          </View>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            backgroundColor: darkMode === "DARK" ? "transparent" : "white",
+            // height: "auto",
+            borderRadius: 15,
+            marginTop: "5%",
+            marginLeft: "5%",
+          }}
+        >
+          <BlurView style={{ borderRadius: 15, paddingVertical: "3%" }}>
+            <TouchableOpacity
+              onPress={() => navigateAlert(() => handlePress(urlEmail))}
+            >
+              <View style={styles.row}>
+                <MaterialCommunityIcons
+                  name="email"
+                  size={30}
+                  color="blue"
+                  style={styles.icon1}
+                />
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkiconText : styles.iconText
+                  }
+                >
+                  hello@carbonyte.io
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ marginVertical: "3%" }}
+              onPress={() => copyToClipboard(physicalAddress)}
+            >
+              <View style={styles.row1}>
+                <Entypo
+                  name="address"
+                  size={30}
+                  color="blue"
+                  style={styles.icon1}
+                />
+
+                <Text
+                  style={
+                    darkMode === "DARK" ? styles.darkiconText : styles.iconText
+                  }
+                >
+                  {physicalAddress}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </BlurView>
+        </View>
+        <View style={{ marginTop: "10%" }}>
+          <Tagline darkMode={darkMode} />
         </View>
       </View>
     </ImageBackground>
@@ -292,11 +356,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  row1: {
+    flexDirection: "row",
+    // height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   icon: {
     flex: 2,
     resizeMode: "contain",
     height: "70%",
     width: "auto",
+  },
+  icon1: {
+    flex: 2,
+    height: "70%",
+    width: "auto",
+    textAlign: "center",
   },
 
   iconText: {
@@ -305,6 +381,8 @@ const styles = StyleSheet.create({
   darkiconText: {
     flex: 8,
     color: GlobalStyles.Color.white,
+    textAlign: "left",
+    lineHeight: 25,
   },
 });
 
