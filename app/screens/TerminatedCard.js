@@ -49,23 +49,6 @@ const TerminatedCard = ({ navigation }) => {
       }}
     >
       <View style={styles.terminatedCard}>
-        {/* <View
-          style={{
-            // position: "absolute",
-            zIndex: 10,
-            flex: 1,
-            height: "100%",
-            left: "25%",
-          }}
-        >
-         
-          <View style={{ width: "100%", height: "50%", top: "10%" }}>
-            <BrokenTop height="100%" />
-          </View>
-          <View style={{ width: "100%", height: "50%", bottom: "25%" }}>
-            <BrokenCard height="100%" />
-          </View>
-        </View> */}
         <View
           style={
             darkMode === "DARK"
