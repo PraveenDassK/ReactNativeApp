@@ -100,6 +100,7 @@ export default function MyCards({ navigation }) {
     };
     setCurrentCardDataShow(obj);
   };
+  console.log(cardData)
 
   const loadData = async () => {
     setIsLoading(true);
@@ -495,23 +496,6 @@ const CardCarousel = ({
       // You can add more configuration options for the Animated.event if needed
     }
   );
-  if (showPinModal) {
-    return (
-      <View style={styles.mainContainer}>
-        {/* <RecentTransactions
-        amount={10}
-      /> */}
-        {showPinModal ? (
-          <PinModal
-            title="Enter your PIN"
-            success={() => {
-              setShowPinModal(false);
-            }}
-          />
-        ) : null}
-      </View>
-    );
-  }
   return (
     <ScrollView
       horizontal={true}
@@ -705,7 +689,6 @@ const CardBackSide = ({ dataAbovecard, newData }) => {
   const [cardBackObj, setCardBackObject] = useState(null);
   const groupedDigits = cardBackObj?.cardNumber?.match(/.{1,5}/g);
 
-  console.log(newData?.id);
   useEffect(() => {
     loadData();
   }, [newData]);

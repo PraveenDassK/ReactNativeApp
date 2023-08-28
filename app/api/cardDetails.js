@@ -41,9 +41,8 @@ const getCardResponse = (id) => {
  * @returns The unedited HTML return for the card details
  */
 const getCardDetails = (url, token) => {
-  client.setBaseURL(url);
-
   return client.any({
+    url,
     method: "POST",
     params: { token },
     data: {},
@@ -66,9 +65,7 @@ const GetCardFromID = async (ID) => {
     responseDetails?.data?.cardDataUrl,
     responseDetails?.data?.token
   );
-  // console.log(ID)
-  // console.log(responseDetails)
-  // console.log(cardText)
+  
   const cardExpiry = cardText?.data?.substr(601 + 98, 5);
 
   const cardCVV = cardText?.data?.substr(637 + 97, 3);

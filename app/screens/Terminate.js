@@ -94,7 +94,8 @@ const Terminate = ({ navigation, route }) => {
     setShowPinModal(false);
     const ID = route?.params?.cardID;
     const result = await apiCall.FreezeUpdateCard(ID, "CARD_CLOSED");
-
+    console.log(ID)
+    console.log(result)
     terminateAnimation();
 
     setTimeout(() => {
