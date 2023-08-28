@@ -135,7 +135,13 @@ const Settings = ({ navigation }) => {
     alert("Account code copied");
     await Clipboard.setStringAsync(account);
   };
-
+  const copyAddress = async () => {
+    Vibration.vibrate();
+    alert("Address code copied");
+    await Clipboard.setStringAsync(
+      "83 Integer House Bre Innovation Campus, Bucknalls Lane, Watford, Hertfordshire,England, WD25 9XX."
+    );
+  };
   const copySort = async () => {
     Vibration.vibrate();
     alert("Sort code copied");
@@ -488,7 +494,55 @@ const Settings = ({ navigation }) => {
                 </AppText>
               </View>
             </View>
+            <View style={styles.accountDetailsRow1}>
+              <View style={{ flex: 1 }}>
+                <AppText
+                  style={[
+                    styles.divStart,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitle
+                      : styles.customTitle,
+                  ]}
+                >
+                  Bank Address
+                </AppText>
+              </View>
 
+              <View style={[styles.splitDiv]}>
+                <Pressable style={styles.helloParent} onPress={copyAddress}>
+                  <Image
+                    style={{
+                      resizeMode: "contain",
+                      height: "25%",
+                      width: 30,
+                      marginRight: "5%",
+                    }}
+                    source={require("../assets/icon-materialcontentcopy.png")}
+                  />
+                </Pressable>
+              </View>
+
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+              >
+                <AppText
+                  style={[
+                    // styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitleAddress
+                      : styles.customTitleAddress,
+                    { textAlign: "left" },
+                  ]}
+                >
+                  {`83 Integer House Bre Innovation Campus, Bucknalls Lane,Watford, Hertfordshire,England,\n WD25 9XX.`}
+                  {/* Press to Copy */}
+                </AppText>
+              </View>
+            </View>
             <View style={styles.accountDetailsRow}>
               <View style={{ flex: 1 }}>
                 <AppText
@@ -688,6 +742,18 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(14),
     color: GlobalStyles.Color.white,
   },
+  darkcustomTitleAddress: {
+    // fontWeight: Platform.OS === "android" ? "normal" : "700",
+    fontFamily: "Montserrat-Medium",
+    fontSize: 10,
+    color: GlobalStyles.Color.white,
+  },
+  customTitleAddress: {
+    // fontWeight: Platform.OS === "android" ? "normal" : "700",
+    fontFamily: "Montserrat-Medium",
+    fontSize: 10,
+    color: GlobalStyles.Color.secondaryDarkTheme_bg,
+  },
   customTitle1: {
     fontFamily: "Montserrat",
     fontSize: moderateScale(14),
@@ -740,7 +806,13 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: "center",
   },
-
+  accountDetailsRow1: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+    // height: 35,
+    alignItems: "center",
+  },
   splitDiv: {
     flexDirection: "row",
     flex: 1,

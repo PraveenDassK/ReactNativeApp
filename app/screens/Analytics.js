@@ -253,7 +253,7 @@ const Analytics = ({ navigation }) => {
               fontFamily: "Montserrat-SemiBold",
               color: GlobalStyles.Color.white,
               fontSize: 16,
-              marginVertical:20
+              marginVertical: 20,
             }}
           >
             Your Spendings Details

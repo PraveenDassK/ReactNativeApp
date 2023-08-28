@@ -214,7 +214,7 @@ const AddNewCard = ({ navigation, route }) => {
       console.log(requestObj, "this is a virtual card");
       if (response?.data?.status === 201) {
         alert("Your new card has been made successfully");
-
+        console.log(response, "this is response of carr add");
         navigation.navigate("MyCards");
       } else {
         alert(response?.data?.message);
@@ -228,7 +228,7 @@ const AddNewCard = ({ navigation, route }) => {
         physicalCardObj
       );
       console.log(physicalCardObj, "this is a virtual card");
-
+      console.log(response, "this is response of carr add");
       if (response?.data?.status === 201) {
         alert("Your new card has been ordered  successfully");
         navigation.navigate("MyCards");

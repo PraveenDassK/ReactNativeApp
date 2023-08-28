@@ -81,7 +81,6 @@ const Transactions = ({ navigation, route }) => {
   useEffect(() => {
     loadData();
   }, []);
-
   const loadData = async () => {
     setIsLoading(true);
     //Load the data for transactions
@@ -99,7 +98,6 @@ const Transactions = ({ navigation, route }) => {
   };
 
   const reportTransaction = async (Id) => {
-
     Alert.alert("Alert", "Report This Transaction", [
       {
         text: "Cancel",
@@ -306,6 +304,11 @@ const Transactions = ({ navigation, route }) => {
       </View>
     );
   }
+  const renderNoStateMessage = () => {
+    <View>
+      <Text>You have no employers in your favorite list.</Text>
+    </View>;
+  };
 
   return (
     <AppScreen darkMode={darkMode}>
@@ -363,6 +366,31 @@ const Transactions = ({ navigation, route }) => {
           //   {useNativeDriver: true }
           // )}
           keyExtractor={(item) => item.sourceId.toString()}
+          ListEmptyComponent={
+            <View
+              style={{
+                paddingVertical: 20,
+                backgroundColor:
+                  darkMode === "DARK" ? "rgba(255,255,255,0.1)" : "white",
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+              }}
+            >
+              <Text
+                style={{
+                  color:
+                    darkMode === "DARK"
+                      ? GlobalStyles.Color.white
+                      : GlobalStyles.Color.darkTheme_bg,
+                  fontFamily: "Montserrat",
+                  fontSize: 20,
+                  textAlign: "center",
+                }}
+              >
+                No transaction found
+              </Text>
+            </View>
+          }
           renderItem={({ item, index, separators }) => {
             const inputRange = [
               -1,
@@ -417,6 +445,7 @@ const Transactions = ({ navigation, route }) => {
                     </Pressable>
                   </Swipeable>
                 </Animated.View>
+
                 {
                   <View style={{ display, alignItems: "flex-end" }}>
                     <Text style={{ color: "red" }}>Transaction reported</Text>

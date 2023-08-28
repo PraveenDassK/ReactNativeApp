@@ -44,20 +44,38 @@ const TransactionContainer = ({
         width: "100%",
       }}
     >
-      {transactions.map(
-        ({ id, credit, description, transactionDate, amount }, index) => (
-          <TransactionBody
-            key={id}
-            onTransaction={onTransaction}
-            description={description}
-            date={transactionDate}
-            amount={amount}
-            credit={credit}
-            index={index}
-            lastElement={transactions.length - 1}
-            darkMode={darkMode}
-          />
+      {transactions.length > 0 ? (
+        transactions.map(
+          ({ id, credit, description, transactionDate, amount }, index) => (
+            <TransactionBody
+              key={id}
+              onTransaction={onTransaction}
+              description={description}
+              date={transactionDate}
+              amount={amount}
+              credit={credit}
+              index={index}
+              lastElement={transactions.length - 1}
+              darkMode={darkMode}
+            />
+          )
         )
+      ) : (
+        <View style={{ marginVertical: 10 }}>
+          <Text
+            style={{
+              color:
+                darkMode === "DARK"
+                  ? GlobalStyles.Color.white
+                  : GlobalStyles.Color.darkTheme_bg,
+              fontFamily: "Montserrat",
+              fontSize: 20,
+              textAlign: "center",
+            }}
+          >
+            No transaction found
+          </Text>
+        </View>
       )}
     </BlurView>
     {transactions.length === 0 ? (

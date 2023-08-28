@@ -7,13 +7,13 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Alert
+  Alert,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Swiper from "react-native-swiper";
 import { moderateScale } from "../config/scaling";
-import { Rating } from 'react-native-ratings';
+import { Rating } from "react-native-ratings";
 
 import Button from "../components/AppButton";
 
@@ -43,7 +43,6 @@ const imageArray = [
     img: "https://fastly.picsum.photos/id/116/3504/2336.jpg?hmac=C46vgpj3R407e8pCyy8NhIsNaBZCjb4r5d71keNgMJY",
     tag: "Fashion shouldn't cost the earth",
   },
- 
 ];
 
 const capitalizeINIKA = (name) => {
@@ -53,6 +52,7 @@ const capitalizeINIKA = (name) => {
 
 const Marketplace = ({ navigation }) => {
   const [data, setData] = useState(itemArrayWithIds);
+  console.log(data, "this is marketplace");
   const Item = ({
     name,
     images,
@@ -100,19 +100,21 @@ const Marketplace = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.priceFooterContainer}>
-          <View style={{flexDirection: "row"}}>
-               <Rating startingValue={score} imageSize={20}/>
-          <Text>
-           ({reviewCount})
-          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Rating startingValue={score} imageSize={20} readonly={true} />
+            <Text>({reviewCount})</Text>
           </View>
-     
+
           <TouchableOpacity>
             <Text style={styles.priceReview}>reviews</Text>
           </TouchableOpacity>
         </View>
 
-        <Button title={"go to vendor"} textTransform={"uppercase"} onPress={() => navigation.navigate("MarketPlaceItem")}/>
+        <Button
+          title={"go to vendor"}
+          textTransform={"uppercase"}
+          onPress={() => navigation.navigate("MarketPlaceItem")}
+        />
       </View>
     </View>
   );
