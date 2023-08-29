@@ -85,7 +85,7 @@ const MarketPlaceItem = () => {
           <View style={styles.priceFooterContainer}>
             <Rating
               startingValue={itemObj.reviews.score}
-              tintColor={GlobalStyles.Color.backgroundColor}
+              tintColor={GlobalStyles.Color.gray_100}
               imageSize={20}
             />
             <TouchableOpacity>
@@ -111,7 +111,7 @@ const MarketPlaceItem = () => {
 
           <View>
             {isTaxable ? (
-              <Text>Inclusive of all taxes</Text>
+              <Text>Inclusive of all taxess</Text>
             ) : (
               <Text>Not inclusive of all taxes</Text>
             )}
