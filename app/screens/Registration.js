@@ -442,7 +442,7 @@ const Registration = ({ navigation }) => {
         newRegObject,
         "AA"
       );
-
+     console.log(response,"this is a business account");
       if (!response.data.result) return response.data.resultMessage;
 
       // return false;

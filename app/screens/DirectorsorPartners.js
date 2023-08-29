@@ -20,7 +20,7 @@ const DirectororPartner = ({ navigation }) => {
 
   const [registrationData, setRegistrationData] = useState({
     businessId: "CBFC015105",
-    businessType: "SOLE TRADER",
+    businessType: "LLC",
   })
   
   const businessTypes = [
