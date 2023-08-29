@@ -13,6 +13,11 @@ import {
   TouchableWithoutFeedback,
   Pressable,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import * as Device from "expo-device";
+import { Keyboard } from "react-native";
+
+
 import apiCall from "../api/apiCall";
 import CountdownBar from "../components/CountdownBar";
 import Button from "../components/AppButton";
@@ -22,9 +27,7 @@ import formatCurrency from "../utility/formatCurrency";
 import SendFrom from "../components/SendFrom";
 import AuthContext from "../auth/context";
 import GlobalStyles from "../../GlobalStyles";
-import { LinearGradient } from "expo-linear-gradient";
-import * as Device from "expo-device";
-import { Keyboard } from "react-native";
+
 const height = Dimensions.get("window").height;
 const smallDevice = { height: 650 };
 const isSmallDevice = height < smallDevice.height;

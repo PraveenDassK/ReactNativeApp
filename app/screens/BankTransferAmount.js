@@ -309,7 +309,7 @@ const BankTransferAmount = ({ route, navigation }) => {
             </View>
             <Formik
               initialValues={{ amount: "" }}
-              onSubmit={() => console.log("submitted")}
+              onSubmit={(values) => console.log("submitted", values)}
               validationSchema={validationSchema}
             >
               {({
