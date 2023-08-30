@@ -17,26 +17,26 @@ const DirectororPartner = ({ navigation }) => {
   const [directorData, setDirectorData] = useState([]);
   const [BeneficialownersData, setBeneficialownersData] = useState([]);
   const [ControllingInterestsData, setControllingInterestsData] = useState([]);
-
+  const [partnersData, setPartnersData] = useState([]);
+  const [soleTraderData, setSoleTraderData] = useState([]);
   const [registrationData, setRegistrationData] = useState({
-    businessId: "CBFC015105",
-    businessType: "LLC",
-  })
-  
+    businessId: "02978727",
+    businessType:  "LIMITED LIABILITY PARTNERSHIP",
+  });
+
   const businessTypes = [
     "LIMITED COMPANY", //D B C S
     "SOLE TRADER", //D C
     "ORDINARY PARTNERSHIP", //DD C S
     "LIMITED PARTNERSHIP", //DD B C S
-    "LIMITED LIABILITY PARTNERSHIP" //DD B C S
-  ]
+    "LIMITED LIABILITY PARTNERSHIP", //DD B C S
+  ];
 
-  console.log(registrationData.businessType)
+  console.log(registrationData.businessType);
 
   const [formView, setFormView] = useState(0);
   const [role, setRole] = useState("");
   const handleOnPress = (event) => {
-
     setRole(event);
     if (formView === 0) {
       setFormView(1);
@@ -58,7 +58,10 @@ const DirectororPartner = ({ navigation }) => {
           setBeneficialownersData={setBeneficialownersData}
           setControllingInterestsData={setControllingInterestsData}
           businessType={registrationData.businessType}
-
+          setPartnersData={setPartnersData}
+          partnersData={partnersData}
+          setSoleTraderData={setSoleTraderData}
+          soleTraderData={soleTraderData}
         />
       ) : (
         <RegistartionDirectorForm
@@ -70,6 +73,9 @@ const DirectororPartner = ({ navigation }) => {
           ControllingInterestsData={ControllingInterestsData}
           setBeneficialownersData={setBeneficialownersData}
           setControllingInterestsData={setControllingInterestsData}
+          partnersData={partnersData}
+          setPartnersData={setPartnersData}
+          setSoleTraderData={setSoleTraderData}
         />
         // <View><Text>Hello</Text></View>
       )}

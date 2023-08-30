@@ -381,15 +381,15 @@ const Registration = ({ navigation }) => {
     } else {
       //Business registration
       const newRegObject = {
-        "type": "LPARTNRSHP",//companyHouse.type, 
-        "company_status": companyHouse.company_status,
-        "etag": companyHouse.etag,
-        "aboutBusiness": companyInformation,
-        "incomeSources": ["Sales revenue"],
-        "operationTime": companyOperations,
-        "targetCustomer": "People",
-        "customerOutOfUk": "True",
-        "sic_codes": companyHouse.sic_codes,
+        type: "SOLETRADER", //companyHouse.type,
+        company_status: companyHouse.company_status,
+        etag: companyHouse.etag,
+        aboutBusiness: companyInformation,
+        incomeSources: ["Sales revenue"],
+        operationTime: companyOperations,
+        targetCustomer: "People",
+        customerOutOfUk: "True",
+        sic_codes: companyHouse.sic_codes,
 
         sic_category: "A",
         expectedMonthlySpendings: 0,
@@ -437,12 +437,12 @@ const Registration = ({ navigation }) => {
         acceptanceDateTime: "29-06-2023",
         policyVersion: "1",
       };
-
+      console.log(newRegObject, "This is the onj");
       const response = await apiLogin.RegisterBusinessAccount(
         newRegObject,
         "AA"
       );
-     console.log(response,"this is a business account");
+      console.log(response, "this is a business account");
       if (!response.data.result) return response.data.resultMessage;
 
       // return false;

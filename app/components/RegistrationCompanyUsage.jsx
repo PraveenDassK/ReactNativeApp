@@ -36,7 +36,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
   const [operationTime, setOperationTime] = useState("")
 
   const handleSubmit = () => {
-    SaveDetails(null, "CompanyUsage");
+    SaveDetails(operationTime, "CompanyUsage");
   };
   const handleBack = () => {
     

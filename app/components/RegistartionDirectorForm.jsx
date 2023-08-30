@@ -32,7 +32,7 @@ import GetPostCode from "../components/RegistrationPostCode";
 import apiLogin from "../api/apiLogin";
 import moment from "moment";
 import * as Device from "expo-device";
-import CountryPickerModal from 'react-native-country-codes-picker';
+import CountryPickerModal from "react-native-country-codes-picker";
 
 const RegistartionDirectorForm = ({
   back = true,
@@ -42,6 +42,9 @@ const RegistartionDirectorForm = ({
   directorData,
   setBeneficialownersData,
   setControllingInterestsData,
+  setSoleTraderData,
+  setPartnersData,
+  partnersData,
 }) => {
   const [date, setDate] = useState(new Date());
   const [birthdate, setBirthDate] = useState(new Date());
@@ -52,9 +55,36 @@ const RegistartionDirectorForm = ({
   const [displaymode, setMode] = useState("date");
   const [isDisplayDate, setDateShow] = useState(false);
   const [show, setShow] = useState(false);
-  const [countryCode, setCountryCode] = useState({ "code": "GB", "dial_code": "+44", "flag": "🇬🇧", "name": { "bg": "Великобритания", "by": "Злучанае Каралеўства", "cn": "英国", "cz": "Spojené království", "de": "Vereinigtes Königreich", "ee": "Ühendkuningriik", "el": "Ηνωμένο Βασίλειο", "en": "United Kingdom", "es": "Reino Unido", "fr": "Royaume-Uni", "he": "הממלכה המאוחדת", "it": "Regno Unito", "jp": "イギリス", "nl": "Verenigd Koningkrijk", "pl": "Zjednoczone Królestwo", "pt": "Reino Unido", "ro": "Regatul Unit", "ru": "Объединенное Королевство", "ua": "Об'єднане Королівство", "zh": "英國" } });
+  const [countryCode, setCountryCode] = useState({
+    code: "GB",
+    dial_code: "+44",
+    flag: "🇬🇧",
+    name: {
+      bg: "Великобритания",
+      by: "Злучанае Каралеўства",
+      cn: "英国",
+      cz: "Spojené království",
+      de: "Vereinigtes Königreich",
+      ee: "Ühendkuningriik",
+      el: "Ηνωμένο Βασίλειο",
+      en: "United Kingdom",
+      es: "Reino Unido",
+      fr: "Royaume-Uni",
+      he: "הממלכה המאוחדת",
+      it: "Regno Unito",
+      jp: "イギリス",
+      nl: "Verenigd Koningkrijk",
+      pl: "Zjednoczone Królestwo",
+      pt: "Reino Unido",
+      ro: "Regatul Unit",
+      ru: "Объединенное Королевство",
+      ua: "Об'єднане Королівство",
+      zh: "英國",
+    },
+  });
   const [manualView, setManualView] = useState(false);
   const [isChecked, setChecked] = useState(false);
+  const [isApplicant, setApplicant] = useState(false);
   const [formCheck, setIsFormCheck] = useState(false);
   const [postCode, setPostCode] = useState("");
   const phoneInput = useRef();
@@ -68,7 +98,7 @@ const RegistartionDirectorForm = ({
   const [martialValue, setMartialValue] = useState("");
   const [maritalStatusError, setMartialStatus] = useState("");
   const [genderStatusError, setGenderStatus] = useState("");
-  const [owenershipShares, setOwnweShipError] = useState("");
+  const [owenershipShares, setOwnweShipError] = useState(0);
   const [employmentStatus, setEmploymentStatus] = useState("");
   const [countryStatusError, setCountryStatus] = useState("");
   const [nationallityStatusError, setNationallityStatus] = useState("");
@@ -244,6 +274,24 @@ const RegistartionDirectorForm = ({
     totalIncome,
     savings,
   }) => {
+    let roleLables;
+    switch (role) {
+      case "Director":
+        roleLables = "DIRECTOR";
+        break;
+      case "Beneficial owners":
+        roleLables = "BENE_OWNER";
+        break;
+      case "Controlling Interests":
+        roleLables = "C_INTEREST";
+        break;
+      case "SOLE TRADER":
+        roleLables = "SOLETRADER";
+        break;
+      case "Partners":
+        roleLables = "PARTNER";
+        break;
+    }
     console.log(role, "this is a role");
     if (!martialValue) {
       setMartialStatus("MartialValue is required ");
@@ -268,6 +316,7 @@ const RegistartionDirectorForm = ({
       setEmploymentStatus("");
       setCountryStatus("");
       setBirthError("");
+      console.log(roleLables, "this iis role");
       const dataObj = {
         id: 0,
         customerId: "",
@@ -291,7 +340,7 @@ const RegistartionDirectorForm = ({
 
           firstName: firstName,
 
-          dob: moment(birthdate).format("MM-DD-YYYY"),
+          dob: moment(birthdate).format("DD-MM-YYYY"),
 
           nationalId: id,
 
@@ -324,14 +373,14 @@ const RegistartionDirectorForm = ({
 
         key: "",
 
-        role: role,
-        isApplicant: false,
+        role: roleLables,
+        isApplicant: isApplicant,
 
-        ownershipPercentage: owenershipShares,
+        ownershipPercentage: Number(owenershipShares),
 
         marketingChoices: "string",
 
-        acceptanceDateTime: moment(currentTime).format("MM-DD-YYYY"),
+        acceptanceDateTime: moment(currentTime).format("DD-MM-YYYY"),
 
         policyVersion: "1",
       };
@@ -366,6 +415,23 @@ const RegistartionDirectorForm = ({
             dataObj,
           ]);
           break;
+        case "Partners":
+          setPartnersData((directorData) => [
+            ...directorData,
+            // getResponse?.customerDetails?.firstName +
+            //   getResponse?.customerDetails?.lastName,
+            dataObj,
+          ]);
+          break;
+        case "SOLE TRADER":
+          setSoleTraderData((directorData) => [
+            ...directorData,
+            // getResponse?.customerDetails?.firstName +
+            //   getResponse?.customerDetails?.lastName,
+            dataObj,
+          ]);
+          break;
+
         // default:
         //   return setDirectorData((directorData) => [
         //     ...directorData,
@@ -379,7 +445,7 @@ const RegistartionDirectorForm = ({
 
   //For the country picker
   const sortCountries = (countries) => {
-    const ukIndex = countries.findIndex(country => country.code === 'GB');
+    const ukIndex = countries.findIndex((country) => country.code === "GB");
     const ukCountry = countries.splice(ukIndex, 1)[0];
     countries.sort((a, b) => a.name.localeCompare(b.name));
     countries.unshift(ukCountry);
@@ -992,6 +1058,7 @@ const RegistartionDirectorForm = ({
                       visible={touched.totalIncome}
                     />
                   </View>
+
                   <View
                     style={{
                       width: "100%",
@@ -1010,6 +1077,22 @@ const RegistartionDirectorForm = ({
                       visible={touched.savings}
                     />
                   </View>
+                  {role === "Director" ||
+                  role === "SOLE TRADER" ||
+                  role === "Partners" ? (
+                    <View>
+                      <CheckBox
+                        title="Is this the person applying?"
+                        checkedIcon="check-square-o"
+                        uncheckedIcon="square-o"
+                        checkedColor="black"
+                        checked={isApplicant}
+                        onPress={() => setApplicant(!isApplicant)}
+                        textStyle={{ fontSize: 16, color: "#212529" }}
+                      />
+                    </View>
+                  ) : null}
+
                   <View>
                     <CheckBox
                       title="Persons with significant control"
