@@ -10,6 +10,7 @@ import {
   Pressable,
   useWindowDimensions,
   Dimensions,
+  ActivityIndicator,
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
@@ -75,11 +76,20 @@ const RegistrationDirectororPartner = ({
   const [applicant, setApplicant] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showCheckbox, setShowCheckbox] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const handleSubmit = async (type) => {
     // SaveDetails(type)
     // navigation.navigate("Directororpartner");
   };
 
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
   const handleApi = async () => {
     if (
       businessType === "ORDINARY PARTNERSHIP" ||
@@ -134,13 +144,21 @@ const RegistrationDirectororPartner = ({
       ...partnersData,
       ...soleTraderData
     );
+    setIsLoading(true);
+
     const IDs = businessId;
     const response = await apiLogin.RegisterPersonalDirectorAccount(
       newArray,
       IDs
     );
+    setIsLoading(false);
+
     console.log(response);
-    if (!response.data.result) return alert(response.data.details);
+    if (!response.data.result) return alert(response?.data?.details);
+    if (response.data.result) {
+      alert(response?.data?.resultMessage);
+      navigation.navigate("SplashAnimation");
+    }
   };
   const handleBack = () => {
     navigation.navigate("SplashAnimation");
