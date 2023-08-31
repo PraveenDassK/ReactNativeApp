@@ -141,6 +141,7 @@ const RegistrationDirectororPartner = ({
     );
     console.log(response);
     if (!response.data.result) return alert(response.data.details);
+    navigation.navigate("ProofOfFace")
   };
   const handleBack = () => {
     navigation.navigate("SplashAnimation");

@@ -22,6 +22,8 @@ import apiLogin from "./app/api/apiLogin";
 
 import versionChecker from "./app/utility/versionChecker";
 import { usePreventScreenCapture } from "expo-screen-capture";
+import ProofOfFace from "./app/screens/ProofOfFace";
+import ProofOfAddress from "./app/screens/ProofOfAddress";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -272,6 +274,8 @@ export default function App() {
     );
   }
 
+  
+
   return !netInfo.isInternetReachable ? (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>No internet connection</Text>
@@ -319,6 +323,7 @@ export default function App() {
       }}
     >
       <NavigationContainer>
+       
         {!currentUser ? (
           <AuthNavigator />
         ) : currentUser ? (
