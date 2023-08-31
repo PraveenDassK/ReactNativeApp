@@ -50,9 +50,10 @@ const Registration = ({ navigation }) => {
   const [companyHouse, setRegistrationNumberDetails] = useState(null);
   const [companyDetails, setCompanyDetails] = useState(null);
   const [companyInformation, setCompanyInformation] = useState(null);
+  const [companyUsage, setCompanyUsage] = useState(null);
   const [companyOperations, setcompanyOperations] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
-
+  
   useEffect(() => {}, []);
 
   useEffect(() => {}, []);
@@ -151,7 +152,7 @@ const Registration = ({ navigation }) => {
         setScreenToShow("CompanyUsage");
         return;
       case "CompanyUsage":
-        setPersonalDetails(details);
+        setCompanyUsage(details);
         setScreenToShow("CompanyConfirm");
         return;
       case "CompanyDirectors":
@@ -165,7 +166,11 @@ const Registration = ({ navigation }) => {
         if (callResult === true) {
           //If successful
           alert("Your business was registered");
-          navigation.navigate("Directororpartner");
+          let formVariables = {
+            businessType : companyUsage,
+            businessId : companyHouse.company_number
+          }
+          navigation.navigate("Directororpartner", formVariables);
           // setScreenToShow("CompanyDirectors");
         } else {
           //If unsuccessful
@@ -381,7 +386,7 @@ const Registration = ({ navigation }) => {
     } else {
       //Business registration
       const newRegObject = {
-        type: "SOLETRADER", //companyHouse.type,
+        type: companyUsage, //companyHouse.type,
         company_status: companyHouse.company_status,
         etag: companyHouse.etag,
         aboutBusiness: companyInformation,

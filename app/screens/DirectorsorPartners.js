@@ -13,12 +13,14 @@ import Button from "../components/AppButton";
 
 import { getCompanyType } from "../utility/companyTypeRefrence";
 
-const DirectororPartner = ({ navigation }) => {
+const DirectororPartner = ({ navigation, route }) => {
   const [directorData, setDirectorData] = useState([]);
   const [BeneficialownersData, setBeneficialownersData] = useState([]);
   const [ControllingInterestsData, setControllingInterestsData] = useState([]);
   const [partnersData, setPartnersData] = useState([]);
   const [soleTraderData, setSoleTraderData] = useState([]);
+
+  const dataFromForm = route.params
   const [registrationData, setRegistrationData] = useState({
     businessId: "02978727",
     businessType:  "LIMITED LIABILITY PARTNERSHIP",
