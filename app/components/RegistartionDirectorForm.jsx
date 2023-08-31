@@ -222,7 +222,6 @@ const RegistartionDirectorForm = ({
     { label: "Lady", value: "Lady" },
     { label: "Esq", value: "Esq" },
   ];
-  console.log(role, "this is a role");
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -292,7 +291,6 @@ const RegistartionDirectorForm = ({
         roleLables = "PARTNER";
         break;
     }
-    console.log(role, "this is a role");
     if (!martialValue) {
       setMartialStatus("MartialValue is required ");
     } else if (!genderValue) {
@@ -316,7 +314,6 @@ const RegistartionDirectorForm = ({
       setEmploymentStatus("");
       setCountryStatus("");
       setBirthError("");
-      console.log(roleLables, "this iis role");
       const dataObj = {
         id: 0,
         customerId: "",
@@ -386,7 +383,7 @@ const RegistartionDirectorForm = ({
       };
 
       console.log(dataObj, "this is object");
-      const IDs = "12814316";
+      // const IDs = businessType.businessId;
       // const response = await apiLogin.RegisterPersonalDirectorAccount(
       //   dataObj,
       //   IDs
@@ -451,6 +448,10 @@ const RegistartionDirectorForm = ({
     countries.unshift(ukCountry);
     return countries;
   };
+
+  const handleBack =()=>{
+    setFormView(0)
+  }
 
   return (
     <ScrollView>
@@ -1052,6 +1053,7 @@ const RegistartionDirectorForm = ({
                       style={styles.textInuput}
                       placeholder="Total income"
                       onChangeText={handleChange("totalIncome")}
+                      keyboardType="numeric"
                     />
                     <ErrorMessage
                       error={errors.totalIncome}
@@ -1071,6 +1073,8 @@ const RegistartionDirectorForm = ({
                       style={styles.textInuput}
                       placeholder="Enter the Savings Amount"
                       onChangeText={handleChange("savings")}
+                      keyboardType="numeric"
+
                     />
                     <ErrorMessage
                       error={errors.savings}
@@ -1130,6 +1134,8 @@ const RegistartionDirectorForm = ({
                             <TextInput
                               style={styles.textPercentageInuput}
                               onChangeText={handleChange("owenershipShares")}
+                              keyboardType="numeric"
+
                             />
                             <Text
                               style={{
@@ -1160,6 +1166,8 @@ const RegistartionDirectorForm = ({
                               onChangeText={handleChange(
                                 "owenershipvotingrights"
                               )}
+                              keyboardType="numeric"
+
                             />
                             <Text
                               style={{

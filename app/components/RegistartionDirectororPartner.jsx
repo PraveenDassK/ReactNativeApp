@@ -58,6 +58,7 @@ const RegistrationDirectororPartner = ({
   businessType,
   setPartnersData,
   partnersData,
+  businessId,
   soleTraderData,
   setSoleTraderData,
 }) => {
@@ -68,9 +69,7 @@ const RegistrationDirectororPartner = ({
     "LIMITED PARTNERSHIP", //DD B C S
     "LIMITED LIABILITY PARTNERSHIP", //DD B C S
   ];
-  console.log(directorData.length);
   const MAX_DIRECTORS = 2;
-  console.log(soleTraderData, "this is a business type");
   const [error, setError] = useState();
   const [directorError, setDireectorError] = useState("");
   const [applicant, setApplicant] = useState(false);
@@ -135,14 +134,13 @@ const RegistrationDirectororPartner = ({
       ...partnersData,
       ...soleTraderData
     );
-    // console.log(newArray, "this is submit");
-    // console.log(directorData);
-    const IDs = "02978727";
+    const IDs = businessId;
     const response = await apiLogin.RegisterPersonalDirectorAccount(
       newArray,
       IDs
     );
-    console.log(response, "this is a response");
+    console.log(response);
+    if (!response.data.result) return alert(response.data.details);
   };
   const handleBack = () => {
     navigation.navigate("SplashAnimation");
@@ -177,7 +175,6 @@ const RegistrationDirectororPartner = ({
     }
   };
   const handleIndex = (index, name) => {
-    console.log(name);
     setSelectedIndex(index);
     setApplicant(true);
     switch (name) {
@@ -186,12 +183,9 @@ const RegistrationDirectororPartner = ({
         let values = directorData.map((value, i) => {
           if (i === index) {
             const updatedValue = { ...value, isApplicant: true };
-            console.log(updatedValue, "this is update of director");
             return updatedValue;
           } else {
             const notUpdatedValue = { ...value, isApplicant: false };
-            console.log(notUpdatedValue, "this is notUpdatedValue of director");
-
             return notUpdatedValue;
           }
         });
@@ -216,21 +210,21 @@ const RegistrationDirectororPartner = ({
         setSoleTraderData(solevalues);
         setDireectorError("");
 
-        case "Partners":
-          let partnervalues = partnersData.map((value, i) => {
-            if (i === index) {
-              const updatedValue = { ...value, isApplicant: true };
-              console.log(updatedValue, "this is update of director");
-              return updatedValue;
-            } else {
-              const notUpdatedValue = { ...value, isApplicant: false };
-              console.log(notUpdatedValue, "this is notUpdatedValue of director");
-  
-              return notUpdatedValue;
-            }
-          });
-          setPartnersData(partnervalues);
-          setDireectorError("");
+      case "Partners":
+        let partnervalues = partnersData.map((value, i) => {
+          if (i === index) {
+            const updatedValue = { ...value, isApplicant: true };
+            console.log(updatedValue, "this is update of director");
+            return updatedValue;
+          } else {
+            const notUpdatedValue = { ...value, isApplicant: false };
+            console.log(notUpdatedValue, "this is notUpdatedValue of director");
+
+            return notUpdatedValue;
+          }
+        });
+        setPartnersData(partnervalues);
+        setDireectorError("");
     }
   };
   const Item = ({ title, index, name, error }) => (

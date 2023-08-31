@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -20,12 +20,50 @@ const DirectororPartner = ({ navigation, route }) => {
   const [partnersData, setPartnersData] = useState([]);
   const [soleTraderData, setSoleTraderData] = useState([]);
 
-  const dataFromForm = route.params
+  const dataFromForm = route.params;
   const [registrationData, setRegistrationData] = useState({
-    businessId: "02978727",
-    businessType:  "LIMITED LIABILITY PARTNERSHIP",
+    businessId: "",
+    businessType: "",
   });
+  useEffect(() => {
+    //  if(dataFromForm.businessType === "LLC"){
 
+    //  }
+    switch (dataFromForm.businessType) {
+      case "LLC":
+        setRegistrationData({
+          businessId: dataFromForm.businessId,
+          businessType: "LIMITED COMPANY",
+        });
+        break;
+
+      case "SOLETRADER":
+        setRegistrationData({
+          businessId: dataFromForm.businessId,
+          businessType: "SOLE TRADER",
+        });
+        break;
+      case "OPARTNRSHP":
+        setRegistrationData({
+          businessId: dataFromForm.businessId,
+          businessType: "ORDINARY PARTNERSHIP",
+        });
+        break;
+
+      case "LPARTNRSHP":
+        setRegistrationData({
+          businessId: dataFromForm.businessId,
+          businessType: "LIMITED PARTNERSHIP",
+        });
+        break;
+      case "LLP":
+        setRegistrationData({
+          businessId: dataFromForm.businessId,
+          businessType: "LIMITED LIABILITY PARTNERSHIP",
+        });
+        break;
+    }
+  }, []);
   const businessTypes = [
     "LIMITED COMPANY", //D B C S
     "SOLE TRADER", //D C
@@ -33,9 +71,6 @@ const DirectororPartner = ({ navigation, route }) => {
     "LIMITED PARTNERSHIP", //DD B C S
     "LIMITED LIABILITY PARTNERSHIP", //DD B C S
   ];
-
-  console.log(registrationData.businessType);
-
   const [formView, setFormView] = useState(0);
   const [role, setRole] = useState("");
   const handleOnPress = (event) => {
@@ -60,6 +95,7 @@ const DirectororPartner = ({ navigation, route }) => {
           setBeneficialownersData={setBeneficialownersData}
           setControllingInterestsData={setControllingInterestsData}
           businessType={registrationData.businessType}
+          businessId={registrationData.businessId}
           setPartnersData={setPartnersData}
           partnersData={partnersData}
           setSoleTraderData={setSoleTraderData}

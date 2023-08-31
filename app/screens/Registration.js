@@ -53,7 +53,7 @@ const Registration = ({ navigation }) => {
   const [companyUsage, setCompanyUsage] = useState(null);
   const [companyOperations, setcompanyOperations] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
-  
+
   useEffect(() => {}, []);
 
   useEffect(() => {}, []);
@@ -167,9 +167,9 @@ const Registration = ({ navigation }) => {
           //If successful
           alert("Your business was registered");
           let formVariables = {
-            businessType : companyUsage,
-            businessId : companyHouse.company_number
-          }
+            businessType: companyUsage,
+            businessId: companyHouse.company_number,
+          };
           navigation.navigate("Directororpartner", formVariables);
           // setScreenToShow("CompanyDirectors");
         } else {
