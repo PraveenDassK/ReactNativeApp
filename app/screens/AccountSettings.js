@@ -48,6 +48,11 @@ const ITEMS = [
     title: "invoice",
     route: "Invoices",
   },
+  {
+    id:6,
+    title:"Edit account",
+    route:"AccountEdit"
+  }
 ];
 
 const AccountSettings = ({ navigation }) => {

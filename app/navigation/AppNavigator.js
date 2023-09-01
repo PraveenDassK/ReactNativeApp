@@ -25,6 +25,7 @@ import DashBoard from "../screens/Dashboard";
 import ViewPin from "../screens/ViewPin";
 import Notification from "../screens/Notifications";
 import AccountSpendLimt from "../screens/AccountSpendLimit"
+import AccountDetailsEdit from "../screens/AccountDetailsEdit"
 /**
  * @notice Screens on account page to navigate to
  */
@@ -1267,7 +1268,26 @@ const StackNavigator = () => {
         name="AccountSpending"
         component={gestureHandlerRootHOC(AccountSpendLimt)}
         options={{
-          title: "Account Spending",
+          title: "Account Limit",
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 25,
+          },
+          headerBackImage: () => <HeaderBackButton />,
+        }}
+      />
+      <Stack.Screen
+        name="AccountEdit"
+        component={gestureHandlerRootHOC(AccountDetailsEdit)}
+        options={{
+          title: "Edit account",
           headerStyle: {
             backgroundColor:
               darkMode === "DARK"

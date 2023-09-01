@@ -206,7 +206,7 @@ const SpendingLimit = ({ navigation, route }) => {
               using this Account per month
             </Text>
           </View>
-          <View style={styles.subTextRow}>
+          {/* <View style={styles.subTextRow}>
             <Text
               style={darkMode === "DARK" ? styles.darksubText : styles.subText}
             >
@@ -239,7 +239,7 @@ const SpendingLimit = ({ navigation, route }) => {
               }}
               autoScroll={false}
             />
-          </View>
+          </View> */}
 
           <View
             style={{
@@ -310,7 +310,8 @@ const SpendingLimit = ({ navigation, route }) => {
                         }}
                       >
                         {" "}
-                        £{(monthLim - spend).toFixed(2)}
+                        {/* £{(monthLim - spend).toFixed(2)} */}
+                        £ 0.00
                       </Text>
                     ) : (
                       <Text
@@ -322,7 +323,8 @@ const SpendingLimit = ({ navigation, route }) => {
                         }}
                       >
                         {" "}
-                        £{(monthLim - spend).toFixed(2)}
+                        {/* £{(monthLim - spend).toFixed(2)} */}
+                        £ 0
                       </Text>
                     )}
                     <Text
@@ -367,7 +369,7 @@ const SpendingLimit = ({ navigation, route }) => {
                             : GlobalStyles.Color.gray_1400,
                       }}
                     >
-                      Account Spending limit
+                      Account limit
                     </Text>
                     <Text
                       style={{
@@ -429,7 +431,9 @@ const SpendingLimit = ({ navigation, route }) => {
                         marginRight: "1%",
                       }}
                     >
-                      Limit is £{monthLim.toFixed(2)}
+                      {/* Limit is £{monthLim.toFixed(2)} */}
+                      Limit is £ 0
+
                     </Text>
                     <Text
                       onPress={() => setIsToggled(true)}
