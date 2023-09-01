@@ -76,7 +76,7 @@ const RegistrationDirectororPartner = ({
   const [applicant, setApplicant] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showCheckbox, setShowCheckbox] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (type) => {
     // SaveDetails(type)
@@ -107,7 +107,6 @@ const RegistrationDirectororPartner = ({
       if (!value) {
         setDireectorError("Need atleast one direactor as an applicant");
         setShowCheckbox(true);
-        return;
       } else {
         setShowCheckbox(false);
       }
@@ -121,7 +120,6 @@ const RegistrationDirectororPartner = ({
       if (!value) {
         setDireectorError("Need atleast one partner as an applicant");
         setShowCheckbox(true);
-        return;
       } else {
         setShowCheckbox(false);
       }
@@ -131,7 +129,6 @@ const RegistrationDirectororPartner = ({
       if (!value) {
         setDireectorError("Need atleast one SoleTrader as an applicant");
         setShowCheckbox(true);
-        return;
       } else {
         setShowCheckbox(false);
       }
@@ -153,7 +150,7 @@ const RegistrationDirectororPartner = ({
     );
     setIsLoading(false);
 
-    console.log(response);
+    console.log(response,"this is response");
     if (!response.data.result) return alert(response?.data?.details);
     if (response.data.result) {
       alert(response?.data?.resultMessage);
@@ -435,6 +432,7 @@ const RegistrationDirectororPartner = ({
                       index={index}
                       name={"Partners"}
                       error={showCheckbox}
+                      kye={index}
                     />
                   );
                 })}

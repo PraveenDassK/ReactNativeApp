@@ -31,7 +31,7 @@ const ITEMS = [
   {
     id: 2,
     title: "limits",
-    route: "SpendingLimit",
+    route: "AccountSpending",
   },
   {
     id: 3,
