@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Camera, CameraType } from "expo-camera";
+import * as FaceDetector from "expo-face-detector";
+
 import * as ImagePicker from "expo-image-picker";
 import {
   StyleSheet,
@@ -11,11 +14,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import images from '../assets/login/images'
+import images from "../assets/login/images";
 
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
@@ -41,9 +45,10 @@ const ProofOfFace = ({ navigation, back = true }) => {
   const { user, setUser } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isDetected, setDetected] = useState(false);
+  const [faceData, setFaceData] = useState([]);
   const [imageUri, setImageUri] = useState();
   const [frontImage, setFrontImage] = useState(null);
-  const [backImage, setBackImage] = useState(null);
   const [documentType, setDocumentType] = useState("");
 
   const requestPermission = async () => {
@@ -51,15 +56,13 @@ const ProofOfFace = ({ navigation, back = true }) => {
     if (!granted) alert("You need to enable permission to access the library");
   };
 
-  const selectImage = async (document) => {
+  const selectImage = async () => {
     setIsLoading(true);
     try {
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
-
-      
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
@@ -67,33 +70,13 @@ const ProofOfFace = ({ navigation, back = true }) => {
         setDocumentType(document);
       }
     } catch (error) {
-      
-    }
-    setIsLoading(false);
-  };
-
-  const selectImage2 = async () => {
-    setIsLoading(true);
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        base64: true,
-      });
-
-      
-
-      if (!result.canceled) {
-        setImageUri(result.assets[0].uri);
-        setBackImage(result.assets[0].base64);
-      }
-    } catch (error) {
-      
+      console.error(error);
     }
     setIsLoading(false);
   };
 
   const handleSubmit = async () => {
-    navigation.navigate("ProofOfAuthority");
+    navigation.navigate("ProofOfResidency");
   };
 
   useEffect(() => {
@@ -110,6 +93,57 @@ const ProofOfFace = ({ navigation, back = true }) => {
   const handleBack = () => {
     navigation.navigate("ProofOfResidency");
   };
+
+ async function handleFacesDetected ({ faces }) {
+    console.log('here')
+    setFaceData(faces);
+    console.log(faces);
+    setDetected(false)
+    await selectImage();
+  };
+
+  if (isDetected) {
+    return (
+      <Camera
+      style={styles.camera}
+        type={CameraType.front}
+        onFacesDetected={handleFacesDetected}
+        faceDetectorSettings={{
+          mode: FaceDetector.FaceDetectorMode.fast,
+          detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+          runClassifications: FaceDetector.FaceDetectorClassifications.none,
+          minDetectionInterval: 100,
+          tracking: true,
+        }}
+      >
+        {getFaceDataView()}
+      </Camera>
+    );
+  }
+
+
+
+  function getFaceDataView() {
+    if (faceData.length === 0) {
+      return (
+        <View style={styles.faces}>
+          <Text style={styles.faceDesc}>No faces :(</Text>
+        </View>
+      );
+    } else {
+      return faceData.map((face, index) => {
+        const eyesShut = face.rightEyeOpenProbability < 0.4 && face.leftEyeOpenProbability < 0.4;
+        // const winking = !eyesShut && (face.rightEyeOpenProbability < 0.4 || face.leftEyeOpenProbability < 0.4);
+        // const smiling = face.smilingProbability > 0.7;
+        return (
+          <View style={styles.faces} key={index}>
+            <Text style={styles.faceDesc}>Face detected!</Text>
+            
+          </View>
+        );
+      });
+    }
+  }
 
   return (
     <Screen>
@@ -181,40 +215,22 @@ const ProofOfFace = ({ navigation, back = true }) => {
                     </Text>
                   </View>
                   <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                style={{ width :"100%",height:300}}
-                resizeMode="contain"
-                source={require('../assets/icon-faceid.png')}
-              />
-            </View>
-                  {/* <CountryOfResidence /> */}
-
-                  {/* <View>
-              <Dropdown
-                style={[styles.dropdown]}
-                containerStyle={styles.dropdownContainer}
-                data={data}
-                maxHeight={100}
-                labelField="label"
-                valueField="value"
-                placeholder={"Select"}
-                placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
-                value={documentType}
-                onChange={(item) => {
-                  setDocumentType(item.value);
-                }}
-              />
-            </View> */}
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      style={{ width: "100%", height: 300 }}
+                      resizeMode="contain"
+                      source={require("../assets/icon-faceid.png")}
+                    />
+                  </View>
 
                   <TouchableOpacity
                     style={styles.uploadContainer}
-                    onPress={() => selectImage(documentType)}
+                    onPress={() => setDetected(true)}
                   >
                     {!frontImage ? (
                       <>
@@ -343,6 +359,11 @@ const ImageReview = () => {
 };
 
 const styles = StyleSheet.create({
+  camera: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     paddingVertical: 15,
     paddingHorizontal: 7,
@@ -498,6 +519,17 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     marginBottom: 10,
   },
+  faces: {
+   
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 16
+  },
+  faceDesc: {
+    fontSize: 30,
+    color: colors.white
+  }
 });
 
 export default ProofOfFace;

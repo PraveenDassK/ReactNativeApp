@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  Platform
 } from "react-native";
 
 import AuthContext from "../auth/context";
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     shadowColor: "#0000000D",
     width: "80%",
-    shadowOffset: 10,
+    shadowOffset: Platform.OS === "android" ? 10 : null,
     shadowOpacity: 0.1,
     shadowRadius: 0.1,
     marginTop: "10%",

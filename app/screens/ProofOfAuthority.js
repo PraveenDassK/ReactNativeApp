@@ -106,7 +106,7 @@ const ProofOfAuthority = ({ navigation, back = true }) => {
     );
   }
   const handleBack = () => {
-    navigation.navigate("ProofOfResidency");
+    navigation.navigate("ProofOfId");
   };
 
   return (

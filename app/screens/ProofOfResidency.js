@@ -95,7 +95,7 @@ const ProofOfResidency = ({ navigation, back = true }) => {
 
     // setUser((prev) => ({ ...prev, frontImage, backImage, documentType }));
     setIsLoading(false);
-    navigation.navigate("ProofOfFace");
+    navigation.navigate("ProofOfID");
 
   };
 
@@ -112,7 +112,7 @@ const ProofOfResidency = ({ navigation, back = true }) => {
   }
 
   const handleBack = () => {
-    navigation.navigate("ProofOfID");
+    navigation.navigate("ProofOfFace");
 
   };
 
