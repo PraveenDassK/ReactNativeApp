@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "479103437211",
+    "project_id": "carbonytebank",
+    "storage_bucket": "carbonytebank.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479103437211:android:e63b7bee5eac2d1c31393e",
+        "android_client_info": {
+          "package_name": "com.carbonyte.bankin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479103437211-sh32kp2nufau9f5aumjff731qg4v4bi2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGkSEUMa7ZFNLVJ0OmK6RufK0vz-GiAgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479103437211-sh32kp2nufau9f5aumjff731qg4v4bi2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

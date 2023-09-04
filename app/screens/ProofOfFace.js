@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Camera } from "expo-camera";
+import { Camera, CameraType } from "expo-camera";
 import * as FaceDetector from "expo-face-detector";
 
 import * as ImagePicker from "expo-image-picker";
@@ -46,6 +46,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDetected, setDetected] = useState(false);
+  const [faceData, setFaceData] = useState([]);
   const [imageUri, setImageUri] = useState();
   const [frontImage, setFrontImage] = useState(null);
   const [documentType, setDocumentType] = useState("");
@@ -93,10 +94,19 @@ const ProofOfFace = ({ navigation, back = true }) => {
     navigation.navigate("ProofOfResidency");
   };
 
+ async function handleFacesDetected ({ faces }) {
+    console.log('here')
+    setFaceData(faces);
+    console.log(faces);
+    setDetected(false)
+    await selectImage();
+  };
+
   if (isDetected) {
     return (
       <Camera
-        // other props
+      style={styles.camera}
+        type={CameraType.front}
         onFacesDetected={handleFacesDetected}
         faceDetectorSettings={{
           mode: FaceDetector.FaceDetectorMode.fast,
@@ -105,14 +115,35 @@ const ProofOfFace = ({ navigation, back = true }) => {
           minDetectionInterval: 100,
           tracking: true,
         }}
-      />
+      >
+        {getFaceDataView()}
+      </Camera>
     );
   }
 
-  const handleFacesDetected = async ({ faces }) => {
-    Alert.alert("Face detected")
-    await selectImage();
-  };
+
+
+  function getFaceDataView() {
+    if (faceData.length === 0) {
+      return (
+        <View style={styles.faces}>
+          <Text style={styles.faceDesc}>No faces :(</Text>
+        </View>
+      );
+    } else {
+      return faceData.map((face, index) => {
+        const eyesShut = face.rightEyeOpenProbability < 0.4 && face.leftEyeOpenProbability < 0.4;
+        // const winking = !eyesShut && (face.rightEyeOpenProbability < 0.4 || face.leftEyeOpenProbability < 0.4);
+        // const smiling = face.smilingProbability > 0.7;
+        return (
+          <View style={styles.faces} key={index}>
+            <Text style={styles.faceDesc}>Face detected!</Text>
+            
+          </View>
+        );
+      });
+    }
+  }
 
   return (
     <Screen>
@@ -199,7 +230,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
 
                   <TouchableOpacity
                     style={styles.uploadContainer}
-                    onPress={() => setDetected(!isDetected)}
+                    onPress={() => setDetected(true)}
                   >
                     {!frontImage ? (
                       <>
@@ -328,6 +359,11 @@ const ImageReview = () => {
 };
 
 const styles = StyleSheet.create({
+  camera: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     paddingVertical: 15,
     paddingHorizontal: 7,
@@ -483,6 +519,17 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     marginBottom: 10,
   },
+  faces: {
+   
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 16
+  },
+  faceDesc: {
+    fontSize: 30,
+    color: colors.white
+  }
 });
 
 export default ProofOfFace;
