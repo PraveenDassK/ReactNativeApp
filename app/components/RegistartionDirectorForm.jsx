@@ -55,6 +55,8 @@ const RegistartionDirectorForm = ({
   const [displaymode, setMode] = useState("date");
   const [isDisplayDate, setDateShow] = useState(false);
   const [show, setShow] = useState(false);
+  const [nationalityshow, setNationalityshow] = useState(false);
+
   const [countryCode, setCountryCode] = useState({
     code: "GB",
     dial_code: "+44",
@@ -92,7 +94,33 @@ const RegistartionDirectorForm = ({
   const [formattedValue, setFormattedValue] = useState("");
   const [addressData, setAddressData] = useState([]);
   const [address, setAddress] = useState(null);
-  const [nationallityValue, setNationallity] = useState("");
+  const [nationallityValue, setNationallity] = useState({
+    code: "GB",
+    dial_code: "+44",
+    flag: "🇬🇧",
+    name: {
+      bg: "Великобритания",
+      by: "Злучанае Каралеўства",
+      cn: "英国",
+      cz: "Spojené království",
+      de: "Vereinigtes Königreich",
+      ee: "Ühendkuningriik",
+      el: "Ηνωμένο Βασίλειο",
+      en: "United Kingdom",
+      es: "Reino Unido",
+      fr: "Royaume-Uni",
+      he: "הממלכה המאוחדת",
+      it: "Regno Unito",
+      jp: "イギリス",
+      nl: "Verenigd Koningkrijk",
+      pl: "Zjednoczone Królestwo",
+      pt: "Reino Unido",
+      ro: "Regatul Unit",
+      ru: "Объединенное Королевство",
+      ua: "Об'єднане Королівство",
+      zh: "英國",
+    },
+  });
   const [occupatioinValue, setOccupatioin] = useState("");
   const [genderValue, setGenderValue] = useState("");
   const [martialValue, setMartialValue] = useState("");
@@ -103,6 +131,7 @@ const RegistartionDirectorForm = ({
   const [countryStatusError, setCountryStatus] = useState("");
   const [nationallityStatusError, setNationallityStatus] = useState("");
   const [occupationStatusError, setOccupatioinStatus] = useState("");
+  const [addressStatusError, setAddressStatus] = useState("");
   const [employementValue, setEmployementValue] = useState("");
   const currentTime = new Date();
 
@@ -293,6 +322,8 @@ const RegistartionDirectorForm = ({
     }
     if (!martialValue) {
       setMartialStatus("MartialValue is required ");
+    } else if (!manualView &&!apiAddress) {
+      setAddressStatus("Address is required");
     } else if (!genderValue) {
       setGenderStatus("Gender is required ");
     } else if (!employementValue) {
@@ -314,6 +345,8 @@ const RegistartionDirectorForm = ({
       setEmploymentStatus("");
       setCountryStatus("");
       setBirthError("");
+      setAddressStatus("")
+      console.log(nationallityValue?.name?.en, "this is a placeholder");
       const dataObj = {
         id: 0,
         customerId: "",
@@ -363,7 +396,7 @@ const RegistartionDirectorForm = ({
 
           savings: savings,
 
-          taxResidency: nationallityValue,
+          taxResidency: nationallityValue?.name?.en,
 
           incomeSources: ["Salary"],
         },
@@ -449,9 +482,9 @@ const RegistartionDirectorForm = ({
     return countries;
   };
 
-  const handleBack =()=>{
-    setFormView(0)
-  }
+  const handleBack = () => {
+    setFormView(0);
+  };
 
   return (
     <ScrollView>
@@ -852,6 +885,10 @@ const RegistartionDirectorForm = ({
                         style={styles.addressDropdown}
                         containerStyle={styles.containerStyle}
                       />
+                      <ErrorMessage
+                        error={addressStatusError}
+                        visible={addressStatusError}
+                      />
                       <Text
                         style={styles.enterManually}
                         onPress={() => setManualView(true)}
@@ -973,6 +1010,53 @@ const RegistartionDirectorForm = ({
                     />
                   </View>
                   <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
+                    <Text
+                      style={styles.textStyle}
+                      onPress={() => setNationalityshow(true)}
+                    >
+                      Nationality
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => setNationalityshow(true)}
+                      style={styles.textCountryInuput}
+                    >
+                      {nationallityValue?.dial_code && (
+                        <Text
+                          style={{
+                            color: "#212529",
+                            fontSize: 20,
+                            fontFamily: "Montserrat-Regular",
+                          }}
+                        >
+                          {`  ${nationallityValue?.name?.en}`}
+                        </Text>
+                      )}
+                      {!nationallityValue?.dial_code && (
+                        <Text
+                          style={{
+                            color: "#999999",
+                            fontSize: isSmallDevice ? 14 : 20,
+                          }}
+                        >
+                          Select the Country of residence{" "}
+                        </Text>
+                      )}
+                    </TouchableOpacity>
+                    <CountryPicker
+                      show={nationalityshow}
+                      // when picker button press you will get the country object with dial code
+                      pickerButtonOnPress={(item) => {
+                        setNationallity(item);
+                        setNationalityshow(false);
+                        handleChange("nationality");
+                      }}
+                    />
+                    <ErrorMessage
+                      error={nationallityStatusError}
+                      visible={nationallityStatusError}
+                    />
+                  </View>
+                  {/* <View style={{ width: "100%", padding: 10, marginTop: 10 }}>
                     <Text style={styles.textStyle}>Nationality</Text>
                     <Dropdown
                       data={nationalityMenu}
@@ -990,7 +1074,7 @@ const RegistartionDirectorForm = ({
                       error={nationallityStatusError}
                       visible={nationallityStatusError}
                     />
-                  </View>
+                  </View> */}
 
                   <View
                     style={{
@@ -1074,7 +1158,6 @@ const RegistartionDirectorForm = ({
                       placeholder="Enter the Savings Amount"
                       onChangeText={handleChange("savings")}
                       keyboardType="numeric"
-
                     />
                     <ErrorMessage
                       error={errors.savings}
@@ -1135,7 +1218,6 @@ const RegistartionDirectorForm = ({
                               style={styles.textPercentageInuput}
                               onChangeText={handleChange("owenershipShares")}
                               keyboardType="numeric"
-
                             />
                             <Text
                               style={{
@@ -1167,7 +1249,6 @@ const RegistartionDirectorForm = ({
                                 "owenershipvotingrights"
                               )}
                               keyboardType="numeric"
-
                             />
                             <Text
                               style={{
