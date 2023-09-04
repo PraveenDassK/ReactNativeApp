@@ -98,7 +98,7 @@ const ProofOfID = ({ navigation, back = true }) => {
 
   const handleSubmit = async () => {
     // navigation.navigate("ProofOfFace");
-    navigation.navigate("ProofOfResidency");
+    navigation.navigate("ProofOfAuthority");
 
     // setIsLoading(true);
     // const clientReference = phoneNumber;
@@ -132,7 +132,7 @@ const ProofOfID = ({ navigation, back = true }) => {
     );
   }
   const handleBack = () => {
-    navigation.navigate("Directororpartner");
+    navigation.navigate("ProofOfResidency");
   };
 
   return (

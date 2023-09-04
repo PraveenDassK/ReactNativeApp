@@ -93,7 +93,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
   };
 
   const handleSubmit = async () => {
-    navigation.navigate("ProofOfAuthority");
+    navigation.navigate("ProofOfResidency");
   };
 
   useEffect(() => {

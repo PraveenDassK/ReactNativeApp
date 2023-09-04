@@ -38,7 +38,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import apiLogin from "../api/apiLogin";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import { CheckBox } from "@rneui/themed";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -152,13 +152,11 @@ const RegistrationDirectororPartner = ({
     );
     setIsLoading(false);
 
-    console.log(response,"this is response");
+    console.log(response, "this is response");
     if (!response.data.result) return alert(response?.data?.details);
-    if (response.data.result) {
-      alert(response?.data?.resultMessage);
-      routerNavigation.navigate("SplashAnimation");
-      
-    }
+
+    alert(response?.data?.resultMessage);
+    routerNavigation.navigate("ProofOfFace");
   };
   const handleBack = () => {
     routerNavigation.navigate("SplashAnimation");
