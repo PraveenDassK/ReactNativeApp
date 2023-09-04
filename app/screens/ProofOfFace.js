@@ -14,6 +14,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -44,7 +45,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
   const { user, setUser } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isDetected, setDetected] = useState(false)
+  const [isDetected, setDetected] = useState(false);
   const [imageUri, setImageUri] = useState();
   const [frontImage, setFrontImage] = useState(null);
   const [documentType, setDocumentType] = useState("");
@@ -93,24 +94,25 @@ const ProofOfFace = ({ navigation, back = true }) => {
   };
 
   if (isDetected) {
-    return <Camera
-      // other props
-      onFacesDetected={handleFacesDetected}
-      faceDetectorSettings={{
-        mode: FaceDetector.FaceDetectorMode.fast,
-        detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
-        runClassifications: FaceDetector.FaceDetectorClassifications.none,
-        minDetectionInterval: 100,
-        tracking: true,
-      }}
-    />;
+    return (
+      <Camera
+        // other props
+        onFacesDetected={handleFacesDetected}
+        faceDetectorSettings={{
+          mode: FaceDetector.FaceDetectorMode.fast,
+          detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+          runClassifications: FaceDetector.FaceDetectorClassifications.none,
+          minDetectionInterval: 100,
+          tracking: true,
+        }}
+      />
+    );
   }
 
   const handleFacesDetected = async ({ faces }) => {
+    Alert.alert("Face detected")
     await selectImage();
   };
-
-
 
   return (
     <Screen>
@@ -197,7 +199,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
 
                   <TouchableOpacity
                     style={styles.uploadContainer}
-                    onPress={() =>setDetected(!isDetected)}
+                    onPress={() => setDetected(!isDetected)}
                   >
                     {!frontImage ? (
                       <>
