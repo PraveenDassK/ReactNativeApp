@@ -38,6 +38,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import apiLogin from "../api/apiLogin";
 import ErrorMessage from "../components/forms/ErrorMessage";
 import { CheckBox } from "@rneui/themed";
+import { useNavigation } from '@react-navigation/native';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -77,6 +78,7 @@ const RegistrationDirectororPartner = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showCheckbox, setShowCheckbox] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const routerNavigation = useNavigation();
 
   const handleSubmit = async (type) => {
     // SaveDetails(type)
@@ -154,11 +156,12 @@ const RegistrationDirectororPartner = ({
     if (!response.data.result) return alert(response?.data?.details);
     if (response.data.result) {
       alert(response?.data?.resultMessage);
-      navigation.navigate("SplashAnimation");
+      routerNavigation.navigate("SplashAnimation");
+      
     }
   };
   const handleBack = () => {
-    navigation.navigate("SplashAnimation");
+    routerNavigation.navigate("SplashAnimation");
   };
 
   const handleDelete = (index, name) => {
