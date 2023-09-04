@@ -4,18 +4,40 @@ import Button from "../components/AppButton";
 import apiAccount from "../api/apiAccount";
 import AuthContext from "../auth/context";
 import terminateCardAlert from "../utility/terminateCardAlert";
+import terminateAccountAlert from "../utility/terminateAccountAlert";
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
 import LinearAccountButton from "../components/LinearAccountButton";
+import PinModal from "../components/PinModal";
+
 const DeleteAccount = ({ navigation }) => {
   const { userID, darkMode } = useContext(AuthContext);
+  const [showPinModal, setShowPinModal] = useState(false);
 
   /**
    * @dev This handles the deletion of the current account
    */
   const handleDelete = async () => {
+    setShowPinModal(true);
+  };
+
+  const handleSuccess = async () => {
+    setShowPinModal(false);
     //apiAccount.DeleteAccount(userID)
   };
+
+  if (showPinModal) {
+    return (
+      <View style={styles.mainContainer}>
+        {/* <RecentTransactions
+        amount={10}
+      /> */}
+        {showPinModal ? (
+          <PinModal title="Enter your PIN" success={() => handleSuccess()} />
+        ) : null}
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
@@ -61,7 +83,7 @@ const DeleteAccount = ({ navigation }) => {
           title="yes"
           textColor="black"
           color="danger"
-          onPress={() => terminateCardAlert(handleDelete)}
+          onPress={() => terminateAccountAlert(handleDelete)}
         />
       </View>
     </ImageBackground>
@@ -76,5 +98,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: "10%",
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
   },
 });
