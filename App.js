@@ -274,7 +274,7 @@ export default function App() {
     );
   }
 
-  
+ 
 
   return !netInfo.isInternetReachable ? (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -323,14 +323,15 @@ export default function App() {
       }}
     >
       <NavigationContainer>
+        <ProofOfFace />
        
-        {!currentUser ? (
+        {/* {!currentUser ? (
           <AuthNavigator />
         ) : currentUser ? (
           <AppNavigator />
         ) : (
           <AuthNavigator />
-        )}
+        )} */}
 
         {/**
          *  @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />

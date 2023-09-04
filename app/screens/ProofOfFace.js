@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Camera } from "expo-camera";
+import * as FaceDetector from "expo-face-detector";
+
 import * as ImagePicker from "expo-image-picker";
 import {
   StyleSheet,
@@ -15,7 +18,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import images from '../assets/login/images'
+import images from "../assets/login/images";
 
 import colors from "../config/colors";
 import GlobalStyles from "../../GlobalStyles";
@@ -41,9 +44,9 @@ const ProofOfFace = ({ navigation, back = true }) => {
   const { user, setUser } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isDetected, setDetected] = useState(false)
   const [imageUri, setImageUri] = useState();
   const [frontImage, setFrontImage] = useState(null);
-  const [backImage, setBackImage] = useState(null);
   const [documentType, setDocumentType] = useState("");
 
   const requestPermission = async () => {
@@ -51,15 +54,13 @@ const ProofOfFace = ({ navigation, back = true }) => {
     if (!granted) alert("You need to enable permission to access the library");
   };
 
-  const selectImage = async (document) => {
+  const selectImage = async () => {
     setIsLoading(true);
     try {
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
       });
-
-      
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
@@ -67,27 +68,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
         setDocumentType(document);
       }
     } catch (error) {
-      
-    }
-    setIsLoading(false);
-  };
-
-  const selectImage2 = async () => {
-    setIsLoading(true);
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        base64: true,
-      });
-
-      
-
-      if (!result.canceled) {
-        setImageUri(result.assets[0].uri);
-        setBackImage(result.assets[0].base64);
-      }
-    } catch (error) {
-      
+      console.error(error);
     }
     setIsLoading(false);
   };
@@ -110,6 +91,26 @@ const ProofOfFace = ({ navigation, back = true }) => {
   const handleBack = () => {
     navigation.navigate("ProofOfResidency");
   };
+
+  if (isDetected) {
+    return <Camera
+      // other props
+      onFacesDetected={handleFacesDetected}
+      faceDetectorSettings={{
+        mode: FaceDetector.FaceDetectorMode.fast,
+        detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+        runClassifications: FaceDetector.FaceDetectorClassifications.none,
+        minDetectionInterval: 100,
+        tracking: true,
+      }}
+    />;
+  }
+
+  const handleFacesDetected = async ({ faces }) => {
+    await selectImage();
+  };
+
+
 
   return (
     <Screen>
@@ -181,40 +182,22 @@ const ProofOfFace = ({ navigation, back = true }) => {
                     </Text>
                   </View>
                   <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                style={{ width :"100%",height:300}}
-                resizeMode="contain"
-                source={require('../assets/icon-faceid.png')}
-              />
-            </View>
-                  {/* <CountryOfResidence /> */}
-
-                  {/* <View>
-              <Dropdown
-                style={[styles.dropdown]}
-                containerStyle={styles.dropdownContainer}
-                data={data}
-                maxHeight={100}
-                labelField="label"
-                valueField="value"
-                placeholder={"Select"}
-                placeholderStyle={{ fontSize: 14, color: "#D3D3D3" }}
-                value={documentType}
-                onChange={(item) => {
-                  setDocumentType(item.value);
-                }}
-              />
-            </View> */}
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      style={{ width: "100%", height: 300 }}
+                      resizeMode="contain"
+                      source={require("../assets/icon-faceid.png")}
+                    />
+                  </View>
 
                   <TouchableOpacity
                     style={styles.uploadContainer}
-                    onPress={() => selectImage(documentType)}
+                    onPress={() =>setDetected(!isDetected)}
                   >
                     {!frontImage ? (
                       <>
