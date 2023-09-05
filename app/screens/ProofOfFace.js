@@ -62,6 +62,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         base64: true,
+        camera: CameraType.front,
       });
 
       if (!result.canceled) {
@@ -90,22 +91,22 @@ const ProofOfFace = ({ navigation, back = true }) => {
       </View>
     );
   }
-  const handleBack = () => {
-    navigation.navigate("ProofOfResidency");
-  };
+  // const handleBack = () => {
+  //   navigation.navigate("ProofOfResidency");
+  // };
 
- async function handleFacesDetected ({ faces }) {
-    console.log('here')
+  async function handleFacesDetected({ faces }) {
+    console.log("here");
     setFaceData(faces);
     console.log(faces);
-    setDetected(false)
-    await selectImage();
-  };
+    setDetected(false);
+    if (faces.length > 0) await selectImage();
+  }
 
   if (isDetected) {
     return (
       <Camera
-      style={styles.camera}
+        style={styles.camera}
         type={CameraType.front}
         onFacesDetected={handleFacesDetected}
         faceDetectorSettings={{
@@ -121,8 +122,6 @@ const ProofOfFace = ({ navigation, back = true }) => {
     );
   }
 
-
-
   function getFaceDataView() {
     if (faceData.length === 0) {
       return (
@@ -132,13 +131,14 @@ const ProofOfFace = ({ navigation, back = true }) => {
       );
     } else {
       return faceData.map((face, index) => {
-        const eyesShut = face.rightEyeOpenProbability < 0.4 && face.leftEyeOpenProbability < 0.4;
+        const eyesShut =
+          face.rightEyeOpenProbability < 0.4 &&
+          face.leftEyeOpenProbability < 0.4;
         // const winking = !eyesShut && (face.rightEyeOpenProbability < 0.4 || face.leftEyeOpenProbability < 0.4);
         // const smiling = face.smilingProbability > 0.7;
         return (
           <View style={styles.faces} key={index}>
             <Text style={styles.faceDesc}>Face detected!</Text>
-            
           </View>
         );
       });
@@ -151,7 +151,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
         <View>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{ flex: 1, justifyContent: "flex-end" }}>
-              {back && (
+              {/* {back && (
                 <TouchableOpacity
                   onPress={() => handleBack()}
                   style={{
@@ -173,7 +173,7 @@ const ProofOfFace = ({ navigation, back = true }) => {
                     color={colors.black}
                   />
                 </TouchableOpacity>
-              )}
+              )} */}
               <View
                 style={{
                   flex: 1,
@@ -361,8 +361,8 @@ const ImageReview = () => {
 const styles = StyleSheet.create({
   camera: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   container: {
     paddingVertical: 15,
@@ -520,16 +520,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   faces: {
-   
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 16
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 16,
   },
   faceDesc: {
     fontSize: 30,
-    color: colors.white
-  }
+    color: colors.white,
+  },
 });
 
 export default ProofOfFace;
