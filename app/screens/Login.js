@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import PhoneInput from "react-native-phone-number-input";
 
 import AuthContext from "../auth/context";
 import Button from "../components/AppButton";
@@ -101,7 +102,7 @@ const Login = ({ navigation }) => {
     setCardID(IDs.cardID);
     setCustomerDetails(IDs.customerDetails);
     setAccountDetails(IDs.accountData);
-    console.log(IDs)
+    console.log(IDs);
     //Turns off the loading
     setIsLoading(false);
   };
@@ -181,21 +182,26 @@ const Login = ({ navigation }) => {
                         { marginLeft: horizontalScale(10) },
                       ]}
                     >
-                      <TextInput
+                      <PhoneInput
                         keyboardType="numeric"
                         onBlur={() => setFieldTouched("phoneNumber")}
                         onChangeText={handleChange("phoneNumber")}
-                        style={[
-                          styles.component1981Child,
-                          styles.childBorder,
-                          { padding: 10 },
-                        ]}
+                        withDarkTheme
+                        withShadow
+                        autoFocus
+                        defaultCode="GB"
+                        // style={[
+                        //   styles.component1981Child,
+                        //   styles.childBorder,
+                        //   { padding: 10 },
+                        // ]}
+                        containerStyle={styles.textPhoneInuput}
                       />
                     </View>
                     <View
                       style={[styles.component1971, styles.mt_850, styles.ml24]}
                     >
-                      <View
+                      {/* <View
                         style={[styles.component1971Child, styles.childBorder]}
                       />
                       <Text
@@ -211,7 +217,7 @@ const Login = ({ navigation }) => {
                         style={[styles.maskGroup288, styles.keysPosition]}
                         resizeMode="cover"
                         source={require("../assets/image-ukflag.png")}
-                      />
+                      /> */}
                     </View>
                     <ErrorMessage
                       error={errors.phoneNumber}
@@ -889,6 +895,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     top: verticalScale(50),
+  },
+  textPhoneInuput: {
+    borderColor: "#EBEBEB",
+    borderRadius: 10,
+    height: 60,
+    width: "100%",
+    borderWidth: 2,
+    marginTop: 10,
+    fontSize: 20,
+    elevation: 0,
   },
 });
 

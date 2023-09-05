@@ -146,7 +146,7 @@ const AccountDeatils = ({
                   // <Text style={styles.incomeAmount}>Coming soon..</Text>
                   <Text style={styles.incomeAmount}>
                     <AntDesign name="arrowup" size={20} />
-                    {formatCurrency(200, "GBP", false)}
+                    {formatCurrency(0, "GBP", false)}
                   </Text>
                 )}
               </View>
@@ -161,7 +161,7 @@ const AccountDeatils = ({
                   // <Text style={styles.incomeAmount}>Coming soon..</Text>
                   <Text style={styles.incomeAmount}>
                     <AntDesign name="arrowdown" size={20} />
-                    {formatCurrency(100, "GBP", false)}
+                    {formatCurrency(0, "GBP", false)}
                   </Text>
                 )}
               </View>

@@ -346,7 +346,6 @@ const RegistartionDirectorForm = ({
       setCountryStatus("");
       setBirthError("");
       setAddressStatus("")
-      console.log(nationallityValue?.name?.en, "this is a placeholder");
       const dataObj = {
         id: 0,
         customerId: "",
