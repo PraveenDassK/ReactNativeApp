@@ -20,14 +20,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.carbonyte.bankin",
-      "buildNumber": "1.1.35"
+      "buildNumber": "1.1.37"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/logo-carbonyte.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 45,
+      "versionCode": 47,
       "package": "com.carbonyte.bankin",
       "googleServicesFile": "./google-services.json"
     },
