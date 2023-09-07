@@ -30,16 +30,27 @@ const validationSchema = Yup.object().shape({
   customers: Yup.string().required().min(1).max(50).label("Customers"),
 });
 
-const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
+const CompanyUsage = ({ SaveDetails, setScreenToShow, setCompanyUsage }) => {
   const [name, setName] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [operationTime, setOperationTime] = useState("")
-
-  const handleSubmit = () => {
-    SaveDetails(operationTime, "CompanyUsage");
+  const [operationTime, setOperationTime] = useState("");
+  const handleSubmit = ({ customers }) => {
+    // console.log(customers)
+    // let newArray = [
+    //   {
+    //     operationType: operationTime,
+    //     user_outofUK: isChecked,
+    //     main_customers: customers,
+    //   },
+    // ];
+    const value={
+      operationType: operationTime,
+      user_outofUK: isChecked,
+      main_customers: customers,
+    }
+    SaveDetails(value, "CompanyUsage");
   };
   const handleBack = () => {
-    
     setScreenToShow("CompanyOperations");
   };
 
@@ -50,7 +61,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
     { label: "LPARTNRSHP", value: "LPARTNRSHP" },
     { label: "LLP", value: "LLP" },
     { label: "PLC", value: "PLC" },
-  ]
+  ];
 
   return (
     <AuthScreen

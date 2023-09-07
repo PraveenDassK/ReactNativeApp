@@ -53,7 +53,7 @@ const Registration = ({ navigation }) => {
   const [companyUsage, setCompanyUsage] = useState(null);
   const [companyOperations, setcompanyOperations] = useState(null);
   const [screenToShow, setScreenToShow] = useState(null);
-  console.log(companyInformation,"this is the company operations")
+  console.log(companyInformation, "this is the company operations");
 
   useEffect(() => {}, []);
 
@@ -153,6 +153,7 @@ const Registration = ({ navigation }) => {
         setScreenToShow("CompanyUsage");
         return;
       case "CompanyUsage":
+        console.log(details);
         setCompanyUsage(details);
         setScreenToShow("CompanyConfirm");
         return;
@@ -161,24 +162,24 @@ const Registration = ({ navigation }) => {
         break;
       case "CompanyConfirm":
         //Confirms and sends the data
-        alert("Worked")
-        // const callResult = await sendDetails("Business");
-        // console.log(callResult, "this is call result");
-        // // const callResult = true
-        // if (callResult === true) {
-        //   //If successful
-        //   alert("Your business was registered");
-        //   let formVariables = {
-        //     businessType: companyUsage,
-        //     businessId: companyHouse.company_number,
-        //   };
-        //   navigation.navigate("Directororpartner", formVariables);
-        //   // setScreenToShow("CompanyDirectors");
-        // } else {
-        //   //If unsuccessful
-        //   alert(callResult);
-        // }
-        // return;
+        // alert("Worked");
+      const callResult = await sendDetails("Business");
+      console.log(callResult, "this is call result");
+      // const callResult = true
+      if (callResult === true) {
+        //If successful
+        alert("Your business was registered");
+        let formVariables = {
+          businessType: companyUsage,
+          businessId: companyHouse.company_number,
+        };
+        navigation.navigate("Directororpartner", formVariables);
+        // setScreenToShow("CompanyDirectors");
+      } else {
+        //If unsuccessful
+        alert(callResult);
+      }
+      return;
       case "PersonalOrBusiness":
         break;
     }
@@ -306,6 +307,7 @@ const Registration = ({ navigation }) => {
           <CompanyUsage
             SaveDetails={detailsSaver}
             setScreenToShow={setScreenToShow}
+            // setCompanyUsage={setCompanyUsage}
           />
         );
       case "CompanyDirectors":
@@ -326,6 +328,11 @@ const Registration = ({ navigation }) => {
             companyType={companyUsage}
             aboutBusines={companyInformation}
             companyOperations={companyOperations}
+            personalDetails={personalDetails}
+            setRegistrationNumberDetails={setRegistrationNumberDetails}
+            setCompanyUsage={setCompanyUsage}
+            setCompanyInformation={setCompanyInformation}
+            setcompanyOperations={setcompanyOperations}
           />
         );
       default:
@@ -391,7 +398,7 @@ const Registration = ({ navigation }) => {
     } else {
       //Business registration
       const newRegObject = {
-        type: companyUsage, //companyHouse.type,
+        type: companyUsage.operationType, //companyHouse.type,
         company_status: companyHouse.company_status,
         etag: companyHouse.etag,
         aboutBusiness: companyInformation,
@@ -448,15 +455,15 @@ const Registration = ({ navigation }) => {
         policyVersion: "1",
       };
       // console.log(newRegObject, "This is the onj");
-      // const response = await apiLogin.RegisterBusinessAccount(
-      //   newRegObject,
-      //   "AA"
-      // );
+      const response = await apiLogin.RegisterBusinessAccount(
+        newRegObject,
+        "AA"
+      );
       // console.log(response, "this is a business account");
-      // if (!response.data.result) return response.data.resultMessage;
+      if (!response.data.result) return response.data.resultMessage;
 
-      // // return false;
-      // return true;
+      // return false;
+      return true;
     }
   };
 
