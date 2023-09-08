@@ -15,6 +15,14 @@ import { Dropdown } from "react-native-element-dropdown";
 import GlobalStyles from "../../GlobalStyles";
 import Button from "./AppButton";
 import AuthScreen from "./AuthScreen";
+import { Formik, Field, Form } from "formik";
+import { CheckBox } from "@rneui/themed";
+import PostCode from "./RegistrationPostCode.jsx";
+import {
+  horizontalScale,
+  verticalScale,
+  moderateScale,
+} from "../config/scaling";
 const ConfirmDetailsBusiness = ({
   SaveDetails,
   setScreenToShow,
@@ -27,6 +35,9 @@ const ConfirmDetailsBusiness = ({
   setCompanyUsage,
   setCompanyInformation,
   setcompanyOperations,
+  setPersonalDetails,
+  addresses,
+  setAddresses
 }) => {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,19 +61,42 @@ const ConfirmDetailsBusiness = ({
   //state for Customer outside UK
   const [isOutsideUK, setIsOutsideUk] = useState(false);
   const [outsideUKValue, setOutsideUKValue] = useState(false);
-  console.log(companyType, "this is a confirmation");
+  console.log(addresses, "this is a confirmation");
+
+  // states for setting source of income
+
+  const [salesRevenue, setSalesRevenue] = useState(false);
+  const [subscriptionRevenue, setSubscriptionRevenue] = useState(false);
+  const [advertisingRevenue, setAdvertisingRevenue] = useState(false);
+  const [affiliateIncome, setAffiliateIncome] = useState(false);
+  const [licensingFranchisingRevenue, setLicensingFranchisingRevenue] =
+    useState(false);
+  const [rentalIncome, setRentalIncome] = useState(false);
+  const [consultancyServicesIncome, setConsultancyServicesIncome] =
+    useState(false);
+  const [grantsSubsidiesIncome, setGrantsSubsidiesIncome] = useState(false);
+  const [crowdfundingIncome, setCrowdfundingIncome] = useState(false);
+
+  //state for showing source of income
+  const [isEarning, setIsEarnings] = useState(false);
+  const [earningValue, setEarningValue] = useState(null);
+
+  //state for showing address edit
+  const [isAddress, setIsAddress] = useState(false);
+  const [addressValue, setAddressValue] = useState(null);
+  const [formValue, setFormValue] = useState([]);
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   const getData = useCallback(() => {
     let newArray = [];
     // newArray.push(data?.registered_office_address);
-    let value = Object.values(data?.registered_office_address).map(
+    let value = Object.values(addresses?.[0]).map(
       (eachvalue, index) => newArray.push(eachvalue)
     );
     setNewAddress(newArray.sort().join(", "));
-  }, [data]);
+  }, [newAddress, data]);
   const handleSubmit = async () => {
     setLoading(true);
     await SaveDetails(null, "CompanyConfirm");
@@ -72,6 +106,7 @@ const ConfirmDetailsBusiness = ({
   const handleBack = () => {
     setScreenToShow("CompanyUsage");
   };
+  //handle edit for each field
   const handleEdit = (key, value) => {
     setModalVisible(true);
     // setSingleData(value);
@@ -102,12 +137,100 @@ const ConfirmDetailsBusiness = ({
         setIsOutsideUk(true);
         setOutsideUKValue(value);
         break;
+      case "earning":
+        setIsEarnings(true);
+        setEarningValue(value);
+        value?.map((eachValue, index) => {
+          // if (eachValue ==="affiliateIncome"){
+
+          // }
+          switch (eachValue) {
+            case "affiliateIncome":
+              setAffiliateIncome(true);
+              break;
+            case "licensingFranchisingRevenue":
+              setLicensingFranchisingRevenue(true);
+              break;
+
+            case "salesRevenue":
+              setSalesRevenue(true);
+              break;
+            case "subscriptionRevenue":
+              setSubscriptionRevenue(true);
+              break;
+            case "advertisingRevenue":
+              setAdvertisingRevenue(true);
+              break;
+            case "rentalIncome":
+              setRentalIncome(true);
+              break;
+            case "consultancyServicesIncome":
+              setConsultancyServicesIncome(true);
+              break;
+            case "grantsSubsidiesIncome":
+              setGrantsSubsidiesIncome(true);
+              break;
+            case "crowdfundingIncome":
+              setCrowdfundingIncome(true);
+              break;
+          }
+        });
+        break;
+      case "Location":
+        setIsAddress(true);
+        setAddressValue(value);
+        // let newAddress = [
+        //   {
+        //     id: 1,
+        //     label: "Address1",
+        //     placeholder: "Enter the address line1",
+        //     value: value?.address_line_1 === null ? "" : value?.address_line_1,
+        //     initialValue: "address_line_1",
+        //   },
+        //   {
+        //     id: 2,
+        //     label: "Address2",
+        //     placeholder: "Enter the address line2",
+        //     value: value?.address_line_2 === null ? "" : value?.address_line_2,
+        //     initialValue: "address_line_2",
+        //   },
+        //   {
+        //     id: 3,
+        //     label: "Country",
+        //     placeholder: "Enter the country",
+        //     value: value?.country === null ? "" : value?.country,
+        //     initialValue: "country",
+        //   },
+        //   {
+        //     id: 4,
+        //     label: "Locality",
+        //     placeholder: "Enter the locality",
+        //     value: value?.locality === null ? "" : value?.locality,
+        //     initialValue: "locality",
+        //   },
+        //   {
+        //     id: 5,
+        //     label: "Postal Code",
+        //     placeholder: "Enter the postal code",
+        //     value: value?.postal_code === null ? "" : value?.postal_code,
+        //     initialValue: "postcode",
+        //   },
+        //   {
+        //     id: 6,
+        //     label: "Region",
+        //     placeholder: "Enter the region",
+        //     value: value?.region === null ? "" : value?.region,
+        //     initialValue: "region",
+        //   },
+        // ];
+        // setFormValue(newAddress);
+        break;
     }
 
     // setIsName
-    console.log(key);
   };
 
+  // handle submit of each filed
   const handleModalFinish = () => {
     setModalVisible(false);
     if (isName) {
@@ -120,7 +243,6 @@ const ConfirmDetailsBusiness = ({
         ...companyType,
         operationType: businessTypeValue,
       };
-      console.log(businessValue);
       setCompanyUsage(businessValue);
       setIsBusinessType(false);
     } else if (isAboutBusiness) {
@@ -144,8 +266,35 @@ const ConfirmDetailsBusiness = ({
       };
       setCompanyUsage(maincustomer);
       setIsOutsideUk(false);
+    } else if (isEarning) {
+      const details = {
+        salesRevenue: salesRevenue,
+        subscriptionRevenue: subscriptionRevenue,
+        advertisingRevenue: advertisingRevenue,
+        affiliateIncome: affiliateIncome,
+        licensingFranchisingRevenue: licensingFranchisingRevenue,
+        rentalIncome: rentalIncome,
+        consultancyServicesIncome: consultancyServicesIncome,
+        grantsSubsidiesIncome: grantsSubsidiesIncome,
+        crowdfundingIncome: crowdfundingIncome,
+      };
+      setPersonalDetails(getTrueItems(details));
+      setIsEarnings(false);
     }
   };
+
+  // function to get true value for income
+  function getTrueItems(obj) {
+    const trueItems = [];
+
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key) && obj[key] === true) {
+        trueItems.push(key);
+      }
+    }
+
+    return trueItems;
+  }
   //data for company business type
   const companyData = [
     { label: "LLC", value: "LLC" },
@@ -172,6 +321,21 @@ const ConfirmDetailsBusiness = ({
     { label: "False", value: false },
   ];
 
+  const handleAddress = (value) => {
+    console.log(value);
+    setModalVisible(false);
+    setAddresses([value]);
+
+    // const editedAddress = { ...data, registered_office_address: value };
+    // setAddressValue(editedAddress);
+    // setRegistrationNumberDetails(editedAddress);
+    let newArray = [];
+     Object.values(value).map(
+      (eachvalue, index) => newArray.push(eachvalue)
+    );
+    setNewAddress(newArray.sort().join(", "));
+    setIsAddress(false);
+  };
   return (
     <ScrollView>
       <AuthScreen
@@ -195,7 +359,9 @@ const ConfirmDetailsBusiness = ({
         <EditComponents
           title={"Location"}
           value={newAddress}
-          onPress={() => handleEdit()}
+          onPress={() =>
+            handleEdit("Location", addresses)
+          }
         />
         <EditComponents
           title={"About your Business"}
@@ -205,7 +371,7 @@ const ConfirmDetailsBusiness = ({
         <EditComponents
           title={"How are you earning?"}
           value={personalDetails.join("\n")}
-          onPress={() => handleEdit()}
+          onPress={() => handleEdit("earning", personalDetails)}
         />
         <EditComponents
           title={`Howlong have you been${"\n"} opearating?`}
@@ -260,113 +426,290 @@ const ConfirmDetailsBusiness = ({
               setIsName(false);
             }}
           >
-            <View style={styles.modalMainView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Edit Details</Text>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                    setIsAboutBusiness(false);
-                    setIsBusinessType(false);
-                    setIsName(false);
-                    setOpearating(false);
-                    setIsMainCustomer(false);
-                    setIsOutsideUk(false);
-                  }}
-                >
-                  <Text style={styles.textStyle}>X</Text>
-                </Pressable>
-              </View>
-              <View style={{ padding: "0%" }}>
-                {isName ? (
-                  <TextInput
-                    style={styles.textInput}
-                    //   keyboardType="numeric"
-                    onChangeText={(newText) => setBusinessNameText(newText)}
-                    defaultValue={businessNameText}
-                  />
-                ) : null}
+            <ScrollView>
+              <View style={styles.modalMainView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>Edit Details</Text>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => {
+                      setModalVisible(!modalVisible);
+                      setIsAboutBusiness(false);
+                      setIsBusinessType(false);
+                      setIsName(false);
+                      setOpearating(false);
+                      setIsMainCustomer(false);
+                      setIsEarnings(false)
+                      setIsOutsideUk(false);
+                      setIsAddress(false);
+                    }}
+                  >
+                    <Text style={styles.textStyle}>X</Text>
+                  </Pressable>
+                </View>
+                <View style={{ padding: "0%" }}>
+                  {isName ? (
+                    <TextInput
+                      style={styles.textInput}
+                      //   keyboardType="numeric"
+                      onChangeText={(newText) => setBusinessNameText(newText)}
+                      defaultValue={businessNameText}
+                    />
+                  ) : null}
 
-                {isBusinessType ? (
-                  <Dropdown
-                    style={[styles.textInput]}
-                    containerStyle={styles.dropdownContainer}
-                    data={companyData}
-                    maxHeight={100}
-                    labelField="label"
-                    valueField="label"
-                    placeholder={"Select an option"}
-                    value={businessTypeValue}
-                    defaultValue={businessTypeValue}
-                    onChange={(item) => {
-                      setBusinessTypeValue(item.value);
-                    }}
-                  />
-                ) : null}
-                {isAboutBusiness ? (
-                  <TextInput
-                    editable
-                    multiline
-                    numberOfLines={4}
-                    maxLength={500}
-                    minLength={250}
-                    placeholder="Write about your business... (min 250 characters)"
-                    placeholderTextColor="grey"
-                    keyboardType="Text"
-                    defaultValue={aboutBusinessValue}
-                    onChangeText={(newText) => setAboutBusinessValue(newText)}
-                    style={[styles.component1981Child, styles.childBorder]}
-                  />
-                ) : null}
-                {isOpearating ? (
-                  <Dropdown
-                    style={[styles.textInput]}
-                    containerStyle={styles.dropdownContainer}
-                    data={timeOptions}
-                    maxHeight={100}
-                    labelField="label"
-                    valueField="label"
-                    placeholder={"Select an option"}
-                    value={opeartingValue}
-                    defaultValue={opeartingValue}
-                    onChange={(item) => {
-                      setOpearatingValue(item.value);
-                    }}
-                  />
-                ) : null}
-                {isMainCustomer ? (
-                  <TextInput
-                    style={styles.textInput}
-                    //   keyboardType="numeric"
-                    onChangeText={(newText) => setMainCustomerValue(newText)}
-                    defaultValue={mainCustomerValue}
-                  />
-                ) : null}
-                {isOutsideUK ? (
-                  <Dropdown
-                    style={[styles.textInput]}
-                    containerStyle={styles.dropdownContainer}
-                    data={outSideUkData}
-                    maxHeight={100}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={"Select an option"}
-                    value={outsideUKValue}
-                    defaultValue={outsideUKValue}
-                    onChange={(item) => {
-                      setOutsideUKValue(item.value);
-                    }}
-                  />
-                ) : null}
-                <Button
-                  title="Continue"
-                  color="black"
-                  textColor="white"
-                  onPress={handleModalFinish}
-                />
+                  {isBusinessType ? (
+                    <Dropdown
+                      style={[styles.textInput]}
+                      containerStyle={styles.dropdownContainer}
+                      data={companyData}
+                      maxHeight={100}
+                      labelField="label"
+                      valueField="label"
+                      placeholder={"Select an option"}
+                      value={businessTypeValue}
+                      defaultValue={businessTypeValue}
+                      onChange={(item) => {
+                        setBusinessTypeValue(item.value);
+                      }}
+                    />
+                  ) : null}
+                  {isAboutBusiness ? (
+                    <TextInput
+                      editable
+                      multiline
+                      numberOfLines={4}
+                      maxLength={500}
+                      minLength={250}
+                      placeholder="Write about your business... (min 250 characters)"
+                      placeholderTextColor="grey"
+                      keyboardType="Text"
+                      defaultValue={aboutBusinessValue}
+                      onChangeText={(newText) => setAboutBusinessValue(newText)}
+                      style={[styles.component1981Child, styles.childBorder]}
+                    />
+                  ) : null}
+                  {isOpearating ? (
+                    <Dropdown
+                      style={[styles.textInput]}
+                      containerStyle={styles.dropdownContainer}
+                      data={timeOptions}
+                      maxHeight={100}
+                      labelField="label"
+                      valueField="label"
+                      placeholder={"Select an option"}
+                      value={opeartingValue}
+                      defaultValue={opeartingValue}
+                      onChange={(item) => {
+                        setOpearatingValue(item.value);
+                      }}
+                    />
+                  ) : null}
+                  {isMainCustomer ? (
+                    <TextInput
+                      style={styles.textInput}
+                      //   keyboardType="numeric"
+                      onChangeText={(newText) => setMainCustomerValue(newText)}
+                      defaultValue={mainCustomerValue}
+                    />
+                  ) : null}
+                  {isOutsideUK ? (
+                    <Dropdown
+                      style={[styles.textInput]}
+                      containerStyle={styles.dropdownContainer}
+                      data={outSideUkData}
+                      maxHeight={100}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={"Select an option"}
+                      value={outsideUKValue}
+                      defaultValue={outsideUKValue}
+                      onChange={(item) => {
+                        setOutsideUKValue(item.value);
+                      }}
+                    />
+                  ) : null}
+                  {isEarning ? (
+                    <Formik onSubmit={(values) => sendData(values)}>
+                      {({ handleChange, handleSubmit, setFieldTouched }) => (
+                        <View
+                          style={[
+                            styles.component1981,
+                            styles.mt14,
+                            { marginLeft: horizontalScale(10) },
+                          ]}
+                        >
+                          <Text>Enter all that apply</Text>
+                          <CheckBox
+                            title="Sales revenue"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={salesRevenue}
+                            onPress={() => setSalesRevenue(!salesRevenue)}
+                          />
+                          <CheckBox
+                            title="Subscription revenue"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={subscriptionRevenue}
+                            onPress={() =>
+                              setSubscriptionRevenue(!subscriptionRevenue)
+                            }
+                          />
+                          <CheckBox
+                            title="Advertising revenue"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={advertisingRevenue}
+                            onPress={() =>
+                              setAdvertisingRevenue(!advertisingRevenue)
+                            }
+                          />
+                          <CheckBox
+                            title="Affiliate income"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={affiliateIncome}
+                            onPress={() => setAffiliateIncome(!affiliateIncome)}
+                          />
+                          <CheckBox
+                            title="Licensing or franchising"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={licensingFranchisingRevenue}
+                            onPress={() =>
+                              setLicensingFranchisingRevenue(
+                                !licensingFranchisingRevenue
+                              )
+                            }
+                          />
+                          <CheckBox
+                            title="Rental income"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={rentalIncome}
+                            onPress={() => setRentalIncome(!rentalIncome)}
+                          />
+                          <CheckBox
+                            title="Consultancy or professional services"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={consultancyServicesIncome}
+                            onPress={() =>
+                              setConsultancyServicesIncome(
+                                !consultancyServicesIncome
+                              )
+                            }
+                          />
+                          <CheckBox
+                            title="Grants and subsidies"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={grantsSubsidiesIncome}
+                            onPress={() =>
+                              setGrantsSubsidiesIncome(!grantsSubsidiesIncome)
+                            }
+                          />
+                          <CheckBox
+                            title="Crowdfunding"
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle-o"
+                            checkedColor="black"
+                            checked={crowdfundingIncome}
+                            onPress={() =>
+                              setCrowdfundingIncome(!crowdfundingIncome)
+                            }
+                          />
+                        </View>
+                      )}
+                    </Formik>
+                  ) : null}
+                  {isAddress ? (
+                    // <Formik
+                    //   enablereinitialize
+                    //   initialValues={{
+                    //     address_line_1: formValue?.[0]?.value,
+                    //     address_line_2: formValue?.[1]?.value,
+                    //     country: formValue?.[2]?.value,
+                    //     locality: formValue?.[3]?.value,
+                    //     postal_code: formValue?.[4]?.value,
+                    //     region: formValue?.[5]?.value,
+                    //   }}
+                    //   // validationSchema={validationSchema}
+                    //   onSubmit={handleAddress}
+                    // >
+                    //   {({
+                    //     handleChange,
+                    //     handleSubmit,
+                    //     errors,
+                    //     setFieldTouched,
+                    //     setFieldValue,
+                    //     touched,
+                    //   }) => (
+                    //     <>
+                    //       <View>
+                    //         {formValue?.map((item, index) => (
+                    //           <View key={item.id}>
+                    //             <View
+                    //               key={item.id}
+                    //               style={{
+                    //                 width: "90%",
+                    //                 marginLeft: "5%",
+                    //                 marginBottom: "5%",
+                    //               }}
+                    //             >
+                    //               <Text style={styles.lable}>{item.label}</Text>
+                    //               <TextInput
+                    //                 onBlur={() =>
+                    //                   setFieldTouched(item.initialValue)
+                    //                 }
+                    //                 onChangeText={handleChange(
+                    //                   item.initialValue
+                    //                 )}
+                    //                 style={styles.textInput}
+                    //                 placeholder={item.placeholder}
+                    //                 // value={item.initialValue}
+                    //                 defaultValue={item.value}
+                    //               />
+
+                    //               {/* <ErrorMessage
+                    //                   error={errors[item.initialValue]}
+                    //                   visible={touched[item.initialValue]}
+                    //                 /> */}
+                    //             </View>
+                    //           </View>
+                    //         ))}
+                    //         <Button
+                    //           title="Continue"
+                    //           color="black"
+                    //           textColor="white"
+                    //           onPress={handleSubmit}
+                    //         />
+                    //       </View>
+                    //     </>
+                    //   )}
+                    // </Formik>
+                    <PostCode AddAddress={handleAddress} backgroundColor={"white"}/>
+
+                  ) : null}
+                  {!isAddress ? (
+                    <Button
+                      title="Continue"
+                      color="black"
+                      textColor="white"
+                      onPress={handleModalFinish}
+                    />
+                  ) : null}
+                </View>
               </View>
-            </View>
+            </ScrollView>
           </Modal>
         </View>
       </AuthScreen>
@@ -430,7 +773,6 @@ const styles = StyleSheet.create({
 export default ConfirmDetailsBusiness;
 
 const EditComponents = ({ title, value, onPress }) => {
-  console.log(value);
   return (
     <View
       style={{

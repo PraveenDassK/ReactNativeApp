@@ -28,7 +28,7 @@ import Button from "./AppButton";
 import { Dropdown } from "react-native-element-dropdown";
 import { CheckBox } from "@rneui/themed";
 
-const Postcode = ({ AddAddress }) => {
+const Postcode = ({ AddAddress ,backgroundColor}) => {
   const [addressData, setAddressData] = useState([]);
   const [address, setAddress] = useState(null);
 
@@ -36,7 +36,7 @@ const Postcode = ({ AddAddress }) => {
    * @dev This finds the correct address from the postcode
    * @param {Str} postcode The postcode entered
    */
-  const handleSubmit = async ({ postcode }) => {
+  const handleSubmit = async ({ postcode, }) => {
     // const response = await apiLogin.GetAddressByPostCode(postcode)
     // 
     // setAddressData(response)
@@ -46,7 +46,7 @@ const Postcode = ({ AddAddress }) => {
       {
         label: "Fake address",
         value: {
-          address1: "123 street",
+          address1: "124 street",
           address2: "456 house",
           area: "Area 5",
           city: "City 6",
@@ -80,7 +80,7 @@ const Postcode = ({ AddAddress }) => {
               keyboardType="postcode"
               onBlur={() => setFieldTouched("postcode")}
               onChangeText={handleChange("postcode")}
-              style={[styles.childBorder, { padding: 10 }]}
+              style={[styles.childBorder, { padding: 10 ,backgroundColor:backgroundColor}]}
             />
             <Button
               title="search"

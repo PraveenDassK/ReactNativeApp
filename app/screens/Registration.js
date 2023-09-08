@@ -163,23 +163,23 @@ const Registration = ({ navigation }) => {
       case "CompanyConfirm":
         //Confirms and sends the data
         // alert("Worked");
-      const callResult = await sendDetails("Business");
-      console.log(callResult, "this is call result");
-      // const callResult = true
-      if (callResult === true) {
-        //If successful
-        alert("Your business was registered");
-        let formVariables = {
-          businessType: companyUsage,
-          businessId: companyHouse.company_number,
-        };
-        navigation.navigate("Directororpartner", formVariables);
-        // setScreenToShow("CompanyDirectors");
-      } else {
-        //If unsuccessful
-        alert(callResult);
-      }
-      return;
+        const callResult = await sendDetails("Business");
+        console.log(callResult, "this is call result");
+        // const callResult = true
+        if (callResult === true) {
+          //If successful
+          alert("Your business was registered");
+          let formVariables = {
+            businessType: companyUsage,
+            businessId: companyHouse.company_number,
+          };
+          navigation.navigate("Directororpartner", formVariables);
+          // setScreenToShow("CompanyDirectors");
+        } else {
+          //If unsuccessful
+          alert(callResult);
+        }
+        return;
       case "PersonalOrBusiness":
         break;
     }
@@ -329,10 +329,13 @@ const Registration = ({ navigation }) => {
             aboutBusines={companyInformation}
             companyOperations={companyOperations}
             personalDetails={personalDetails}
+            addresses={addresses}
             setRegistrationNumberDetails={setRegistrationNumberDetails}
             setCompanyUsage={setCompanyUsage}
             setCompanyInformation={setCompanyInformation}
             setcompanyOperations={setcompanyOperations}
+            setPersonalDetails={setPersonalDetails}
+            setAddresses={setAddresses}
           />
         );
       default:
@@ -454,7 +457,7 @@ const Registration = ({ navigation }) => {
         acceptanceDateTime: "29-06-2023",
         policyVersion: "1",
       };
-      // console.log(newRegObject, "This is the onj");
+      console.log(newRegObject, "This is the onj");
       const response = await apiLogin.RegisterBusinessAccount(
         newRegObject,
         "AA"
