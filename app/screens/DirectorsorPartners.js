@@ -25,11 +25,12 @@ const DirectororPartner = ({ navigation, route }) => {
     businessId: "",
     businessType: "",
   });
+  console.log(dataFromForm,"this is data")
   useEffect(() => {
     //  if(dataFromForm.businessType === "LLC"){
 
     //  }
-    switch (dataFromForm.businessType) {
+    switch (dataFromForm?.businessType?.operationType) {
       case "LLC":
         setRegistrationData({
           businessId: dataFromForm.businessId,

@@ -173,6 +173,7 @@ const Registration = ({ navigation }) => {
             businessType: companyUsage,
             businessId: companyHouse.company_number,
           };
+          console.log(formVariables,"this is a form");
           navigation.navigate("Directororpartner", formVariables);
           // setScreenToShow("CompanyDirectors");
         } else {
