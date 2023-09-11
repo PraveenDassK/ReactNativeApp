@@ -26,8 +26,8 @@ const BusinessDetails = ({ SaveDetails, setScreenToShow }) => {
     if (regName == "") return Alert.alert("Nothing entered");
     setLoading(true);
     const regNumber = await apiLoginRegister.getCompanyRegNoByName(regName);
-    
-    if (regNumber == null) {
+    console.log(regNumber)
+    if (regNumber == null || regNumber == "The remote server returned an error: (404) Not Found.") {
       setLoading(false);
       return Alert.alert("The companay could not be found");
     }
