@@ -8,13 +8,11 @@
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
-        "resourceClass": "m1-medium",
-        "simulator": true
+        "resourceClass": "m1-medium"
       }
     },
     "development-simulator": {
-      "developmentClient": true,
-      "distribution": "internal",
+      "extends": "development",
       "ios": {
         "simulator": true
       }

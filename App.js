@@ -22,8 +22,7 @@ import apiLogin from "./app/api/apiLogin";
 
 import versionChecker from "./app/utility/versionChecker";
 import { usePreventScreenCapture } from "expo-screen-capture";
-import ProofOfFace from "./app/screens/ProofOfFace";
-import ProofOfAddress from "./app/screens/ProofOfAddress";
+
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -323,7 +322,6 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-       
         {!currentUser ? (
           <AuthNavigator />
         ) : currentUser ? (
@@ -331,11 +329,6 @@ export default function App() {
         ) : (
           <AuthNavigator />
         )}
-
-        {/**
-         *  @Devs- Do not delete the Authentication code above. Render the Navigator you require for development. i.e. <AppNavigator />
-            or <AuthNavigator />
-        */}
       </NavigationContainer>
     </AuthContext.Provider>
   );

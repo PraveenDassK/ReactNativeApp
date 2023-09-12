@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Camera, CameraType } from "expo-camera";
 import * as FaceDetector from "expo-face-detector";
 import * as ImagePicker from "expo-image-picker";
@@ -10,11 +10,17 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
+import Button from "../components/AppButton";
 
-const ProofOfFace = () => {
+const ProofOfFace = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDetected, setIsDetected] = useState(false);
   const [imageUri, setImageUri] = useState(null);
+  const [faceAccuracy, setFaceAccuracy] = useState(null);
+  const [countdown, setCountdown] = useState(3); // Three-second countdown
+  const [autoCapture, setAutoCapture] = useState(false);
+
+  const cameraRef = useRef(null);
 
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestCameraPermissionsAsync();
@@ -22,33 +28,70 @@ const ProofOfFace = () => {
   };
 
   const selectImage = async () => {
-    setIsLoading(true);
     try {
-      const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        base64: true,
-        camera: CameraType.front,
-      });
+      setIsLoading(true);
+      if (cameraRef.current) {
+        const options = { quality: 0.5, base64: true };
+        const photo = await cameraRef.current.takePictureAsync(options);
 
-      if (!result.cancelled) {
-        setImageUri(result.uri);
+        setImageUri(photo.uri);
+        const faceResult = await FaceDetector.detectFacesAsync(photo.uri, {
+          mode: FaceDetector.FaceDetectorMode.accurate,
+          detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+          runClassifications: FaceDetector.FaceDetectorClassifications.all,
+        });
+
+        if (faceResult.faces.length > 0) {
+          setFaceAccuracy(faceResult.faces[0].leftEyeOpenProbability);
+          setAutoCapture(false); // Reset autoCapture to false after a successful capture
+        }
+        console.log("picture taken", photo, faceResult);
+        setIsDetected(true);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
     }
-    setIsLoading(false);
   };
 
   const handleFacesDetected = ({ faces }) => {
     if (faces.length > 0) {
-      setIsDetected(true);
-      selectImage();
+      // setIsDetected(true);
+      // setFaceAccuracy(faces[0].leftEyeOpenProbability);
+      // if (
+      //   faces[0].leftEyeOpenProbability > 0.5 &&
+      //   faces[0].rightEyeOpenProbability > 0.5
+      // )
+      //   return startCountdown();
+      // // setIsDetected(false);
     }
+  };
+
+  const startCountdown = () => {
+    let timer = setInterval(() => {
+      if (countdown > 0) {
+        setCountdown(countdown - 1);
+      } else {
+        // setIsDetected(true)
+        clearInterval(timer);
+        setAutoCapture(true); // Start automatic capture
+        return;
+      }
+    }, 1000); // Update the countdown every second
   };
 
   useEffect(() => {
     requestPermission();
   }, []);
+
+  useEffect(() => {
+    if (autoCapture) {
+      async () => {
+        await selectImage();
+      };
+      setIsDetected(true);
+    }
+  }, [autoCapture]);
 
   if (isLoading) {
     return (
@@ -64,32 +107,58 @@ const ProofOfFace = () => {
         <View style={styles.faceDetectedContainer}>
           <Text style={styles.faceDetectedText}>Face Detected!</Text>
           <Image source={{ uri: imageUri }} style={styles.detectedImage} />
+          {faceAccuracy !== null && (
+            <Text style={styles.accuracyText}>
+              Face Accuracy: {Math.round(faceAccuracy * 100)}%
+            </Text>
+          )}
+
+          <View style={styles.captureButton}>
+            <Button
+              title="Retake Picture"
+              textColor="black"
+              color="white"
+              onPress={() => setIsDetected(false)}
+            />
+          </View>
+          <View style={styles.selectButton}>
+            <Button
+              title="Select Picture"
+              textColor="white"
+              color="black"
+              onPress={() => navigation.navigate("ProofOfResidency")}
+            />
+          </View>
         </View>
       ) : (
-        <Camera
-          style={styles.camera}
-          type={CameraType.front}
-          onFacesDetected={handleFacesDetected}
-          faceDetectorSettings={{
-            mode: FaceDetector.FaceDetectorMode.fast,
-            detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
-            runClassifications: FaceDetector.FaceDetectorClassifications.none,
-            minDetectionInterval: 100,
-            tracking: true,
-          }}
-        />
-      )}
-      {!isDetected && (
-        <TouchableOpacity
-          style={styles.captureButton}
-          onPress={selectImage}
-          disabled={isLoading}
-        >
-          <Text style={styles.captureButtonText}>Take Picture</Text>
-        </TouchableOpacity>
+        <>
+          <Camera
+            ref={cameraRef}
+            style={styles.camera}
+            type={CameraType.front} // Use front-facing camera
+            onFacesDetected={handleFacesDetected}
+            faceDetectorSettings={{
+              mode: FaceDetector.FaceDetectorMode.accurate,
+              detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+              runClassifications: FaceDetector.FaceDetectorClassifications.all,
+              minDetectionInterval: 100,
+              tracking: true,
+            }}
+          />
+          <View style={styles.captureButton}>
+            <Button
+              title="Take Picture"
+              textColor="white"
+              color="red"
+              onPress={selectImage}
+            />
+          </View>
+        </>
       )}
     </View>
   );
+
+ 
 };
 
 const styles = StyleSheet.create({
@@ -121,13 +190,18 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: "contain",
   },
+  accuracyText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
   captureButton: {
     position: "absolute",
+    bottom: 80,
+  },
+  selectButton: {
+    position: "absolute",
     bottom: 20,
-    backgroundColor: "blue",
-    borderRadius: 30,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
   },
   captureButtonText: {
     color: "white",
@@ -137,5 +211,3 @@ const styles = StyleSheet.create({
 });
 
 export default ProofOfFace;
-
-
