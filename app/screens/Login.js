@@ -174,7 +174,7 @@ const Login = ({ navigation }) => {
                       borderTopRightRadius: 20,
                     }}
                   >
-                    <Text>Mobile number</Text>
+                    <Text>Phone number</Text>
                     <View
                       style={[
                         styles.component1981,

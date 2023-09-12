@@ -23,11 +23,11 @@ import GlobalStyles from "../../GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
 import Tagline from "../components/Tagline";
 const ITEMS = [
-  {
-    id: 1,
-    title: "statements",
-    route: "Transactions",
-  },
+  // {
+  //   id: 1,
+  //   title: "statements",
+  //   route: "Transactions",
+  // },
   {
     id: 2,
     title: "limits",
@@ -45,8 +45,8 @@ const ITEMS = [
   },
   {
     id: 5,
-    title: "invoice",
-    route: "Invoices",
+    title: "Edit Business",
+    route: "AccountEdit",
   },
   {
     id:6,

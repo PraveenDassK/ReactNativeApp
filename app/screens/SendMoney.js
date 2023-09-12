@@ -309,7 +309,7 @@ const SendMoney = ({ navigation }) => {
                     onPress={() => setModalVisible(true)}
                   />
                 </View>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => navigation.navigate("MoveMoney")}
                 >
                   <View
@@ -338,7 +338,7 @@ const SendMoney = ({ navigation }) => {
                       To self account
                     </Text>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
               <View
                 style={
