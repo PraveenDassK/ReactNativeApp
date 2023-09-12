@@ -19,7 +19,7 @@ import {
 import { Formik } from "formik";
 import * as Yup from "yup";
 import PhoneInput from "react-native-phone-number-input";
-
+import LoginTopImage from "../assets/login/login-img.svg";
 import AuthContext from "../auth/context";
 import Button from "../components/AppButton";
 import ErrorMessage from "../components/forms/ErrorMessage";
@@ -40,7 +40,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  phoneNumber: Yup.string().required().min(9).max(11).label("Phone number"),
+  phoneNumber: Yup.string().required().min(9).max(11).label("Mobile number"),
 });
 
 const Login = ({ navigation }) => {
@@ -125,11 +125,12 @@ const Login = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <Image
-              style={{ width: "100%", height: 300 }}
+            {/* <Image
+              style={{ width: "100%", height: 400 }}
               resizeMode="contain"
-              source={require("../assets/login/LoginAnimalFull.png")}
-            />
+              source={LoginTopImage}
+            /> */}
+              <LoginTopImage />
           </View>
 
           <View
@@ -147,9 +148,6 @@ const Login = ({ navigation }) => {
               }}
             >
               <Text style={{ fontSize: 30 }}>Log in to your account</Text>
-              <Text style={[styles.otp]}>
-                OTP will be sent to verify your number and email ID.
-              </Text>
             </View>
 
             <Formik
@@ -168,12 +166,15 @@ const Login = ({ navigation }) => {
                   <View
                     style={{
                       paddingHorizontal: 30,
-                      paddingVertical: 50,
+                      paddingVertical: 0,
                       backgroundColor: "white",
                       borderTopLeftRadius: 20,
                       borderTopRightRadius: 20,
                     }}
                   >
+                    <Text style={[styles.otp]}>
+                      OTP will be sent to verify your number and email ID.
+                    </Text>
                     <Text>Mobile number</Text>
                     <View
                       style={[
@@ -390,7 +391,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   otp: {
+    paddingVertical: 20,
     fontSize: 14,
+    color: "black",
   },
   mt2: {
     marginTop: GlobalStyles.Margin.margin_31xs,
