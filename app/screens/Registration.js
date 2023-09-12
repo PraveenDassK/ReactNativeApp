@@ -354,8 +354,11 @@ const Registration = ({ navigation }) => {
    * @notice  The only validation done here is to check if an item
    *          has been added
    */
+  console.log(addresses,addresses?.[0]?.address1,"this is a new address")
+
   const sendDetails = async (type) => {
     // const Id = String(Math.floor(Math.random() * 500000));
+    console.log(addresses,"this is a new address")
     const Id = income.nationalInsurance;
     if (type == "Personal") {
       const regData = [
@@ -444,10 +447,10 @@ const Registration = ({ navigation }) => {
         trading_address: {
           country: "UK",
           countryCode: "GBR",
-          address_line_1: companyHouse.registered_office_address.address_line_1,
-          postal_code: companyHouse.registered_office_address.postal_code,
-          locality: companyHouse.registered_office_address.locality,
-          address_line_2: companyHouse.registered_office_address.address_line_2,
+          address_line_1: addresses?.[0]?.address1,
+          postal_code: addresses?.[0]?.postcode,
+          locality: addresses?.[0]?.city,
+          address_line_2:  addresses?.[0]?.address2,
           region: "London",
           locale: "en_GB",
           dateMovedIn: "01-01-2023",
