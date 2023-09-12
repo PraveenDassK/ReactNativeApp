@@ -40,7 +40,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  phoneNumber: Yup.string().required().min(9).max(11).label("Mobile number"),
+  phoneNumber: Yup.string().required().min(9).max(11).label("Phone number"),
 });
 
 const Login = ({ navigation }) => {
@@ -130,7 +130,7 @@ const Login = ({ navigation }) => {
               resizeMode="contain"
               source={LoginTopImage}
             /> */}
-              <LoginTopImage />
+            <LoginTopImage />
           </View>
 
           <View
@@ -172,6 +172,9 @@ const Login = ({ navigation }) => {
                       borderTopRightRadius: 20,
                     }}
                   >
+                    <Text style={styles.otp}>
+                      OTP will be sent to verify your number & email ID
+                    </Text>
                     <Text>Phone number</Text>
                     <View
                       style={[
