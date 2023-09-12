@@ -48,7 +48,7 @@ const CompanyOperations = ({ SaveDetails, setScreenToShow }) => {
   return (
     <AuthScreen
       img="lion"
-      title="When were you incorparated?"
+      title={`How long have you been \n operating?`}
       handleBack={handleBack}
     >
       <Formik onSubmit={(values) => sendData(values)}>

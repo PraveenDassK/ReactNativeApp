@@ -43,11 +43,14 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow, setCompanyUsage }) => {
     //     main_customers: customers,
     //   },
     // ];
-    const value={
+    if (!operationTime) {
+      return alert("Please select Company Type");
+    }
+    const value = {
       operationType: operationTime,
       user_outofUK: isChecked,
       main_customers: customers,
-    }
+    };
     SaveDetails(value, "CompanyUsage");
   };
   const handleBack = () => {
@@ -65,7 +68,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow, setCompanyUsage }) => {
 
   return (
     <AuthScreen
-      title="How would you use this account"
+      title={`How would you use this \n account?`}
       img="eagleCard"
       handleBack={handleBack}
     >
@@ -78,7 +81,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow, setCompanyUsage }) => {
       >
         {({ handleChange, handleSubmit, setFieldTouched, errors, touched }) => (
           <View style={[styles.component1981, styles.mt14]}>
-            <Text>Who are your main customers</Text>
+            <Text>Who are your main customers?</Text>
             <TextInput
               keyboardType="Text"
               placeholder="Enter you main customers"
@@ -103,6 +106,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow, setCompanyUsage }) => {
               checked={isChecked}
               onPress={() => setChecked(!isChecked)}
             />
+            <Text>Company Type</Text>
 
             <Dropdown
               style={[styles.dropdown]}
@@ -111,7 +115,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow, setCompanyUsage }) => {
               maxHeight={100}
               labelField="label"
               valueField="label"
-              placeholder={"Select an option"}
+              placeholder={"Select Company Type"}
               value={operationTime}
               onChange={(item) => {
                 setOperationTime(item.value);

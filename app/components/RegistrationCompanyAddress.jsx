@@ -40,12 +40,15 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
   const [add, setAdd] = useState(null);
   const [isChecked, setChecked] = useState(false);
 
-
+  console.log(companyAddresses, "this is a new company");
   useEffect(() => {
     if (addresses?.length > 0) setAdd(addresses.address1);
   }, [addresses, isAdding]);
 
   const handleSubmit = async () => {
+    if (!addresses?.[0]) {
+      return alert("Please select a trading address");
+    }
     SaveDetails(addresses, "CompanyAddress");
   };
 
@@ -54,14 +57,31 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
     if (isChecked) {
       setAddresses([
         {
-          "address1": "123 street",
-          "address2": "456 house",
-          "area": "Area 5",
-          "city": "City 6",
-          "locale": "en_GB",
-          "postcode": "WD25 9XX"
-        }
+          address1:
+            companyAddresses?.registered_office_address?.address_line_1 === null
+              ? ""
+              : companyAddresses?.registered_office_address?.address_line_1,
+          address2:
+            companyAddresses?.registered_office_address?.address_line_2 === null
+              ? ""
+              : companyAddresses?.registered_office_address?.address_line_2,
+          area:
+            companyAddresses?.registered_office_address?.region === null
+              ? ""
+              : companyAddresses?.registered_office_address?.region,
+          city:
+            companyAddresses?.registered_office_address?.locality === null
+              ? ""
+              : companyAddresses?.registered_office_address?.locality,
+          locale: "en_GB",
+          postcode:
+            companyAddresses?.registered_office_address?.postal_code === null
+              ? ""
+              : companyAddresses?.registered_office_address?.postal_code,
+        },
       ]);
+    } else {
+      setAddresses([]);
     }
   }, [isChecked]);
   /**
@@ -89,13 +109,13 @@ const CompanyAddress = ({ SaveDetails, setScreenToShow, companyAddresses }) => {
           <Text>{`${addresses[0].address1}`}</Text>
           <Text>{`${addresses[0].address2} `}</Text>
           <Text>{`${addresses[0].area} `}</Text>
+          <Text>{`${addresses[0].city} `}</Text>
           <Text>{`${addresses[0].postcode} `}</Text>
         </>
       ) : null}
       {isAdding ? (
         <PostCode AddAddress={addAddress} />
       ) : (
-
         <View>
           <CheckBox
             title="Is the trading address the same as the registred address?"

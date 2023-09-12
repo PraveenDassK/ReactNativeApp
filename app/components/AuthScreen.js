@@ -21,6 +21,7 @@ const AuthScreen = ({
   width = "100%",
   height = "100%",
   back = true,
+  subtitle,
 }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -57,6 +58,11 @@ const AuthScreen = ({
             source={images[img]}
           />
         </View>
+        <Text
+          style={{ textAlign: "center", fontSize: 16, paddingVertical: 10 }}
+        >
+          {subtitle}
+        </Text>
 
         <View
           style={{
@@ -72,7 +78,7 @@ const AuthScreen = ({
               marginVertical: 30,
             }}
           >
-            <Text style={{ fontSize: 30 }}>{title}</Text>
+            <Text style={{ fontSize: 30, textAlign: "center" }}>{title}</Text>
           </View>
           <View
             style={{
