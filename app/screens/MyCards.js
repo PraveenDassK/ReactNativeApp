@@ -100,7 +100,7 @@ export default function MyCards({ navigation }) {
     };
     setCurrentCardDataShow(obj);
   };
-  console.log(cardData)
+  console.log(cardData);
 
   const loadData = async () => {
     setIsLoading(true);
@@ -241,7 +241,9 @@ export default function MyCards({ navigation }) {
           <Icon
             title={"settings"}
             onSettingsPress={() =>
-              navigation.navigate("CardSettings", requestObject)
+              !dataAbovecard?.[0]
+                ? alert("No card selected")
+                : navigation.navigate("CardSettings", requestObject)
             }
             darkMode={darkMode}
           />
@@ -801,8 +803,10 @@ const Icon = ({
   onSettingsPress,
   darkMode,
   dataAbovecard,
+  disabled,
 }) => {
   // const [frozen, setFrozen] = useState(false);
+  console.log(dataAbovecard, "this is data");
   let frozen = false;
   if (isFrozen === "CARD_BLOCKED") {
     frozen = true;

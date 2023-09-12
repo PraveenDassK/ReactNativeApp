@@ -82,7 +82,8 @@ const Analytics = ({ navigation }) => {
   const [recentTransactions, setRecent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const authContext = useContext(AuthContext);
-  const { userID, accountID, darkMode, setDarkMode } = useContext(AuthContext);
+  const { userID, accountID, darkMode, setDarkMode, customerDetails } =
+    useContext(AuthContext);
   const [carbnonSpendData, setCarbonSpendData] = useState([]);
   const [carbonGraphData, setCarbonGraphData] = useState(null);
   const [name, setName] = useState([]);
@@ -97,11 +98,11 @@ const Analytics = ({ navigation }) => {
     setIsLoading(true);
     if (!accountID) return;
     const dataCall = await apiCall.GetAnalysisData(accountID);
-    const response = await apiCall.GetScheduledPayments("CC1");
+    const response = await apiCall.GetScheduledPayments(customerDetails);
     const graphData = await apiCall.GetTransactionsWeek(accountID);
     const carbonSpendData = await apiCarbon.GetCarbonSpending();
     const carbonSpendDataBarGraph = await apiCarbon.GetBarGraphData();
-    const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
+    const userDataReturn = await apiCall.GetAllAccounts(userID);
     setCarbonGraphData(carbonSpendDataBarGraph);
     setCatNames(carbonSpendDataBarGraph.labels);
     setDataPercentages(carbonSpendDataBarGraph.percentages);
@@ -122,7 +123,6 @@ const Analytics = ({ navigation }) => {
     setActive("Week");
     setIsLoading(false);
   };
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -136,6 +136,7 @@ const Analytics = ({ navigation }) => {
    * @dev All the data procesasing is done on apiCall
    * @param {str} time The time period to change
    */
+  console.log(data, "this is upcoming data");
   const changeGraphData = async (time) => {
     setActive(time);
 
@@ -726,7 +727,40 @@ const Analytics = ({ navigation }) => {
           </View> */}
           <View style={[styles.containerSpacing, { marginTop: 40 }]}>
             <UpcomingHead headerTitle="Upcoming spending" darkMode={darkMode} />
-            {data.map((transaction, index) => (
+            {data.length >= 1 ? (
+              data.map((transaction, index) => (
+                <UpcomingTransactionBody
+                  key={index}
+                  name={transaction.scheduleID}
+                  date={transaction.date}
+                  amount={transaction.amount}
+                  credit={transaction.credit}
+                  accountID={accountID}
+                  darkMode={darkMode}
+                />
+              ))
+            ) : (
+              <Text
+                style={{
+                  width: "100%",
+                  backgroundColor:
+                    darkMode === "DARK" ? "rgba(255,255,255,0.5)" : "white",
+                  textAlign: "center",
+                  padding: "5%",
+                  fontSize: 20,
+                  color:
+                    darkMode === "DARK"
+                      ? "white"
+                      : GlobalStyles.Color.darkBlack,
+                  fontFamily: "Montserrat",
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
+                }}
+              >
+                No transaction
+              </Text>
+            )}
+            {/* {data.map((transaction, index) => (
               <UpcomingTransactionBody
                 key={index}
                 name={transaction.scheduleID}
@@ -736,7 +770,7 @@ const Analytics = ({ navigation }) => {
                 accountID={accountID}
                 darkMode={darkMode}
               />
-            ))}
+            ))} */}
           </View>
           <View style={{ height: 20, width: "100%", position: "relative" }} />
         </BlurView>

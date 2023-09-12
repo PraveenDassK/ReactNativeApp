@@ -30,21 +30,20 @@ import { CheckBox } from "@rneui/themed";
 import AuthScreen from "./AuthScreen";
 
 const CompanyInformation = ({ SaveDetails, setScreenToShow }) => {
-
   const handleSubmit = ({ details }) => {
-    if(details.length < 1){
+    if (details.length < 1) {
       return;
     }
-    
+
     SaveDetails(details, "CompanyInformation");
   };
   const handleBack = () => {
-    
     setScreenToShow("CompanyAddress");
   };
   return (
     <AuthScreen
       title="Tell us something more"
+      subtitle={`We gives you opportunity to look at every gram \n of carbon your spending is contributing to`}
       img="turtleCard"
       handleBack={handleBack}
     >

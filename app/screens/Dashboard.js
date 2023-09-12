@@ -198,9 +198,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
         > */}
         <View
           style={{
-            backgroundColor: `${
-              darkMode === "DARK" ? "transparent" : "transparent"
-            }`,
+            backgroundColor: `${darkMode === "DARK" ? "transparent" : "transparent"
+              }`,
           }}
         >
           {!iconShow && (
@@ -211,9 +210,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 onPress={() => navigation.navigate("SendMoney")}
               />
               <SquareIcon
-                name={"Move money"}
-                image={"bank-transfer"}
-                onPress={() => navigation.navigate("MoveMoney")}
+                name={"Invoices"}
+                image={"file-chart"}
+                onPress={() => navigation.navigate("Invoices")}
               />
               <SquareIcon
                 name={"Cards"}
@@ -236,9 +235,9 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                   onPress={() => navigation.navigate("SendMoney")}
                 />
                 <SquareIcon
-                  name={"Move money"}
-                  image={"bank-transfer"}
-                  onPress={() => navigation.navigate("MoveMoney")}
+                  name={"Invoices"}
+                  image={"file-chart"}
+                  onPress={() => navigation.navigate("Invoices")}
                 />
                 <SquareIcon
                   name={"Cards"}
@@ -252,10 +251,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.buttonContainer}>
-              <SquareIcon
-                  name={"Marketplace"}
-                  image={"basket"}
-                  onPress={() => navigation.navigate("Marketplace")}
+                <SquareIcon
+                  name={"Support"}
+                  image={"contacts"}
+                  onPress={() => navigation.navigate("AboutUs")}
                 />
                 <SquareIcon
                   name={"Teams"}

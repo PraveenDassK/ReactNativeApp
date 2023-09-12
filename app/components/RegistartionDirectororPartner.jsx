@@ -79,7 +79,7 @@ const RegistrationDirectororPartner = ({
   const [showCheckbox, setShowCheckbox] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const routerNavigation = useNavigation();
-
+console.log(businessId,"this is a router navigation")
   const handleSubmit = async (type) => {
     // SaveDetails(type)
     // navigation.navigate("Directororpartner");
@@ -144,8 +144,9 @@ const RegistrationDirectororPartner = ({
       ...soleTraderData
     );
     setIsLoading(true);
-
+    console.log(newArray,"this is loading")
     const IDs = businessId;
+    console.log(IDs)
     const response = await apiLogin.RegisterPersonalDirectorAccount(
       newArray,
       IDs

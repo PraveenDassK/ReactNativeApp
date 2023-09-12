@@ -37,7 +37,7 @@ const TerminatedCard = ({ navigation }) => {
       }
       resizeMode="contain"
       imageStyle={{
-        bottom: darkMode === "DARK" ? "-28%" : "-70%", // Whatever offset you want from the bottom
+        bottom: darkMode === "DARK" ? "-38%" : "-70%", // Whatever offset you want from the bottom
       }}
       style={{
         width: "100%",

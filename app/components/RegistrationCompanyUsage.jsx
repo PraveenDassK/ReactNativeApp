@@ -30,16 +30,30 @@ const validationSchema = Yup.object().shape({
   customers: Yup.string().required().min(1).max(50).label("Customers"),
 });
 
-const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
+const CompanyUsage = ({ SaveDetails, setScreenToShow, setCompanyUsage }) => {
   const [name, setName] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [operationTime, setOperationTime] = useState("")
-
-  const handleSubmit = () => {
-    SaveDetails(operationTime, "CompanyUsage");
+  const [operationTime, setOperationTime] = useState("");
+  const handleSubmit = ({ customers }) => {
+    // console.log(customers)
+    // let newArray = [
+    //   {
+    //     operationType: operationTime,
+    //     user_outofUK: isChecked,
+    //     main_customers: customers,
+    //   },
+    // ];
+    if (!operationTime) {
+      return alert("Please select Company Type");
+    }
+    const value = {
+      operationType: operationTime,
+      user_outofUK: isChecked,
+      main_customers: customers,
+    };
+    SaveDetails(value, "CompanyUsage");
   };
   const handleBack = () => {
-    
     setScreenToShow("CompanyOperations");
   };
 
@@ -50,11 +64,11 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
     { label: "LPARTNRSHP", value: "LPARTNRSHP" },
     { label: "LLP", value: "LLP" },
     { label: "PLC", value: "PLC" },
-  ]
+  ];
 
   return (
     <AuthScreen
-      title="How would you use this account"
+      title={`How would you use this \n account?`}
       img="eagleCard"
       handleBack={handleBack}
     >
@@ -67,7 +81,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
       >
         {({ handleChange, handleSubmit, setFieldTouched, errors, touched }) => (
           <View style={[styles.component1981, styles.mt14]}>
-            <Text>Who are your main customers</Text>
+            <Text>Who are your main customers?</Text>
             <TextInput
               keyboardType="Text"
               placeholder="Enter you main customers"
@@ -92,6 +106,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
               checked={isChecked}
               onPress={() => setChecked(!isChecked)}
             />
+            <Text>Company Type</Text>
 
             <Dropdown
               style={[styles.dropdown]}
@@ -100,7 +115,7 @@ const CompanyUsage = ({ SaveDetails, setScreenToShow }) => {
               maxHeight={100}
               labelField="label"
               valueField="label"
-              placeholder={"Select an option"}
+              placeholder={"Select Company Type"}
               value={operationTime}
               onChange={(item) => {
                 setOperationTime(item.value);

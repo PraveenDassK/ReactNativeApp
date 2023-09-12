@@ -581,7 +581,7 @@ const Settings = ({ navigation }) => {
         </View>
         <TouchableOpacity style={styles.button}>
           <LinearAccountButton
-            title="Account"
+            title="Account details"
             // style={styles.boxShadow}
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("AccountSettings")}
@@ -590,7 +590,7 @@ const Settings = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <LinearAccountButton
-            title="Settings"
+            title="Login and Security"
             transform={{ textTransform: "none" }}
             onPress={() => navigation.navigate("SecurityAndPrivacy")}
             darkMode={darkMode}

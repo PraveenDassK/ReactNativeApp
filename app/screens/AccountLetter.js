@@ -9,7 +9,7 @@ import AppText from "../components/Text";
 import { BlurView } from "expo-blur";
 
 const AccountLetter = ({ navigation }) => {
-  const [email, setemail] = useState(null);
+  const [email, setemail] = useState("");
   const authContext = useContext(AuthContext);
   const { darkMode,userID } = useContext(AuthContext);
   useEffect(() => {
@@ -18,8 +18,8 @@ const AccountLetter = ({ navigation }) => {
   
   const loadData = async () => {
     const customer = await api.GetCustomer(userID);
-    // const data = customer.data.details;
-    // setemail(data.associates[0].email);
+    const data = customer?.data?.details;
+    setemail(data?.associates?.[0]?.email);
   };
   return (
     <ImageBackground
