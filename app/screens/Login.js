@@ -172,10 +172,7 @@ const Login = ({ navigation }) => {
                       borderTopRightRadius: 20,
                     }}
                   >
-                    <Text style={[styles.otp]}>
-                      OTP will be sent to verify your number and email ID.
-                    </Text>
-                    <Text>Mobile number</Text>
+                    <Text>Phone number</Text>
                     <View
                       style={[
                         styles.component1981,
