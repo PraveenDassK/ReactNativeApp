@@ -15,6 +15,7 @@ import {
   Vibration,
   ImageBackground,
   ActivityIndicator,
+  Share,
 } from "react-native";
 import Icon from "../components/Icon";
 import { Entypo } from "@expo/vector-icons";
@@ -26,6 +27,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import AuthContext from "../auth/context";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 const LINK = "https://www.google.com";
 
@@ -34,12 +36,13 @@ const PaymentLink = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [linkSelection, setLinkSelection] = useState([]);
   const [selectedLink, setSelectedLink] = useState("");
+  const [isshareLink, setIsShareLink] = useState(false);
   const { darkMode } = useContext(AuthContext);
   const copyToClipboard = async () => {
-    
     Vibration.vibrate();
     alert("Referral copied");
     await Clipboard.setStringAsync(link);
+    setIsShareLink(true);
   };
 
   //Calls the API once during load
@@ -50,7 +53,7 @@ const PaymentLink = () => {
   useEffect(() => {
     getPaymentLink();
   }, [selectedLink]);
-
+  console.log(link);
   const loadData = async () => {
     try {
       setIsLoading(true);
@@ -62,7 +65,32 @@ const PaymentLink = () => {
       return;
     }
   };
-
+  const showShareModal = async () => {
+    try {
+      // const result = await Share.share({
+      //   // message: `Pay Jack <a href=${link}>Click here</a>`,
+      //   title: "pay Jack",
+      //   message: `Pay Jack: Click here `,
+      //   url: link,
+      // });
+      // if (result.action === Share.sharedAction) {
+      //   if (result.activityType) {
+      //     // shared with activity type of result.activityType
+      //   } else {
+      //     // shared
+      //   }
+      // } else if (result.action === Share.dismissedAction) {
+      //   // dismissed
+      // }
+      await Share.share({
+        title: "Share Link",
+        message: "pay Jack",
+        url: link, // Shortened URL to open when the recipient clicks "Click here"
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
   const getPaymentLink = async () => {
     try {
       setIsLoading(true);
@@ -214,7 +242,9 @@ const PaymentLink = () => {
             <Icon name="content-copy" size={45} />
           </TouchableOpacity> */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={copyToClipboard}>
+            <TouchableOpacity
+              onPress={!isshareLink ? copyToClipboard : showShareModal}
+            >
               <LinearGradient
                 colors={
                   darkMode === "DARK"
@@ -229,9 +259,20 @@ const PaymentLink = () => {
                     : styles.buttonPayNew
                 }
               >
-                <Text style={styles.buttonPayNewText}>Copy link </Text>
+                {!isshareLink ? (
+                  <>
+                    <Text style={styles.buttonPayNewText}>Copy link </Text>
+                    <FontAwesome5 name="copy" size={24} color="white" />
+                  </>
+                ) : (
+                  <>
+                    <Text style={styles.buttonPayNewText}>
+                      Link Copied.Start Sharing{" "}
+                    </Text>
+                    <Feather name="share" size={24} color="white" />
+                  </>
+                )}
                 {/* <Icon name="content-copy" size={45} color={} /> */}
-                <FontAwesome5 name="copy" size={24} color="white" />
               </LinearGradient>
             </TouchableOpacity>
           </View>

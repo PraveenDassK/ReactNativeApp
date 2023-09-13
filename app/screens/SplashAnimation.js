@@ -34,6 +34,7 @@ const SplashAnimation = ({ navigation }) => {
             source={require("../assets/login/LoginAnimal0.png")}
           />
         </FadeInView>
+        
       </View>
 
       <View
@@ -69,7 +70,6 @@ const SplashAnimation = ({ navigation }) => {
             color="black"
             // onPress={() => navigation.navigate("ProofOfResidency")}
             onPress={() => navigation.navigate("Registration")}
-
           />
           <Button
             title="Login"
