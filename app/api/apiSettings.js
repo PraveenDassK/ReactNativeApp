@@ -8,11 +8,10 @@ import { format as prettyFormat } from "pretty-format";
  */
 const GetSettings = async (Id) => {
   try {
-    const response = await client.get(
-      `/cardmodule/GetToggles?cardId=${Id}`
-    );
+    const response = await client.get(`/cardmodule/GetToggles?cardId=${Id}`);
+    console.log(response, "this is res after api call for jwt");
     const requestData = response?.data?.details;
-    
+
     return requestData;
   } catch {
     SetToggles(Id, false, false, false, false);

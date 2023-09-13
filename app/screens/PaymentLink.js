@@ -84,7 +84,7 @@ const PaymentLink = () => {
       // }
       await Share.share({
         title: "Share Link",
-        message: "pay Jack",
+        message: $`pay Jack${link}`,
         url: link, // Shortened URL to open when the recipient clicks "Click here"
       });
     } catch (error) {

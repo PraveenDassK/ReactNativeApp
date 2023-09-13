@@ -71,7 +71,7 @@ const CardSettings = ({ navigation, route }) => {
     setIsLoading(true);
     try {
       const cardSettings = await apiSettings.GetSettings(authContext.accountID);
-
+      console.log(cardSettings, "this is card settings");
       const data = cardSettings;
 
       data.onlineTransactions ? setIsEnabled(true) : null;
