@@ -28,7 +28,7 @@ import ErrorMessage from "../components/forms/ErrorMessage";
 import loginApi from "../api/apiLogin";
 import authStorage from "../auth/storage";
 import Screen from "../components/Screen";
-import {} from "react-native-gesture-handler";
+import { } from "react-native-gesture-handler";
 
 import * as Device from "expo-device";
 
@@ -43,19 +43,12 @@ const validationSchema = Yup.object().shape({
   // eVer4: Yup.number().required().min(0).max(9).label("E Ver4"),
 }); // add required if necessary
 
-const OTPVerificationPersonal = () => {
+const OTPVerificationPersonal = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [resetVisible, setResetVisible] = useState(false);
   const {
     user,
-    currentUser,
-    setCurrentUser,
-    setUserID,
-    setAccountID,
-    setUserDetails,
-    setCardID,
     expoPushToken,
-    setCustomerDetails,
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -118,27 +111,22 @@ const OTPVerificationPersonal = () => {
       phoneOTP,
       emailOTP,
     });
-    
-    if (!result){
+
+    if (!result) {
       setIsLoading(false)
       return alert("Could not verify otp");
-    } 
+    }
 
     const IDs = await loginApi.GetIDs(result?.token);
 
     //If the account details cannot be found
-    
-    if(!IDs){
+
+    if (!IDs) {
       alert("Warning your account could not be authenticated")
       return;
     }
-  
-    authStorage.storeToken(result?.token);
-    setCurrentUser(IDs.token);
-    setUserID(IDs.userID);
-    setAccountID(IDs.accountID);
-    setCardID(IDs.cardID);
-    setCustomerDetails(IDs.customerDetails);
+
+    navigation.navigate("SwitchAccounts", result?.token)
 
     const pushNotification = await loginApi.SendPushNotificationToken({
       tokenID: expoPushToken,
@@ -148,7 +136,7 @@ const OTPVerificationPersonal = () => {
       macAddress: "",
       operatingSystem: Device.osName,
     });
-    
+
 
     //Turns off the loading
     setIsLoading(false);
@@ -159,7 +147,7 @@ const OTPVerificationPersonal = () => {
     const phoneNumber = user.phoneNumber;
 
     const result = await loginApi.Login({ email, phoneNumber });
-    
+
     setResetVisible(false);
     setCount(59);
   };

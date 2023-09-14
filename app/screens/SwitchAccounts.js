@@ -116,11 +116,6 @@ const SwitchAccounts = ({ navigation, route }) => {
             alignItems: "center",
           }}
         ></View>
-        <Button
-          style={styles.boxShadow}
-          title="Return"
-          onPress={() => navigation.navigate("Account")}
-        />
       </View>
     </ScrollView>
   );
