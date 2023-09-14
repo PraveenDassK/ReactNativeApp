@@ -49,9 +49,11 @@ const AccountDeatils = ({
   accountBalance,
   accountId,
   isVisible = true,
+  accountName
 }) => {
   const [title, setTitle] = useState("");
   const [dropdownData, setDropdownData] = useState();
+
   useEffect(() => {
     const newStateArray = [];
     userData?.map((eachData, i) =>
@@ -95,30 +97,9 @@ const AccountDeatils = ({
         <View style={styles.accountContainer}>
           <Text style={styles.accountName}>Account</Text>
           <View style={styles.accountNumberStyle}>
-            <Dropdown
-              fontFamily="Montserrat-Medium"
-              data={dropdownData}
-              value={title}
-              activeColor={GlobalStyles.Color.backgroundColor}
-              defaultValue={dropdownData?.[0]}
-              labelField="label"
-              valueField="value"
-              onChange={(item) => {
-                setTitle(item?.value);
-                handleBalance(item?.value);
-              }}
-              style={styles.dropdown}
-              selectedTextStyle={{
-                color: GlobalStyles.Color.backgroundColorOg,
-              }}
-              iconColor={"white"}
-              autoScroll={false}
-              containerStyle={{
-                borderBottomStartRadius: 10,
-                borderBottomEndRadius: 10,
-                width: "100%",
-              }}
-            />
+            <Text style={styles.accountName}>
+              {accountName}
+            </Text>
           </View>
         </View>
         <View style={styles.bottomCardContainer}>

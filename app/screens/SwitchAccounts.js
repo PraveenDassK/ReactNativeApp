@@ -18,10 +18,23 @@ import {
   verticalScale,
   moderateScale,
 } from "../config/scaling";
+import authStorage from "../auth/storage";
+import loginApi from "../api/apiLogin";
 
 const SwitchAccounts = ({ navigation, route }) => {
-  const [userData, setUserData] = useState([]);
-  const { userID, setAccountID, accountID, darkMode } = useContext(AuthContext);
+  const token = route.params
+  const [IDs, setIDs] = useState([])
+  const [userData, setUserData] = useState(IDs?.accountData?.accountDetails);
+  const { darkMode } = useContext(AuthContext);
+  const {
+    setCurrentUser,
+    setUserID,
+    setAccountID,
+    setUser,
+    setCardID,
+    setCustomerDetails,
+    setAccountDetails,
+  } = useContext(AuthContext);
 
   //Calls the API once during load
   useEffect(() => {
@@ -29,9 +42,11 @@ const SwitchAccounts = ({ navigation, route }) => {
   }, []);
 
   const loadData = async () => {
-    const response = await apiCall.GetAllAccounts(userID);
-
-    setUserData(response);
+    const IDs = await loginApi.GetIDs(token);
+    console.log(IDs)
+    setIDs(IDs)
+    // const response = await apiCall.GetAllAccounts("A122HTHM");
+    setUserData(IDs?.accountData?.accountDetails);
   };
 
   const showUserAccounts = () => {
@@ -48,7 +63,7 @@ const SwitchAccounts = ({ navigation, route }) => {
                     : styles.accountName
                 }
               >
-                {element.id}
+                {element.accountId}
               </Text>
             </View>
           </View>
@@ -59,7 +74,17 @@ const SwitchAccounts = ({ navigation, route }) => {
   };
 
   const switchAccount = (Id) => {
-    setAccountID(Id);
+
+    authStorage.storeToken(token);
+    setCurrentUser(IDs.token);
+    setUserID(IDs.userID);
+    setAccountID(IDs.accountID);
+    setCardID(IDs.cardID);
+    setCustomerDetails(IDs.customerDetails);
+    setAccountDetails(IDs.accountData);
+    //Turns off the loading
+    // setIsLoading(false);
+    // setAccountID(Id);
     // navigation.navigate("Account")
   };
 
@@ -73,17 +98,6 @@ const SwitchAccounts = ({ navigation, route }) => {
       }}
     >
       <View style={darkMode === "DARK" ? styles.darkpage : styles.page}>
-        {/* <View style={styles.titleTextRow}>
-                <Text style={styles.titleText}>Switch Account</Text>
-            </View>    */}
-
-        <View style={styles.subTextDiv}>
-          <Text
-            style={darkMode === "DARK" ? styles.darksubText : styles.subText}
-          >
-            Selected Account: {accountID}
-          </Text>
-        </View>
 
         <View style={styles.subTextDiv}>
           <Text

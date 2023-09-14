@@ -209,6 +209,9 @@ const GetIDs = async (JWT) => {
 
     //Get all the other IDs
     const accountData = await GetCustomerDetails(accountID);
+    // const accountDetails = await GetAccount(accountID);
+    console.log(accountData.accountDetails.length)
+
     const missingAccountSetup = false;
     if (missingAccountSetup) {
       return "Missing Setup";
@@ -257,6 +260,15 @@ const GetAccountByCustomer = async (Id) => {
   const url = `https://api.carbonyte.io/walletmodule/GetAccountByCustomer/${Id}`;
   const accountRequest = await client.get(url);
   return accountRequest.data.details;
+};
+
+//A122HTHM
+const GetAccount = async (enfuceid) => {
+  const request = await client.get(
+    "https://api.carbonyte.io/walletmodule/GetAccount/" + enfuceid
+  );
+  const requestReturn = request?.data?.details;
+  return requestReturn;
 };
 
 export default {
