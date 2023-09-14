@@ -94,6 +94,8 @@ const Settings = ({ navigation }) => {
 
     const data = userDetails;
     const accountdata = accountDetails;
+    console.log(accountDetails)
+    
     setPlan(subscriptionDetails?.subName);
     setName(accountdata?.customerName);
     setBal(accountdata?.balance);

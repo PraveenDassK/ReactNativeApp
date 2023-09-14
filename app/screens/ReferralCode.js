@@ -32,11 +32,14 @@ const PaymentLink = () => {
   const [selectedLink, setSelectedLink] = useState("")
 
   const copyToClipboard = async () => {
-    
     Vibration.vibrate();
     alert("Referral copied");
     await Clipboard.setStringAsync(link);
   };
+
+  const {
+    userID,
+  } = useContext(AuthContext);
 
   //Calls the API once during load
   useEffect(() => {
@@ -46,8 +49,14 @@ const PaymentLink = () => {
   const loadData = async () => {
     try {
       setIsLoading(true)
-      const paymentLinkSelection = await apiReferral.getReferralCode({user:"CC1",type:"Business",name:"Friend"})
-      
+      const paymentLinkSelection = await apiReferral.getReferralCode(
+        {
+          user: userID,
+          type: "Business",
+          name: "Referral"
+        }
+      )
+
       setLink(paymentLinkSelection)
       setIsLoading(false);
     } catch {
@@ -83,7 +92,7 @@ const PaymentLink = () => {
 
           <View style={styles.linkContainer}>
             <Entypo name="link" size={20} color="black" />
-            <Text style={{color:GlobalStyles.Color.black}}>{link?.slice(0, 100)}...</Text>
+            <Text style={{ color: GlobalStyles.Color.black }}>{link?.slice(0, 100)}...</Text>
           </View>
           <TouchableOpacity
             style={styles.paymentContainer}
@@ -93,8 +102,8 @@ const PaymentLink = () => {
             <Icon name="content-copy" size={45} />
           </TouchableOpacity>
         </View>
-        <View style={{position:"absolute",bottom:0,left:"15%"}}>
-        <Tagline />
+        <View style={{ position: "absolute", bottom: 0, left: "15%" }}>
+          <Tagline />
         </View>
       </View>
     </ImageBackground>
@@ -138,10 +147,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   paymentLink: {
-    color:  GlobalStyles.Color.white,
+    color: GlobalStyles.Color.white,
     fontSize: 17,
     marginRight: 10,
-    fontFamily:"Montserrat-Medium"
+    fontFamily: "Montserrat-Medium"
   },
   linkContainer: {
     borderColor: "#F7F7F7",

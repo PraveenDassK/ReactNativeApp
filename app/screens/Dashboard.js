@@ -35,6 +35,8 @@ import colors from "../config/colors";
 import Tagline from "../components/Tagline";
 import authStorage from "../auth/storage";
 import apiLogin from "../api/apiLogin";
+import api from "../api/apiCall";
+
 const HomeScreenPersonal = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPinModal, setShowPinModal] = useState(true);
@@ -42,7 +44,8 @@ const HomeScreenPersonal = ({ navigation, route }) => {
   const [bannerName, setbannerName] = useState();
   const [userImpact, setUserImpact] = useState([]);
   const [userData, setuserData] = useState([]);
-
+  const [accountName, setAccountName] = useState("")
+  
   const {
     accountID,
     customerDetails,
@@ -69,6 +72,10 @@ const HomeScreenPersonal = ({ navigation, route }) => {
       // const userDataReturn = await apiCall.GetAllAccounts("C122BMS7");
       const userImpactReturn = await apiCall.GetUserImpact(customerDetails);
       const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
+
+      const accountDetails = await apiCall.GetAccount(accountID);
+      console.log(accountDetails)
+      setAccountName(accountDetails.name)
       const details = getUserID;
       setuserData(details?.accountDetails);
       setbannerName(details?.customerDetails);
@@ -178,6 +185,7 @@ const HomeScreenPersonal = ({ navigation, route }) => {
             setBalance={setBalance}
             accountDetails={accountDetails}
             accountId={accountID}
+            accountName={accountName}
           />
         </View>
 

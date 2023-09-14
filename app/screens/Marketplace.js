@@ -52,7 +52,6 @@ const capitalizeINIKA = (name) => {
 
 const Marketplace = ({ navigation }) => {
   const [data, setData] = useState(itemArrayWithIds);
-  console.log(data, "this is marketplace");
   const Item = ({
     name,
     images,

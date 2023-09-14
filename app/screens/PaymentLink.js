@@ -67,21 +67,7 @@ const PaymentLink = () => {
   };
   const showShareModal = async () => {
     try {
-      // const result = await Share.share({
-      //   // message: `Pay Jack <a href=${link}>Click here</a>`,
-      //   title: "pay Jack",
-      //   message: `Pay Jack: Click here `,
-      //   url: link,
-      // });
-      // if (result.action === Share.sharedAction) {
-      //   if (result.activityType) {
-      //     // shared with activity type of result.activityType
-      //   } else {
-      //     // shared
-      //   }
-      // } else if (result.action === Share.dismissedAction) {
-      //   // dismissed
-      // }
+
       await Share.share({
         title: "Share Link",
         message: $`pay Jack${link}`,
