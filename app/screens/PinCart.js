@@ -73,8 +73,9 @@ const Pin = ({ route, navigation }) => {
       alert("Pin is incorrect");
       return;
     }
-
+    setLoading(true);
     const response = await apiCall.Checkout(route.params);
+    setLoading(false);
 
     if (!response) {
       alert("Transaction unsuccessful");

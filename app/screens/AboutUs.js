@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     marginTop: GlobalStyles.RowText.marginTop,
     width: GlobalStyles.DivContainer.width,
     marginLeft: GlobalStyles.DivContainer.marginLeft,
-    fontColor: GlobalStyles.RowText.fontColor,
+    color: GlobalStyles.RowText.fontColor,
   },
 
   row: {

@@ -21,7 +21,7 @@ export const jwtClient = create({
   headers: {
     Accept: "*/*",
     // Authorization: `Bearer ${jwt}`, // Add the JWT to the Authorization header
-    carbontoken: jwt, // Passing the JWT to the  header
+    carboyteauthorizer: jwt, // Passing the JWT to the  header
   },
 });
 

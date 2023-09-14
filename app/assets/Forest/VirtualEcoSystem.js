@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     marginTop: GlobalStyles.RowText.marginTop,
     marginLeft: GlobalStyles.RowText.marginLeft,
     width: "80%",
-    fontColor: GlobalStyles.RowText.fontColor,
+    color: GlobalStyles.RowText.fontColor,
   },
 
   divContainer: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     width: GlobalStyles.CenterRowText.width,
     fontSize: GlobalStyles.CenterRowText.fontSize,
     fontWeight: GlobalStyles.CenterRowText.fontWeight,
-    fontColor: GlobalStyles.CenterRowText.fontColor,
+    color: GlobalStyles.CenterRowText.fontColor,
     textAlign: GlobalStyles.CenterRowText.textAlign,
   },
 
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     width: GlobalStyles.CenterRowSubText.width,
     fontSize: GlobalStyles.CenterRowSubText.fontSize,
     fontWeight: GlobalStyles.CenterRowSubText.fontWeight,
-    fontColor: GlobalStyles.CenterRowSubText.fontColor,
+    color: GlobalStyles.CenterRowSubText.fontColor,
     textAlign: GlobalStyles.CenterRowSubText.textAlign,
   },
 

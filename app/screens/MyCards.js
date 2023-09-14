@@ -128,6 +128,7 @@ export default function MyCards({ navigation }) {
     // api to get card details using enfuse account ID
 
     const cards = await apiCall.GetCardByEnfuseAccountId(EnfuseAccountId);
+    console.log(cards,"this is cards")
     setCardData(cards);
     setIsLoading(false);
   };
