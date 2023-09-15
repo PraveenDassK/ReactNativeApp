@@ -287,4 +287,5 @@ export default {
   RegisterBusinessUsers,
   RegisterBusinessDirectors,
   GetAccountByCustomer,
+  GetAccount
 };

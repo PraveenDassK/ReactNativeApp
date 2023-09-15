@@ -21,10 +21,16 @@ import {
 import authStorage from "../auth/storage";
 import loginApi from "../api/apiLogin";
 
+import FadeInView from "../components/fadeInview";
+import colors from "../config/colors";
+
+
 const SwitchAccounts = ({ navigation, route }) => {
   const token = route.params
   const [IDs, setIDs] = useState([])
   const [userData, setUserData] = useState(IDs?.accountData?.accountDetails);
+  const [missingAccounts, setMissingAccounts] = useState(false)
+
   const { darkMode } = useContext(AuthContext);
   const {
     setCurrentUser,
@@ -43,11 +49,22 @@ const SwitchAccounts = ({ navigation, route }) => {
 
   const loadData = async () => {
     const IDs = await loginApi.GetIDs(token);
-    console.log(IDs)
+    const businessName = await loginApi.GetAccount("A122HTHM");
     setIDs(IDs)
+
     // const response = await apiCall.GetAllAccounts("A122HTHM");
+
+    //If there aren't any accounts
+    if(IDs?.accountData?.AccountDeatils != []){
+      console.log("!")
+      setMissingAccounts(true)
+    }
     setUserData(IDs?.accountData?.accountDetails);
   };
+
+  const getBusinessName = async() => {
+
+  }
 
   const showUserAccounts = () => {
     let accounts = [];
@@ -74,7 +91,6 @@ const SwitchAccounts = ({ navigation, route }) => {
   };
 
   const switchAccount = (Id) => {
-
     authStorage.storeToken(token);
     setCurrentUser(IDs.token);
     setUserID(IDs.userID);
@@ -82,12 +98,70 @@ const SwitchAccounts = ({ navigation, route }) => {
     setCardID(IDs.cardID);
     setCustomerDetails(IDs.customerDetails);
     setAccountDetails(IDs.accountData);
-    //Turns off the loading
-    // setIsLoading(false);
-    // setAccountID(Id);
-    // navigation.navigate("Account")
   };
 
+
+  //Show this if the user needs to initiate an account setup
+  if(missingAccounts){
+    return(
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <FadeInView style={{ width: "100%" }}>
+          <Image
+            style={{ width: "100%" }}
+            resizeMode="contain"
+            source={require("../assets/login/LoginAnimal0.png")}
+          />
+        </FadeInView>
+        
+      </View>
+
+      <View
+        style={{
+          backgroundColor: colors.light,
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,
+        }}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 30,
+          }}
+        >
+          <Text style={{ fontSize: 30 }}>Welcome to Carbonyte</Text>
+        </View>
+
+        <View
+          style={{
+            paddingHorizontal: 30,
+            paddingVertical: 50,
+            backgroundColor: "white",
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+          }}
+        >
+          <Button
+            title="Signup"
+            textColor="white"
+            color="black"
+            // onPress={() => navigation.navigate("ProofOfFace")}
+            onPress={() => navigation.navigate("Registration")}
+          />
+          <Button
+            title="Login"
+            textColor="black"
+            color="white"
+            onPress={() => navigation.navigate("Login")}
+          />
+        </View>
+      </View>
+    </View>
+    )
+  }
+
+  //Regular account chosing
   return (
     <ScrollView
       style={{
@@ -97,26 +171,41 @@ const SwitchAccounts = ({ navigation, route }) => {
             : GlobalStyles.Color.white,
       }}
     >
-      <View style={darkMode === "DARK" ? styles.darkpage : styles.page}>
+    <View style={{ flex: 1, justifyContent: "flex-end" }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      
+    </View>
 
-        <View style={styles.subTextDiv}>
-          <Text
-            style={darkMode === "DARK" ? styles.darksubText : styles.subText}
-          >
-            Accounts:
-          </Text>
-        </View>
-
-        {showUserAccounts()}
-        <View
-          style={{
-            position: "absolute",
-            bottom: 20,
-            width: "100%",
-            alignItems: "center",
-          }}
-        ></View>
+    <View
+      style={{
+        backgroundColor: colors.light,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+      }}
+    >
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginVertical: 30,
+        }}
+      >
+        <Text style={{ fontSize: 30 }}>Select an account</Text>
       </View>
+
+      <View
+        style={{
+          paddingHorizontal: 30,
+          paddingVertical: 50,
+          backgroundColor: "white",
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,
+        }}
+      >
+        {showUserAccounts()}
+        </View>
+      </View>
+    </View>
     </ScrollView>
   );
 };
@@ -193,6 +282,64 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
+  },
+  maskGroupLayout: {
+    overflow: "hidden",
+    maxWidth: "100%",
+    width: "100%",
+    alignItems: "center",
+  },
+  helloFlexBox: {
+    textAlign: "center",
+    position: "absolute",
+  },
+  maskGroup261: {
+    right: horizontalScale(0),
+    bottom: verticalScale(0),
+    left: horizontalScale(0),
+    height: verticalScale(132),
+  },
+  layer12Icon: {
+    marginTop: verticalScale(-135.5),
+    marginLeft: horizontalScale(-63.5),
+    left: "50%",
+    width: horizontalScale(128),
+    height: verticalScale(136),
+    top: "50%",
+    position: "absolute",
+  },
+  hello: {
+    textAlign: "center",
+    marginleft: horizontalScale(-20),
+    top: verticalScale(50),
+    width: "100%",
+    fontSize: GlobalStyles.FontSize.size_10xl,
+    color: GlobalStyles.Color.indigo_100,
+  },
+  quickSecuredBanking: {
+    fontSize: GlobalStyles.FontSize.size_2xl,
+    fontWeight: "700",
+    color: GlobalStyles.Color.black,
+    width: "100%",
+    top: "75%",
+    textAlign: "center",
+  },
+  maskGroup259: {
+    marginTop: verticalScale(-140.5),
+    height: verticalScale(337),
+    top: "50%",
+    width: "100%",
+  },
+  maskGroup261Parent: {
+    width: "100%",
+    height: verticalScale(505),
+  },
+  logoAnimation3: {
+    backgroundColor: colors.white,
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    paddingTop: GlobalStyles.Padding.padding_xl,
   },
 });
 

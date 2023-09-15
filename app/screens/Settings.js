@@ -496,6 +496,8 @@ const Settings = ({ navigation }) => {
                 </AppText>
               </View>
             </View>
+
+            {/*  */}
             <View style={styles.accountDetailsRow1}>
               <View style={{ flex: 1 }}>
                 <AppText
