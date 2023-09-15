@@ -94,8 +94,8 @@ const Settings = ({ navigation }) => {
 
     const data = userDetails;
     const accountdata = accountDetails;
-    console.log(accountDetails)
-    
+    console.log(accountDetails);
+
     setPlan(subscriptionDetails?.subName);
     setName(accountdata?.customerName);
     setBal(accountdata?.balance);
@@ -540,9 +540,63 @@ const Settings = ({ navigation }) => {
                     { textAlign: "left" },
                   ]}
                 >
-                  {`83 Integer House Bre Innovation Campus, Bucknalls Lane,Watford, Hertfordshire,England,\n WD25 9XX.`}
+                  83 Integer House Bre
                   {/* Press to Copy */}
                 </AppText>
+                <AppText
+                  style={[
+                    // styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitleAddress
+                      : styles.customTitleAddress,
+                    { textAlign: "left" },
+                  ]}
+                >
+                  Innovation Campus
+                  {/* Press to Copy */}
+                </AppText>
+                <AppText
+                  style={[
+                    // styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitleAddress
+                      : styles.customTitleAddress,
+                    // { textAlign: "" },
+                  ]}
+                >
+                  Bucknalls Lane
+                </AppText>
+                <AppText
+                  style={[
+                    // styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitleAddress
+                      : styles.customTitleAddress,
+                    // { textAlign: "" },
+                  ]}
+                >
+                  Watford,Hertfordshire
+                </AppText>
+                <AppText
+                  style={[
+                    // styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitleAddress
+                      : styles.customTitleAddress,
+                    { textAlign: "left" },
+                  ]}
+                >
+                  England, WD25 9XX.
+                </AppText>
+                <AppText
+                  style={[
+                    // styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitleAddress
+                      : styles.customTitleAddress,
+                    { textAlign: "left" },
+                  ]}
+                ></AppText>
               </View>
             </View>
             <View style={styles.accountDetailsRow}>
