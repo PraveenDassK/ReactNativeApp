@@ -577,7 +577,18 @@ const Settings = ({ navigation }) => {
                     // { textAlign: "" },
                   ]}
                 >
-                  Watford,Hertfordshire
+                  Watford
+                </AppText>
+                <AppText
+                  style={[
+                    // styles.divEnd,
+                    darkMode === "DARK"
+                      ? styles.darkcustomTitleAddress
+                      : styles.customTitleAddress,
+                    // { textAlign: "" },
+                  ]}
+                >
+                  Hertfordshire
                 </AppText>
                 <AppText
                   style={[

@@ -1265,11 +1265,11 @@ const RegistartionDirectorForm = ({
                             <Text
                               style={{
                                 color: "#0101FD",
-                                fontSize: isSmallDevice ? 14 : 16,
+                                fontSize: isSmallDevice ? 12 : 14,
                                 fontWeight: "bold",
                               }}
                             >
-                              Right to appoint &{"/n"} remove directors
+                              Right to appoint & remove directors
                             </Text>
                           </View>
                           <View style={styles.percentageContainer}>
@@ -1279,7 +1279,7 @@ const RegistartionDirectorForm = ({
                               checkedColor="#0101FD"
                               checked={formCheck}
                               onPress={() => setIsFormCheck(!formCheck)}
-                              style={{ width: 40, height: 40 }}
+                              style={{ width: 50, height: 50 }}
                             />
                           </View>
                         </View>
