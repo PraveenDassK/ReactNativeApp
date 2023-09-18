@@ -114,8 +114,8 @@ export default function App() {
   const [modulrId, setModulrId] = useState("")
   //CC1120
   const [carbonyteId, setCarbonyteId] = useState("")
-  
-  
+
+
   const [accountDetails, setAccountDetails] = useState("")
 
   //Shopping card Details
@@ -184,7 +184,7 @@ export default function App() {
     // if (JailMonkey.isJailBroken()) {
     //   // Alternative behaviour for jail-broken/rooted devices.
     // }
-    // 
+
   }, []);
   // usePreventScreenCapture();
 
@@ -227,7 +227,7 @@ export default function App() {
    */
   const restoreToken = async () => {
     //Get the token from storage
-    const token = await authStorage.removeToken();
+    const token = await authStorage.getToken();
     if (!token) {
       setIsLoading(false);
       return;
@@ -273,7 +273,7 @@ export default function App() {
     );
   }
 
-  
+
 
   return !netInfo.isInternetReachable ? (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>

@@ -2,7 +2,7 @@ const images = {
     animals: require("./LoginAnimalFull.png"),
     bear: require("./LoginAnimal0.png"),
     bearPhone: require("./LoginAnimal14.png"),
-    elephantCarbon: require("./LoginAnimal1.png"),
+    elephantCarbon: require("./LoginAnimal6.png"),
     elephantCarbonLarge: require("./LoginAnimal6.png"),
     tiger: require("./LoginAnimal2.png"),
     tigerCard: require("./LoginAnimal13.png"),

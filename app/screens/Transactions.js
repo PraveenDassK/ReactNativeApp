@@ -312,6 +312,22 @@ const Transactions = ({ navigation, route }) => {
 
   return (
     <AppScreen darkMode={darkMode}>
+      <View
+        style={{
+          paddingHorizontal: 30,
+          paddingVertical: 20,
+          // backgroundColor: "white",
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,
+        }}
+      >
+        <Button
+          title="Download Transactions placeholder"
+          textColor="black"
+          color="white"
+          // onPress={() => navigation.navigate("Login")}
+        />
+      </View>
       <View style={styles.page}>
         <FlatList
           showsVerticalScrollIndicator={false}

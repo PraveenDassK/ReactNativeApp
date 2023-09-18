@@ -55,14 +55,14 @@ const SwitchAccounts = ({ navigation, route }) => {
     // const response = await apiCall.GetAllAccounts("A122HTHM");
 
     //If there aren't any accounts
-    if(IDs?.accountData?.AccountDeatils != []){
+    if (IDs?.accountData?.AccountDeatils == []) {
       console.log("!")
       setMissingAccounts(true)
     }
     setUserData(IDs?.accountData?.accountDetails);
   };
 
-  const getBusinessName = async() => {
+  const getBusinessName = async () => {
 
   }
 
@@ -102,62 +102,69 @@ const SwitchAccounts = ({ navigation, route }) => {
 
 
   //Show this if the user needs to initiate an account setup
-  if(missingAccounts){
-    return(
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <FadeInView style={{ width: "100%" }}>
-          <Image
-            style={{ width: "100%" }}
-            resizeMode="contain"
-            source={require("../assets/login/LoginAnimal0.png")}
-          />
-        </FadeInView>
-        
-      </View>
-
-      <View
+  if (missingAccounts) {
+    return (
+      <ScrollView
         style={{
-          backgroundColor: colors.light,
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.darkTheme_bg
+              : GlobalStyles.Color.white,
         }}
       >
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginVertical: 30,
-          }}
-        >
-          <Text style={{ fontSize: 30 }}>Welcome to Carbonyte</Text>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+
         </View>
 
         <View
           style={{
-            paddingHorizontal: 30,
-            paddingVertical: 50,
-            backgroundColor: "white",
+            backgroundColor: colors.light,
             borderTopLeftRadius: 25,
             borderTopRightRadius: 25,
           }}
         >
-          <Button
-            title="Signup"
-            textColor="white"
-            color="black"
-            // onPress={() => navigation.navigate("ProofOfFace")}
-            onPress={() => navigation.navigate("Registration")}
-          />
-          <Button
-            title="Login"
-            textColor="black"
-            color="white"
-            onPress={() => navigation.navigate("Login")}
-          />
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 30,
+            }}
+          >
+            <Text style={{ fontSize: 25 }}>
+              First time setup
+            </Text>
+          </View>
+
+          <View
+            style={{
+              paddingHorizontal: 30,
+              paddingVertical: 50,
+              backgroundColor: "white",
+              borderTopLeftRadius: 25,
+              borderTopRightRadius: 25,
+            }}
+          >
+
+            <Text>
+              Welcome to our platform! This is your first time logging
+              in, and we're excited to have you on board. Please note that as you're just getting
+              started, some background processes may still be running to set up your account and fetch
+              your data. Don't worry, this won't take long everything will be ready for you shortly.
+              If you have any questions or need assistance, don't hesitate to reach out to our support
+              team. Enjoy your experience!
+            </Text>
+
+            <Button
+              title="Placeholder button put second API call here"
+              textColor="white"
+              color="black"
+              // onPress={() => navigation.navigate("ProofOfFace")}
+              // onPress={() => navigation.navigate("Registration")}
+            />
+
+          </View>
         </View>
-      </View>
-    </View>
+      </ScrollView >
     )
   }
 
@@ -171,41 +178,41 @@ const SwitchAccounts = ({ navigation, route }) => {
             : GlobalStyles.Color.white,
       }}
     >
-    <View style={{ flex: 1, justifyContent: "flex-end" }}>
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      
-    </View>
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 
-    <View
-      style={{
-        backgroundColor: colors.light,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-      }}
-    >
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          marginVertical: 30,
-        }}
-      >
-        <Text style={{ fontSize: 30 }}>Select an account</Text>
-      </View>
+        </View>
 
-      <View
-        style={{
-          paddingHorizontal: 30,
-          paddingVertical: 50,
-          backgroundColor: "white",
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
-        }}
-      >
-        {showUserAccounts()}
+        <View
+          style={{
+            backgroundColor: colors.light,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 30,
+            }}
+          >
+            <Text style={{ fontSize: 30 }}>Select an account</Text>
+          </View>
+
+          <View
+            style={{
+              paddingHorizontal: 30,
+              paddingVertical: 50,
+              backgroundColor: "white",
+              borderTopLeftRadius: 25,
+              borderTopRightRadius: 25,
+            }}
+          >
+            {showUserAccounts()}
+          </View>
         </View>
       </View>
-    </View>
     </ScrollView>
   );
 };
