@@ -40,7 +40,7 @@ const SpendingLimit = ({ navigation, route }) => {
   const [isToggled, setIsToggled] = useState(false);
   const [validCheck, setValidator] = useState(false);
   const [amount, setAmount] = useState("0");
-  const { userID, customerDetails, darkMode } = useContext(AuthContext);
+  const { userID, customerDetails, darkMode,accountID } = useContext(AuthContext);
   useEffect(() => {}, []);
 
   //Calls the API once during load
@@ -61,14 +61,15 @@ const SpendingLimit = ({ navigation, route }) => {
   const loadData = async () => {
     //Gets the data from the api
     setIsLoading(true);
-    const response = await apiCall.GetLimits(selectedCard);
+    const response = await apiCall.GetLimits(accountID);
+    console.log(response,"this is account get");
     const spendTotal = response === null ? 0 : response?.spend;
     const monthlyAmount = response === null ? 0 : response?.monthlyAmount;
-    const cards = await apiCall.GetCardByAccount("686283112");
+    // const cards = await apiCall.GetCardByAccount("686283112");
     // const accountApi = await apiCall.GetAllAccounts(userID);
     const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
     const details = getUserID;
-    setDropDownValue(cards);
+    // setDropDownValue(cards);
     setMonLim(monthlyAmount);
     setAccountData(details?.accountDetails);
     setSpend(spendTotal);
@@ -100,7 +101,8 @@ const SpendingLimit = ({ navigation, route }) => {
     //Check if the text is valid from the validator
     if (validCheck) {
       //If it is do this
-      const response = await api.SetLimit(selectedCard, amount);
+      const response = await api.SetLimit(accountID, amount);
+      console.log(response,"this is a valid limit");
       setIsToggled(false);
       loadData();
     } else {
@@ -310,8 +312,8 @@ const SpendingLimit = ({ navigation, route }) => {
                         }}
                       >
                         {" "}
-                        {/* £{(monthLim - spend).toFixed(2)} */}
-                        £ 0.00
+                        £{(monthLim - spend).toFixed(2)}
+                        {/* £ 0.00 */}
                       </Text>
                     ) : (
                       <Text

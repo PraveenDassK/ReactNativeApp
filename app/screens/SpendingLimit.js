@@ -65,8 +65,8 @@ const SpendingLimit = ({ navigation, route }) => {
     //Gets the data from the api
     setIsLoading(true);
     const response = await apiCall.GetLimits(selectedCard);
-    const responseData = await apiSettings.GetCardById(requestObject?.cardID);
-    console.log(responseData?.usageLimits, "this is data from the api");
+    const responseData = await apiSettings.GetCardById("750975412");
+    console.log(responseData, "this is data from the api");
     console.log(isMonthWise, transactionMode, "this is filtered Value");
     const settingValues = responseData?.usageLimits;
     const eachData = responseData?.usageLimits?.map((eachValue, index) => {
@@ -123,6 +123,9 @@ const SpendingLimit = ({ navigation, route }) => {
   };
   const navigate = async () => {
     //Check if the text is valid from the validator
+    console.log("====================================");
+    console.log(amount);
+    console.log("====================================");
     const apiData = [
       {
         code: isMonthWise,
@@ -130,19 +133,21 @@ const SpendingLimit = ({ navigation, route }) => {
           {
             code: transactionMode,
             count: 0,
-            reset: true,
+            reset: false,
             singleAmount: amount,
             sumAmount: 0,
           },
         ],
       },
     ];
-    console.log(apiData);
+    console.log(typeof apiData);
     if (validCheck) {
       //If it is do this
       // const response = await api.SetLimit(selectedCard, amount);
-      // setIsToggled(false);
-      // loadData();
+      const response = await apiSettings.SetCardLimit(apiData, "750975412");
+      console.log(response, "thsis is ssiksidisdisid");
+      setIsToggled(false);
+      loadData();
     } else {
       //If it isn't show an error message here
     }

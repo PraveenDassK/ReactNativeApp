@@ -40,9 +40,19 @@ const GetCardById = async (Id) => {
   );
   return response?.data?.details;
 };
+const SetCardLimit = async (card, Id) => {
+  console.log(card, "before api call");
+  const response = await client.patch(
+    `/cardmodule/SetCardUsageLimits?cardId=${Id}`,
+    card
+  );
+  console.log(response, "this is response of card usage limit");
+  return response;
+};
 
 export default {
   GetSettings,
   SetToggles,
   GetCardById,
+  SetCardLimit,
 };
