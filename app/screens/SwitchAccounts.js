@@ -8,6 +8,7 @@ import {
   Modal,
   TouchableOpacity,
 } from "react-native";
+import * as LocalAuthentication from "expo-local-authentication";
 import GlobalStyles from "../../GlobalStyles";
 import Button from "../components/AppButton";
 
@@ -38,6 +39,7 @@ const SwitchAccounts = ({ navigation, route }) => {
     setUserID,
     setAccountID,
     setUser,
+    setIsAuth,
     setCardID,
     setCustomerDetails,
     setAccountDetails,
@@ -104,6 +106,21 @@ const SwitchAccounts = ({ navigation, route }) => {
     setCustomerDetails(IDs.customerDetails);
     setAccountDetails(IDs.accountData);
     navigation.navigate('Account')
+    authenticate()
+
+  };
+
+  async function authenticate () {
+    "starting authentication";
+
+    const result = await LocalAuthentication.authenticateAsync();
+    await LocalAuthentication.supportedAuthenticationTypesAsync();
+    if (result.success) {
+      setIsAuth(false);
+    } else {
+      alert("not authenticated");
+      authenticate();
+    }
   };
 
 

@@ -182,7 +182,7 @@ const AddBeneficiary = (
     }
   );
 
-const GetUserImpacts = async (Id) =>
+ const GetUserImpacts = async (Id) =>
   await client.get(
     "https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/CC11875"
   );

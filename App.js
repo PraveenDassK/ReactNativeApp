@@ -159,15 +159,6 @@ export default function App() {
     };
   }, []);
 
-  useLayoutEffect(() => {
-    if (isAuth && currentUser) {
-      if (Device.isDevice || Platform.OS == "ios") authenticate();
-    }
-
-  }, [currentUser, isAuth]);
-
-  // use Effect and Function to set Dark theme
-
   useEffect(() => {
     loadDarkTheme();
   }, [darkMode]);
@@ -196,22 +187,6 @@ export default function App() {
     };
   }, []);
 
-  const authenticate = async () => {
-    "starting authentication";
-
-    const result = await LocalAuthentication.authenticateAsync();
-    const device =
-      await LocalAuthentication.supportedAuthenticationTypesAsync();
-    if (result.success) {
-      setIsAuth(false);
-      setIsLoading(false);
-    }
-    // if (result) authStorage.storeSignInSetting(JSON.stringify({"signedIn":`${isEnabled}`}))
-    if (!result.success) {
-      alert("not authenticated");
-      authenticate();
-    }
-  };
 
   const handleAppStateChange = (nextAppState) => {
     if (nextAppState === "inactive") {
@@ -243,12 +218,14 @@ export default function App() {
     setAccountID(IDs.accountID);
     setCardID(IDs.cardID);
     setCustomerDetails(IDs.customerDetails);
+    setIsLoading(false);
   };
 
   const restoreSignIn = async () => {
     const token = await authStorage.getSignInSettings();
     if (!token) return;
     setIsAuth(token.includes("true"));
+    setIsLoading(false);
   };
 
   if (!AppState.currentState) {
