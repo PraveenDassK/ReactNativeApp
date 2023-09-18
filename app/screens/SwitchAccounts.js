@@ -26,13 +26,14 @@ import colors from "../config/colors";
 
 
 const SwitchAccounts = ({ navigation, route }) => {
-  const token = route.params
+  
   const [IDs, setIDs] = useState([])
   const [userData, setUserData] = useState(IDs?.accountData?.accountDetails);
   const [missingAccounts, setMissingAccounts] = useState(false)
-
+  
   const { darkMode } = useContext(AuthContext);
   const {
+    currentUser,
     setCurrentUser,
     setUserID,
     setAccountID,
@@ -41,7 +42,8 @@ const SwitchAccounts = ({ navigation, route }) => {
     setCustomerDetails,
     setAccountDetails,
   } = useContext(AuthContext);
-
+  
+  const token = currentUser
   //Calls the API once during load
   useEffect(() => {
     loadData();
@@ -68,6 +70,7 @@ const SwitchAccounts = ({ navigation, route }) => {
 
   const showUserAccounts = () => {
     let accounts = [];
+  
     userData?.forEach((element, i) => {
       accounts.push(
         <TouchableOpacity key={i} onPress={() => switchAccount(element.id)}>
@@ -91,6 +94,8 @@ const SwitchAccounts = ({ navigation, route }) => {
   };
 
   const switchAccount = (Id) => {
+   
+
     authStorage.storeToken(token);
     setCurrentUser(IDs.token);
     setUserID(IDs.userID);
@@ -98,6 +103,7 @@ const SwitchAccounts = ({ navigation, route }) => {
     setCardID(IDs.cardID);
     setCustomerDetails(IDs.customerDetails);
     setAccountDetails(IDs.accountData);
+    navigation.navigate('Account')
   };
 
 

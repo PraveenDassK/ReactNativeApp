@@ -275,7 +275,7 @@ const StackNavigator = () => {
         gestureEnabled: true,
         gestureResponseDistance: 100,
         gestureDirection: "horizontal",
-        initialRouteName: "Account",
+        initialRouteName: "SwitchAccounts",
 
         headerTitleStyle: {
           fontFamily: "Montserrat",
@@ -302,16 +302,38 @@ const StackNavigator = () => {
       }}
     >
       <Stack.Screen
-        name="Account"
-        component={AppNavigator}
+        name="SwitchAccounts"
+        component={gestureHandlerRootHOC(SwitchAccounts)}
         options={{
-          title: "Carbonyte",
-          headerShown: false,
+          title: "Switch Accounts",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => <HeaderBackButton />,
         }}
       />
+          <Stack.Screen
+            name="FirstTimeSetup"
+            component={FirstTimeSetup}
+            options={{
+              title: "Carbonyte",
+              headerShown: false,
+            }}
+          />
       <Stack.Screen
-        name="FirstTimeSetup"
-        component={FirstTimeSetup}
+        name="Account"
+        component={AppNavigator}
         options={{
           title: "Carbonyte",
           headerShown: false,
@@ -1584,28 +1606,7 @@ const StackNavigator = () => {
         }}
       />
 
-      <Stack.Screen
-        name="SwitchAccounts"
-        component={gestureHandlerRootHOC(SwitchAccounts)}
-        options={{
-          title: "Switch Accounts",
-          presentation: "modal",
-          gestureEnabled: true,
-          ...TransitionPresets.ModalTransition,
-          headerStyle: {
-            backgroundColor:
-              darkMode === "DARK"
-                ? GlobalStyles.Color.darkBlack
-                : GlobalStyles.Color.backgroundColor,
-          },
-          headerTitleStyle: {
-            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
-            fontFamily: "Montserrat",
-            fontSize: 30,
-          },
-          headerBackImage: () => <HeaderBackButton />,
-        }}
-      />
+      
       <Stack.Screen
         name="MarketPlaceItem"
         component={MarketPlaceItem}

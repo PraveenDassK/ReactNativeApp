@@ -49,6 +49,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
   const {
     user,
     expoPushToken,
+    setCurrentUser
   } = useContext(AuthContext);
   const [count, setCount] = useState(59);
   const [resendOTP, setResendOTP] = useState(null);
@@ -126,7 +127,7 @@ const OTPVerificationPersonal = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate("SwitchAccounts", result?.token)
+    setCurrentUser(token)
 
     const pushNotification = await loginApi.SendPushNotificationToken({
       tokenID: expoPushToken,

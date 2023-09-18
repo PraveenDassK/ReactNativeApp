@@ -144,11 +144,6 @@ const AuthNavigator = () => (
       name="RegistrationDBC2"
       component={gestureHandlerRootHOC(RegistrationCompanyDBCDetails2)}
     />
-
-    <Stack.Screen
-      name="SwitchAccounts"
-      component={gestureHandlerRootHOC(SwitchAccounts)}
-    />
   </Stack.Navigator>
 );
 

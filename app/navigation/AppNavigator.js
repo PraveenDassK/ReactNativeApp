@@ -305,7 +305,7 @@ const StackNavigator = () => {
         gestureEnabled: true,
         gestureResponseDistance: 100,
         gestureDirection: "horizontal",
-        initialRouteName: "Account",
+        initialRouteName: "SwitchAccounts",
 
         headerTitleStyle: {
           fontFamily: "Montserrat",
@@ -331,6 +331,30 @@ const StackNavigator = () => {
         ),
       }}
     >
+        <Stack.Screen
+        name="SwitchAccounts"
+        component={gestureHandlerRootHOC(SwitchAccounts)}
+        options={{
+          title: "Switch Accounts",
+          presentation: "modal",
+          gestureEnabled: true,
+          ...TransitionPresets.ModalTransition,
+          headerStyle: {
+            backgroundColor:
+              darkMode === "DARK"
+                ? GlobalStyles.Color.darkBlack
+                : GlobalStyles.Color.backgroundColor,
+          },
+          headerTitleStyle: {
+            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+            fontFamily: "Montserrat",
+            fontSize: 30,
+          },
+          headerBackImage: () => <HeaderBackButton />,
+        }}
+      />
+
+
       <Stack.Screen
         name="Account"
         component={AppNavigator}
@@ -1656,7 +1680,7 @@ const StackNavigator = () => {
         name="MarketPlaceItem"
         component={MarketPlaceItem}
         options={{
-          title: null,
+          title: n
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />
