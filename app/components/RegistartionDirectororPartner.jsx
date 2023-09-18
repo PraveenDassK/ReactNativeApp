@@ -79,7 +79,7 @@ const RegistrationDirectororPartner = ({
   const [showCheckbox, setShowCheckbox] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const routerNavigation = useNavigation();
-console.log(businessId,"this is a router navigation")
+  console.log(businessId, "this is a router navigation");
   const handleSubmit = async (type) => {
     // SaveDetails(type)
     // navigation.navigate("Directororpartner");
@@ -144,9 +144,9 @@ console.log(businessId,"this is a router navigation")
       ...soleTraderData
     );
     setIsLoading(true);
-    console.log(newArray,"this is loading")
+    console.log(newArray, "this is loading");
     const IDs = businessId;
-    console.log(IDs)
+    console.log(IDs);
     const response = await apiLogin.RegisterPersonalDirectorAccount(
       newArray,
       IDs
@@ -386,6 +386,7 @@ console.log(businessId,"this is a router navigation")
                           key={index}
                           title={
                             item?.customerDetails?.firstName +
+                            " " +
                             item?.customerDetails?.lastName
                           }
                           index={index}
@@ -429,6 +430,7 @@ console.log(businessId,"this is a router navigation")
                     <Item
                       title={
                         item?.customerDetails?.firstName +
+                        " " +
                         item?.customerDetails?.lastName
                       }
                       index={index}
@@ -483,6 +485,7 @@ console.log(businessId,"this is a router navigation")
                           key={index}
                           title={
                             item?.customerDetails?.firstName +
+                            " " +
                             item?.customerDetails?.lastName
                           }
                           index={index}
@@ -534,6 +537,7 @@ console.log(businessId,"this is a router navigation")
                               key={index} // Use a unique key for the list item
                               title={
                                 item?.customerDetails?.firstName +
+                                " " +
                                 item?.customerDetails?.lastName
                               }
                               index={index}
@@ -574,6 +578,7 @@ console.log(businessId,"this is a router navigation")
                         <Item
                           title={
                             item?.customerDetails?.firstName +
+                            " " +
                             item?.customerDetails?.lastName
                           }
                           index={index}

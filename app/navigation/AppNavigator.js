@@ -1653,28 +1653,6 @@ const StackNavigator = () => {
       />
 
       <Stack.Screen
-        name="SwitchAccounts"
-        component={gestureHandlerRootHOC(SwitchAccounts)}
-        options={{
-          title: "Switch Accounts",
-          presentation: "modal",
-          gestureEnabled: true,
-          ...TransitionPresets.ModalTransition,
-          headerStyle: {
-            backgroundColor:
-              darkMode === "DARK"
-                ? GlobalStyles.Color.darkBlack
-                : GlobalStyles.Color.backgroundColor,
-          },
-          headerTitleStyle: {
-            color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
-            fontFamily: "Montserrat",
-            fontSize: 30,
-          },
-          headerBackImage: () => <HeaderBackButton />,
-        }}
-      />
-      <Stack.Screen
         name="MarketPlaceItem"
         component={MarketPlaceItem}
         options={{

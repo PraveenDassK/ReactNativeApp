@@ -28,23 +28,23 @@ import StepProgress from "../components/SteeperCounter";
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
 
-    .required("Name is required")
+    .required("FirstName is required")
 
     .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
 
-    .min(2, "Name must be at least 2 characters")
+    .min(2, "FirstName must be at least 2 characters")
 
-    .max(20, "Name must be less than 20 characters"),
+    .max(20, "FirstName must be less than 20 characters"),
 
   lastName: Yup.string()
 
-    .required("Name is required")
+    .required("LastName is required")
 
     .matches(/^[a-zA-Z\s]+$/, "Invalid name format")
 
-    .min(2, "Name must be at least 2 characters")
+    .min(2, "LastName must be at least 2 characters")
 
-    .max(20, "Name must be less than 20 characters"),
+    .max(20, "LastName must be less than 20 characters"),
 
   sortCode: Yup.string()
 
@@ -62,13 +62,13 @@ const items = [
   {
     id: 2,
     label: "First name",
-    placeholder: "Enter your name",
+    placeholder: "Enter First Name",
     initialValue: "firstName",
   },
   {
     id: 3,
     label: "Last name",
-    placeholder: "Enter your name",
+    placeholder: "Enter Last name",
     initialValue: "lastName",
   },
   {

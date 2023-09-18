@@ -244,6 +244,8 @@ const VirtualEcoSystem = ({ navigation }) => {
     let trees = 0;
     try {
       const response = await apiCall.GetUserImpact(customerDetails);
+      // console.log(response.totalAssets,"this is request after jwt")
+
       trees = response.totalAssets;
     } catch {}
     setTrees(trees);

@@ -67,12 +67,13 @@ const CarbonExplore = ({ route, navigation }) => {
     setIsLoading(true);
     const response = await apiCall.GetProjectList();
     const responseProjects = response;
+    console.log(responseProjects,"this is data after api call")
     setProjects(
-      responseProjects.map((project) => {
+      responseProjects?.map((project) => {
         return {
-          id: project.id,
-          displayName: project.displayName,
-          price: project.asset.displayAssetPriceWithMarkup,
+          id: project?.id,
+          displayName: project?.displayName,
+          price: project?.asset?.displayAssetPriceWithMarkup,
         };
       })
     );

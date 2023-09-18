@@ -26,6 +26,7 @@ import Registration from "../screens/Registration";
 import W2Success from "../screens/W2Success";
 import RegistrationCompanyDBCDetails from "../components/RegistrationCompanyDBCDetails";
 import RegistrationCompanyDBCDetails2 from "../components/RegistrationCompanyDBCDetails2";
+import SwitchAccounts from "../screens/SwitchAccounts";
 
 const Stack = createNativeStackNavigator();
 
@@ -142,6 +143,11 @@ const AuthNavigator = () => (
     <Stack.Screen
       name="RegistrationDBC2"
       component={gestureHandlerRootHOC(RegistrationCompanyDBCDetails2)}
+    />
+
+    <Stack.Screen
+      name="SwitchAccounts"
+      component={gestureHandlerRootHOC(SwitchAccounts)}
     />
   </Stack.Navigator>
 );

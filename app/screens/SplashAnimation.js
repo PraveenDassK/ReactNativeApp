@@ -68,7 +68,7 @@ const SplashAnimation = ({ navigation }) => {
             title="Signup"
             textColor="white"
             color="black"
-            // onPress={() => navigation.navigate("ProofOfResidency")}
+            // onPress={() => navigation.navigate("ProofOfFace")}
             onPress={() => navigation.navigate("Registration")}
           />
           <Button

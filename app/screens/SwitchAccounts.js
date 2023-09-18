@@ -18,10 +18,29 @@ import {
   verticalScale,
   moderateScale,
 } from "../config/scaling";
+import authStorage from "../auth/storage";
+import loginApi from "../api/apiLogin";
+
+import FadeInView from "../components/fadeInview";
+import colors from "../config/colors";
+
 
 const SwitchAccounts = ({ navigation, route }) => {
-  const [userData, setUserData] = useState([]);
-  const { userID, setAccountID, accountID, darkMode } = useContext(AuthContext);
+  const token = route.params
+  const [IDs, setIDs] = useState([])
+  const [userData, setUserData] = useState(IDs?.accountData?.accountDetails);
+  const [missingAccounts, setMissingAccounts] = useState(false)
+
+  const { darkMode } = useContext(AuthContext);
+  const {
+    setCurrentUser,
+    setUserID,
+    setAccountID,
+    setUser,
+    setCardID,
+    setCustomerDetails,
+    setAccountDetails,
+  } = useContext(AuthContext);
 
   //Calls the API once during load
   useEffect(() => {
@@ -29,10 +48,23 @@ const SwitchAccounts = ({ navigation, route }) => {
   }, []);
 
   const loadData = async () => {
-    const response = await apiCall.GetAllAccounts(userID);
+    const IDs = await loginApi.GetIDs(token);
+    const businessName = await loginApi.GetAccount("A122HTHM");
+    setIDs(IDs)
 
-    setUserData(response);
+    // const response = await apiCall.GetAllAccounts("A122HTHM");
+
+    //If there aren't any accounts
+    if (IDs?.accountData?.AccountDeatils == []) {
+      console.log("!")
+      setMissingAccounts(true)
+    }
+    setUserData(IDs?.accountData?.accountDetails);
   };
+
+  const getBusinessName = async () => {
+
+  }
 
   const showUserAccounts = () => {
     let accounts = [];
@@ -48,7 +80,7 @@ const SwitchAccounts = ({ navigation, route }) => {
                     : styles.accountName
                 }
               >
-                {element.id}
+                {element.accountId}
               </Text>
             </View>
           </View>
@@ -59,10 +91,84 @@ const SwitchAccounts = ({ navigation, route }) => {
   };
 
   const switchAccount = (Id) => {
-    setAccountID(Id);
-    // navigation.navigate("Account")
+    authStorage.storeToken(token);
+    setCurrentUser(IDs.token);
+    setUserID(IDs.userID);
+    setAccountID(IDs.accountID);
+    setCardID(IDs.cardID);
+    setCustomerDetails(IDs.customerDetails);
+    setAccountDetails(IDs.accountData);
   };
 
+
+  //Show this if the user needs to initiate an account setup
+  if (missingAccounts) {
+    return (
+      <ScrollView
+        style={{
+          backgroundColor:
+            darkMode === "DARK"
+              ? GlobalStyles.Color.darkTheme_bg
+              : GlobalStyles.Color.white,
+        }}
+      >
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+
+        </View>
+
+        <View
+          style={{
+            backgroundColor: colors.light,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 30,
+            }}
+          >
+            <Text style={{ fontSize: 25 }}>
+              First time setup
+            </Text>
+          </View>
+
+          <View
+            style={{
+              paddingHorizontal: 30,
+              paddingVertical: 50,
+              backgroundColor: "white",
+              borderTopLeftRadius: 25,
+              borderTopRightRadius: 25,
+            }}
+          >
+
+            <Text>
+              Welcome to our platform! This is your first time logging
+              in, and we're excited to have you on board. Please note that as you're just getting
+              started, some background processes may still be running to set up your account and fetch
+              your data. Don't worry, this won't take long everything will be ready for you shortly.
+              If you have any questions or need assistance, don't hesitate to reach out to our support
+              team. Enjoy your experience!
+            </Text>
+
+            <Button
+              title="Placeholder button put second API call here"
+              textColor="white"
+              color="black"
+              // onPress={() => navigation.navigate("ProofOfFace")}
+              // onPress={() => navigation.navigate("Registration")}
+            />
+
+          </View>
+        </View>
+      </ScrollView >
+    )
+  }
+
+  //Regular account chosing
   return (
     <ScrollView
       style={{
@@ -72,41 +178,40 @@ const SwitchAccounts = ({ navigation, route }) => {
             : GlobalStyles.Color.white,
       }}
     >
-      <View style={darkMode === "DARK" ? styles.darkpage : styles.page}>
-        {/* <View style={styles.titleTextRow}>
-                <Text style={styles.titleText}>Switch Account</Text>
-            </View>    */}
+      <View style={{ flex: 1, justifyContent: "flex-end" }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 
-        <View style={styles.subTextDiv}>
-          <Text
-            style={darkMode === "DARK" ? styles.darksubText : styles.subText}
-          >
-            Selected Account: {accountID}
-          </Text>
         </View>
 
-        <View style={styles.subTextDiv}>
-          <Text
-            style={darkMode === "DARK" ? styles.darksubText : styles.subText}
-          >
-            Accounts:
-          </Text>
-        </View>
-
-        {showUserAccounts()}
         <View
           style={{
-            position: "absolute",
-            bottom: 20,
-            width: "100%",
-            alignItems: "center",
+            backgroundColor: colors.light,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
           }}
-        ></View>
-        <Button
-          style={styles.boxShadow}
-          title="Return"
-          onPress={() => navigation.navigate("Account")}
-        />
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 30,
+            }}
+          >
+            <Text style={{ fontSize: 30 }}>Select an account</Text>
+          </View>
+
+          <View
+            style={{
+              paddingHorizontal: 30,
+              paddingVertical: 50,
+              backgroundColor: "white",
+              borderTopLeftRadius: 25,
+              borderTopRightRadius: 25,
+            }}
+          >
+            {showUserAccounts()}
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
@@ -184,6 +289,64 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: GlobalStyles.Title.fontSize,
     fontWeight: GlobalStyles.Title.fontWeight,
+  },
+  maskGroupLayout: {
+    overflow: "hidden",
+    maxWidth: "100%",
+    width: "100%",
+    alignItems: "center",
+  },
+  helloFlexBox: {
+    textAlign: "center",
+    position: "absolute",
+  },
+  maskGroup261: {
+    right: horizontalScale(0),
+    bottom: verticalScale(0),
+    left: horizontalScale(0),
+    height: verticalScale(132),
+  },
+  layer12Icon: {
+    marginTop: verticalScale(-135.5),
+    marginLeft: horizontalScale(-63.5),
+    left: "50%",
+    width: horizontalScale(128),
+    height: verticalScale(136),
+    top: "50%",
+    position: "absolute",
+  },
+  hello: {
+    textAlign: "center",
+    marginleft: horizontalScale(-20),
+    top: verticalScale(50),
+    width: "100%",
+    fontSize: GlobalStyles.FontSize.size_10xl,
+    color: GlobalStyles.Color.indigo_100,
+  },
+  quickSecuredBanking: {
+    fontSize: GlobalStyles.FontSize.size_2xl,
+    fontWeight: "700",
+    color: GlobalStyles.Color.black,
+    width: "100%",
+    top: "75%",
+    textAlign: "center",
+  },
+  maskGroup259: {
+    marginTop: verticalScale(-140.5),
+    height: verticalScale(337),
+    top: "50%",
+    width: "100%",
+  },
+  maskGroup261Parent: {
+    width: "100%",
+    height: verticalScale(505),
+  },
+  logoAnimation3: {
+    backgroundColor: colors.white,
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    paddingTop: GlobalStyles.Padding.padding_xl,
   },
 });
 

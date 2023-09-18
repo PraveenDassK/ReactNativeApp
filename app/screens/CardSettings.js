@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   StyleSheet,
   View,
@@ -34,28 +40,27 @@ const CardSettings = ({ navigation, route }) => {
   const [isEnabled3, setIsEnabled3] = useState(false);
 
   let routeObj = route.params;
-  console.log("====================================");
-  console.log(routeObj);
-  console.log("====================================");
+
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
-    sendRequest();
+    sendRequest("isonline");
   };
 
   const toggleSwitch1 = () => {
     setIsEnabled1((previousState) => !previousState);
-    sendRequest();
+    sendRequest("isswipe");
   };
   const toggleSwitch2 = () => {
     setIsEnabled2((previousState) => !previousState);
-    sendRequest();
+    sendRequest("isatm");
   };
   const toggleSwitch3 = () => {
     setIsEnabled3((previousState) => !previousState);
-    sendRequest();
+    sendRequest("iscontactless");
   };
   const authContext = useContext(AuthContext);
   const { darkMode } = useContext(AuthContext);
+
   useEffect(() => {
     getSettings();
   }, []);
@@ -70,8 +75,8 @@ const CardSettings = ({ navigation, route }) => {
   const getSettings = async () => {
     setIsLoading(true);
     try {
-      const cardSettings = await apiSettings.GetSettings(authContext.accountID);
-
+      const cardSettings = await apiSettings.GetSettings(routeObj?.cardID);
+      console.log(cardSettings, "this is card settings");
       const data = cardSettings;
 
       data.onlineTransactions ? setIsEnabled(true) : null;
@@ -85,17 +90,31 @@ const CardSettings = ({ navigation, route }) => {
     setIsLoading(false);
   };
 
-  const sendRequest = async () => {
+  const sendRequest = async (name) => {
+    let value = isEnabled;
+    let atmValue = isEnabled2;
+    let contactlessValue = isEnabled3;
+    let swipeableValue = isEnabled1;
+    if (name === "isonline") {
+      value = !isEnabled;
+    } else if (name === "isswipe") {
+      swipeableValue = !isEnabled1;
+    } else if (name === "isatm") {
+      atmValue = !isEnabled2;
+    } else if (name === "iscontactless") {
+      contactlessValue = !isEnabled3;
+    }
     setIsLoading(true);
 
     try {
       const response = await apiSettings.SetToggles(
-        authContext.accountID,
-        isEnabled,
-        isEnabled1,
-        isEnabled2,
-        isEnabled3
+        routeObj?.cardID,
+        value,
+        swipeableValue,
+        atmValue,
+        contactlessValue
       );
+      console.log(response, "this is enabled");
 
       setIsLoading(false);
     } catch {

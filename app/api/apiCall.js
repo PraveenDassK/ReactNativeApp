@@ -1,6 +1,6 @@
 import client from "./client";
 import moment from "moment";
-
+import { jwtClient } from "./client";
 /**
  * @dev Use this for a specific Enfuse account only
  * @notice  Function will not work with a carbonyte ID
@@ -468,10 +468,9 @@ const GetProject = async (Id) => {
  */
 const GetUserImpact = async (Id) => {
   try {
-    const request = await client.get(
+    const request = await jwtClient.get(
       `https://api.carbonyte.io/ecomodule/Earthly/GetUserImpacts/${Id}`
     );
-
     const returnData = request.data.details;
     return {
       totalOffset: returnData.data.totalOffsetInTonnes.toFixed(1),

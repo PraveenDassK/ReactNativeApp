@@ -39,11 +39,17 @@ const StepProgress = ({ currentStep, darkMode }) => {
       ></View>
 
       <TouchableOpacity
-        style={[styles.step, currentStep >= 2 && styles.activeStep]}
+        style={[
+          darkMode === "DARK" ? styles.darkstep : styles.step,
+          currentStep >= 2 && styles.activeStep,
+        ]}
         onPress={() => handleStepPress(2)}
       >
         <Text
-          style={[styles.stepText, currentStep >= 2 && styles.activeStepText]}
+          style={[
+            darkMode === "DARK" ? styles.darkstepText : styles.stepText,
+            currentStep >= 2 && styles.activeStepText,
+          ]}
         >
           2
         </Text>
@@ -58,11 +64,17 @@ const StepProgress = ({ currentStep, darkMode }) => {
       />
 
       <TouchableOpacity
-        style={[styles.step, currentStep >= 3 && styles.activeStep]}
+        style={[
+          darkMode === "DARK" ? styles.darkstep : styles.step,
+          currentStep >= 3 && styles.activeStep,
+        ]}
         onPress={() => handleStepPress(3)}
       >
         <Text
-          style={[styles.stepText, currentStep >= 3 && styles.activeStepText]}
+          style={[
+            darkMode === "DARK" ? styles.darkstepText : styles.stepText,
+            currentStep >= 3 && styles.activeStepText,
+          ]}
         >
           3
         </Text>
@@ -87,8 +99,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  darkstep: {
+    backgroundColor: "black",
+    borderColor: GlobalStyles.Color.gray_1000,
+    borderWidth: 1,
+    borderRadius: 15,
+    height: 30,
+    width: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   stepText: {
     textAlign: "center",
+  },
+  darkstepText: {
+    textAlign: "center",
+    color: GlobalStyles.Color.gray_1000,
   },
   activeStep: {
     backgroundColor: "#212529",

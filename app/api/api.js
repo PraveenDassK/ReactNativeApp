@@ -2,7 +2,7 @@ import client from "./client";
 import AuthContext from "../auth/context";
 import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
-
+import { jwtClient as Client } from "./client";
 /**Getters */
 const GetCustomerDetails = async (Id) => {
   const request = await client.get(
@@ -44,15 +44,17 @@ const GetAccount = async (Id) => {
 };
 
 const GetProjectList = async () => {
-  const request = await client.get(
+  const request = await Client.get(
     "https://api.carbonyte.io/ecomodule/Earthly/GetProjectList"
   );
-  const requestData = request?.data?.details.data;
+  console.log(request, "this is request");
+  const requestData = request?.data?.details?.data;
+  console.log(requestData, "this is request data");
   return requestData;
 };
 
 const GetSingleProject = async (Id) => {
-  const request = await client.get(
+  const request = await Client.get(
     "https://api.carbonyte.io/ecomodule/Earthly/GetProjectById?projectId=" + Id
   );
   const requestData = request?.data?.details;
@@ -61,7 +63,7 @@ const GetSingleProject = async (Id) => {
 };
 
 const Checkout = async (obj) => {
-  const request = await client.post(
+  const request = await Client.post(
     "https://api.carbonyte.io/ecomodule/Earthly/Checkout",
     obj
   );

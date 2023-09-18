@@ -30,6 +30,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { CheckBox } from "@rneui/themed";
 import AuthScreen from "./AuthScreen";
 import Privacy from "./PrivacyPolicy";
+import VerifyReferralCode from "./verifyReferralCode";
 
 const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   const [type, setType] = useState(null);
@@ -37,13 +38,13 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   const [visible, setVisible] = useState(false);
 
   const handleSubmit = ({ incomeDetails }) => {
-    
-    
+
+
     const currencyPattern = /^\$?\d+(,\d{3})*(\.\d{2})?$/;
 
     //If currency isn't correct
-    
-    
+
+
 
     if (!currencyPattern.test(incomeDetails)) {
       return alert("Please enter a valid amount")
@@ -65,7 +66,7 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
   };
 
   const handleBack = () => {
-    
+
     setScreenToShow("RegistrationNumber");
   };
 
@@ -459,6 +460,8 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
                 }}
               />
 
+              <VerifyReferralCode />
+
               <CheckBox
                 title="I have read and accepted the Privacy Policy"
                 checked={privacyPolicy}
@@ -471,6 +474,8 @@ const CompanyDetails = ({ SaveDetails, setScreenToShow }) => {
                 textColor="white"
                 onPress={() => setVisible(true)}
               />
+
+
 
               <Button
                 title="Continue"
