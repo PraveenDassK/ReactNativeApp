@@ -253,7 +253,7 @@ const CardSettings = ({ navigation, route }) => {
 
           <Pressable
             style={[styles.boxShadow]}
-            onPress={() => navigation.navigate("SpendingLimit")}
+            onPress={() => navigation.navigate("SpendingLimit",routeObj)}
           >
             <View
               style={[

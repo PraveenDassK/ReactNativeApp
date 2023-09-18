@@ -34,7 +34,15 @@ const SetToggles = (enfuceid, online, swipe, atm, contactless) => {
   return client.post(request);
 };
 
+const GetCardById = async (Id) => {
+  const response = await client.get(
+    `/walletmodule/Enfuce/GetCardById?cardId=${Id}`
+  );
+  return response?.data?.details;
+};
+
 export default {
   GetSettings,
   SetToggles,
+  GetCardById,
 };

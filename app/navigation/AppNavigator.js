@@ -1680,7 +1680,7 @@ const StackNavigator = () => {
         name="MarketPlaceItem"
         component={MarketPlaceItem}
         options={{
-          title: n
+          title: "hjs",
           headerStyle: { backgroundColor: GlobalStyles.Color.backgroundColor },
         }}
       />

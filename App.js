@@ -227,7 +227,7 @@ export default function App() {
    */
   const restoreToken = async () => {
     //Get the token from storage
-    const token = await authStorage.getToken();
+    const token = await authStorage.removeToken();
     if (!token) {
       setIsLoading(false);
       return;

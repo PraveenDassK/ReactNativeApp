@@ -25,7 +25,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import Tagline from "../components/Tagline";
 import apiLogin from "../api/apiLogin";
 import LinearAccountButton from "../components/LinearAccountButton";
-
+import apiSettings from "../api/apiSettings";
 const SpendingLimit = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -40,9 +40,12 @@ const SpendingLimit = ({ navigation, route }) => {
   const [isToggled, setIsToggled] = useState(false);
   const [validCheck, setValidator] = useState(false);
   const [amount, setAmount] = useState("0");
+  const [isMonthWise, setMonthWise] = useState("MONTHLY");
+  const [transactionMode, setTransactionMode] = useState("ALL");
   const { userID, customerDetails, darkMode } = useContext(AuthContext);
   useEffect(() => {}, []);
-
+  console.log(route.params, "this is route object");
+  const requestObject = route.params;
   //Calls the API once during load
   useFocusEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -62,17 +65,39 @@ const SpendingLimit = ({ navigation, route }) => {
     //Gets the data from the api
     setIsLoading(true);
     const response = await apiCall.GetLimits(selectedCard);
-    const spendTotal = response === null ? 0 : response?.spend;
-    const monthlyAmount = response === null ? 0 : response?.monthlyAmount;
-    const cards = await apiCall.GetCardByAccount("686283112");
+    const responseData = await apiSettings.GetCardById(requestObject?.cardID);
+    console.log(responseData?.usageLimits, "this is data from the api");
+    console.log(isMonthWise, transactionMode, "this is filtered Value");
+    const settingValues = responseData?.usageLimits;
+    const eachData = responseData?.usageLimits?.map((eachValue, index) => {
+      if (eachValue.code === isMonthWise) {
+        console.log(eachValue?.values, "this ios itme");
+        eachValue?.values?.map((eachTransactionCode, index) => {
+          if (eachTransactionCode.code === transactionMode) {
+            console.log(eachTransactionCode?.count);
+            const spendTotal =
+              eachValue === null ? 0 : eachTransactionCode?.sumAmount;
+            const monthlyAmount =
+              eachValue === null ? 0 : eachTransactionCode?.singleAmount;
+            setMonLim(eachTransactionCode?.singleAmount);
+            setSpend(eachTransactionCode?.sumAmount);
+            setPercent(spendTotal / monthlyAmount);
+            console.log(spendTotal / monthlyAmount, "thsisnbsns");
+          }
+        });
+      }
+    });
+    // const spendTotal = response === null ? 0 : response?.spend;
+    // const monthlyAmount = response === null ? 0 : response?.monthlyAmount;
+    // const cards = await apiCall.GetCardByAccount("686283112");
     // const accountApi = await apiCall.GetAllAccounts(userID);
     const getUserID = await apiLogin.GetCustomerDetails(customerDetails);
     const details = getUserID;
-    setDropDownValue(cards);
-    setMonLim(monthlyAmount);
-    setAccountData(details?.accountDetails);
-    setSpend(spendTotal);
-    setPercent(spendTotal / monthlyAmount);
+    // setDropDownValue(cards);
+    // setMonLim(monthlyAmount);
+    // setAccountData(details?.accountDetails);
+    // setSpend(spendTotal);
+    // setPercent(spendTotal / monthlyAmount);
     setIsLoading(false);
   };
   // const setandGetValue= ()={}
@@ -98,11 +123,26 @@ const SpendingLimit = ({ navigation, route }) => {
   };
   const navigate = async () => {
     //Check if the text is valid from the validator
+    const apiData = [
+      {
+        code: isMonthWise,
+        values: [
+          {
+            code: transactionMode,
+            count: 0,
+            reset: true,
+            singleAmount: amount,
+            sumAmount: 0,
+          },
+        ],
+      },
+    ];
+    console.log(apiData);
     if (validCheck) {
       //If it is do this
-      const response = await api.SetLimit(selectedCard, amount);
-      setIsToggled(false);
-      loadData();
+      // const response = await api.SetLimit(selectedCard, amount);
+      // setIsToggled(false);
+      // loadData();
     } else {
       //If it isn't show an error message here
     }
@@ -128,6 +168,18 @@ const SpendingLimit = ({ navigation, route }) => {
       // navigation.navigate("SetLimit");
     }
   };
+  //Month dropdown values
+  const monthDropdown = [
+    { label: "Daily", value: "DAILY" },
+    { label: "Weekly", value: "WEEKLY" },
+    { label: "Monthly", value: "MONTHLY" },
+  ];
+
+  const WithdrawtypeDropdown = [
+    { label: "ALL", value: "ALL" },
+    { label: "ATM", value: "ATM" },
+    { label: "RETAIL", value: "RETAIL" },
+  ];
 
   if (isLoading) {
     return (
@@ -206,7 +258,7 @@ const SpendingLimit = ({ navigation, route }) => {
               using this card per month
             </Text>
           </View>
-          <View style={styles.subTextRow}>
+          {/* <View style={styles.subTextRow}>
             <Text
               style={darkMode === "DARK" ? styles.darksubText : styles.subText}
             >
@@ -239,8 +291,83 @@ const SpendingLimit = ({ navigation, route }) => {
               }}
               autoScroll={false}
             />
+          </View> */}
+          <View style={{ paddingHorizontal: "5%", marginTop: "5%" }}>
+            <Text
+              style={darkMode === "DARK" ? styles.darksubText : styles.subText}
+            >
+              Select Range
+            </Text>
+            <Dropdown
+              data={monthDropdown}
+              value={isMonthWise}
+              labelField="label"
+              valueField="value"
+              // defalutValue="Mr"
+              onChange={(item) => {
+                setMonthWise(item.value);
+                // loadData();
+              }}
+              style={
+                darkMode === "DARK" ? styles.darkdropdown : styles.dropdown
+              }
+              containerStyle={styles.containerStyle}
+              // renderRightIcon={() => (
+              //   <AntDesign name="checkcircle" size={24} color="green" />
+              // )}
+              // renderItem={renderItem}
+              placeholder="Select an option..."
+              selectedTextStyle={{
+                color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+              }}
+              placeholderStyle={{
+                color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+              }}
+              autoScroll={false}
+            />
           </View>
 
+          <View style={{ paddingHorizontal: "5%" }}>
+            <Text
+              style={darkMode === "DARK" ? styles.darksubText : styles.subText}
+            >
+              Select Method of withdrawal
+            </Text>
+            <Dropdown
+              data={WithdrawtypeDropdown}
+              value={transactionMode}
+              labelField="label"
+              valueField="value"
+              // defalutValue="Mr"
+              onChange={(item) => {
+                setTransactionMode(item.value);
+                // loadData();
+              }}
+              style={
+                darkMode === "DARK" ? styles.darkdropdown : styles.dropdown
+              }
+              containerStyle={styles.containerStyle}
+              // renderRightIcon={() => (
+              //   <AntDesign name="checkcircle" size={24} color="green" />
+              // )}
+              // renderItem={renderItem}
+              placeholder="Select an option..."
+              selectedTextStyle={{
+                color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+              }}
+              placeholderStyle={{
+                color: darkMode === "DARK" ? GlobalStyles.Color.white : null,
+              }}
+              autoScroll={false}
+            />
+          </View>
+          <View style={{ paddingHorizontal: "5%" }}>
+            <LinearAccountButton
+              darkMode={darkMode}
+              title="Apply"
+              onPress={() => loadData()}
+            />
+          </View>
           <View
             style={{
               width: "90%",
@@ -298,7 +425,20 @@ const SpendingLimit = ({ navigation, route }) => {
                       top: 150,
                     }}
                   >
-                    {monthLim - spend >= 0 ? (
+                    <Text
+                      style={{
+                        fontSize: 28,
+                        color:
+                          darkMode === "DARK"
+                            ? GlobalStyles.Color.white
+                            : "blue",
+                        fontFamily: "Montserrat-Bold",
+                      }}
+                    >
+                      {" "}
+                      £{monthLim.toFixed(2)}
+                    </Text>
+                    {/* {monthLim - spend >= 0 ? (
                       <Text
                         style={{
                           fontSize: 28,
@@ -324,7 +464,7 @@ const SpendingLimit = ({ navigation, route }) => {
                         {" "}
                         £{(monthLim - spend).toFixed(2)}
                       </Text>
-                    )}
+                    )} */}
                     <Text
                       style={{
                         fontSize: 16,
